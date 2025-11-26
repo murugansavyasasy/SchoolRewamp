@@ -100,6 +100,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStud
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwDeleteResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
@@ -343,6 +344,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
     var isnoticeboarddelete: LiveData<NoticeBoardDeleteResponse?>? = null
     var isEventDelete: LiveData<EventDeleteResponse?>? = null
+    var isLsrwDelete: LiveData<LsrwDeleteResponse?>? = null
     var isAttachmentReportResponse: LiveData<AttachmentReportResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
@@ -522,6 +524,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
         isnoticeboarddelete = apiSchoolRepositories.isnoticeboarddeleteLiveData
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
+        isLsrwDelete = apiSchoolRepositories.isLsrwDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
         getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
@@ -1076,6 +1079,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isEventDelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
+    }
+    fun isLsrwDelete(isToken: String, request: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isLsrwDelete(isToken, request, activity)
     }
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {

@@ -186,6 +186,9 @@ class LSRWImagePickingAdapter(
                 listener.onImageClick(pos)
                 return@setOnClickListener
             }
+            if (isAudio) {
+                return@setOnClickListener
+            }
 
             if (item.path.contains("amazonaws.", ignoreCase = true)) {
 
@@ -285,7 +288,7 @@ class LSRWImagePickingAdapter(
 
     private fun playPauseAudio(item: FileItem, holder: FileViewHolder, pos: Int) {
 
-        // IF SAME AUDIO → PLAY/PAUSE TOGGLE
+        // CASE 1: User tapped the same audio → toggle
         if (currentPlayingItemIndex == pos) {
             mediaPlayer?.let { mp ->
                 if (mp.isPlaying) {
@@ -301,17 +304,25 @@ class LSRWImagePickingAdapter(
             return
         }
 
-        // NEW AUDIO → STOP PREVIOUS
+        // CASE 2: User tapped a DIFFERENT audio → STOP previous one
+        val previousPos = currentPlayingItemIndex
         stopAudioIfPlaying()
 
+        // 🔥 VERY IMPORTANT: reset previous UI
+        if (previousPos != null && previousPos != RecyclerView.NO_POSITION) {
+            notifyItemChanged(previousPos)
+        }
+
+        // NOW START NEW AUDIO
         try {
             val uri = Uri.parse(item.path)
             mediaPlayer = MediaPlayer.create(context, uri)
-                ?: throw Exception("Audio Unsupported")
+                ?: throw Exception("Audio not supported")
 
             val mp = mediaPlayer!!
             currentPlayingItemIndex = pos
 
+            // update UI for new audio
             holder.imgVideoPlay.setImageResource(pauseIcon)
             holder.seekBar.max = mp.duration
             holder.lblCurrentDuration.text = formatTime(mp.duration.toLong())
@@ -343,6 +354,7 @@ class LSRWImagePickingAdapter(
             currentPlayingItemIndex = null
         }
     }
+
 
     private fun startProgressUpdate(holder: FileViewHolder, mp: MediaPlayer) {
         val updateTask = object : Runnable {

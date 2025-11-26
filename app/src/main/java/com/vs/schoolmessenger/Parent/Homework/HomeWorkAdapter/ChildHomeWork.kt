@@ -513,7 +513,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                audioAdapter = AudioAdapter(audioList)
+                 audioAdapter = AudioAdapter(audioList)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
                     LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter

@@ -3,8 +3,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/twenty_five"
     android:visibility="visible"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
+
     android:layout_alignParentStart="true"
     android:layout_alignParentEnd="true"
     android:background="@drawable/rect_shadow_white"
@@ -38,7 +37,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/eight"
-        android:text="0:03"
         android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp"
         android:fontFamily="sans-serif-medium"/>

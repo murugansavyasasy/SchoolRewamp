@@ -64,6 +64,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModel
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStudentsResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwDeleteResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
@@ -194,6 +195,7 @@ class SchoolServices {
     var sendanswer: MutableLiveData<AnswerModelResponse?>
     var isnoticeboarddelete: MutableLiveData<NoticeBoardDeleteResponse?>
     var isEventDelete: MutableLiveData<EventDeleteResponse?>
+    var isLsrwDelete: MutableLiveData<LsrwDeleteResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
     var getassignmentlist: MutableLiveData<SubmissionResponse?>
     var islsrwskillsreport: MutableLiveData<lsrwskillresponse?>
@@ -311,6 +313,7 @@ class SchoolServices {
         sendanswer = MutableLiveData()
         isnoticeboarddelete = MutableLiveData()
         isEventDelete = MutableLiveData()
+        isLsrwDelete = MutableLiveData()
         isNoticeBoardStaffReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
         getassignmentlist = MutableLiveData()
@@ -327,27 +330,27 @@ class SchoolServices {
         isDateWiseSlot = MutableLiveData()
         isSlotValidation = MutableLiveData()
         isCreateQuiz = MutableLiveData()
-        isGetQuizExamReport= MutableLiveData()
-        isGetCheckLevel= MutableLiveData()
-        isGetQuizQuestionReport= MutableLiveData()
-        isGetQuizSubmissionList= MutableLiveData()
-        isGetPickFromQBank= MutableLiveData()
-        isAddQuestion= MutableLiveData()
-        isGetMessageFromStaff= MutableLiveData()
-        isSchoolprofilelist= MutableLiveData()
-        getchildhomeworkstandard= MutableLiveData()
-        getassignmentchildhomework= MutableLiveData()
-        isGetMessageFromStaffArchive= MutableLiveData()
-        getattachmentchildhomework= MutableLiveData()
-        getdashboardnewupdates= MutableLiveData()
-        getattendanceStudentList= MutableLiveData()
-        isblockstudent= MutableLiveData()
-        isblockstudentlist= MutableLiveData()
-        isfrequentlyasked= MutableLiveData()
-        isdeletenotification= MutableLiveData()
-        getreviewlist= MutableLiveData()
-        reviewpost= MutableLiveData()
-        isgetfeature= MutableLiveData()
+        isGetQuizExamReport = MutableLiveData()
+        isGetCheckLevel = MutableLiveData()
+        isGetQuizQuestionReport = MutableLiveData()
+        isGetQuizSubmissionList = MutableLiveData()
+        isGetPickFromQBank = MutableLiveData()
+        isAddQuestion = MutableLiveData()
+        isGetMessageFromStaff = MutableLiveData()
+        isSchoolprofilelist = MutableLiveData()
+        getchildhomeworkstandard = MutableLiveData()
+        getassignmentchildhomework = MutableLiveData()
+        isGetMessageFromStaffArchive = MutableLiveData()
+        getattachmentchildhomework = MutableLiveData()
+        getdashboardnewupdates = MutableLiveData()
+        getattendanceStudentList = MutableLiveData()
+        isblockstudent = MutableLiveData()
+        isblockstudentlist = MutableLiveData()
+        isfrequentlyasked = MutableLiveData()
+        isdeletenotification = MutableLiveData()
+        getreviewlist = MutableLiveData()
+        reviewpost = MutableLiveData()
+        isgetfeature = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -494,8 +497,8 @@ class SchoolServices {
     val isGetAdsLiveData: LiveData<AdsResponse?>
         get() = isGetAds
 
-    fun isGetGlobalVariables(jsonObject: JsonObject,isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetGlobalVariable(jsonObject,isToken)
+    fun isGetGlobalVariables(jsonObject: JsonObject, isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetGlobalVariable(jsonObject, isToken)
             ?.enqueue(object : Callback<GlobalVariableResponse?> {
                 override fun onResponse(
                     call: Call<GlobalVariableResponse?>, response: Response<GlobalVariableResponse?>
@@ -1198,7 +1201,8 @@ class SchoolServices {
         RestClient.apiInterfaces.isNoticeBoardReport(isToken)
             ?.enqueue(object : Callback<NoticeBoardStaffResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardStaffResponse?>, response: Response<NoticeBoardStaffResponse?>
+                    call: Call<NoticeBoardStaffResponse?>,
+                    response: Response<NoticeBoardStaffResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -2265,10 +2269,19 @@ class SchoolServices {
 
 
     fun getabsenteesstudentbydate(
-        isToken: String, absent_on: String? = null, standard_id: String ,section_id: String? = null, activity: Activity
+        isToken: String,
+        absent_on: String? = null,
+        standard_id: String,
+        section_id: String? = null,
+        activity: Activity
 
     ) {
-        RestClient.apiInterfaces.getabsenteesstudentbydate(isToken, absent_on,standard_id, section_id)
+        RestClient.apiInterfaces.getabsenteesstudentbydate(
+            isToken,
+            absent_on,
+            standard_id,
+            section_id
+        )
             ?.enqueue(object : Callback<AbsenteeStudentsResponse?> {
                 override fun onResponse(
                     call: Call<AbsenteeStudentsResponse?>,
@@ -2663,7 +2676,8 @@ class SchoolServices {
         RestClient.apiInterfaces.getlpcreateReport(isToken, request_type)
             ?.enqueue(object : Callback<LessonPlanTemplateResponse?> {
                 override fun onResponse(
-                    call: Call<LessonPlanTemplateResponse?>, response: Response<LessonPlanTemplateResponse?>
+                    call: Call<LessonPlanTemplateResponse?>,
+                    response: Response<LessonPlanTemplateResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -2691,7 +2705,6 @@ class SchoolServices {
 
     val isgetlpcreateReportLiveData: LiveData<LessonPlanTemplateResponse?>
         get() = getlpcreateReport
-
 
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
@@ -3121,6 +3134,44 @@ class SchoolServices {
     val isEventDeleteLiveData: LiveData<EventDeleteResponse?>
         get() = isEventDelete
 
+
+    fun isLsrwDelete(
+        isToken: String, request: JsonObject, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isLsrwDelete(isToken, request)
+            ?.enqueue(object : Callback<LsrwDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<LsrwDeleteResponse?>, response: Response<LsrwDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isLsrwDelete.postValue(response.body())
+                            } else {
+                                isLsrwDelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isLsrwDelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LsrwDeleteResponse?>, t: Throwable
+                ) {
+                    isLsrwDelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isLsrwDeleteLiveData: LiveData<LsrwDeleteResponse?>
+        get() = isLsrwDelete
+
     fun getAttachmentReportList(
         isToken: String, activity: Activity
     ) {
@@ -3136,15 +3187,15 @@ class SchoolServices {
                     )
                     if (response.code() == 200) {
 //                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponse.postValue(response.body())
-                            }
-                       // }
+                        val status = response.body()!!.status
+                        if (status) {
+                            Log.d("GetChildAttendanceReportData", response.body().toString())
+                            isAttachmentResponse.postValue(response.body())
+                        } else {
+                            Log.d("GetChildAttendanceReportData", response.body().toString())
+                            isAttachmentResponse.postValue(response.body())
+                        }
+                        // }
                     }
                 }
 
@@ -3367,7 +3418,6 @@ class SchoolServices {
         get() = isPtmSlotCancelClose
 
 
-
     fun isDatewiseBookedSlots(
         isToken: String, iseventDate: String
     ) {
@@ -3487,13 +3537,11 @@ class SchoolServices {
         get() = islsrwskillsreport
 
 
-
-
     fun islsrwStudentlist(
         isToken: String,
         id: String
     ) {
-        RestClient.apiInterfaces.islsrwStudentlist(isToken,id)
+        RestClient.apiInterfaces.islsrwStudentlist(isToken, id)
             ?.enqueue(object : Callback<StudentSubmissionLsrwResponse?> {
                 override fun onResponse(
                     call: Call<StudentSubmissionLsrwResponse?>,
@@ -3531,13 +3579,12 @@ class SchoolServices {
         get() = islsrwStudentlist
 
 
-
     fun islsrwstats(
         isToken: String,
         month_id: Int,
 
-    ) {
-        RestClient.apiInterfaces.islsrwstats(isToken,month_id)
+        ) {
+        RestClient.apiInterfaces.islsrwstats(isToken, month_id)
             ?.enqueue(object : Callback<AvgSkillResponse?> {
                 override fun onResponse(
                     call: Call<AvgSkillResponse?>,
@@ -3575,7 +3622,6 @@ class SchoolServices {
         get() = islsrwstats
 
 
-
     fun islsrwremarkupdate(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
@@ -3611,8 +3657,6 @@ class SchoolServices {
 
     val islsrwremarkupdateLiveData: LiveData<LsrwremarkUpdateModel?>
         get() = islsrwremarkupdate
-
-
 
 
     fun isSubmitQuiz(
@@ -3694,9 +3738,9 @@ class SchoolServices {
 
 
     fun isGetCheckLevel(
-        isToken: String,class_id:String, subject_id:String, section_id:String
+        isToken: String, class_id: String, subject_id: String, section_id: String
     ) {
-        RestClient.apiInterfaces.isGetCheckLevel(isToken,class_id,subject_id,section_id)
+        RestClient.apiInterfaces.isGetCheckLevel(isToken, class_id, subject_id, section_id)
             ?.enqueue(object : Callback<GetCheckLevel?> {
                 override fun onResponse(
                     call: Call<GetCheckLevel?>, response: Response<GetCheckLevel?>
@@ -3732,7 +3776,6 @@ class SchoolServices {
         get() = isGetCheckLevel
 
 
-
     fun islsrwSkillCreate(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.islsrwSkillCreate(isToken, jsonObject)
@@ -3761,11 +3804,10 @@ class SchoolServices {
         get() = islsrwSkillCreate
 
 
-
     fun isGetQuizQuestionReport(
-        isToken: String,class_id:String,
+        isToken: String, class_id: String,
     ) {
-        RestClient.apiInterfaces.isGetQuizQuestionReport(isToken,class_id)
+        RestClient.apiInterfaces.isGetQuizQuestionReport(isToken, class_id)
             ?.enqueue(object : Callback<GetQuizQuestionReport?> {
                 override fun onResponse(
                     call: Call<GetQuizQuestionReport?>, response: Response<GetQuizQuestionReport?>
@@ -3802,9 +3844,9 @@ class SchoolServices {
 
 
     fun isGetQuizSubmissionList(
-        isToken: String,id:String,
+        isToken: String, id: String,
     ) {
-        RestClient.apiInterfaces.isGetQuizSubmissionList(isToken,id)
+        RestClient.apiInterfaces.isGetQuizSubmissionList(isToken, id)
             ?.enqueue(object : Callback<GetQuizSubmissionList?> {
                 override fun onResponse(
                     call: Call<GetQuizSubmissionList?>, response: Response<GetQuizSubmissionList?>
@@ -3840,11 +3882,10 @@ class SchoolServices {
         get() = isGetQuizSubmissionList
 
 
-
     fun isGetPickFromQBank(
-        isToken: String,subject_id: String
+        isToken: String, subject_id: String
     ) {
-        RestClient.apiInterfaces.isGetPickFromQBank(isToken,subject_id)
+        RestClient.apiInterfaces.isGetPickFromQBank(isToken, subject_id)
             ?.enqueue(object : Callback<GetPickFromQBank?> {
                 override fun onResponse(
                     call: Call<GetPickFromQBank?>, response: Response<GetPickFromQBank?>
@@ -3878,7 +3919,6 @@ class SchoolServices {
 
     val isGetPickFromQBankLiveData: LiveData<GetPickFromQBank?>
         get() = isGetPickFromQBank
-
 
 
     fun isQuizAddQuestion(
@@ -3998,9 +4038,6 @@ class SchoolServices {
         get() = isGetMessageFromStaffArchive
 
 
-
-
-
     fun isSchoolprofilelist(
         isToken: String
     ) {
@@ -4044,7 +4081,7 @@ class SchoolServices {
         isToken: String,
         id: Int
     ) {
-        RestClient.apiInterfaces.getchildhomeworkstandard(isToken,id)
+        RestClient.apiInterfaces.getchildhomeworkstandard(isToken, id)
             ?.enqueue(object : Callback<ChildStandardResponse?> {
                 override fun onResponse(
                     call: Call<ChildStandardResponse?>, response: Response<ChildStandardResponse?>
@@ -4080,17 +4117,16 @@ class SchoolServices {
         get() = getchildhomeworkstandard
 
 
-
-
     fun getassignmentchildhomework(
         isToken: String,
         id: Int,
         target_type: Int
     ) {
-        RestClient.apiInterfaces.getassignmentchildhomework(isToken,id,target_type)
+        RestClient.apiInterfaces.getassignmentchildhomework(isToken, id, target_type)
             ?.enqueue(object : Callback<AssignmentTargetDetailsResponse?> {
                 override fun onResponse(
-                    call: Call<AssignmentTargetDetailsResponse?>, response: Response<AssignmentTargetDetailsResponse?>
+                    call: Call<AssignmentTargetDetailsResponse?>,
+                    response: Response<AssignmentTargetDetailsResponse?>
                 ) {
                     Log.d(
                         "GetMessagesStaff Response",
@@ -4123,16 +4159,16 @@ class SchoolServices {
         get() = getassignmentchildhomework
 
 
-
     fun getattachmentchildhomework(
         isToken: String,
         id: Int,
         target_type: Int
     ) {
-        RestClient.apiInterfaces.getattachmentchildhomework(isToken,id,target_type)
+        RestClient.apiInterfaces.getattachmentchildhomework(isToken, id, target_type)
             ?.enqueue(object : Callback<AttachmentTargetDetailResponse?> {
                 override fun onResponse(
-                    call: Call<AttachmentTargetDetailResponse?>, response: Response<AttachmentTargetDetailResponse?>
+                    call: Call<AttachmentTargetDetailResponse?>,
+                    response: Response<AttachmentTargetDetailResponse?>
                 ) {
                     Log.d(
                         "GetMessagesStaff Response",
@@ -4165,12 +4201,11 @@ class SchoolServices {
         get() = getattachmentchildhomework
 
 
-
     fun getdashboardnewupdates(
         isToken: String,
         role_type: String
     ) {
-        RestClient.apiInterfaces.getdashboardnewupdates(isToken,role_type)
+        RestClient.apiInterfaces.getdashboardnewupdates(isToken, role_type)
             ?.enqueue(object : Callback<WhatsNewUpdateResponse?> {
                 override fun onResponse(
                     call: Call<WhatsNewUpdateResponse?>, response: Response<WhatsNewUpdateResponse?>
@@ -4190,8 +4225,7 @@ class SchoolServices {
                                 getdashboardnewupdates.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getdashboardnewupdates.postValue(null)
                     }
                 }
@@ -4216,10 +4250,17 @@ class SchoolServices {
         date: String,
         attendance_type: String,
     ) {
-        RestClient.apiInterfaces.getAttendanceStudentList(isToken,class_id,section_id,date,attendance_type)
+        RestClient.apiInterfaces.getAttendanceStudentList(
+            isToken,
+            class_id,
+            section_id,
+            date,
+            attendance_type
+        )
             ?.enqueue(object : Callback<GetAttendanceStudentList?> {
                 override fun onResponse(
-                    call: Call<GetAttendanceStudentList?>, response: Response<GetAttendanceStudentList?>
+                    call: Call<GetAttendanceStudentList?>,
+                    response: Response<GetAttendanceStudentList?>
                 ) {
                     Log.d(
                         "GetMessagesStaff Response",
@@ -4250,8 +4291,6 @@ class SchoolServices {
 
     val getAttendanceStudentListLiveData: LiveData<GetAttendanceStudentList?>
         get() = getattendanceStudentList
-
-
 
 
     fun isblockstudent(
@@ -4299,7 +4338,8 @@ class SchoolServices {
         RestClient.apiInterfaces.isblockstudentlist(isToken)
             ?.enqueue(object : Callback<BlockedStudentsResponse?> {
                 override fun onResponse(
-                    call: Call<BlockedStudentsResponse?>, response: Response<BlockedStudentsResponse?>
+                    call: Call<BlockedStudentsResponse?>,
+                    response: Response<BlockedStudentsResponse?>
                 ) {
                     Log.d(
                         "isAddQuestion Response",
@@ -4332,15 +4372,14 @@ class SchoolServices {
         get() = isblockstudentlist
 
 
-
-
     fun isfrequentlyasked(
         isToken: String
     ) {
         RestClient.apiInterfaces.isfrequentlyasked(isToken)
             ?.enqueue(object : Callback<FrequentlyModelResponse?> {
                 override fun onResponse(
-                    call: Call<FrequentlyModelResponse?>, response: Response<FrequentlyModelResponse?>
+                    call: Call<FrequentlyModelResponse?>,
+                    response: Response<FrequentlyModelResponse?>
                 ) {
                     Log.d(
                         "isAddQuestion Response",
@@ -4373,16 +4412,15 @@ class SchoolServices {
         get() = isfrequentlyasked
 
 
-
-
     fun isdeletenotification(
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isdeletenotification(isToken,jsonObject)
+        RestClient.apiInterfaces.isdeletenotification(isToken, jsonObject)
             ?.enqueue(object : Callback<DeleteNotificationResponse?> {
                 override fun onResponse(
-                    call: Call<DeleteNotificationResponse?>, response: Response<DeleteNotificationResponse?>
+                    call: Call<DeleteNotificationResponse?>,
+                    response: Response<DeleteNotificationResponse?>
                 ) {
                     Log.d(
                         "isAddQuestion Response",
@@ -4413,7 +4451,6 @@ class SchoolServices {
 
     val isdeletenotificationLiveData: LiveData<DeleteNotificationResponse?>
         get() = isdeletenotification
-
 
 
     fun isgetfeature() {
@@ -4453,16 +4490,11 @@ class SchoolServices {
         get() = isgetfeature
 
 
-
-
-
-
-
     fun getreviewlist(
         isToken: String,
         mobile_number: String
     ) {
-        RestClient.apiInterfaces.getreviewlist(isToken,mobile_number)
+        RestClient.apiInterfaces.getreviewlist(isToken, mobile_number)
             ?.enqueue(object : Callback<ReviewResponse?> {
                 override fun onResponse(
                     call: Call<ReviewResponse?>, response: Response<ReviewResponse?>
@@ -4498,13 +4530,11 @@ class SchoolServices {
         get() = getreviewlist
 
 
-
-
     fun reviewpost(
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.reviewpost(isToken,jsonObject)
+        RestClient.apiInterfaces.reviewpost(isToken, jsonObject)
             ?.enqueue(object : Callback<SubmitReviewResponse?> {
                 override fun onResponse(
                     call: Call<SubmitReviewResponse?>, response: Response<SubmitReviewResponse?>
