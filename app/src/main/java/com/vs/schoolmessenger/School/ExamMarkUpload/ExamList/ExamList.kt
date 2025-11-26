@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ExamList
 
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +16,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getSubjectData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter.ExamListAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamListBinding
@@ -47,6 +49,7 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lnrUpload.setOnClickListener(this)
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -182,6 +185,10 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
+            }
+            R.id.lnrUpload->{
+                val intent = Intent(this, UploadMarkSheet::class.java)
+                this.startActivity(intent)
             }
         }
     }
