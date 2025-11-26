@@ -114,6 +114,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: LSRWImagePickingAdapter? = null
 
+    private var audioAdapter: AudioAdapter? = null
+
     lateinit var childstandardadapter: ChildStandardAdapter
     lateinit var assignmentchildstandardAdapter: AssignmentChildStandardAdapter
 
@@ -345,7 +347,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     .map { it.url }
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                val audioAdapter = AudioAdapter(audioList)
+                audioAdapter = AudioAdapter(audioList)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
                     LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
@@ -511,7 +513,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                val audioAdapter = AudioAdapter(audioList)
+                audioAdapter = AudioAdapter(audioList)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
                     LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
@@ -1452,7 +1454,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     override fun onBackPressed() {
-
+        audioAdapter?.release()
         if (isRecording) {
             stopVoiceRecording()
         }
@@ -1777,4 +1779,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
     }
+
+
 }
