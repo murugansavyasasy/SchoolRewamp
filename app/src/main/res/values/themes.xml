@@ -28,8 +28,8 @@
     <!-- 🚀 Launch splash theme (Shows instantly) -->
     <style name="App.LaunchTheme" parent="Theme.SplashScreen">
         <!-- Splash background color -->
-        <item name="windowSplashScreenBackground">@color/white</item>
-
+<!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Splash logo -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo_inset</item>
         <item name="android:windowDisablePreview">true</item>
