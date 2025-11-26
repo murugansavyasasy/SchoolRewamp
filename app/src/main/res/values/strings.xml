@@ -1305,6 +1305,9 @@
     <string name="student_names_and_roll_numbers">Student names and roll numbers</string>
     <string name="subject_columns_and_marks">Subject columns and marks</string>
     <string name="table_structure_and_layout">Table structure and layout</string>
+    <string name="yes_continue_manually">Yes, Continue Manually</string>
+    <string name="you_ll_enter_student_marks_manually_in_the_next_step_you_can_add_and_edit_all_mark_data_directly_without_ai_processing">You\'ll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing.</string>
+    <string name="continue_to_manual_entry">Continue to Manual Entry?</string>
 
 
 </resources>
