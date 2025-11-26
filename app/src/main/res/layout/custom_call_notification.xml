@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:padding="5dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/school_chimes"
+            android:src="@drawable/school_chimes_trans_splash"
             android:visibility="visible">
         </ImageView>
 

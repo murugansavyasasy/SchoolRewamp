@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -24,6 +25,8 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
     private var id: String = ""
+    private var audioAdapter: AudioAdapter? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -52,15 +55,21 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
         fetchMySubmissionList()
 
 
+
+
+
+
+
         appViewModel?.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
 
                 val submission = response.data[0]
 
-                val fileList = submission.file_path?.map {
+                val fileList = submission!!.file_path.filter { it.type.uppercase() != Constant.AUDIO }.map {
                     GetFilePathDetails(url = it.url, type = it.type)
                 } ?: emptyList()
+
 
                 if (fileList.isNotEmpty()) {
                     val adapter = MySubmissionAdapter(
@@ -74,6 +83,19 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                     binding.rcChildHW.layoutManager =
                         GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
                     binding.rcChildHW.adapter = adapter
+
+                    val audioList =
+                        submission!!.file_path.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                            .map { it.url }
+
+                    if (audioList.isNotEmpty()) {
+                        binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                         audioAdapter = AudioAdapter(audioList)
+                        binding.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
+                        binding.rcSeekBarAndTitle.adapter = audioAdapter
+                    } else {
+                        binding.rcSeekBarAndTitle.visibility = View.GONE
+                    }
 
                     binding.rcChildHW.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
@@ -99,5 +121,10 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
     private fun fetchMySubmissionList() {
         Constant.showLoading(this)
         appViewModel?.islsrwmysubmission(isAccessToken!!, id)
+    }
+
+    override fun onBackPressed() {
+        audioAdapter?.release()
+        super.onBackPressed()
     }
 }

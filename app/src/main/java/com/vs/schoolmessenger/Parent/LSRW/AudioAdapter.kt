@@ -19,7 +19,9 @@ class AudioAdapter(
     private var mediaPlayer: MediaPlayer? = null
     private var handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable? = null
+
     private var currentlyPlayingPos = -1
+    private var previousHolder: AudioViewHolder? = null
 
     inner class AudioViewHolder(val binding: AudioItemBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -38,13 +40,11 @@ class AudioAdapter(
 
         resetUI(holder)
 
-        // Load total duration & set to lblCurrentDuration
         getAudioDuration(url) { duration ->
             holder.binding.lblCurrentDuration.text = duration
             holder.binding.audioSeekBar.max = parseToSeconds(duration)
         }
 
-        // Handle play/pause
         holder.binding.imgVoicePlay.setOnClickListener {
             if (currentlyPlayingPos == position) {
                 pauseCurrent(holder)
@@ -53,16 +53,13 @@ class AudioAdapter(
             }
         }
 
-        // SeekBar listener
         holder.binding.audioSeekBar.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser && mediaPlayer != null && currentlyPlayingPos == position) {
                     mediaPlayer?.seekTo(progress * 1000)
                 }
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -70,16 +67,20 @@ class AudioAdapter(
 
     override fun getItemCount(): Int = audioList.size
 
-    // ----------- AUDIO PLAYBACK IMPLEMENTATION --------------
+    // ---------------- PLAYBACK --------------------
 
     private fun playAudio(url: String, holder: AudioViewHolder, position: Int) {
+
+        // 🔥 STOP PREVIOUS PLAYING AUDIO + RESET UI
+        if (previousHolder != null && currentlyPlayingPos != -1) {
+            resetUI(previousHolder!!)
+        }
         releasePlayer()
 
         mediaPlayer = MediaPlayer().apply {
             setDataSource(url)
             prepare()
             start()
-
             setOnCompletionListener {
                 resetUI(holder)
                 currentlyPlayingPos = -1
@@ -88,8 +89,9 @@ class AudioAdapter(
         }
 
         currentlyPlayingPos = position
-        holder.binding.imgVoicePlay.setImageResource(R.drawable.pause_icon)
+        previousHolder = holder
 
+        holder.binding.imgVoicePlay.setImageResource(R.drawable.pause_icon)
         startProgressUpdater(holder)
     }
 
@@ -97,14 +99,9 @@ class AudioAdapter(
         runnable = object : Runnable {
             override fun run() {
                 mediaPlayer?.let {
-                    val currentSec = it.currentPosition / 1000
-
-                    // Update lblTime (current playing time)
-                    holder.binding.lblTime.text = formatDuration(currentSec)
-
-                    // Update SeekBar
-                    holder.binding.audioSeekBar.progress = currentSec
-
+                    val sec = it.currentPosition / 1000
+                    holder.binding.lblTime.text = formatDuration(sec)
+                    holder.binding.audioSeekBar.progress = sec
                     handler.postDelayed(this, 500)
                 }
             }
@@ -125,11 +122,9 @@ class AudioAdapter(
 
         mediaPlayer?.release()
         mediaPlayer = null
-
-        currentlyPlayingPos = -1
     }
 
-    // ----------- UTILITY METHODS --------------
+    // ---------------- UTIL --------------------
 
     private fun getAudioDuration(url: String, callback: (String) -> Unit) {
         try {
@@ -142,7 +137,6 @@ class AudioAdapter(
             }
             temp.prepareAsync()
         } catch (e: Exception) {
-            e.printStackTrace()
             callback("00:00")
         }
     }
@@ -152,16 +146,13 @@ class AudioAdapter(
 
     private fun parseToSeconds(duration: String): Int {
         val parts = duration.split(":")
-        return if (parts.size == 2) {
-            (parts[0].toInt() * 60) + parts[1].toInt()
-        } else 0
+        return if (parts.size == 2) (parts[0].toInt() * 60) + parts[1].toInt() else 0
     }
 
     private fun resetUI(holder: AudioViewHolder) {
         holder.binding.imgVoicePlay.setImageResource(R.drawable.video_play)
         holder.binding.audioSeekBar.progress = 0
         holder.binding.lblTime.text = "00:00"
-        // lblCurrentDuration stays as total duration (loaded once)
     }
 
     fun release() {

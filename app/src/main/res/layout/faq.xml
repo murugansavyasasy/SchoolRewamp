@@ -11,63 +11,55 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyfaq"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:paddingHorizontal="@dimen/ten"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <include
-            android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar" />
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/rcyfaq"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyfaq"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:src="@drawable/no_data_found" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
-            android:layout_marginTop="@dimen/five"
-            android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/ten"
-            android:scrollbars="none" />
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
 
-        <LinearLayout
-            android:id="@+id/lytList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rcyfaq"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/nomessage"
-                android:layout_width="@dimen/two_fifty"
-                android:layout_height="@dimen/two_fifty"
-                android:layout_gravity="center"
-                android:src="@drawable/no_data_found"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp" />
-
-            <TextView
-                android:id="@+id/txtNoData"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/no_list_found"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp" />
-
-
-        </LinearLayout>
-
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

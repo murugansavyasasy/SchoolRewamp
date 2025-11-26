@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.School.LSRW.Model.Overview
 import com.vs.schoolmessenger.Utils.Constant
@@ -23,6 +24,7 @@ import com.vs.schoolmessenger.Utils.Constant
 class LsrwCompletedAdapter (
     private var itemList: List<LsrwTask>,
     private val context: Context,
+    private var listener: lsrwskillreportlistener,
     private val noDataImage: ImageView? = null,
     private val noDataText: TextView? = null
 ) : RecyclerView.Adapter<LsrwCompletedAdapter.HeaderViewHolder>() {
@@ -46,6 +48,18 @@ class LsrwCompletedAdapter (
         notifyDataSetChanged()
     }
 
+    fun removeItemAt(position: Int) {
+        if (position in itemList.indices) {
+            val removedNotice = itemList[position]
+            itemList = itemList.toMutableList().apply {
+                removeAt(position)
+            }
+            itemList = itemList.filterNot { it.id == removedNotice.id }
+            notifyItemRemoved(position)
+
+        }
+    }
+
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
         private val txtSubTitle: TextView = itemView.findViewById(R.id.txtSubTitle)
@@ -58,6 +72,8 @@ class LsrwCompletedAdapter (
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+
 
         fun bind(item: LsrwTask) {
             txtTitle.text = item.subject
@@ -68,6 +84,15 @@ class LsrwCompletedAdapter (
             txtSubmitted.text = item.submitted_average + " "+context.getString(R.string.submitted)
 
 
+            if (item.can_edit || item.can_delete) {
+                imgEditAndDelete.visibility = View.VISIBLE
+            } else {
+                imgEditAndDelete.visibility = View.GONE
+            }
+
+            imgEditAndDelete.setOnClickListener {
+                listener.onEditAndDeleteCompleted(item, it, adapterPosition,"COMPLETED")
+            }
 
             if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)

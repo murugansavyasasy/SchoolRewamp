@@ -232,7 +232,7 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/sixteen"
         app:layout_constraintTop_toBottomOf="@id/rytSearch1"
-        app:layout_constraintBottom_toTopOf="@id/createlp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -260,6 +260,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+
     <ImageView
         android:id="@+id/createlp"
         android:layout_width="wrap_content"
@@ -270,6 +272,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/sixteen" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

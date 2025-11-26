@@ -113,6 +113,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStud
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwDeleteResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
@@ -846,6 +847,13 @@ interface ApiInterfaces {
     fun isEventDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<EventDeleteResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isLsrwDelete)
+    fun isLsrwDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<LsrwDeleteResponse?>
 
 
     @GET(APIMethods.isAssignmentSubmittedList)
