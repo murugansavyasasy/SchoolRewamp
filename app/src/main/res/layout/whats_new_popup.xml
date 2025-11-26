@@ -35,7 +35,7 @@
                 android:layout_width="@dimen/fourty"
                 android:layout_height="@dimen/fourty"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/school_chimes" />
+                android:src="@drawable/school_chimes_trans_splash" />
 
         </RelativeLayout>
 

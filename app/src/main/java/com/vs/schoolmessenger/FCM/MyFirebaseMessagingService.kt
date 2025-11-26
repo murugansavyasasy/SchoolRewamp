@@ -173,7 +173,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.school_chimes)
+            .setSmallIcon(R.drawable.school_chimes_trans_splash)
             .setContentTitle(title ?: Constant.School_Chimes)
             .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -281,7 +281,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.school_chimes)
+            .setSmallIcon(R.drawable.school_chimes_trans_splash)
             .setContentTitle(title ?: Constant.School_Chimes)
             .setContentText(messageBody ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

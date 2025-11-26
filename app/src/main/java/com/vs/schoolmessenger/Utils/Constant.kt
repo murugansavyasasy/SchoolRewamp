@@ -1759,6 +1759,47 @@ object Constant {
     }
 
 
+    fun showSendConfirmation(
+        activity: Activity,
+        istitle: String,
+        Ok: String,
+        Cancel: String,
+        isMessage: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.manually_entry_alert, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+
+        alertMessage.text = isMessage
+        okButton.text = Ok
+        lblalertTitle.text = istitle
+        btnCancel.text = Cancel
+
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(true)
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(false)
+        }
+    }
+
+
     fun getAudioDurationInSeconds(url: String): Int {
         val retriever = MediaMetadataRetriever()
         return try {
