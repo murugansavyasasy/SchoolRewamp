@@ -60,21 +60,27 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
 
 
-        appViewModel?.islsrwmysubmission?.observe(this) { response ->
+        appViewModel.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
+
             if (response?.status == true && !response.data.isNullOrEmpty()) {
 
                 val submission = response.data[0]
 
-                val fileList = submission!!.file_path.filter { it.type.uppercase() != Constant.AUDIO }.map {
-                    GetFilePathDetails(url = it.url, type = it.type)
-                } ?: emptyList()
+                // IMAGE LIST (non-audio items)
+                val imageList = submission.file_path
+                    .filter { !it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                    .map { GetFilePathDetails(url = it.url, type = it.type) }
+
+                val audioList = submission.file_path
+                    .filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                    .map { it.url }
 
 
-                if (fileList.isNotEmpty()) {
+                if (imageList.isNotEmpty()) {
                     val adapter = MySubmissionAdapter(
                         this,
-                        fileList,
+                        imageList,
                         "English",
                         SELECTED_MENU_ID,
                         true
@@ -84,37 +90,40 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                         GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
                     binding.rcChildHW.adapter = adapter
 
-                    val audioList =
-                        submission!!.file_path.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
-                            .map { it.url }
-
-                    if (audioList.isNotEmpty()) {
-                        binding.rcSeekBarAndTitle.visibility = View.VISIBLE
-                         audioAdapter = AudioAdapter(audioList)
-                        binding.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
-                        binding.rcSeekBarAndTitle.adapter = audioAdapter
-                    } else {
-                        binding.rcSeekBarAndTitle.visibility = View.GONE
-                    }
-
                     binding.rcChildHW.visibility = View.VISIBLE
-                    binding.lytNoDataFound.visibility = View.GONE
                     binding.imageslabel.visibility = View.VISIBLE
-
                 } else {
                     binding.rcChildHW.visibility = View.GONE
-                    binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.imageslabel.visibility = View.GONE
-                    binding.noDataFound.text = response.message?: getString(R.string.no_attached_image_available)
+                }
+
+
+                if (audioList.isNotEmpty()) {
+                    binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                    audioAdapter = AudioAdapter(audioList)
+                    binding.rcSeekBarAndTitle.layoutManager =
+                        LinearLayoutManager(this)
+                    binding.rcSeekBarAndTitle.adapter = audioAdapter
+                    binding.imageslabel.visibility = View.VISIBLE
+                } else {
+                    binding.rcSeekBarAndTitle.visibility = View.GONE
+                    binding.imageslabel.visibility = View.GONE
+                }
+
+                if (imageList.isEmpty() && audioList.isEmpty()) {
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.noDataFound.text =
+                        response.message ?: getString(R.string.no_attached_image_available)
+                } else {
+                    binding.lytNoDataFound.visibility = View.GONE
                 }
 
             } else {
-                binding.rcChildHW.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.imageslabel.visibility = View.GONE
                 binding.noDataFound.text = response?.message ?: Constant.NO_DATA_FOUND
             }
         }
+
 
     }
 
