@@ -25,10 +25,10 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"
-        android:translationY="80dp"
+        android:layout_marginBottom="-50dp"
         app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.9" />
 
@@ -58,6 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Super Easy Transaction"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/thirty_sp" />
 
@@ -71,5 +73,7 @@
                 android:textColor="#808080"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
+
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

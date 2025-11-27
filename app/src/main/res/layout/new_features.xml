@@ -34,8 +34,8 @@
             android:layout_width="match_parent"
             tools:listitem="@layout/item_onboarding"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-             />
+            android:clipToPadding="false">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <!-- Floating overlay container -->
         <LinearLayout
@@ -109,72 +109,3 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:id="@+id/main"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="@color/light_white">-->
-
-<!--    <View-->
-<!--        android:id="@+id/statusBarBackground"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/PrimaryColor"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/toolbarLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerOnboarding"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:clipToPadding="false"-->
-<!--                android:paddingBottom="32dp" />-->
-
-<!--            &lt;!&ndash; Dot indicator &ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/layoutDots"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="24dp"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="horizontal" />-->
-
-<!--            &lt;!&ndash; Skip button &ndash;&gt;-->
-<!--            <TextView-->
-<!--                android:id="@+id/btnSkip"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="32dp"-->
-<!--                android:background="@drawable/bg__rounded_rect"-->
-<!--                android:paddingHorizontal="@dimen/twenty_five"-->
-<!--                android:paddingVertical="@dimen/eight"-->
-<!--                android:text="Skip"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:textColor="#222222" />-->
-
-<!--        </LinearLayout>-->
-<!--    </RelativeLayout>-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->

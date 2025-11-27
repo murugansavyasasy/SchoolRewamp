@@ -478,7 +478,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+            window.statusBarColor = this.resources.getColor(R.color.bpWhite)
             window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
