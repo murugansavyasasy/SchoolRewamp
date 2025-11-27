@@ -56,8 +56,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-
         userDetails = SharedPreference.getUserDetails(this)
 
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
