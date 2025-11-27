@@ -55,6 +55,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -232,6 +233,7 @@ class SchoolServices {
     var getreviewlist: MutableLiveData<ReviewResponse?>
     var reviewpost: MutableLiveData<SubmitReviewResponse?>
     var isgetfeature: MutableLiveData<GetFeature?>
+    var isgetStaffWiseExam: MutableLiveData<getStaffWisExam?>
 
 
     init {
@@ -351,6 +353,7 @@ class SchoolServices {
         getreviewlist = MutableLiveData()
         reviewpost = MutableLiveData()
         isgetfeature = MutableLiveData()
+        isgetStaffWiseExam = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4568,6 +4571,49 @@ class SchoolServices {
 
     val reviewpostLiveData: LiveData<SubmitReviewResponse?>
         get() = reviewpost
+
+
+
+    fun isGetStaffWiseExam(
+        isToken: String,
+        section_id: String,
+    ) {
+        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id,)?.enqueue(object : Callback<getStaffWisExam?> {
+                override fun onResponse(
+                    call: Call<getStaffWisExam?>,
+                    response: Response<getStaffWisExam?>
+                ) {
+                    Log.d(
+                        "getStaffWisExam Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("getStaffWisExam", response.body().toString())
+                                isgetStaffWiseExam.postValue(response.body())
+                            } else {
+                                Log.d("getStaffWisExam", response.body().toString())
+                                isgetStaffWiseExam.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<getStaffWisExam?>, t: Throwable
+                ) {
+                    isgetStaffWiseExam.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getStaffWiseExamLiveData: LiveData<getStaffWisExam?>
+        get() = isgetStaffWiseExam
+
+
 
 
 }

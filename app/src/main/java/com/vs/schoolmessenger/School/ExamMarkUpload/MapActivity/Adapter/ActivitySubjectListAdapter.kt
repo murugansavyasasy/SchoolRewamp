@@ -1,31 +1,38 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter
 
 import android.content.Context
-import android.graphics.PorterDuff
+import android.content.res.Resources
+import android.graphics.drawable.GradientDrawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.AdapterView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.FlexboxLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getSubjectData
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.SpinnerMarkUploadAdapter
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
+import org.w3c.dom.Text
 
 class ActivitySubjectListAdapter(
-    private val subjects: List<getActivitySubjectData>,
+    private val subjects: List<getActivityPaperNameData>,
     private val context: Context,
+    private val onSelectionChanged: () -> Unit
+
 ) : RecyclerView.Adapter<ActivitySubjectListAdapter.SubjectViewHolder>() {
 
-    private var expandedSubjectPos = -1   // local expand index
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.subject_item, parent, false)
+            .inflate(R.layout.activity_subject_item, parent, false)
         return SubjectViewHolder(view)
     }
 
@@ -38,50 +45,124 @@ class ActivitySubjectListAdapter(
     inner class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)
-        private val flexActivities: FlexboxLayout = itemView.findViewById(R.id.flexActivities)
-        private val subArrow: ImageView = itemView.findViewById(R.id.subArrow)
-        private val subjectHeader: LinearLayout = itemView.findViewById(R.id.subHeader)
-        private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
+        private val isSpinnerColumn: Spinner = itemView.findViewById(R.id.isSpinnerColumn)
+        private val spinnerContainer: RelativeLayout = itemView.findViewById(R.id.spinnerContainer)
 
-        fun bind(item: getActivitySubjectData, position: Int) {
+        private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
+
+
+        fun bind(item: getActivityPaperNameData, position: Int) {
 
             subjectName.text = item.name
-            flexActivities.removeAllViews()
-
-            item.activities.forEach { act ->
-                val chip = LayoutInflater.from(context)
-                    .inflate(R.layout.activity_item, flexActivities, false) as TextView
-                chip.text = act
-                flexActivities.addView(chip)
+            val defaultItems = listOf("ACTIONS","\uD83D\uDEAB\u00A0\u00A0Ignore(Skip this activity)", "✏\uFE0F\u00A0\u00A0Enter marks manually", "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
+            val fullList = defaultItems + item.activities  // api values appended
+            spinnerContainer.setOnClickListener {
+                isSpinnerColumn.performClick()
             }
 
-            // --- Determine if this item should be expanded ---
-            val isExpanded = position == expandedSubjectPos
 
-            lnrFlexContainer.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            val adapter = SpinnerMarkUploadAdapter(context, fullList)
+            isSpinnerColumn.adapter = adapter
 
-            subArrow.rotation = if (isExpanded) 90f else 0f
-
-            // --- Click to expand/collapse ---
-            subjectHeader.setOnClickListener {
-
-                val prev = expandedSubjectPos
-
-                expandedSubjectPos =
-                    if (expandedSubjectPos == position) -1     // collapse current
-                    else position                               // expand new
-
-                // Refresh old expanded row
-                if (prev != -1) notifyItemChanged(prev)
-
-                // Refresh newly expanded row
-                notifyItemChanged(position)
+            // Restore selection when scrolling
+            if (item.selectedValue != null) {
+                adapter.selectedPosition = fullList.indexOf(item.selectedValue)
             }
 
-            subArrow.setColorFilter(
-                ContextCompat.getColor(context, R.color.dark_orange_2),
-                PorterDuff.Mode.SRC_IN
-            )
+            fun updateHintUi(selected: String?, pos: Int) {
+
+                val bg = lblHint.background as GradientDrawable
+
+                when (pos) {
+                    -1,0, 3 -> {   // hide for 1st & 4th
+                        lblHint.visibility = View.GONE
+                    }
+
+                    1 -> {      // Ignore (Skip this activity)
+                        lblHint.visibility = View.VISIBLE
+                        lblHint.text = "\uD83D\uDEAB\u00A0\u00A0This activity will be skipped"
+                        bg.setColor(ContextCompat.getColor(context, R.color.light_dark_gray_4))  // fill
+                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.very_dark_gray_5)) // stroke
+                        lblHint.setTextColor(ContextCompat.getColor(context, R.color.very_dark_gray2))
+                    }
+
+                    2 -> {      // Enter manual entry
+                        lblHint.visibility = View.VISIBLE
+                        lblHint.text = "✏\uFE0F\u00A0\u00A0Marks will be entered manually in the review step"
+                        bg.setColor(ContextCompat.getColor(context, R.color.pale_light_blue))
+                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.pale_light_blue_3))
+                        lblHint.setTextColor(ContextCompat.getColor(context, R.color.dark_blue_10))
+
+                    }
+
+                    else -> {   // for api dropdown value
+                        lblHint.visibility = View.VISIBLE
+                        bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_3))
+                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.dark_bg_orange_2))
+                        setMappedHint(selected) // here we just change some part of text to different colour
+                    }
+                }
+            }
+
+
+
+            // Apply initial state after view recycling
+            updateHintUi(item.selectedValue, adapter.selectedPosition)
+
+            isSpinnerColumn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+
+                    // disable 1st & 4th row – allow opening dropdown but revert
+                    if (pos == 0 || pos == 3) {
+                        isSpinnerColumn.setSelection(
+                            if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition, false
+                        )
+                        updateHintUi(item.selectedValue, adapter.selectedPosition)
+                        return
+                    }
+
+                    // Accept selection
+                    adapter.selectedPosition = pos
+                    item.selectedValue = fullList[pos]
+                    adapter.notifyDataSetChanged()
+                    onSelectionChanged()
+
+
+                    updateHintUi(item.selectedValue, pos)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
         }
+        fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+        fun setMappedHint(selected: String?) {
+            val sel = selected ?: ""
+            val label = "\uD83D\uDCC4\u00A0\u00A0Mapped to: "
+            val full = label + sel
+
+            val span = SpannableString(full)
+
+            //  Orange text for label section
+            span.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_bg_orange_2)),
+                0,
+                label.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            //  Black text for selected value section
+            span.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                label.length,
+                full.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+
+            lblHint.text = span
+        }
+
+
     }
 }

@@ -192,6 +192,7 @@ object APIMethods {
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
     const val dashboard_newupdates = "dashboard/api/dashboard/new-updates"
     const val getAttendanceStudentList = "stud-attd/api/attendance/student-list"
+    const val getStaffWiseExam = "exam/api/exam/get-staff-wise-exam"
 
 
     const val isblockstudent = "/comm/api/interaction/block-student"
