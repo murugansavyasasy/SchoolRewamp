@@ -16,6 +16,8 @@ plugins {
 android {
     namespace = "com.vs.schoolmessenger"
     compileSdk = 35
+    ndkVersion = "28.0.12433566"
+
     defaultConfig {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
@@ -52,6 +54,12 @@ android {
         viewBinding = true
         buildConfig = true
 
+    }
+    packagingOptions {
+        jniLibs {
+            // Make sure new packaging is used so libs can be aligned properly
+            useLegacyPackaging = false
+        }
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

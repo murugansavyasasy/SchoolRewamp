@@ -13,14 +13,16 @@
         android:background="@color/PrimaryColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" >
+    </View>
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+    </include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyfaq"
