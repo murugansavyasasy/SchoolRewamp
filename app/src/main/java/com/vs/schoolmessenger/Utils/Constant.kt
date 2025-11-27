@@ -77,6 +77,8 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -236,6 +238,10 @@ object Constant {
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
+
+    var isMarkUploadClassSectionDetails: ClassSectionData? = null
+    var isMarkUploadExamListDataDetails: getExamListData? = null
+
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null

@@ -17,6 +17,7 @@ import android.graphics.drawable.GradientDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -51,6 +52,8 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.Attachment
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.ExamList
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.MapActivity
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 
 import com.vs.schoolmessenger.Utils.Constant
@@ -96,6 +99,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
+        Constant.Remaining = MAX_FILES
+
 
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
@@ -107,6 +112,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         binding.cardUploadImage.setOnClickListener(this)
         binding.cardManual.setOnClickListener(this)
         binding.lnrUploadFile.setOnClickListener(this)
+        binding.lnrUpload.setOnClickListener(this)
+
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -119,9 +126,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         setBulletText(binding.lblIns2, getString(R.string.subject_columns_and_marks))
         setBulletText(binding.lblIns3, getString(R.string.table_structure_and_layout))
 
-        binding.btnUpload.setOnClickListener {
-            isFileUploadInAws("Image")
-        }
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -182,9 +186,12 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
                             if (Constant.selectedFiles.size > 0) {
                                 binding.lblFileName.text = fileName.toString()
+                                binding.lnrUpload.visibility=View.VISIBLE
                             } else {
                                 binding.lblFileName.text =
                                     getString(R.string.click_to_upload_or_drag_and_drop)
+                                binding.lnrUpload.visibility=View.GONE
+
                             }
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
@@ -245,29 +252,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         ).toInt()
     }
 
-    private fun openAlbumSelectActivity(isFileType: String) {
-        Log.d("FileComing", isFileType)
-        val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
-            openSystemDocumentPicker()
-        } else {
-            val intent = Intent(this, AlbumSelectActivity::class.java)
-            intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra("isWithOutHotCodeImage", true)
-            albumResultLauncher.launch(intent)
-        }
-    }
-
-    // Opens the system file picker for DOCUMENT on Android 10 and below
-    private fun openSystemDocumentPicker() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
-            putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        }
-        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
-    }
 
     private fun isFileUploadInAws(
         isFileType: String?
@@ -341,9 +325,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
                                 if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                     Log.d(
-                                        "UploadSuccess",
-                                        Constant.isAwsUploadedFiles.get(0).isFileUrl
-                                    )
+                                        "UploadSuccess", Constant.isAwsUploadedFiles.get(0).isFileUrl)
                                     // need to do a api call
                                 }
                             }
@@ -395,6 +377,30 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         dialog.show()
     }
 
+    private fun openAlbumSelectActivity(isFileType: String) {
+        Log.d("FileComing", isFileType)
+        val sdkInt = Build.VERSION.SDK_INT
+        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
+            openSystemDocumentPicker()
+        } else {
+            val intent = Intent(this, AlbumSelectActivity::class.java)
+            intent.putExtra(Constant.isFileType, isFileType)
+            intent.putExtra("isWithOutHotCodeImage", true)
+            albumResultLauncher.launch(intent)
+        }
+    }
+
+    // Opens the system file picker for DOCUMENT on Android 10 and below
+    private fun openSystemDocumentPicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
+    }
+
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.CAMERA
@@ -429,6 +435,15 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }.show()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("cameraImageFilePath", cameraImageFilePath)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        cameraImageFilePath = savedInstanceState.getString("cameraImageFilePath")
+    }
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -507,10 +522,14 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             if (Constant.selectedFiles.isNotEmpty()) {
-                binding.lblFileName.text = fileName.toString()
+                binding.lblFileName.text = fileName
+                binding.lnrUpload.visibility=View.VISIBLE
+
             } else {
                 binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
+                binding.lnrUpload.visibility=View.GONE
             }
+
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
@@ -684,11 +703,23 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         }
     }
 
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        Constant.Remaining = MAX_FILES
+        super.onBackPressed()
+    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
+            }
+
+            R.id.lnrUpload -> {
+//                isFileUploadInAws("Image")
+                val intent = Intent(this, MapActivity::class.java)
+                this.startActivity(intent)
             }
 
             R.id.cardUploadImage -> {
@@ -732,6 +763,23 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             R.id.cardManual -> {
+                Log.d("LastSaved",Constant.selectedFiles.toString())
+                Log.d("LastSaved",Constant.isAwsUploadedFiles.toString())
+                Log.d("LastSaved",Constant.isAwsUploadedFiles.toString())
+
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
+                Constant.Remaining = MAX_FILES
+
+                binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
+                binding.lnrUpload.visibility=View.GONE
+
+
+
+                Log.d("After",Constant.selectedFiles.toString())
+                Log.d("After",Constant.isAwsUploadedFiles.toString())
+                Log.d("After",Constant.isAwsUploadedFiles.toString())
+
                 binding.lnrContainer.visibility = View.GONE
 
                 val bg = binding.lnrUploadImage.background as GradientDrawable
@@ -762,7 +810,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
                     }
                 }
-
 
             }
 

@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.ExamList
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import kotlin.String
 
 
 class ClassListAdapter(
@@ -70,9 +73,14 @@ class ClassListAdapter(
 
             Header.setOnClickListener {
                 val intent = Intent(context, ExamList::class.java)
-                intent.putExtra("grade", item.grade)
-                intent.putExtra("section", item.section)
-                intent.putExtra("count", item.studentCount.toString())
+
+                val saveMarkUploadClassSectionDetails = ClassSectionData(
+                    grade=item.grade,
+                    section=item.section,
+                    studentCount = item.studentCount
+                )
+                Constant.isMarkUploadClassSectionDetails = saveMarkUploadClassSectionDetails
+
                 context.startActivity(intent)
             }
         }
