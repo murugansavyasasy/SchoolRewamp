@@ -1,14 +1,21 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ClassList
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.ExamList
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import kotlin.String
 
 
 class ClassListAdapter(
@@ -57,12 +64,25 @@ class ClassListAdapter(
 
         private val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         private val tvCount: TextView = itemView.findViewById(R.id.tvCount)
+        private val Header: RelativeLayout = itemView.findViewById(R.id.Header)
 
         fun bind(item: ClassSectionData) {
             tvTitle.text = "${item.grade} - ${context.getString(R.string.Section)} ${item.section}"
             tvCount.text = "${item.studentCount} ${context.getString(R.string.Students)}"
 
 
+            Header.setOnClickListener {
+                val intent = Intent(context, ExamList::class.java)
+
+                val saveMarkUploadClassSectionDetails = ClassSectionData(
+                    grade=item.grade,
+                    section=item.section,
+                    studentCount = item.studentCount
+                )
+                Constant.isMarkUploadClassSectionDetails = saveMarkUploadClassSectionDetails
+
+                context.startActivity(intent)
+            }
         }
     }
 

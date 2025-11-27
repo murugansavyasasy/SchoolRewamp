@@ -238,7 +238,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:text="Completed Meetings"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"></TextView>
+                    android:textSize="@dimen/fifteen_sp">
+                </TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyComplete"
@@ -249,7 +250,8 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never"></androidx.recyclerview.widget.RecyclerView>
+                    android:overScrollMode="never">
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <ImageView
                     android:id="@+id/imgNoData"

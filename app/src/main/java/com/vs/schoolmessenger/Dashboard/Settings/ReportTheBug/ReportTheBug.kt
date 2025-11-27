@@ -336,7 +336,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra("ReportBugMenu", true)
+            intent.putExtra("isWithOutHotCodeImage", true)
             albumResultLauncher.launch(intent)
         }
     }

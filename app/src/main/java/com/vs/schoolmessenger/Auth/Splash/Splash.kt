@@ -411,14 +411,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val finalY = centerY + (-clusterSpread..clusterSpread).random() - size / 2
         bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).withEndAction { container.removeView(bubble)
             if (isLastBubble) {
-                container.visibility = View.GONE
                 startWaveAnimation()
-//                    startAllSplashAnimations()
+                container.visibility = View.GONE
+                startAllSplashAnimations()
+
             }
         }
             .start()
-
-        startAllSplashAnimations()
 
     }
     private fun startWaveAnimation() {
@@ -428,7 +427,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             wave.scaleY = 0f
             wave.alpha = 0f
             wave.visibility = View.VISIBLE
-            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 400L).setDuration(1600).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(900).withEndAction { startWaveAnimation() }.start() }.start()
+            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 200L).setDuration(1000).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(400).start() }.start()
         }
     }
     private fun startAllSplashAnimations() {

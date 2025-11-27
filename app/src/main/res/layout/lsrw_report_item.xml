@@ -8,6 +8,16 @@
     android:background="@drawable/rect_shadow_white"
     android:padding="@dimen/twenty">
 
+    <ImageView
+        android:id="@+id/imgEditAndDelete"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:elevation="@dimen/ten"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_more_vert"
+        android:visibility="gone"
+        />
+
 
     <LinearLayout
         android:id="@+id/iconContainer"

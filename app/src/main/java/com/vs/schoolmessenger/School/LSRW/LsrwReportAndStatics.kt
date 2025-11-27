@@ -48,67 +48,41 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
+
         setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
 
         binding.toolbarLayout.lblParentToolBar.text =
-            getString(com.vs.schoolmessenger.R.string.report_analytics)
+            getString(R.string.report_analytics)
+
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
         binding.toolbarLayout.monthSelectorLayout.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-
         setupMonthSpinner()
-
 
         appViewModel?.islsrwstats?.observe(this) { response ->
             Constant.hideLoading(this)
+
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+
                 val data = response.data[0]
 
-
                 val headerItems = mutableListOf<LsrwHeaderItem>().apply {
-                    add(
-                        LsrwHeaderItem(
-                            Constant.Today_Submitted,
-                            "",
-                            "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"
-                        )
-                    )
-                    add(
-                        LsrwHeaderItem(
-                            Constant.Listening,
-                            data.listening?.over_all_percentage ?: "0%",
-                            "${data.listening?.student_count ?: "0"} ${getString(R.string.Students)}"
-                        )
-                    )
-                    add(
-                        LsrwHeaderItem(
-                            Constant.Speaking,
-                            data.speaking?.over_all_percentage ?: "0%",
-                            "${data.speaking?.student_count ?: "0"} ${getString(R.string.Students)}"
-                        )
-                    )
-                    add(
-                        LsrwHeaderItem(
-                            Constant.Reading,
-                            data.reading?.over_all_percentage ?: "0%",
-                            "${data.reading?.student_count ?: "0"} ${getString(R.string.Students)}"
-                        )
-                    )
-                    add(
-                        LsrwHeaderItem(
-                            Constant.Writing,
-                            data.writing?.over_all_percentage ?: "0%",
-                            "${data.writing?.student_count ?: "0"} ${getString(R.string.Students)}"
-                        )
-                    )
+                    add(LsrwHeaderItem(Constant.Today_Submitted, "", "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"))
+                    add(LsrwHeaderItem(Constant.Listening, data.listening?.over_all_percentage ?: "0%", "${data.listening?.student_count
+                        ?: "0"} ${getString(R.string.Students)}"))
+                    add(LsrwHeaderItem(Constant.Speaking, data.speaking?.over_all_percentage ?: "0%", "${data.speaking?.student_count
+                        ?: "0"} ${getString(R.string.Students)}"))
+                    add(LsrwHeaderItem(Constant.Reading, data.reading?.over_all_percentage ?: "0%", "${data.reading?.student_count
+                        ?: "0"} ${getString(R.string.Students)}"))
+                    add(LsrwHeaderItem(Constant.Writing, data.writing?.over_all_percentage ?: "0%", "${data.writing?.student_count
+                        ?: "0"} ${getString(R.string.Students)}"))
                 }
-
 
                 binding.rclsrwheader.layoutManager =
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -117,7 +91,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 }
                 binding.rclsrwheader.adapter = headerAdapter
 
-
                 val allDetails = mutableListOf<AvgStudentSubmission>().apply {
                     addAll(data.listening?.details ?: emptyList())
                     addAll(data.reading?.details ?: emptyList())
@@ -125,34 +98,26 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                     addAll(data.writing?.details ?: emptyList())
                 }
 
-
                 val weeklyReport = calculateWeeklyReport(allDetails)
                 binding.rvWeekly.layoutManager = LinearLayoutManager(this)
                 binding.rvWeekly.adapter = WeeklyReportAdapter(weeklyReport)
 
-
                 val topPerformers = calculateTopPerformers(allDetails)
-                if (topPerformers.isNotEmpty()) {
-                    binding.rvTopPerformance.visibility = View.VISIBLE
-                    binding.topperformanceLabel.visibility = View.VISIBLE
-                    binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
-                    binding.rvTopPerformance.adapter = TopPerformanceAdapter(topPerformers)
-                } else {
-                    binding.rvTopPerformance.visibility = View.GONE
-                    binding.topperformanceLabel.visibility = View.GONE
-                }
 
+                if (topPerformers.isNotEmpty()) {
+                    showTopPerformanceSection(topPerformers)
+                } else {
+                    hideTopPerformanceSection()
+                }
 
                 binding.apply {
                     rclsrwheader.visibility = View.VISIBLE
-                    topperformanceCardview.visibility = View.VISIBLE
                     monthlyReportcardview.visibility = View.VISIBLE
                     rvWeekly.visibility = View.VISIBLE
                     weeklyreportLabel.visibility = View.VISIBLE
                     monthlyLabel.visibility = View.VISIBLE
                     lytNoDataFound.visibility = View.GONE
                 }
-
 
                 if (headerItems.isNotEmpty()) {
                     filterByHeader(headerItems[0], data)
@@ -166,31 +131,25 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                     monthlyLabel.visibility = View.GONE
                     studentsLabel.visibility = View.GONE
                     rcstudents.visibility = View.GONE
-                    rvTopPerformance.visibility = View.GONE
-                    topperformanceCardview.visibility = View.GONE
-                    monthlyReportcardview.visibility = View.GONE
-                    topperformanceLabel.visibility = View.GONE
 
+                    hideTopPerformanceSection()
+                    monthlyReportcardview.visibility = View.GONE
 
                     lytNoDataFound.visibility = View.VISIBLE
                     noDataFound.text = response?.message ?: getString(R.string.no_data_found)
                 }
             }
         }
-
-
     }
 
     private fun setupMonthSpinner() {
-        val months = DateFormatSymbols().months
-        val monthList = months.take(12)
+        val months = DateFormatSymbols().months.take(12)
 
         val adapter = object : ArrayAdapter<String>(
-            this, android.R.layout.simple_spinner_item, monthList
+            this, android.R.layout.simple_spinner_item, months
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
-
                 view.setTextColor(ContextCompat.getColor(context, android.R.color.white))
                 view.textSize = 16f
                 return view
@@ -210,8 +169,8 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.toolbarLayout.lblDropDownMonth.adapter = adapter
 
-        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-        binding.toolbarLayout.lblDropDownMonth.setSelection(currentMonthIndex)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        binding.toolbarLayout.lblDropDownMonth.setSelection(currentMonth)
 
         binding.toolbarLayout.lblDropDownMonth.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -225,10 +184,8 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
-        // Initial fetch for current month
         fetchLsrwstatsReportData(selectedMonth)
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
@@ -241,7 +198,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
             else -> emptyList()
         }
 
-        val uniqueDetails = details.groupBy { it.id }.map { entry -> entry.value.first() }
+        val uniqueDetails = details.groupBy { it.id }.map { it.value.first() }
 
         binding.rcstudents.layoutManager = LinearLayoutManager(this)
         binding.rcstudents.adapter = StudentListAdapter(uniqueDetails, this)
@@ -255,47 +212,65 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         }
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
 
-
-        val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy, Locale.getDefault())
+        val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy)
         val currentYear = LocalDate.now().year
 
-        // Get unique activities by id to avoid double-counting
-        val uniqueActivities = details.groupBy { it.id }.mapValues { entry -> entry.value.first() }.values.toList()
+        val uniqueActivities = details.groupBy { it.id }
+            .map { it.value.first() }
 
-        val sums = mutableMapOf<Int, Pair<Int, Int>>() // week -> (sum_submitted, sum_member)
+        val sums = mutableMapOf<Int, Pair<Int, Int>>()
 
         uniqueActivities.forEach { activity ->
             val date = LocalDate.parse(activity.student_submited_on, formatter)
+
             if (date.monthValue == selectedMonth && date.year == currentYear) {
-                val weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
-                val current = sums.getOrDefault(weekOfMonth, 0 to 0)
-                val submitted = activity.submitted_count ?: 0
-                val members = activity.member_count ?: 0
-                sums[weekOfMonth] = (current.first + submitted) to (current.second + members)
+                val week = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
+                val current = sums.getOrDefault(week, 0 to 0)
+
+                sums[week] = (current.first + (activity.submitted_count ?: 0)) to
+                        (current.second + (activity.member_count ?: 0))
             }
         }
 
-        val weeklyReport = mutableListOf<WeeklyReportItem>()
-        for (week in 1..6) {
+        return (1..6).map { week ->
             val (sub, mem) = sums.getOrDefault(week, 0 to 0)
             val avg = if (mem > 0) ((sub.toDouble() / mem) * 100).toInt() else 0
-            weeklyReport.add(WeeklyReportItem("${Constant.Week} $week", avg))
+            WeeklyReportItem("${Constant.Week} $week", avg)
         }
-        return weeklyReport
     }
 
     private fun calculateTopPerformers(details: List<AvgStudentSubmission>): List<TopPerformanceItem> {
-        return details.map {
+
+        val valid = details.filter {
+            val remark = it.remark?.replace("%", "")?.trim()
+            remark?.toIntOrNull()?.let { num -> num > 0 } ?: false
+        }
+
+        return valid.map {
             TopPerformanceItem(
                 studentName = it.student_name,
                 className = "${Constant.Class} ${it.std_sec}",
-                percentage = it.remark.replace("%", "").toIntOrNull() ?: 0
+                percentage = it.remark.replace("%", "").toInt()
             )
-        }.filter { it.percentage > 0 }.sortedByDescending { it.percentage }
+        }.sortedByDescending { it.percentage }
+    }
+
+    private fun hideTopPerformanceSection() {
+        binding.rvTopPerformance.visibility = View.GONE
+        binding.topperformanceCardview.visibility = View.GONE
+        binding.topperformanceLabel.visibility = View.GONE
+    }
+
+    private fun showTopPerformanceSection(list: List<TopPerformanceItem>) {
+        binding.rvTopPerformance.visibility = View.VISIBLE
+        binding.topperformanceCardview.visibility = View.VISIBLE
+        binding.topperformanceLabel.visibility = View.VISIBLE
+
+        binding.rvTopPerformance.layoutManager = LinearLayoutManager(this)
+        binding.rvTopPerformance.adapter = TopPerformanceAdapter(list)
     }
 
     private fun fetchLsrwstatsReportData(month: Int) {

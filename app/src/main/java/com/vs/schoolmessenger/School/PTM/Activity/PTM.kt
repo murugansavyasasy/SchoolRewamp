@@ -1,6 +1,9 @@
 package com.vs.schoolmessenger.School.PTM.Activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -50,12 +53,18 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
 
+    // Add these class-level lists to store the flat SlotDetail lists for each section
+    private val todaySlots = ArrayList<SlotDetail>()
+    private val upcomingSlots = ArrayList<SlotDetail>()
+    private val completedSlots = ArrayList<SlotDetail>()
+
     override fun setupViews() {
         super.setupViews()
         isPTMToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
         userDetails = SharedPreference.getUserDetails(this)
 
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
@@ -78,7 +87,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             Constant.isSelectedMenuName = menu_name!!
         }
 
-
         binding.layoutDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
@@ -86,7 +94,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
-
 
         binding.lblMenuName.text = Constant.isSelectedMenuName
 
@@ -100,6 +107,9 @@ class PTM : BaseActivity<PtmStaffBinding>(),
             if (response != null && response.status) {
                 isSlotCategory = response.data
                 isLoadData(isSlotCategory)
+                if (fromNotification) {
+                    scrollToMessageId(headerId)
+                }
             } else {
                 binding.tvNoData.visibility = View.VISIBLE
                 binding.tvNoData.text=response!!.message?: getString(R.string.no_meeting_available)
@@ -108,7 +118,6 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 binding.rcyComplete.adapter = null
             }
         }
-
 
         appViewModel.isPtmSlotCancelClose?.observe(this) { result ->
             Constant.hideLoading(this)
@@ -121,6 +130,70 @@ class PTM : BaseActivity<PtmStaffBinding>(),
                 }
             } else {
                 Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun scrollToMessageId(headerId: String?) {
+        if (headerId.isNullOrEmpty()) return
+
+        var found = false
+
+        // Check todaySlots
+        val todayIndex = todaySlots.indexOfFirst { detail ->
+            detail.slots.any { slot -> slot.slot_id == headerId }
+        }
+        if (todayIndex != -1) {
+            Log.d("ScrollDebug", "Found in today at index $todayIndex")
+            binding.rcyToday.post {
+                binding.rcyToday.smoothScrollToPosition(todayIndex)
+                highlightItemTemporarily(binding.rcyToday, todayIndex)
+            }
+            found = true
+        } else {
+            // Check upcomingSlots
+            val upcomingIndex = upcomingSlots.indexOfFirst { detail ->
+                detail.slots.any { slot -> slot.slot_id == headerId }
+            }
+            if (upcomingIndex != -1) {
+                Log.d("ScrollDebug", "Found in upcoming at index $upcomingIndex")
+                binding.rcyUpcoming.post {
+                    binding.rcyUpcoming.smoothScrollToPosition(upcomingIndex)
+                    highlightItemTemporarily(binding.rcyUpcoming, upcomingIndex)
+                }
+                found = true
+            } else {
+                // Check completedSlots
+                val completedIndex = completedSlots.indexOfFirst { detail ->
+                    detail.slots.any { slot -> slot.slot_id == headerId }
+                }
+                if (completedIndex != -1) {
+                    Log.d("ScrollDebug", "Found in completed at index $completedIndex")
+                    binding.rcyComplete.post {
+                        binding.rcyComplete.smoothScrollToPosition(completedIndex)
+                        highlightItemTemporarily(binding.rcyComplete, completedIndex)
+                    }
+                    found = true
+                }
+            }
+        }
+
+        if (!found) {
+            Log.d("ScrollDebug", "No item found with headerId: $headerId")
+        }
+    }
+
+    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+        recyclerView.post {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            viewHolder?.itemView?.let { itemView ->
+                val originalBackground = itemView.background
+
+                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    itemView.background = originalBackground
+                }, 3000)
             }
         }
     }
@@ -143,55 +216,53 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     fun isLoadData(isSlotCategory: List<SlotCategory>?) {
         if (isSlotCategory.isNullOrEmpty()) return
 
-        val todayList = ArrayList<SlotDetail>()
-        val upcomingList = ArrayList<SlotDetail>()
-        val completedList = ArrayList<SlotDetail>()
+        // Clear existing lists
+        todaySlots.clear()
+        upcomingSlots.clear()
+        completedSlots.clear()
 
         for (category in isSlotCategory) {
             if (isAllSlot) {
-                todayList.addAll(category.today.flatMap { it.details })
-                upcomingList.addAll(category.upcoming.flatMap { it.details })
-                completedList.addAll(category.completed.flatMap { it.details })
+                todaySlots.addAll(category.today.flatMap { it.details })
+                upcomingSlots.addAll(category.upcoming.flatMap { it.details })
+                completedSlots.addAll(category.completed.flatMap { it.details })
             } else {
                 for (group in category.today) {
-                    todayList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
+                    todaySlots.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
                 for (group in category.upcoming) {
-                    upcomingList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
+                    upcomingSlots.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
                 for (group in category.completed) {
-                    completedList.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
+                    completedSlots.addAll(group.details.filter { toDashDate(it.date) == toDashDate(isSelectedDate) })
                 }
             }
         }
 
-        isLoadDataAdapter(todayList, binding.rcyToday)
-        isLoadDataAdapter(upcomingList, binding.rcyUpcoming)
-        isLoadDataAdapter(completedList, binding.rcyComplete)
+        isLoadDataAdapter(todaySlots, binding.rcyToday)
+        isLoadDataAdapter(upcomingSlots, binding.rcyUpcoming)
+        isLoadDataAdapter(completedSlots, binding.rcyComplete)
 
-        binding.lblToday.visibility = if (todayList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.lblToday.visibility = if (todaySlots.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyToday.visibility = binding.lblToday.visibility
 
-        binding.lblUpComing.visibility = if (upcomingList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.lblUpComing.visibility = if (upcomingSlots.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyUpcoming.visibility = binding.lblUpComing.visibility
 
-        binding.lblComplete.visibility = if (completedList.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.lblComplete.visibility = if (completedSlots.isNotEmpty()) View.VISIBLE else View.GONE
         binding.rcyComplete.visibility = binding.lblComplete.visibility
 
-        val hasData = todayList.isNotEmpty() || upcomingList.isNotEmpty() || completedList.isNotEmpty()
+        val hasData = todaySlots.isNotEmpty() || upcomingSlots.isNotEmpty() || completedSlots.isNotEmpty()
         binding.tvNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         binding.imgNoData.visibility = if (hasData) View.GONE else View.VISIBLE
 
-
-
         binding.lblSlotCount.visibility = View.VISIBLE
-        binding.lblSlotCount.text = if (todayList.isNotEmpty()) {
-            "${getString(R.string.You_have)} ${todayList.size} ${getString(R.string.meeting_s_today)}"
+        binding.lblSlotCount.text = if (todaySlots.isNotEmpty()) {
+            "${getString(R.string.You_have)} ${todaySlots.size} ${getString(R.string.meeting_s_today)}"
         } else {
             getString(R.string.you_have_0_meeting_s_today)
         }
     }
-
 
     private fun isLoadDataAdapter(list: ArrayList<SlotDetail>, recyclerView: RecyclerView) {
         val adapter = UpComingSlotAdapter(list, this, this, Constant.isShimmerViewDisable)
@@ -250,6 +321,11 @@ class PTM : BaseActivity<PtmStaffBinding>(),
         binding.lblUpComing.visibility = View.GONE
         binding.lblComplete.visibility = View.GONE
         binding.tvNoData.visibility = View.GONE
+
+        // Clear lists before loading
+        todaySlots.clear()
+        upcomingSlots.clear()
+        completedSlots.clear()
 
         binding.rcyToday.layoutManager = LinearLayoutManager(this)
         binding.rcyToday.adapter = UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
