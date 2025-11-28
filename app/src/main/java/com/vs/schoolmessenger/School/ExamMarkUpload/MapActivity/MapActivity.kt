@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity
 
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.OnExamSelectListener
-
 import android.content.Intent
 import android.graphics.Color
 import android.text.Editable
@@ -20,12 +18,9 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getSubjectData
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter.ExamListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityExamListData
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -44,8 +39,8 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ActivityExamListAdapter
-    private var isClassList: List<getActivityExamListData>? = emptyList()
-    private var selectedExam: getActivityExamListData? = null
+    private var isClassList: List<getActivitySubjectNameData>? = emptyList()
+    private var selectedExam: getActivitySubjectNameData? = null
 
 
     override fun setupViews() {
@@ -63,11 +58,10 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        if (Constant.isSelectedMenuName==""){
-            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        }else{
-            binding.toolbarLayout.lblParentToolBar.text="ExamMarks"
-        }
+        Log.d("Constant.isSelectedMenuName",Constant.isSelectedMenuName)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+
+
 
 
 
@@ -122,20 +116,21 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
     private fun LoadExamList(){
         val dummyList =listOf(
-            getActivityExamListData(
-                "Mid-Term Examination",
-                "October 2024",
-                subjects = listOf(
-                    getActivitySubjectData("Mathematics", listOf("Paper 1 - Algebra", "Paper 2 - Geometry", "Internal Assessment")),
-                    getActivitySubjectData("Physics", listOf("Theory", "Lab Work")),
-                    getActivitySubjectData("Chemistry", listOf("Organic", "Inorganic"))
+            getActivitySubjectNameData(
+                "Science",
+                paper = listOf(
+                    getActivityPaperNameData("Paper 1-Botany", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Paper 2-Zoology", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
                 )
             ),
-            getActivityExamListData(
-                "Final Examination",
-                "December 2024",
-                subjects = listOf(
-                    getActivitySubjectData("Biology", listOf("Botany", "Zoology"))
+
+            getActivitySubjectNameData(
+                "Tamil",
+                paper = listOf(
+                    getActivityPaperNameData("Paper 1", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Paper 2", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
                 )
             )
         )
@@ -159,8 +154,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
         } else {
             isClassList.orEmpty().filter { isSubList ->
                 val fieldsToSearch = mutableListOf(
-                    isSubList.month?.lowercase().orEmpty(),
-                    isSubList.title?.lowercase().orEmpty(),
+                    isSubList.subject?.lowercase().orEmpty(),
                 )
 
                 searchWords.all { word ->
@@ -231,7 +225,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
         }
     }
 
-    override fun onActivityExamSelected(item: getActivityExamListData?) {
+    override fun onActivityExamSelected(item: getActivitySubjectNameData?) {
         Log.d("Data",item.toString())
         if (item == null) {
             selectedExam = null

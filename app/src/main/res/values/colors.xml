@@ -40,6 +40,8 @@
     <color name="teal">#53c0bd</color>
     <color name="very_dark_gray2">#777777</color>
     <color name="very_dark_gray3">#E0E0E0</color>
+    <color name="light_dark_gray_4">#f3f4f6</color>
+    <color name="very_dark_gray_5">#e7e9ed</color>
 
     <color name="darkGreen">#1B5E20</color>
     <color name="iconBlue">#0066FF</color>
@@ -177,6 +179,9 @@
     <color name="dark_blue1">#1886ff</color>
     <color name="dark_green1">#12451F</color>
     <color name="light_green">#92b879</color>
+    <color name="light_pale_green_1">#e2fceb</color>
+    <color name="dark_pale_green_2">#4eda86</color>
+    <color name="dark_green_3">#2f9143</color>
     <color name="light_green1">#cdffab</color>
     <color name="light_green2">#ccf4e6</color>
     <color name="light_green_4">#c8ead1</color>
@@ -236,8 +241,14 @@
     <color name="dark_bg_voilet">#a22d00</color>
     <color name="dark_bg_orange_2">#e17100</color>
     <color name="light_bg_orange_3">#fff7ed</color>
+    <color name="light_bg_orange_4">#ffe5c8</color>
+    <color name="light_bg_orange_5">#fefce8</color>
+    <color name="light_bg_orange_6">#dfaa4b</color>
     <color name="pale_light_yellow">#fef3c6</color>
     <color name="pale_light_brown">#c37652</color>
+    <color name="pale_light_blue">#eff6ff</color>
+    <color name="dark_blue_9">#254aba</color>
+    <color name="pale_light_blue_3">#d1e5ff</color>
 
 
     <color name="light_bg_blue">#CFE8F6</color>
@@ -293,7 +304,7 @@
     <color name="hospitalization_leave">#A5E5FB</color>
     <color name="medical_leave">#FFB8E1</color>
     <color name="children_leave">#FFB556</color>
-    <color name="dark_blue_9">#477cee</color>
+    <color name="dark_blue_10">#477cee</color>
     <color name="light_blue2">#E9F2FF</color>
     <color name="light_lavender">#EAE6FF</color>
     <color name="lightpink">#f4e5e7</color>

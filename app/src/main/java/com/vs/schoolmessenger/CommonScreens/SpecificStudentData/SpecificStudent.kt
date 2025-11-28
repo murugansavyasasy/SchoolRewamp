@@ -347,7 +347,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

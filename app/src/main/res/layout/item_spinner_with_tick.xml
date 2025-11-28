@@ -25,6 +25,7 @@
         android:visibility="gone" />
 
     <View
+        android:id="@+id/viewDiv"
         android:layout_below="@+id/textViewItem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/point_five"

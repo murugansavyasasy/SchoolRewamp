@@ -42,11 +42,6 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isStaffDetails = SharedPreference.getStaffDetails(requireActivity())
 
-        binding.lblCreateNoticeBoard.setOnClickListener {
-            val intent = Intent(requireActivity(), ClassList::class.java)
-            startActivity(intent)
-        }
-
         if (Constant.isParentChoose){
             val isChildDetails = SharedPreference.getChildDetails(requireActivity())
             isAccessToken = isChildDetails?.access_token

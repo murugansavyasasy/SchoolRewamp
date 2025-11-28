@@ -54,11 +54,9 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        if (Constant.isSelectedMenuName==""){
-            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        }else{
-            binding.toolbarLayout.lblParentToolBar.text="ExamMarks"
-        }
+
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+
         //initial we disabled the lblUpload
         binding.lnrUpload.isEnabled = false
         binding.lnrUpload.alpha = 0.4f
@@ -69,7 +67,7 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
 
-        binding.lblClassSectionDetail.text = Constant.isMarkUploadClassSectionDetails?.grade +" "+"-"+" "+Constant.isMarkUploadClassSectionDetails?.section
+        binding.lblClassSectionDetail.text = "${getString(R.string.Standard)} ${Constant.isMarkUploadClassSectionDetails?.standardName} - ${getString(R.string.Section)}${Constant.isMarkUploadClassSectionDetails?.sectionName}"
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {

@@ -1312,6 +1312,9 @@
     <string name="map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually">Map each activity to a column from your uploaded image, or choose to enter marks manually.</string>
     <string name="tip">Tip:</string>
     <string name="tip_you_don_t_need_to_fill_all_activities_now_unmapped_activities_can_be_filled_later">Tip: You don\'t need to fill all activities now. Unmapped activities can be filled later.</string>
+    <string name="not_started">Not started</string>
+    <string name="of">of</string>
+    <string name="activities_mapped">activities mapped</string>
 
 
 </resources>

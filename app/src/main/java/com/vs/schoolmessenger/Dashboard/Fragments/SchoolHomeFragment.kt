@@ -66,6 +66,7 @@ import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.Event.EventReport
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Homework.HomeworkReport
@@ -825,6 +826,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         LsrwMain::class.java
+                    }
+                }
+            }
+            Constant.M_UPLOAD_MARKS -> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    ClassList::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        ClassList::class.java
                     }
                 }
             }

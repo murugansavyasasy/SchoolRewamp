@@ -90,6 +90,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -414,6 +415,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getreviewlist: LiveData<ReviewResponse?>? = null
     var reviewpost: LiveData<SubmitReviewResponse?>? = null
 
+    var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
+
 
 
     fun init() {
@@ -590,6 +593,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isdeletenotification = apiSchoolRepositories.isdeletenotificationLiveData
         getreviewlist = apiSchoolRepositories.getreviewlistLiveData
         reviewpost = apiSchoolRepositories.reviewpostLiveData
+        getStaffWiseExam = apiSchoolRepositories.getStaffWiseExamLiveData
 
 
     }
@@ -1536,6 +1540,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.reviewpost(isToken, jsonObject)
     }
 
+    fun getStaffWiseExam(
+        isToken: String,
+        section_id: String
+    ) {
+        apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id)
+    }
 
 }
 

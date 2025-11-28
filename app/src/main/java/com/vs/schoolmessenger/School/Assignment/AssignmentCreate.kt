@@ -912,7 +912,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

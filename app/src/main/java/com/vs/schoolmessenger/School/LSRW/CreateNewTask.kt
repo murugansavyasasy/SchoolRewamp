@@ -876,7 +876,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

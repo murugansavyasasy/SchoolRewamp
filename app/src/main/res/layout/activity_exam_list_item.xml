@@ -10,9 +10,11 @@
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:background="@drawable/card_border"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:id="@+id/Header"
             android:layout_width="match_parent"
@@ -62,9 +64,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/examMonth"
+                            android:id="@+id/lblMap"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="October 2024"
+                            android:text=""
                             android:alpha="0.6"
                             android:textColor="@color/black"
                             android:textSize="14sp" />

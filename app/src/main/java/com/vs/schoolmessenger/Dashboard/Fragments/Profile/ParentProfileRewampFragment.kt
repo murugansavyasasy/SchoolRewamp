@@ -417,11 +417,10 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     isAwsUploadingPreSigned?.getPreSignedUrl(
                         outputPath,
                         isChildDetails!!.school_id,
-                        "Documents",
+                        currentEditMode!!,
                         requireActivity(),
                         isCountryId!!,
                         true,
-                        false,
                         object : UploadCallback {
                             override fun onUploadSuccess(
                                 response: String?, isFileUploaded: String?
@@ -896,11 +895,10 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                         isAwsUploadingPreSigned?.getPreSignedUrl(
                             Constant.selectedFiles[i].path,
                             isChildDetails!!.school_id,
-                            isFileType!!,
+                            currentEditMode!!,
                             requireActivity(),
                             isCountryId!!,
                             true,
-                            false,
                             object : UploadCallback {
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?

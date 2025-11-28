@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_right_left_radious"
-            android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/twenty">
 
             <ImageView
