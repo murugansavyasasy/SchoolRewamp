@@ -544,7 +544,6 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                             isFileType!!,
                             this@MyAssignmentSubmit,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

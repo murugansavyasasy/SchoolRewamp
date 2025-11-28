@@ -768,7 +768,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

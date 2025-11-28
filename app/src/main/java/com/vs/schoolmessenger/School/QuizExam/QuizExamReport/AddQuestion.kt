@@ -1454,7 +1454,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                             isType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

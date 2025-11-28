@@ -565,7 +565,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         isFileType!!,
                         this,
                         isCountryId!!,
-                        true,
                         false,
                         object : UploadCallback {
 

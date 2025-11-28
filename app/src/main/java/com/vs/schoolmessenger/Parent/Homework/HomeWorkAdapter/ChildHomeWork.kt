@@ -1053,7 +1053,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         isFileType!!,
                         this,
                         isCountryId!!,
-                        true,
                         false,
                         object : UploadCallback {
 
