@@ -489,9 +489,11 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     }
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, AssignmentCreate::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
+        if(fromNotification) {
+            val intent = Intent(this, SchoolDashboard::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
     }
 }
