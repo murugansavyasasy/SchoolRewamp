@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/rytSlots"
         android:layout_width="match_parent"
@@ -10,6 +11,7 @@
         android:layout_margin="@dimen/five"
         android:background="@drawable/bg_gradient"
         android:padding="@dimen/ten">
+
         <TextView
             android:id="@+id/lblDate"
             style="@style/CustomTextStylePoppinsMedium"
@@ -22,8 +24,8 @@
             android:paddingVertical="@dimen/five"
             android:text="10 MAY 2005"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
-        </TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
         <TextView
             android:id="@+id/lblTime"
             style="@style/CustomTextStylePoppinsMedium"
@@ -37,8 +39,8 @@
             android:paddingVertical="@dimen/five"
             android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
-        </TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
         <ImageView
             android:id="@+id/imgDot"
             android:layout_width="@dimen/thirty_five"
@@ -48,9 +50,9 @@
             android:layout_marginEnd="@dimen/five"
             android:background="@drawable/rounded_grey_background"
             android:padding="@dimen/ten"
-            android:visibility="gone"
-            android:src="@drawable/threedot">
-        </ImageView>
+            android:src="@drawable/threedot"
+            android:visibility="gone"></ImageView>
+
         <TextView
             android:id="@+id/lblTitle"
             style="@style/CustomTextStylePoppinsBold"
@@ -59,10 +61,11 @@
             android:layout_below="@+id/lblDate"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
+            android:maxLines="1"
             android:text="Exam Meeting"
             android:textColor="@color/black"
-            android:textSize="@dimen/sixteen">
-        </TextView>
+            android:textSize="@dimen/sixteen"></TextView>
+
         <TextView
             android:id="@+id/lblMode"
             style="@style/CustomTextStylePoppinsMedium"
@@ -73,8 +76,8 @@
             android:layout_marginTop="@dimen/five"
             android:text="Mode - Online"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen">
-        </TextView>
+            android:textSize="@dimen/thirteen"></TextView>
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img1"
             android:layout_width="@dimen/fourty"
@@ -86,6 +89,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/user_sample"
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img2"
             android:layout_width="@dimen/fourty"
@@ -98,6 +102,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/user_sample"
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img3"
             android:layout_width="@dimen/fourty"
@@ -110,6 +115,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/user_sample"
             app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
         <TextView
             android:id="@+id/tvNoProfiles"
             android:layout_width="wrap_content"
@@ -124,6 +130,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp"
             android:visibility="gone" />
+
         <TextView
             android:id="@+id/lblCount"
             style="@style/CustomTextStylePoppinsBold"
@@ -137,8 +144,8 @@
             android:text="+3"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
-            android:visibility="gone">
-        </TextView>
+            android:visibility="gone"></TextView>
+
         <RelativeLayout
             android:id="@+id/rltJoinNow"
             android:layout_width="wrap_content"
@@ -149,6 +156,7 @@
             android:background="@drawable/rounded_bg"
             android:padding="@dimen/five"
             android:visibility="gone">
+
             <TextView
                 android:id="@+id/lblJoin"
                 style="@style/CustomTextStylePoppinsBold"
@@ -156,15 +164,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/join_now"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="@dimen/thirteen_sp">
-            </TextView>
+                android:textSize="@dimen/thirteen_sp"></TextView>
+
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_toEndOf="@+id/lblJoin"
-                android:src="@drawable/arrow_right_blue">
-            </ImageView>
+                android:src="@drawable/arrow_right_blue"></ImageView>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -174,14 +174,80 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/cltDateSelection">
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/lnrTabsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/ten">
+
+                    <LinearLayout
+                        android:id="@+id/lnrTabMeeting"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/five">
+
+                        <TextView
+                            android:id="@+id/txtTabMeeting"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:text="Meetings" />
+
+                        <View
+                            android:id="@+id/viewTabMeeting"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/PrimaryColor"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrTabBookedSlots"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/five">
+
+                        <TextView
+                            android:id="@+id/txtTabBookedSlots"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Booked Slots"
+                            android:textColor="@color/gray" />
+
+                        <View
+                            android:id="@+id/viewTabBookedSlots"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/gray"
+                        />
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/lblToday"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
+                    android:layout_below="@+id/lnrTabsContainer"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"

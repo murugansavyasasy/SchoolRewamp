@@ -1408,12 +1408,9 @@ object Constant {
         onDateSelected: (String) -> Unit
     ) {
         val calendar = Calendar.getInstance()
-
-        // Use pre-selected date if it is selected
         if (preSelectedDateMillis != null) {
             calendar.timeInMillis = preSelectedDateMillis
         }
-
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -1430,11 +1427,9 @@ object Constant {
             },
             year, month, day
         )
-
         minDate?.let {
             datePickerDialog.datePicker.minDate = it
         }
-
         datePickerDialog.show()
     }
 

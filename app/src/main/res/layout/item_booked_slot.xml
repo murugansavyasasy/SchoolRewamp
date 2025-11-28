@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/ten"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="@dimen/two">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rytStatusBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/bg_light_green"
+            android:padding="@dimen/five"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgCheckmark"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/checkmark_circle" />
+
+            <TextView
+                android:id="@+id/lblStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_toEndOf="@id/imgCheckmark"
+                android:text="Booked"
+                android:textColor="@color/green"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/rlDotParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/thirteen_sp"
+                android:padding="@dimen/five"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_blue_radious"
+                android:layout_toStartOf="@+id/imgDot"
+                android:layout_marginEnd="@dimen/ten"
+                android:maxLines="1"/>
+            <ImageView
+                android:id="@+id/imgDot"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:background="@drawable/rounded_bg"
+                android:padding="@dimen/ten"
+                android:src="@drawable/threedot"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sixteen"
+            android:layout_marginTop="@dimen/sixteen"
+            android:layout_marginEnd="@dimen/sixteen"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rytStatusBanner" />
+
+        <TextView
+            android:id="@+id/lblMode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four"
+            android:text="In Person"
+            android:textColor="@color/light_gray_2"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="@id/lblTitle"
+            app:layout_constraintStart_toStartOf="@id/lblTitle"
+            app:layout_constraintTop_toBottomOf="@id/lblTitle" />
+
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four"
+            android:text="07:30 pm - 07:40 pm"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="@id/lblTitle"
+            app:layout_constraintStart_toStartOf="@id/lblTitle"
+            app:layout_constraintTop_toBottomOf="@id/lblMode" />
+
+        <TextView
+            android:id="@+id/lblDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four"
+            android:text="Duration - 10 Minutes"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="@id/lblTitle"
+            app:layout_constraintStart_toStartOf="@id/lblTitle"
+            app:layout_constraintTop_toBottomOf="@id/lblTime" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBookedBy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sixteen"
+            android:layout_marginBottom="@dimen/sixteen"
+            app:cardBackgroundColor="#E8F5E9"
+            app:cardCornerRadius="@dimen/eight"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/lblTitle"
+            app:layout_constraintStart_toStartOf="@id/lblTitle"
+            app:layout_constraintTop_toBottomOf="@id/lblDuration">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sixteen">
+
+                <TextView
+                    android:id="@+id/lblBookedBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Booked by:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginTop="12dp"
+                    app:shapeAppearanceOverlay="@style/CircleImageShape"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lblBookedBy" />
+
+                <TextView
+                    android:id="@+id/lblName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Nicholas"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/imgExpand"
+                    app:layout_constraintStart_toEndOf="@id/imgProfile"
+                    app:layout_constraintTop_toTopOf="@id/imgProfile" />
+
+                <TextView
+                    android:id="@+id/lblClass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/two"
+                    android:text="II - B1"
+                    android:textColor="@color/light_gray_2"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintEnd_toEndOf="@id/lblName"
+                    app:layout_constraintStart_toStartOf="@id/lblName"
+                    app:layout_constraintTop_toBottomOf="@id/lblName" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/conParentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/lblClass">
+
+                    <TextView
+                        android:id="@+id/lblFatherName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/four"
+                        android:text="Father Name  :"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtFatherName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/four"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/lblFatherName"
+                        app:layout_constraintStart_toEndOf="@id/lblFatherName" />
+
+                    <TextView
+                        android:id="@+id/lblMotherName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/two"
+                        android:text="Mother Name  :"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/lblFatherName" />
+
+                    <TextView
+                        android:id="@+id/txtMotherName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/four"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/lblMotherName"
+                        app:layout_constraintStart_toEndOf="@id/lblMotherName" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/imgExpand"
+                    android:layout_width="@dimen/twenty_four"
+                    android:layout_height="@dimen/twenty_four"
+                    android:src="@drawable/ic_down_blue_round"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imgProfile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

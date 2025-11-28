@@ -145,6 +145,7 @@ object APIMethods {
 
     const val isCreateSlots = "ptm/api/ptm-schedule/create-slots"
     const val isSlotDetailsForStaff = "ptm/api/ptm-schedule/slot-details-for-staff"
+    const val isBookedSlots = "ptm/api/ptm-schedule/datewise-booked-slots"
     const val isSlotCancelAndReOpen = "ptm/api/ptm-schedule/cancel-and-reopen-slot"
     const val isSlotCancelAndClose = "ptm/api/ptm-schedule/cancel-and-close-slot"
     const val isDatewiseBookedSlots = "ptm/api/ptm-schedule/datewise-booked-slots"
