@@ -32,6 +32,7 @@ import java.io.File
 
 class AwsUploadingPreSigned {
     var isBucket: String = ""
+    var isFolderName: String = ""
 
     fun getPreSignedUrl(
         isFilePathUrl: String,
@@ -47,7 +48,8 @@ class AwsUploadingPreSigned {
         var fileExtension: String?
 
         if(isProfilePage){
-            if(isFileType == null){
+            Log.d("isFileType",isFileType)
+            if(isFileType == ""){
                 isBucket = AWSKeys.SCHOOL_CHIMES_SCHOOL_DOCS
                 bucketPath = "$instituteID/$currentDate"
             }
@@ -62,58 +64,58 @@ class AwsUploadingPreSigned {
             when (Constant.SELECTED_MENU_ID) {
                 M_COMMUNICATION -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
-                    val isFolderName = "voice"
+                    isFolderName = "voice"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
                 M_ASSIGNMENT -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "assignment"
+                    isFolderName = "assignment"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_HOMEWORK -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "homework"
+                    isFolderName = "homework"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_NOTICEBOARD -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "noticeboard"
+                    isFolderName = "noticeboard"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_SCHOOL_CLASS_EVENTS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "events"
+                    isFolderName = "events"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_ATTACHMENTS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "files"
+                    isFolderName = "files"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_LSRW -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "skills"
+                    isFolderName = "skills"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_QUIZ_EXAM -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "quiz"
+                    isFolderName = "quiz"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_UPLOAD_MARKS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    val isFolderName = "marksheets"
+                    isFolderName = "marksheets"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
@@ -122,10 +124,6 @@ class AwsUploadingPreSigned {
                 }
             }
         }
-
-        isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
-        val isFolderName = "communication"
-        bucketPath = "$isFolderName/${Constant.isSelectedMenuName}/$instituteID/$currentDate"
 
         Log.d("isBucket", isBucket)
 

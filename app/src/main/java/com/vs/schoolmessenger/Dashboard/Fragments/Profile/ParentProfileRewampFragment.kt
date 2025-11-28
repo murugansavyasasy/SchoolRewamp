@@ -31,12 +31,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
@@ -69,11 +71,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.iterator
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
-import androidx.core.content.ContextCompat
-import com.google.gson.JsonArray
 
 
 class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentClickListener,
@@ -108,7 +105,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     private var pendingChangedData: JsonObject? = null
 
     private var profilePhotoFileItem: FileItem? = null
-    private var currentEditMode: String? = null
+    private var currentEditMode=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -214,7 +211,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                             Glide.with(this).load(uri).placeholder(defaultProfileRes)
                                 .error(defaultProfileRes).into(binding.imgProfile)
                         }
-                        currentEditMode = null
+                        currentEditMode = ""
                     } else {
                         val remaining = MAX_FILES - Constant.selectedFiles.size
 
@@ -402,6 +399,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         val outputDir = File(
             requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput"
         )
+
+        Log.d("currentEditMode",currentEditMode.toString())
         outputDir.mkdirs()
         Constant.compressImageFilesOnly(
             context = requireContext(),
@@ -444,7 +443,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     }
 
     override fun onDocumentClicked(field: ProfileField, position: Int) {
-        currentEditMode = null
+        currentEditMode = ""
         showBottomDialog()
         mAdapter?.notifyItemChanged(position)
     }
@@ -486,7 +485,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         rlaVoice.setOnClickListener {
             if (currentEditMode == "profile_photo") {
-                currentEditMode = null
+                currentEditMode = ""
             }
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
@@ -495,7 +494,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         rlaVideoPick.setOnClickListener {
             if (currentEditMode == "profile_photo") {
-                currentEditMode = null
+                currentEditMode = ""
             }
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
@@ -517,7 +516,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         rlaDocument.setOnClickListener {
             if (currentEditMode == "profile_photo") {
-                currentEditMode = null
+                currentEditMode = ""
             }
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
@@ -697,7 +696,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                         Toast.makeText(requireContext(), getString(R.string.camera_image_failed), Toast.LENGTH_SHORT)
                             .show()
                     }
-                    currentEditMode = null
+                    currentEditMode = ""
                 } else {
                     cameraImageFilePath?.let { filePath ->
                         var file = File(filePath)
