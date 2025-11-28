@@ -125,6 +125,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.BookedSlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
@@ -363,6 +364,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
+    var isBookedSlotsData: LiveData<BookedSlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
     var isPtmSlotCancelClose: LiveData<StatusMessageModel?>? = null
     var isDateWiseSlot: LiveData<SlotBookingResponse?>? = null
@@ -543,6 +545,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
+        isBookedSlotsData = apiSchoolRepositories.isBookedSlotResponseLiveData
         isPtmSlotCancelReOpen = apiSchoolRepositories.isPtmSlotCancelReOpenLiveData
         isPtmSlotCancelClose = apiSchoolRepositories.isPtmSlotCancelCloseLiveData
         isDateWiseSlot = apiSchoolRepositories.isDateWiseSlotLiveData
@@ -1229,6 +1232,13 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isPtmSlotForStaff(isToken, isEventDate)
     }
+
+    fun isBookedSlotsData(
+        isToken: String, isEventDate: String
+    ) {
+        apiSchoolRepositories.isBookedSlot(isToken, isEventDate)
+    }
+
 
     fun isSlotCancelReOpen(
         isToken: String, jsonObject: JsonObject

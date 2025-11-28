@@ -144,10 +144,12 @@
             <TextView
                 android:id="@+id/lblBookedName"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblBookedBy"
+                android:layout_toStartOf="@+id/imgExpand"
                 android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_toEndOf="@+id/imgUser"
                 android:text="Sathish G"
@@ -156,6 +158,15 @@
 
             </TextView>
 
+            <ImageView
+                android:id="@+id/imgExpand"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
+                android:src="@drawable/ic_down_blue_round"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_below="@+id/lblBookedBy" />
+
             <TextView
                 android:id="@+id/lblStandardAndSection"
                 style="@style/CustomTextStylePoppinsBold"
@@ -163,14 +174,69 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblBookedName"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
                 android:layout_toEndOf="@+id/imgUser"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/light_gray"
                 android:textSize="@dimen/thirteen_sp"
-                android:visibility="gone">
+                android:visibility="visible">
 
             </TextView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/conParentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStandardAndSection"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblFatherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/four"
+                    android:text="Father Name  :"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtFatherName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/four"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblFatherName"
+                    app:layout_constraintStart_toEndOf="@id/lblFatherName" />
+
+                <TextView
+                    android:id="@+id/lblMotherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/two"
+                    android:text="Mother Name  :"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lblFatherName" />
+
+                <TextView
+                    android:id="@+id/txtMotherName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/four"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblMotherName"
+                    app:layout_constraintStart_toEndOf="@id/lblMotherName" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </RelativeLayout>
 

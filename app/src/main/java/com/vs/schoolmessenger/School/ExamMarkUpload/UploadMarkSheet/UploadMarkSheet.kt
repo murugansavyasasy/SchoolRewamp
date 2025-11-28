@@ -308,7 +308,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                         isFileType!!,
                         this,
                         isCountryId!!,
-                        true,
                         false,
                         object : UploadCallback {
 

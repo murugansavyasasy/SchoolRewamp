@@ -89,6 +89,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.BookedSlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
@@ -208,6 +209,7 @@ class SchoolServices {
 
     var isPtmSlotCreate: MutableLiveData<StatusMessageModel?>
     var isPtmSlotResponse: MutableLiveData<SlotResponse?>
+    var isBookedSlotResponse: MutableLiveData<BookedSlotResponse?>
     var isPtmSlotCancelReOpen: MutableLiveData<StatusMessageModel?>
     var isPtmSlotCancelClose: MutableLiveData<StatusMessageModel?>
     var isDateWiseSlot: MutableLiveData<SlotBookingResponse?>
@@ -329,6 +331,7 @@ class SchoolServices {
 
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
+        isBookedSlotResponse = MutableLiveData()
         isPtmSlotCancelReOpen = MutableLiveData()
         isPtmSlotCancelClose = MutableLiveData()
         isDateWiseSlot = MutableLiveData()
@@ -3333,6 +3336,43 @@ class SchoolServices {
     val isPtmSlotResponseLiveData: LiveData<SlotResponse?>
         get() = isPtmSlotResponse
 
+    fun isBookedSlot(
+        isToken: String, isEventDate: String
+    ) {
+        RestClient.apiInterfaces.isBookedSlots(isToken, isEventDate)
+            ?.enqueue(object : Callback<BookedSlotResponse?> {
+                override fun onResponse(
+                    call: Call<BookedSlotResponse?>, response: Response<BookedSlotResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isBookedSlotResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isBookedSlotResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BookedSlotResponse?>, t: Throwable
+                ) {
+                    isBookedSlotResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isBookedSlotResponseLiveData: LiveData<BookedSlotResponse?>
+        get() = isBookedSlotResponse
 
     fun isSlotCancelReOpen(
         isToken: String, jsonObject: JsonObject
