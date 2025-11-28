@@ -365,7 +365,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
     override fun onBackPressed() {
-//        Constant.selectedFiles.clear()
+        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
 

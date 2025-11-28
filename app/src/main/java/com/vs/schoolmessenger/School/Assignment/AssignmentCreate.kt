@@ -1119,14 +1119,10 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
 
     override fun onBackPressed() {
-//        Constant.selectedFiles.clear()
+        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
         super.onBackPressed()
-        val intent = Intent(this, SchoolDashboard::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
     }
 
 }

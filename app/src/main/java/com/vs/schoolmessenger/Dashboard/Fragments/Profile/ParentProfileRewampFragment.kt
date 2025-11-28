@@ -346,7 +346,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
-
     private fun onAllUploadsComplete() {
         val documentsArray = JsonArray()
         // Map Constant.isAwsUploadedFiles to the required document format
