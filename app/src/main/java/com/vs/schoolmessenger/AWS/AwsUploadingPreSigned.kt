@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
+import com.vs.schoolmessenger.Utils.Constant.M_QUIZ_EXAM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_UPLOAD_MARKS
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -67,35 +68,47 @@ class AwsUploadingPreSigned {
                 }
                 M_ASSIGNMENT -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "assignment"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_HOMEWORK -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "homework"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_NOTICEBOARD -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "noticeboard"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_SCHOOL_CLASS_EVENTS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "events"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_ATTACHMENTS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "files"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 
                 M_LSRW -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
-                    bucketPath = "${Constant.isSelectedMenuName}/$instituteID/$currentDate"
+                    val isFolderName = "skills"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
+                }
+
+                M_QUIZ_EXAM -> {
+                    isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
+                    val isFolderName = "quiz"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 
                 M_UPLOAD_MARKS -> {
