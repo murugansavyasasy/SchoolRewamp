@@ -96,6 +96,7 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
                     loadSectionStandard(response.data)
                     ShowData()
                 } else {
+                    binding.rcClassList.visibility=View.GONE
                     binding.toolbarLayout.imgSearchToolBarforCreate.visibility= View.GONE
                     ErrorMessage(response.message?:getString(R.string.something_went_wrong_please_try_again_later))
                 }

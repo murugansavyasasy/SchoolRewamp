@@ -113,6 +113,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         binding.cardManual.setOnClickListener(this)
         binding.lnrUploadFile.setOnClickListener(this)
         binding.lnrUpload.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
 
         isStaffDetails = SharedPreference.getStaffDetails(this)

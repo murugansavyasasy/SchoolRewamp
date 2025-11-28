@@ -75,6 +75,8 @@
 
     </LinearLayout>
     <View
+        android:paddingVertical="@dimen/twenty"
+        android:layout_marginHorizontal="@dimen/sixteen"
         android:layout_width="match_parent"
         android:background="@color/AthensGray"
         android:layout_height="@dimen/one">

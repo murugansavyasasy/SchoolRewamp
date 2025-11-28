@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -234,6 +235,7 @@ class SchoolServices {
     var reviewpost: MutableLiveData<SubmitReviewResponse?>
     var isgetfeature: MutableLiveData<GetFeature?>
     var isgetStaffWiseExam: MutableLiveData<getStaffWisExam?>
+    var isgetSubjectWiseActivities: MutableLiveData<getSubjectWiseACtivities?>
 
 
     init {
@@ -354,6 +356,7 @@ class SchoolServices {
         reviewpost = MutableLiveData()
         isgetfeature = MutableLiveData()
         isgetStaffWiseExam = MutableLiveData()
+        isgetSubjectWiseActivities = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4612,6 +4615,49 @@ class SchoolServices {
 
     val getStaffWiseExamLiveData: LiveData<getStaffWisExam?>
         get() = isgetStaffWiseExam
+
+
+
+    fun isGetSubjectWiseActivities(
+        isToken: String,
+        exam_id: String,
+    ) {
+        RestClient.apiInterfaces.getSubjectWiseActivities(isToken, exam_id,)?.enqueue(object : Callback<getSubjectWiseACtivities?> {
+            override fun onResponse(
+                call: Call<getSubjectWiseACtivities?>,
+                response: Response<getSubjectWiseACtivities?>
+            ) {
+                Log.d(
+                    "isgetSubjectWiseActivities Response",
+                    response.code().toString() + " - " + response.toString()
+                )
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        val status = response.body()!!.status
+                        if (status) {
+                            Log.d("isgetSubjectWiseActivities", response.body().toString())
+                            isgetSubjectWiseActivities.postValue(response.body())
+                        } else {
+                            Log.d("isgetSubjectWiseActivities", response.body().toString())
+                            isgetSubjectWiseActivities.postValue(response.body())
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<getSubjectWiseACtivities?>, t: Throwable
+            ) {
+                isgetSubjectWiseActivities.postValue(null)
+                t.printStackTrace()
+            }
+        })
+    }
+
+    val getSubjectWiseActivitiesLiveData: LiveData<getSubjectWiseACtivities?>
+        get() = isgetSubjectWiseActivities
+
+
 
 
 
