@@ -392,7 +392,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
     override fun onBackPressed() {
-        Constant.selectedFiles.clear()
+//        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
 
