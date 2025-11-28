@@ -949,7 +949,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

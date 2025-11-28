@@ -1650,7 +1650,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             isFileType!!,
                             this@RecipientActivity,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

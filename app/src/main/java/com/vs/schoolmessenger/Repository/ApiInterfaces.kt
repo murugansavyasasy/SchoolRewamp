@@ -137,6 +137,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.BookedSlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
@@ -950,6 +951,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("event_date") event_date: String
     ): Call<SlotResponse?>?
+
+    @GET(APIMethods.isBookedSlots)
+    fun isBookedSlots(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("event_date") event_date: String
+    ): Call<BookedSlotResponse?>?
 
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isSlotCancelAndReOpen)

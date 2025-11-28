@@ -841,7 +841,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

@@ -70,7 +70,8 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         appViewModel!!.init()
 
         binding.lblMeetingTitle.text = isSlotsDetails.event_name
-        binding.lblHostName.text = isSlotsDetails.meeting_duration.toString() + " "+getString(R.string.minutes)
+        binding.lblHostName.text =
+            isSlotsDetails.meeting_duration.toString() + " " + getString(R.string.minutes)
         binding.lblMeetingMode.text = getString(R.string.mode_2) + " - " + isSlotsDetails.event_mode
         binding.lblModeMeeting.text = isSlotsDetails.event_mode
         binding.lblDate.text = formatApiDateToDisplay(isSlotsDetails.date)
@@ -88,11 +89,10 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(joinUrl))
                 startActivity(intent)
             } else {
-                Toast.makeText(this, getString(R.string.join_url_not_available), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.join_url_not_available), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
-
-
 
         binding.lblTime.text = isSlotsDetails.start_time + " - " + isSlotsDetails.end_time
 
@@ -106,7 +106,11 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 val message = response.message ?: getString(R.string.failed_to_cancel_slot)
                 Constant.showTopAlertPopup1(message, this, true)
             } else {
-                Constant.showTopAlertPopup1(getString(R.string.something_went_wrong_please_try_again_later), this, true)
+                Constant.showTopAlertPopup1(
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this,
+                    true
+                )
             }
         }
 
@@ -118,7 +122,11 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 val message = response.message ?: getString(R.string.failed_to_reopen_slot)
                 Constant.showTopAlertPopup1(message, this, true)
             } else {
-                Constant.showTopAlertPopup1(getString(R.string.something_went_wrong_please_try_again_later), this, true)
+                Constant.showTopAlertPopup1(
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this,
+                    true
+                )
             }
         }
         isLoadDataAdapter(isSlot)

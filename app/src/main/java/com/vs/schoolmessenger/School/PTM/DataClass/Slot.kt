@@ -14,6 +14,8 @@ data class Slot(
     val my_class: String,
     val my_section: String,
     val profile_url: String,
+    val father_name: String?,
+    val mother_name: String?,
     val mobile_no: String,
     val status: String,
     val event_name: String,
