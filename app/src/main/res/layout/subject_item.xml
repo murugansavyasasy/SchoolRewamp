@@ -60,6 +60,17 @@
             app:justifyContent="flex_start" />
 
     </LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:id="@+id/lblNoData"
+        android:layout_marginTop="@dimen/five"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:text="@string/no_data_found"
+        android:layout_height="wrap_content">
+    </TextView>
     <View
         android:layout_width="match_parent"
         android:background="@color/AthensGray"

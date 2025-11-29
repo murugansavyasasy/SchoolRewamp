@@ -33,12 +33,12 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val childDetails = SharedPreference.getChildDetails(this)
-        binding.imgBack.setOnClickListener(this)
+//        binding.imgBack.setOnClickListener(this)
         binding.btnOk.setOnClickListener(this)
-        binding.imgBack.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_IN
-        )
+//        binding.imgBack.setColorFilter(
+//            ContextCompat.getColor(this, R.color.white),
+//            PorterDuff.Mode.SRC_IN
+//        )
         binding.btnOk.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN

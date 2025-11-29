@@ -104,6 +104,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -1270,6 +1271,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.section_id ) section_id: String,
     ): Call<getStaffWisExam>
+
+    @GET(APIMethods.getSubjectWiseACtivities)
+    fun getSubjectWiseActivities(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.exam_id ) exam_id: String,
+    ): Call<getSubjectWiseACtivities>
 
 
 }

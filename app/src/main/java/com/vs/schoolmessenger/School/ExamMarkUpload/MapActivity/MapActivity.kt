@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -65,8 +66,8 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
 
 
-        binding.lblExamName.text= Constant.isMarkUploadExamListDataDetails?.title
-        binding.lblMonthName.text= Constant.isMarkUploadExamListDataDetails?.month
+        binding.lblExamName.text= Constant.isMarkUploadExamListDataDetails?.name
+        binding.lblMonthName.text= Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
 
 
@@ -219,7 +220,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
                 onBackPressed()
             }
             R.id.lnrUpload->{
-                val intent = Intent(this, UploadMarkSheet::class.java)
+                val intent = Intent(this, ReviewAndEditMarks::class.java)
                 this.startActivity(intent)
             }
         }
