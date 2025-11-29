@@ -133,9 +133,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             if (binding.rytSearchbox.visibility == View.VISIBLE) {
                 binding.rytSearchbox.visibility = View.GONE
                 binding.txtSearchBox.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
             } else {
                 binding.rytSearchbox.visibility = View.VISIBLE
                 binding.txtSearchBox.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
 
             }
         }

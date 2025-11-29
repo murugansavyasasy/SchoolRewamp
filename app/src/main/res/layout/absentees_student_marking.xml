@@ -166,47 +166,56 @@
                 android:textColor="@color/light_purple1" />
         </LinearLayout>
 
-        <!-- RecyclerView for students -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleStudents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
+        <androidx.core.widget.NestedScrollView
             android:layout_below="@id/lnrHeader"
-            tools:listitem="@layout/attendance_student_list" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!-- RecyclerView for students -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleStudents"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="true"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    tools:listitem="@layout/attendance_student_list" />
 
-        <LinearLayout
-            android:id="@+id/lytNoDataFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recycleStudents"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+                <LinearLayout
+                    android:id="@+id/lytNoDataFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-            <ImageView
-                android:layout_width="@dimen/two_fifty"
-                android:layout_height="@dimen/two_fifty"
-                android:layout_marginTop="@dimen/twenty_five"
-                android:src="@drawable/no_takeattendence_message">
+                    <ImageView
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:src="@drawable/no_takeattendence_message">
 
-            </ImageView>
+                    </ImageView>
 
-            <TextView
-                android:id="@+id/noDataFound"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/twenty"
-                android:textSize="@dimen/fifteen_sp"
-                android:text="">
+                    <TextView
+                        android:id="@+id/noDataFound"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/five"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:text="">
 
-            </TextView>
+                    </TextView>
 
-        </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 
     <!-- Send Button -->

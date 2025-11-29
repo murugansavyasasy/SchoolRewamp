@@ -120,12 +120,12 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 binding.rlaSortSearch.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
             } else {
                 binding.rlaSortSearch.visibility = View.VISIBLE
                 binding.txtSearchMenu.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.toolbarLayout.imgSearch.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
             }
         }
 
@@ -349,7 +349,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         mAdapter = AbsenteesMarkAdapter(null,"", this, Constant.isShimmerViewShow, this)
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
-
+        binding.recycleStudents.setNestedScrollingEnabled(false);
         appViewModel!!.getAttendanceStudentList(
             isAccessToken!!,Constant.isMarkAttendanceDataSending?.class_id.toString(),
             isSectionId!!.toString(),Constant.isMarkAttendanceDataSending?.attendance_date!!,isFullDay.toString()
@@ -368,6 +368,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     studentsList.toMutableList(),isCurrentAttendanceType!!, this, Constant.isShimmerViewDisable, this
                 )
             binding.recycleStudents.adapter = mAdapter
+            binding.recycleStudents.setNestedScrollingEnabled(false);
 
             //we are checking whether all are marked as present or absent at initial time
             binding.cbSelect.isChecked = studentsList?.all { student ->

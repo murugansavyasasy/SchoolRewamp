@@ -154,6 +154,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
+
         binding.rlaCreateLeaveRequest.visibility = View.GONE
         binding.rlaHistory.visibility = View.VISIBLE
 
