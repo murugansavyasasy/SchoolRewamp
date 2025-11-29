@@ -14,10 +14,12 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
 import com.vs.schoolmessenger.databinding.CompletedTasklistBinding
 
 
-class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClickListener {
+class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClickListener,
+    lsrwskillreportlistener {
 
     override fun getViewBinding(): CompletedTasklistBinding {
         return CompletedTasklistBinding.inflate(layoutInflater)
@@ -67,6 +69,7 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
            adapter = LsrwCompletedAdapter(
                itemList = taskList,
                context = this,
+               this,
                noDataImage = binding.noDataImage,
                noDataText = binding.noDataFound
            )
@@ -144,6 +147,15 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
         }
+    }
+
+    override fun onEditAndDeleteCompleted(
+        data: LsrwTask,
+        anchorView: View,
+        adapterPosition: Int,
+        source: String
+    ) {
+        TODO("Not yet implemented")
     }
 
 }

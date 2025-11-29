@@ -44,6 +44,9 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
     private var isStaffDetails: StaffDetails? = null
     var userDetails: UserDetails? = null
 
+    private var audioAdapter: AudioAdapter? = null
+
+
 
     private var data: FilePreview? = null
     override fun setupViews() {
@@ -77,11 +80,13 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
         binding.rcChildHW.adapter = adapter
 
 
-        val audioList = data!!.fileList.filter { it.type.equals(Constant.M4A, ignoreCase = true) }
-            .map { it.url }
+        val audioList =
+            data!!.fileList.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                .map { it.url }
+
         if (audioList.isNotEmpty()) {
             binding.rcSeekBarAndTitle.visibility = View.VISIBLE
-            val audioAdapter = AudioAdapter(audioList)
+            audioAdapter = AudioAdapter(audioList)
             binding.rcSeekBarAndTitle.layoutManager = LinearLayoutManager(binding.root.context)
             binding.rcSeekBarAndTitle.adapter = audioAdapter
         } else {
@@ -198,5 +203,10 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
     }
     override fun onImageClick(position: Int) {
         TODO("Not yet implemented")
+    }
+
+    override fun onBackPressed() {
+        audioAdapter?.release()
+        super.onBackPressed()
     }
 }

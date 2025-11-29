@@ -103,6 +103,8 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -113,6 +115,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStud
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwDeleteResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
@@ -135,6 +138,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.BookedSlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
@@ -848,6 +852,13 @@ interface ApiInterfaces {
     ): Call<EventDeleteResponse?>
 
 
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isLsrwDelete)
+    fun isLsrwDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<LsrwDeleteResponse?>
+
+
     @GET(APIMethods.isAssignmentSubmittedList)
     fun getassignmentlist(
         @Header(APIKeyNames.Authorization) token: String,
@@ -941,6 +952,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("event_date") event_date: String
     ): Call<SlotResponse?>?
+
+    @GET(APIMethods.isBookedSlots)
+    fun isBookedSlots(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("event_date") event_date: String
+    ): Call<BookedSlotResponse?>?
 
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isSlotCancelAndReOpen)
@@ -1247,6 +1264,19 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<SubmitReviewResponse?>?
+
+
+    @GET(APIMethods.getStaffWiseExam)
+    fun getStaffWiseExam(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_id ) section_id: String,
+    ): Call<getStaffWisExam>
+
+    @GET(APIMethods.getSubjectWiseACtivities)
+    fun getSubjectWiseActivities(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.exam_id ) exam_id: String,
+    ): Call<getSubjectWiseACtivities>
 
 
 }

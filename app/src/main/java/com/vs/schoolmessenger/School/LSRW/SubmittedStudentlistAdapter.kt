@@ -69,11 +69,11 @@ class SubmittedStudentlistAdapter (
             sectionlabel.text = item.standard +" - "+ item.section
 
             if (item.submit_status == Constant.NOTSUBMITTED) {
-                submittedDate.text = item.submit_status
-                submittedLabel.text = ""
+                submittedDate.text = Constant.convertDateAndTimeFormat(item.created_on)
+                submittedLabel.text = "Due Date : "
             } else {
                 submittedDate.text = Constant.convertDateAndTimeFormat(item.submitted_date)
-                submittedLabel.visibility = View.VISIBLE
+                submittedLabel.text = "Submitted : "
             }
 
             val name = item.student_name

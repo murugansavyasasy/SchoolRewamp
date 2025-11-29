@@ -77,9 +77,13 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -152,6 +156,7 @@ object Constant {
     val M_MARK_YOUR_ATTENDANCE = 21
     val M_MESSAGES_FROM_MANAGEMENT = 22
     val M_NOTICEBOARD = 23
+    val M_UPLOAD_MARKS = 41
     val M_ONLINE_MEETING = 24
     val M_ONLINE_TEXT_BOOK = 25
     val M_PTM = 26
@@ -236,6 +241,11 @@ object Constant {
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
+
+//    var isMarkUploadClassSectionDetails: ClassSectionData? = null
+    var isMarkUploadClassSectionDetails: StandardSection? = null
+    var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
+
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
@@ -1402,12 +1412,9 @@ object Constant {
         onDateSelected: (String) -> Unit
     ) {
         val calendar = Calendar.getInstance()
-
-        // Use pre-selected date if it is selected
         if (preSelectedDateMillis != null) {
             calendar.timeInMillis = preSelectedDateMillis
         }
-
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -1424,11 +1431,9 @@ object Constant {
             },
             year, month, day
         )
-
         minDate?.let {
             datePickerDialog.datePicker.minDate = it
         }
-
         datePickerDialog.show()
     }
 
@@ -1759,6 +1764,47 @@ object Constant {
     }
 
 
+    fun showSendConfirmation(
+        activity: Activity,
+        istitle: String,
+        Ok: String,
+        Cancel: String,
+        isMessage: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.manually_entry_alert, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+
+        alertMessage.text = isMessage
+        okButton.text = Ok
+        lblalertTitle.text = istitle
+        btnCancel.text = Cancel
+
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(true)
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(false)
+        }
+    }
+
+
     fun getAudioDurationInSeconds(url: String): Int {
         val retriever = MediaMetadataRetriever()
         return try {
@@ -1970,6 +2016,21 @@ object Constant {
             inputDateStr
         }
     }
+
+    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to MMMM yyyy (" July 2025 ")
+
+    fun convertDateFormatType3(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr
+        }
+    }
+
 
 
     //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)

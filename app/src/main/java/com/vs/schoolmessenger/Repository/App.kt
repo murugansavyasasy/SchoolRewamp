@@ -90,6 +90,8 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -100,6 +102,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Response.BlockedStud
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel.AvgSkillResponse
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwDeleteResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwremarkUpdateModel
 import com.vs.schoolmessenger.School.LSRW.Model.lsrwskillresponse
@@ -122,6 +125,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaf
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.PTM.DataClass.BookedSlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotBookingResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
@@ -343,6 +347,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
     var isnoticeboarddelete: LiveData<NoticeBoardDeleteResponse?>? = null
     var isEventDelete: LiveData<EventDeleteResponse?>? = null
+    var isLsrwDelete: LiveData<LsrwDeleteResponse?>? = null
     var isAttachmentReportResponse: LiveData<AttachmentReportResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
@@ -359,6 +364,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isPtmSlotCreate: LiveData<StatusMessageModel?>? = null
     var isPtmSlotResponse: LiveData<SlotResponse?>? = null
+    var isBookedSlotsData: LiveData<BookedSlotResponse?>? = null
     var isPtmSlotCancelReOpen: LiveData<StatusMessageModel?>? = null
     var isPtmSlotCancelClose: LiveData<StatusMessageModel?>? = null
     var isDateWiseSlot: LiveData<SlotBookingResponse?>? = null
@@ -409,6 +415,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getNewFeature: LiveData<GetFeature?>? = null
     var getreviewlist: LiveData<ReviewResponse?>? = null
     var reviewpost: LiveData<SubmitReviewResponse?>? = null
+
+    var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
+    var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
 
 
 
@@ -522,6 +531,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
         isnoticeboarddelete = apiSchoolRepositories.isnoticeboarddeleteLiveData
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
+        isLsrwDelete = apiSchoolRepositories.isLsrwDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
         getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
@@ -535,6 +545,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isPtmSlotCreate = apiSchoolRepositories.isPtmSlotCreateLiveData
         isPtmSlotResponse = apiSchoolRepositories.isPtmSlotResponseLiveData
+        isBookedSlotsData = apiSchoolRepositories.isBookedSlotResponseLiveData
         isPtmSlotCancelReOpen = apiSchoolRepositories.isPtmSlotCancelReOpenLiveData
         isPtmSlotCancelClose = apiSchoolRepositories.isPtmSlotCancelCloseLiveData
         isDateWiseSlot = apiSchoolRepositories.isDateWiseSlotLiveData
@@ -584,6 +595,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isdeletenotification = apiSchoolRepositories.isdeletenotificationLiveData
         getreviewlist = apiSchoolRepositories.getreviewlistLiveData
         reviewpost = apiSchoolRepositories.reviewpostLiveData
+        getStaffWiseExam = apiSchoolRepositories.getStaffWiseExamLiveData
+        getSubjectWiseActivities = apiSchoolRepositories.getSubjectWiseActivitiesLiveData
 
 
     }
@@ -1077,6 +1090,9 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isEventDelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
+    fun isLsrwDelete(isToken: String, request: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isLsrwDelete(isToken, request, activity)
+    }
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
         apiParentRepositories.isHomeWorkComplete(isToken, jsonObject)
@@ -1216,6 +1232,13 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isPtmSlotForStaff(isToken, isEventDate)
     }
+
+    fun isBookedSlotsData(
+        isToken: String, isEventDate: String
+    ) {
+        apiSchoolRepositories.isBookedSlot(isToken, isEventDate)
+    }
+
 
     fun isSlotCancelReOpen(
         isToken: String, jsonObject: JsonObject
@@ -1518,6 +1541,20 @@ class App(application: Application) : AndroidViewModel(application) {
         jsonObject: JsonObject
     ) {
         apiSchoolRepositories.reviewpost(isToken, jsonObject)
+    }
+
+    fun getStaffWiseExam(
+        isToken: String,
+        section_id: String
+    ) {
+        apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id)
+    }
+
+    fun getSubjectWiseActivities(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
     }
 
 

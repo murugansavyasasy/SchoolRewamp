@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardUploadImage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ten"
+    android:layout_marginBottom="@dimen/ten"
+    android:background="@color/white"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
+    app:cardBackgroundColor="@android:color/transparent"
+    card_view:cardCornerRadius="@dimen/twele"
+    card_view:cardElevation="@dimen/four">
+
+    <LinearLayout
+        android:id="@+id/lnrUploadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_border"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lnrDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <!-- Exam Header -->
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Radio Indicator -->
+                <ImageView
+                    android:id="@+id/imgCheck"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:src="@drawable/circle_icon" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp">
+
+                    <TextView
+                        android:id="@+id/examTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mid-Term Examination"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/lblMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:alpha="0.6"
+                        android:text="@string/not_started"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
+                    android:src="@drawable/down_arrow_3"
+                    android:tint="@color/gnt_gray" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewDiv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginHorizontal="@dimen/two"
+            android:background="@color/AthensGray"></View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
+            android:background="@drawable/rect_bottom_radius"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

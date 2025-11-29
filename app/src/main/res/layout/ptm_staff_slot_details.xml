@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty_five"
                 android:text="@string/function_meeting"
                 android:textColor="@color/black"

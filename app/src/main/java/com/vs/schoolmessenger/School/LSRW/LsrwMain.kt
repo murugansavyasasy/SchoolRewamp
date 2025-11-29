@@ -1,26 +1,39 @@
 package com.vs.schoolmessenger.School.LSRW
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsRwDashboardAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwFilterAdapter
+import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.School.LSRW.Model.Overview
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwSkillMainBinding
 
-class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
+class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsrwskillreportlistener {
 
     override fun getViewBinding(): LsrwSkillMainBinding {
         return LsrwSkillMainBinding.inflate(layoutInflater)
@@ -38,6 +51,12 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
     private var allOverviewItems: List<Overview> = emptyList()
     private var allTaskItems: List<LsrwTask> = emptyList()
     private var allCompletedItems: List<LsrwTask> = emptyList()
+
+    var isLsrwId = ""
+    var isLsrwPosition = 0
+
+    private var deleteFrom: String = ""
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -63,6 +82,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         adapter = LsrwAdapter(
             itemList = emptyList(),
             context = this,
+            this,
             noDataImage = binding.noDataImage,
             noDataText = binding.noDataFound
         )
@@ -71,6 +91,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
         completedviewadapter = LsrwCompletedAdapter(
             itemList = emptyList(),
             context = this,
+            this,
             noDataImage = binding.noDataImage,
             noDataText = binding.noDataFound
         )
@@ -111,6 +132,23 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
                 handleVisibility(allTaskItems, allCompletedItems,"")
             } else {
                 handleVisibility(emptyList(), emptyList(),response!!.message?:getString(R.string.no_data_found))
+            }
+        }
+
+        appViewModel!!.isLsrwDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@LsrwMain)
+                    when (deleteFrom) {
+                        "ACTIVE" -> adapter.removeItemAt(isLsrwPosition)
+                        "COMPLETED" -> completedviewadapter.removeItemAt(isLsrwPosition)
+                    }
+                    fetchLsrwSkillReportData()
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
             }
         }
     }
@@ -222,4 +260,79 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener {
             binding.noDataImage.visibility = View.GONE
         }
     }
+
+    override fun onEditAndDeleteCompleted(
+        data: LsrwTask,
+        anchorView: View,
+        adapterPosition: Int,
+        source: String
+    ) {
+        isLsrwId = data.id
+        isLsrwPosition = adapterPosition
+        deleteFrom = source
+        showEditDeletePopup(data, anchorView)
+
+    }
+
+
+    fun showEditDeletePopup(data: LsrwTask, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        if(data.can_edit) {
+            layoutEdit.visibility = View.GONE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
+
+        if(data.can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+
+
+    fun showSendConfirmationDialog(isEventUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        alertMessage.text = getString(R.string.are_you_sure_want_to_delete)
+
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            val jsonObject = JsonObject()
+            jsonObject.addProperty(APIKeyNames.id, isLsrwId)
+            appViewModel?.isLsrwDelete(isAccessToken!!, jsonObject, this)
+
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+
 }

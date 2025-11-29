@@ -503,7 +503,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             stopVoiceRecording()
         }
         mAdapter?.releaseMediaPlayer()
-//        Constant.selectedFiles.clear()
+        Constant.selectedFiles.clear()
         Constant.isAwsUploadedFiles.clear()
         updateRemainingCount()
         super.onBackPressed()
@@ -876,7 +876,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             isFileType!!,
                             this,
                             isCountryId!!,
-                            true,
                             false,
                             object : UploadCallback {
 

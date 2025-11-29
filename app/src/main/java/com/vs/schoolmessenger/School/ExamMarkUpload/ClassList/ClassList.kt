@@ -4,13 +4,26 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.RelativeLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.PTM.Adapter.SectionAndStandardAdapter
+import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
+import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -28,9 +41,14 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    var isAcademicYear: List<AcademicYear>? = null
+    var isAcademicYearId = -1
+    var isCurrentAcademicYear = true
+    var isValidAcademicYear = false
+
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ClassListAdapter
-    private var isClassList: List<ClassSectionData>? = emptyList()
+    private var isClassList: List<StandardSection>? = emptyList()
 
     override fun setupViews() {
         super.setupViews()
@@ -39,6 +57,24 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+        params.removeRule(RelativeLayout.START_OF)
+        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
+        binding.toolbarLayout.lytTitleAndName.layoutParams = params
+
+
+        isAcademicYear = Constant.isAcademicYearList
+        isLoadAcademicYear(isAcademicYear)
+        if (!isAcademicYear.isNullOrEmpty()) {
+            isValidAcademicYear =
+                isAcademicYear!!.any { it.current_academic_year == true }
+            isAcademicYearId = isAcademicYear!![0].id
+            isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+        }
+
+        binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE
+        binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
 
@@ -46,17 +82,33 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        if (Constant.isSelectedMenuName==""){
-            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        }else{
-            binding.toolbarLayout.lblParentToolBar.text="ExamMarks"
-        }
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
 
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+        appViewModel!!.isStandardSectionList?.observe(this) { response ->
+            if (response != null) {
+                if (response.status && response.data.isNotEmpty()) {
+                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility= View.VISIBLE
+                    loadSectionStandard(response.data)
+                    ShowData()
+                } else {
+                    binding.rcClassList.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility= View.GONE
+                    ErrorMessage(response.message?:getString(R.string.something_went_wrong_please_try_again_later))
+                }
+
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+            }
+        }
+
+        binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
@@ -87,26 +139,28 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
 
             }
         })
-
-
-        LoadClassList()
     }
-    private fun LoadClassList() {
-        val dummyList = listOf(
-            ClassSectionData("Grade 10", "A", 32),
-            ClassSectionData("Grade 9", "B", 28),
-            ClassSectionData("Grade 8", "C", 26),
-            ClassSectionData("Grade 12", "A", 31),
-            ClassSectionData("Grade 10", "A", 32),
-            ClassSectionData("Grade 9", "B", 28),
-            ClassSectionData("Grade 8", "C", 26),
-            ClassSectionData("Grade 12", "A", 31)
-        )
-        isClassList=dummyList
-        binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
 
-        adapter = ClassListAdapter(dummyList,this,false)
+    private fun loadSectionStandard(data: List<Standard>) {
 
+        val standardSectionList = mutableListOf<StandardSection>()
+
+        for (standard in data) {
+            for (section in standard.sections) {
+                standardSectionList.add(
+                    StandardSection(
+                        standardId = standard.id.toString(),
+                        standardName = standard.name,
+                        sectionId = section.id.toString(),
+                        sectionName = section.name
+                    )
+                )
+            }
+        }
+
+        isClassList=standardSectionList //for search
+
+        adapter = ClassListAdapter(standardSectionList,this,false)
         binding.rcClassList.apply {
             layoutManager = object : LinearLayoutManager(context) {
                 override fun canScrollVertically() = false
@@ -115,6 +169,41 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
         }
 
     }
+
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = NewAcademicYearAdapter(this, isAcademicYear)
+        binding.toolbarLayout.isAcademicSpinner.adapter = adapter
+        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                val selectedOption = isAcademicYear!![position]
+                isAcademicYearId = selectedOption.id
+                isCurrentAcademicYear = selectedOption.current_academic_year
+                Log.d(
+                    "DropdownMenu",
+                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                )
+
+                isGetStandardSection()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+    private fun isGetStandardSection() {
+
+        adapter = ClassListAdapter(null,this,Constant.isShimmerViewShow)
+        binding.rcClassList.apply {
+            layoutManager = object : LinearLayoutManager(context) {
+                override fun canScrollVertically() = false
+            }
+            adapter = this@ClassList.adapter
+        }
+
+        appViewModel!!.isGetStandardSection(isAccessToken!!, isAcademicYearId, this)
+    }
+
 
 
     private fun filter(text: String) {
@@ -125,9 +214,8 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
         } else {
             isClassList.orEmpty().filter { isSubList ->
                 val fieldsToSearch = mutableListOf(
-                    isSubList.grade?.lowercase().orEmpty(),
-                    isSubList.section?.lowercase().orEmpty(),
-                    isSubList.studentCount.toString()?.lowercase().orEmpty(),
+                    isSubList.standardName?.lowercase().orEmpty(),
+                    isSubList.sectionName?.lowercase().orEmpty(),
                 )
 
                 searchWords.all { word ->
@@ -149,11 +237,15 @@ class ClassList : BaseActivity<ClassListBinding >(), View.OnClickListener {
     fun ShowData() {
         binding.rcClassList.visibility=View.VISIBLE
         binding.lytList.visibility = View.GONE
+        binding.lblSelectClass.visibility= View.VISIBLE
+        binding.lblClassDetail.visibility= View.VISIBLE
     }
 
     fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
+        binding.lblSelectClass.visibility= View.GONE
+        binding.lblClassDetail.visibility= View.GONE
     }
 
 

@@ -28,7 +28,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     private var fileType: String = Constant.IMAGE
-    private var isReportTheBugMenu = false
+    private var isWithOutHotCodeImage = false
 
     private var openedSettings = false   // avoids repeated dialog loop
 
@@ -57,7 +57,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
-        isReportTheBugMenu = intent.getBooleanExtra("ReportBugMenu", false)
+        isWithOutHotCodeImage = intent.getBooleanExtra("isWithOutHotCodeImage", false)
 
         setupPermissionLauncher()
         setupDocumentPicker()
@@ -65,8 +65,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         binding.toolbarLayout.tvSelectionCount.text =
             "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
         binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-
-        if (!isReportTheBugMenu) {
+//here we are checking for default first image in recycler view
+        if (!isWithOutHotCodeImage) {
             binding.toolbarLayout.tvSelectedFiles.text =
                 "Total Selected Files : ${Constant.selectedFiles.size - 1}"
         } else {
@@ -98,7 +98,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         requestPermission()
 
         binding.toolbarLayout.imgBack.setOnClickListener {
-            isReportTheBugMenu = false
+            isWithOutHotCodeImage = false
             onBackPressed()
         }
 
@@ -417,7 +417,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 //    private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
 //    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 //    private var fileType: String = Constant.IMAGE
-//    private var isReportTheBugMenu = false
+//    private var isWithOutHotCodeImage = false
 //    private var shouldReload = false
 //    private var hasOpenedSettingsOnce = false
 //
@@ -439,7 +439,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 //        binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 //
 //        fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
-//        isReportTheBugMenu = intent.getBooleanExtra("ReportBugMenu", false)
+//        isWithOutHotCodeImage = intent.getBooleanExtra("ReportBugMenu", false)
 //        setupPermissionLauncher()
 //        setupDocumentPicker()
 //
@@ -447,7 +447,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 //            "Selected Files : 0 / ${Constant.isFileLimit}"
 //        binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
 //
-//        if (!isReportTheBugMenu) {
+//        if (!isWithOutHotCodeImage) {
 //            binding.toolbarLayout.tvSelectedFiles.text =
 //                "Total Selected Files : ${Constant.selectedFiles.size - 1}"
 //        } else {
@@ -476,7 +476,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 //        }
 //
 //        binding.toolbarLayout.imgBack.setOnClickListener {
-//            isReportTheBugMenu = false
+//            isWithOutHotCodeImage = false
 //            onBackPressed()
 //        }
 //

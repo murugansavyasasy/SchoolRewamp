@@ -44,7 +44,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarWhiteTheme()
+        isPrioritySelection(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
         binding.lblParent.setOnClickListener(this)
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)

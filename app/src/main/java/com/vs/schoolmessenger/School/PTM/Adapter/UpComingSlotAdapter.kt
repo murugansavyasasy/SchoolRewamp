@@ -74,7 +74,7 @@ class UpComingSlotAdapter(
             lblMode.text = "Mode - ${data.event_mode}"
             lblTime.text = "${data.start_time} - ${data.end_time}"
 
-            val profiles = data.profiles.map { it.toString() }
+            val profiles = data.profiles.map { it }
             img1.visibility = View.GONE
             img2.visibility = View.GONE
             img3.visibility = View.GONE
@@ -134,14 +134,11 @@ class UpComingSlotAdapter(
         if (apiDate.isNullOrBlank()) return ""
 
         val raw = apiDate.trim()
-        android.util.Log.d("UpComingSlotAdapter", "formatDate input: $raw")
-
         if (raw.matches(Regex("^\\d{10}$")) || raw.matches(Regex("^\\d{13}$"))) {
             try {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
                 val d = java.util.Date(millis)
                 val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(d)
-                android.util.Log.d("UpComingSlotAdapter", "parsed epoch -> $out")
                 return out
             } catch (e: Exception) {
             }
@@ -156,7 +153,6 @@ class UpComingSlotAdapter(
                 val parsed = sdf.parse(raw)
                 if (parsed != null) {
                     val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(parsed)
-                    android.util.Log.d("UpComingSlotAdapter", "parsed with $pattern -> $out")
                     return out
                 }
             } catch (e: Exception) { /* ignore and try next */ }
@@ -176,12 +172,10 @@ class UpComingSlotAdapter(
                 val parsed = sdf.parse(fixed)
                 if (parsed != null) {
                     val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(parsed)
-                    android.util.Log.d("UpComingSlotAdapter", "fixed 2-digit year -> $out")
                     return out
                 }
             } catch (e: Exception) { /* ignore */ }
         }
-        android.util.Log.w("UpComingSlotAdapter", "Unable to parse date: $raw")
         return raw
     }
 }

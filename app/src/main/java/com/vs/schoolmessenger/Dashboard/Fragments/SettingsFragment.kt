@@ -140,7 +140,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     startActivity(intent)
                     requireActivity().finish()
                     Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
-
                 }
                 else {
 //                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()

@@ -17,5 +17,7 @@ data class LsrwTask (
     val thumbnail: String,
     val submitted_average: String,
     val submission_date: String,
+    val can_edit: Boolean,
+    val can_delete: Boolean,
     val file_path: List<FilePath>
 ): Parcelable

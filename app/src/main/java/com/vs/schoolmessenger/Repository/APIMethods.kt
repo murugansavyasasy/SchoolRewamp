@@ -124,6 +124,7 @@ object APIMethods {
     const val isleaverequestupdate = "comm/api/leave-req/update"
     const val isleaverequestdelete = "comm/api/leave-req/delete"
     const val isEventDelete = "admin/api/school-event/delete"
+    const val isLsrwDelete = "lms/api/lsrw/delete"
     const val isnoticeboarddelete = "admin/api/notice-board/delete"
     const val isEventCategories = "admin/api/school-event/categories"
     const val isleavecategories = "comm/api/leave-req/leave-categories"
@@ -144,6 +145,7 @@ object APIMethods {
 
     const val isCreateSlots = "ptm/api/ptm-schedule/create-slots"
     const val isSlotDetailsForStaff = "ptm/api/ptm-schedule/slot-details-for-staff"
+    const val isBookedSlots = "ptm/api/ptm-schedule/datewise-booked-slots"
     const val isSlotCancelAndReOpen = "ptm/api/ptm-schedule/cancel-and-reopen-slot"
     const val isSlotCancelAndClose = "ptm/api/ptm-schedule/cancel-and-close-slot"
     const val isDatewiseBookedSlots = "ptm/api/ptm-schedule/datewise-booked-slots"
@@ -191,6 +193,8 @@ object APIMethods {
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
     const val dashboard_newupdates = "dashboard/api/dashboard/new-updates"
     const val getAttendanceStudentList = "stud-attd/api/attendance/student-list"
+    const val getStaffWiseExam = "exam/api/exam/get-staff-wise-exam"
+    const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
 
 
     const val isblockstudent = "/comm/api/interaction/block-student"

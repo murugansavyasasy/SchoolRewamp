@@ -52,7 +52,7 @@
             android:background="@drawable/bg_rect_white"
             android:elevation="@dimen/six"
             android:padding="@dimen/five"
-            android:src="@drawable/school_chimes"
+            android:src="@drawable/school_chimes_trans_splash"
             app:shapeAppearanceOverlay="@style/RoundedSquare"
             app:layout_constraintBottom_toBottomOf="@id/imgProduct"
             app:layout_constraintEnd_toEndOf="parent" />

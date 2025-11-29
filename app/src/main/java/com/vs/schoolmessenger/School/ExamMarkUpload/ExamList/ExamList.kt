@@ -11,8 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassListAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getSubjectData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter.ExamListAdapter
@@ -34,8 +40,8 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ExamListAdapter
-    private var isClassList: List<getExamListData>? = emptyList()
-    private var selectedExam: getExamListData? = null
+    private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+    private var selectedExam: getStaffWisExamData? = null
 
 
     override fun setupViews() {
@@ -53,11 +59,9 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        if (Constant.isSelectedMenuName==""){
-            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        }else{
-            binding.toolbarLayout.lblParentToolBar.text="ExamMarks"
-        }
+
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+
         //initial we disabled the lblUpload
         binding.lnrUpload.isEnabled = false
         binding.lnrUpload.alpha = 0.4f
@@ -68,8 +72,7 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
 
-        binding.lblClassSectionDetail.text = intent.getStringExtra("grade")+" "+"-"+" "+intent.getStringExtra("section")
-
+        binding.lblClassSectionDetail.text = "${getString(R.string.Standard)} ${Constant.isMarkUploadClassSectionDetails?.standardName} - ${getString(R.string.Section)} ${Constant.isMarkUploadClassSectionDetails?.sectionName}"
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -105,37 +108,50 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         })
 
 
-        LoadExamList()
+        appViewModel!!.getStaffWiseExam?.observe(this) { response ->
+            if (response != null) {
+                if (response.status && response.data.isNotEmpty()) {
+                    staffWisExamList=response.data
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
+                    binding.lblClassContinue0.visibility= View.VISIBLE
+                    binding.LnrContainer2.visibility= View.VISIBLE
+                    LoadExamList(response.data)
+                    ShowData()
+                } else {
+                    binding.lblClassContinue0.visibility= View.GONE
+                    binding.LnrContainer2.visibility= View.GONE
+                    binding.rcExamList.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
+                    ErrorMessage(response.message?:getString(R.string.something_went_wrong_please_try_again_later))
+                }
+
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+            }
+        }
+
+        appViewModel!!.getSubjectWiseActivities?.observe(this) { response ->
+            if (response != null) {
+                if (response.status && response.data.isNotEmpty()) {
+                    adapter.updateSecondData(response.data)
+                    adapter.notifyItemChanged(adapter.expandedPosition)
+                } else {
+                    adapter.updateSecondData(emptyList())
+                    adapter.notifyItemChanged(adapter.expandedPosition)
+                }
+            }
+        }
+
+        isGetStaffWiseData()
     }
 
-    private fun LoadExamList(){
-        val dummyList =listOf(
-            getExamListData(
-                "Mid-Term Examination",
-                "October 2024",
-                subjects = listOf(
-                    getSubjectData("Mathematics", listOf("Paper 1 - Algebra", "Paper 2 - Geometry", "Internal Assessment")),
-                    getSubjectData("Physics", listOf("Theory", "Lab Work")),
-                    getSubjectData("Chemistry", listOf("Organic", "Inorganic"))
-                )
-            ),
-            getExamListData(
-                "Final Examination",
-                "December 2024",
-                subjects = listOf(
-                    getSubjectData("Biology", listOf("Botany", "Zoology"))
-                )
-            )
-        )
-
-        isClassList=dummyList
-        binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
-
-        adapter = ExamListAdapter(dummyList,this,this,false)
-
+    private fun LoadExamList(data: List<getStaffWisExamData>?){
+        adapter = ExamListAdapter(data,this,this,false)
         binding.rcExamList.layoutManager = LinearLayoutManager(this)
-
         binding.rcExamList.adapter = adapter
+
     }
 
 
@@ -143,12 +159,12 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
 
         val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
-            isClassList.orEmpty()
+            staffWisExamList.orEmpty()
         } else {
-            isClassList.orEmpty().filter { isSubList ->
+            staffWisExamList.orEmpty().filter { isSubList ->
                 val fieldsToSearch = mutableListOf(
-                    isSubList.month?.lowercase().orEmpty(),
-                    isSubList.title?.lowercase().orEmpty(),
+                    isSubList.name?.lowercase().orEmpty(),
+                    isSubList.date?.lowercase().orEmpty(),
                 )
 
                 searchWords.all { word ->
@@ -177,7 +193,12 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         binding.txtNoData.text = errorMessage
     }
 
-
+    private fun isGetStaffWiseData() {
+        adapter = ExamListAdapter(null,this,this,Constant.isShimmerViewShow)
+        binding.rcExamList.layoutManager = LinearLayoutManager(this)
+        binding.rcExamList.adapter = adapter
+        appViewModel!!.getStaffWiseExam(isAccessToken!!, Constant.isMarkUploadClassSectionDetails?.sectionId?:"")
+    }
 
 
 
@@ -188,12 +209,14 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
             }
             R.id.lnrUpload->{
                 val intent = Intent(this, UploadMarkSheet::class.java)
+                val saveMarkUploadClassSectionDetails = selectedExam
+                Constant.isMarkUploadExamListDataDetails = saveMarkUploadClassSectionDetails
                 this.startActivity(intent)
             }
         }
     }
 
-    override fun onExamSelected(item: getExamListData?) {
+    override fun onExamSelected(item: getStaffWisExamData?,triggerApi: Boolean) {
         Log.d("Data",item.toString())
         if (item == null) {
             selectedExam = null
@@ -208,6 +231,17 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         binding.lnrUpload.isEnabled = true
         binding.lnrUpload.alpha = 1f
         binding.lblClassContinue.visibility= View.GONE
+
+        if (triggerApi) {//only when the api call is happening we are actually make null
+            adapter.updateSecondData(null)
+
+            //  Only refresh active expanded item if valid index
+            if (adapter.expandedPosition != -1) {
+                adapter.notifyItemChanged(adapter.expandedPosition)
+            }
+
+            appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item.id)
+        }
 
     }
 }

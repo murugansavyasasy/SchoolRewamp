@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.FirebaseApp
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -190,22 +191,7 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
     }
 
     private fun submitReview() {
-        val description = binding.edtSuggestions.text.toString().trim()
-
-        if (mobileNumber.isBlank()) {
-            Toast.makeText(requireContext(),
-                getString(R.string.mobile_number_not_found), Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val jsonObject = JsonObject().apply {
-            addProperty("mobile_number", mobileNumber)
-            addProperty("rating", ratingValue)
-            addProperty("description", description)
-        }
-
-        appViewModel.reviewpost("", jsonObject)
-        observeSubmitReviewResponse()
+        throw RuntimeException("Test Crash - Crashlytics")
     }
 
     override fun onDestroyView() {

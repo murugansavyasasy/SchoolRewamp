@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -24,6 +25,8 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
     private var id: String = ""
+    private var audioAdapter: AudioAdapter? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -52,20 +55,32 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
         fetchMySubmissionList()
 
 
-        appViewModel?.islsrwmysubmission?.observe(this) { response ->
+
+
+
+
+
+        appViewModel.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
+
             if (response?.status == true && !response.data.isNullOrEmpty()) {
 
                 val submission = response.data[0]
 
-                val fileList = submission.file_path?.map {
-                    GetFilePathDetails(url = it.url, type = it.type)
-                } ?: emptyList()
+                // IMAGE LIST (non-audio items)
+                val imageList = submission.file_path
+                    .filter { !it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                    .map { GetFilePathDetails(url = it.url, type = it.type) }
 
-                if (fileList.isNotEmpty()) {
+                val audioList = submission.file_path
+                    .filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+                    .map { it.url }
+
+
+                if (imageList.isNotEmpty()) {
                     val adapter = MySubmissionAdapter(
                         this,
-                        fileList,
+                        imageList,
                         "English",
                         SELECTED_MENU_ID,
                         true
@@ -76,28 +91,49 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                     binding.rcChildHW.adapter = adapter
 
                     binding.rcChildHW.visibility = View.VISIBLE
-                    binding.lytNoDataFound.visibility = View.GONE
                     binding.imageslabel.visibility = View.VISIBLE
-
                 } else {
                     binding.rcChildHW.visibility = View.GONE
-                    binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.imageslabel.visibility = View.GONE
-                    binding.noDataFound.text = response.message?: getString(R.string.no_attached_image_available)
+                }
+
+
+                if (audioList.isNotEmpty()) {
+                    binding.rcSeekBarAndTitle.visibility = View.VISIBLE
+                    audioAdapter = AudioAdapter(audioList)
+                    binding.rcSeekBarAndTitle.layoutManager =
+                        LinearLayoutManager(this)
+                    binding.rcSeekBarAndTitle.adapter = audioAdapter
+                    binding.imageslabel.visibility = View.VISIBLE
+                } else {
+                    binding.rcSeekBarAndTitle.visibility = View.GONE
+                    binding.imageslabel.visibility = View.GONE
+                }
+
+                if (imageList.isEmpty() && audioList.isEmpty()) {
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.noDataFound.text =
+                        response.message ?: getString(R.string.no_attached_image_available)
+                } else {
+                    binding.lytNoDataFound.visibility = View.GONE
                 }
 
             } else {
-                binding.rcChildHW.visibility = View.GONE
                 binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.imageslabel.visibility = View.GONE
                 binding.noDataFound.text = response?.message ?: Constant.NO_DATA_FOUND
             }
         }
+
 
     }
 
     private fun fetchMySubmissionList() {
         Constant.showLoading(this)
         appViewModel?.islsrwmysubmission(isAccessToken!!, id)
+    }
+
+    override fun onBackPressed() {
+        audioAdapter?.release()
+        super.onBackPressed()
     }
 }
