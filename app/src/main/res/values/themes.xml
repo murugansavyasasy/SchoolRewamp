@@ -2,7 +2,8 @@
 <resources>
     <style name="Theme.SchoolChimes" parent="android:Theme.Material.Light.NoActionBar" >
     </style>
-    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/PrimaryColor</item>
         <!-- Defining that new color in ColorPrimaryDark -->

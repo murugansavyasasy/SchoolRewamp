@@ -285,7 +285,7 @@ object ApiCallRequest {
         target_code: MutableList<String>,
         iframe: String,
         fileSize: String,
-        isSelectedCategory: String,
+        isSelectedCategory: Int,
     ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
