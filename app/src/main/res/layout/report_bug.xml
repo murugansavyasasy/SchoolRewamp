@@ -196,7 +196,7 @@
                 android:background="@drawable/background_radius_button"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/send_mail"
+                android:text="Send Mail"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
