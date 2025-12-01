@@ -193,6 +193,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
                     binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                    binding.rlaRecordVoice.visibility= View.GONE
+                    binding.rlaMessageFromText.visibility= View.GONE
                     val isGetHistory = response.data
                     isVoiceHistoryData = isGetHistory
                     loadVoiceData(isVoiceHistoryData)
@@ -209,6 +211,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
                     binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                    binding.rlaRecordVoice.visibility= View.GONE
+                    binding.rlaMessageFromText.visibility= View.GONE
                     val isTextHistory = response.data
                     isTextHistoryData = isTextHistory
                     loadTextHistoryData(isTextHistoryData)
@@ -1036,7 +1040,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 }
                 binding.rlaAddLocalFile.visibility = View.GONE
-
                 binding.lblStartDuration.text = Constant.time_zero
                 stopAudioProgressUpdate()
                 Constant.isVoiceType = 1

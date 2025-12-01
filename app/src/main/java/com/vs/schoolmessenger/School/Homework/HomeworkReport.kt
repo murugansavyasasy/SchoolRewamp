@@ -132,6 +132,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@HomeworkReport)
                     mHomeWorkReportAdapter!!.removeItemAt(isHomeWorkPosition)
+                    fetchHomeWorkReportData()
                 } else {
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
@@ -206,9 +207,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
             override fun afterTextChanged(s: Editable?) {}
         })
-
     }
-
 
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
