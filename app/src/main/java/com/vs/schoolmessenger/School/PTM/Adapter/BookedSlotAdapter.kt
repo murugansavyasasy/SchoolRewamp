@@ -89,7 +89,7 @@ class BookedSlotAdapter(
             val isExpanded = position == expandedPosition
             isConParentName.visibility = if (isExpanded) View.VISIBLE else View.GONE
             imgExpand.setImageResource(
-                if (isExpanded) R.drawable.ic_down_blue_round else R.drawable.ic_up_blue_round
+                if (isExpanded) R.drawable.ic_up_blue_round else R.drawable.ic_down_blue_round
             )
             imgExpand.setOnClickListener {
                 expandedPosition = if (isExpanded) {
