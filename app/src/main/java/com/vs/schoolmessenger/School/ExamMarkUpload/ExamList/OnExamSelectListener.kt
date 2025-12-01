@@ -4,6 +4,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 
 interface OnExamSelectListener {
-    fun onExamSelected(item: getStaffWisExamData?,triggerApi: Boolean)
+    fun onExamSelected(item: getStaffWisExamData?)
+    fun onExamApiCall(item: getStaffWisExamData?)
 
 }

@@ -16,4 +16,5 @@ data class LeaveData(
     val to_session: String,
     val approved_by: String,
     val leave_type: String,
+    val leave_type_id: Int,
 )

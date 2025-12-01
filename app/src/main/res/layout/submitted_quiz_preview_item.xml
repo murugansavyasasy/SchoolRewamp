@@ -93,11 +93,21 @@
             android:textColor="@color/azure_radiance"
             android:textSize="@dimen/fourteen_sp" />
 
+        <View
+            android:layout_marginTop="@dimen/eight"
+            android:layout_width="match_parent"
+            android:background="@color/gray4"
+            android:layout_height="@dimen/one">
+
+        </View>
+
+
+
         <LinearLayout
             android:id="@+id/lnrAnswerDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/eight"
             android:orientation="horizontal"
             android:weightSum="2">
 

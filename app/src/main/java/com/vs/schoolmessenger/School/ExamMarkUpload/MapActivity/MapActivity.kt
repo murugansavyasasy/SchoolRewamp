@@ -120,7 +120,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
             getActivitySubjectNameData(
                 "Science",
                 paper = listOf(
-                    getActivityPaperNameData("Paper 1-Botany", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Paper 1-Botany", listOf("Student_Name and the college is waiting Student_Name and the college is waiting", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
                     getActivityPaperNameData("Paper 2-Zoology", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
                     getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
                 )
@@ -129,7 +129,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
             getActivitySubjectNameData(
                 "Tamil",
                 paper = listOf(
-                    getActivityPaperNameData("Paper 1", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
+                    getActivityPaperNameData("Paper 1", listOf("Student_Name and the college is waiting", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
                     getActivityPaperNameData("Paper 2", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
                     getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
                 )
