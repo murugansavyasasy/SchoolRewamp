@@ -1315,6 +1315,9 @@
     <string name="not_started">Not started</string>
     <string name="of">of</string>
     <string name="activities_mapped">activities mapped</string>
+    <string name="review_and_edit_marks">Review and Edit Marks</string>
+    <string name="verify_the_data_and_make_any_necessary_corrections">Verify the data and make any necessary corrections</string>
+    <string name="save_all_marks">Save All Marks</string>
 
 
 </resources>
