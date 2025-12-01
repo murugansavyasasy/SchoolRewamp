@@ -90,6 +90,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         val rightAnswer = data.get(0).right_answer
         val wrongAnswer =  data.get(0).wrong_answer
         val unAnswer =  data.get(0).un_answer
+        binding.lblMessage.text=data.get(0).message
 
         val rightParts = rightAnswer.split("/")
         val wrongParts = wrongAnswer.split("/")

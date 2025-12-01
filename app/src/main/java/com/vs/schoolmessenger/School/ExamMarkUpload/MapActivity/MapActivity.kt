@@ -65,8 +65,8 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
 
 
-        binding.lblExamName.text= Constant.isMarkUploadExamListDataDetails?.title
-        binding.lblMonthName.text= Constant.isMarkUploadExamListDataDetails?.month
+        binding.lblExamName.text= Constant.isMarkUploadExamListDataDetails?.name
+        binding.lblMonthName.text= Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
 
 

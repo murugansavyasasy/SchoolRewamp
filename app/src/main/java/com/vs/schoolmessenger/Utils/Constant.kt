@@ -78,6 +78,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
@@ -243,7 +244,7 @@ object Constant {
 
 //    var isMarkUploadClassSectionDetails: ClassSectionData? = null
     var isMarkUploadClassSectionDetails: StandardSection? = null
-    var isMarkUploadExamListDataDetails: getExamListData? = null
+    var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
 
 
     var StaffDataSending: StaffDataSending? = null
@@ -2015,6 +2016,21 @@ object Constant {
             inputDateStr
         }
     }
+
+    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to MMMM yyyy (" July 2025 ")
+
+    fun convertDateFormatType3(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr
+        }
+    }
+
 
 
     //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)

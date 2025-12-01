@@ -126,10 +126,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
-    var isAcademicServerLoad = false
-    private var isAssignmentReportData: List<AssignmentData>? = null
-    var isAssignmentAdapter: AssignmentAdapter? = null
     var isValidAcademicYear = false
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
@@ -140,7 +136,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {

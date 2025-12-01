@@ -91,6 +91,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -416,6 +417,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var reviewpost: LiveData<SubmitReviewResponse?>? = null
 
     var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
+    var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
 
 
 
@@ -594,6 +596,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getreviewlist = apiSchoolRepositories.getreviewlistLiveData
         reviewpost = apiSchoolRepositories.reviewpostLiveData
         getStaffWiseExam = apiSchoolRepositories.getStaffWiseExamLiveData
+        getSubjectWiseActivities = apiSchoolRepositories.getSubjectWiseActivitiesLiveData
 
 
     }
@@ -1546,6 +1549,14 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id)
     }
+
+    fun getSubjectWiseActivities(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
+    }
+
 
 }
 
