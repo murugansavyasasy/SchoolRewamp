@@ -8,5 +8,5 @@ data class EventDetails(
     val txtDesc: String,
     val txtStartDate: String,
     val txtStartTime: String,
-    val isCategory: String,
+    val isCategory: Int,
 ) : Serializable
