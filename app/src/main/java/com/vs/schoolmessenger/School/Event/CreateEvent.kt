@@ -95,6 +95,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
     var isSelectedCategory = ""
+    var isSelectedCategoryId = 0
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -260,6 +261,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 ) {
                     Log.d("isSelectedId", data[position].name)
                     isSelectedCategory = data[position].name
+                    isSelectedCategoryId = data[position].id
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -813,7 +815,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             txtDesc,
             txtStartDate,
             txtStartTime,
-            isSelectedCategory
+            isSelectedCategoryId
         )
 
         val intent = Intent(this, RecipientActivity::class.java)
@@ -1101,7 +1103,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             Constant.convertDateFormat(binding.txtStartDate.text.toString())
         )
         jsonObject.addProperty(APIKeyNames.event_time, binding.txtStartTime.text.toString().trim())
-        jsonObject.addProperty(APIKeyNames.category, isSelectedCategory)
+        jsonObject.addProperty(APIKeyNames.category, isSelectedCategoryId)
         jsonObject.addProperty(APIKeyNames.venue, binding.txtLocation.text.toString())
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()

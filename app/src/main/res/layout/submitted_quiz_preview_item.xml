@@ -96,7 +96,7 @@
         <View
             android:layout_marginTop="@dimen/eight"
             android:layout_width="match_parent"
-            android:background="@color/gray4"
+            android:background="@color/gray5"
             android:layout_height="@dimen/one">
 
         </View>

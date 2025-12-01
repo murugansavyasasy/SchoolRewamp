@@ -37,6 +37,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val CHANNEL_NAME = "Custom Notifications"
     }
 
+
+
     private val handler = Handler()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

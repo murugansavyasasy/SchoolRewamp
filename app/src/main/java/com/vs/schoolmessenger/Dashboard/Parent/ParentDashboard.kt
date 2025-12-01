@@ -300,8 +300,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 
-
-
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {
             drawerLayout.openDrawer(GravityCompat.START)
