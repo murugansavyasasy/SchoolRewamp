@@ -71,7 +71,7 @@ import java.util.Date
 import java.util.Locale
 
 class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
-      VimeoVideoUpload.UploadCompletionListener {
+    VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
@@ -180,9 +180,21 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -210,7 +222,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                      //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                        //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -322,7 +334,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -360,6 +376,18 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_homework)) {
+                    val title = binding.edtTitle.text.toString().trim()
+                    val description = binding.edtDescription.text.toString().trim()
+                    if (title.isEmpty()) {
+                        binding.edtTitle.error = getString(R.string.This_field_required)
+                        binding.edtTitle.requestFocus()
+                        return
+                    }
+                    if (description.isEmpty()) {
+                        binding.edtDescription.error = getString(R.string.This_field_required)
+                        binding.edtDescription.requestFocus()
+                        return
+                    }
                     showSendConfirmationDialog(true)
                 } else {
                     isRedirectToSectionStudents()
@@ -450,7 +478,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -501,7 +533,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -514,7 +550,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -564,11 +604,19 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_image_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -636,13 +684,19 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
     // Edit Update code
     fun isUploadFilesInServer(isFileType: String?) {
 
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any { !it.path.contains("player.vimeo.com") }
+        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
+            !it.path.contains("player.vimeo.com")
+        }
         if (needsProcessing) {
             ProgressDialogHelper.show(this)
         }
@@ -863,7 +917,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
             ProgressDialogHelper.dismiss()
         }
-
     }
 
     fun isUpdateHomeWork() {
@@ -913,7 +966,12 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             if (isHomeWorkUpdate) {
                 ProgressDialogHelper.show(this)
                 ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer(Constant.file_)
+                if (Constant.selectedFiles.size != 1) {
+                    isUploadFilesInServer(Constant.file_)
+                } else {
+                    isUpdateHomeWork()
+                }
+
             } else {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)

@@ -655,8 +655,12 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val allSlotsList = data.filter { it.slots.isNotEmpty() }
 
         if (allSlotsList.isEmpty()) {
-            Constant.showTopAlertPopup1(getString(R.string.no_slots_found_for_selected_date_s_and_time), this, false)
-            return
+            Constant.showSendConfirmationDialog(this,"Oops","Ok","Cancel","",getString(R.string.no_slots_found_for_selected_date_s_and_time))
+            { confirmed ->
+                if (confirmed) {
+                    return@showSendConfirmationDialog
+                }
+            }
         }
 
         // ✅ Prevent reopening if already open
@@ -789,15 +793,21 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (isSlotDurationCustom && binding.edtSlotCustomDuration.text.toString().isEmpty()) {
-
             binding.edtSlotCustomDuration.error = getString(R.string.enter_the_slot_duration)
             return null
         }
 
-        if (binding.edtSlotCustomDuration.text.toString() == "0") {
-            Toast.makeText(this,
-                getString(R.string.minutes_should_greater_then_zero), Toast.LENGTH_SHORT).show()
-            return null
+        if (isSlotDurationCustom) {
+            val durationText = binding.edtSlotCustomDuration.text.toString().trim()
+            val duration = durationText.toIntOrNull() ?: 0
+            if (duration == 0) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.minutes_should_greater_then_zero),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return null
+            }
         }
 
         if (binding.switchBreak.isChecked() && isBreakDuration.isEmpty()) {

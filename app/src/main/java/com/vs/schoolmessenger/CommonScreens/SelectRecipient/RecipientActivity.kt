@@ -1340,7 +1340,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         Log.d("CreateQuizRequest", jsonObject.toString())
                         appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
                     }
-
                 }
             }
         }
@@ -1792,7 +1791,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
         }
     }
-
 
     fun voiceSendApi() {
 

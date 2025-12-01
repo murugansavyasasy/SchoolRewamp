@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.Activity.CreateSlots
 import com.vs.schoolmessenger.School.PTM.DataClass.AvailableSlotGroup
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
+import com.vs.schoolmessenger.Utils.Constant
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -40,8 +41,8 @@ class CheckAvailableSlotsDate(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayGroup = dates[position]
 
-        val formattedDate = formatDateForDisplay(dayGroup.date)
-        holder.tvDate.text = formattedDate
+//        val formattedDate = formatDateForDisplay(dayGroup.date)
+        holder.tvDate.text = Constant.formatDatepostedby(dayGroup.date)
 
         val adapter = SlotTimingLoadAdapter(
             dayGroup.slots,

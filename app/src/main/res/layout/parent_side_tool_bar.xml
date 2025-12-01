@@ -65,27 +65,40 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblStudentName"
                     android:text=""
                     android:textSize="@dimen/eleven_sp"
                     android:textColor="@color/white">
 
                 </TextView>
+
+                <TextView
+                    android:id="@+id/lblSubjectName"
+                    android:visibility="gone"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/white"
+                    android:text=""
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/lblSubjectName"
-                android:visibility="gone"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/white"
-                android:layout_below="@+id/rlaStudentName"
-                android:layout_toStartOf="@+id/imgSearchToolBar"
-                android:layout_toEndOf="@id/imgBack"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+<!--            <TextView-->
+<!--                android:id="@+id/lblSubjectName"-->
+<!--                android:visibility="gone"-->
+<!--                style="@style/CustomTextStylePoppinsMedium"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:text="ahcbakdbcakdjbcakjdbcakdakd"-->
+<!--                android:layout_below="@+id/rlaStudentName"-->
+<!--                android:layout_toStartOf="@+id/imgSearchToolBar"-->
+<!--                android:layout_toEndOf="@id/imgBack"-->
+<!--                android:layout_marginEnd="@dimen/five"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
 
-            </TextView>
+<!--            </TextView>-->
 
             <TextView
                 android:id="@+id/lblPostedOn"
