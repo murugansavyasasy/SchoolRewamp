@@ -199,7 +199,8 @@ class LeaveRequestAdapter(
                     from_session = data.from_session,
                     to_session = data.to_session,
                     approved_by = data.approved_by,
-                    leave_type = data.leave_type
+                    leave_type = data.leave_type,
+                    leave_type_id = data.leave_type_id,
                 )
                 Constant.isLeaveData = saveLeaveData
                 context.startActivity(myIntent)

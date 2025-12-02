@@ -630,6 +630,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         intent.putExtra(Constant.isFromSession, data.from_session)
         intent.putExtra(Constant.isToSession, data.to_session)
         intent.putExtra(Constant.isLeaveType, data.leave_type)
+        intent.putExtra(Constant.isLeaveTypeID, data.leave_type_id)
         intent.putExtra(Constant.isRequestEdit, true)
         startActivity(intent)
     }

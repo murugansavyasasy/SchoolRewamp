@@ -49,7 +49,6 @@
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rytSearch1"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:text="@string/upload_mark_sheet"
                 android:textColor="@color/dark_orange_2"
@@ -98,7 +97,7 @@
                         <ImageView
                             android:id="@+id/imgUpload"
                             android:layout_width="@dimen/fourty_five"
-                            android:layout_height="@dimen/sixty"
+                            android:layout_height="@dimen/fourty_five"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:background="@drawable/rect_bg_gray"
@@ -135,11 +134,11 @@
 
                         <ImageView
                             android:id="@+id/imgArrow"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/twenty"
+                            android:layout_marginEnd="@dimen/five"
                             android:src="@drawable/right_arrow_ic"
                             android:tint="#99a1af">
 
@@ -297,7 +296,7 @@
                     <ImageView
                         android:id="@+id/imgUpload1"
                         android:layout_width="@dimen/fourty_five"
-                        android:layout_height="@dimen/sixty"
+                        android:layout_height="@dimen/fourty_five"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/rect_bg_gray"
@@ -334,11 +333,11 @@
 
                     <ImageView
                         android:id="@+id/imgArrow1"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/five"
                         android:src="@drawable/right_arrow_ic"
                         android:tint="#99a1af">
 

@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New_2
 import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,10 +33,13 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private var fromDate: LocalDate? = null
     private var toDate: LocalDate? = null
-    private val leaveCategories = mutableListOf<String>()
+
+    private val leaveCategories = mutableListOf<getCatorgiesData>()
+
     var isFromSession = ""
     var isToSession = ""
     var isLeaveCategoryType = ""
+    var isLeaveCatoryID = 0
     var RequestEdit = false
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -45,6 +49,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private var originalLeaveFrom: String = ""
     private var originalLeaveTo: String = ""
     private var originalLeaveType: String = ""
+    private var originalLeaveID: Int =0
     private var originalFromSession: String = ""
     private var originalToSession: String = ""
 
@@ -102,9 +107,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         })
 
         appViewModel!!.isleaverequestupdate?.observe(this) { response ->
+            Constant.hideLoading(this@NewLeaveRequest)
             if (response != null) {
                 if (response.status) {
-                    Constant.hideLoading(this@NewLeaveRequest)
                     Log.d("isleaverequestupdate", response.message)
                     Constant.showRedirecttoMenu(
                         resources.getString(R.string.success), response.message, this
@@ -118,10 +123,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         }
 
         appViewModel!!.isLeaveRequest?.observe(this) { response ->
+            Constant.hideLoading(this@NewLeaveRequest)
             if (response != null) {
                 if (response.status) {
-                    Constant.hideLoading(this@NewLeaveRequest)
-
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
@@ -145,7 +149,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             Constant.hideLoading(this@NewLeaveRequest)
             if (response != null) {
                 if (response.status) {
-                    leaveCategories.add(Constant.Select_a_leave_type) // Default
+                    leaveCategories.clear()
+                    leaveCategories.add(getCatorgiesData(0,Constant.Select_a_leave_type)) // Default
                     leaveCategories.addAll(response.data)
                     isLeaveCategorySpinner()
                     getIntentValuesIfEditing()
@@ -277,15 +282,16 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     }
 
     private fun isLeaveCategorySpinner() {
-        val adapter = SpinnerLoadingAdapter_New(this, leaveCategories)
+        val adapter = SpinnerLoadingAdapter_New_2(this, leaveCategories)
 
-        // hide first item from dropdown which we are using it as a hint
         adapter.enableFirstItemAsHint()
 
         binding.isLeaveCategories.adapter = adapter
         binding.isLeaveCategories.setSelection(0)
-        isLeaveCategoryType = leaveCategories[0]
-        Log.d("isLeaveCategoryType", isLeaveCategoryType)
+
+        // Default selected
+        isLeaveCategoryType = leaveCategories[0].name
+        isLeaveCatoryID = leaveCategories[0].id
 
         binding.isLeaveCategories.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -296,7 +302,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                     adapter.notifyDataSetChanged()
 
                     if (position > 0) {
-                        isLeaveCategoryType = leaveCategories[position]
+                        isLeaveCategoryType = leaveCategories[position].name
+                        isLeaveCatoryID = leaveCategories[position].id
                         validateDateAndSession(showError = true)
                     }
                 }
@@ -304,6 +311,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
     }
+
 
     private fun isToSpinner() {
 
@@ -350,6 +358,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             }
 
             R.id.btnupdate -> {
+                Log.d("hasChangesMade",hasChangesMade().toString())
                 if (hasChangesMade()) {
                     Constant.showSendConfirmationDialog(
                         this,
@@ -388,7 +397,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             addProperty(APIKeyNames.reason, binding.etLeaveReason.text.toString().trim())
             addProperty(APIKeyNames.f_session, if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
             addProperty(APIKeyNames.t_session, if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
-            addProperty(APIKeyNames.leave_type, isLeaveCategoryType)
+            addProperty(APIKeyNames.leave_type, isLeaveCatoryID)
 
 
         }
@@ -407,7 +416,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             reason = binding.etLeaveReason.text.toString().trim(),
             f_session = if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf,
             t_session = if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf,
-            leave_type = isLeaveCategoryType
+            leave_type = isLeaveCatoryID
         )
         appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
     }
@@ -424,7 +433,8 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             originalReason = intent.getStringExtra(Constant.isReason) ?: ""
             originalLeaveFrom = intent.getStringExtra(Constant.isLeaveFrom) ?: ""
             originalLeaveTo = intent.getStringExtra(Constant.isLeaveTo) ?: ""
-            originalLeaveType = intent.getStringExtra(Constant.isLeaveType) ?: Session[0]
+            originalLeaveType = intent.getStringExtra(Constant.isLeaveType) ?: Constant.Others2
+            originalLeaveID = intent.getIntExtra(Constant.isLeaveTypeID,0)
             originalFromSession = intent.getStringExtra(Constant.isFromSession) ?: Session[0]
             originalToSession = intent.getStringExtra(Constant.isToSession) ?: Session[1]
 
@@ -451,13 +461,21 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             if (toSessionIndex != -1) binding.isToSession.setSelection(toSessionIndex)
 
             Log.d("leaveCategories", leaveCategories.toString())
-            val leaveType = leaveCategories.indexOf(originalLeaveType)
-            Log.d("leaveType", leaveType.toString())
-            if (leaveType != -1) binding.isLeaveCategories.setSelection(leaveType)
+//            val leaveType = leaveCategories.indexOf(originalLeaveType)
+            val leaveTypeIndex = leaveCategories.indexOfFirst { it.id == originalLeaveID }
+            if (leaveTypeIndex != -1) {
+                binding.isLeaveCategories.setSelection(leaveTypeIndex)
+                isLeaveCatoryID = leaveCategories[leaveTypeIndex].id
+                originalLeaveID = leaveCategories[leaveTypeIndex].id
+                isLeaveCategoryType = leaveCategories[leaveTypeIndex].name
+            }
+//            Log.d("leaveType", leaveType.toString())
+//            if (leaveType != -1) binding.isLeaveCategories.setSelection(leaveType)
+//            isLeaveCatoryID = originalLeaveID
 
             isFromSession = originalFromSession
             isToSession = originalToSession
-            isLeaveCategoryType = originalLeaveType
+
             Log.d("isLeaveCategoryType", isLeaveCategoryType)
 
             validateDateAndSession(showError = true)
@@ -471,14 +489,28 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val currentTo = toDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
         val currentFSession = isFromSession
         val currentTSession = isToSession
-        val currentLeaveCatoryType = isLeaveCategoryType
+        val currentLeaveCatoryID = isLeaveCatoryID
+
+Log.d("isLeaveFinalID",isLeaveCatoryID.toString())
+Log.d("isLeaveFinalID",currentTSession.toString())
+Log.d("isLeaveFinalID",currentFSession.toString())
+Log.d("isLeaveFinalID",currentTo.toString())
+Log.d("isLeaveFinalID",currentFrom.toString())
+Log.d("isLeaveFinalID",currentReason.toString())
+Log.d("isLeaveFinalID",originalReason.toString())
+Log.d("isLeaveFinalID",originalLeaveFrom.toString())
+Log.d("isLeaveFinalID",originalLeaveTo.toString())
+Log.d("isLeaveFinalID",originalFromSession.toString())
+Log.d("isLeaveFinalID",originalToSession.toString())
+Log.d("isLeaveFinalID",originalLeaveID.toString())
+
 
         return originalReason != currentReason ||
                 originalLeaveFrom != currentFrom ||
                 originalLeaveTo != currentTo ||
                 originalFromSession != currentFSession ||
                 originalToSession != currentTSession ||
-                originalLeaveType != currentLeaveCatoryType
+                originalLeaveID != currentLeaveCatoryID
     }
 
 
@@ -486,8 +518,11 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val errors = mutableListOf<String>()
         val reason = binding.etLeaveReason.text.toString().trim()
 
-        // Validate Leave Type
-        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == Constant.Select_a_leave_type) {
+//        // Validate Leave Type
+//        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == Constant.Select_a_leave_type) {
+//            errors.add(getString(R.string.leave_type_is_required))
+//        }
+        if (isLeaveCatoryID<0||isLeaveCategoryType == Constant.Select_a_leave_type) {
             errors.add(getString(R.string.leave_type_is_required))
         }
 
@@ -582,6 +617,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     }
 
     private fun loadLeaveCategories() {
+        Constant.showLoading(this)
         appViewModel!!.getLeaveCategories(isAccessToken!!)
     }
 
