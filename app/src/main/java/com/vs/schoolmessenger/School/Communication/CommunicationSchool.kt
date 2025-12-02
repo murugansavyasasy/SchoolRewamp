@@ -871,6 +871,32 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
 
+            R.id.lnrScheduleCall -> {
+                KeyboardUtils.hideKeyboard(this)
+                val dateAdapter = DateAdapter(this) { updatedList -> }
+                selectedDatesAdapter = SelectedDatesAdapter(
+                    context = this,
+                    selectedDates = selectedDates.toMutableList(),
+                    dateAdapter = dateAdapter
+                ) { removedDate ->
+                    selectedDates.remove(removedDate)
+                    dateAdapter.removeSelectedDate(removedDate)
+                }
+                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
+
+                val datePickerPopup = CustomDatePicker(
+                    context = this,
+                    preSelectedDates = selectedDates.toList(),
+                    dateAdapter = dateAdapter
+                ) { newSelectedDates ->
+                    selectedDates.clear()
+                    selectedDates.addAll(newSelectedDates)
+                    selectedDatesAdapter!!.submitSelectedDates(selectedDates.toList())
+                }
+                datePickerPopup.show(window.decorView.rootView)
+            }
+
+
             R.id.rlaAddLocalFile -> {
 
                 if (checkAndRequestAccessFilePermissions(this)) {
@@ -1072,31 +1098,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 KeyboardUtils.hideKeyboard(this)
                 onBackPressed()
                 Constant.selectedFiles.clear()
-            }
-
-            R.id.lnrScheduleCall -> {
-                KeyboardUtils.hideKeyboard(this)
-                val dateAdapter = DateAdapter(this) { updatedList -> }
-                selectedDatesAdapter = SelectedDatesAdapter(
-                    context = this,
-                    selectedDates = selectedDates.toMutableList(),
-                    dateAdapter = dateAdapter
-                ) { removedDate ->
-                    selectedDates.remove(removedDate)
-                    dateAdapter.removeSelectedDate(removedDate)
-                }
-                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
-
-                val datePickerPopup = CustomDatePicker(
-                    context = this,
-                    preSelectedDates = selectedDates.toList(),
-                    dateAdapter = dateAdapter
-                ) { newSelectedDates ->
-                    selectedDates.clear()
-                    selectedDates.addAll(newSelectedDates)
-                    selectedDatesAdapter!!.submitSelectedDates(selectedDates.toList())
-                }
-                datePickerPopup.show(window.decorView.rootView)
             }
 
 
