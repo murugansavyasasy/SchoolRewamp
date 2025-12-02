@@ -112,6 +112,7 @@ object APIKeyNames {
     const val admission_no = "admission_no"
     const val roll_no = "roll_no"
     const val created_on = "created_on"
+    const val designation = "designation"
     const val sections = "sections"
     const val detail_id = "detail_id"
     const val member_type = "member_type"

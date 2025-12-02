@@ -627,11 +627,11 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         if (resultCode != RESULT_OK) return
 
         val remaining =
-            ParentProfileRewampFragment.Companion.MAX_FILES - Constant.selectedFiles.size
+            MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
             Toast.makeText(
                 requireContext(),
-                "${getString(R.string.Max)} ${ParentProfileRewampFragment.Companion.MAX_FILES} ${
+                "${getString(R.string.Max)} ${MAX_FILES} ${
                     getString(R.string.files_allowed)
                 }",
                 Toast.LENGTH_SHORT

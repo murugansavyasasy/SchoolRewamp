@@ -17,6 +17,6 @@ data class NameAndIds(
     @SerializedName(APIKeyNames.name) val name: String,
     @SerializedName(APIKeyNames.admission_no) val admission_no: String,
     @SerializedName(APIKeyNames.roll_no) val roll_no: String,
-    @SerializedName(APIKeyNames.created_on) val created_on: String
-
+    @SerializedName(APIKeyNames.created_on) val created_on: String,
+    @SerializedName(APIKeyNames.designation) val designation: String,
 )

@@ -100,7 +100,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
