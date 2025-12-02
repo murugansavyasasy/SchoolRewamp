@@ -99,6 +99,7 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:gravity="center"
+                android:visibility="gone"
                 android:layout_height="match_parent">
                 <RelativeLayout
                     android:id="@+id/rytAcademicYearDropDown"

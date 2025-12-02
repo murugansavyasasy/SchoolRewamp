@@ -124,6 +124,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+        isAcademicYearId= Constant.isCurrentAcademicYearId
         isGetStandardSection()
 
 
