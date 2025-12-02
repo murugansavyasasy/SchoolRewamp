@@ -178,8 +178,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
-        binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
+        val subject = data?.subjectName
+        if (subject.isNullOrEmpty()) {
+            binding.toolbarLayout.lblSubjectName.visibility = View.GONE
+        } else {
+            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.text = subject
+        }
+
 
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             LsrwSubmitSkill()
