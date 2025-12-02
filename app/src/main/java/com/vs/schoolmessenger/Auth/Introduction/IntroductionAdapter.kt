@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeatureData
 import com.vs.schoolmessenger.R
 
@@ -36,6 +37,9 @@ class OnboardingAdapter(
         // Load image from URL using Glide
         Glide.with(context)
             .load(item.file_path.get(0).url)
+            .thumbnail(0.1f)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(600, 600)
             .placeholder(R.drawable.no_search_message)
             .error(R.drawable.no_search_message)
             .into(holder.img)

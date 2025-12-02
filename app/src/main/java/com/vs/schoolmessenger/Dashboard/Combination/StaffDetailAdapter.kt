@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -125,6 +126,9 @@ class StaffDetailAdapter(
 
         Glide.with(context)
             .load(item.school_logo)
+            .thumbnail(0.1f)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(600, 600)
             .placeholder(R.drawable.school_sample) // Temporary image while loading
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(

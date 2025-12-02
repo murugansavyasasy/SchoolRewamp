@@ -4,5 +4,6 @@ data class BlockedStudent (
     val id: String,
     val name: String,
     val gender: String,
+    val reason: String,
     val blocked_on: String
 )

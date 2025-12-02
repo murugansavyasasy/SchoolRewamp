@@ -225,7 +225,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
 
         // Prepare list for spinner ("All" + school names)
         val schoolNames = mutableListOf<String>()
-        schoolNames.add("All")
+        schoolNames.add("All Schools")
         schoolNames.addAll(staffList.map { it.school_name })
 
         // Use your custom spinner adapter instead of ArrayAdapter

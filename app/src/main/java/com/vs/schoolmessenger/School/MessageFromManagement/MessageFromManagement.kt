@@ -200,7 +200,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                         if (isMultipleSchool) {
                             Log.d("IsComing", "AAAAAAAAAAAAAAAAAA")
-                            if (selectedSchoolId == Constant.All_) {
+                            if (selectedSchoolId == Constant.All_Schools) {
                                 Log.d("IsComing", "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
                                 Log.d("IsComing", isMultipleSchool.toString())
                                 adapter.AppendData(response.data)
@@ -395,7 +395,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
 
         val schoolNames = mutableListOf<String>()
-        schoolNames.add("All")
+        schoolNames.add("All Schools")
         schoolNames.addAll(staffList.map { it.school_name })
 
         val adapter = SpinnerLoadingAdapter(this, schoolNames)
@@ -421,7 +421,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             isLoadMsgStaff(completeAttachmentList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-                            selectedSchoolId = Constant.All_
+                            selectedSchoolId = Constant.All_Schools
 
                         } else {
                             // Specific school selected

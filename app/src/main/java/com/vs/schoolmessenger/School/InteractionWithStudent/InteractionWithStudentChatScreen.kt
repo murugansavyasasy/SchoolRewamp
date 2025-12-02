@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -56,7 +57,11 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+
+        isToolBarPrimaryInteractionwithStaff(
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
+        )
+
         super.setupViews()
         setupToolbarBlueWhite()
         appViewModel = ViewModelProvider(this).get(App::class.java)
