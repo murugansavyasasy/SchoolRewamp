@@ -84,6 +84,7 @@
                 android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/dark_orange_2"
+                android:textStyle="bold"
                 android:textSize="@dimen/twenty_sp"
                 android:text="@string/review_and_edit_marks"
                 android:layout_height="wrap_content">
@@ -96,6 +97,7 @@
                 android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/verify_the_data_and_make_any_necessary_corrections"
                 android:layout_height="wrap_content">
@@ -193,7 +195,7 @@
                         android:id="@+id/imgLeftArrow"
                         android:layout_centerVertical="true"
                         android:layout_width="@dimen/twenty"
-                        android:src="@drawable/ic_left_arrow"
+                        android:src="@drawable/arrow_narrow_left_icon"
                         android:tint="@color/black"
                         android:layout_height="@dimen/twenty">
                     </ImageView>
@@ -208,6 +210,7 @@
                         android:layout_width="match_parent"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:textStyle="bold"
+                        android:textSize="@dimen/thirteen_sp"
                         android:text="Swipe horizontally to see all activities"
                         android:layout_height="wrap_content">
                     </TextView>
@@ -218,7 +221,7 @@
                         android:layout_alignParentEnd="true"
                         android:id="@+id/imgRightArrow"
                         android:layout_width="@dimen/twenty"
-                        android:src="@drawable/right_arrow_ic"
+                        android:src="@drawable/arrow_narrow_right_icon"
                         android:layout_height="@dimen/twenty">
                     </ImageView>
                 </RelativeLayout>

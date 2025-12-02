@@ -7,11 +7,12 @@
 
     <TextView
         android:id="@+id/dateBox"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty_five"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:gravity="center"
-        android:background="@drawable/rect_white_light_radious"
-        android:padding="@dimen/five"
+        android:background="@drawable/rect_round_light_green"
         android:textColor="@color/black"
         android:textSize="@dimen/twele_sp" />
+
+
 </LinearLayout>

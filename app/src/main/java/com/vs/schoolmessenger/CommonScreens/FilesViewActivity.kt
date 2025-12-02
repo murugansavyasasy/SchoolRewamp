@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -213,7 +214,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 }
 
                 R.id.action_download -> {
-                    binding.lnrDownloadStatus.visibility = View.VISIBLE
                     if (url.contains("vimeo.com/video/")) fetchAndDownloadVimeoVideo(url)
                     else if (checkStoragePermission()) downloadFile(url)
                     else requestStoragePermission()
@@ -250,15 +250,18 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             binding.lnrDownloadStatus.visibility = View.GONE
             return
         }
-        CoroutineScope(Dispatchers.IO).launch {
+
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitClient.apiService.getVideoDetails(
                     videoId,
                     "Bearer ${Constant.isVimeoToken}"
                 )
+
                 if (response.isSuccessful) {
                     val videoData = response.body()
                     val mp4Link = videoData?.download?.find { it.type == "video/mp4" }?.link
+
                     if (!mp4Link.isNullOrEmpty()) {
                         downloadFile(mp4Link)
                     } else {
@@ -268,16 +271,17 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                                 getString(R.string.no_downloadable_mp4_found),
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }
-                        withContext(Dispatchers.Main) {
                             binding.lnrDownloadStatus.visibility = View.GONE
                         }
                     }
                 } else {
                     Log.e("VimeoAPI", "${response.code()} ${response.errorBody()?.string()}")
+                    withContext(Dispatchers.Main) {
+                        binding.lnrDownloadStatus.visibility = View.GONE
+                    }
                 }
             } catch (e: Exception) {
-                Log.e("VimeoAPI", "Error: ${e.message}", e)
+                Log.e("VimeoAPI", "Error: ${e.message}")
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                 }
@@ -285,22 +289,22 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         }
     }
 
+
     private fun downloadFile(url: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.VISIBLE
                 }
 
                 var fileName = url.substringAfterLast("/").substringBefore("?")
-                val fileExtension =
-                    fileName.substringAfterLast('.', missingDelimiterValue = "").lowercase()
+                val fileExtension = fileName.substringAfterLast('.', "").lowercase()
 
                 val subFolder = when (fileExtension) {
                     "mp4", "mov", "mkv", "avi", "flv", "wmv", "webm", "mpeg", "mpg", "3gp", "m4v" -> "Videos"
-                    "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "csv", "txt", "rtf", "odt", "ods", "odp", "html", "xml", "json", "log" -> "Documents"
-                    "jpg", "jpeg", "png", "gif", "bmp", "webp", "heic", "tiff", "svg", "ico" -> "Images"
-                    "mp3", "wav", "aac", "ogg", "flac", "m4a", "wma", "amr", "opus" -> "Audio"
+                    "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx" -> "Documents"
+                    "jpg", "jpeg", "png", "gif", "bmp", "webp" -> "Images"
+                    "mp3", "wav", "aac", "ogg", "flac", "m4a" -> "Audio"
                     else -> "Others"
                 }
 

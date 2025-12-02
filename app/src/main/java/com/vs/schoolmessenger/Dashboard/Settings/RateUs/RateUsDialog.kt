@@ -191,7 +191,22 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
     }
 
     private fun submitReview() {
-        throw RuntimeException("Test Crash - Crashlytics")
+        val description = binding.edtSuggestions.text.toString().trim()
+
+        if (mobileNumber.isBlank()) {
+            Toast.makeText(requireContext(),
+                getString(R.string.mobile_number_not_found), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val jsonObject = JsonObject().apply {
+            addProperty("mobile_number", mobileNumber)
+            addProperty("rating", ratingValue)
+            addProperty("description", description)
+        }
+
+        appViewModel.reviewpost("", jsonObject)
+        observeSubmitReviewResponse()
     }
 
     override fun onDestroyView() {

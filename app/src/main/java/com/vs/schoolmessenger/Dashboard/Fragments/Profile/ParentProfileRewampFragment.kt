@@ -411,6 +411,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             maxHeight = 1280,
             onEachProcessed = { original, outputPath, success ->
                 if (success && outputPath != null) {
+                    currentEditMode="profile_photo"
                     val isCountryId = SharedPreference.getCountryId(requireContext())
                     isAwsUploadingPreSigned?.getPreSignedUrl(
                         outputPath,
@@ -888,6 +889,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
+                        currentEditMode=""
                         val originalFileName =
                             getFileName(Uri.parse(Constant.selectedFiles[i].path))
                         isAwsUploadingPreSigned?.getPreSignedUrl(

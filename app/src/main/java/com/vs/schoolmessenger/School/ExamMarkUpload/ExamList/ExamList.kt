@@ -216,7 +216,7 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         }
     }
 
-    override fun onExamSelected(item: getStaffWisExamData?,triggerApi: Boolean) {
+    override fun onExamSelected(item: getStaffWisExamData?) {
         Log.d("Data",item.toString())
         if (item == null) {
             selectedExam = null
@@ -232,16 +232,19 @@ class ExamList : BaseActivity<ExamListBinding >(), View.OnClickListener, OnExamS
         binding.lnrUpload.alpha = 1f
         binding.lblClassContinue.visibility= View.GONE
 
-        if (triggerApi) {//only when the api call is happening we are actually make null
-            adapter.updateSecondData(null)
+    }
 
-            //  Only refresh active expanded item if valid index
-            if (adapter.expandedPosition != -1) {
-                adapter.notifyItemChanged(adapter.expandedPosition)
-            }
+    override fun onExamApiCall(item: getStaffWisExamData?) {
+        Log.d("Data",item.toString())
+        Log.d("isSelected",selectedExam.toString())
 
-            appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item.id)
+        adapter.updateSecondData(null)
+
+        //  Only refresh active expanded item if valid index
+        if (adapter.expandedPosition != -1) {
+            adapter.notifyItemChanged(adapter.expandedPosition)
         }
 
+        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id)
     }
 }

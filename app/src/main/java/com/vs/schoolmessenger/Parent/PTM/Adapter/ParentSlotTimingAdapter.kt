@@ -55,7 +55,7 @@ class ParentSlotTimingAdapter(
                 if (slot.my_booking) {
                     holder.card.setBackgroundResource(R.drawable.circle_background_green)
                     holder.tvSlotStatus.text = context.getString(R.string.booked)
-                    holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                    holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
                     holder.card.isEnabled = false
                 } else {
                     holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
@@ -75,7 +75,7 @@ class ParentSlotTimingAdapter(
             slot.my_booking -> {
                 holder.card.setBackgroundResource(R.drawable.circle_background_green)
                 holder.tvSlotStatus.text = context.getString(R.string.booked)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
                 holder.card.isEnabled = false
             }
 

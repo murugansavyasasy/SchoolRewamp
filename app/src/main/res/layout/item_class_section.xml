@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.cardview.widget.CardView
-                card_view:cardCornerRadius="@dimen/fourteen"
+                card_view:cardCornerRadius="@dimen/thirteen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <!-- Content Layout -->
@@ -55,8 +55,8 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/thirty"
-                            android:src="@drawable/graduation_hat"
-                            android:tint="@color/dark_orange_2" />
+                            android:src="@drawable/graduate_hat_icon"
+                           />
                     </RelativeLayout>
 
                     <TextView

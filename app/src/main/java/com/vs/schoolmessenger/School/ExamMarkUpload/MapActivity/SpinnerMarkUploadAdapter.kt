@@ -37,35 +37,65 @@ class SpinnerMarkUploadAdapter(
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_new, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val viewDiv = view.findViewById<View>(R.id.viewDiv)
-        val tick = view.findViewById<ImageView>(R.id.imageTick)
 
         textView.text = items[position]
 
-        // Only 3rd item visible, others gone
+        // Divider only for 3rd item
         viewDiv.visibility = if (position == 2) View.VISIBLE else View.GONE
 
-        // Tick highlighted
-        tick.visibility = if (position == selectedPosition) View.VISIBLE else View.GONE
-
-        //  Change text color only for 1st & 4th items
-        if (position == 0) {
-            textView.setTextColor(context.getColor(R.color.very_dark_gray2))
+        // Tick on selected item using drawableEnd
+        if (position == selectedPosition) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(
+                0, 0, R.drawable.ic_check_mark_new, 0
+            )
+        } else {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         }
 
-        else if (position == 3){
-            textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
-
-        }
-        else {
-            textView.setTextColor(context.getColor(R.color.black))
-            view.alpha = 1f
+        // Text color customization
+        when (position) {
+            0 -> textView.setTextColor(context.getColor(R.color.very_dark_gray2))
+            3 -> textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
+            else -> textView.setTextColor(context.getColor(R.color.black))
         }
 
         return view
     }
+
+
+//    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+//        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick, parent, false)
+//        val textView = view.findViewById<TextView>(R.id.textViewItem)
+//        val viewDiv = view.findViewById<View>(R.id.viewDiv)
+//        val tick = view.findViewById<ImageView>(R.id.imageTick)
+//
+//        textView.text = items[position]
+//
+//        // Only 3rd item visible, others gone
+//        viewDiv.visibility = if (position == 2) View.VISIBLE else View.GONE
+//
+//        // Tick highlighted
+//        tick.visibility = if (position == selectedPosition) View.VISIBLE else View.GONE
+//
+//        //  Change text color only for 1st & 4th items
+//        if (position == 0) {
+//            textView.setTextColor(context.getColor(R.color.very_dark_gray2))
+//        }
+//
+//        else if (position == 3){
+//            textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
+//
+//        }
+//        else {
+//            textView.setTextColor(context.getColor(R.color.black))
+//            view.alpha = 1f
+//        }
+//
+//        return view
+//    }
 
 }
 

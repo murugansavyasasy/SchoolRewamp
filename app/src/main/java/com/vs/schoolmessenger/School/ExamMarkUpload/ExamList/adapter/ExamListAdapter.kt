@@ -100,7 +100,7 @@ class ExamListAdapter(
                 if (prevExpanded != -1 && prevExpanded != position) notifyItemChanged(prevExpanded)
 
                 //Actually we are calling the api for the inner recyclerview here true means i want to do api call
-                listener.onExamSelected(item, true)
+                listener.onExamApiCall(item)
             }
 
             val isSelected = position == selectedPosition
@@ -122,7 +122,7 @@ class ExamListAdapter(
                 if (prevSelected == position) {
                     selectedPosition = -1
                     notifyItemChanged(prevSelected)
-                    listener.onExamSelected(null, false)
+                    listener.onExamSelected(null)
                     return@setOnClickListener
                 }
 
@@ -132,7 +132,7 @@ class ExamListAdapter(
 
                 //Actually we are calling the api for the inner recyclerview here false means i am not calling the api
 
-                listener.onExamSelected(item, false)
+                listener.onExamSelected(item)
             }
 
             if (isExpanded) {
