@@ -96,6 +96,7 @@ class BlockListStudentAdapter(
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
 
         private val blocked_on: TextView = itemView.findViewById(R.id.blocked_on)
+        private val reason: TextView = itemView.findViewById(R.id.reason)
 
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
         private val lytunblock: LinearLayout = itemView.findViewById(R.id.lytunblock)
@@ -105,7 +106,8 @@ class BlockListStudentAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: BlockedStudent, position: Int, adapter: BlockListStudentAdapter) {
             nameheader.text = student.name
-            blocked_on.text = "${context.getString(R.string.Blocked_on)}: "+student.blocked_on
+            blocked_on.text = "${context.getString(R.string.Blocked_on)} : "+student.blocked_on
+            reason.text = "${context.getString(R.string.reason_2)} "+student.reason
             lblLogo.text = Constant.getNameInitials(student.name)
 
             lytunblock.setOnClickListener {

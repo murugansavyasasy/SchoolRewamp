@@ -169,6 +169,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+        binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
 
