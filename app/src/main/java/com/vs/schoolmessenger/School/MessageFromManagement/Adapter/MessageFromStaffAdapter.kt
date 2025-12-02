@@ -112,7 +112,6 @@ class MessageFromStaffAdapter(
             }
 
             lblSchoolName.text = data.school_name
-            lblSchoolName.visibility=View.GONE
 
             lblTimeDate.text = "${Constant.isFormatDate(data.date.toString())} ${data.time}"
 

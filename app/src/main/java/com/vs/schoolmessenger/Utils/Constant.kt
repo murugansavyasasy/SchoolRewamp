@@ -456,6 +456,7 @@ object Constant {
     var current = "current"
     var wav = ".wav"
     var wav_ = "wav"
+    var isCurrentAcademicYearId=0
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
     var ALL_STUDENTS = "All students"
@@ -503,6 +504,7 @@ object Constant {
     var claimed = "claimed"
     var expired = "expired"
     var All_ = "All"
+    var All_Schools= "All_Schools"
     var all__ = "all"
     var st = "st"
     var nd = "nd"

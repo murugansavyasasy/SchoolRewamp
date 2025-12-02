@@ -56,6 +56,7 @@ class GroupStaffAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblGroupName: TextView = itemView.findViewById(R.id.lblgroupname)
         private val lblCreated: TextView = itemView.findViewById(R.id.lblCreated)
+        private val lblDesignation: TextView = itemView.findViewById(R.id.lblDesignation)
         private val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
 
         fun bind(data: NameAndIds, position: Int) {
@@ -67,6 +68,13 @@ class GroupStaffAdapter(
                     lblCreated.text = Constant.convertDateTimeFormat(it)
                 } ?: run {
                     lblCreated.visibility = View.GONE
+                }
+            } else {
+                if (data.designation == "") {
+                    lblDesignation.visibility = View.GONE
+                } else {
+                    lblDesignation.visibility = View.VISIBLE
+                    lblDesignation.text = data.designation
                 }
             }
 

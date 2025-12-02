@@ -40,7 +40,7 @@ class TimeTableDayAdapter(
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_day, parent, false)
+                .inflate(R.layout.item_day_timetable, parent, false)
             DataViewHolder(view, context)
         }
     }

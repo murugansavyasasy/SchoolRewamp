@@ -100,7 +100,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
@@ -169,6 +168,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+        binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.btnSubmit.setOnClickListener(this)
 

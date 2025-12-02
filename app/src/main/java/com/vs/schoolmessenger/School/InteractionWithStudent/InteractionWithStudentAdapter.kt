@@ -44,8 +44,7 @@ class InteractionWithStudentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.interaction_student_item)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.interaction_student_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -75,7 +74,8 @@ class InteractionWithStudentAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.subject_name.lowercase().contains(query)
+                        it.subject_name.lowercase().contains(query) || it.name.lowercase()
+                            .contains(query) || it.section_name.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -105,7 +105,8 @@ class InteractionWithStudentAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: StudentChatData, position: Int, adapter: InteractionWithStudentAdapter) {
             nameheader.text = student.subject_name
-            subjectheader.text = "${context.getString(R.string.Class_1)} - ${student.name} (${student.section_name})"
+            subjectheader.text =
+                "${context.getString(R.string.Class_1)} - ${student.name} (${student.section_name})"
 
             unreadcount.text = student.unread_count.toString()
             lblLogo.text = Constant.getNameInitials(student.subject_name)
@@ -150,7 +151,14 @@ class InteractionWithStudentAdapter(
                     minutes < 1 -> context.getString(R.string.just_now)
                     minutes < 60 -> "$minutes ${context.getString(R.string.min_ago)}"
                     hours < 24 -> "$hours ${context.getString(R.string.hr_ago)}"
-                    days < 7 -> "$days ${context.getString(R.string.day_)}${if (days > 1) "${context.getString(R.string.s_)}" else ""} ${context.getString(R.string.ago)}"
+                    days < 7 -> "$days ${context.getString(R.string.day_)}${
+                        if (days > 1) "${
+                            context.getString(
+                                R.string.s_
+                            )
+                        }" else ""
+                    } ${context.getString(R.string.ago)}"
+
                     else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
                 }
             } catch (e: Exception) {

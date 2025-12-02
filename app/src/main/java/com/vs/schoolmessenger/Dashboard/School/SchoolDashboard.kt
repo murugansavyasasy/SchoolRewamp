@@ -254,6 +254,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 val data = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYearList == data) return@observe
                 isAcademicYearList = data
+                val activeYear = data.find { it.current_academic_year == true }
+                Constant.isCurrentAcademicYearId = activeYear?.id!!
             }
         }
 

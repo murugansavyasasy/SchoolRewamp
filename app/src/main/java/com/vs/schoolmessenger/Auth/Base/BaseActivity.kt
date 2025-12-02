@@ -1021,8 +1021,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun CustomshowDatePickerDialog(
-    context: Context,
-    listener: OnDateSelectedListener
+        context: Context,
+        listener: OnDateSelectedListener
     ) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -1086,6 +1086,60 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
+
+
+    fun isToolBarPrimaryInteractionwithStaff(mainViewId: Int, statusBarBgView: View) {
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout =
+            findViewById<View>(R.id.toolbarlayout)  // Fixed: lowercase 'l' to match XML
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val combinedType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            val combinedInsets = insets.getInsets(combinedType)
+
+            v.updatePadding(
+                left = combinedInsets.left,
+                right = combinedInsets.right,
+                bottom = combinedInsets.bottom
+            )
+
+            // Size status bar background to cover the status bar area
+            statusBarBgView.updateLayoutParams {
+                height = combinedInsets.top
+            }
+
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { _, insets ->
+            insets  // Passthrough: No specific handling needed for toolbar
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Fixed: No top padding needed—rytHeader is already positioned below statusBarBackground.
+            // Adding it caused double-offset (status bar height x2). Handle other insets if needed in future.
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right
+            )
+            // Optionally add bottom padding if RecyclerView needs it, but mainView already handles global bottom.
+            WindowInsetsCompat.CONSUMED  // Consume to prevent propagation to children
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
+
 
 
 
@@ -1171,55 +1225,55 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-     fun showSuccessPopup(message: String, status: Boolean){
+    fun showSuccessPopup(message: String, status: Boolean){
 
-             val inflater = LayoutInflater.from(this)
-             val view = inflater.inflate(R.layout.success_popup, null)
+        val inflater = LayoutInflater.from(this)
+        val view = inflater.inflate(R.layout.success_popup, null)
 
-             val messageText = view.findViewById<TextView>(R.id.alertMessage)
-             val okButton = view.findViewById<TextView>(R.id.btnOk)
-             messageText.text = message
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
 
-             val rootView = this.findViewById<ViewGroup>(android.R.id.content)
+        val rootView = this.findViewById<ViewGroup>(android.R.id.content)
 
-             val dimView = View(this).apply {
-                 setBackgroundColor(Color.parseColor("#80000000"))
-                 layoutParams = ViewGroup.LayoutParams(
-                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-                 )
-                 isClickable = true // prevent clicks on background
-             }
+        val dimView = View(this).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
 
-             val marginInPx = TypedValue.applyDimension(
-                 TypedValue.COMPLEX_UNIT_DIP, 20f, this.resources.displayMetrics
-             ).toInt()
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, this.resources.displayMetrics
+        ).toInt()
 
-             val popupLayoutParams = FrameLayout.LayoutParams(
-                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
-             ).apply {
-                 gravity = Gravity.CENTER
-                 setMargins(marginInPx, 0, marginInPx, 0)
-             }
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
 
-             rootView.addView(dimView)
-             rootView.addView(view, popupLayoutParams)
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
 
-             val closePopup = {
-                 rootView.removeView(view)
-                 rootView.removeView(dimView)
-             }
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
 
-             okButton.setOnClickListener {
-                 if(status) {
-                     closePopup()
-                     finish()
-                 }else{
-                     closePopup()
-                 }
-             }
-             dimView.isFocusable = true
-             dimView.isFocusableInTouchMode = true
+        okButton.setOnClickListener {
+            if(status) {
+                closePopup()
+                finish()
+            }else{
+                closePopup()
+            }
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
 
 
-     }
+    }
 }
