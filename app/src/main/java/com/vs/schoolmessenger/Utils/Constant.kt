@@ -503,6 +503,7 @@ object Constant {
     var claimed = "claimed"
     var expired = "expired"
     var All_ = "All"
+    var All_Schools= "All_Schools"
     var all__ = "all"
     var st = "st"
     var nd = "nd"
