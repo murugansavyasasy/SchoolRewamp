@@ -527,6 +527,48 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
+    fun isToolBarTimeTable(mainViewId: Int, statusBarBgView: View) {
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+
+            statusBarBgView.updateLayoutParams {
+                height = systemBars.top
+            }
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
 
 
     fun isToolBarCoupon(mainViewId: Int, statusBarBgView: View) {
