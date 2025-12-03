@@ -142,7 +142,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
                 }
                 else {
-//                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
                     Constant.showErrorAlert(requireActivity(),getString(R.string.Oops),response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
                 }
             }
@@ -319,9 +318,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             context.startActivity(intent)
         }
     }
-
-
-
     private fun isShowLogoutPopup() {
 
         if (!isAdded || requireActivity().isFinishing || requireActivity().isDestroyed) {
@@ -359,23 +355,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             authViewModel!!.isLogout(jsonObject, requireActivity())
             Constant.showLoading(requireActivity())
 
-//            SharedPreference.putLogout(requireActivity(), true)
-//            SharedPreference.setLoggedIn(requireActivity(), false)
-//
-//            val intent = Intent(requireActivity(), Login::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
-//            requireActivity().finish()
-
         }
-
-//        val rootView = requireActivity().window.decorView.rootView
-//        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
-//
-//        popupWindow.setOnDismissListener {
-//            clearDim()
-//        }
-
         val activity = activity ?: return
         if (activity.isFinishing || activity.isDestroyed) return
 
