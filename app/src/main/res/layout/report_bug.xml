@@ -37,6 +37,35 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/twenty">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblDescription"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Module"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/lblStar2"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    app:layout_constraintStart_toEndOf="@id/lblDescription"
+                    app:layout_constraintTop_toTopOf="@id/lblDescription"
+                    android:layout_marginStart="@dimen/two"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <RelativeLayout
                 android:id="@+id/spinnerContainer"
                 android:layout_width="match_parent"
@@ -66,6 +95,34 @@
                     app:tint="@color/black" />
             </RelativeLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblRemark"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remark"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lblRemarkStar"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    android:layout_marginStart="@dimen/two"
+                    app:layout_constraintStart_toEndOf="@id/lblRemark"
+                    app:layout_constraintTop_toTopOf="@id/lblRemark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:id="@+id/lnrDesc"
                 android:layout_width="match_parent"
@@ -139,7 +196,7 @@
                 android:background="@drawable/background_radius_button"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/lblReportbug"
+                android:text="Send Mail"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
