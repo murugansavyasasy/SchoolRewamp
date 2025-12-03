@@ -6,14 +6,15 @@
     <!-- Header Image + Loader -->
     <RelativeLayout
         android:id="@+id/relativelayout_header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/one_twenty"
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/hundred"
         android:visibility="visible">
 
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/five"
             android:scaleType="centerCrop"
             android:visibility="visible" />
 

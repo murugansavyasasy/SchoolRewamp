@@ -199,6 +199,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         }
 
                         if (isMultipleSchool) {
+                            binding.rytSpinner.visibility = View.VISIBLE//last fix
+
                             Log.d("IsComing", "AAAAAAAAAAAAAAAAAA")
                             if (selectedSchoolId == Constant.All_Schools) {
                                 Log.d("IsComing", "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
@@ -216,6 +218,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                                 adapter.updateData(filteredList)
                             }
                         } else {
+                            binding.rytSpinner.visibility = View.GONE//last fix
                             Log.d("IsComing", "CCCCCCCCCCCCCCCCCCCCCCCC")
                             //if role is staff or only handle one school means we are directly update the response direclty to adapter
                             adapter.AppendData(response.data)
@@ -230,6 +233,14 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                             binding.rcMessageStaff.visibility = View.VISIBLE//last fix
                             binding.lytList.visibility = View.GONE//last fix
+                            //last fix
+                            if (isMultipleSchool){
+                                binding.rytSpinner.visibility = View.VISIBLE
+                            }
+                            else{
+                                binding.rytSpinner.visibility = View.GONE
+                            }
+
 
 
                         } else {
@@ -241,6 +252,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                             binding.rcMessageStaff.visibility = View.GONE//last fix
                             binding.lytList.visibility = View.VISIBLE//last fix
+                            binding.rytSpinner.visibility = View.GONE //last fix
+
+
                         }
 
 //                        ShowData() //last fix

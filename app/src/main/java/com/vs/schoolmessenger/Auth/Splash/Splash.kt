@@ -1166,7 +1166,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun isShowUpdateAvailable(versionData: List<VersionData>) {
-        val dialogView = layoutInflater.inflate(R.layout.whats_new_popup, null)
+        val dialogView = layoutInflater.inflate(R.layout.update_available_popup, null)
         val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
             .setCancelable(false) // Prevent dismissing by clicking outside
 
@@ -1175,29 +1175,14 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         alertDialog.show()
 
         val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
-        val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
-        val lblNewVersionCode = dialogView.findViewById<TextView>(R.id.lblNewVersionCode)
-        val lblYourAppVersionCode = dialogView.findViewById<TextView>(R.id.lblYourAppVersionCode)
-        val lblNewUpdates = dialogView.findViewById<TextView>(R.id.lblNewUpdates)
-
-        if(!versionData[0].new_version_updates.equals("")) {
-            val text = versionData[0].new_version_updates
-            val updates = text.split(",")
-            val finalText = updates.joinToString("\n") { "• $it" }
-            lblNewUpdates.text = finalText
-        }
-
-        val pInfo = this.packageManager.getPackageInfo(this.packageName, 0)
-        val versionName = pInfo.versionName
-        lblNewVersionCode.setText(versionData[0].new_version)
-        lblYourAppVersionCode.setText(versionName)
+        val btnLater = dialogView.findViewById<TextView>(R.id.btnLater)
 
         if (versionData[0].force_update) {
             btnUpdateButton.visibility = View.VISIBLE
-            btnNotNow.visibility = View.GONE
+            btnLater.visibility = View.GONE
         } else {
             btnUpdateButton.visibility = View.VISIBLE
-            btnNotNow.visibility = View.VISIBLE
+            btnLater.visibility = View.VISIBLE
         }
 
         btnUpdateButton.setOnClickListener {
@@ -1206,7 +1191,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             openPlayStore()
         }
 
-        btnNotNow.setOnClickListener {
+        btnLater.setOnClickListener {
             alertDialog.dismiss() // Close popup
             autoLoginFlowCheck(isVersionData!!)
 

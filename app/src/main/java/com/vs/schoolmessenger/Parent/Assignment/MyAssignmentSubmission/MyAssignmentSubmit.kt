@@ -406,7 +406,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         okButton.setOnClickListener {
             alertDialog.dismiss()
             ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
+//            ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
 
         }
@@ -414,19 +414,6 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
-
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any { !it.path.contains("player.vimeo.com") }
-        if (needsProcessing) {
-            ProgressDialogHelper.show(this)
-        }
-        Log.d("UploadDebug", "isUploadFilesInServer called with type: $isFileType")
-
-        ProgressDialogHelper.show(this)
-        Log.d("UploadDebug", "ProgressDialogHelper.show() called")
-
-        ProgressDialogHelper.updateProgress(0)
-        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(0) called")
-
 
         Constant.selectedFiles.removeAt(0)
         isTotalSelectedItem = Constant.selectedFiles.size
@@ -441,19 +428,47 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             }
         }
 
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
             else -> {
                 ProgressDialogHelper.dismiss()
                 isAssignmentSend()
             }
         }
-        ProgressDialogHelper.updateProgress(80)
+//        ProgressDialogHelper.updateProgress(80)
     }
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
         // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
@@ -468,10 +483,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                         isFileType = fileItem.type.name
                     )
                 )
-                val progress =
-                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                        .coerceAtMost(100)
-                ProgressDialogHelper.updateProgress(progress)
+//                val progress =
+//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                        .coerceAtMost(100)
+//                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
@@ -479,12 +494,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
-                ProgressDialogHelper.updateProgress(100)
-                ProgressDialogHelper.dismiss()
+//                ProgressDialogHelper.updateProgress(100)
                 ProgressDialogHelper.dismiss()
                 isAssignmentSend()
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val numToCompress = Constant.selectedFiles.size
@@ -521,19 +535,20 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                         )
 
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-                        val compressedCount = newSelectedFiles.size
-                        val progress =
-                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
-                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
+//                        val compressedCount = newSelectedFiles.size
+//                        val progress =
+//                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
+//                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
                     // Progress after compression (50%)
-                    ProgressDialogHelper.updateProgress(50)
+//                    ProgressDialogHelper.updateProgress(50)
                     val isAwsUploadingFile = ArrayList<String>()
 
                     val isSelectedFileCount = Constant.selectedFiles.size
@@ -559,23 +574,25 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                                                 ?: "UNKNOWN"
                                         )
                                     )
+                                    onTaskComplete()
                                     // Incremental progress during upload
-                                    val progress =
-                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                                            .coerceAtMost(100)
-                                    ProgressDialogHelper.updateProgress(progress)
+//                                    val progress =
+//                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                                            .coerceAtMost(100)
+//                                    ProgressDialogHelper.updateProgress(progress)
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isAssignmentSend()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
 
                                 override fun onUploadError(error: String?) {
+                                    onTaskComplete()
                                     Log.d("isUploadIssue", error.toString())
                                 }
                             })
@@ -586,7 +603,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
     }
 
-    private fun videoUploading() {
+    private fun videoUploading( totalTasks: Int,
+                                onTaskComplete: () -> Unit) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -598,18 +616,26 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     )
                 )
                 // Incremental progress update for pre-processed videos
-                val progress =
-                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                        .coerceAtMost(100)
-                ProgressDialogHelper.updateProgress(progress)
+//                val progress =
+//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                        .coerceAtMost(100)
+//                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            ProgressDialogHelper.updateProgress(100)
+//            ProgressDialogHelper.updateProgress(100)
             ProgressDialogHelper.dismiss()
             for (i in isVideoSelectedArrayList.indices) {
+
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
+
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
@@ -927,7 +953,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
     fun isAssignmentSend() {
 
-        ProgressDialogHelper.updateProgress(100)
+//        ProgressDialogHelper.updateProgress(100)
         ProgressDialogHelper.dismiss()
 
         val id = if (submissionData != null) submissionData!!.id else assignmentId!!

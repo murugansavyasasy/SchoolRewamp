@@ -735,7 +735,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         okButton.setOnClickListener {
             alertDialog.dismiss()
             ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
+//            ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
@@ -746,7 +746,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         if (SELECTED_MENU_ID == M_ATTACHMENTS) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-        ProgressDialogHelper.updateProgress(50)
+//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -758,15 +758,38 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 iterator.remove()
             }
         }
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
         }
-        ProgressDialogHelper.updateProgress(80)
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+        }
+//        ProgressDialogHelper.updateProgress(80)
     }
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -788,7 +811,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 ProgressDialogHelper.dismiss()
                 isUpdateAttachment()
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val outputDir =
@@ -827,6 +850,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
@@ -854,13 +878,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    onTaskComplete()
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isUpdateAttachment()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
@@ -876,7 +901,8 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
     }
 
-    private fun videoUploading() {
+    private fun videoUploading(  totalTasks: Int,
+                                 onTaskComplete: () -> Unit) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -891,6 +917,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
