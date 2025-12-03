@@ -250,56 +250,137 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+//    when navigation bar is in gesture this code below is not working only for button it is working
+//    @SuppressLint("UseCompatLoadingForColorStateLists")
+//    fun isToolBarPrimaryIntroduction(mainViewId: Int, statusBarBgView: View) {
+//        // Enables edge-to-edge rendering
+//        enableEdgeToEdge()
+//
+//        val mainView = findViewById<View>(mainViewId)
+//        val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
+//        val headerView = findViewById<View?>(R.id.rytHeader)
+//
+//        // Apply window insets to the main view (safe call)
+//        mainView?.let { view ->
+//            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+//                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//                v.updatePadding(
+//                    left = systemBars.left,
+//                    right = systemBars.right,
+//                    bottom = systemBars.bottom
+//                )
+//                // Adjust status bar background height
+//                statusBarBgView.updateLayoutParams {
+//                    height = systemBars.top
+//                }
+//                insets
+//            }
+//        }
+//
+//        // Apply window insets to toolbarLayout if it exists
+//        toolbarLayout?.let { toolbar ->
+//            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+//                insets // no custom handling, just consume
+//            }
+//        }
+//
+//        // Apply window insets to headerView if it exists
+//        headerView?.let { header ->
+//            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+//                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//                v.updatePadding(top = systemBars.top)
+//                WindowInsetsCompat.CONSUMED
+//            }
+//        }
+//
+//        // Customize window colors and theme
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            val window = this.window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//            window.statusBarColor = resources.getColor(R.color.bpWhite, theme)
+//            window.navigationBarColor = resources.getColor(R.color.PrimaryColor, theme)
+//            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+//        }
+//    }
+
+
+
     @SuppressLint("UseCompatLoadingForColorStateLists")
     fun isToolBarPrimaryIntroduction(mainViewId: Int, statusBarBgView: View) {
-        // Enables edge-to-edge rendering
+        // Enable edge-to-edge (safe on all versions, no-op before API 29)
         enableEdgeToEdge()
 
         val mainView = findViewById<View>(mainViewId)
         val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
         val headerView = findViewById<View?>(R.id.rytHeader)
 
-        // Apply window insets to the main view (safe call)
-        mainView?.let { view ->
-            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        // Find the navigation bar background view and frame container (MUST exist in your layout)
+        val navigationBarBgView = findViewById<View>(R.id.navigationBarBackground)
+        val frameContainer = findViewById<View>(R.id.frameContainer)
+
+        // Apply insets to root (only left/right, NO bottom padding here anymore)
+        mainView?.let { root ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.updatePadding(
+
+                // Only apply side padding to root
+                root.updatePadding(
+                    left = systemBars.left,
+                    right = systemBars.right
+                    // Do NOT apply bottom padding here → that was causing white flash!
+                )
+
+                // Status bar background height
+                statusBarBgView.updateLayoutParams {
+                    height = systemBars.top
+                }
+
+                // Navigation bar background height → fixes white in gesture mode
+                navigationBarBgView.updateLayoutParams {
+                    height = systemBars.bottom
+                }
+
+                // Push actual content (RecyclerView + buttons) away from navigation bar
+                frameContainer.updatePadding(
                     left = systemBars.left,
                     right = systemBars.right,
                     bottom = systemBars.bottom
                 )
-                // Adjust status bar background height
-                statusBarBgView.updateLayoutParams {
-                    height = systemBars.top
-                }
+
                 insets
             }
         }
 
-        // Apply window insets to toolbarLayout if it exists
+        // Toolbar & header handling (unchanged)
         toolbarLayout?.let { toolbar ->
-            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-                insets // no custom handling, just consume
-            }
+            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { _, insets -> insets }
         }
 
-        // Apply window insets to headerView if it exists
         headerView?.let { header ->
-            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+            ViewCompat.setOnApplyWindowInsetsListener(header) { _, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.updatePadding(top = systemBars.top)
+                header.updatePadding(top = systemBars.top)
                 WindowInsetsCompat.CONSUMED
             }
         }
 
-        // Customize window colors and theme
+        // Window colors – works perfectly from Android 5.0 up
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = this.window
+            val window = window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
             window.statusBarColor = resources.getColor(R.color.bpWhite, theme)
             window.navigationBarColor = resources.getColor(R.color.PrimaryColor, theme)
+
+            // Optional: nice gradient background
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+
+        // Optional but recommended: better scrim on Android 10+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
         }
     }
 
