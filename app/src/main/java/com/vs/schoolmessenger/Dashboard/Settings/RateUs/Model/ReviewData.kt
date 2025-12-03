@@ -6,5 +6,6 @@ data class ReviewData (
     val rating: Int,
     val description: String,
     val created_on: String,
-    val updated_on: String
+    val updated_on: String,
+    val remarks: List<RemarkItem>? = null
 )

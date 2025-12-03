@@ -82,6 +82,7 @@ import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -244,12 +245,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             binding.toolbarLayout.rlaStudentName.layoutParams = params
             binding.toolbarLayout.lblPostedOn.text =
-                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} - ${Constant.formatDatepostedby(data!!.created_date.toString())}"
             Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_by)} - " + data!!.sentBy
             }
         }
 
@@ -971,7 +972,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT).show()
             return
         }
-        Constant.showLoading(this@ChildHomeWork)
+//        Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
 
@@ -993,15 +994,43 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
         }
     }
 
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         val allNonVideos = Constant.selectedFiles.toList()
         val imagesToCompress = allNonVideos.filter { it.type == FileType.IMAGE }
@@ -1044,6 +1073,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     newSelectedFiles.add(original)
                     Log.e("Compressor", "Failed: ${original.path}")
                 }
+                onTaskComplete()
             },
             onComplete = {
                 val updatedFiles = newSelectedFiles + nonImages
@@ -1071,25 +1101,27 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                         isFileType = Constant.selectedFiles[i].type.name
                                     )
                                 )
+                                onTaskComplete()
 
                                 awsCompleted++
                                 if (awsCompleted == nonVideoCount) {
                                     if (isVideoSelectedArrayList.isEmpty()) {
                                         onAllUploadsComplete()
                                     } else {
-                                        videoUploading()
+                                        videoUploading(totalTasks, onTaskComplete)
                                     }
                                 }
                             }
 
                             override fun onUploadError(error: String?) {
+                                onTaskComplete()
                                 Log.d("isUploadIssue", error.toString())
                                 awsCompleted++
                                 if (awsCompleted == nonVideoCount) {
                                     if (isVideoSelectedArrayList.isEmpty()) {
                                         onAllUploadsComplete()
                                     } else {
-                                        videoUploading()
+                                        videoUploading(totalTasks, onTaskComplete)
                                     }
                                 }
                             }
@@ -1101,7 +1133,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-    private fun videoUploading() {
+    private fun videoUploading( totalTasks: Int,
+                                onTaskComplete: () -> Unit) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1116,15 +1149,54 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            var videoCompleted = 0
-            val videoCount = isVideoSelectedArrayList.size
             for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, "lsrw", "lsrw", isVideoSelectedArrayList[i].path, this
                 )
             }
         } else {
             onAllUploadsComplete()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            var videoCompleted = 0
+            if (success && link != null) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = link, isFileType = "VIDEO"
+                    )
+                )
+                if (!iframe.isNullOrEmpty()) {
+                    isIframe = iframe
+                }
+            }
+            videoCompleted++
+            val videoCount = isVideoSelectedArrayList.size
+            if (videoCompleted == videoCount) {
+                onAllUploadsComplete()
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            var videoCompleted = 0
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            videoCompleted++
+            val videoCount = isVideoSelectedArrayList.size
+            if (videoCompleted == videoCount) {
+                onAllUploadsComplete()
+            }
         }
     }
 
@@ -1489,41 +1561,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun onImageClick(position: Int) {
         if (position == 0) {
             showBottomDialog()
-        }
-    }
-
-    override fun onUploadComplete(
-        success: Boolean, iframe: String?, link: String?
-    ) {
-        runOnUiThread {
-            var videoCompleted = 0
-            if (success && link != null) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = link, isFileType = "VIDEO"
-                    )
-                )
-                if (!iframe.isNullOrEmpty()) {
-                    isIframe = iframe
-                }
-            }
-            videoCompleted++
-            val videoCount = isVideoSelectedArrayList.size
-            if (videoCompleted == videoCount) {
-                onAllUploadsComplete()
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            var videoCompleted = 0
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-            videoCompleted++
-            val videoCount = isVideoSelectedArrayList.size
-            if (videoCompleted == videoCount) {
-                onAllUploadsComplete()
-            }
         }
     }
 
