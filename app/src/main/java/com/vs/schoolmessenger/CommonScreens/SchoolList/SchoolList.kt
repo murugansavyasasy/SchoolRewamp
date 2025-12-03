@@ -202,7 +202,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
 
@@ -432,7 +431,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     fun isUploadFilesInServer(isFileType: String?) {
         ProgressDialogHelper.show(this)
-        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
+//        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
 
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
@@ -450,10 +449,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         val numNonVideoFiles = Constant.selectedFiles.size
         val numVideos = isVideoSelectedArrayList.size
-        val totalTasks = (numNonVideoFiles * 2) + numVideos
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
         var completedTasks = 0
 
         fun updateProgress() {
@@ -466,8 +470,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
             else -> {
                 ProgressDialogHelper.dismiss()
                 when (SELECTED_MENU_ID) {
@@ -478,7 +488,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
     }
-
 
     private fun isFileUploadInAws(
         isFileType: String?,
@@ -605,7 +614,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             })
     }
 
-
     private fun videoUploading(
         totalTasks: Int,
         onTaskComplete: () -> Unit
@@ -616,7 +624,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             if (fileItem.path.contains("player.vimeo.com")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
                     )
                 )
                 iterator.remove()
@@ -624,29 +633,140 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            for (i in isVideoSelectedArrayList.indices) {
-                VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
-                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-                            // Delegate to the activity's onUploadComplete for main logic
-                            this@SchoolList.onUploadComplete(success, iframe, link)
-                            onTaskComplete()  // Increment for each video upload task
-                        }
-
-                        override fun onFailure(errorMessage: String?) {
-                            // Delegate to the activity's onFailure
-                            this@SchoolList.onFailure(errorMessage)
-                            onTaskComplete()  // Increment on error to avoid hanging
-                        }
+            for (video in isVideoSelectedArrayList) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
                     }
+                }.start()
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", video.path, this
                 )
+
+//                VimeoVideoUpload.uploadVideo(
+//                    this,
+//                    "quiz",
+//                    "quiz",
+//                    video.path,
+//                    object : VimeoVideoUpload.UploadCompletionListener {
+//
+//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//
+//                            Log.e("VIDEO_DEBUG", "Callback fired")
+//
+//                            Constant.isAwsUploadedFiles.add(
+//                                AwsUploadedFiles(
+//                                    isFileUrl = link.toString(),
+//                                    isFileType = Constant.VIDEO
+//                                )
+//                            )
+//
+//                            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+//                                ProgressDialogHelper.dismiss()
+//
+//                                when (SELECTED_MENU_ID) {
+//                                    M_ATTACHMENTS -> attachmentSendApi()
+//                                    M_NOTICEBOARD -> noticeboardsendapi()
+//                                }
+//                            }
+//                        }
+//
+//                        override fun onFailure(errorMessage: String?) {
+//                            Log.e("VIDEO_DEBUG", "Upload failed: $errorMessage")
+//                        }
+//                    }
+//                )
             }
+
         } else {
             ProgressDialogHelper.dismiss()
             when (SELECTED_MENU_ID) {
                 M_ATTACHMENTS -> attachmentSendApi()
                 M_NOTICEBOARD -> noticeboardsendapi()
             }
+        }
+    }
+
+
+
+//    private fun videoUploading(
+//        totalTasks: Int,
+//        onTaskComplete: () -> Unit
+//    ) {
+//        val iterator = isVideoSelectedArrayList.iterator()
+//        while (iterator.hasNext()) {
+//            val fileItem = iterator.next()
+//            if (fileItem.path.contains("player.vimeo.com")) {
+//                Constant.isAwsUploadedFiles.add(
+//                    AwsUploadedFiles(
+//                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+//                    )
+//                )
+//                iterator.remove()
+//            }
+//        }
+//
+//        if (isVideoSelectedArrayList.isNotEmpty()) {
+//            for (i in isVideoSelectedArrayList.indices) {
+//
+//                Thread {
+//                    for (x in 1..10) {
+//                        Thread.sleep(300)
+//                        runOnUiThread { onTaskComplete() }
+//                    }
+//                }.start()
+//
+//
+//                VimeoVideoUpload.uploadVideo(
+//                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
+//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//                            // Delegate to the activity's onUploadComplete for main logic
+//                            this@SchoolList.onUploadComplete(success, iframe, link)
+//                            onTaskComplete()  // Increment for each video upload task
+//                        }
+//
+//                        override fun onFailure(errorMessage: String?) {
+//                            // Delegate to the activity's onFailure
+//                            this@SchoolList.onFailure(errorMessage)
+//                            onTaskComplete()  // Increment on error to avoid hanging
+//                        }
+//                    }
+//                )
+//            }
+//        } else {
+//            ProgressDialogHelper.dismiss()
+//            when (SELECTED_MENU_ID) {
+//                M_ATTACHMENTS -> attachmentSendApi()
+//                M_NOTICEBOARD -> noticeboardsendapi()
+//            }
+//        }
+//    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                when (SELECTED_MENU_ID) {
+                    M_ATTACHMENTS -> attachmentSendApi()
+                    M_NOTICEBOARD -> noticeboardsendapi()
+                }
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
 
@@ -770,33 +890,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
-        }
-    }
-
-    override fun onUploadComplete(
-        success: Boolean, iframe: String?, link: String?
-    ) {
-        runOnUiThread {
-            Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
-                AwsUploadedFiles(
-                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
-                )
-            )
-
-            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                ProgressDialogHelper.dismiss()
-                when (SELECTED_MENU_ID) {
-                    M_ATTACHMENTS -> attachmentSendApi()
-                    M_NOTICEBOARD -> noticeboardsendapi()
-                }
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
 }
