@@ -347,84 +347,102 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         } else {
-            if (SELECTED_MENU_ID == M_ATTENDANCE_MARKING) {
-                val intent = Intent(this, AttendanceMark::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_HOMEWORK) {
-                val intent = Intent(this, HomeWorkCreate::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS) {
-                val intent = Intent(this, CreateEvent::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_ABSENTEES_REPORT) {
-                val intent = Intent(this, AbsenteesReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_SCHOOL_STRENGTH) {
-                val intent = Intent(this, SchoolStrength::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT) {
-                val intent = Intent(this, MessageFromManagement::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_DAILY_COLLECTION) {
-                val intent = Intent(this, DailyCollection::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT) {
-                val intent = Intent(this, InteractionWithStudent::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_LSRW) {
-                val intent = Intent(this, LsrwMain::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_STUDENT_REPORT) {
-                val intent = Intent(this, StudentReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_LESSON_PLAN) {
-                val intent = Intent(this, LessonPlan::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_FEE_PENDING_REPORT) {
-                val intent = Intent(this, FeePendingReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE) {
-                val intent = Intent(this, MarkYourAttendance::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT) {
-                val intent = Intent(this, StaffWiseAttendanceReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_PTM) {
-                val intent = Intent(this, PTM::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
-                val intent = Intent(this, AssignmentCreate::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_QUIZ_EXAM) {
-                val intent = Intent(this, ExamQuiz::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            }
-            else if (SELECTED_MENU_ID == M_LEAVE_REQUEST) {
-                val intent = Intent(this, LeaveRequests::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            }
-            else if (SELECTED_MENU_ID == M_UPLOAD_MARKS) {
-                val intent = Intent(this, ClassList::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+            when (SELECTED_MENU_ID) {
+                M_ATTENDANCE_MARKING -> {
+                    val intent = Intent(this, AttendanceMark::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_HOMEWORK -> {
+                    val intent = Intent(this, HomeWorkCreate::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_SCHOOL_CLASS_EVENTS -> {
+                    val intent = Intent(this, CreateEvent::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_ABSENTEES_REPORT -> {
+                    val intent = Intent(this, AbsenteesReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_SCHOOL_STRENGTH -> {
+                    val intent = Intent(this, SchoolStrength::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_MESSAGES_FROM_MANAGEMENT -> {
+                    val intent = Intent(this, MessageFromManagement::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_DAILY_COLLECTION -> {
+                    val intent = Intent(this, DailyCollection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_INTERACTION_WITH_STUDENT -> {
+                    val intent = Intent(this, InteractionWithStudent::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LSRW -> {
+                    val intent = Intent(this, LsrwMain::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_STUDENT_REPORT -> {
+                    val intent = Intent(this, StudentReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LESSON_PLAN -> {
+                    val intent = Intent(this, LessonPlan::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_FEE_PENDING_REPORT -> {
+                    val intent = Intent(this, FeePendingReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_MARK_YOUR_ATTENDANCE -> {
+                    val intent = Intent(this, MarkYourAttendance::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_STAFF_WISE_ATTENDANCE_REPORT -> {
+                    val intent = Intent(this, StaffWiseAttendanceReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_PTM -> {
+                    val intent = Intent(this, PTM::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_ASSIGNMENT -> {
+                    val intent = Intent(this, AssignmentCreate::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_QUIZ_EXAM -> {
+                    val intent = Intent(this, ExamQuiz::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LEAVE_REQUEST -> {
+                    val intent = Intent(this, LeaveRequests::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_UPLOAD_MARKS -> {
+                    val intent = Intent(this, ClassList::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
             }
         }
     }
