@@ -626,9 +626,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
 //            ProgressDialogHelper.updateProgress(100)
-            ProgressDialogHelper.dismiss()
+//            ProgressDialogHelper.dismiss()
             for (i in isVideoSelectedArrayList.indices) {
-
                 Thread {
                     for (x in 1..10) {
                         Thread.sleep(400)

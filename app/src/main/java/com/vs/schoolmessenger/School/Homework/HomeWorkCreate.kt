@@ -694,12 +694,12 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     // Edit Update code
     fun isUploadFilesInServer(isFileType: String?) {
 
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
-            !it.path.contains("player.vimeo.com")
-        }
-        if (needsProcessing) {
-            ProgressDialogHelper.show(this)
-        }
+//        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
+//            !it.path.contains("player.vimeo.com")
+//        }
+//        if (needsProcessing) {
+//            ProgressDialogHelper.show(this)
+//        }
 
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
@@ -899,7 +899,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
         if (isVideoSelectedArrayList.isNotEmpty()) {
 //            ProgressDialogHelper.updateProgress(100)
-            ProgressDialogHelper.dismiss()
+//            ProgressDialogHelper.dismiss()
             for (i in isVideoSelectedArrayList.indices) {
 
                 Thread {

@@ -1149,17 +1149,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            var videoCompleted = 0
-            val videoCount = isVideoSelectedArrayList.size
             for (i in isVideoSelectedArrayList.indices) {
-
                 Thread {
                     for (x in 1..10) {
                         Thread.sleep(400)
                         runOnUiThread { onTaskComplete() }
                     }
                 }.start()
-
                 VimeoVideoUpload.uploadVideo(
                     this, "lsrw", "lsrw", isVideoSelectedArrayList[i].path, this
                 )

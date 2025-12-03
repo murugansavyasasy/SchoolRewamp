@@ -1211,12 +1211,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     fun isUploadFilesInServer(isFileType: String?) {
 
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
-            !it.path.contains("player.vimeo.com")
-        }
-        if (needsProcessing) {
-            ProgressDialogHelper.show(this)
-        }
+//        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
+//            !it.path.contains("player.vimeo.com")
+//        }
+//        if (needsProcessing) {
+//            ProgressDialogHelper.show(this)
+       // }
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)
 
@@ -1314,7 +1314,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
-                ProgressDialogHelper.updateProgress(100)
+//                ProgressDialogHelper.updateProgress(100)
                 ProgressDialogHelper.dismiss()
                 when (SELECTED_MENU_ID) {
                     M_HOMEWORK -> isHomeWorkSend()
@@ -1805,7 +1805,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
     fun isHomeWorkSend() {
-        ProgressDialogHelper.updateProgress(100)
+//        ProgressDialogHelper.updateProgress(100)
         ProgressDialogHelper.dismiss()
         val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
         sectionDetails?.let {
