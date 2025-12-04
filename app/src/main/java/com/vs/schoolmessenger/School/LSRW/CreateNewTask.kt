@@ -228,8 +228,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             }
                             return@forEach
                         }
-
-
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
                         addedCount++
                     }

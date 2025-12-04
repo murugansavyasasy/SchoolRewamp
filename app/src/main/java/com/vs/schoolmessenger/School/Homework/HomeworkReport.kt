@@ -44,11 +44,12 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
-    HomeWorkReportClickListener,OnDateSelectedListener,View.OnClickListener {
+    HomeWorkReportClickListener, OnDateSelectedListener, View.OnClickListener {
 
     override fun getViewBinding(): HomeworkReportBinding {
         return HomeworkReportBinding.inflate(layoutInflater)
     }
+
     var isFirstLoad = false
     var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
@@ -102,7 +103,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         binding.toolbarLayout.layoutCreateSlot.setOnClickListener {
             val intent = Intent(this, HomeWorkCreate::class.java)
@@ -120,11 +120,11 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
 
         isAcademicYear = Constant.isAcademicYearList
-           isLoadAcademicYear(isAcademicYear)
+        isLoadAcademicYear(isAcademicYear)
         isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-        isAcademicYearId= Constant.isCurrentAcademicYearId
+        isAcademicYearId = Constant.isCurrentAcademicYearId
         isGetStandardSection()
 
 
@@ -156,8 +156,8 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                             isSection = isGetStandard!!.get(0).sections
                             binding.noDataFound.visibility = View.GONE
                             binding.lytNoDataFound.visibility = View.GONE
-                            binding.line1.visibility=View.VISIBLE
-                            binding.line2.visibility=View.VISIBLE
+                            binding.line1.visibility = View.VISIBLE
+                            binding.line2.visibility = View.VISIBLE
                         }
                     } else {
                         binding.rytStandardDropDown.visibility = View.GONE
@@ -166,8 +166,8 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                         binding.lytNoDataFound.visibility = View.VISIBLE
                         binding.noDataFound.visibility = View.VISIBLE
                         binding.noDataFound.text = response.message
-                        binding.line1.visibility=View.GONE
-                        binding.line2.visibility=View.GONE
+                        binding.line1.visibility = View.GONE
+                        binding.line2.visibility = View.GONE
                     }
                 }
             }
@@ -184,11 +184,11 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
                     binding.line2.visibility = View.VISIBLE
                     val isHomeWorkReport = response.data
                     isHomeWorkReportDataData = isHomeWorkReport
-                    fullHomeworkList=isHomeWorkReport
+                    fullHomeworkList = isHomeWorkReport
                     loadHomeWorkReportData(isHomeWorkReportDataData!!)
                 } else {
-                    binding.search.visibility=View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.search.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.line1.visibility = View.GONE
                     binding.line2.visibility = View.GONE
                     binding.noDataFound.visibility = View.VISIBLE
@@ -199,7 +199,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
             }
         }
 
-                binding.edtSearch.addTextChangedListener(object : TextWatcher {
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s.toString().trim().lowercase(Locale.ROOT)
@@ -315,7 +315,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         }
     }
 
-        private fun fetchHomeWorkReportData() {
+    private fun fetchHomeWorkReportData() {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter =
             HomeWorkReportAdapter(this, emptyList(), this, Constant.isShimmerViewShow)
@@ -330,12 +330,12 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     }
 
     private fun loadHomeWorkReportData(isHomeWorkReportDataDetails: List<HomeWorkReportData>) {
-        if(isHomeWorkReportDataDetails.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        if (isHomeWorkReportDataDetails.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.search.visibility = View.GONE
 
-        }else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.search.visibility = View.GONE
 
 
@@ -389,7 +389,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     }
 
 
-
     override fun onClickListener(data: HomeWorkReportData, anchorView: View, isPosition: Int) {
         isHomeWorkId = data.id
         isHomeWorkPosition = isPosition
@@ -410,7 +409,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Constant.isClickEdit = true
             val intent = Intent(this, HomeWorkCreate::class.java)
             intent.putExtra(Constant.homework_data, data)
             startActivity(intent)
@@ -442,9 +441,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-                val jsonObject = JsonObject()
-                jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
-                appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
+            val jsonObject = JsonObject()
+            jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
+            appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
 
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }

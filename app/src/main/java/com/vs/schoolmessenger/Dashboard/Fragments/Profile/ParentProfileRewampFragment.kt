@@ -72,7 +72,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentClickListener,
     OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
 
@@ -80,32 +79,25 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     private lateinit var appViewModel: App
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-
     private var originalData: List<Map<String, List<ProfileField>>> = emptyList()
     private var adapter: ProfileRewampFragmentAdapter? = null
-
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ProfileImagePickingAdapter? = null
-
     var isTotalSelectedItem = 0
     private var pendingChangedData: JsonObject? = null
-
     private var profilePhotoFileItem: FileItem? = null
-    private var currentEditMode=""
+    private var currentEditMode = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -265,7 +257,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     }
                 }
             }
-
         return binding.root
     }
 
@@ -287,9 +278,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
-
     private fun isUpdateProfile() {
-        // Prepare changed profile fields
         val changedData = JsonObject()
         for (section in originalData) {
             for ((_, originalFields) in section) {
@@ -371,7 +360,9 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     payload.addProperty("photoPath", url)
                 } else {
                     showDataValidation(
-                        getString(R.string.Oops), getString(R.string.profile_photo_upload_failed), requireActivity()
+                        getString(R.string.Oops),
+                        getString(R.string.profile_photo_upload_failed),
+                        requireActivity()
                     )
                 }
                 if (payload.entrySet().isEmpty()) return@uploadProfilePhoto
@@ -399,7 +390,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput"
         )
 
-        Log.d("currentEditMode",currentEditMode.toString())
+        Log.d("currentEditMode", currentEditMode.toString())
         outputDir.mkdirs()
         Constant.compressImageFilesOnly(
             context = requireContext(),
@@ -411,12 +402,12 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             maxHeight = 1280,
             onEachProcessed = { original, outputPath, success ->
                 if (success && outputPath != null) {
-                    currentEditMode="profile_photo"
+                    currentEditMode = "profile_photo"
                     val isCountryId = SharedPreference.getCountryId(requireContext())
                     isAwsUploadingPreSigned?.getPreSignedUrl(
                         outputPath,
                         isChildDetails!!.school_id,
-                        currentEditMode!!,
+                        currentEditMode,
                         requireActivity(),
                         isCountryId!!,
                         true,
@@ -689,11 +680,17 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                                 .error(defaultProfileRes).into(binding.imgProfile)
                         } else {
                             Toast.makeText(
-                                requireContext(), getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
+                                requireContext(),
+                                getString(R.string.camera_image_file_not_found),
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                     } ?: run {
-                        Toast.makeText(requireContext(), getString(R.string.camera_image_failed), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.camera_image_failed),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                     currentEditMode = ""
@@ -712,11 +709,17 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                             addPath(uri)
                         } else {
                             Toast.makeText(
-                                requireContext(), getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
+                                requireContext(),
+                                getString(R.string.camera_image_file_not_found),
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                     } ?: run {
-                        Toast.makeText(requireContext(), getString(R.string.camera_image_failed), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.camera_image_failed),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }
@@ -889,7 +892,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
                     val isSelectedFileCount = Constant.selectedFiles.size
                     for (i in Constant.selectedFiles.indices) {
-                        currentEditMode=""
+                        currentEditMode = ""
                         val originalFileName =
                             getFileName(Uri.parse(Constant.selectedFiles[i].path))
                         isAwsUploadingPreSigned?.getPreSignedUrl(
