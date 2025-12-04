@@ -646,12 +646,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
-            if (data!!.school_name != "") {
-                binding.toolbarLayout.lblStudentSection.visibility = View.VISIBLE
-                binding.toolbarLayout.lblStudentSection.text = data!!.school_name
-            } else {
-                binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+
+            if (data!!.isMenuType == Constant.M_NOTICEBOARD) {
+
+                val schoolName = data?.school_name
+
+                if (schoolName.isNullOrEmpty()) {
+                    binding.sendtostandardLabel.visibility = View.GONE
+                    binding.noticeboardcardview.visibility = View.GONE
+                } else {
+
+                    binding.sendtostandardLabel.visibility = View.VISIBLE
+                    binding.standardValue.text = "\uD83C\uDF93" + " " + "Message sent to SCHOOL"
+                    binding.noticeboardcardview.visibility = View.VISIBLE
+                    binding.lblschoolvalue.text = data!!.school_name
+
+                }
             }
+
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
