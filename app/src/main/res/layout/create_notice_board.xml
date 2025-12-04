@@ -32,9 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbarLayout"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
             android:scrollbars="none"
             android:visibility="visible">
 
@@ -447,7 +444,6 @@
                                 android:visibility="invisible">
 
                             </ImageView>
-
                             <RelativeLayout
                                 android:id="@+id/rytRecyclewview"
                                 android:layout_width="match_parent"
@@ -460,6 +456,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/ten"
                                     android:orientation="vertical">
+
                                 </androidx.recyclerview.widget.RecyclerView>
 
                             </RelativeLayout>
