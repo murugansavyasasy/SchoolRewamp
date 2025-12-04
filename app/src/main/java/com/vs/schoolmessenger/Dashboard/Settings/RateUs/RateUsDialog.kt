@@ -170,21 +170,46 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
     private fun submitReview() {
         val description = binding.edtSuggestions.text.toString().trim()
-        val selectedCategories = selectedRemark?.category?.filter { it.selected == true }?.map { it.name }
 
-        val json = JsonObject().apply {
-            addProperty("mobile_number", mobileNumber)
-            addProperty("rating", ratingValue)
-            addProperty("description", description)
+        // Build the full categories array (allRemarks contains rating 1–5 groups)
+        val categoriesArray = JsonArray()
 
-            val arr = JsonArray()
-            selectedCategories?.forEach { arr.add(it) }
-            add("categories", arr)
+        allRemarks?.forEach { remark ->
+            val remarkObj = JsonObject().apply {
+                addProperty("name", remark.name)
+                addProperty("rating", remark.rating)
+            }
+
+            val categoryItemsArray = JsonArray()
+
+            remark.category?.forEach { item ->
+                val itemObj = JsonObject().apply {
+                    addProperty("name", item.name)
+                    addProperty("selected", item.selected == true)
+                }
+                categoryItemsArray.add(itemObj)
+            }
+
+            remarkObj.add("category", categoryItemsArray)
+            categoriesArray.add(remarkObj)
         }
 
+        // Final JSON body
+        val json = JsonObject().apply {
+            add("categories", categoriesArray)
+            addProperty("rating", ratingValue)
+            addProperty("description", description)
+            addProperty("mobile_number", mobileNumber)
+        }
+
+        Log.d("FINAL_JSON", json.toString())
+
+        // Send to API
         appViewModel.reviewpost("", json)
+
         observeSubmitReviewResponse()
     }
+
 
     private fun observeSubmitReviewResponse() {
         appViewModel.reviewpost!!.observe(viewLifecycleOwner) { response ->
