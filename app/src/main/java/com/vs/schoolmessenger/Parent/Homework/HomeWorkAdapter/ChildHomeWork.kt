@@ -56,7 +56,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
@@ -624,7 +623,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS) {
-
 
 
             if (data!!.created_date.isNullOrBlank()) {
