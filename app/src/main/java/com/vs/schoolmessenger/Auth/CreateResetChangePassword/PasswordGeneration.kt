@@ -32,7 +32,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.imgHide.setOnClickListener(this)
         binding.imgHide1.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)

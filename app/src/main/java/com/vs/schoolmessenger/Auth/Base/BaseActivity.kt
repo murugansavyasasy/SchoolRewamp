@@ -522,6 +522,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
 
+
+
+
+
     fun isPrioritySelection(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 

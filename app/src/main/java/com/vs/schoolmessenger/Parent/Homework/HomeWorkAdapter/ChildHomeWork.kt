@@ -101,6 +101,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
@@ -233,7 +234,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if(SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.my_submissionadapter == true) {
+        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.my_submissionadapter == true) {
             binding.toolbarLayout.lblSubjectName.visibility = View.GONE
 
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
@@ -327,7 +328,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
+                getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 getString(R.string.listening_speaking_reading_writing)
@@ -363,9 +365,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
         } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
+                getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =getString(R.string.listening_speaking_reading_writing)
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                getString(R.string.listening_speaking_reading_writing)
             binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
@@ -448,13 +452,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             albumResultLauncher =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        val selectedUris = result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+                        val selectedUris =
+                            result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                         if (selectedUris.isNullOrEmpty()) return@registerForActivityResult
 
                         var addedCount = 0
                         selectedUris.forEach { uri ->
                             if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-                                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.max_10_files_allowed),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 return@forEach
                             }
 
@@ -473,9 +482,21 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -484,11 +505,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                 lifecycleScope.launch {
                                     val wavFile = Constant.convertToWav(this@ChildHomeWork, uri)
                                     if (wavFile != null) {
-                                        Constant.selectedFiles.add(FileItem(wavFile.absolutePath, FileType.AUDIO))
+                                        Constant.selectedFiles.add(
+                                            FileItem(
+                                                wavFile.absolutePath,
+                                                FileType.AUDIO
+                                            )
+                                        )
                                         mAdapter?.notifyDataSetChanged()
                                         updateRemainingCount()
                                     } else {
-                                        Toast.makeText(this@ChildHomeWork, "Audio convert failed!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this@ChildHomeWork,
+                                            "Audio convert failed!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
                                 return@forEach
@@ -504,7 +534,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             updateRemainingCount()
 
                             if (addedCount < selectedUris.size) {
-                                Toast.makeText(this, getString(R.string.only_x_files_added, Constant.Remaining), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.only_x_files_added, Constant.Remaining),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -520,7 +554,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                 audioAdapter = AudioAdapter(audioList)
+                audioAdapter = AudioAdapter(audioList)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
                     LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
@@ -591,6 +625,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS) {
 
+
+
             if (data!!.created_date.isNullOrBlank()) {
                 binding.toolbarLayout.lblPostedOn.visibility = View.GONE
             } else {
@@ -612,6 +648,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+            if (data!!.school_name != "") {
+                binding.toolbarLayout.lblStudentSection.visibility = View.VISIBLE
+                binding.toolbarLayout.lblStudentSection.text = data!!.school_name
+            } else {
+                binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+            }
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
@@ -962,14 +1004,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
-            binding.childlsrwlayoutxml.editDescription.error = getString(R.string.Description_required)
+            binding.childlsrwlayoutxml.editDescription.error =
+                getString(R.string.Description_required)
             binding.childlsrwlayoutxml.editDescription.requestFocus()
             return
         }
         val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
         if (totalSizeKB <= 0) {
-            Toast.makeText(this,
-                getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT
+            ).show()
             return
         }
 //        Constant.showLoading(this@ChildHomeWork)
@@ -1133,8 +1178,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-    private fun videoUploading( totalTasks: Int,
-                                onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1260,12 +1307,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 showAudioPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             }
         }
     }
-
 
 
     override fun onRequestPermissionsResult(
@@ -1283,7 +1331,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -1298,7 +1350,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showAudioPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.microphone_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.microphone_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -1441,7 +1497,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         isRecording = false
         try {
             mediaRecorder?.stop()
-        } catch (e: RuntimeException) { }
+        } catch (e: RuntimeException) {
+        }
         mediaRecorder?.release()
         mediaRecorder = null
 
@@ -1452,13 +1509,25 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
                     mAdapter?.notifyDataSetChanged()
                     updateRemainingCount()
-                    Toast.makeText(this, getString(R.string.audio_recorded_and_added), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.audio_recorded_and_added),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.max_10_files_allowed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     file.delete()
                 }
             } else {
-                Toast.makeText(this, getString(R.string.recording_failed_file_empty), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.recording_failed_file_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
                 file.delete()
             }
         }
@@ -1519,6 +1588,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         afd.length
                     } ?: 0L
                 }
+
                 "file" -> File(uri.path ?: path).length()
                 null -> File(path).length()
                 else -> 0L
@@ -1602,7 +1672,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -1640,7 +1714,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -1659,7 +1732,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -1670,7 +1747,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK || Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
             if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
+                    .show()
             }
             return
         }
@@ -1685,7 +1763,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
@@ -1709,6 +1791,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     }
                 }
             }
+
             ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST -> {
                 data?.clipData?.let { clip ->
                     for (i in 0 until clip.itemCount) {
@@ -1767,7 +1850,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
 

@@ -126,12 +126,43 @@
                 android:layout_marginTop="@dimen/twenty_five">
             </androidx.recyclerview.widget.RecyclerView>
 
+            <LinearLayout
+                android:id="@+id/lytList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rcMapActivity"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/noDataImage"
+                    android:layout_width="@dimen/two_hundred"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:src="@drawable/no_data_found">
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text=""
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+            </LinearLayout>
+
            <RelativeLayout
                android:id="@+id/lnrTips"
                android:layout_width="match_parent"
                android:padding="@dimen/fifteen"
                android:layout_marginTop="@dimen/ten"
-               android:layout_below="@+id/rcMapActivity"
+               android:layout_below="@+id/lytList"
                android:background="@drawable/rect_radius15_fill_stroke"
                android:layout_marginHorizontal="@dimen/ten"
                android:layout_height="wrap_content">
@@ -173,39 +204,6 @@
                     android:gravity="center"
                     android:text="@string/continue_to_review"
                     android:layout_height="wrap_content">
-                </TextView>
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:id="@+id/lytList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/rcClassList"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/txtNoData"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text=""
-                    android:textSize="@dimen/fifteen_sp">
-
                 </TextView>
             </LinearLayout>
         </RelativeLayout>

@@ -1057,7 +1057,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
     private fun isInterNetChecking() {
         lifecycleScope.launch {
-            delay(3000) // 2-second delay
+            delay(4000) // 2-second delay
             withContext(Dispatchers.Main) {
                 if (Constant.isInternetAvailable(this@Splash)) {
                     val countryId = SharedPreference.getCountryId(this@Splash)
