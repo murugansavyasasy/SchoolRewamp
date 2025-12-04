@@ -377,6 +377,7 @@
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/rect_gray_radius"
                     android:ellipsize="none"
+                    android:maxLength="4"
                     android:hint="@string/drop_your_mark_here"
                     android:inputType="number"
                     android:padding="@dimen/eight"
