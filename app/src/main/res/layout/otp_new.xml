@@ -8,11 +8,16 @@
     android:background="@color/light_white">
 
     <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -313,6 +318,7 @@
                 android:id="@+id/lnrPowered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -329,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/imgSavyasasy"
-                    android:text="Powered by savyasasy"
+                    android:text="@string/powered_by_savyasasy"
                     android:textColor="@color/grey" />
             </RelativeLayout>
 

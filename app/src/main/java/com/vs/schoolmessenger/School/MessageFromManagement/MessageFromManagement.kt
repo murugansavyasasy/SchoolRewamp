@@ -146,6 +146,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         isMenuCount = Constant.isSchoolMenuCount
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
+            Constant.hideLoading(this)
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             if (response != null) {
@@ -176,8 +177,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         }
 
         appViewModel?.isGetMessageStaffArchive?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
-                Constant.hideLoading(this)
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
                         val updatedList = completeAttachmentList.toMutableList()
@@ -199,6 +200,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         }
 
                         if (isMultipleSchool) {
+                            binding.rytSpinner.visibility = View.VISIBLE//last fix
+
                             Log.d("IsComing", "AAAAAAAAAAAAAAAAAA")
                             if (selectedSchoolId == Constant.All_Schools) {
                                 Log.d("IsComing", "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
@@ -216,6 +219,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                                 adapter.updateData(filteredList)
                             }
                         } else {
+                            binding.rytSpinner.visibility = View.GONE//last fix
                             Log.d("IsComing", "CCCCCCCCCCCCCCCCCCCCCCCC")
                             //if role is staff or only handle one school means we are directly update the response direclty to adapter
                             adapter.AppendData(response.data)
@@ -230,6 +234,14 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                             binding.rcMessageStaff.visibility = View.VISIBLE//last fix
                             binding.lytList.visibility = View.GONE//last fix
+                            //last fix
+                            if (isMultipleSchool){
+                                binding.rytSpinner.visibility = View.VISIBLE
+                            }
+                            else{
+                                binding.rytSpinner.visibility = View.GONE
+                            }
+
 
 
                         } else {
@@ -241,6 +253,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                             binding.rcMessageStaff.visibility = View.GONE//last fix
                             binding.lytList.visibility = View.VISIBLE//last fix
+                            binding.rytSpinner.visibility = View.GONE //last fix
+
+
                         }
 
 //                        ShowData() //last fix
@@ -533,6 +548,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
 
     fun isGetMessageFromStaff() {
+        Constant.showLoading(this)
         adapter = MessageFromStaffAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
         binding.rcMessageStaff.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

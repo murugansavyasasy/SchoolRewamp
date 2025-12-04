@@ -1211,12 +1211,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     fun isUploadFilesInServer(isFileType: String?) {
 
-        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
-            !it.path.contains("player.vimeo.com")
-        }
-        if (needsProcessing) {
-            ProgressDialogHelper.show(this)
-        }
+//        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
+//            !it.path.contains("player.vimeo.com")
+//        }
+//        if (needsProcessing) {
+//            ProgressDialogHelper.show(this)
+       // }
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)
 
@@ -1241,27 +1241,319 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 iterator.remove()
             }
         }
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
 
         // After separating videos
-        ProgressDialogHelper.updateProgress(10)
+//        ProgressDialogHelper.updateProgress(10)
         Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(10) called")
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> {
-                Log.d("UploadDebug", "Uploading non-video files to AWS...")
-                isFileUploadInAws(isFileType)
-            }
-
-            isVideoSelectedArrayList.isNotEmpty() -> {
-                Log.d("UploadDebug", "Uploading video files...")
-                videoUploading()
-            }
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+//            Constant.selectedFiles.isNotEmpty() -> {
+//                Log.d("UploadDebug", "Uploading non-video files to AWS...")
+//                isFileUploadInAws(isFileType)
+//            }
+//
+//            isVideoSelectedArrayList.isNotEmpty() -> {
+//                Log.d("UploadDebug", "Uploading video files...")
+//                videoUploading()
+//            }
 
             else -> {
                 Log.d("UploadDebug", "No files to upload.")
             }
         }
     }
+
+    private fun isFileUploadInAws(
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
+        // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
+        // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
+
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                // Incremental progress for pre-signed files
+//                val progress =
+//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                        .coerceAtMost(100)
+//                ProgressDialogHelper.updateProgress(progress)
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+//                ProgressDialogHelper.updateProgress(100)
+                ProgressDialogHelper.dismiss()
+                when (SELECTED_MENU_ID) {
+                    M_HOMEWORK -> isHomeWorkSend()
+                    M_COMMUNICATION -> voiceSendApi()
+                    M_ASSIGNMENT -> isAssignmentSend()
+                    M_LSRW -> isLsrwSkillSend()
+
+                }
+            } else {
+//                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
+            }
+        } else {
+            val numToCompress = Constant.selectedFiles.size
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                        // Incremental progress during compression (10% to 50%)
+//                        val compressedCount = newSelectedFiles.size
+//                        val progress =
+//                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
+//                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                    onTaskComplete()
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    // Progress after compression (50%)
+//                    ProgressDialogHelper.updateProgress(50)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this@RecipientActivity,
+                            isCountryId!!,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles.getOrNull(i)?.type?.name
+                                                ?: "UNKNOWN"
+                                        )
+                                    )
+                                    // Incremental progress during upload
+//                                    val progress =
+//                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                                            .coerceAtMost(100)
+//                                    ProgressDialogHelper.updateProgress(progress)
+                                    onTaskComplete()
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+//                                        ProgressDialogHelper.updateProgress(100)
+                                        ProgressDialogHelper.dismiss()
+                                        when (SELECTED_MENU_ID) {
+                                            M_HOMEWORK -> isHomeWorkSend()
+                                            M_COMMUNICATION -> voiceSendApi()
+                                            M_ATTACHMENTS -> attachmentSendApi()
+                                            M_SCHOOL_CLASS_EVENTS -> eventsendapi()
+                                            M_ASSIGNMENT -> isAssignmentSend()
+                                            M_LSRW -> isLsrwSkillSend()
+                                        }
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading(totalTasks, onTaskComplete)
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                    // Optionally handle error, e.g., retry or dismiss
+                                    onTaskComplete()
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading(    totalTasks: Int,
+                                   onTaskComplete: () -> Unit) {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                // Incremental progress update for pre-processed videos
+//                val progress =
+//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                        .coerceAtMost(100)
+//                ProgressDialogHelper.updateProgress(progress)
+                iterator.remove()
+            }
+        }
+
+        if (isVideoSelectedArrayList.isEmpty()) {
+//            ProgressDialogHelper.updateProgress(100)
+            ProgressDialogHelper.dismiss()
+            when (SELECTED_MENU_ID) {
+                M_HOMEWORK -> {
+                    isHomeWorkSend()
+                }
+
+                M_ATTACHMENTS -> {
+                    attachmentSendApi()
+                }
+
+                M_SCHOOL_CLASS_EVENTS -> {
+                    eventsendapi()
+                }
+
+                M_ASSIGNMENT -> {
+                    isAssignmentSend()
+                }
+
+                M_LSRW -> {
+                    isLsrwSkillSend()
+                }
+            }
+        } else {
+            for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
+
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        }
+    }
+
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            if (success) {
+                Log.d("link", link.toString())
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                    )
+                )
+                // Incremental progress update
+//                val progress =
+//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
+//                        .coerceAtMost(100)
+//                ProgressDialogHelper.updateProgress(progress)
+
+                if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+//                    ProgressDialogHelper.updateProgress(100)
+                    ProgressDialogHelper.dismiss()
+                    when (SELECTED_MENU_ID) {
+                        M_HOMEWORK -> {
+                            isHomeWorkSend()
+                        }
+
+                        M_ATTACHMENTS -> {
+                            attachmentSendApi()
+                        }
+
+                        M_SCHOOL_CLASS_EVENTS -> {
+                            eventsendapi()
+                        }
+
+                        M_ASSIGNMENT -> {
+                            isAssignmentSend()
+                        }
+
+                        M_LSRW -> {
+                            isLsrwSkillSend()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            // Optionally handle failure, e.g., dismiss dialog or show error
+            ProgressDialogHelper.dismiss()
+        }
+    }
+
+
 
 
     fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
@@ -1371,112 +1663,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-    private fun videoUploading() {
-        val iterator = isVideoSelectedArrayList.iterator()
-        while (iterator.hasNext()) {
-            val fileItem = iterator.next()
-            if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-                    )
-                )
-                // Incremental progress update for pre-processed videos
-                val progress =
-                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                        .coerceAtMost(100)
-                ProgressDialogHelper.updateProgress(progress)
-                iterator.remove()
-            }
-        }
-
-        if (isVideoSelectedArrayList.isEmpty()) {
-            ProgressDialogHelper.updateProgress(100)
-            ProgressDialogHelper.dismiss()
-            when (SELECTED_MENU_ID) {
-                M_HOMEWORK -> {
-                    isHomeWorkSend()
-                }
-
-                M_ATTACHMENTS -> {
-                    attachmentSendApi()
-                }
-
-                M_SCHOOL_CLASS_EVENTS -> {
-                    eventsendapi()
-                }
-
-                M_ASSIGNMENT -> {
-                    isAssignmentSend()
-                }
-
-                M_LSRW -> {
-                    isLsrwSkillSend()
-                }
-            }
-        } else {
-            for (i in isVideoSelectedArrayList.indices) {
-                VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
-                )
-            }
-        }
-    }
-
-
-    override fun onUploadComplete(
-        success: Boolean, iframe: String?, link: String?
-    ) {
-        runOnUiThread {
-            if (success) {
-                Log.d("link", link.toString())
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = link.toString(), isFileType = Constant.VIDEO
-                    )
-                )
-                // Incremental progress update
-                val progress =
-                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                        .coerceAtMost(100)
-                ProgressDialogHelper.updateProgress(progress)
-
-                if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                    ProgressDialogHelper.updateProgress(100)
-                    ProgressDialogHelper.dismiss()
-                    when (SELECTED_MENU_ID) {
-                        M_HOMEWORK -> {
-                            isHomeWorkSend()
-                        }
-
-                        M_ATTACHMENTS -> {
-                            attachmentSendApi()
-                        }
-
-                        M_SCHOOL_CLASS_EVENTS -> {
-                            eventsendapi()
-                        }
-
-                        M_ASSIGNMENT -> {
-                            isAssignmentSend()
-                        }
-
-                        M_LSRW -> {
-                            isLsrwSkillSend()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-            // Optionally handle failure, e.g., dismiss dialog or show error
-            ProgressDialogHelper.dismiss()
-        }
-    }
 
     override fun onIdCheck(group: NameAndIds) {
         if (!isGroupSelectedIds.any { it.id == group.id }) {
@@ -1550,155 +1736,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-
-    private fun isFileUploadInAws(
-        isFileType: String?
-    ) {
-        // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
-        // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
-
-        val iterator = Constant.selectedFiles.iterator()
-        while (iterator.hasNext()) {
-            val fileItem = iterator.next()
-            if (fileItem.path.contains("amazonaws.")) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-                    )
-                )
-                // Incremental progress for pre-signed files
-                val progress =
-                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                        .coerceAtMost(100)
-                ProgressDialogHelper.updateProgress(progress)
-                iterator.remove()
-            }
-        }
-
-        val isCountryId = SharedPreference.getCountryId(this)
-        if (Constant.selectedFiles.isEmpty()) {
-            if (isVideoSelectedArrayList.isEmpty()) {
-                ProgressDialogHelper.updateProgress(100)
-                ProgressDialogHelper.dismiss()
-                when (SELECTED_MENU_ID) {
-                    M_HOMEWORK -> isHomeWorkSend()
-                    M_COMMUNICATION -> voiceSendApi()
-                    M_ASSIGNMENT -> isAssignmentSend()
-                    M_LSRW -> isLsrwSkillSend()
-
-                }
-            } else {
-                videoUploading()
-            }
-        } else {
-            val numToCompress = Constant.selectedFiles.size
-            val outputDir =
-                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
-            outputDir.mkdirs()
-            val newSelectedFiles = mutableListOf<FileItem>()
-            Constant.compressImageFilesOnly(
-                context = this,
-                files = Constant.selectedFiles,
-                outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.JPEG,
-                quality = 80,
-                maxWidth = 1280,
-                maxHeight = 1280,
-                onEachProcessed = { original, outputPath, success ->
-                    if (success && outputPath != null) {
-                        val compressedFile = File(outputPath)
-                        val originalSizeKB = try {
-                            if (original.path.startsWith("content://")) {
-                                contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path), "r"
-                                )?.statSize ?: 0
-                            } else {
-                                File(original.path).length()
-                            }
-                        } catch (e: Exception) {
-                            0L
-                        }
-
-                        Log.d(
-                            "Compressor",
-                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
-                        )
-
-                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-                        // Incremental progress during compression (10% to 50%)
-                        val compressedCount = newSelectedFiles.size
-                        val progress =
-                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
-                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
-                    } else {
-                        Log.e("Compressor", "Failed: ${original.path}")
-                    }
-                },
-                onComplete = {
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(newSelectedFiles)
-                    // Progress after compression (50%)
-                    ProgressDialogHelper.updateProgress(50)
-                    val isAwsUploadingFile = ArrayList<String>()
-
-                    val isSelectedFileCount = Constant.selectedFiles.size
-                    for (i in Constant.selectedFiles.indices) {
-                        isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path,
-                            isStaffDetails!!.school_id,
-                            isFileType!!,
-                            this@RecipientActivity,
-                            isCountryId!!,
-                            false,
-                            object : UploadCallback {
-
-                                override fun onUploadSuccess(
-                                    response: String?, isFileUploaded: String?
-                                ) {
-                                    isAwsUploadingFile.add(isFileUploaded!!)
-                                    Constant.isAwsUploadedFiles.add(
-                                        AwsUploadedFiles(
-                                            isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles.getOrNull(i)?.type?.name
-                                                ?: "UNKNOWN"
-                                        )
-                                    )
-                                    // Incremental progress during upload
-                                    val progress =
-                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-                                            .coerceAtMost(100)
-                                    ProgressDialogHelper.updateProgress(progress)
-
-                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
-                                        ProgressDialogHelper.updateProgress(100)
-                                        ProgressDialogHelper.dismiss()
-                                        when (SELECTED_MENU_ID) {
-                                            M_HOMEWORK -> isHomeWorkSend()
-                                            M_COMMUNICATION -> voiceSendApi()
-                                            M_ATTACHMENTS -> attachmentSendApi()
-                                            M_SCHOOL_CLASS_EVENTS -> eventsendapi()
-                                            M_ASSIGNMENT -> isAssignmentSend()
-                                            M_LSRW -> isLsrwSkillSend()
-                                        }
-                                    } else {
-                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
-                                        }
-                                    }
-                                }
-
-                                override fun onUploadError(error: String?) {
-                                    Log.d("isUploadIssue", error.toString())
-                                    // Optionally handle error, e.g., retry or dismiss
-                                }
-                            })
-                    }
-
-                    Log.d("Compressor", "All files compressed and uploaded.")
-                })
-        }
-    }
-
     fun attachmentSendApi() {
         val jsonObject = ApiCallRequest.isSendAttachment(
             isAcademicYearId = isAcademicYearId,
@@ -1768,7 +1805,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
     fun isHomeWorkSend() {
-        ProgressDialogHelper.updateProgress(100)
+//        ProgressDialogHelper.updateProgress(100)
         ProgressDialogHelper.dismiss()
         val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
         sectionDetails?.let {

@@ -363,7 +363,6 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgView.setBackgroundColor(Color.BLACK)
                         binding.imgView.setImageResource(R.drawable.video_play)
                         binding.progressBar.visibility = View.GONE
                     }

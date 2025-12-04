@@ -202,7 +202,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
 
@@ -348,91 +347,109 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         } else {
-            if (SELECTED_MENU_ID == M_ATTENDANCE_MARKING) {
-                val intent = Intent(this, AttendanceMark::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_HOMEWORK) {
-                val intent = Intent(this, HomeWorkCreate::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS) {
-                val intent = Intent(this, CreateEvent::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_ABSENTEES_REPORT) {
-                val intent = Intent(this, AbsenteesReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_SCHOOL_STRENGTH) {
-                val intent = Intent(this, SchoolStrength::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT) {
-                val intent = Intent(this, MessageFromManagement::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_DAILY_COLLECTION) {
-                val intent = Intent(this, DailyCollection::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT) {
-                val intent = Intent(this, InteractionWithStudent::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_LSRW) {
-                val intent = Intent(this, LsrwMain::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_STUDENT_REPORT) {
-                val intent = Intent(this, StudentReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_LESSON_PLAN) {
-                val intent = Intent(this, LessonPlan::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_FEE_PENDING_REPORT) {
-                val intent = Intent(this, FeePendingReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE) {
-                val intent = Intent(this, MarkYourAttendance::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT) {
-                val intent = Intent(this, StaffWiseAttendanceReport::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_PTM) {
-                val intent = Intent(this, PTM::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
-                val intent = Intent(this, AssignmentCreate::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } else if (SELECTED_MENU_ID == M_QUIZ_EXAM) {
-                val intent = Intent(this, ExamQuiz::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            }
-            else if (SELECTED_MENU_ID == M_LEAVE_REQUEST) {
-                val intent = Intent(this, LeaveRequests::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            }
-            else if (SELECTED_MENU_ID == M_UPLOAD_MARKS) {
-                val intent = Intent(this, ClassList::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+            when (SELECTED_MENU_ID) {
+                M_ATTENDANCE_MARKING -> {
+                    val intent = Intent(this, AttendanceMark::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_HOMEWORK -> {
+                    val intent = Intent(this, HomeWorkCreate::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_SCHOOL_CLASS_EVENTS -> {
+                    val intent = Intent(this, CreateEvent::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_ABSENTEES_REPORT -> {
+                    val intent = Intent(this, AbsenteesReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_SCHOOL_STRENGTH -> {
+                    val intent = Intent(this, SchoolStrength::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_MESSAGES_FROM_MANAGEMENT -> {
+                    val intent = Intent(this, MessageFromManagement::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_DAILY_COLLECTION -> {
+                    val intent = Intent(this, DailyCollection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_INTERACTION_WITH_STUDENT -> {
+                    val intent = Intent(this, InteractionWithStudent::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LSRW -> {
+                    val intent = Intent(this, LsrwMain::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_STUDENT_REPORT -> {
+                    val intent = Intent(this, StudentReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LESSON_PLAN -> {
+                    val intent = Intent(this, LessonPlan::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_FEE_PENDING_REPORT -> {
+                    val intent = Intent(this, FeePendingReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_MARK_YOUR_ATTENDANCE -> {
+                    val intent = Intent(this, MarkYourAttendance::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_STAFF_WISE_ATTENDANCE_REPORT -> {
+                    val intent = Intent(this, StaffWiseAttendanceReport::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_PTM -> {
+                    val intent = Intent(this, PTM::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_ASSIGNMENT -> {
+                    val intent = Intent(this, AssignmentCreate::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_QUIZ_EXAM -> {
+                    val intent = Intent(this, ExamQuiz::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_LEAVE_REQUEST -> {
+                    val intent = Intent(this, LeaveRequests::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                M_UPLOAD_MARKS -> {
+                    val intent = Intent(this, ClassList::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
             }
         }
     }
 
     fun isUploadFilesInServer(isFileType: String?) {
         ProgressDialogHelper.show(this)
-        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
+//        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
 
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
@@ -450,10 +467,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         val numNonVideoFiles = Constant.selectedFiles.size
         val numVideos = isVideoSelectedArrayList.size
-        val totalTasks = (numNonVideoFiles * 2) + numVideos
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
         var completedTasks = 0
 
         fun updateProgress() {
@@ -466,8 +488,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
             else -> {
                 ProgressDialogHelper.dismiss()
                 when (SELECTED_MENU_ID) {
@@ -478,7 +506,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
     }
-
 
     private fun isFileUploadInAws(
         isFileType: String?,
@@ -605,7 +632,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             })
     }
 
-
     private fun videoUploading(
         totalTasks: Int,
         onTaskComplete: () -> Unit
@@ -616,7 +642,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             if (fileItem.path.contains("player.vimeo.com")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
                     )
                 )
                 iterator.remove()
@@ -624,29 +651,140 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            for (i in isVideoSelectedArrayList.indices) {
-                VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
-                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-                            // Delegate to the activity's onUploadComplete for main logic
-                            this@SchoolList.onUploadComplete(success, iframe, link)
-                            onTaskComplete()  // Increment for each video upload task
-                        }
-
-                        override fun onFailure(errorMessage: String?) {
-                            // Delegate to the activity's onFailure
-                            this@SchoolList.onFailure(errorMessage)
-                            onTaskComplete()  // Increment on error to avoid hanging
-                        }
+            for (video in isVideoSelectedArrayList) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
                     }
+                }.start()
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", video.path, this
                 )
+
+//                VimeoVideoUpload.uploadVideo(
+//                    this,
+//                    "quiz",
+//                    "quiz",
+//                    video.path,
+//                    object : VimeoVideoUpload.UploadCompletionListener {
+//
+//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//
+//                            Log.e("VIDEO_DEBUG", "Callback fired")
+//
+//                            Constant.isAwsUploadedFiles.add(
+//                                AwsUploadedFiles(
+//                                    isFileUrl = link.toString(),
+//                                    isFileType = Constant.VIDEO
+//                                )
+//                            )
+//
+//                            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+//                                ProgressDialogHelper.dismiss()
+//
+//                                when (SELECTED_MENU_ID) {
+//                                    M_ATTACHMENTS -> attachmentSendApi()
+//                                    M_NOTICEBOARD -> noticeboardsendapi()
+//                                }
+//                            }
+//                        }
+//
+//                        override fun onFailure(errorMessage: String?) {
+//                            Log.e("VIDEO_DEBUG", "Upload failed: $errorMessage")
+//                        }
+//                    }
+//                )
             }
+
         } else {
             ProgressDialogHelper.dismiss()
             when (SELECTED_MENU_ID) {
                 M_ATTACHMENTS -> attachmentSendApi()
                 M_NOTICEBOARD -> noticeboardsendapi()
             }
+        }
+    }
+
+
+
+//    private fun videoUploading(
+//        totalTasks: Int,
+//        onTaskComplete: () -> Unit
+//    ) {
+//        val iterator = isVideoSelectedArrayList.iterator()
+//        while (iterator.hasNext()) {
+//            val fileItem = iterator.next()
+//            if (fileItem.path.contains("player.vimeo.com")) {
+//                Constant.isAwsUploadedFiles.add(
+//                    AwsUploadedFiles(
+//                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+//                    )
+//                )
+//                iterator.remove()
+//            }
+//        }
+//
+//        if (isVideoSelectedArrayList.isNotEmpty()) {
+//            for (i in isVideoSelectedArrayList.indices) {
+//
+//                Thread {
+//                    for (x in 1..10) {
+//                        Thread.sleep(300)
+//                        runOnUiThread { onTaskComplete() }
+//                    }
+//                }.start()
+//
+//
+//                VimeoVideoUpload.uploadVideo(
+//                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
+//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//                            // Delegate to the activity's onUploadComplete for main logic
+//                            this@SchoolList.onUploadComplete(success, iframe, link)
+//                            onTaskComplete()  // Increment for each video upload task
+//                        }
+//
+//                        override fun onFailure(errorMessage: String?) {
+//                            // Delegate to the activity's onFailure
+//                            this@SchoolList.onFailure(errorMessage)
+//                            onTaskComplete()  // Increment on error to avoid hanging
+//                        }
+//                    }
+//                )
+//            }
+//        } else {
+//            ProgressDialogHelper.dismiss()
+//            when (SELECTED_MENU_ID) {
+//                M_ATTACHMENTS -> attachmentSendApi()
+//                M_NOTICEBOARD -> noticeboardsendapi()
+//            }
+//        }
+//    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                when (SELECTED_MENU_ID) {
+                    M_ATTACHMENTS -> attachmentSendApi()
+                    M_NOTICEBOARD -> noticeboardsendapi()
+                }
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
 
@@ -770,33 +908,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
-        }
-    }
-
-    override fun onUploadComplete(
-        success: Boolean, iframe: String?, link: String?
-    ) {
-        runOnUiThread {
-            Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
-                AwsUploadedFiles(
-                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
-                )
-            )
-
-            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                ProgressDialogHelper.dismiss()
-                when (SELECTED_MENU_ID) {
-                    M_ATTACHMENTS -> attachmentSendApi()
-                    M_NOTICEBOARD -> noticeboardsendapi()
-                }
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
 }
