@@ -26,7 +26,7 @@
             android:id="@+id/toolbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_theme_school"
+            android:background="@drawable/bg_header_rounded"
             android:paddingVertical="@dimen/fifteen">
             <ImageView
                 android:id="@+id/imgBack"
@@ -73,6 +73,8 @@
                 </TextView>
             </LinearLayout>
         </RelativeLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcystaffQuestionchatdata"
             android:layout_width="match_parent"
