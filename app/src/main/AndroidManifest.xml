@@ -128,7 +128,7 @@
         <activity
             android:name=".School.QuizExam.QuizExamReport.AddQuestion"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Dashboard.Settings.WhatsNew.WhatsNewActivity"
             android:theme="@style/AppTheme"
