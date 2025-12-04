@@ -76,7 +76,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
-
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
     val isSectionSelectedIds = mutableListOf<Section>()
@@ -498,12 +497,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             when (SELECTED_MENU_ID) {
                 M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
-
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
-
                 }
 
                 M_ASSIGNMENT -> {
@@ -542,12 +539,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabLayout.visibility = View.GONE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSection)
                     //show send button only
 
@@ -556,12 +548,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 M_ASSIGNMENT -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabLayout.visibility = View.GONE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
                     changeTapBg(Constant.isSection)
 
                 }
@@ -569,11 +556,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 M_LSRW -> {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
 
                 }
@@ -711,6 +694,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isGroupSelectedIds.clear()
                 binding.subjectlabel.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.rytLevelDropDown.visibility = View.GONE
                 selectedIds.clear()
                 binding.btnSpecificStudent.isEnabled = false
                 binding.btnSpecificStudent.background =
