@@ -550,7 +550,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
-
                 }
 
                 M_LSRW -> {
