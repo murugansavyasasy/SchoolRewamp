@@ -757,7 +757,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             return
         }
 
-
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,
             description,
@@ -768,7 +767,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         intent.putExtra(Constant.lsrwskill_data, isLsrwnewTaskSendingData)
         startActivity(intent)
     }
-
 
     fun View.shake() {
         val anim = AnimationUtils.loadAnimation(context, R.anim.shake)
