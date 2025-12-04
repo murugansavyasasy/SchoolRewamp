@@ -8,13 +8,19 @@ import android.os.Build
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.webkit.MimeTypeMap
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,7 +64,41 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        enableEdgeToEdge()
+
+        val mainView = binding.main
+        val toolbarLayout = findViewById<View>(R.id.ImageLayout)
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+
+            binding.statusBarBackground.updateLayoutParams {
+                height = systemBars.top
+            }
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
+            insets
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            // Removed statusBarColor override to keep it transparent for edge-to-edge with colored view behind
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.visibility = View.GONE
         binding.lblSubject.text = subjectName
