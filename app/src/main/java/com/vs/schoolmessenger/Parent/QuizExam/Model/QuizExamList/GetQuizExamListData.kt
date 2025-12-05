@@ -1,12 +1,12 @@
 package com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList
 
-class GetQuizExamListData (
+class GetQuizExamListData(
     val id: String,
     val header_id: String,
     val quiz_id: String,
     val title: String,
     val description: String,
-    val max_mark:Int,
+    val max_mark: Int,
     val subject_id: Int,
     val level: Int,
     val subject: String,

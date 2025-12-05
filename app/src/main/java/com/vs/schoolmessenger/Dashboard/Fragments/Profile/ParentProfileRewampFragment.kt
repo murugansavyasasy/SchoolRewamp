@@ -85,12 +85,14 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
+
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ProfileImagePickingAdapter? = null
@@ -578,7 +580,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(intent, ParentProfileRewampFragment.Companion.PICK_DOCUMENT_REQUEST)
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
     private fun openCameraIntent() {
@@ -632,7 +634,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= ParentProfileRewampFragment.Companion.MAX_FILES) return
+            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = requireContext().contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
@@ -661,7 +663,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
 
         when (requestCode) {
-            ParentProfileRewampFragment.Companion.CAMERA_IMAGE_REQUEST -> {
+            CAMERA_IMAGE_REQUEST -> {
                 if (currentEditMode == "profile_photo") {
                     cameraImageFilePath?.let { filePath ->
                         var file = File(filePath)
@@ -725,7 +727,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 }
             }
 
-            ParentProfileRewampFragment.Companion.PICK_DOCUMENT_REQUEST -> {
+            PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
 

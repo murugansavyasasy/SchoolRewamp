@@ -36,6 +36,7 @@ class ChildMenuAdapter(
                 val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.dashboard_app_item)
                 ShimmerViewHolder(shimmerView)
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.dashboard_app_item, parent, false)
@@ -56,6 +57,7 @@ class ChildMenuAdapter(
                     holder.bind(menuDetail, position, listener, itemCountList)
                 }
             }
+
             is ShimmerViewHolder -> holder.startShimmer()
         }
     }

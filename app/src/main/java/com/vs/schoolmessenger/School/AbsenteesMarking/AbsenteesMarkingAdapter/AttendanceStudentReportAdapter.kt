@@ -5,16 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceStudentReportAdapter(
@@ -63,7 +58,8 @@ class AttendanceStudentReportAdapter(
         private val tvStudentName: TextView = itemView.findViewById(R.id.tvStudentName)
         private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
         private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
-//        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
+
+        //        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
         private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
         private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
 //        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
@@ -73,19 +69,18 @@ class AttendanceStudentReportAdapter(
         fun bind(data: StudentAttendanceReportData, position: Int) {
             tvStudentName.text = data.student_name
 
-            if (data.admission_no.isEmpty()){
-                tvAdmissionNo.visibility=View.GONE
-            }
-            else{
-                tvAdmissionNo.visibility=View.VISIBLE
-                tvAdmissionNo.text = "${context.getString(R.string.admission_no)}: ${data.admission_no}"
+            if (data.admission_no.isEmpty()) {
+                tvAdmissionNo.visibility = View.GONE
+            } else {
+                tvAdmissionNo.visibility = View.VISIBLE
+                tvAdmissionNo.text =
+                    "${context.getString(R.string.admission_no)}: ${data.admission_no}"
             }
 
-            if (data.roll_no.isEmpty()){
-                tvRollNo.visibility=View.GONE
-            }
-            else{
-                tvRollNo.visibility=View.VISIBLE
+            if (data.roll_no.isEmpty()) {
+                tvRollNo.visibility = View.GONE
+            } else {
+                tvRollNo.visibility = View.VISIBLE
                 tvRollNo.text = "${context.getString(R.string.roll_no)}${data.roll_no}"
             }
 
@@ -99,8 +94,8 @@ class AttendanceStudentReportAdapter(
             setStatusView(statusAN, anStatus)
 
 
-
         }
+
         private fun setStatusView(view: TextView, status: String) {
             val drawableRes = when (status.uppercase()) {
                 "P" -> R.drawable.report_present_icon
@@ -115,7 +110,7 @@ class AttendanceStudentReportAdapter(
 
             // set the status text (P, A, etc.)
             view.text = if (status == "-") "-"
-            else if (status=="P~") "LA"
+            else if (status == "P~") "LA"
             else status
 
         }

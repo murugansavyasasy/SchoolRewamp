@@ -1,8 +1,8 @@
 package com.vs.schoolmessenger.School.PTM.DataClass
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import com.vs.schoolmessenger.School.PTM.Adapter.SelectedClassSection
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MeetingCreationData(

@@ -1,7 +1,7 @@
 package com.vs.schoolmessenger.School.Assignment.DataClass
 
-import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import android.os.Parcelable
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -25,5 +25,5 @@ data class AssignmentData(
     val file_size: String,
     val thumbnail: String,
     val file_path: List<FilePath>
-)  : Parcelable
+) : Parcelable
 

@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomPieChartView
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -118,13 +116,13 @@ class LessonPlanPicChartAdapter(
             lblSubject.text = data.subject_name.orEmpty()
             lblSection.text = "${data.class_name} - ${data.section_name}"
             lblStaffName.text = data.staff_name.orEmpty()
-            lblStatus.text = "${context.getString(R.string.Items_Completed)} ${data.items_completed}"
+            lblStatus.text =
+                "${context.getString(R.string.Items_Completed)} ${data.items_completed}"
 
-            val itemscompleted = data.items_completed
+            data.items_completed
 
-            val percentage = data.percentage_value
+            data.percentage_value
             customPieChart.setProgress(data.percentage_value)
-
 
 
             val context = rootHeader.context
@@ -137,7 +135,7 @@ class LessonPlanPicChartAdapter(
 
 
             totalrelative_layout.setOnClickListener {
-                    listener.onItem(data, requestType)
+                listener.onItem(data, requestType)
             }
 
         }

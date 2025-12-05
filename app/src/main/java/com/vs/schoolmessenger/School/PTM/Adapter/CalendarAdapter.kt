@@ -71,6 +71,7 @@ class CalendarAdapter(
                 tvDay.setBackgroundResource(R.drawable.bg_selected_day)
                 tvDay.setTextColor(Color.WHITE)
             }
+
             cellDateStr == todayStr -> {
                 tvDay.setBackgroundResource(R.drawable.circle_bg_primary)
                 tvDay.setTextColor(Color.WHITE)

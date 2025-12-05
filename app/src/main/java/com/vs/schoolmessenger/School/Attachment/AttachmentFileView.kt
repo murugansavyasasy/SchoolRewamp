@@ -74,7 +74,7 @@ class AttachmentFileView(
                 Constant.TXT -> imgAttachment.setBackgroundResource(R.drawable.txt_file_img)
                 Constant.PPT, Constant.PPTX -> imgAttachment.setBackgroundResource(R.drawable.ppt_icon)
                 Constant.EXCEL -> imgAttachment.setBackgroundResource(R.drawable.excel_icon)
-                Constant.VIDEO -> imgAttachment.setBackgroundResource(R.drawable.video_type_icon)
+                Constant.VIDEO -> imgAttachment.setBackgroundResource(R.drawable.video_icon_2)
                 else -> imgAttachment.setBackgroundResource(R.drawable.image_pdf_icon)
             }
 

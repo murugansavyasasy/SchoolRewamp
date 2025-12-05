@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.ContactsContract
 import android.util.Log
 import android.util.TypedValue
@@ -23,15 +22,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -60,16 +53,13 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
-import com.vs.schoolmessenger.School.Assignment.AssignmentReport
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Event.EventReport
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
-import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -79,9 +69,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardReport
-
-import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
+import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
@@ -143,7 +132,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.lblRole.text = userDetails!!.staff_details[0].role
             binding.profileImage.visibility = View.VISIBLE
 
-            if(userDetails!!.staff_details[0].school_logo != "") {
+            if (userDetails!!.staff_details[0].school_logo != "") {
                 Glide.with(this)
                     .load(userDetails!!.staff_details[0].school_logo)
                     .error(R.drawable.school_sample)
@@ -165,7 +154,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 binding.username.text = userDetails!!.staff_details[0].name
                 binding.lblRole.text = userDetails!!.staff_details[0].role
 
-                if(userDetails!!.staff_details[0].school_logo != "") {
+                if (userDetails!!.staff_details[0].school_logo != "") {
                     Glide.with(this)
                         .load(userDetails!!.staff_details[0].school_logo)
                         .error(R.drawable.school_sample)
@@ -179,7 +168,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             if (response != null) {
                 response.status
                 response.message
-                Constant.isGlobalVariableData=response.data[0]
+                Constant.isGlobalVariableData = response.data[0]
                 checkContactPermission()
             }
         }
@@ -199,10 +188,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isSchoolDashBoardData = isDashboardResponse
 
-                    if(isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
+                    if (isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
                         showBirthdayPopup()
                     }
-                    Log.d("DashboardDataMenus","DashboardData")
+                    Log.d("DashboardDataMenus", "DashboardData")
                     isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
                     appViewModel!!.isDashBoardCountData(
                         access_token, Constant.staff_, requireActivity()
@@ -227,7 +216,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
                     isSchoolMenuCountDetails = isDashBoardCountData!![0].menu_details
-                   // isGetAds()
+                    // isGetAds()
                     isLoadData()
                     setupRecyclerView()
 
@@ -255,12 +244,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (userDetails!!.is_parent && userDetails!!.is_staff ||  userDetails!!.staff_details.size > 1) {
+                if (userDetails!!.is_parent && userDetails!!.is_staff || userDetails!!.staff_details.size > 1) {
                     val intent = Intent(requireActivity(), PrioritySelection::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                }
-                else {
+                } else {
                     handleBackPress()
                 }
             }
@@ -345,13 +333,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 REQUEST_CONTACT_PERMISSION
             )
         } else {
-            if(!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
+            if (!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
 
                 val contacts = mutableListOf<Pair<String, String>>()
 
-                val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
+                val numbers = Constant.isGlobalVariableData!!.v_card_numbers.split(",")
                 for (item in numbers) {
-                    contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
+                    contacts.add(
+                        Pair(
+                            Constant.isGlobalVariableData!!.contact_display_name,
+                            item.trim()
+                        )
+                    )
                 }
                 val missingContacts = contacts.filterNot { contactExists(it.second) }
                 if (missingContacts.isNotEmpty()) {
@@ -380,14 +373,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return exists
     }
 
-    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>)   {
+    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.save_contact_popup, null)
 
         val alertTitle: TextView = view.findViewById(R.id.alertTitle)
         val alertMessage: TextView = view.findViewById(R.id.alertMessage)
-        alertTitle.setText(Constant.isGlobalVariableData!!.contact_alert_title)
-        alertMessage.setText(Constant.isGlobalVariableData!!.contact_alert_content)
+        alertTitle.text = Constant.isGlobalVariableData!!.contact_alert_title
+        alertMessage.text = Constant.isGlobalVariableData!!.contact_alert_content
 
         val btnSave: TextView = view.findViewById(R.id.lblSave)
         val btnNo: TextView = view.findViewById(R.id.lblNo)
@@ -482,7 +475,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         // Prepare Intent to insert contact (user will confirm)
         val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-        intent.putExtra(ContactsContract.Intents.Insert.NAME, Constant.isGlobalVariableData!!.contact_display_name) // set contact name
+        intent.putExtra(
+            ContactsContract.Intents.Insert.NAME,
+            Constant.isGlobalVariableData!!.contact_display_name
+        ) // set contact name
         intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data)
 
         startActivityForResult(intent, 100)
@@ -498,7 +494,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 LinearLayoutManager(safeActivity, LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentSchoollyUsedMenuItems!!,isSchoolMenuCountDetails, this)
+            adapter = AutoScrollAdapterWithDots(
+                FrequentSchoollyUsedMenuItems!!,
+                isSchoolMenuCountDetails,
+                this
+            )
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -528,7 +528,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = isMenuAdapter
 
     }
-
 
 
     override fun onClick(p0: View?) {
@@ -573,10 +572,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        if(isSchoolDashBoardData == null) {
+        if (isSchoolDashBoardData == null) {
             isDashBoardData()
-        }
-        else{
+        } else {
             isLoadData()
             setupRecyclerView()
             appViewModel!!.isDashBoardCountData(
@@ -668,14 +666,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.M_NOTICEBOARD ->{
+            Constant.M_NOTICEBOARD -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     NoticeBoardReport::class.java
-                }
-                else{
+                } else {
                     CreateNoticeBoard::class.java
                 }
             }
+
             Constant.M_SCHOOL_CLASS_EVENTS -> {
 
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
@@ -796,6 +794,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
             Constant.M_ATTACHMENTS -> {
                 Attachment::class.java
             }
@@ -812,6 +811,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_ONLINE_TEXT_BOOK -> Ebooks::class.java
 
@@ -829,6 +829,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
             Constant.M_UPLOAD_MARKS -> {
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
                     ClassList::class.java

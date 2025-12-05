@@ -35,13 +35,13 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
-import com.vs.schoolmessenger.School.AbsenteesMarking.CustomCalendarFragement.CustomCalendarFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AttendanceStudentReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
+import com.vs.schoolmessenger.School.AbsenteesMarking.CustomCalendarFragement.CustomCalendarFragment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
@@ -51,7 +51,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
-    CustomCalendarFragment.CalendarDateListener,View.OnClickListener {
+    CustomCalendarFragment.CalendarDateListener, View.OnClickListener {
 
 
     lateinit var mAdapter: AttendanceStudentReportAdapter
@@ -100,14 +100,19 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         AttendanceType = Constant.fullDay
         isSelectedDate = LocalDate.now()
-        binding.AttendanceSelectedDate.text=Constant.formatToPretty(isSelectedDate.toString())
+        binding.AttendanceSelectedDate.text = Constant.formatToPretty(isSelectedDate.toString())
         SelectedDate = Constant.formatToUi2(isSelectedDate.toString())
         binding.imgInfo.setColorFilter(
             ContextCompat.getColor(this, R.color.PrimaryColor),
             PorterDuff.Mode.SRC_IN
         )
 
-        styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
+        styleLabel(
+            binding.lblFullDay,
+            R.drawable.mild_gray_radius,
+            R.color.PrimaryColor,
+            R.color.white
+        )
         styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
 
         binding.rlaStandard.setOnClickListener(this)
@@ -162,12 +167,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             imm.hideSoftInputFromWindow(binding.txtSearchBox.windowToken, 0)
             binding.lnrClasses2.visibility = View.GONE
             binding.lnrClasses1.visibility = View.VISIBLE
-            binding.btnAbsent.visibility=View.VISIBLE
+            binding.btnAbsent.visibility = View.VISIBLE
             binding.lblAttendanceOptions.visibility = View.VISIBLE
             binding.calendarFromFragmentContainer.visibility = View.VISIBLE
             binding.lnrAttendanceReport.visibility = View.GONE
             binding.lnrClasses2.visibility = View.GONE
-            binding.rytSearchbox.visibility=View.GONE
+            binding.rytSearchbox.visibility = View.GONE
             loadFromCalendar()
 
         }
@@ -182,8 +187,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearchBox.windowToken, 0)
             callApi = true
-            binding.rytSearchbox.visibility=View.GONE
-            binding.btnAbsent.visibility=View.GONE
+            binding.rytSearchbox.visibility = View.GONE
+            binding.btnAbsent.visibility = View.GONE
             binding.lnrClasses2.visibility = View.GONE
             binding.lnrClasses1.visibility = View.GONE
             binding.lblAttendanceOptions.visibility = View.GONE
@@ -226,9 +231,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         this
                     )
                 }
-            }
-            else {
-                Constant.showDataValidation(getString(R.string.fail),getString(R.string.something_went_wrong_please_try_again_later), this)
+            } else {
+                Constant.showDataValidation(
+                    getString(R.string.fail),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
 
@@ -283,13 +291,15 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 if (response.status) {
                     studentsList = response.data.get(0).attd_report
 
-                    if (response.data.get(0).holiday_message!=""){
-                        binding.marqueeText.visibility= View.VISIBLE
+                    if (response.data.get(0).holiday_message != "") {
+                        binding.marqueeText.visibility = View.VISIBLE
                         binding.marqueeText.isSelected = true
-                        setMarqueeText(binding.marqueeText,"📢 ${response.data.get(0).holiday_message}")
-                    }
-                    else{
-                        binding.marqueeText.visibility= View.GONE
+                        setMarqueeText(
+                            binding.marqueeText,
+                            "📢 ${response.data.get(0).holiday_message}"
+                        )
+                    } else {
+                        binding.marqueeText.visibility = View.GONE
                     }
 
                     studentsList?.size?.let {
@@ -297,44 +307,44 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 //                            studentsList = isStudentAttendanceReportResponseData
                             ShowData()
                             loadStudentReport(studentsList)
-                            binding.imgSearchicon.visibility=View.VISIBLE
-                            binding.rytInfoDetails.visibility=View.VISIBLE
-                            binding.lnrAttendancePercentageRate.visibility=View.VISIBLE
+                            binding.imgSearchicon.visibility = View.VISIBLE
+                            binding.rytInfoDetails.visibility = View.VISIBLE
+                            binding.lnrAttendancePercentageRate.visibility = View.VISIBLE
                         } else {
-                            if (response.message==Constant.This_day_is_marked_as_a_holiday){
-                                ErrorMessage(response.message,R.drawable.no_holiday_message)
-                            }
-                            else{
-                                ErrorMessage(response.message,R.drawable.no_attendance_taken)
+                            if (response.message == Constant.This_day_is_marked_as_a_holiday) {
+                                ErrorMessage(response.message, R.drawable.no_holiday_message)
+                            } else {
+                                ErrorMessage(response.message, R.drawable.no_attendance_taken)
                             }
                             binding.rcyAttendanceReport.visibility = View.GONE
-                            binding.imgSearchicon.visibility=View.GONE
-                            binding.rytInfoDetails.visibility=View.GONE
-                            binding.lnrAttendancePercentageRate.visibility=View.GONE
+                            binding.imgSearchicon.visibility = View.GONE
+                            binding.rytInfoDetails.visibility = View.GONE
+                            binding.lnrAttendancePercentageRate.visibility = View.GONE
                         }
                     }
 
                 } else {
-                    binding.marqueeText.visibility= View.GONE
+                    binding.marqueeText.visibility = View.GONE
 
-                    if (response.message==Constant.Attendance_has_not_been_taken_yet){
-                        ErrorMessage(response.message,R.drawable.no_attendance_taken)
-                    }
-                    else{
-                        ErrorMessage(response.message,R.drawable.no_holiday_message)
+                    if (response.message == Constant.Attendance_has_not_been_taken_yet) {
+                        ErrorMessage(response.message, R.drawable.no_attendance_taken)
+                    } else {
+                        ErrorMessage(response.message, R.drawable.no_holiday_message)
                     }
                     binding.rcyAttendanceReport.visibility = View.GONE
-                    binding.imgSearchicon.visibility=View.GONE
-                    binding.rytInfoDetails.visibility=View.GONE
-                    binding.lnrAttendancePercentageRate.visibility=View.GONE
+                    binding.imgSearchicon.visibility = View.GONE
+                    binding.rytInfoDetails.visibility = View.GONE
+                    binding.lnrAttendancePercentageRate.visibility = View.GONE
                 }
-            }
-            else{
+            } else {
                 binding.rcyAttendanceReport.visibility = View.GONE
-                ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later),R.drawable.no_search_message)
-                binding.imgSearchicon.visibility=View.GONE
-                binding.rytInfoDetails.visibility=View.GONE
-                binding.lnrAttendancePercentageRate.visibility=View.GONE
+                ErrorMessage(
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    R.drawable.no_search_message
+                )
+                binding.imgSearchicon.visibility = View.GONE
+                binding.rytInfoDetails.visibility = View.GONE
+                binding.lnrAttendancePercentageRate.visibility = View.GONE
             }
         }
 
@@ -398,7 +408,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         } else {
             binding.rcyAttendanceReport.visibility = View.GONE
-            ErrorMessage(resources.getString(R.string.no_data_found),R.drawable.no_search_message)
+            ErrorMessage(resources.getString(R.string.no_data_found), R.drawable.no_search_message)
         }
     }
 
@@ -459,7 +469,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     }
 
-    fun ErrorMessage(ErrorMessage: String,drawableRes: Int) {
+    fun ErrorMessage(ErrorMessage: String, drawableRes: Int) {
         binding.lytNoDataFound.visibility = View.VISIBLE
         binding.noDataFound.text = ErrorMessage
 
@@ -478,7 +488,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadFromCalendar() {
         val today = LocalDate.now()
-        val minFromDate = today.minusYears(1) //LocalDate.of(2025, 9, 10)   // 10 Sep 2025 To handle the only for Specify date
+        val minFromDate =
+            today.minusYears(1) //LocalDate.of(2025, 9, 10)   // 10 Sep 2025 To handle the only for Specify date
         val maxFromDate = today
 
 
@@ -505,9 +516,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 Log.d("selectedDate", selected.toString())
                 SelectedDate = Constant.formatToUi2(selected.toString())
                 isSelectedDate = selected//This Date for Fragemnt to change the next date
-                binding.AttendanceSelectedDate.text=Constant.formatToPretty(selected.toString())
+                binding.AttendanceSelectedDate.text = Constant.formatToPretty(selected.toString())
                 if (callApi) {
-                    binding.rytSearchbox.visibility=View.GONE
+                    binding.rytSearchbox.visibility = View.GONE
                     binding.txtSearchBox.text.clear()
                     loadData()
                 }
@@ -541,12 +552,22 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
 
-            R.id.lblFullDay, -> {
+            R.id.lblFullDay -> {
                 SessionType = ""
                 AttendanceType = Constant.fullDay
 
-                styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
-                styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
+                styleLabel(
+                    binding.lblFullDay,
+                    R.drawable.mild_gray_radius,
+                    R.color.PrimaryColor,
+                    R.color.white
+                )
+                styleLabel(
+                    binding.lblHalfDay,
+                    R.drawable.mild_gray_radius,
+                    R.color.gray,
+                    R.color.black
+                )
                 binding.lnrClasses2.visibility = View.GONE
 
             }
@@ -554,28 +575,68 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             R.id.lblHalfDay -> {
                 AttendanceType = Constant.halfDay
 
-                styleLabel(binding.lblFullDay, R.drawable.mild_gray_radius, R.color.gray, R.color.black)
-                styleLabel(binding.lblHalfDay, R.drawable.mild_gray_radius, R.color.PrimaryColor, R.color.white)
+                styleLabel(
+                    binding.lblFullDay,
+                    R.drawable.mild_gray_radius,
+                    R.color.gray,
+                    R.color.black
+                )
+                styleLabel(
+                    binding.lblHalfDay,
+                    R.drawable.mild_gray_radius,
+                    R.color.PrimaryColor,
+                    R.color.white
+                )
                 binding.lnrClasses2.visibility = View.VISIBLE
 
                 binding.lnrClasses2.visibility = View.VISIBLE
                 SessionType = Constant.firstHalf
-                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
-                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
+                styleLabel(
+                    binding.lblFirstHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.green,
+                    R.color.white
+                )
+                styleLabel(
+                    binding.lblSecondHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.gray,
+                    R.color.black
+                )
 
             }
 
             R.id.lblFirstHalf -> {
                 SessionType = Constant.firstHalf
-                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
-                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
+                styleLabel(
+                    binding.lblFirstHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.green,
+                    R.color.white
+                )
+                styleLabel(
+                    binding.lblSecondHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.gray,
+                    R.color.black
+                )
             }
 
             R.id.lblSecondHalf -> {
                 SessionType = Constant.secondHalf
 
-                styleLabel(binding.lblFirstHalf, R.drawable.gray_bg_radius, R.color.gray, R.color.black)
-                styleLabel(binding.lblSecondHalf, R.drawable.gray_bg_radius, R.color.green, R.color.white)
+                styleLabel(
+                    binding.lblFirstHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.gray,
+                    R.color.black
+                )
+                styleLabel(
+                    binding.lblSecondHalf,
+                    R.drawable.gray_bg_radius,
+                    R.color.green,
+                    R.color.white
+                )
 
             }
 
@@ -604,7 +665,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         view.background = drawable
         view.setTextColor(ContextCompat.getColor(view.context, textColorRes))
     }
-
 
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
@@ -715,7 +775,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         )
         //We are Saving all the data in Constant as List Here
         Constant.isMarkAttendanceDataSending = saveAttendanceData
-        Log.d("saveAttendanceData",saveAttendanceData.toString())
+        Log.d("saveAttendanceData", saveAttendanceData.toString())
     }
 
 
@@ -868,21 +928,41 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             val fnLabelStart = text.length
             text.append(fnLabel)
-            text.setSpan(AbsoluteSizeSpan(16, true), fnLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(16, true),
+                fnLabelStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             // Forenoon
             val fnValueStart = text.length
             text.append(fnValue)
-            text.setSpan(AbsoluteSizeSpan(13, true), fnValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(13, true),
+                fnValueStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             // AN :
             val anLabelStart = text.length
             text.append(anLabel)
-            text.setSpan(AbsoluteSizeSpan(16, true), anLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(16, true),
+                anLabelStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             val anValueStart = text.length
             text.append(anValue)
-            text.setSpan(AbsoluteSizeSpan(13, true), anValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(13, true),
+                anValueStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             textAlignment = TextView.TEXT_ALIGNMENT_VIEW_START
             this.text = text
@@ -914,7 +994,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             container.addView(itemView)
         }
 
-        popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.bg_popup_round))
+        popupWindow.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.bg_popup_round
+            )
+        )
         popupWindow.elevation = 10f
         popupWindow.isOutsideTouchable = true
         popupWindow.showAsDropDown(binding.imgInfo, -30, 10)

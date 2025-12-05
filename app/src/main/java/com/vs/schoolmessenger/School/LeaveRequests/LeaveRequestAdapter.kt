@@ -98,7 +98,11 @@ class LeaveRequestAdapter(
                 Constant.convertDateTimeFormat(data.leave_to ?: "")
             }"
             textNoOfDays.text =
-                "${data.no_of_days} ${if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(R.string.days)} ${context.getString(R.string.Application)}"
+                "${data.no_of_days} ${
+                    if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(
+                        R.string.days
+                    )
+                } ${context.getString(R.string.Application)}"
             textReason.text = data.reason
 
             if (data.status == Constant.rejected) {

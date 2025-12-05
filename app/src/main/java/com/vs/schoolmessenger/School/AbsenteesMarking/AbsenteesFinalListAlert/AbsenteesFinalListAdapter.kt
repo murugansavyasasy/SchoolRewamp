@@ -27,7 +27,8 @@ class AbsenteesFinalListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_final_list_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_final_list_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)

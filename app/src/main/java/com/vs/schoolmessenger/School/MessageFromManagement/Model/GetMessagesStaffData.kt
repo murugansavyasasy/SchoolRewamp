@@ -1,9 +1,8 @@
 package com.vs.schoolmessenger.School.MessageFromManagement.Model
 
-import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 
-data class GetMessagesStaffData (
+data class GetMessagesStaffData(
     val type: String,
     val id: String,
     val school_id: String,

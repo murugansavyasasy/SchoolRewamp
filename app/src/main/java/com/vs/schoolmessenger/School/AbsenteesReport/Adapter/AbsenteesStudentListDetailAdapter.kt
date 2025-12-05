@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +14,6 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesStudentListDetailAdapter(
@@ -112,6 +109,7 @@ class AbsenteesStudentListDetailAdapter(
         private val tvStudentName: TextView = itemView.findViewById(R.id.tvStudentName)
         private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
         private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
+
         //        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
         private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
         private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
@@ -124,7 +122,8 @@ class AbsenteesStudentListDetailAdapter(
                 tvAdmissionNo.visibility = View.GONE
             } else {
                 tvAdmissionNo.visibility = View.VISIBLE
-                tvAdmissionNo.text = "${context.getString(R.string.admission_no)}: ${data.admission_no}"
+                tvAdmissionNo.text =
+                    "${context.getString(R.string.admission_no)}: ${data.admission_no}"
             }
 
             if (data.roll_no.isEmpty()) {
@@ -188,7 +187,7 @@ class AbsenteesStudentListDetailAdapter(
 
             // set the status text (P, A, etc.)
             view.text = if (status == "-") "-"
-            else if (status=="P~") "LA"
+            else if (status == "P~") "LA"
             else status
 
         }

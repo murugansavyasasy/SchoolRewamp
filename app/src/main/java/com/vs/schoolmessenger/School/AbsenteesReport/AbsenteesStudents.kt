@@ -79,7 +79,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
             if (response.status) {
                 isLoadDailyCollectionData(response.data)
             } else {
-                showErrorUI(response.message ?:getString(R.string.no_data_available))
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
             }
         }
 
@@ -99,7 +99,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         Log.d("API_CALL", "Fetching for date: $absent_on, section: $section_id")
 
         appViewModel?.getabsenteesstudentbydate(
-            isAccessToken ?: "", absent_on,class_id!!, section_id, this
+            isAccessToken ?: "", absent_on, class_id!!, section_id, this
         )
     }
 
@@ -109,7 +109,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
             return
         }
 
-        val singleItemList = listOf(data.first()) // For header display
+        listOf(data.first()) // For header display
 
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE

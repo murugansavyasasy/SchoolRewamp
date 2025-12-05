@@ -1,14 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
-import android.R.attr.repeatCount
-import android.R.attr.repeatMode
-import com.vs.schoolmessenger.R
-import android.animation.*
 import android.content.Context
-import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
 
 class AnimationHelper(private val context: Context) {
 

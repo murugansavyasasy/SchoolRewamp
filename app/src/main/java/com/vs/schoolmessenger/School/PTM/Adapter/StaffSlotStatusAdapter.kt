@@ -32,6 +32,7 @@ class StaffSlotStatusAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
@@ -47,7 +48,7 @@ class StaffSlotStatusAdapter(
         }
     }
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             val data = itemList!![position]
             holder.bind(data, position, listener, expandedPosition)
@@ -76,7 +77,7 @@ class StaffSlotStatusAdapter(
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
         private val imgDot: ImageView = itemView.findViewById(R.id.imgDot)
         private val rytSlots: RelativeLayout = itemView.findViewById(R.id.rytSlots)
-                private val isConParentName: ConstraintLayout = itemView.findViewById(R.id.conParentName)
+        private val isConParentName: ConstraintLayout = itemView.findViewById(R.id.conParentName)
         private val txtMotherName: TextView = itemView.findViewById(R.id.txtMotherName)
         private val txtFatherName: TextView = itemView.findViewById(R.id.txtFatherName)
         val imgExpand: ImageView = itemView.findViewById(R.id.imgExpand)
@@ -84,7 +85,12 @@ class StaffSlotStatusAdapter(
             itemView.findViewById(R.id.lblStandardAndSection)
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: Slot, position: Int, listener: StaffSlotCancelReOpenClickListener, expandedPos: Int) {
+        fun bind(
+            data: Slot,
+            position: Int,
+            listener: StaffSlotCancelReOpenClickListener,
+            expandedPos: Int
+        ) {
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
@@ -92,8 +98,8 @@ class StaffSlotStatusAdapter(
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
 
 
-                        txtMotherName.text=data.mother_name
-            txtFatherName.text=data.father_name
+            txtMotherName.text = data.mother_name
+            txtFatherName.text = data.father_name
 
             val isExpanded = position == expandedPos
             isConParentName.visibility = if (isExpanded) View.VISIBLE else View.GONE
@@ -110,17 +116,20 @@ class StaffSlotStatusAdapter(
                     imgDot.visibility = View.VISIBLE
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
+
                 "Cancelled" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_red_radious)
                     lblWaitingBooking.visibility = View.VISIBLE
                     lblWaitingBooking.text = "Slot Cancelled"
                     lblStatus.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
-                    lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    lblWaitingBooking.background =
+                        context.getDrawable(R.drawable.bg_light_red_radious)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.cancelled))
                     imgDot.visibility = View.GONE
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
+
                 "Expired" -> {
                     rltStatus.background = context.getDrawable(R.drawable.gray_bg_radius)
                     lblWaitingBooking.visibility = View.VISIBLE
@@ -130,6 +139,7 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.expired))
                     imgDot.visibility = View.GONE
                 }
+
                 "Completed" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_green)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
@@ -138,6 +148,7 @@ class StaffSlotStatusAdapter(
                     lblBookedName.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
                 }
+
                 "Booked" -> {
                     rltStatus.background =
                         context.getDrawable(R.drawable.rect_bg_light_green_present)
@@ -146,6 +157,7 @@ class StaffSlotStatusAdapter(
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
                     imgDot.visibility = View.VISIBLE
                 }
+
                 "Upcoming" -> {
                     rltStatus.background =
                         context.getDrawable(R.drawable.rect_bg_light_green_present)
@@ -191,12 +203,6 @@ class StaffSlotStatusAdapter(
         }
     }
 }
-
-
-
-
-
-
 
 
 //package com.vs.schoolmessenger.School.PTM.Adapter

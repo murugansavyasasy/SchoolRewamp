@@ -68,7 +68,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
         val mainView = binding.main
         val toolbarLayout = findViewById<View>(R.id.ImageLayout)
-        val headerView = findViewById<View>(R.id.rytHeader)
+        findViewById<View>(R.id.rytHeader)
 
 
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
@@ -112,7 +112,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         binding.lnrPrevious.setOnClickListener(this)
         isFilesList.clear()
         if (Constant.commonFileList.isNotEmpty()) {
-            Log.d("commonFileList",Constant.commonFileList.toString())
+            Log.d("commonFileList", Constant.commonFileList.toString())
             val first = Constant.commonFileList[0]
             if (first.type != FileType.VIDEO.toString()
                 && !first.path.startsWith("content://")

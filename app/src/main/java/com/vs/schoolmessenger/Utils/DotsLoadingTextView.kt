@@ -62,11 +62,19 @@ class ThreeDotsLoadingView @JvmOverloads constructor(
 
     // animator setters
     @Suppress("unused")
-    fun setScale0(value: Float) { scaleFactors[0] = value; invalidate() }
+    fun setScale0(value: Float) {
+        scaleFactors[0] = value; invalidate()
+    }
+
     @Suppress("unused")
-    fun setScale1(value: Float) { scaleFactors[1] = value; invalidate() }
+    fun setScale1(value: Float) {
+        scaleFactors[1] = value; invalidate()
+    }
+
     @Suppress("unused")
-    fun setScale2(value: Float) { scaleFactors[2] = value; invalidate() }
+    fun setScale2(value: Float) {
+        scaleFactors[2] = value; invalidate()
+    }
 
     fun start() {
         animators.forEach { if (!it.isRunning) it.start() }

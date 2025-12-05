@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -38,7 +39,6 @@ import com.vs.schoolmessenger.databinding.LessonplanViewDetailsBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import androidx.core.view.isVisible
 
 class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View.OnClickListener,
     LessonPlanClickListener, OnDateSelectedListener {
@@ -101,10 +101,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         total_items = intent.getStringExtra(Constant.total_items)
 
         if (request_type == Constant.allclass) {
-            Log.d("Request Type",request_type.toString())
+            Log.d("Request Type", request_type.toString())
             binding.createlp.visibility = View.GONE
         } else {
-            Log.d("Request Type",request_type.toString())
+            Log.d("Request Type", request_type.toString())
             binding.createlp.visibility = View.VISIBLE
         }
 
@@ -144,7 +144,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_list_found)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.tabLayout1.visibility = View.GONE
                 binding.rcyLessonViewPlan.visibility = View.GONE
@@ -191,13 +191,21 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
     }
 
     fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     private fun setupRecycler() {
         lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
+            null,
+            this,
+            this,
+            Constant.isShimmerViewShow,
+            request_type ?: "",
+            subject_name ?: "",
+            items_completed ?: "",
+            completed_items ?: "",
+            total_items ?: ""
         )
         binding.rcyLessonViewPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonViewPlan.isNestedScrollingEnabled = false
@@ -206,7 +214,15 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
     private fun fetchLessonPlanData(sectionSubjectId: String?) {
         lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
+            null,
+            this,
+            this,
+            Constant.isShimmerViewShow,
+            request_type ?: "",
+            subject_name ?: "",
+            items_completed ?: "",
+            completed_items ?: "",
+            total_items ?: ""
         )
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
 
@@ -245,7 +261,15 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         }
 
         lessonplanViewAdapter = LessonPlanAdapter(
-            filteredList, this, this, Constant.isShimmerViewDisable, request_type ?: "", subject_name ?: "", items_completed?: "", completed_items?: "", total_items?: ""
+            filteredList,
+            this,
+            this,
+            Constant.isShimmerViewDisable,
+            request_type ?: "",
+            subject_name ?: "",
+            items_completed ?: "",
+            completed_items ?: "",
+            total_items ?: ""
         )
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
     }

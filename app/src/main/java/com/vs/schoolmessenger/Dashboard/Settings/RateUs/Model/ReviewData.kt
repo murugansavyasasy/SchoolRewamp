@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model
 
-data class ReviewData (
+data class ReviewData(
     val id: String,
     val mobile: String,
     val rating: Int,

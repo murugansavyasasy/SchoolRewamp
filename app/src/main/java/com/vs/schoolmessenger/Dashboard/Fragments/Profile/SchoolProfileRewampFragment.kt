@@ -14,13 +14,11 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
-import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileRewampFragmentAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ProfileFragmentBinding
-import kotlin.collections.iterator
 
 class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentClickListener {
     private lateinit var binding: ProfileFragmentBinding
@@ -78,7 +76,8 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     }
                 }
 
-                binding.recyclerview.adapter = ProfileRewampFragmentAdapter(items, requireContext(),this)
+                binding.recyclerview.adapter =
+                    ProfileRewampFragmentAdapter(items, requireContext(), this)
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
 

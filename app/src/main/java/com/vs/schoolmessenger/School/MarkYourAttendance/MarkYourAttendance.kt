@@ -156,7 +156,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 binding.lblNoRecords.visibility = View.VISIBLE
                 binding.imgNorecord.visibility = View.VISIBLE
                 binding.linearagendalayout.visibility = View.GONE
-                binding.lblNoRecords.text = response?.message ?: getString(R.string.no_data_available)
+                binding.lblNoRecords.text =
+                    response?.message ?: getString(R.string.no_data_available)
             }
         }
 

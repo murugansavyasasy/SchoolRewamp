@@ -216,9 +216,9 @@ class CalendarFragment : Fragment() {
                 ContextCompat.getColor(requireContext(), android.R.color.black)
             )
             binding.holidaylabel.text = "${getString(R.string.Holidays_for)} $currentMonthYear"
-            binding.holidaylabel.visibility=View.VISIBLE
+            binding.holidaylabel.visibility = View.VISIBLE
         } else {
-            binding.holidaylabel.visibility=View.GONE
+            binding.holidaylabel.visibility = View.GONE
             binding.holidayRecyclerView.visibility = View.GONE
             binding.lnrErrorMsg.visibility = View.VISIBLE
             binding.holidaylabel.setTextColor(

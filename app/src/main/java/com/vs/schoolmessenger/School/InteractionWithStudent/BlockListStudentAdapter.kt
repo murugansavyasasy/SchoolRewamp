@@ -3,14 +3,12 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -102,12 +100,11 @@ class BlockListStudentAdapter(
         private val lytunblock: LinearLayout = itemView.findViewById(R.id.lytunblock)
 
 
-
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: BlockedStudent, position: Int, adapter: BlockListStudentAdapter) {
             nameheader.text = student.name
-            blocked_on.text = "${context.getString(R.string.Blocked_on)} : "+student.blocked_on
-            reason.text = "${context.getString(R.string.reason_2)} "+student.reason
+            blocked_on.text = "${context.getString(R.string.Blocked_on)} : " + student.blocked_on
+            reason.text = "${context.getString(R.string.reason_2)} " + student.reason
             lblLogo.text = Constant.getNameInitials(student.name)
 
             lytunblock.setOnClickListener {

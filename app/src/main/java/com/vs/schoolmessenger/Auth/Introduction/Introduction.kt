@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Auth.Introduction
 import android.content.Intent
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeatureData
-import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -44,21 +42,18 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
             Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
-                    if (response.data.isNotEmpty()){
-                        setupOnboardingRecycler( response.data)
-                    }
-                    else{
+                    if (response.data.isNotEmpty()) {
+                        setupOnboardingRecycler(response.data)
+                    } else {
                         //if suppose api status is failed we directly go country list
                         RedirectCountryList()
                     }
-                }
-                else {
+                } else {
                     //if suppose api status is failed we directly go country list
 
                     RedirectCountryList()
                 }
-            }
-            else {
+            } else {
                 //if suppose api status is failed we directly go country list
 
                 RedirectCountryList()
@@ -89,7 +84,8 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
         recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val pos = (rv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    val pos =
+                        (rv.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (pos != currentIndex) {
                         currentIndex = pos
                         updateDots(pos)
@@ -119,13 +115,14 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
         }
 
     }
+
     private fun updateButtonText(position: Int) {
         val isLastPage = position == adapter.itemCount - 1
-        binding.btnNext.text = if (isLastPage) getString(R.string.let_s_go) else getString(R.string.next)
+        binding.btnNext.text =
+            if (isLastPage) getString(R.string.let_s_go) else getString(R.string.next)
         binding.btnSkip.visibility = if (isLastPage) View.GONE else View.VISIBLE
 
     }
-
 
 
     private fun setupDots(count: Int) {
@@ -150,7 +147,8 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
             )
         }
     }
-    fun RedirectCountryList(){
+
+    fun RedirectCountryList() {
         SharedPreference.putIntroductionSkip(this@Introduction, true)
         startActivity(Intent(this@Introduction, CountryScreen::class.java))
         finish()

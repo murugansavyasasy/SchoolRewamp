@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList
 
-class GetQuizSubmissionListData (
+class GetQuizSubmissionListData(
 
     val id: String,
     val standard: String,
@@ -12,4 +12,4 @@ class GetQuizSubmissionListData (
     val submitted_on: String,
     val is_unread: Boolean,
     val gender: String,
-    )
+)

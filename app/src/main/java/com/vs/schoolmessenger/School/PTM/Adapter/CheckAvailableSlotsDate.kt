@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -91,7 +90,20 @@ class CheckAvailableSlotsDate(
         if (input.isNullOrBlank()) return ""
 
         val s = input.trim()
-        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ssXXX", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "dd MMM yyyy", "dd MMMM yyyy", "MM/dd/yyyy", "MM-dd-yyyy")
+        val patterns = listOf(
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "yyyy-MM-dd'T'HH:mm:ssXXX",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd-MM-yyyy",
+            "dd/MM/yyyy",
+            "dd MMM yyyy",
+            "dd MMMM yyyy",
+            "MM/dd/yyyy",
+            "MM-dd-yyyy"
+        )
         for (p in patterns) {
             try {
                 val sdf = SimpleDateFormat(p, Locale.getDefault())
@@ -122,7 +134,8 @@ class CheckAvailableSlotsDate(
                     return out
                 }
             }
-        } catch (_: Exception) { }
+        } catch (_: Exception) {
+        }
 
         Log.w("CheckAvailableSlotsDate", "Unable to parse date: '$input' (showing raw)")
         return try {

@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -87,7 +85,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
 //            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
@@ -123,13 +121,13 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             if (binding.rytsearch.isVisible) {
                 binding.rytsearch.visibility = View.GONE
                 binding.txtSearchMeeting.setText("")
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMeeting.windowToken, 0)
             } else {
                 binding.rytsearch.visibility = View.VISIBLE
                 binding.txtSearchMeeting.setText("")
                 binding.txtSearchMeeting.requestFocus()
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
             }
         }
@@ -146,11 +144,11 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
                     } else {
                         binding.rytNoDataFound.visibility = View.VISIBLE
-                        binding.NoData.text="No meeting found"
+                        binding.NoData.text = "No meeting found"
                         binding.recyclerViewSlots.visibility = View.GONE
                     }
                 } else {
-                    binding.NoData.text=response.message?:"No meeting found"
+                    binding.NoData.text = response.message ?: "No meeting found"
                     binding.rytNoDataFound.visibility = View.VISIBLE
                     binding.recyclerViewSlots.visibility = View.GONE
                 }
@@ -173,7 +171,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
                                 if (isMeetingHistoryAdapter.itemCount == 0) {
                                     binding.rytNoDataFound.visibility = View.VISIBLE
-                                    binding.NoData.text=response.message?:"No meeting found"
+                                    binding.NoData.text = response.message ?: "No meeting found"
                                     binding.rcyMeetingHistory.visibility = View.GONE
                                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                                 } else {
@@ -191,27 +189,27 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         appViewModel?.isSlotBookingForStudent?.observe(this) { response ->
             if (response != null) {
                 binding.rcyMeetingHistory.postDelayed({
-                Constant.hideLoading(this)
-                if (response?.status == true) {
-                    AlertDialog.Builder(this)
-                        .setMessage(response.message ?: "Slot booked successfully!")
-                        .setCancelable(false)
-                        .setPositiveButton("OK") { dlg, _ ->
-                            dlg.dismiss()
-                            selectedSlotIds.clear()
-                            binding.lblBookSlots.visibility = View.GONE
-                            isScheduleCallList()
-                        }
-                        .show()
-                } else {
-                    AlertDialog.Builder(this)
-                        .setMessage(response?.message ?: "Booking failed!")
-                        .setCancelable(false)
-                        .setPositiveButton("OK") { dlg, _ -> dlg.dismiss() }
-                        .show()
-                }
-            }, 2000)
-        }
+                    Constant.hideLoading(this)
+                    if (response?.status == true) {
+                        AlertDialog.Builder(this)
+                            .setMessage(response.message ?: "Slot booked successfully!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK") { dlg, _ ->
+                                dlg.dismiss()
+                                selectedSlotIds.clear()
+                                binding.lblBookSlots.visibility = View.GONE
+                                isScheduleCallList()
+                            }
+                            .show()
+                    } else {
+                        AlertDialog.Builder(this)
+                            .setMessage(response?.message ?: "Booking failed!")
+                            .setCancelable(false)
+                            .setPositiveButton("OK") { dlg, _ -> dlg.dismiss() }
+                            .show()
+                    }
+                }, 2000)
+            }
         }
 
 
@@ -255,12 +253,12 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                     isLoadMeetingData(response.data)
                 } else {
                     binding.lytList.visibility = View.VISIBLE
-                    binding.txtNoData.text ="No meeting found"
+                    binding.txtNoData.text = "No meeting found"
                     binding.rcyMeetingHistory.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
             } else {
-                binding.txtNoData.text =response?.message?:"No meeting found"
+                binding.txtNoData.text = response?.message ?: "No meeting found"
                 binding.lytList.visibility = View.VISIBLE
                 binding.rcyMeetingHistory.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -269,7 +267,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     }
 
     fun isLoadData(data: List<MeetingData>) {
-        val adapter = ParentMeetingAdapter(data,this) { meeting, slot, isSelected ->
+        val adapter = ParentMeetingAdapter(data, this) { meeting, slot, isSelected ->
             slot?.let {
                 if (isSelected) {
                     if (!selectedSlotIds.contains(it.id)) {
@@ -319,16 +317,19 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                         isClassTeacherId = "0"
                         isManagement = false
                     }
+
                     "Management" -> {
                         isSubjectId = "0"
                         isClassTeacherId = "0"
                         isManagement = true
                     }
+
                     "Class Teacher" -> {
                         isSubjectId = "0"
                         isClassTeacherId = selectedSubject.id
                         isManagement = false
                     }
+
                     else -> {
                         isSubjectId = selectedSubject.id
                         isClassTeacherId = "0"

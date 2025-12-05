@@ -18,7 +18,6 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickList
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.MycouponViewActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -103,7 +102,8 @@ class TicketCouponAdapter(
         fun bind(data: TicketSummary, position: Int) {
             categoryName.text = data.merchant_name
             discount.text = data.offer_to_show
-            merchantName.text = "${context.getString(R.string.Expires_in)} ${data.expires_in} ${context.getString(R.string.days)}"
+            merchantName.text =
+                "${context.getString(R.string.Expires_in)} ${data.expires_in} ${context.getString(R.string.days)}"
 
             Log.d(
                 "TicketCouponAdapter",
@@ -140,7 +140,7 @@ class TicketCouponAdapter(
                     couponStatus.visibility = View.VISIBLE
                     couponStatus.background =
                         ContextCompat.getDrawable(context, R.drawable.redeemed_backgroundgrey)
-                    couponStatus.text =context.getString(R.string.expired)
+                    couponStatus.text = context.getString(R.string.expired)
                 }
 
                 else -> {

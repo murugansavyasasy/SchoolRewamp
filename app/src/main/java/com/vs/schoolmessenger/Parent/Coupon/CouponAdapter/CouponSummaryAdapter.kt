@@ -17,7 +17,6 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickLis
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponActivateActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.ParseException
@@ -134,7 +133,7 @@ class CouponSummaryAdapter(
                 val daysLeft = TimeUnit.MILLISECONDS.toDays(diffInMillies)
 
                 if (daysLeft >= 0) {
-                    lblDays.text = "${daysLeft.toString()} ${context.getString(R.string.days)}"
+                    lblDays.text = "$daysLeft ${context.getString(R.string.days)}"
                 } else {
                     lblDays.text = context.getString(R.string.expired)
                 }
@@ -170,8 +169,8 @@ class CouponSummaryAdapter(
                 intent.putExtra("remainingPoints", remainingPoints)
                 intent.putExtra("pointspercoupon", pointspercoupon)
 
-                Log.d("pointspercouponnnnnnnn",pointspercoupon.toString())
-                Log.d("remainingPointsssssssssss",remainingPoints.toString())
+                Log.d("pointspercouponnnnnnnn", pointspercoupon.toString())
+                Log.d("remainingPointsssssssssss", remainingPoints.toString())
 
 
                 intent.putExtra(Constant.merchant_logo, data.merchant_logo)

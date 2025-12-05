@@ -26,7 +26,6 @@ import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import lecho.lib.hellocharts.model.Line
 
 class SchoolEventCompletedAdapter(
     private var itemList: List<SchoolEventItem>?,
@@ -164,7 +163,8 @@ class SchoolEventCompletedAdapter(
             adapter: SchoolEventCompletedAdapter
         ) {
             event_header.text = data.title
-            event_time.text = data.category + " " + data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
+            event_time.text =
+                data.category + " " + data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
 

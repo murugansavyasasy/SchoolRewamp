@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -94,7 +93,6 @@ class MySubmissionAdapter(
     }
 
 
-
     override fun getItemCount(): Int {
         return if (isLoading) 20 else filteredList.size
     }
@@ -113,7 +111,8 @@ class MySubmissionAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val submitteddetails: TextView = itemView.findViewById(R.id.submitteddetails)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.headerrelative_layout)
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val rightText: TextView = itemView.findViewById(R.id.rightText)
         private val rightIcon: ImageView = itemView.findViewById(R.id.rightIcon)
@@ -141,24 +140,28 @@ class MySubmissionAdapter(
 
 
             try {
-                val apiFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_ss_a, Locale.getDefault())
+                val apiFormat =
+                    SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_ss_a, Locale.getDefault())
                 val parsedDate = apiFormat.parse(data.submitted_on)
 
                 if (parsedDate != null) {
                     val displayFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
                     val formattedDate = displayFormat.format(parsedDate)
 
-                    submitteddetails.text = "${context.getString(R.string.submitted1)}: $formattedDate"
+                    submitteddetails.text =
+                        "${context.getString(R.string.submitted1)}: $formattedDate"
 
                     val shortDateFormat = SimpleDateFormat("d MMM", Locale.getDefault())
                     datevalue.text = shortDateFormat.format(parsedDate)
                 } else {
-                    submitteddetails.text = "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
+                    submitteddetails.text =
+                        "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
                     datevalue.text = data.submitted_on
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                submitteddetails.text = "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
+                submitteddetails.text =
+                    "${context.getString(R.string.submitted1)}: ${data.submitted_on}"
                 datevalue.text = data.submitted_on
             }
 

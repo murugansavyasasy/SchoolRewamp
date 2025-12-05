@@ -1,9 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.WhatsNew
 
 import android.os.Build
-import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -19,10 +16,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanPicChartAdapter
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ActivityWhatsNewBinding
@@ -70,13 +63,14 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         appViewModel?.getdashboardnewupdates?.observe(this) { response ->
             if (response != null && response.status) {
                 binding.rcywhatsnew.visibility = View.VISIBLE
-                binding.lytList.visibility=View.GONE
+                binding.lytList.visibility = View.GONE
                 getWhatsNewData(response.data)
 
             } else {
                 binding.rcywhatsnew.visibility = View.GONE
-                binding.lytList.visibility=View.VISIBLE
-                binding.txtNoData.text=getString(R.string.something_went_wrong_please_try_again_later)
+                binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text =
+                    getString(R.string.something_went_wrong_please_try_again_later)
             }
         }
     }
@@ -93,11 +87,13 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcywhatsnew.adapter = whatsnewAdapter
 
-        if(Constant.isParentChoose){
-            appViewModel!!.getdashboardnewupdates(isAccessToken!!,Constant.parent)
-        }
-        else{
-            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.user_details!!.staff_role)
+        if (Constant.isParentChoose) {
+            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.parent)
+        } else {
+            appViewModel!!.getdashboardnewupdates(
+                isAccessToken!!,
+                Constant.user_details!!.staff_role
+            )
         }
     }
 

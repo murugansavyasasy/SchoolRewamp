@@ -1,20 +1,20 @@
 package com.vs.schoolmessenger.School.LSRW
 
 import android.content.Context
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
-import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
-import com.vs.schoolmessenger.Utils.Constant
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
 import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.CompletedTasklistBinding
 
 
@@ -24,6 +24,7 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
     override fun getViewBinding(): CompletedTasklistBinding {
         return CompletedTasklistBinding.inflate(layoutInflater)
     }
+
     private lateinit var adapter: LsrwCompletedAdapter
     private lateinit var LsrwTaskList: List<LsrwTask>
 
@@ -54,27 +55,27 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Completed_Task)
         val taskList =
-            intent.getParcelableArrayListExtra<LsrwTask>(Constant.COMPLETED_TASK_LIST) ?: arrayListOf()
-        LsrwTaskList=taskList
+            intent.getParcelableArrayListExtra<LsrwTask>(Constant.COMPLETED_TASK_LIST)
+                ?: arrayListOf()
+        LsrwTaskList = taskList
 
 
-       if (taskList.isNullOrEmpty()){
-           binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-           ErrorMessage(getString(R.string.no_data_found))
-       }
-       else{
-           binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-           ShowData()
-           binding.rcycompletedtaskrcy.layoutManager = LinearLayoutManager(this)
-           adapter = LsrwCompletedAdapter(
-               itemList = taskList,
-               context = this,
-               this,
-               noDataImage = binding.noDataImage,
-               noDataText = binding.noDataFound
-           )
-           binding.rcycompletedtaskrcy.adapter = adapter
-       }
+        if (taskList.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_data_found))
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            ShowData()
+            binding.rcycompletedtaskrcy.layoutManager = LinearLayoutManager(this)
+            adapter = LsrwCompletedAdapter(
+                itemList = taskList,
+                context = this,
+                this,
+                noDataImage = binding.noDataImage,
+                noDataText = binding.noDataFound
+            )
+            binding.rcycompletedtaskrcy.adapter = adapter
+        }
 
         binding.txtSearchBox.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -92,7 +93,7 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
     }
 
     fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 

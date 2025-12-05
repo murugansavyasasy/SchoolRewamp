@@ -102,10 +102,12 @@ class CalendarAbsenteesAdapter(
                         dateBox.setBackgroundResource(R.drawable.bg_today_red)
                         dateBox.setTextColor(Color.WHITE)
                     }
+
                     date == today -> {
                         dateBox.setBackgroundResource(R.drawable.light_red_selected_today)
                         dateBox.setTextColor(Color.WHITE)
                     }
+
                     else -> {
                         if (!isSunday) {
                             dateBox.setTextColor(Color.BLACK)

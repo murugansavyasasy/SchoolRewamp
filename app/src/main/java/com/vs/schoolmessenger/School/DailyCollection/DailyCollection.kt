@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.DailyCollection
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -209,7 +208,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             }
 
             R.id.mode_name -> {
-                if(selectedType == Constant.three) return
+                if (selectedType == Constant.three) return
                 selectedType = Constant.three
                 binding.modeName.setBackgroundResource(R.drawable.bg_primary)
                 binding.modeName.setTextColor(Color.WHITE)

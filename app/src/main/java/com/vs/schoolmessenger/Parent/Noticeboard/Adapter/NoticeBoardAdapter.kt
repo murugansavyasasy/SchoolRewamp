@@ -16,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -31,7 +30,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
@@ -150,7 +148,7 @@ class NoticeBoardAdapter(
             val dateTime = noticeData.created_on
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
-            val time = (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
+            (parts.getOrNull(1) ?: "") + " " + (parts.getOrNull(2) ?: "")
 
 
             loadingBar.visibility = View.GONE

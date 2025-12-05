@@ -87,6 +87,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         private const val PICK_IMAGE_REQUEST = 1001
         private const val CAMERA_IMAGE_REQUEST = 1004
     }
+
     private var attachmentDataList: List<AttachmentDataReport>? = null
     private var isUserDetails: UserDetails? = null
     var isMultipleSchool = false
@@ -780,8 +781,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
         }
 //        ProgressDialogHelper.updateProgress(80)
     }
@@ -901,8 +908,10 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
     }
 
-    private fun videoUploading(  totalTasks: Int,
-                                 onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()

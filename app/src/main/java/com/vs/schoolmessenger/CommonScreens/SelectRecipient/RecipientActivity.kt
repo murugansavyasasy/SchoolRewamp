@@ -76,6 +76,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
+
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
     val isSectionSelectedIds = mutableListOf<Section>()
@@ -327,13 +328,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
-                if(response.status){
+                if (response.status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -370,13 +371,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
 
-                if(response.status){
+                if (response.status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_voice)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -388,13 +389,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
 
-                if(response.status){
+                if (response.status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_text)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -406,13 +407,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 Constant.showTopAlertPopup(response.message, this)
 
-                if(response.status){
+                if (response.status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_homework)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -424,13 +425,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
 
-                if(response.status){
+                if (response.status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_attachment)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -743,7 +744,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "DropdownMenu",
                         "Clicked Subject: ID = ${selectedItem.id}, Name = ${selectedItem.name}"
                     )
-                    isSubjectId =  selectedItem.id
+                    isSubjectId = selectedItem.id
 
                     if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
 //                        if (position != 0) {
@@ -837,7 +838,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isTargetType = Constant.isSchool
                         isCircularType = Constant.school
                         selectedIds.clear()
-                        isTypeOfName="School"
+                        isTypeOfName = "School"
                         isStaffDetails!!.school_id.let {
                             selectedIds.add(it)
                         }
@@ -887,7 +888,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || Constant.M_HOMEWORK == SELECTED_MENU_ID || Constant.M_LSRW == SELECTED_MENU_ID) {
+                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || M_HOMEWORK == SELECTED_MENU_ID || M_LSRW == SELECTED_MENU_ID) {
                         if (isSubjectId == null) {
                             Constant.showValidationAlertPopup(
                                 getString(R.string.alert),
@@ -920,9 +921,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                         }
 
-                    }
-
-                    else {
+                    } else {
 
                         showSendConfirmationDialog(
                             resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
@@ -1199,7 +1198,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 //        }
 //        if (needsProcessing) {
 //            ProgressDialogHelper.show(this)
-       // }
+        // }
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)
 
@@ -1250,8 +1249,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(10) called")
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
 //            Constant.selectedFiles.isNotEmpty() -> {
 //                Log.d("UploadDebug", "Uploading non-video files to AWS...")
 //                isFileUploadInAws(isFileType)
@@ -1311,7 +1316,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 videoUploading(totalTasks, onTaskComplete)
             }
         } else {
-            val numToCompress = Constant.selectedFiles.size
+            Constant.selectedFiles.size
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
@@ -1421,8 +1426,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-    private fun videoUploading(    totalTasks: Int,
-                                   onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1535,8 +1542,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             ProgressDialogHelper.dismiss()
         }
     }
-
-
 
 
     fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {

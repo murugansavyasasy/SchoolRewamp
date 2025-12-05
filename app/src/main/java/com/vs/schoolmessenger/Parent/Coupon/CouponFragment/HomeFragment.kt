@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
 import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,12 +38,10 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     private var isAccessToken: String? = null
 
 
-
     private var earnedPoints: Int = 0
     private var pointspercoupon: Int = 0
     private var spentPoints: Int = 0
     private var remainingPoints: Int = 0
-
 
 
     override fun onCreateView(
@@ -67,11 +63,12 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         fetchCouponMenu()
         fetchCouponSummary()
         fetchPauketPoints()
-        binding.backtext.text=Constant.isSelectedMenuName
+        binding.backtext.text = Constant.isSelectedMenuName
         binding.imgSearchToolBar.setOnClickListener(this)
 
         binding.imgSearchToolBar.setOnClickListener {
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             if (binding.linearlayout.visibility == View.VISIBLE) {
                 binding.linearlayout.visibility = View.GONE
                 binding.editSearch.setText("")
@@ -141,7 +138,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     }
 
 
-
     private fun showProgressBar() {
         binding.isProgressBar.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
@@ -164,6 +160,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             binding.recyclerView.visibility = View.GONE
         }
     }
+
     private fun showCouponSummaryErrorUI(message: String) {
         updateNoDataView(false)
         binding.lblNoRecord.visibility = View.VISIBLE

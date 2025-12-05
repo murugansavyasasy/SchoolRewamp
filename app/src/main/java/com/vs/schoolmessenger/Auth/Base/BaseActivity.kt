@@ -44,8 +44,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -67,7 +67,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected abstract fun getViewBinding(): VB
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
@@ -77,10 +76,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
     override fun attachBaseContext(newBase: Context) {
-        var isAppLanguage = SharedPreference.getLanguage(newBase)?: "en"
+        var isAppLanguage = SharedPreference.getLanguage(newBase) ?: "en"
         val context = LocalHelperForLanguage.wrapContext(newBase, isAppLanguage.toString())
         super.attachBaseContext(context)
     }
@@ -113,11 +110,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         viewModel!!.isLogout?.observe(activity) { response ->
             Constant.hideLoading(activity)
 
-            if (response != null ) {
+            if (response != null) {
                 if (response.status) {
                     onResult(true, response.message ?: "Success")
-                }
-                else {
+                } else {
                     onResult(false, response?.message ?: "Something went wrong")
                 }
             }
@@ -303,7 +299,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
 //        }
 //    }
-
 
 
     @SuppressLint("UseCompatLoadingForColorStateLists")
@@ -521,11 +516,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
-
-
-
     fun isPrioritySelection(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
@@ -612,6 +602,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
+
     fun isToolBarTimeTable(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
@@ -696,11 +687,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
-
-
-
     fun isToolBarPrimaryParentInteractionwithStaff(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
@@ -744,9 +730,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
-
-
-
 
 
     // Method to allow child activities to access specific views
@@ -1041,7 +1024,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             if (currentFragment != null && currentFragment::class == fragment::class) {
                 return
             }
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragment)?.commit()
 
         }
     }
@@ -1070,11 +1054,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
-
-
-
     fun showDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener
@@ -1099,7 +1078,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
     fun dailycollectionshowDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener,
@@ -1114,7 +1092,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             try {
                 val parsed = sdf.parse(preSelectedDate)
                 if (parsed != null) calendar.time = parsed
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+            }
         }
 
         val year = calendar.get(Calendar.YEAR)
@@ -1141,10 +1120,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-
-
 
 
     fun CustomshowDatePickerDialog(
@@ -1268,8 +1243,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
     fun lsrwshowDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener,
@@ -1308,8 +1281,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
-
 
 
     //Homework report sender
@@ -1352,7 +1323,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    fun showSuccessPopup(message: String, status: Boolean){
+    fun showSuccessPopup(message: String, status: Boolean) {
 
         val inflater = LayoutInflater.from(this)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -1391,10 +1362,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
 
         okButton.setOnClickListener {
-            if(status) {
+            if (status) {
                 closePopup()
                 finish()
-            }else{
+            } else {
                 closePopup()
             }
         }

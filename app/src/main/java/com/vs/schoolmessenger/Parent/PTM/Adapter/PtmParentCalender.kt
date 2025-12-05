@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,14 @@ import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlin.collections.find
+
 class PtmParentCalender(
     private val dates: List<Triple<String, Int, Int>>, // month, day, year
     private val slotCounts: List<SlotCountData>,
     private val onDateClick: (String) -> Unit
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
     private var selectedPos = -1
+
     inner class DateViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvMonth: TextView = view.findViewById(R.id.tvMonth)
         val tvDay: TextView = view.findViewById(R.id.tvDay)
@@ -45,7 +45,7 @@ class PtmParentCalender(
         holder.tvMonth.setTextColor(if (isSelected) Color.WHITE else Color.BLACK)
 
         // Format this calendar item date
-        val formattedDate = formatDate(month, day,year) // dd-MM-yyyy
+        val formattedDate = formatDate(month, day, year) // dd-MM-yyyy
 
         // Find if this date has a slot count
         val countData = slotCounts.find { it.event_date == formattedDate }
@@ -112,6 +112,7 @@ class PtmParentCalender(
             else -> 0
         }
     }
+
     private fun formatDate(month: String, day: Int, year: Int): String {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, year)

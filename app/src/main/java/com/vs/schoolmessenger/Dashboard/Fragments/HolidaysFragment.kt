@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,12 +10,9 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Auth.Introduction.Introduction
-import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HelpFragmentBinding
@@ -42,22 +38,21 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isStaffDetails = SharedPreference.getStaffDetails(requireActivity())
 
-        if (Constant.isParentChoose){
+        if (Constant.isParentChoose) {
             val isChildDetails = SharedPreference.getChildDetails(requireActivity())
             isAccessToken = isChildDetails?.access_token
-            Log.d("Log","child "+isAccessToken)
+            Log.d("Log", "child " + isAccessToken)
 
-        }
-        else{
+        } else {
 
             if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
                 isAccessToken = isStaffDetails!!.access_token
-                Log.d("Log","staff "+isAccessToken)
+                Log.d("Log", "staff " + isAccessToken)
 
             } else {
                 //even multiple role comes like mutiple school principal or single school principal we directly use the first school token
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
-                Log.d("Log","principal "+isAccessToken)
+                Log.d("Log", "principal " + isAccessToken)
 
             }
         }

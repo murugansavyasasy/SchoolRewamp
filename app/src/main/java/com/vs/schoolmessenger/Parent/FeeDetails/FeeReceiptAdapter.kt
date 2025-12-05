@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.vs.schoolmessenger.Utils.Constant.covertDateFormate
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
@@ -83,7 +82,6 @@ class FeeReceiptAdapter(
     }
 
 
-
     fun getCurrentList(): List<FeeInvoiceResponse.InvoiceData> = filteredList ?: listOf()
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -100,7 +98,8 @@ class FeeReceiptAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(data: FeeInvoiceResponse.InvoiceData, listener: InvoiceClickListener) {
 
-            lblInvoiceNo.text = "${context.getString(R.string.InvoiceNo)}: ${data.invoice_no ?: "-"}"
+            lblInvoiceNo.text =
+                "${context.getString(R.string.InvoiceNo)}: ${data.invoice_no ?: "-"}"
             val dateTime = data.invoice_date?.split(" ") ?: listOf()
             val rawDate = dateTime.getOrNull(0) ?: "-"
             val time = dateTime.drop(1).joinToString(" ")
@@ -108,7 +107,8 @@ class FeeReceiptAdapter(
             val formattedDate = isFormatDate(rawDate)
             lblInvoiceDate.text = formattedDate
             lblInvoiceTime.text = time
-            lblInvoiceAmount.text = "${context.getString(R.string.Invoice_Amount)}: ${data.invoice_amount ?: "-"}"
+            lblInvoiceAmount.text =
+                "${context.getString(R.string.Invoice_Amount)}: ${data.invoice_amount ?: "-"}"
             imgPdf.setImageResource(R.drawable.pdf_icon)
 
             rytView.setOnClickListener { listener.onItemClick(data, this@DataViewHolder) }
@@ -127,6 +127,7 @@ class FeeReceiptAdapter(
             ShimmerUtil.startShimmer(itemView)
         }
     }
+
     fun setData(newList: List<FeeInvoiceResponse.InvoiceData>, loading: Boolean = false) {
         this.originalList = newList
         this.filteredList = newList

@@ -45,16 +45,16 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         )
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)
-        urgency_level=getString(R.string.not_urgent)
+        urgency_level = getString(R.string.not_urgent)
 
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.btnSendCertificateRequest.setOnClickListener(this)
 
 //        binding.headerText3.text=Constant.isParentMenuName
-        binding.headerText3.text=Constant.isSelectedMenuName
+        binding.headerText3.text = Constant.isSelectedMenuName
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text  =
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
@@ -77,7 +77,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 } else {
                     binding.recyclerView.visibility = View.GONE
                     binding.lnrNoRecords.visibility = View.VISIBLE
-                    binding.txtNoData.text =response.message?:getString(R.string.no_data_found)
+                    binding.txtNoData.text = response.message ?: getString(R.string.no_data_found)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
             }
@@ -95,15 +95,25 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
-                if (response.status){
-                    Constant.showParentDataValidation(getString(R.string.success),response!!.message, this)
+                if (response.status) {
+                    Constant.showParentDataValidation(
+                        getString(R.string.success),
+                        response!!.message,
+                        this
+                    )
+                } else {
+                    Constant.showParentDataValidation(
+                        getString(R.string.Oops),
+                        response!!.message,
+                        this
+                    )
                 }
-                else{
-                    Constant.showParentDataValidation(getString(R.string.Oops),response!!.message, this)
-                }
-            }
-            else{
-                Constant.showParentDataValidation(getString(R.string.Oops),getString(R.string.something_went_wrong_please_try_again_later), this)
+            } else {
+                Constant.showParentDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
         loadCertificateRequestData()
@@ -133,7 +143,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Filter",s.toString())
+                Log.d("Filter", s.toString())
             }
         })
 

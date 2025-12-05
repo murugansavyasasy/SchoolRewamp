@@ -48,7 +48,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
         if (SharedPreference.isFingerprintEnabled(this)) {
             if (!mobile_number.equals("") && !password.equals("")) {
                 binding.rytFingerPrint.visibility = View.VISIBLE
-                Constant.setupBiometricPrompt(this, this,false)
+                Constant.setupBiometricPrompt(this, this, false)
                 Constant.authenticate(this)
             } else {
                 binding.rytFingerPrint.visibility = View.GONE
@@ -78,7 +78,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.mobile_number, mobile_number)
                         addProperty(APIKeyNames.activity, Constant.add_points_login)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_MENU_ID )
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints("", jsonObject)
 
@@ -109,20 +109,20 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
                                 } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                        if (Constant.user_data!![0].user_details.staff_details.size > 1) {
-                                            val intent =
-                                                Intent(this@Login, PrioritySelection::class.java)
-                                            startActivity(intent)
-                                        } else {
-                                            val intent = Intent(
-                                                this@Login, SchoolDashboard::class.java
-                                            )
-                                            SharedPreference.putStaffDetails(
-                                                this,
-                                                Constant.user_data!![0].user_details.staff_details[0]
-                                            )
-                                            startActivity(intent)
-                                        }
+                                    if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                        val intent =
+                                            Intent(this@Login, PrioritySelection::class.java)
+                                        startActivity(intent)
+                                    } else {
+                                        val intent = Intent(
+                                            this@Login, SchoolDashboard::class.java
+                                        )
+                                        SharedPreference.putStaffDetails(
+                                            this,
+                                            Constant.user_data!![0].user_details.staff_details[0]
+                                        )
+                                        startActivity(intent)
+                                    }
                                 } else if (Constant.user_data!![0].user_details.is_parent) {
                                     if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                         val intent =
@@ -153,8 +153,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                         Constant.errorAlert(this@Login, "", message)
 
                     }
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@Login, "", message)
                 }
             }
@@ -184,8 +183,10 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
     }
 
-    private fun isValidMobileNumber(mobileNumber: String,password : String): Boolean {
-        return mobileNumber.length == Constant.country_details!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() } && !password.equals("")
+    private fun isValidMobileNumber(mobileNumber: String, password: String): Boolean {
+        return mobileNumber.length == Constant.country_details!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() } && !password.equals(
+            ""
+        )
     }
 
     private fun isForgetPassword() {
@@ -257,7 +258,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
             }
 
             R.id.rytFingerPrint -> {
-                Constant.setupBiometricPrompt(this, this,false)
+                Constant.setupBiometricPrompt(this, this, false)
                 Constant.authenticate(this)
             }
         }
@@ -265,19 +266,22 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
     private fun isUserNamePasswordValidation(): Boolean {
         var isValidation = false
-        if (isValidMobileNumber(binding.txtMobileNumber.text.toString(),binding.txtPassword.text.toString())) {
+        if (isValidMobileNumber(
+                binding.txtMobileNumber.text.toString(),
+                binding.txtPassword.text.toString()
+            )
+        ) {
             isValidation = true
-        }
-        else {
-            if(binding.txtMobileNumber.text.toString().length !=  Constant.country_details!!.mobile_number_length) {
+        } else {
+            if (binding.txtMobileNumber.text.toString().length != Constant.country_details!!.mobile_number_length) {
                 binding.txtMobileNumber.error =
                     resources.getString(R.string.Enter_the) + " " + Constant.country_details!!.mobile_number_length + " " + resources.getString(
                         R.string.digit_mobile_number
                     )
-            }
-            else if(binding.txtPassword.text.toString().equals("")) {
+            } else if (binding.txtPassword.text.toString().equals("")) {
 //                binding.txtPassword.error = "Password is required"
-                Toast.makeText(this, getString(R.string.password_is_required), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.password_is_required), Toast.LENGTH_SHORT)
+                    .show()
             }
             isValidation = false
         }

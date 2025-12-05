@@ -19,7 +19,9 @@ class RoundedBackgroundSpan(
         end: Int,
         fm: Paint.FontMetricsInt?
     ): Int {
-        return (padding + paint.measureText(text.subSequence(start, end).toString()) + padding).toInt()
+        return (padding + paint.measureText(
+            text.subSequence(start, end).toString()
+        ) + padding).toInt()
     }
 
     override fun draw(

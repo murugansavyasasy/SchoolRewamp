@@ -77,7 +77,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         isToolBarNoticeCallTheme()
         startCallAnimation()
 
-        handleIntent(getIntent())
+        handleIntent(intent)
 
         binding.acceptButton.setOnTouchListener { view, event ->
             if (isActivityClosing) return@setOnTouchListener false
@@ -102,7 +102,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                         movedDistance < -150 -> {
                             //end call
                             isUserResponse = "NO"
-                            if (Constant.mediaPlayer.isPlaying()) {
+                            if (Constant.mediaPlayer.isPlaying) {
                                 Constant.mediaPlayer.stop()
                             }
                             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
@@ -110,6 +110,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                             isStartTime = isEndTime
                             updateNotificationCallLog(isStartTime!!, isEndTime!!)
                         }
+
                         else -> view.animate().x(originalX).setDuration(200).start()
                     }
                 }
@@ -132,12 +133,12 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         calculateTotalDuration(Runnable {
             val formatted: String = formatDuration(totalDurationMs)
             Log.d("Total_Duration:", formatted)
-            binding.lblTotalDuration.setText(formatted)
+            binding.lblTotalDuration.text = formatted
         })
 
 
         binding.declineButton.setOnClickListener {
-            if (Constant.mediaPlayer.isPlaying()) {
+            if (Constant.mediaPlayer.isPlaying) {
                 Constant.mediaPlayer.stop()
             }
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
@@ -161,7 +162,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                 tempPlayer.setDataSource(url)
 
                 tempPlayer.setOnPreparedListener(OnPreparedListener { mp: MediaPlayer? ->
-                    val duration = mp!!.getDuration()
+                    val duration = mp!!.duration
                     totalDurationMs += duration.toLong()
                     trackDurations.add(duration)
                     preparedCount++
@@ -213,14 +214,14 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             mediaPlayer!!.setOnPreparedListener(OnPreparedListener { mp: MediaPlayer? ->
                 Log.d(
                     "AUDIO_PLAYER", "Playing: " + (index + 1) +
-                            " | Duration: " + formatDuration(mp!!.getDuration().toLong())
+                            " | Duration: " + formatDuration(mp!!.duration.toLong())
                 )
                 mp.start()
                 startUpdatingProgress() // 🕒 start updating duration
             })
 
             mediaPlayer!!.setOnCompletionListener(OnCompletionListener { mp: MediaPlayer? ->
-                totalElapsed += mp!!.getDuration()
+                totalElapsed += mp!!.duration
                 currentTrack++
                 if (currentTrack < audioUrls!!.size) {
                     playAudio(currentTrack)
@@ -241,15 +242,14 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
 
-
     private fun startUpdatingProgress() {
         stopUpdatingProgress() // avoid duplicates
 
         updateRunnable = object : Runnable {
             override fun run() {
-                if (mediaPlayer != null && mediaPlayer!!.isPlaying()) {
-                    val currentPosition = mediaPlayer!!.getCurrentPosition()
-                    val totalDuration = mediaPlayer!!.getDuration()
+                if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+                    val currentPosition = mediaPlayer!!.currentPosition
+                    mediaPlayer!!.duration
                     val totalProgress = totalElapsed + currentPosition // ✅ accumulated time
 
                     Log.d(
@@ -257,7 +257,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                                 + " / Total: " + formatDuration(totalProgress.toLong()))
                     )
 
-                    binding.lblCurrentDuration.setText(formatDuration(totalProgress.toLong()))
+                    binding.lblCurrentDuration.text = formatDuration(totalProgress.toLong())
                 }
                 handler.postDelayed(this, 1000) // update every second
             }
@@ -265,7 +265,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         handler.postDelayed(updateRunnable!!, 1000)
     }
 
-    private fun updateNotificationCallLog(startTime: String?,endTime : String?){
+    private fun updateNotificationCallLog(startTime: String?, endTime: String?) {
 
     }
 
@@ -310,9 +310,9 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             member_name = intent.getStringExtra("member_name")
             call_title = intent.getStringExtra("call_title")
 
-            binding.lblSchoolName.setText(school_name)
-            binding.lblMemberName.setText("Calling - " + member_name + " from")
-            binding.lblCallTitle.setText(call_title)
+            binding.lblSchoolName.text = school_name
+            binding.lblMemberName.text = "Calling - " + member_name + " from"
+            binding.lblCallTitle.text = call_title
 
 
             audioList = ArrayList<String?>()
@@ -333,14 +333,14 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
 
         binding.acceptButton.animate()
-            .x(binding.actionContainer.getWidth() / 2f - binding.acceptButton.getWidth() / 2f)
+            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
             .setDuration(300)
             .withEndAction(Runnable {
-                binding.ringContainer.setVisibility(View.GONE)
+                binding.ringContainer.visibility = View.GONE
                 binding.acceptButton.setVisibility(View.GONE)
                 binding.callEndButton.setVisibility(View.VISIBLE)
 
-                if (Constant.mediaPlayer.isPlaying()) {
+                if (Constant.mediaPlayer.isPlaying) {
                     Constant.mediaPlayer.stop()
                 }
                 isUserResponse = "OC"

@@ -74,16 +74,16 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
 //            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
 
 
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytsearch.isVisible) {
                 binding.rytsearch.visibility = View.GONE
                 binding.txtVideoMenuBox.setText("")
@@ -128,14 +128,14 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 return@observe
             }
             if (response.status) {
                 isLoadStaffData(response.data)
             } else {
                 showErrorUI(response.message ?: getString(R.string.no_data_available))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
         }
     }
@@ -157,11 +157,11 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
     private fun isLoadStaffData(data: List<Staff>?) {
         if (data.isNullOrEmpty()) {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.rcystaffdata.visibility = View.VISIBLE

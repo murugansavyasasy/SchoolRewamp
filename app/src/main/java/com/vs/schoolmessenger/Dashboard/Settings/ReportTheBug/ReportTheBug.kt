@@ -31,7 +31,6 @@ import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.FCM.NotificationCallScreen
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -42,7 +41,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.jvm.java
 
 class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
@@ -176,7 +174,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 if (selectedMenu != "Select the menu") {
                     sendMailWithAttachment()
                 } else {
-                    Toast.makeText(this, getString(R.string.select_the_menu), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.select_the_menu), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
@@ -225,7 +224,10 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = "*/*"
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-            putExtra(Intent.EXTRA_CC, arrayOf("murugan@savyasasy.com", "swathi@savyasasy.com")) // CC
+            putExtra(
+                Intent.EXTRA_CC,
+                arrayOf("murugan@savyasasy.com", "swathi@savyasasy.com")
+            ) // CC
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(Intent.EXTRA_TEXT, message)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
@@ -288,7 +290,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     }
 
     override fun onResume() {
-       // Constant.selectedFiles.clear()
+        // Constant.selectedFiles.clear()
         super.onResume()
     }
 
@@ -631,11 +633,10 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
     }
 
 
-
     private fun loadMenu() {
-        Log.d("DropdownMenuList",Constant.menuNameList.toString())
+        Log.d("DropdownMenuList", Constant.menuNameList.toString())
 
-        val adapter = SpinnerLoadingAdapter(this,Constant.menuNameList)
+        val adapter = SpinnerLoadingAdapter(this, Constant.menuNameList)
         binding.isMenuSpinner.adapter = adapter
 
         binding.isMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

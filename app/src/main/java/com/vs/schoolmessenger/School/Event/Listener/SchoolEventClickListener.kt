@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Event.Listener
 
 import android.view.View
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 

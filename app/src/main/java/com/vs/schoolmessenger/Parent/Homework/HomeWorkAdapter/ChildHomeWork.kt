@@ -149,7 +149,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun updateRemainingCount() {
-        val usedSlots = Constant.selectedFiles.size - 1
+        val usedSlots = selectedFiles.size - 1
         Constant.Remaining = (CreateNewTask.Companion.MAX_FILES - usedSlots).coerceAtLeast(0)
     }
 
@@ -233,7 +233,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.my_submissionadapter == true) {
+        if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.my_submissionadapter == true) {
             binding.toolbarLayout.lblSubjectName.visibility = View.GONE
 
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
@@ -263,7 +263,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
+        if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
             val params =
                 binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams
@@ -431,17 +431,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
                 }
             }
-            Constant.selectedFiles.clear()
+            selectedFiles.clear()
             dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
             dummyPath?.let {
-                Constant.selectedFiles.add(
+                selectedFiles.add(
                     FileItem(
                         it, FileType.IMAGE
                     )
                 )
             }
 
-            mAdapter = LSRWImagePickingAdapter(this, Constant.selectedFiles!!, this)
+            mAdapter = LSRWImagePickingAdapter(this, selectedFiles!!, this)
             binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 1)
             binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
 
@@ -457,7 +457,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
                         var addedCount = 0
                         selectedUris.forEach { uri ->
-                            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+                            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
                                 Toast.makeText(
                                     this,
                                     getString(R.string.max_10_files_allowed),
@@ -504,7 +504,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                 lifecycleScope.launch {
                                     val wavFile = Constant.convertToWav(this@ChildHomeWork, uri)
                                     if (wavFile != null) {
-                                        Constant.selectedFiles.add(
+                                        selectedFiles.add(
                                             FileItem(
                                                 wavFile.absolutePath,
                                                 FileType.AUDIO
@@ -524,7 +524,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             }
 
 
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            selectedFiles.add(FileItem(uri.toString(), type))
                             addedCount++
                         }
 
@@ -727,19 +727,19 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
 
-                    val submittedFiles = Constant.isAwsUploadedFiles.map { aws ->
+                    val submittedFiles = isAwsUploadedFiles.map { aws ->
                         FileItem(aws.isFileUrl, FileType.valueOf(aws.isFileType))
                     }
 
                     if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-                        Constant.selectedFiles.removeAll { it.path == dummyPath }
+                        selectedFiles.removeAll { it.path == dummyPath }
                     }
 
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(submittedFiles)
+                    selectedFiles.clear()
+                    selectedFiles.addAll(submittedFiles)
                     mAdapter?.notifyDataSetChanged()
 
-                    Constant.isAwsUploadedFiles.clear()
+                    isAwsUploadedFiles.clear()
                     isVideoSelectedArrayList.clear()
                 }
                 showTopAlertParentPopup(it.message, this)
@@ -1033,14 +1033,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     fun isUploadFilesInServer(isFileType: String?) {
-        Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
+        Log.d("ChildHomeWork", "Starting file upload, total: ${selectedFiles.size}")
         if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-            Constant.selectedFiles.removeAt(0)
+            selectedFiles.removeAt(0)
         }
-        isTotalSelectedItem = Constant.selectedFiles.size
+        isTotalSelectedItem = selectedFiles.size
         isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        isAwsUploadedFiles.clear()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val file = iterator.next()
             if (file.type == FileType.VIDEO) {
@@ -1049,7 +1049,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
-        val numNonVideoFiles = Constant.selectedFiles.size
+        val numNonVideoFiles = selectedFiles.size
         val numVideos = isVideoSelectedArrayList.size
 
         val videoSteps = 10
@@ -1070,7 +1070,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+            selectedFiles.isNotEmpty() -> isFileUploadInAws(
                 isFileType,
                 totalTasks,
                 { completedTasks++; updateProgress() })
@@ -1087,7 +1087,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         totalTasks: Int,
         onTaskComplete: () -> Unit
     ) {
-        val allNonVideos = Constant.selectedFiles.toList()
+        val allNonVideos = selectedFiles.toList()
         val imagesToCompress = allNonVideos.filter { it.type == FileType.IMAGE }
         val nonImages = allNonVideos.filter { it.type != FileType.IMAGE }
         val newSelectedFiles = mutableListOf<FileItem>()
@@ -1132,14 +1132,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             },
             onComplete = {
                 val updatedFiles = newSelectedFiles + nonImages
-                Constant.selectedFiles.clear()
-                Constant.selectedFiles.addAll(updatedFiles)
-                val nonVideoCount = Constant.selectedFiles.size
+                selectedFiles.clear()
+                selectedFiles.addAll(updatedFiles)
+                val nonVideoCount = selectedFiles.size
                 var awsCompleted = 0
                 val isCountryId = SharedPreference.getCountryId(this)
-                for (i in Constant.selectedFiles.indices) {
+                for (i in selectedFiles.indices) {
                     isAwsUploadingPreSigned?.getPreSignedUrl(
-                        Constant.selectedFiles[i].path,
+                        selectedFiles[i].path,
                         isChildDetails!!.school_id,
                         isFileType!!,
                         this,
@@ -1150,10 +1150,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             override fun onUploadSuccess(
                                 response: String?, isFileUploaded: String?
                             ) {
-                                Constant.isAwsUploadedFiles.add(
+                                isAwsUploadedFiles.add(
                                     AwsUploadedFiles(
                                         isFileUrl = isFileUploaded!!,
-                                        isFileType = Constant.selectedFiles[i].type.name
+                                        isFileType = selectedFiles[i].type.name
                                     )
                                 )
                                 onTaskComplete()
@@ -1196,7 +1196,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
@@ -1228,7 +1228,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         runOnUiThread {
             var videoCompleted = 0
             if (success && link != null) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = link, isFileType = "VIDEO"
                     )
@@ -1515,8 +1515,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         recordingFilePath?.let { path ->
             val file = File(path)
             if (file.exists() && file.length() > 0) {
-                if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
-                    Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
+                if (selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                    selectedFiles.add(FileItem(path, FileType.AUDIO))
                     mAdapter?.notifyDataSetChanged()
                     updateRemainingCount()
                     Toast.makeText(
@@ -1573,13 +1573,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(intent, ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST)
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
 
     private fun calculateFileSize(): String {
         var totalSize = 0L
-        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
+        selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
             val size = getFileSize(fileItem.path)  // Pass path directly as String
             Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
             totalSize += size
@@ -1616,7 +1616,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             stopVoiceRecording()
         }
 //        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
+        isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES
         updateRemainingCount()
@@ -1680,7 +1680,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         rlaVideoPick.setOnClickListener {
-            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
                 Toast.makeText(
                     this,
@@ -1688,7 +1688,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                if (selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
                 } else if (selectedVideoCount == 1) {
                     Constant.isFileLimit = 1
@@ -1755,8 +1755,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+        if (resultCode != RESULT_OK || selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
                 Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
                     .show()
             }
@@ -1764,7 +1764,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         fun addFile(uri: Uri) {
-            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) return
+            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
@@ -1784,7 +1784,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            selectedFiles.add(FileItem(uri.toString(), type))
         }
 
         when (requestCode) {
@@ -1802,7 +1802,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 }
             }
 
-            ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST -> {
+            PICK_DOCUMENT_REQUEST -> {
                 data?.clipData?.let { clip ->
                     for (i in 0 until clip.itemCount) {
                         addFile(clip.getItemAt(i).uri)

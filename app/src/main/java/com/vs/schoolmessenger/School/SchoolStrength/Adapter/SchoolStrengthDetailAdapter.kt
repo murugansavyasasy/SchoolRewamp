@@ -65,12 +65,16 @@ class SchoolStrengthDetailAdapter(
         fun bind(
             data: Section, position: Int, adapter: SchoolStrengthDetailAdapter
         ) {
-            sectionname.text = context.getString(R.string.Section)+ "-" + data.name
+            sectionname.text = context.getString(R.string.Section) + "-" + data.name
             val studentCount = data.total_students.toIntOrNull() ?: 0
 
             val count = studentCount ?: 0
             totalcount.text =
-                if (count <= 1) "${context.getString(R.string.Total_student)} - $count" else "${context.getString(R.string.total_students)} - $count"
+                if (count <= 1) "${context.getString(R.string.Total_student)} - $count" else "${
+                    context.getString(
+                        R.string.total_students
+                    )
+                } - $count"
 
 
 

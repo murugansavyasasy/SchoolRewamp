@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints
 
-data class PauketPointsData (
+data class PauketPointsData(
     val earned: Int,
     val spent: Int,
     val remaining: Int,

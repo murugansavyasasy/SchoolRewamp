@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.QuizExam.QuizExamReport
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -24,10 +25,10 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     private var appViewModel: App? = null
     private lateinit var adapter: QuizSubmitReportAdapter
     private var isSubmission: List<GetQuizSubmissionListData>? = emptyList()
-    var isQuizID=""
-    var isTittle=""
-    var isDescription=""
-    var isSubject=""
+    var isQuizID = ""
+    var isTittle = ""
+    var isDescription = ""
+    var isSubject = ""
 
     override fun getViewBinding(): QuizSubmitReportBinding {
         return QuizSubmitReportBinding.inflate(layoutInflater)
@@ -44,7 +45,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.quiz_submission_list)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name
@@ -52,9 +53,9 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
         isTittle = intent.getStringExtra(Constant.title_).toString()
         isDescription = intent.getStringExtra(Constant.description).toString()
         isSubject = intent.getStringExtra(Constant.subjectName).toString()
-        binding.lblSubjectID.text=isSubject
-        binding.tvTitle.text=isTittle
-        binding.tvDescription.text=isDescription
+        binding.lblSubjectID.text = isSubject
+        binding.tvTitle.text = isTittle
+        binding.tvDescription.text = isDescription
 
 
         isGetSubmittedList()
@@ -65,10 +66,9 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
                     binding.rcSubmitReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     isLoadisSubList(response.data)
-                    isSubmission=response.data
+                    isSubmission = response.data
 
-                }
-                else {
+                } else {
                     binding.rlaSubmitReport.visibility = View.VISIBLE
                     binding.rcSubmitReport.visibility = View.GONE
                     ErrorMessage(response.message)
@@ -106,7 +106,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
 
 
             }
@@ -156,8 +156,9 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     private fun isLoadisSubList(data: List<GetQuizSubmissionListData>) {
 
         if (data.isNotEmpty()) {
-            adapter = QuizSubmitReportAdapter(data,this, Constant.isShimmerViewDisable)
-            binding.rcSubmitReport.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+            adapter = QuizSubmitReportAdapter(data, this, Constant.isShimmerViewDisable)
+            binding.rcSubmitReport.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding.rcSubmitReport.adapter = adapter
             binding.rcSubmitReport.isNestedScrollingEnabled = false
             binding.rcSubmitReport.visibility = View.VISIBLE
@@ -170,13 +171,13 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     }
 
 
-
-    fun isGetSubmittedList(){
+    fun isGetSubmittedList() {
         adapter = QuizSubmitReportAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcSubmitReport.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.rcSubmitReport.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcSubmitReport.adapter = adapter
         binding.rcSubmitReport.isNestedScrollingEnabled = false
-        appViewModel?.isGetQuizSubmissionList(isAccessToken ?: "",isQuizID)
+        appViewModel?.isGetQuizSubmissionList(isAccessToken ?: "", isQuizID)
     }
 
 

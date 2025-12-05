@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Adapter.StudentSubmittedListRemarkAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SubmittedstudentListViewBinding
 
@@ -63,11 +61,15 @@ class MySubmissionAdapter(
                         .load(item.url)
                         .listener(object : RequestListener<Drawable> {
                             override fun onLoadFailed(
-                                e: GlideException?, model: Any?, target: Target<Drawable?>, isFirstResource: Boolean
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable?>,
+                                isFirstResource: Boolean
                             ): Boolean {
                                 binding.progressBar.visibility = View.GONE
                                 return false
                             }
+
                             override fun onResourceReady(
                                 resource: Drawable,
                                 model: Any,
@@ -81,6 +83,7 @@ class MySubmissionAdapter(
                         })
                         .into(binding.imgView)
                 }
+
                 Constant.VIDEO -> binding.imgView.setImageResource(R.drawable.video_play)
                 Constant.PDF -> binding.imgView.setImageResource(R.drawable.hw_pdf_img)
                 Constant.DOC, Constant.DOCX -> binding.imgView.setImageResource(R.drawable.microsoft_word_img)

@@ -18,10 +18,9 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
-import com.vs.schoolmessenger.School.LSRW.Model.Overview
 import com.vs.schoolmessenger.Utils.Constant
 
-class LsrwCompletedAdapter (
+class LsrwCompletedAdapter(
     private var itemList: List<LsrwTask>,
     private val context: Context,
     private var listener: lsrwskillreportlistener,
@@ -71,7 +70,8 @@ class LsrwCompletedAdapter (
         private val txtsubdesc: TextView = itemView.findViewById(R.id.txtsubdesc)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.headerrelative_layout)
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
 
 
@@ -80,8 +80,8 @@ class LsrwCompletedAdapter (
             txtSubTitle.text = item.activity_type
             txtDescription.text = item.title
             txtsubdesc.text = item.description
-            txtDate.text =Constant.convertDateTimeFormat(item.created_on)
-            txtSubmitted.text = item.submitted_average + " "+context.getString(R.string.submitted)
+            txtDate.text = Constant.convertDateTimeFormat(item.created_on)
+            txtSubmitted.text = item.submitted_average + " " + context.getString(R.string.submitted)
 
 
             if (item.can_edit || item.can_delete) {
@@ -91,21 +91,20 @@ class LsrwCompletedAdapter (
             }
 
             imgEditAndDelete.setOnClickListener {
-                listener.onEditAndDeleteCompleted(item, it, adapterPosition,"COMPLETED")
+                listener.onEditAndDeleteCompleted(item, it, adapterPosition, "COMPLETED")
             }
 
             if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (item.activity_type == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.activity_type == Constant.Reading){
+            } else if (item.activity_type == Constant.Reading) {
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.activity_type ==Constant.Writing){
+            } else if (item.activity_type == Constant.Writing) {
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
             }
-
 
 
             val hasFiles = !item.file_path.isNullOrEmpty()

@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.PTM.Adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,12 +54,22 @@ class ParentSlotTimingAdapter(
                 if (slot.my_booking) {
                     holder.card.setBackgroundResource(R.drawable.circle_background_green)
                     holder.tvSlotStatus.text = context.getString(R.string.booked)
-                    holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+                    holder.tvSlotStatus.setTextColor(
+                        ContextCompat.getColor(
+                            holder.itemView.context,
+                            R.color.black
+                        )
+                    )
                     holder.card.isEnabled = false
                 } else {
                     holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                     holder.tvSlotStatus.text = context.getString(R.string.Available)
-                    holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
+                    holder.tvSlotStatus.setTextColor(
+                        ContextCompat.getColor(
+                            holder.itemView.context,
+                            R.color.green
+                        )
+                    )
                     holder.card.isEnabled = false
                 }
             }
@@ -68,37 +77,72 @@ class ParentSlotTimingAdapter(
             slot.is_booked && !slot.my_booking -> {
                 holder.card.setBackgroundResource(R.drawable.bg_gray)
                 holder.tvSlotStatus.text = context.getString(R.string.not_available)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
+                holder.tvSlotStatus.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.red
+                    )
+                )
                 holder.card.isEnabled = false
             }
 
             slot.my_booking -> {
                 holder.card.setBackgroundResource(R.drawable.circle_background_green)
                 holder.tvSlotStatus.text = context.getString(R.string.booked)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+                holder.tvSlotStatus.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.black
+                    )
+                )
                 holder.card.isEnabled = false
             }
 
             isOverlappingWithSelected || isOverlappingWithGlobalMyBookings -> {
                 holder.card.setBackgroundResource(R.drawable.gray_bg_radius)
                 holder.tvSlotStatus.text = context.getString(R.string.time_conflict)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.system_orange))
+                holder.tvSlotStatus.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.system_orange
+                    )
+                )
                 holder.card.isEnabled = false
             }
 
             selectedSlot == slot -> {
                 holder.card.setBackgroundResource(R.drawable.bg_btn_blue)
                 holder.tvSlotStatus.text = context.getString(R.string.selected)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-                holder.tvSlotTime.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                holder.tvSlotStatus.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.white
+                    )
+                )
+                holder.tvSlotTime.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.white
+                    )
+                )
                 holder.card.isEnabled = true
             }
 
             else -> {
                 holder.card.setBackgroundResource(R.drawable.outline_gray)
                 holder.tvSlotStatus.text = context.getString(R.string.Available)
-                holder.tvSlotStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
-                holder.tvSlotTime.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
+                holder.tvSlotStatus.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.green
+                    )
+                )
+                holder.tvSlotTime.setTextColor(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.black
+                    )
+                )
                 holder.card.isEnabled = true
             }
         }
