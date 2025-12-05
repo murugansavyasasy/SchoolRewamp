@@ -120,7 +120,7 @@ class RateUsDialog(   private val fromScreen: String?,
         binding.edtSuggestions.setText(data.description)
         loadRemarkForRating(ratingValue)
 
-  
+
         val remark = allRemarks?.firstOrNull { it.rating == data.rating }
         remark?.category?.forEach { cat -> cat.selected = cat.selected == true }
     }

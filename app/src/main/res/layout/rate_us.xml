@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_below="@+id/ratingBar"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
@@ -152,7 +152,7 @@
                         android:layout_height="wrap_content"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_marginStart="@dimen/twenty"
-                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
                         android:text="@string/lblAnyothersuggestions"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
@@ -277,6 +277,3 @@
 
     </androidx.cardview.widget.CardView>
 </FrameLayout>
-
-
-

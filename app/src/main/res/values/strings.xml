@@ -1319,13 +1319,6 @@
     <string name="verify_the_data_and_make_any_necessary_corrections">Verify the data and make any necessary corrections</string>
     <string name="save_all_marks">Save All Marks</string>
     <string name="current_date_selected_time_expired">Current date is selected and the time is expired</string>
-    <string name="name__">name</string>
-    <string name="rating">rating</string>
-    <string name="category____">category</string>
-    <string name="categories___">categories</string>
-    <string name="description">description</string>
-    <string name="mobile_number">mobile_number</string>
-    <string name="splashscreen">SplashScreen</string>
 
 
 </resources>
