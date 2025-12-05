@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent.Model
 
-data class BlockedStudent (
+data class BlockedStudent(
     val id: String,
     val name: String,
     val gender: String,

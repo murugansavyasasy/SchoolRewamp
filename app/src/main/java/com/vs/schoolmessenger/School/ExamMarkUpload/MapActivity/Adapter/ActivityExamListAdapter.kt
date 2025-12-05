@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.OnActivityExamSelectListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class ActivityExamListAdapter(
     private var examList: List<getActivitySubjectNameData>,
     private val context: Context,
@@ -66,7 +65,6 @@ class ActivityExamListAdapter(
     }
 
 
-
     inner class ExamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val title: TextView = itemView.findViewById(R.id.examTitle)
@@ -74,7 +72,8 @@ class ActivityExamListAdapter(
         private val arrow: ImageView = itemView.findViewById(R.id.arrow)
         private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
         private val subjectsRv: RecyclerView = itemView.findViewById(R.id.rcSubject)
-//        private val header: RelativeLayout = itemView.findViewById(R.id.Header)
+
+        //        private val header: RelativeLayout = itemView.findViewById(R.id.Header)
         private val lnrUploadImage: LinearLayout = itemView.findViewById(R.id.lnrUploadImage)
 
         private val cardUploadImage: CardView = itemView.findViewById(R.id.cardUploadImage)
@@ -88,7 +87,7 @@ class ActivityExamListAdapter(
             applyParentColor(this, selectedCount, total)
 
             subjectsRv.layoutManager = LinearLayoutManager(context)
-            subjectsRv.adapter = ActivitySubjectListAdapter(item.paper, context){
+            subjectsRv.adapter = ActivitySubjectListAdapter(item.paper, context) {
                 val total = item.paper.size
                 val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
                 applyParentColor(this, selectedCount, total) // update UI instantly without notify
@@ -116,6 +115,7 @@ class ActivityExamListAdapter(
             }
 
         }
+
         fun Context.dp(value: Int): Int {
             return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
@@ -125,54 +125,93 @@ class ActivityExamListAdapter(
         }
 
 
-
         private fun applyParentColor(holder: ExamViewHolder, selectedCount: Int, total: Int) {
             val bg = lnrUploadImage.background as GradientDrawable
             bg.mutate()
             when {
                 selectedCount == 0 -> { // ORIGINAL
 
-                    bg.setStroke(context.dp(2), ContextCompat.getColor(context, android.R.color.white))
+                    bg.setStroke(
+                        context.dp(2),
+                        ContextCompat.getColor(context, android.R.color.white)
+                    )
                     bg.setColor(ContextCompat.getColor(context, R.color.white))
                     cardUploadImage.cardElevation = context.dp(5).toFloat()
 
                     holder.imgCheck.setImageResource(R.drawable.circle_icon)
-                    holder.imgCheck.setColorFilter(ContextCompat.getColor(context, R.color.gray4), PorterDuff.Mode.SRC_IN)
-                    holder.lblMap.setTextColor(ContextCompat.getColor(context, R.color.very_dark_gray2))
+                    holder.imgCheck.setColorFilter(
+                        ContextCompat.getColor(context, R.color.gray4),
+                        PorterDuff.Mode.SRC_IN
+                    )
+                    holder.lblMap.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.very_dark_gray2
+                        )
+                    )
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                    lblMap.text=  context.getString(R.string.not_started)
+                    lblMap.text = context.getString(R.string.not_started)
 
 
                 }
+
                 selectedCount < total -> {           // YELLOW
-                    bg.setStroke(context.dp(2), ContextCompat.getColor(context,R.color.light_bg_orange_6))
+                    bg.setStroke(
+                        context.dp(2),
+                        ContextCompat.getColor(context, R.color.light_bg_orange_6)
+                    )
                     bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
 
                     cardUploadImage.cardElevation = 0f
                     holder.imgCheck.setImageResource(R.drawable.circle_icon)
-                    holder.imgCheck.setColorFilter(ContextCompat.getColor(context, R.color.light_bg_orange_6), PorterDuff.Mode.SRC_IN)
-                    holder.lblMap.setTextColor(ContextCompat.getColor(context, R.color.light_bg_orange_6))
+                    holder.imgCheck.setColorFilter(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.light_bg_orange_6
+                        ), PorterDuff.Mode.SRC_IN
+                    )
+                    holder.lblMap.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.light_bg_orange_6
+                        )
+                    )
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
-                    lblMap.text= "${selectedCount} ${context.getString(R.string.of)} ${total} ${context.getString(R.string.activities_mapped)}"
+                    lblMap.text = "${selectedCount} ${context.getString(R.string.of)} ${total} ${
+                        context.getString(R.string.activities_mapped)
+                    }"
 
                 }
+
                 selectedCount == total -> {          // GREEN
-                    bg.setStroke(context.dp(2), ContextCompat.getColor(context,R.color.dark_green_3))
+                    bg.setStroke(
+                        context.dp(2),
+                        ContextCompat.getColor(context, R.color.dark_green_3)
+                    )
                     bg.setColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
 
                     cardUploadImage.cardElevation = 0f
 
                     holder.imgCheck.setImageResource(R.drawable.tick_circle_icon)
-                    holder.imgCheck.setColorFilter(ContextCompat.getColor(context, R.color.dark_green_3), PorterDuff.Mode.SRC_IN)
+                    holder.imgCheck.setColorFilter(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.dark_green_3
+                        ), PorterDuff.Mode.SRC_IN
+                    )
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
-                    holder.lblMap.setTextColor(ContextCompat.getColor(context, R.color.dark_green_3))
-                    lblMap.text= "${context.getString(R.string.all)} ${total} ${context.getString(R.string.activities_mapped)}"
+                    holder.lblMap.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.dark_green_3
+                        )
+                    )
+                    lblMap.text =
+                        "${context.getString(R.string.all)} ${total} ${context.getString(R.string.activities_mapped)}"
 
                 }
             }
         }
-
-
 
 
     }

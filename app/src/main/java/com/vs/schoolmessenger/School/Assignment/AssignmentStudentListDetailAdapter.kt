@@ -19,7 +19,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.SimpleDateFormat
@@ -29,7 +28,7 @@ class AssignmentStudentListDetailAdapter(
     private var itemList: List<SubmissionDetail>?,
     private var context: Context,
     private var isLoading: Boolean,
-    private val title: String ,
+    private val title: String,
     private val assignmentSubject: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,7 +48,7 @@ class AssignmentStudentListDetailAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_adapter_student_detailreport, parent, false)
-            DataViewHolder(view, context,title,assignmentSubject)
+            DataViewHolder(view, context, title, assignmentSubject)
         }
     }
 
@@ -74,14 +73,19 @@ class AssignmentStudentListDetailAdapter(
     }
 
     class DataViewHolder(
-        itemView: View, private val context: Context, private val title: String, private val assignmentSubject: String
+        itemView: View,
+        private val context: Context,
+        private val title: String,
+        private val assignmentSubject: String
     ) : RecyclerView.ViewHolder(itemView) {
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
         private val lbltitle: TextView = itemView.findViewById(R.id.lbltitle)
-        private val lblassignmentsubject: TextView = itemView.findViewById(R.id.lblassignmentsubject)
+        private val lblassignmentsubject: TextView =
+            itemView.findViewById(R.id.lblassignmentsubject)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-        private val rlarelativelayout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
+        private val rlarelativelayout: RelativeLayout =
+            itemView.findViewById(R.id.rlarelativelayout)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
@@ -94,8 +98,8 @@ class AssignmentStudentListDetailAdapter(
             lblStudentName.text = data.description
             lbltitle.text = title
             lblassignmentsubject.text = assignmentSubject
-            Log.d("title",title.toString())
-            Log.d("description",assignmentSubject.toString())
+            Log.d("title", title.toString())
+            Log.d("description", assignmentSubject.toString())
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
@@ -153,7 +157,7 @@ class AssignmentStudentListDetailAdapter(
                 }
                 val isHomeWorkData = FilePreview(
                     id = data.id,
-                    title =title,
+                    title = title,
                     description = data.description,
                     subjectName = "",
                     sentBy = "",
@@ -185,7 +189,7 @@ class AssignmentStudentListDetailAdapter(
                 }
                 val isHomeWorkData = FilePreview(
                     id = data.id,
-                    title =title,
+                    title = title,
                     description = data.description,
                     subjectName = "",
                     sentBy = "",

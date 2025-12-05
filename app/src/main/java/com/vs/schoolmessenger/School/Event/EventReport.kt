@@ -6,14 +6,12 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
-
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -21,16 +19,13 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
-
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -41,15 +36,12 @@ import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventUpcomingAdapter
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.EventReportBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-
-import kotlin.collections.isNullOrEmpty
 
 class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
     SchoolEventClickListener {
@@ -152,19 +144,27 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.headerview.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.dotindicator.visibility = if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
+                    binding.rcyongoingevent.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.headerview.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.dotindicator.visibility =
+                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
 
-                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.upcomingeventHeaderview.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcyupcomingevent.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.upcomingeventHeaderview.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
 
-                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.completedeventHeaderview.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcycompletedevent.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.completedeventHeaderview.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
 
                     updateDotIndicator()
                 }, 100)
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -221,7 +221,8 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 hideAllSections()
                 binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.txtNoDataFound.text=response!!.message?:getString(R.string.no_data_found)
+                binding.txtNoDataFound.text =
+                    response!!.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -344,20 +345,20 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
-        if(data.can_edit) {
+        if (data.can_edit) {
             layoutEdit.visibility = View.VISIBLE
         } else {
             layoutEdit.visibility = View.GONE
         }
 
-        if(data.can_delete) {
+        if (data.can_delete) {
             layoutDelete.visibility = View.VISIBLE
         } else {
             layoutDelete.visibility = View.GONE
         }
 
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Constant.isClickEdit = true
             val intent = Intent(this, CreateEvent::class.java)
             intent.putExtra(Constant.event_data, data)
             startActivity(intent)
@@ -388,19 +389,19 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
 
-        if(data.can_edit) {
+        if (data.can_edit) {
             layoutEdit.visibility = View.VISIBLE
         } else {
             layoutEdit.visibility = View.GONE
         }
 
-        if(data.can_delete) {
+        if (data.can_delete) {
             layoutDelete.visibility = View.VISIBLE
         } else {
             layoutDelete.visibility = View.GONE
         }
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Constant.isClickEdit = true
             val intent = Intent(this, CreateEvent::class.java)
             intent.putExtra(Constant.event_data, data)
             startActivity(intent)
@@ -451,21 +452,23 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
 
 
         val hasOngoing = !ongoingFiltered.isNullOrEmpty()
-        binding.rcyongoingevent.visibility   = if (hasOngoing) View.VISIBLE else View.GONE
-        binding.headerview.visibility        = if (hasOngoing) View.VISIBLE else View.GONE
-        binding.dotindicator.visibility      = if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
+        binding.rcyongoingevent.visibility = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.headerview.visibility = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.dotindicator.visibility =
+            if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
 
         val hasUpcoming = !upcomingFiltered.isNullOrEmpty()
-        binding.rcyupcomingevent.visibility        = if (hasUpcoming) View.VISIBLE else View.GONE
+        binding.rcyupcomingevent.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
         binding.upcomingeventHeaderview.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
 
         val hasCompleted = !completedFiltered.isNullOrEmpty()
-        binding.rcycompletedevent.visibility        = if (hasCompleted) View.VISIBLE else View.GONE
+        binding.rcycompletedevent.visibility = if (hasCompleted) View.VISIBLE else View.GONE
         binding.completedeventHeaderview.visibility = if (hasCompleted) View.VISIBLE else View.GONE
 
         val allEmpty = !hasOngoing && !hasUpcoming && !hasCompleted
         binding.lytNoDataFound.visibility = if (allEmpty) View.VISIBLE else View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility = if (allEmpty) View.GONE else View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility =
+            if (allEmpty) View.GONE else View.VISIBLE
         binding.toolbarLayout.rytSearch.visibility = if (allEmpty) View.GONE else View.VISIBLE
     }
 
@@ -481,15 +484,20 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         when (adapterTag) {
             Constant.ONGOING -> {
                 binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-                binding.headerview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Also hide header if empty
+                binding.headerview.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE  // Also hide header if empty
             }
+
             Constant.COMPLETED -> {
                 binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-                binding.completedeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Add header
+                binding.completedeventHeaderview.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE  // Add header
             }
+
             Constant.UPCOMING -> {
                 binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
-                binding.upcomingeventHeaderview.visibility = if (isEmpty) View.GONE else View.VISIBLE  // Add header
+                binding.upcomingeventHeaderview.visibility =
+                    if (isEmpty) View.GONE else View.VISIBLE  // Add header
             }
         }
 
@@ -553,8 +561,6 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
-
-
 
 
     override fun onEditAndDelete(
@@ -642,7 +648,6 @@ class EventReport : BaseActivity<EventReportBinding>(), View.OnClickListener,
             closePopup()
         }
     }
-
 
 
 }

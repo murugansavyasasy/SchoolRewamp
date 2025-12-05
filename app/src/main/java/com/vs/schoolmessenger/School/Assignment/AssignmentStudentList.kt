@@ -96,13 +96,23 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
 
     private fun showSubmitted() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals(Constant.SUBMITTED, ignoreCase = true) }
+            allStudentsList.filter {
+                it.submit_status.equals(
+                    Constant.SUBMITTED,
+                    ignoreCase = true
+                )
+            }
         isloadassignmentdata(filteredList)
     }
 
     private fun showPending() {
         val filteredList =
-            allStudentsList.filter { it.submit_status.equals(Constant.NOTSUBMITTED, ignoreCase = true) }
+            allStudentsList.filter {
+                it.submit_status.equals(
+                    Constant.NOTSUBMITTED,
+                    ignoreCase = true
+                )
+            }
         isloadassignmentdata(filteredList)
     }
 

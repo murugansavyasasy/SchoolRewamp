@@ -44,12 +44,9 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
@@ -136,9 +133,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
         binding.edtTitle.setText(titleName)
 
-        Constant.selectedFiles.clear()
+        selectedFiles.clear()
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
-            Constant.selectedFiles.add(
+            selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
                 )
@@ -159,7 +156,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     "TXT" -> FileType.TXT
                     else -> FileType.OTHER
                 }
-                Constant.selectedFiles.add(FileItem(file.url, type))
+                selectedFiles.add(FileItem(file.url, type))
             }
             Constant.Remaining = MAX_FILES - submissionData!!.file_path.size
         }
@@ -186,7 +183,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             }
         }
 
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+        mAdapter = ImagePickingAdapter(this, selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
@@ -196,7 +193,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    if(Constant.Remaining!! > 0) {
+                    if (Constant.Remaining!! > 0) {
                         Constant.Remaining = Constant.Remaining - selectedUris!!.size
                         selectedUris?.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
@@ -231,10 +228,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
-                            if(Constant.selectedFiles.size < MAX_FILES +1) {
-                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                            }
-                            else{
+                            if (selectedFiles.size < MAX_FILES + 1) {
+                                selectedFiles.add(FileItem(uri.toString(), type))
+                            } else {
                                 Constant.Remaining = 0
                             }
 
@@ -300,6 +296,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         dimView.isFocusableInTouchMode = true
 
     }
+
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
         if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
@@ -373,7 +370,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             val originalTitle = submissionData!!.title?.trim() ?: ""
             val originalDesc = submissionData!!.description?.trim() ?: ""
             if (currentTitle == originalTitle && currentDesc == originalDesc) {
-                val currentFileSet = Constant.selectedFiles.drop(1).map { it.path to it.type.name }.toSet()
+                val currentFileSet =
+                    selectedFiles.drop(1).map { it.path to it.type.name }.toSet()
                 val originalFileSet = submissionData!!.file_path.map { it.url to it.type }.toSet()
                 if (currentFileSet == originalFileSet) {
                     AlertDialog.Builder(this)
@@ -415,11 +413,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
     fun isUploadFilesInServer(isFileType: String?) {
 
-        Constant.selectedFiles.removeAt(0)
-        isTotalSelectedItem = Constant.selectedFiles.size
+        selectedFiles.removeAt(0)
+        isTotalSelectedItem = selectedFiles.size
         isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        isAwsUploadedFiles.clear()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val file = iterator.next()
             if (file.type == FileType.VIDEO) {
@@ -428,7 +426,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             }
         }
 
-        val numNonVideoFiles = Constant.selectedFiles.size
+        val numNonVideoFiles = selectedFiles.size
         val numVideos = isVideoSelectedArrayList.size
 
         val videoSteps = 10
@@ -449,7 +447,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+            selectedFiles.isNotEmpty() -> isFileUploadInAws(
                 isFileType,
                 totalTasks,
                 { completedTasks++; updateProgress() })
@@ -457,6 +455,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
                 totalTasks,
                 { completedTasks++; updateProgress() })
+
             else -> {
                 ProgressDialogHelper.dismiss()
                 isAssignmentSend()
@@ -473,11 +472,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
         // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
 
-        val iterator = Constant.selectedFiles.iterator()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path,
                         isFileType = fileItem.type.name
@@ -492,7 +491,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
-        if (Constant.selectedFiles.isEmpty()) {
+        if (selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
 //                ProgressDialogHelper.updateProgress(100)
                 ProgressDialogHelper.dismiss()
@@ -501,14 +500,14 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 videoUploading(totalTasks, onTaskComplete)
             }
         } else {
-            val numToCompress = Constant.selectedFiles.size
+            selectedFiles.size
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
             val newSelectedFiles = mutableListOf<FileItem>()
             Constant.compressImageFilesOnly(
                 context = this,
-                files = Constant.selectedFiles,
+                files = selectedFiles,
                 outputDir = outputDir.absolutePath,
                 format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
@@ -545,16 +544,16 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     onTaskComplete()
                 },
                 onComplete = {
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    selectedFiles.clear()
+                    selectedFiles.addAll(newSelectedFiles)
                     // Progress after compression (50%)
 //                    ProgressDialogHelper.updateProgress(50)
                     val isAwsUploadingFile = ArrayList<String>()
 
-                    val isSelectedFileCount = Constant.selectedFiles.size
-                    for (i in Constant.selectedFiles.indices) {
+                    val isSelectedFileCount = selectedFiles.size
+                    for (i in selectedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path,
+                            selectedFiles[i].path,
                             isChildDetails!!.school_id,
                             isFileType!!,
                             this@MyAssignmentSubmit,
@@ -567,10 +566,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                                     isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
-                                    Constant.isAwsUploadedFiles.add(
+                                    isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles.getOrNull(i)?.type?.name
+                                            isFileType = selectedFiles.getOrNull(i)?.type?.name
                                                 ?: "UNKNOWN"
                                         )
                                     )
@@ -581,7 +580,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 //                                            .coerceAtMost(100)
 //                                    ProgressDialogHelper.updateProgress(progress)
 
-                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                    if (isTotalSelectedItem == isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isAssignmentSend()
                                     } else {
@@ -603,13 +602,15 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
     }
 
-    private fun videoUploading( totalTasks: Int,
-                                onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path,
                         isFileType = fileItem.type.name
@@ -650,13 +651,13 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     ) {
         runOnUiThread {
             Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
+            isAwsUploadedFiles.add(
                 AwsUploadedFiles(
                     isFileUrl = link.toString(), isFileType = Constant.VIDEO
                 )
             )
 
-            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+            if (isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
                 isAssignmentSend()
             }
@@ -709,8 +710,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this,
-                        getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -753,8 +756,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     }
 
     override fun onBackPressed() {
-        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
+        selectedFiles.clear()
+        isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
 
         super.onBackPressed()
@@ -798,12 +801,14 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
 
         rlaVideoPick.setOnClickListener {
-            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this,
-                    getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT
+                ).show()
             } else {
-                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                if (selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
                 } else if (selectedVideoCount == 1) {
                     Constant.isFileLimit = 1
@@ -852,8 +857,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this,
-                    getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -866,7 +873,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -892,13 +903,12 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
-                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            if (selectedFiles.size < MAX_FILES + 1) {
+                selectedFiles.add(FileItem(uri.toString(), type))
+            } else {
                 Constant.Remaining = 0
             }
-            for (item in Constant.selectedFiles) {
+            for (item in selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
         }
@@ -920,12 +930,18 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this,
-                            getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_image_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -960,9 +976,9 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         jsonObject.addProperty("id", id)
         jsonObject.addProperty("description", binding.edtDescription.text.toString())
         jsonObject.addProperty("iframe", "")
-        jsonObject.addProperty("file_size", Constant.isAwsUploadedFiles.size.toString())
+        jsonObject.addProperty("file_size", isAwsUploadedFiles.size.toString())
         val filePathArray = JsonArray()
-        for (file in Constant.isAwsUploadedFiles) {
+        for (file in isAwsUploadedFiles) {
             val obj = JsonObject()
             obj.addProperty("url", file.isFileUrl)
             obj.addProperty("type", file.isFileType)
@@ -970,7 +986,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
         }
         jsonObject.add("file_path", filePathArray)
         if (submissionData != null) {
-            appViewModel!!.getmysubmissionedit(isAccessToken!!, jsonObject,this)
+            appViewModel!!.getmysubmissionedit(isAccessToken!!, jsonObject, this)
         } else {
             appViewModel!!.isSubmitAssignment(isAccessToken!!, jsonObject, this)
         }

@@ -60,8 +60,9 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         isAccessToken = childDetails?.access_token
 
         binding.toolbarLayout.lblStudentName.text = childDetails!!.name
-        binding.lblHomeWork.text=Constant.isSelectedMenuName
-        binding.toolbarLayout.lblStudentSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
+        binding.lblHomeWork.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblStudentSection.text =
+            childDetails!!.standard_name + " - " + childDetails.section_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.recyclerViewCalendar.layoutManager =
@@ -77,7 +78,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         dateList = generateCalendarDates()
 
         val todayDate =
-            SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault()).format(Calendar.getInstance().time)
+            SimpleDateFormat(
+                Constant.ddMMyyyy,
+                Locale.getDefault()
+            ).format(Calendar.getInstance().time)
         isHomeWorkDate = todayDate
         calendarAdapter = CalendarAdapter(dateList, todayDate) {
             isHomeWorkDate = it.fullDate
@@ -85,7 +89,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             if (isHomeWorkData != null) {
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.cytNoDataFound.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.lytSearch.visibility = View.GONE
@@ -96,7 +100,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                 imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
                 binding.lytSearch.visibility = View.GONE
                 binding.edtSearch.setText("")
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.cytNoDataFound.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 mAdapter!!.updateList(emptyList(), "")
@@ -177,7 +181,8 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                     binding.edtSearch.setText("")
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.cytNoDataFound.visibility = View.VISIBLE
-                    binding.lblNoData.text = response.message?:getString(R.string.no_homework_found)
+                    binding.lblNoData.text =
+                        response.message ?: getString(R.string.no_homework_found)
                     binding.recyclerView.visibility = View.GONE
                     isLoadHomeWorkData(emptyList(), "")
                 }
@@ -240,7 +245,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
 
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
@@ -275,7 +279,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
     override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
-        Log.d("flag",data.is_unread.toString())
+        Log.d("flag", data.is_unread.toString())
         if (data.is_unread) {
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.type, Constant.HOMEWORK)
@@ -296,7 +300,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             subjectName = data.subject_name,
             sentBy = data.sent_by,
             thumbnail = data.thumbnail,
-            created_date=isHomeWorkDate,
+            created_date = isHomeWorkDate,
             isUnread = data.is_unread,
             isCompleted = data.is_completed,
             isMenuType = Constant.M_HOMEWORK,
@@ -331,7 +335,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             }
         }
     }
-
 
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {

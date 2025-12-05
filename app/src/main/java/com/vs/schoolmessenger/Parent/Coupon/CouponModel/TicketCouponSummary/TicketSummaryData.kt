@@ -6,6 +6,7 @@ class TicketSummaryData {
 
     @SerializedName("total_pages")
     val totalpages: Int = 0
+
     @SerializedName("coupon_list")
     val coupon_list: TicketSummaryWrapper? = null
 }

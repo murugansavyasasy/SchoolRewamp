@@ -20,4 +20,4 @@ data class SchoolEventItem(
     val can_edit: Boolean,
     val can_delete: Boolean,
     val file_path: List<FilePath>
-): Parcelable
+) : Parcelable

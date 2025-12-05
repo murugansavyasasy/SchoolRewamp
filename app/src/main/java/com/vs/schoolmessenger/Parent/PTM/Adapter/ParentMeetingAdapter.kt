@@ -59,12 +59,12 @@ class ParentMeetingAdapter(
         holder.tvSubject.text = subjectNames.ifEmpty { context.getString(R.string.no_subject) }
 
 
-
         val mode = meeting.slots.firstOrNull()?.event_mode ?: context.getString(R.string.meeting)
         holder.btnMeetingType.text = mode
-        Log.d("mode",mode)
+        Log.d("mode", mode)
 
-        val firstLetter = meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
+        val firstLetter =
+            meeting.staff_name?.trim()?.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
         holder.tvProfileIcon.text = firstLetter
 
         val modeIconRes = when (mode.lowercase()) {

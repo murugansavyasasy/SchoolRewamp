@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.view.ViewGroupCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,7 +18,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -135,27 +133,22 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         val menu = navigationView.menu
         val menuItem = menu.findItem(R.id.role_click)
-        if(userDetails!!.is_parent && userDetails!!.is_staff){
+        if (userDetails!!.is_parent && userDetails!!.is_staff) {
             menuItem.isVisible = true  // show
-        }
-        else if(userDetails!!.is_parent){
-            if(userDetails!!.child_details.size > 1){
+        } else if (userDetails!!.is_parent) {
+            if (userDetails!!.child_details.size > 1) {
                 menuItem.isVisible = true  // show
-            }
-            else{
+            } else {
                 menuItem.isVisible = false  // hide
             }
-        }
-        else if(userDetails!!.is_staff){
+        } else if (userDetails!!.is_staff) {
             if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                if(userDetails!!.staff_details.size > 1){
+                if (userDetails!!.staff_details.size > 1) {
                     menuItem.isVisible = true  // show
-                }
-                else{
+                } else {
                     menuItem.isVisible = false  // hide
                 }
-            }
-            else{
+            } else {
                 menuItem.isVisible = false
             }
         }
@@ -199,16 +192,19 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         // ✅ Use correct lifecycle-aware callback
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                val currentFragment =
+                    supportFragmentManager.findFragmentById(R.id.fragment_container)
                 when (currentFragment) {
                     is SchoolHomeFragment -> {
                         // Exit app when on HomeFragment
                         finish()
                     }
+
                     else -> {
                         // Navigate to HomeFragment
                         updateNavBar(R.id.icon_home)
-                        supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, SchoolHomeFragment())?.commit()
+                        supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.fragment_container, SchoolHomeFragment())?.commit()
                     }
                 }
             }
@@ -264,9 +260,9 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 Log.d("Permission", "Contact granted: $isGranted")
 
             }
-      //  requestContactPermission()
+        //  requestContactPermission()
 
-            isGetAcademicYear()
+        isGetAcademicYear()
     }
 
 
@@ -294,8 +290,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             popupWindow.dismiss()
             isLogout(
                 activity = this,
-                viewModel =authViewModel,
-                secure_id = Constant.getAndroidSecureId(this) ,
+                viewModel = authViewModel,
+                secure_id = Constant.getAndroidSecureId(this),
                 device_type = Constant.isDeviceType,
                 mobile_number = SharedPreference.getMobileNumber(this).toString()
             ) { isSuccess, message ->
@@ -307,7 +303,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     startActivity(Intent(this, Login::class.java))
                 } else {
 //                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
+                    Constant.showErrorAlert(this, getString(R.string.Oops), message)
 
                 }
             }

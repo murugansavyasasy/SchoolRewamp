@@ -6,7 +6,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -45,7 +44,7 @@ class WhatsNewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
             val totalCount = itemList?.size ?: 0
-            itemList?.get(position)?.let { holder.bind(it, totalCount, position,context) }
+            itemList?.get(position)?.let { holder.bind(it, totalCount, position, context) }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -62,12 +61,13 @@ class WhatsNewAdapter(
         private val descText = itemView.findViewById<TextView>(R.id.description_value)
         private val bannerImage = itemView.findViewById<ImageView>(R.id.banner_image)
         private val btnLearnMore = itemView.findViewById<TextView>(R.id.btnLearnMore)
-        private val explore_linearlayout = itemView.findViewById<LinearLayout>(R.id.explore_linearlayout)
+        private val explore_linearlayout =
+            itemView.findViewById<LinearLayout>(R.id.explore_linearlayout)
         private val swipeMoreLayout = itemView.findViewById<LinearLayout>(R.id.swipeeformore)
         private val swipeMoreLeft = itemView.findViewById<TextView>(R.id.swipemore)
         private val swipeMoreRight = itemView.findViewById<TextView>(R.id.swipemoredata)
 
-        fun bind(data: WhatsNewUpdateData, totalCount: Int, position: Int,context: Context) {
+        fun bind(data: WhatsNewUpdateData, totalCount: Int, position: Int, context: Context) {
             titleText.text = data.name
             descText.text = data.description
 
@@ -76,7 +76,7 @@ class WhatsNewAdapter(
                 .fitCenter()
                 .into(bannerImage)
 
-            if(data.app_redirect_link.isNullOrEmpty()) {
+            if (data.app_redirect_link.isNullOrEmpty()) {
                 explore_linearlayout.visibility = View.GONE
             } else {
                 explore_linearlayout.visibility = View.VISIBLE
@@ -118,8 +118,10 @@ class WhatsNewAdapter(
                 if (nextPos < totalCount) {
                     recyclerView.smoothScrollToPosition(nextPos)
                 } else {
-                    Toast.makeText(itemView.context,
-                        context.getString(R.string.no_more_updates), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        itemView.context,
+                        context.getString(R.string.no_more_updates), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -128,8 +130,10 @@ class WhatsNewAdapter(
                 if (prevPos >= 0) {
                     recyclerView.smoothScrollToPosition(prevPos)
                 } else {
-                    Toast.makeText(itemView.context,
-                        context.getString(R.string.you_re_at_the_start), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        itemView.context,
+                        context.getString(R.string.you_re_at_the_start), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -141,8 +145,10 @@ class WhatsNewAdapter(
                         itemView.context.startActivity(intent)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Toast.makeText(itemView.context,
-                            context.getString(R.string.unable_to_open_link), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            itemView.context,
+                            context.getString(R.string.unable_to_open_link), Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } else {

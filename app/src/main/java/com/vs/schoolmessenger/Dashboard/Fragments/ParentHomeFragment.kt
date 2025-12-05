@@ -21,7 +21,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -38,11 +37,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountData
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
-import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
@@ -65,7 +61,6 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -76,12 +71,10 @@ import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuCountDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuDetails
-import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -120,7 +113,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         access_token = childDetails!!.access_token
         binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
-        if(childDetails!!.school_logo_url != "") {
+        if (childDetails!!.school_logo_url != "") {
             Glide.with(this)
                 .load(childDetails!!.school_logo_url)
                 .error(R.drawable.school_sample)
@@ -135,7 +128,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             if (response != null) {
                 response.status
                 response.message
-                Constant.isGlobalVariableData=response.data[0]
+                Constant.isGlobalVariableData = response.data[0]
                 checkContactPermission()
 
             }
@@ -144,8 +137,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         if (isParentDashBoardData == null || isParentDashBoardData!!.isEmpty()) {
             isDashBoardData()
-        }
-        else{
+        } else {
             isLoadData()
             setupRecyclerView()
             appViewModel!!.isDashBoardCountData(
@@ -165,7 +157,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isParentDashBoardData = isDashboardResponse
 
-                    if(isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
+                    if (isDashboardResponse.isNotEmpty() && isDashboardResponse[0].is_birthday) {
                         showBirthdayPopup()
                     }
 
@@ -197,7 +189,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardCountData = isDashboardResponse
                     isParentMenuCountDetails = isDashBoardCountData!![0].menu_details
-                   // isGetAds()
+                    // isGetAds()
                     isLoadData()
                     setupRecyclerView()
 
@@ -226,12 +218,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (userDetails!!.is_parent && userDetails!!.is_staff ||  userDetails!!.staff_details.size > 1) {
+                if (userDetails!!.is_parent && userDetails!!.is_staff || userDetails!!.staff_details.size > 1) {
                     val intent = Intent(requireActivity(), PrioritySelection::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                }
-                else {
+                } else {
                     handleBackPress()
                 }
             }
@@ -303,13 +294,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 REQUEST_CONTACT_PERMISSION
             )
         } else {
-            if(!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
+            if (!Constant.isGlobalVariableData!!.v_card_numbers.equals("")) {
 
                 val contacts = mutableListOf<Pair<String, String>>()
 
-                val numbers =  Constant.isGlobalVariableData!!.v_card_numbers.split(",")
+                val numbers = Constant.isGlobalVariableData!!.v_card_numbers.split(",")
                 for (item in numbers) {
-                    contacts.add(Pair(Constant.isGlobalVariableData!!.contact_display_name, item.trim()))
+                    contacts.add(
+                        Pair(
+                            Constant.isGlobalVariableData!!.contact_display_name,
+                            item.trim()
+                        )
+                    )
                 }
                 val missingContacts = contacts.filterNot { contactExists(it.second) }
                 if (missingContacts.isNotEmpty()) {
@@ -338,14 +334,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return exists
     }
 
-    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>)   {
+    private fun saveContactsPopup(missingContacts: List<Pair<String, String>>) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.save_contact_popup, null)
 
         val alertTitle: TextView = view.findViewById(R.id.alertTitle)
         val alertMessage: TextView = view.findViewById(R.id.alertMessage)
-        alertTitle.setText(Constant.isGlobalVariableData!!.contact_alert_title)
-        alertMessage.setText(Constant.isGlobalVariableData!!.contact_alert_content)
+        alertTitle.text = Constant.isGlobalVariableData!!.contact_alert_title
+        alertMessage.text = Constant.isGlobalVariableData!!.contact_alert_content
 
         val btnSave: TextView = view.findViewById(R.id.lblSave)
         val btnNo: TextView = view.findViewById(R.id.lblNo)
@@ -440,7 +436,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         // Prepare Intent to insert contact (user will confirm)
         val intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-        intent.putExtra(ContactsContract.Intents.Insert.NAME, Constant.isGlobalVariableData!!.contact_display_name) // set contact name
+        intent.putExtra(
+            ContactsContract.Intents.Insert.NAME,
+            Constant.isGlobalVariableData!!.contact_display_name
+        ) // set contact name
         intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, data)
 
         startActivityForResult(intent, 100)
@@ -457,7 +456,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 LinearLayoutManager(safeActivity, LinearLayoutManager.HORIZONTAL, false)
             binding.autoScrollRecyclerView.layoutManager = layoutManager
 
-            adapter = AutoScrollAdapterWithDots(FrequentParentlyUsedMenuItems!!,isParentMenuCountDetails, this)
+            adapter = AutoScrollAdapterWithDots(
+                FrequentParentlyUsedMenuItems!!,
+                isParentMenuCountDetails,
+                this
+            )
             binding.autoScrollRecyclerView.adapter = adapter
 
             if (binding.autoScrollRecyclerView.onFlingListener == null) {
@@ -472,6 +475,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
     }
+
     private fun handleBackPress() {
         AlertDialog.Builder(requireContext()).setTitle(getString(R.string.Go_Back))
             .setMessage(getString(R.string.Do_you_want_Exit))
@@ -568,6 +572,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 InteractionWithStaff::class.java
             )
+
             Constant.M_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
             Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
@@ -577,10 +582,12 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 CertificateRequest::class.java
             )
+
             Constant.M_COUPON_PACKET -> Intent(
                 requireActivity(),
                 CouponDashboardActivity::class.java
             )
+
             Constant.M_EXAM -> Intent(
                 requireActivity(),
                 ExamMark::class.java
@@ -590,6 +597,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 PTM::class.java
             )
+
             Constant.M_ONLINE_TEXT_BOOK -> Intent(
                 requireActivity(),
                 Ebooks::class.java

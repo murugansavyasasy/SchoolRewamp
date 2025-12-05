@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion
 
-import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 
 class GetQuestionDetails(
@@ -8,5 +7,5 @@ class GetQuestionDetails(
     val question: String,
     val mark: Int,
     val options: List<String>,
-    val file_path:List<AttachmentFile>
+    val file_path: List<AttachmentFile>
 )

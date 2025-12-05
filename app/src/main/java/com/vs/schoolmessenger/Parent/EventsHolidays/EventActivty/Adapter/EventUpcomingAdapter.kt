@@ -9,15 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
@@ -143,7 +140,8 @@ class EventUpcomingAdapter(
             adapter: EventUpcomingAdapter
         ) {
             event_header.text = data.title
-            event_time.text = data.category +" "+data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
+            event_time.text =
+                data.category + " " + data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
             loadingBar.visibility = View.GONE

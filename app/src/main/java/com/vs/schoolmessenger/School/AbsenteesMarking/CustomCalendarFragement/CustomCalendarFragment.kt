@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -64,9 +63,12 @@ class CustomCalendarFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Match expected format
-            minDate = it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            maxDate = it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
-            selectedDate = it.getString(ARG_SELECTED_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            minDate =
+                it.getString(ARG_MIN_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            maxDate =
+                it.getString(ARG_MAX_DATE)?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
+            selectedDate = it.getString(ARG_SELECTED_DATE)
+                ?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
             calendarTag = it.getString(ARG_TAG)
         }
 

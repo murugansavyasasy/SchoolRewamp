@@ -8,7 +8,8 @@ import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 
-class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEditText(context, attrs) {
+class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) :
+    AppCompatEditText(context, attrs) {
 
     init {
         isFocusable = true
@@ -24,7 +25,8 @@ class UrlPasteOnlyEditText(context: Context, attrs: AttributeSet?) : AppCompatEd
 
     override fun onTextContextMenuItem(id: Int): Boolean {
         if (id == android.R.id.paste || id == android.R.id.pasteAsPlainText) {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            val clipboard =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
             val clipData = clipboard.primaryClip
 
             if (clipData != null && clipData.itemCount > 0) {

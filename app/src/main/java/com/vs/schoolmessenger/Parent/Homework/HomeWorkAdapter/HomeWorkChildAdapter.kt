@@ -55,8 +55,6 @@ class HomeWorkChildAdapter(
     override fun getItemCount(): Int = filePathDetails.size
 
 
-
-
     class DataViewHolder(private val binding: FileviewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -71,15 +69,13 @@ class HomeWorkChildAdapter(
         ) {
 
 
-
-
             binding.relativelayoutHeader.visibility = View.VISIBLE
             binding.progressBar.visibility = View.VISIBLE
             binding.imgView.visibility = View.VISIBLE
             binding.imgView.setBackgroundColor(Color.TRANSPARENT)
 
-            Log.d("ParentAssigmentValue",isParentAssignment.toString())
-            Log.d("selectedSchoolMenuvalue",selectedSchoolMenu.toString())
+            Log.d("ParentAssigmentValue", isParentAssignment.toString())
+            Log.d("selectedSchoolMenuvalue", selectedSchoolMenu.toString())
             if (selectedSchoolMenu == M_ASSIGNMENT) {
                 Log.d("selectedschoolmenu adaptervalue", selectedSchoolMenu.toString())
                 binding.imgView.visibility = View.GONE
@@ -88,7 +84,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
-                        binding.imgFileType.setText(context.getString(R.string.img))
+                        binding.imgFileType.text = context.getString(R.string.img)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -98,7 +94,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgFileType.setText(context.getString(R.string.vid))
+                        binding.imgFileType.text = context.getString(R.string.vid)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -108,7 +104,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
-                        binding.imgFileType.setText(context.getString(R.string.pdf))
+                        binding.imgFileType.text = context.getString(R.string.pdf)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -118,7 +114,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
-                        binding.imgFileType.setText(context.getString(R.string.docx))
+                        binding.imgFileType.text = context.getString(R.string.docx)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -128,7 +124,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
-                        binding.imgFileType.setText(context.getString(R.string.txt))
+                        binding.imgFileType.text = context.getString(R.string.txt)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -138,7 +134,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
-                        binding.imgFileType.setText(context.getString(R.string.ppt))
+                        binding.imgFileType.text = context.getString(R.string.ppt)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -148,7 +144,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -158,7 +154,7 @@ class HomeWorkChildAdapter(
                     }
 
                     else -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         binding.progressBar.visibility = View.GONE
                     }
                 }
@@ -170,7 +166,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
-                        binding.imgFileType.setText(context.getString(R.string.img))
+                        binding.imgFileType.text = context.getString(R.string.img)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -180,7 +176,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgFileType.setText(context.getString(R.string.vid))
+                        binding.imgFileType.text = context.getString(R.string.vid)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -190,7 +186,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
-                        binding.imgFileType.setText(context.getString(R.string.pdf))
+                        binding.imgFileType.text = context.getString(R.string.pdf)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -200,7 +196,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
-                        binding.imgFileType.setText(context.getString(R.string.docx))
+                        binding.imgFileType.text = context.getString(R.string.docx)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -210,7 +206,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
-                        binding.imgFileType.setText(context.getString(R.string.txt))
+                        binding.imgFileType.text = context.getString(R.string.txt)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -220,7 +216,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
-                        binding.imgFileType.setText(context.getString(R.string.pptx))
+                        binding.imgFileType.text = context.getString(R.string.pptx)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -230,7 +226,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -240,7 +236,7 @@ class HomeWorkChildAdapter(
                     }
 
                     else -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         binding.progressBar.visibility = View.GONE
                     }
                 }
@@ -252,7 +248,7 @@ class HomeWorkChildAdapter(
                 binding.childrelativeLayout.visibility = View.VISIBLE
                 when (item.type.uppercase()) {
                     Constant.IMAGE -> {
-                        binding.imgFileType.setText(context.getString(R.string.img))
+                        binding.imgFileType.text = context.getString(R.string.img)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -262,7 +258,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgFileType.setText(context.getString(R.string.vid))
+                        binding.imgFileType.text = context.getString(R.string.vid)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -272,7 +268,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PDF -> {
-                        binding.imgFileType.setText(context.getString(R.string.pdf))
+                        binding.imgFileType.text = context.getString(R.string.pdf)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -282,7 +278,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.DOC, Constant.DOCX -> {
-                        binding.imgFileType.setText(context.getString(R.string.docx))
+                        binding.imgFileType.text = context.getString(R.string.docx)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -292,7 +288,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.TXT -> {
-                        binding.imgFileType.setText(context.getString(R.string.txt))
+                        binding.imgFileType.text = context.getString(R.string.txt)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -302,7 +298,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.PPT, Constant.PPTX -> {
-                        binding.imgFileType.setText(context.getString(R.string.pptx))
+                        binding.imgFileType.text = context.getString(R.string.pptx)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -312,7 +308,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.EXCEL -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         val fileName = item.url.substringAfterLast("/")
                         binding.txtFileName.text = fileName
                         getFileSize(item.url) { size ->
@@ -322,7 +318,7 @@ class HomeWorkChildAdapter(
                     }
 
                     else -> {
-                        binding.imgFileType.setText(context.getString(R.string.exc))
+                        binding.imgFileType.text = context.getString(R.string.exc)
                         binding.progressBar.visibility = View.GONE
                     }
                 }
@@ -363,7 +359,7 @@ class HomeWorkChildAdapter(
                     }
 
                     Constant.VIDEO -> {
-                        binding.imgView.setImageResource(R.drawable.video_play)
+                        binding.imgView.setImageResource(R.drawable.video_icon_2)
                         binding.progressBar.visibility = View.GONE
                     }
 
@@ -466,7 +462,6 @@ class HomeWorkChildAdapter(
                 }
             }.start()
         }
-
 
 
     }

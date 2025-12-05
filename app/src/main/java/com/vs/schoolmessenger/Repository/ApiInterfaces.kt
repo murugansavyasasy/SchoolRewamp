@@ -7,6 +7,8 @@ import com.vs.schoolmessenger.AWS.PreSignedUrl
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
+import com.vs.schoolmessenger.Auth.Logout.LogoutResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
@@ -21,8 +23,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
-import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
-import com.vs.schoolmessenger.Auth.Logout.LogoutResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
@@ -68,7 +68,6 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Re
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
@@ -697,7 +696,6 @@ interface ApiInterfaces {
     ): Call<LessonPlanUpdateResponse?>
 
 
-
     @Headers("Content-Type: application/json")
     @POST(APIMethods.iscreatelessonplan)
     fun iscreatelessonplan(
@@ -1177,7 +1175,7 @@ interface ApiInterfaces {
     fun getassignmentchildhomework(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: Int,
-        @Query(APIKeyNames.target_type ) target_type : Int
+        @Query(APIKeyNames.target_type) target_type: Int
     ): Call<AssignmentTargetDetailsResponse>
 
 
@@ -1185,7 +1183,7 @@ interface ApiInterfaces {
     fun getattachmentchildhomework(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: Int,
-        @Query(APIKeyNames.target_type ) target_type : Int
+        @Query(APIKeyNames.target_type) target_type: Int
     ): Call<AttachmentTargetDetailResponse>
 
 
@@ -1193,7 +1191,7 @@ interface ApiInterfaces {
     fun getmysubmissionedit(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
-        ): Call<MySubmissionEditResponse?>
+    ): Call<MySubmissionEditResponse?>
 
 
     @Headers("Content-Type: application/json")
@@ -1206,7 +1204,7 @@ interface ApiInterfaces {
     @GET(APIMethods.dashboard_newupdates)
     fun getdashboardnewupdates(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.role_type ) role_type : String
+        @Query(APIKeyNames.role_type) role_type: String
     ): Call<WhatsNewUpdateResponse>
 
 
@@ -1214,11 +1212,10 @@ interface ApiInterfaces {
     fun getAttendanceStudentList(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.class_id) class_id: String,
-        @Query(APIKeyNames.section_id ) section_id: String,
-        @Query(APIKeyNames.date ) date : String,
-        @Query(APIKeyNames.attendance_type ) attendance_type : String
+        @Query(APIKeyNames.section_id) section_id: String,
+        @Query(APIKeyNames.date) date: String,
+        @Query(APIKeyNames.attendance_type) attendance_type: String
     ): Call<GetAttendanceStudentList>
-
 
 
     @PUT(APIMethods.isblockstudent)
@@ -1249,14 +1246,11 @@ interface ApiInterfaces {
     fun isgetfeature(): Call<GetFeature?>?
 
 
-
     @GET(APIMethods.reviewlist)
     fun getreviewlist(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.mobile_number ) mobile_number : String
+        @Query(APIKeyNames.mobile_number) mobile_number: String
     ): Call<ReviewResponse>
-
-
 
 
     @POST(APIMethods.reviewpost)
@@ -1269,13 +1263,13 @@ interface ApiInterfaces {
     @GET(APIMethods.getStaffWiseExam)
     fun getStaffWiseExam(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.section_id ) section_id: String,
+        @Query(APIKeyNames.section_id) section_id: String,
     ): Call<getStaffWisExam>
 
     @GET(APIMethods.getSubjectWiseACtivities)
     fun getSubjectWiseActivities(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.exam_id ) exam_id: String,
+        @Query(APIKeyNames.exam_id) exam_id: String,
     ): Call<getSubjectWiseACtivities>
 
 

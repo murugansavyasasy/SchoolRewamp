@@ -123,7 +123,8 @@ class UpComingSlotAdapter(
     }
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
+        private val shimmerLayout: ShimmerFrameLayout =
+            itemView.findViewById(R.id.shimmer_view_container)
 
         fun startShimmer() {
             shimmerLayout.startShimmer()
@@ -138,13 +139,29 @@ class UpComingSlotAdapter(
             try {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
                 val d = java.util.Date(millis)
-                val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(d)
+                val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                    .format(d)
                 return out
             } catch (e: Exception) {
             }
         }
 
-        val patterns = listOf("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd'T'HH:mm:ss.SSSZ", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy", "dd MMM yyyy", "dd MMM yy", "dd-MM-yy", "yyyy/MM/dd")
+        val patterns = listOf(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            "yyyy-MM-dd'T'HH:mm:ssZ",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd",
+            "dd-MM-yyyy",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy",
+            "dd MMM yyyy",
+            "dd MMM yy",
+            "dd-MM-yy",
+            "yyyy/MM/dd"
+        )
 
         for (pattern in patterns) {
             try {
@@ -152,10 +169,13 @@ class UpComingSlotAdapter(
                 sdf.isLenient = false
                 val parsed = sdf.parse(raw)
                 if (parsed != null) {
-                    val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(parsed)
+                    val out =
+                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                            .format(parsed)
                     return out
                 }
-            } catch (e: Exception) { /* ignore and try next */ }
+            } catch (e: Exception) { /* ignore and try next */
+            }
         }
 
         val twoDigitYearMatch = Regex("([\\d]{1,2}[\\-/][\\d]{1,2}[\\-/])(\\d{2})\$").find(raw)
@@ -171,10 +191,13 @@ class UpComingSlotAdapter(
                 sdf.isLenient = false
                 val parsed = sdf.parse(fixed)
                 if (parsed != null) {
-                    val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(parsed)
+                    val out =
+                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                            .format(parsed)
                     return out
                 }
-            } catch (e: Exception) { /* ignore */ }
+            } catch (e: Exception) { /* ignore */
+            }
         }
         return raw
     }

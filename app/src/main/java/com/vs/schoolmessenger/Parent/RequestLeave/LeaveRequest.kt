@@ -15,19 +15,16 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LeaveRequestBinding
@@ -61,8 +58,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
-
-
 
 
     private enum class TabType {
@@ -184,7 +179,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
             }
         })
 
@@ -193,21 +188,21 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         appViewModel?.getleaverequest?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
-                binding.lytList.visibility=View.GONE
+                binding.lytList.visibility = View.GONE
                 originalLeaveList = response.data
-                isLeaveList=response.data
+                isLeaveList = response.data
                 isloadleaverequestData(isLeaveList)
                 Log.d("Message Id Value Indication", msg_id.toString())
                 if (fromNotification) {
                     scrollToMessageId(headerId)
                 }
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
-                binding.lytList.visibility=View.VISIBLE
+                binding.lytList.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-                binding.rytSearch.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.rytSearch.visibility = View.GONE
             }
         }
 
@@ -271,7 +266,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                     originalLeaveList
                 } else {
                     originalLeaveList.mapNotNull { monthWiseLeave ->
-                        val filteredDetails = monthWiseLeave.details.filter { it.status == selectedStatus }
+                        val filteredDetails =
+                            monthWiseLeave.details.filter { it.status == selectedStatus }
                         if (filteredDetails.isNotEmpty()) monthWiseLeave.copy(details = filteredDetails) else null
                     }
                 }
@@ -310,10 +306,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             Log.d("ScrollDebug", "Found month at index $targetMonthIndex")
             binding.rcyLeaveRequestHistory.smoothScrollToPosition(targetMonthIndex)
             binding.rcyLeaveRequestHistory.post {
-                val outerAdapter = binding.rcyLeaveRequestHistory.adapter as? MonthWiseLeaveHistoryAdapter
+                val outerAdapter =
+                    binding.rcyLeaveRequestHistory.adapter as? MonthWiseLeaveHistoryAdapter
                 val monthData = outerAdapter?.fullList?.getOrNull(targetMonthIndex)
                 if (monthData != null) {
-                    val outerVH = binding.rcyLeaveRequestHistory.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthWiseLeaveHistoryAdapter.DataViewHolder
+                    val outerVH = binding.rcyLeaveRequestHistory.findViewHolderForAdapterPosition(
+                        targetMonthIndex
+                    ) as? MonthWiseLeaveHistoryAdapter.DataViewHolder
                     val innerRV = outerVH?.rvMonthWiseHistory
                     if (innerRV != null) {
                         val innerPosition = monthData.details.indexOfFirst { it.id == headerId }
@@ -321,7 +320,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                             Log.d("ScrollDebug", "Scrolling inner to $innerPosition")
                             innerRV.smoothScrollToPosition(innerPosition)
                             innerRV.post {
-                                val innerVH = innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
+                                val innerVH =
+                                    innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
                                 innerVH?.itemView?.let { itemView ->
                                     val originalBackground = itemView.background
                                     itemView.setBackgroundColor(Color.parseColor("#FFE082"))
@@ -344,8 +344,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             Log.d("ScrollDebug", "No month found with headerId: $headerId")
         }
     }
-
-
 
 
     private fun filter(text: String) {
@@ -430,7 +428,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-
     fun ShowData() {
         binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
@@ -500,7 +497,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         toDateMillis = fromDateMillis
                         totalLeaveDays = 1
                     }
-                    binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
+                    binding.lblTotalDays.text =
+                        "${getString(R.string.No_of_Days)} - $totalLeaveDays"
                 }
             }
 
@@ -522,7 +520,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         fromDateMillis = toDateMillis
                     }
 
-                    binding.lblTotalDays.text = "${getString(R.string.No_of_Days)} - $totalLeaveDays"
+                    binding.lblTotalDays.text =
+                        "${getString(R.string.No_of_Days)} - $totalLeaveDays"
                     val dayOfMonth = getDayAndDate(selectedDate, dateFormat)
                     dayOfMonth?.let {
                         binding.lblEndDay.text = it

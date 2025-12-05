@@ -42,15 +42,18 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
         title = intent.getStringExtra("title") ?: ""
         assignmentSubject = intent.getStringExtra(Constant.assignmentsubject) ?: ""
 
-        Log.d("titleAssignmentStudent",title.toString())
-        Log.d("descriptionAssignmentStudent",assignmentSubject.toString())
+        Log.d("titleAssignmentStudent", title.toString())
+        Log.d("descriptionAssignmentStudent", assignmentSubject.toString())
 
-        val submissionList = intent.getParcelableArrayListExtra<SubmissionDetail>(Constant.submission_list)
+        val submissionList =
+            intent.getParcelableArrayListExtra<SubmissionDetail>(Constant.submission_list)
 
 
         submissionAdapter =
-            AssignmentStudentListDetailAdapter(submissionList ?: emptyList(), this, false,            title,
-                assignmentSubject)
+            AssignmentStudentListDetailAdapter(
+                submissionList ?: emptyList(), this, false, title,
+                assignmentSubject
+            )
         binding.rcystudentlistdetail.apply {
             layoutManager = LinearLayoutManager(this@AssignmentStudentListDetail)
             adapter = submissionAdapter

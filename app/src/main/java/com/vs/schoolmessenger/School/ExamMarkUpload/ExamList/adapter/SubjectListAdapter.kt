@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.flexbox.FlexboxLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
@@ -74,19 +73,18 @@ class SubjectListAdapter(
             subjectName.text = item.subject_name
             flexActivities.removeAllViews()
 
-            if(item.splitup_details.isNotEmpty()){
+            if (item.splitup_details.isNotEmpty()) {
                 item.splitup_details?.forEach { act ->
                     val chip = LayoutInflater.from(context)
                         .inflate(R.layout.activity_item, flexActivities, false) as TextView
                     chip.text = act.name
                     flexActivities.addView(chip)
                 }
-                lnrFlexContainer.visibility= View.VISIBLE
-                lblNoData.visibility= View.GONE
-            }
-            else{
-                lnrFlexContainer.visibility= View.GONE
-                lblNoData.visibility= View.VISIBLE
+                lnrFlexContainer.visibility = View.VISIBLE
+                lblNoData.visibility = View.GONE
+            } else {
+                lnrFlexContainer.visibility = View.GONE
+                lblNoData.visibility = View.VISIBLE
             }
 
             val isExpanded = expandedIndex == position

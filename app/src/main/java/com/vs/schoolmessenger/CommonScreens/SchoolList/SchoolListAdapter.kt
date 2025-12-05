@@ -90,7 +90,7 @@ class SchoolListAdapter(
             }
             lblSchoolAddress.text = data.school_address
 
-            if(data.school_logo != "") {
+            if (data.school_logo != "") {
                 Glide.with(context)
                     .load(data.school_logo)
                     .error(R.drawable.school_sample)

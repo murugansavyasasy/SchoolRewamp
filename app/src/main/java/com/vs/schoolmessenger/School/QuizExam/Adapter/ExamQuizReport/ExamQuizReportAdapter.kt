@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -6,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.SubmitReport
 import com.vs.schoolmessenger.Utils.Constant
@@ -75,9 +74,10 @@ class ExamQuizReportAdapter(
             lblTitle.text = data.title
             lblQuizDescription.text = data.description
             subjectvalue.text = data.subject
-            lblLevelStatus.text = context.getString(R.string.level)+" "+data.level.toString()
-            lblPostedBy.text = context.getString(R.string.posted_by)+" : " + data.sent_by
-            lblCreatedOn.text = context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
+            lblLevelStatus.text = context.getString(R.string.level) + " " + data.level.toString()
+            lblPostedBy.text = context.getString(R.string.posted_by) + " : " + data.sent_by
+            lblCreatedOn.text =
+                context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
 
             val images = listOf(
                 R.drawable.quiz1,
@@ -99,7 +99,7 @@ class ExamQuizReportAdapter(
                 .into(imgItem)
 
 
-            lblAdd.setOnClickListener{
+            lblAdd.setOnClickListener {
                 if (data.submitted_count <= 0) {
                     val intent = Intent(context, AddQuestion::class.java)
                     intent.putExtra(Constant.quiz_Id, data.id)
@@ -108,17 +108,17 @@ class ExamQuizReportAdapter(
                     intent.putExtra(Constant.submittedCount, data.submitted_count)
                     intent.putExtra(Constant.subjectID, data.subject_id)
                     context.startActivity(intent)
-                }
-                else{
+                } else {
                     val studentText = if (data.submitted_count == 1) {
                         context.getString(R.string.student_)
                     } else {
                         context.getString(R.string.students)
                     }
 
-                    val isMessage = context.getString(R.string.this_question_has_already_been_submitted_by) +
-                            " ${data.submitted_count} $studentText " +
-                            context.getString(R.string.do_you_want_to_update_it)
+                    val isMessage =
+                        context.getString(R.string.this_question_has_already_been_submitted_by) +
+                                " ${data.submitted_count} $studentText " +
+                                context.getString(R.string.do_you_want_to_update_it)
 
                     val activity = context as? Activity
                     activity?.let {
@@ -144,7 +144,7 @@ class ExamQuizReportAdapter(
                 }
 
             }
-            lblSubmitted.setOnClickListener{
+            lblSubmitted.setOnClickListener {
                 val intent1 = Intent(context, SubmitReport::class.java)
                 intent1.putExtra(Constant.quiz_Id, data.id)
                 intent1.putExtra(Constant.title_, data.title)

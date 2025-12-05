@@ -73,15 +73,45 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
                 val data = response.data[0]
 
                 val headerItems = mutableListOf<LsrwHeaderItem>().apply {
-                    add(LsrwHeaderItem(Constant.Today_Submitted, "", "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"))
-                    add(LsrwHeaderItem(Constant.Listening, data.listening?.over_all_percentage ?: "0%", "${data.listening?.student_count
-                        ?: "0"} ${getString(R.string.Students)}"))
-                    add(LsrwHeaderItem(Constant.Speaking, data.speaking?.over_all_percentage ?: "0%", "${data.speaking?.student_count
-                        ?: "0"} ${getString(R.string.Students)}"))
-                    add(LsrwHeaderItem(Constant.Reading, data.reading?.over_all_percentage ?: "0%", "${data.reading?.student_count
-                        ?: "0"} ${getString(R.string.Students)}"))
-                    add(LsrwHeaderItem(Constant.Writing, data.writing?.over_all_percentage ?: "0%", "${data.writing?.student_count
-                        ?: "0"} ${getString(R.string.Students)}"))
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Today_Submitted,
+                            "",
+                            "${data.today_submitted?.size ?: 0} ${getString(R.string.Students)}"
+                        )
+                    )
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Listening, data.listening?.over_all_percentage ?: "0%", "${
+                                data.listening?.student_count
+                                    ?: "0"
+                            } ${getString(R.string.Students)}"
+                        )
+                    )
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Speaking, data.speaking?.over_all_percentage ?: "0%", "${
+                                data.speaking?.student_count
+                                    ?: "0"
+                            } ${getString(R.string.Students)}"
+                        )
+                    )
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Reading, data.reading?.over_all_percentage ?: "0%", "${
+                                data.reading?.student_count
+                                    ?: "0"
+                            } ${getString(R.string.Students)}"
+                        )
+                    )
+                    add(
+                        LsrwHeaderItem(
+                            Constant.Writing, data.writing?.over_all_percentage ?: "0%", "${
+                                data.writing?.student_count
+                                    ?: "0"
+                            } ${getString(R.string.Students)}"
+                        )
+                    )
                 }
 
                 binding.rclsrwheader.layoutManager =

@@ -5,24 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCategoryAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class SchoolEventCategoryAdapter (
+class SchoolEventCategoryAdapter(
     private var itemList: List<EventCategory>?,
     val listener: SchoolEventClickListener,
     private val context: Context,
@@ -104,7 +99,10 @@ class SchoolEventCategoryAdapter (
 
 
         fun bind(
-            data: EventCategory, position: Int, isSelected: Boolean, adapter: SchoolEventCategoryAdapter
+            data: EventCategory,
+            position: Int,
+            isSelected: Boolean,
+            adapter: SchoolEventCategoryAdapter
         ) {
             categoryName.text = data.name
             Glide.with(context).load(data.url).placeholder(R.drawable.allimage).into(categoryImage)

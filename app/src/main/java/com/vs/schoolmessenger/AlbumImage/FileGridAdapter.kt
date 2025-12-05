@@ -107,7 +107,7 @@ class FileGridAdapter(
             }
 
             else -> {
-                binding.imageView.setImageResource(R.drawable.doc_icon)
+                binding.imageView.setImageResource(R.drawable.wrong_file)
             }
         }
 
@@ -139,7 +139,11 @@ class FileGridAdapter(
                 if (selected.size >= limit) {
                     Toast.makeText(
                         context,
-                        "${context.getString(R.string.You_can_select_up_to)} $limit ${context.getString(R.string.items_only)}",
+                        "${context.getString(R.string.You_can_select_up_to)} $limit ${
+                            context.getString(
+                                R.string.items_only
+                            )
+                        }",
                         Toast.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
@@ -175,7 +179,6 @@ class FileGridAdapter(
         }
         return name ?: uri.lastPathSegment ?: "Unknown"
     }
-
     fun getSelectedItems(): List<Uri> = selected.toList()
 
     override fun getItemCount(): Int = items.size

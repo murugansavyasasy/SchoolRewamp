@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.MessageFromManagement.Adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
@@ -70,8 +69,8 @@ class MessageFromStaffAdapter(
 
         val oldSize = itemList!!.size
         itemList!!.addAll(newList)
-        Log.d("ListSize",itemList.size.toString())
-        Log.d("ListSize",itemList.toString())
+        Log.d("ListSize", itemList.size.toString())
+        Log.d("ListSize", itemList.toString())
 
         // Notify correctly based on whether it was empty or not
         if (oldSize == 0) {
@@ -103,12 +102,11 @@ class MessageFromStaffAdapter(
             lblLogo.text = Constant.getNameInitials(name)
             lblName.text = name
 
-            if (data.role!!.isNotEmpty()){
+            if (data.role!!.isNotEmpty()) {
                 lblRole.text = data.role
-                lblRole.visibility=View.VISIBLE
-            }
-            else{
-                lblRole.visibility=View.GONE
+                lblRole.visibility = View.VISIBLE
+            } else {
+                lblRole.visibility = View.GONE
             }
 
             lblSchoolName.text = data.school_name
@@ -132,6 +130,7 @@ class MessageFromStaffAdapter(
                     lblDescription.visibility = View.VISIBLE
                     lblDescription.text = data.description
                 }
+
                 Constant.VOICE -> lblDescription.visibility = View.GONE
                 Constant.ATTACHMENT_ -> {
                     lblDescription.visibility = View.VISIBLE

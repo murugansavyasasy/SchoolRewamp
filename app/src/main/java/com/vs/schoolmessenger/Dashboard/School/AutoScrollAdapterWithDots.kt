@@ -37,7 +37,7 @@ class AutoScrollAdapterWithDots(
         when (holder) {
             is ViewHolder -> {
                 items.getOrNull(position)?.let { item ->
-                    holder.bind(item,position, itemCountList, listener)
+                    holder.bind(item, position, itemCountList, listener)
                 }
             }
         }

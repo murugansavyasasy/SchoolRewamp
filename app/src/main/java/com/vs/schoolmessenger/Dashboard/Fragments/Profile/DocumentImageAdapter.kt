@@ -5,11 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
@@ -25,7 +23,8 @@ class DocumentImageAdapter(
         val imgFileType: TextView = itemView.findViewById(R.id.imgFileType)
         val txtFileName: TextView = itemView.findViewById(R.id.txtFileName)
         val txtFileSize: TextView = itemView.findViewById(R.id.txtFileSize)
-        val relativelayout_header: RelativeLayout = itemView.findViewById(R.id.relativelayout_header)
+        val relativelayout_header: RelativeLayout =
+            itemView.findViewById(R.id.relativelayout_header)
         val childrelative_layout: RelativeLayout = itemView.findViewById(R.id.childrelative_layout)
     }
 

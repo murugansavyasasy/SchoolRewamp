@@ -42,7 +42,7 @@ class AbsenteesCustomCalender(
         btnNextMonth = findViewById(R.id.btnNextMonth)
         linearlayout = findViewById(R.id.linear_layout)
 
-        linearlayout.visibility = View.GONE
+        linearlayout.visibility = GONE
 
         // Weekdays header
         val weekdays = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")

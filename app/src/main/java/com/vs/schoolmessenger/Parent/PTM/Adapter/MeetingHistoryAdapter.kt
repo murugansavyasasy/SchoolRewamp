@@ -178,7 +178,8 @@ class MeetingHistoryAdapter(
 
             cancelButton.setOnClickListener {
                 val context = itemView.context
-                val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
+                val dialogView =
+                    LayoutInflater.from(context).inflate(R.layout.dialog_cancel_meeting, null)
                 val etReason = dialogView.findViewById<EditText>(R.id.etReason)
                 val btnCancelMeeting = dialogView.findViewById<Button>(R.id.btnCancelMeeting)
                 val ivClose = dialogView.findViewById<ImageView>(R.id.ivClose)
@@ -202,7 +203,7 @@ class MeetingHistoryAdapter(
                 if (phoneNumber.isNotEmpty()) {
                     try {
                         val intent = Intent(Intent.ACTION_DIAL).apply {
-                            data = android.net.Uri.parse("tel:$phoneNumber")
+                            data = Uri.parse("tel:$phoneNumber")
                         }
                         context.startActivity(intent)
                     } catch (e: Exception) {
@@ -231,7 +232,8 @@ class MeetingHistoryAdapter(
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(formattedUrl))
                         context.startActivity(intent)
                     } catch (e: Exception) {
-                        Toast.makeText(context, "Unable to open meeting link", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Unable to open meeting link", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 } else {
                     Toast.makeText(context, "Meeting URL not available", Toast.LENGTH_SHORT).show()
@@ -265,6 +267,7 @@ class MeetingHistoryAdapter(
                     currentHeader = it
                     headerHasItems = false
                 }
+
                 is MeetingListItem.Item -> {
                     headerHasItems = true
                     newList.add(it)
@@ -297,6 +300,7 @@ class MeetingHistoryAdapter(
                             is MeetingListItem.Header -> {
                                 currentHeader = listItem
                             }
+
                             is MeetingListItem.Item -> {
                                 val meeting = listItem.meeting
                                 if (
@@ -333,11 +337,14 @@ class MeetingHistoryAdapter(
             }
         }
     }
+
     private fun formatDate(dateString: String?): String {
         if (dateString.isNullOrEmpty()) return ""
         return try {
-            val inputFormat = java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
-            val outputFormat = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+            val inputFormat =
+                java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+            val outputFormat =
+                java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
             val date = inputFormat.parse(dateString)
             outputFormat.format(date!!)
         } catch (e: Exception) {

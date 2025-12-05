@@ -14,6 +14,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -21,6 +23,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.CertificateViewActivityBinding
@@ -32,10 +36,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 
 
 class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
@@ -82,12 +82,12 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         )
 
 
-        binding.toolbarLayout.lblStudentSection.visibility=View.GONE
-        binding.toolbarLayout.lblStudentName.text=Constant.isCertificateData?.type.toString()
+        binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+        binding.toolbarLayout.lblStudentName.text = Constant.isCertificateData?.type.toString()
 
 
-        val requestedOn=Constant.isFormatDate(Constant.isCertificateData?.requested_on.toString())
-        binding.lblRequestedOnDate.text =  requestedOn ?: ""
+        val requestedOn = Constant.isFormatDate(Constant.isCertificateData?.requested_on.toString())
+        binding.lblRequestedOnDate.text = requestedOn ?: ""
 
 
         if (Constant.isCertificateData!!.url != "" && Constant.isCertificateData!!.issued_on != "") {
@@ -96,8 +96,8 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             binding.lblCertificateDate.visibility = View.VISIBLE
 //            binding.imgMoreOptions.visibility = View.VISIBLE
             binding.rytWaitingProcess.visibility = View.GONE
-            val issuedOn=Constant.isFormatDate(Constant.isCertificateData?.issued_on.toString())
-            binding.lblCertificateDate.text = issuedOn?: ""
+            val issuedOn = Constant.isFormatDate(Constant.isCertificateData?.issued_on.toString())
+            binding.lblCertificateDate.text = issuedOn ?: ""
 
             binding.loadingBar.visibility = View.VISIBLE
             binding.wvCertificatePdf.apply {
@@ -168,12 +168,18 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
         }
 
     }
-    fun isDirectPreviewActivity(){
+
+    fun isDirectPreviewActivity() {
         Constant.commonFileList.isEmpty()
         Constant.commonFileList.clear()
-        Constant.commonFileList.add(CommonFileData(type = Constant.PDF, path =Constant.isCertificateData!!.url ))
-        Log.d("File",Constant.commonFileList.toString())
-        Log.d("FileSize",Constant.commonFileList.size.toString())
+        Constant.commonFileList.add(
+            CommonFileData(
+                type = Constant.PDF,
+                path = Constant.isCertificateData!!.url
+            )
+        )
+        Log.d("File", Constant.commonFileList.toString())
+        Log.d("FileSize", Constant.commonFileList.size.toString())
         Constant.selectedFileIndex = 0
         val intent = Intent(this, FilesViewActivity::class.java)
         this.startActivity(intent)
@@ -361,7 +367,8 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
                     field.isAccessible = true
                     val helper = field.get(menu)
                     val classPopup = Class.forName(helper.javaClass.name)
-                    val setIcons = classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
+                    val setIcons =
+                        classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
                     setIcons.invoke(helper, true)
                 }
             }

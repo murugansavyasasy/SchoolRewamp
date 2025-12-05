@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.EBooks
+
 import android.util.Log
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -20,10 +21,10 @@ class Ebooks : BaseActivity<EbooksBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
-      //  if (Constant.isParentMenuName.isNullOrEmpty()){
-            binding.toolbarLayout.lblParentToolBar.text=Constant.isSelectedMenuName
+        //  if (Constant.isParentMenuName.isNullOrEmpty()){
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 //        }
 //        else{
 //            binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
@@ -36,7 +37,7 @@ class Ebooks : BaseActivity<EbooksBinding>(),
             Constant.isGlobalVariableData!!.ebooks_url
 
         )
-        Log.d("EbooksUrl",Constant.isGlobalVariableData!!.ebooks_url)
+        Log.d("EbooksUrl", Constant.isGlobalVariableData!!.ebooks_url)
     }
 
     override fun onClick(v: View?) {

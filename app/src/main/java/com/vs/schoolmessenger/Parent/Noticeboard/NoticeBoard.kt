@@ -16,13 +16,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardClickListener
@@ -30,8 +27,6 @@ import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NoticeRevampBinding
-
-
 
 
 class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
@@ -75,9 +70,9 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
 
-                val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-                SharedPreference.putChildDetails(this,matchedChild!!)
-               Constant.isSelectedMenuName = menu_name!!
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
         }
 
         val isChildDetails = SharedPreference.getChildDetails(this)
@@ -87,7 +82,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             "${isChildDetails?.standard_name ?: ""} - ${isChildDetails?.section_name ?: ""}"
 
         binding.root.post {
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.headerview.text = finalName
             binding.headerview.visibility = View.VISIBLE
@@ -143,7 +139,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                 }
             }
         }
-
 
 
         val channel = NotificationChannel(
@@ -222,7 +217,10 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     binding.toolbarLayout.txtVideoMenu.setText("")
                     binding.toolbarLayout.txtVideoMenu.requestFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.showSoftInput(binding.toolbarLayout.txtVideoMenu, InputMethodManager.SHOW_IMPLICIT)
+                    imm.showSoftInput(
+                        binding.toolbarLayout.txtVideoMenu,
+                        InputMethodManager.SHOW_IMPLICIT
+                    )
                 }
             }
         }

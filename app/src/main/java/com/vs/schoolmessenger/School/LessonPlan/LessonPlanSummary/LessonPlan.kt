@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -23,7 +24,6 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlan
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonPlanBinding
-import androidx.core.view.isVisible
 
 class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     LessonPlanChartClickListener {
@@ -92,7 +92,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_list_found)
                 binding.rcyLessonPlan.visibility = View.GONE
             }
         }
@@ -149,13 +149,13 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
     fun Activity.hideKeyboard() {
         val view = this.currentFocus
         if (view != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 
     fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 

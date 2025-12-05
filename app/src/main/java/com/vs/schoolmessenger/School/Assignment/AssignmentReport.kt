@@ -123,7 +123,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        isAcademicYear = Constant.isAcademicYearList
+        isAcademicYear = isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
         if (!isAcademicYear.isNullOrEmpty()) {
             isValidAcademicYear = isAcademicYear!!.any { it.current_academic_year == true }

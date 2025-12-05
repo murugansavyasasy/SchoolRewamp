@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class FilePath(
     val url: String,
     val type: String
-): Parcelable
+) : Parcelable

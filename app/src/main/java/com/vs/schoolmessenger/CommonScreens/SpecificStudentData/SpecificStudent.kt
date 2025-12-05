@@ -32,7 +32,6 @@ import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.FileItem
@@ -49,6 +48,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun getViewBinding(): SpecificStudentBinding {
         return SpecificStudentBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var selectedIds = mutableListOf<String>()
@@ -167,7 +167,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -348,8 +348,14 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         when {
 //            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
 //            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
         }
 //        ProgressDialogHelper.updateProgress(80)
     }
@@ -488,8 +494,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    private fun videoUploading(  totalTasks: Int,
-                                 onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
 
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
@@ -582,7 +590,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 ProgressDialogHelper.dismiss()
                 if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
-                }else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
                     isAssignmentSend()
                 }
             }

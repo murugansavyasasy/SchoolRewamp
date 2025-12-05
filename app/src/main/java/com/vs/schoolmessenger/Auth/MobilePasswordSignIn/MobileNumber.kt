@@ -44,7 +44,11 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                 Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                 isValidateUser()
             } else {
-                Toast.makeText(this, resources.getString(R.string.enter_a_valid_mobile_number), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.enter_a_valid_mobile_number),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             binding.btnLoginContinue.postDelayed({
                 binding.btnLoginContinue.isEnabled = true
@@ -83,13 +87,16 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
                             startActivity(intent)
                         }
                     } else {
-                        Constant.errorAlert(this@MobileNumber,
-                            getString(R.string.Oops), message)
+                        Constant.errorAlert(
+                            this@MobileNumber,
+                            getString(R.string.Oops), message
+                        )
                     }
-                }
-                else {
-                    Constant.errorAlert(this@MobileNumber,
-                       getString(R.string.Oops), message)
+                } else {
+                    Constant.errorAlert(
+                        this@MobileNumber,
+                        getString(R.string.Oops), message
+                    )
                 }
             }
         }

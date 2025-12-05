@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectData
 import com.vs.schoolmessenger.R
 
-class SubjectListWithClassTeacherAdapter (
+class SubjectListWithClassTeacherAdapter(
     private val context: Context,
     private val items: List<SubjectData>?
 ) : BaseAdapter() {

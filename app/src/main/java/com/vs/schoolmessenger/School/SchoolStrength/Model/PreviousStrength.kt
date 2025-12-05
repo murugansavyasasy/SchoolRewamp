@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.SchoolStrength.Model
 
-data class PreviousStrength (
+data class PreviousStrength(
     val aca_year: String,
     val total_staff_strength: String,
     val total_male_staffs_strength: String,

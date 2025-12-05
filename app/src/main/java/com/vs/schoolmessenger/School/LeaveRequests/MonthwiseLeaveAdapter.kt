@@ -49,6 +49,7 @@ class MonthwiseLeaveAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 else filteredList.size
     }
+
     fun filterByStatus(status: String) {
         currentStatusFilter = status
         filter.filter("") // trigger filter with empty query to apply status
@@ -130,7 +131,10 @@ class MonthwiseLeaveAdapter(
                 val result = fullList.mapNotNull { monthData ->
                     // First, filter details by status
                     val statusFiltered = monthData.details.filter { leave ->
-                        currentStatusFilter == Constant.All_ || leave.status.equals(currentStatusFilter, ignoreCase = true)
+                        currentStatusFilter == Constant.All_ || leave.status.equals(
+                            currentStatusFilter,
+                            ignoreCase = true
+                        )
                     }
 
                     // Then, apply text query on the filtered list
@@ -162,7 +166,6 @@ class MonthwiseLeaveAdapter(
             }
         }
     }
-
 
 
     class DataViewHolder(itemView: View, private val context: Context) :

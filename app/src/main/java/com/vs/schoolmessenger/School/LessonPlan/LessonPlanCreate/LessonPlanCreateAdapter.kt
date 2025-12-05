@@ -80,9 +80,6 @@ class LessonPlanCreateAdapter(
     }
 
 
-
-
-
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: LessonPlanTemplate) {
             val nameTextView = itemView.findViewById<TextView>(R.id.headerlabel)
@@ -135,11 +132,13 @@ class LessonPlanCreateAdapter(
 
                         override fun beforeTextChanged(
                             s: CharSequence?, start: Int, count: Int, after: Int
-                        ) {}
+                        ) {
+                        }
 
                         override fun onTextChanged(
                             s: CharSequence?, start: Int, before: Int, count: Int
-                        ) {}
+                        ) {
+                        }
                     })
 
                     valueTextView.visibility = View.VISIBLE
@@ -175,8 +174,10 @@ class LessonPlanCreateAdapter(
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
 
-                                    val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                                    val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                                    val displayFormat =
+                                        SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                    val apiFormat =
+                                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
 
                                     val formattedDisplayDate = displayFormat.format(cal.time)
@@ -203,10 +204,12 @@ class LessonPlanCreateAdapter(
                         selectedView?.setTextColor(grayColor)
                         spinner.setBackgroundResource(R.drawable.gray_bg_radius_textview)
                     }
+
                     Constant.text_ -> {
                         valueTextView.setTextColor(grayColor)
                         valueTextView.setBackgroundResource(R.drawable.gray_bg_radius_textview)
                     }
+
                     Constant.datepicker -> {
                         headerDateLabel.setTextColor(grayColor)
                         headerDateLabel.setBackgroundResource(R.drawable.gray_bg_radius_textview)
@@ -218,10 +221,12 @@ class LessonPlanCreateAdapter(
                         valueTextView.setTextColor(black)
                         valueTextView.setBackgroundResource(R.drawable.field_background)
                     }
+
                     Constant.datepicker -> {
                         headerDateLabel.setTextColor(black)
                         headerDateLabel.setBackgroundResource(R.drawable.field_background)
                     }
+
                     Constant.dropdown -> {
                         spinnerContainer.setBackgroundResource(R.drawable.field_background)
                     }

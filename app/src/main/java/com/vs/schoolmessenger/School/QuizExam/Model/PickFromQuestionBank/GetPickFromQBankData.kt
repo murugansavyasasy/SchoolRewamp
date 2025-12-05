@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank
 
- data class GetPickFromQBankData (
+data class GetPickFromQBankData(
     val id: String,
     val topic: String,
     val chapter: String,

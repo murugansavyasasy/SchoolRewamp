@@ -29,6 +29,12 @@ class DateAdapter(
         Log.d("DateAdapter", "Dates submitted: $dates")
     }
 
+    fun clearSelections() {
+        selectedDates.clear()
+        notifyDataSetChanged()
+    }
+
+
     fun removeSelectedDate(dateStr: String) {
         if (selectedDates.contains(dateStr)) {
             selectedDates.remove(dateStr)

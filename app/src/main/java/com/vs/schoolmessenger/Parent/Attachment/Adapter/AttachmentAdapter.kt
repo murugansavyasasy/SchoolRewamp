@@ -3,8 +3,6 @@ package com.vs.schoolmessenger.Parent.Attachment.Adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,36 +10,23 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
-import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.AttachmentFileView
-import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
 import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import me.relex.circleindicator.CircleIndicator2
 import java.util.Locale
 
 class AttachmentAdapter(
@@ -135,12 +120,13 @@ class AttachmentAdapter(
             }
         }
     }
+
     fun AppendData(newList: List<AttachmentDataReport>) {
         val oldSize = filteredList!!.size
         filteredList = filteredList!!.toMutableList().apply { addAll(newList) }
-        originalList=ArrayList(filteredList)
-        Log.d("FinalList",originalList.size.toString())
-        Log.d("FinalList",filteredList.size.toString())
+        originalList = ArrayList(filteredList)
+        Log.d("FinalList", originalList.size.toString())
+        Log.d("FinalList", filteredList.size.toString())
         notifyItemRangeInserted(oldSize, newList.size)
     }
 
@@ -177,7 +163,8 @@ class AttachmentAdapter(
             adapter: AttachmentAdapter,
         ) {
             val data = item[position]
-            lblDate.text = "${context.getString(R.string.posted_on)} - ${Constant.convertToReadableDate(data.date)}"
+            lblDate.text =
+                "${context.getString(R.string.posted_on)} - ${Constant.convertToReadableDate(data.date)}"
             lblTitle.text = data.title
             lblPostedBy.text = "${context.getString(R.string.posted_by)} - ${data.sent_by}"
             lblDescription.text = data.description
@@ -305,7 +292,6 @@ class AttachmentAdapter(
             )
         }
     }
-
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

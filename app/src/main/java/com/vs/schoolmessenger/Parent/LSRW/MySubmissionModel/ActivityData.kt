@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel
 
-data class ActivityData (
+data class ActivityData(
     val id: String,
     val header_id: String,
     val description: String,

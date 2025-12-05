@@ -93,21 +93,21 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
 
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                    if (Constant.user_data!![0].user_details.staff_details.size > 1) {
-                                        val intent =
-                                            Intent(this@OTP, PrioritySelection::class.java)
-                                        startActivity(intent)
-                                    } else {
-                                        val intent = Intent(
-                                            this@OTP,
-                                            SchoolDashboard::class.java
-                                        )
-                                        SharedPreference.putStaffDetails(
-                                            this,
-                                            Constant.user_data!![0].user_details.staff_details[0]
-                                        )
-                                        startActivity(intent)
-                                    }
+                                if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                    val intent =
+                                        Intent(this@OTP, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(
+                                        this@OTP,
+                                        SchoolDashboard::class.java
+                                    )
+                                    SharedPreference.putStaffDetails(
+                                        this,
+                                        Constant.user_data!![0].user_details.staff_details[0]
+                                    )
+                                    startActivity(intent)
+                                }
 
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 Constant.isParentChoose = true
@@ -133,8 +133,7 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@OTP, "", message)
                 }
 
@@ -152,11 +151,24 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
     }
 
     private fun setupOtp() {
-        val boxes = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6)
+        val boxes = listOf(
+            binding.txtOtp1,
+            binding.txtOtp2,
+            binding.txtOtp3,
+            binding.txtOtp4,
+            binding.txtOtp5,
+            binding.txtOtp6
+        )
 
         boxes.forEachIndexed { index, editText ->
             editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -171,7 +183,8 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                         val allFilled = boxes.all { it.text.length == 1 }
                         if (allFilled) {
                             editText.clearFocus()
-                            val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            val imm =
+                                editText.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                             imm.hideSoftInputFromWindow(editText.windowToken, 0)
                         }
                     } else if (text.isEmpty()) {
@@ -183,8 +196,13 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                         // Multi-character paste detected: distribute digits
                         val digitsOnly = text.filter { it.isDigit() }
                         if (digitsOnly.isNotEmpty()) {
-                            s?.replace(0, s.length, digitsOnly[0].toString()) // Keep first digit in current field
-                            var remaining = digitsOnly.substring(1).take(6 - index) // Limit to remaining fields
+                            s?.replace(
+                                0,
+                                s.length,
+                                digitsOnly[0].toString()
+                            ) // Keep first digit in current field
+                            var remaining =
+                                digitsOnly.substring(1).take(6 - index) // Limit to remaining fields
                             var j = index + 1
                             while (remaining.isNotEmpty() && j < boxes.size) {
                                 val nextEditText = boxes[j]
@@ -201,7 +219,8 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                             val allFilled = boxes.all { it.text.length == 1 }
                             if (allFilled) {
                                 boxes[focusIndex].clearFocus()
-                                val imm = editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                                val imm =
+                                    editText.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                                 imm.hideSoftInputFromWindow(editText.windowToken, 0)
                             }
                         } else {
@@ -237,7 +256,14 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
     }
 
 
-    private fun getOtp(): String = listOf(binding.txtOtp1, binding.txtOtp2, binding.txtOtp3, binding.txtOtp4, binding.txtOtp5, binding.txtOtp6).joinToString("") { it.text.toString() }
+    private fun getOtp(): String = listOf(
+        binding.txtOtp1,
+        binding.txtOtp2,
+        binding.txtOtp3,
+        binding.txtOtp4,
+        binding.txtOtp5,
+        binding.txtOtp6
+    ).joinToString("") { it.text.toString() }
 
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -19,21 +19,18 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
-import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MapActivityBinding
-import kotlin.collections.filter
-import kotlin.collections.isNotEmpty
-import kotlin.collections.orEmpty
 
-class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, OnActivityExamSelectListener {
+class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
+    OnActivityExamSelectListener {
 
     override fun getViewBinding(): MapActivityBinding {
-        return MapActivityBinding .inflate(layoutInflater)
+        return MapActivityBinding.inflate(layoutInflater)
     }
 
     private var appViewModel: App? = null
@@ -59,22 +56,23 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        Log.d("Constant.isSelectedMenuName",Constant.isSelectedMenuName)
+        Log.d("Constant.isSelectedMenuName", Constant.isSelectedMenuName)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
 
 
 
 
-        binding.lblExamName.text= Constant.isMarkUploadExamListDataDetails?.name
-        binding.lblMonthName.text= Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
+        binding.lblExamName.text = Constant.isMarkUploadExamListDataDetails?.name
+        binding.lblMonthName.text =
+            Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
 
 
 
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
 
@@ -105,7 +103,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
 
 
             }
@@ -115,31 +113,103 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
         LoadExamList()
     }
 
-    private fun LoadExamList(){
-        val dummyList =listOf(
+    private fun LoadExamList() {
+        val dummyList = listOf(
             getActivitySubjectNameData(
                 "Science",
                 paper = listOf(
-                    getActivityPaperNameData("Paper 1-Botany", listOf("Student_Name and the college is waiting Student_Name and the college is waiting", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
-                    getActivityPaperNameData("Paper 2-Zoology", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
-                    getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
+                    getActivityPaperNameData(
+                        "Paper 1-Botany",
+                        listOf(
+                            "Student_Name and the college is waiting Student_Name and the college is waiting",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    ),
+                    getActivityPaperNameData(
+                        "Paper 2-Zoology",
+                        listOf(
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    ),
+                    getActivityPaperNameData(
+                        "Internal Assessment",
+                        listOf(
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    )
                 )
             ),
 
             getActivitySubjectNameData(
                 "Tamil",
                 paper = listOf(
-                    getActivityPaperNameData("Paper 1", listOf("Student_Name and the college is waiting", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
-                    getActivityPaperNameData("Paper 2", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No")),
-                    getActivityPaperNameData("Internal Assessment", listOf("Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No","Student_Name", "Roll_No"))
+                    getActivityPaperNameData(
+                        "Paper 1",
+                        listOf(
+                            "Student_Name and the college is waiting",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    ),
+                    getActivityPaperNameData(
+                        "Paper 2",
+                        listOf(
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    ),
+                    getActivityPaperNameData(
+                        "Internal Assessment",
+                        listOf(
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No",
+                            "Student_Name",
+                            "Roll_No"
+                        )
+                    )
                 )
             )
         )
 
-        isClassList=dummyList
-        binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
+        isClassList = dummyList
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
-        adapter = ActivityExamListAdapter(dummyList,this,this,false)
+        adapter = ActivityExamListAdapter(dummyList, this, this, false)
 
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
 
@@ -175,7 +245,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
     }
 
     fun ShowData() {
-        binding.rcMapActivity.visibility=View.VISIBLE
+        binding.rcMapActivity.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
 
@@ -186,7 +256,8 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
 
     fun setTipText(textView: TextView) {
         val tip = getString(R.string.tip)
-        val fullText = getString(R.string.tip_you_don_t_need_to_fill_all_activities_now_unmapped_activities_can_be_filled_later)
+        val fullText =
+            getString(R.string.tip_you_don_t_need_to_fill_all_activities_now_unmapped_activities_can_be_filled_later)
 
         val spannable = SpannableString(fullText)
 
@@ -210,16 +281,13 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
     }
 
 
-
-
-
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.lnrUpload->{
+
+            R.id.lnrUpload -> {
                 val intent = Intent(this, ReviewAndEditMarks::class.java)
                 this.startActivity(intent)
             }
@@ -227,7 +295,7 @@ class MapActivity : BaseActivity<MapActivityBinding >(), View.OnClickListener, O
     }
 
     override fun onActivityExamSelected(item: getActivitySubjectNameData?) {
-        Log.d("Data",item.toString())
+        Log.d("Data", item.toString())
         if (item == null) {
             selectedExam = null
             binding.lnrUpload.isEnabled = false

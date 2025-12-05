@@ -75,11 +75,10 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
 //            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
-
 
 
         val isChildDetails = SharedPreference.getChildDetails(this)
@@ -111,7 +110,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
 
         binding.root.post {
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
@@ -130,38 +130,38 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             if (response != null) {
 //                Constant.hideLoading(this)
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
-                val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
 
-                val jsonObject = JsonObject().apply {
-                    addProperty(APIKeyNames.mobile_number, mobileNumber)
-                    addProperty(APIKeyNames.activity, Constant.add_points_view_assignmnents)
-                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
-                }
-                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_view_assignmnents)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
 
-                isAssignmentReportData = response.data
-                loadAssignmentReportData()
-                if (response.data.isNotEmpty()) {
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    isAssignmentReportData = response.data
+                    loadAssignmentReportData()
+                    if (response.data.isNotEmpty()) {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    } else {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    }
+                    binding.rcyAssignment.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                    Log.d("Message Id Value Indication", msg_id.toString())
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
+
                 } else {
+                    binding.rcyAssignment.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.VISIBLE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.txtNoData.text = response?.message
                 }
-                binding.rcyAssignment.visibility = View.VISIBLE
-                binding.lytList.visibility = View.GONE
-                Log.d("Message Id Value Indication", msg_id.toString())
-                if (fromNotification) {
-                    scrollToMessageId(headerId)
-                }
-
-            } else {
-                binding.rcyAssignment.visibility = View.GONE
-                binding.lytList.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.txtNoData.text = response?.message
             }
-        }
         }
 
         fetchAssignmentReportData()
@@ -189,7 +189,8 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     private fun fetchAssignmentReportData() {
 //        Constant.showLoading(this)
         binding.rcyAssignment.visibility = View.VISIBLE
-        isAssignmentAdapter = AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
+        isAssignmentAdapter =
+            AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignment.adapter = isAssignmentAdapter
 
         appViewModel?.isAssignmentlist(isAccessToken!!)
@@ -221,7 +222,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         }
         Log.d("ScrollDebug", "No index found for msg_id $headerId")
     }
-
 
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {

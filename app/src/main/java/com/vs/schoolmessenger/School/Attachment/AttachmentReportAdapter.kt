@@ -1,4 +1,3 @@
-
 package com.vs.schoolmessenger.School.Attachment
 
 import android.annotation.SuppressLint
@@ -24,7 +23,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentDataReport
-import com.vs.schoolmessenger.School.MessageFromManagement.Model.GetMessagesStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
@@ -123,12 +121,13 @@ class AttachmentReportAdapter(
             }
         }
     }
+
     fun AppendData(newList: List<AttachmentDataReport>) {
         val oldSize = filteredList!!.size
         filteredList = filteredList!!.toMutableList().apply { addAll(newList) }
-        originalList=ArrayList(filteredList)
-        Log.d("FinalList",originalList.size.toString())
-        Log.d("FinalList",filteredList.size.toString())
+        originalList = ArrayList(filteredList)
+        Log.d("FinalList", originalList.size.toString())
+        Log.d("FinalList", filteredList.size.toString())
         notifyItemRangeInserted(oldSize, newList.size)
     }
 
@@ -165,7 +164,8 @@ class AttachmentReportAdapter(
             adapter: AttachmentReportAdapter,
         ) {
             val data = item[position]
-            lblDate.text = "${context.getString(R.string.posted_on)} - ${Constant.convertToReadableDate(data.date)}"
+            lblDate.text =
+                "${context.getString(R.string.posted_on)} - ${Constant.convertToReadableDate(data.date)}"
             lblTitle.text = data.title
             lblPostedBy.text = "${context.getString(R.string.posted_by)} - ${data.sent_by}"
             lblDescription.text = data.description
@@ -295,7 +295,6 @@ class AttachmentReportAdapter(
             )
         }
     }
-
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

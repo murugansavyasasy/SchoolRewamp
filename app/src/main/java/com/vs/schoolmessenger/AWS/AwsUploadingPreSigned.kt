@@ -1,4 +1,3 @@
-
 package com.vs.schoolmessenger.AWS
 
 import android.annotation.SuppressLint
@@ -47,20 +46,17 @@ class AwsUploadingPreSigned {
         val currentDate: String? = CurrentDatePicking.currentDate
         var fileExtension: String?
 
-        if(isProfilePage){
-            Log.d("isFileType",isFileType)
-            if(isFileType == ""){
+        if (isProfilePage) {
+            Log.d("isFileType", isFileType)
+            if (isFileType == "") {
                 isBucket = AWSKeys.SCHOOL_CHIMES_SCHOOL_DOCS
                 bucketPath = "$instituteID/$currentDate"
-            }
-           else if(isFileType.equals("profile_photo"))
-            {
+            } else if (isFileType.equals("profile_photo")) {
                 isBucket = AWSKeys.SCHOOL_CHIMES_STUDENT_PHOTOS
                 bucketPath = "$instituteID/$currentDate"
             }
 
-        }
-        else {
+        } else {
             when (Constant.SELECTED_MENU_ID) {
                 M_COMMUNICATION -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
@@ -68,6 +64,7 @@ class AwsUploadingPreSigned {
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
+
                 M_ASSIGNMENT -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
                     isFolderName = "assignment"

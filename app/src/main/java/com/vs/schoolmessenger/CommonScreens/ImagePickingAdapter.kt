@@ -3,10 +3,7 @@ package com.vs.schoolmessenger.CommonScreens
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +11,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -59,9 +54,9 @@ class ImagePickingAdapter(
         // Layout margins
         val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
 
-            layoutParams.marginStart = defaultStartEndMargin
-            layoutParams.marginEnd = defaultStartEndMargin
-            layoutParams.topMargin = defaultTopMargin
+        layoutParams.marginStart = defaultStartEndMargin
+        layoutParams.marginEnd = defaultStartEndMargin
+        layoutParams.topMargin = defaultTopMargin
 
         holder.itemView.layoutParams = layoutParams
 
@@ -181,6 +176,7 @@ class ImagePickingAdapter(
         val contentResolver = context.contentResolver
         return contentResolver.getType(uri) ?: "*/*"
     }
+
     override fun getItemCount() = items.size
 }
 

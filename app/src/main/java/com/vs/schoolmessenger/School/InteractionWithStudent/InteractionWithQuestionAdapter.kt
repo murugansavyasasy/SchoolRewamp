@@ -7,13 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vs.schoolmessenger.R
@@ -125,7 +122,10 @@ class InteractionWithQuestionAdapter(
 
             // ✅ Set correct menu title dynamically
             val blockItem = popup.menu.findItem(R.id.block_student)
-            blockItem.title = if (chat.is_blocked == true) context.getString(R.string.unblock) else context.getString(R.string.block)
+            blockItem.title =
+                if (chat.is_blocked == true) context.getString(R.string.unblock) else context.getString(
+                    R.string.block
+                )
 
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -184,10 +184,6 @@ class InteractionWithQuestionAdapter(
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
-
-
-
-
 
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

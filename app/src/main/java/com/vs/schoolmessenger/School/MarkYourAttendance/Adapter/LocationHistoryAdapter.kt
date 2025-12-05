@@ -5,7 +5,6 @@ import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -76,7 +75,6 @@ class LocationHistoryAdapter(
         private val rytImgDelete: RelativeLayout = itemView.findViewById(R.id.rytImgDelete)
 
 
-
         private fun getAddressFromLocation(latitude: String, longitude: String): String {
             val geocoder = Geocoder(context, Locale.getDefault())
             val lat: Double? = latitude.toDoubleOrNull()
@@ -86,7 +84,7 @@ class LocationHistoryAdapter(
                 val addresses = geocoder.getFromLocation(lat!!, lang!!, 1)
                 if (!addresses.isNullOrEmpty()) {
                     addresses[0].getAddressLine(0) ?: context.getString(R.string.address_not_found)
-                } else  context.getString(R.string.address_not_found)
+                } else context.getString(R.string.address_not_found)
             } catch (e: Exception) {
                 e.printStackTrace()
                 "Geocoder error"
@@ -101,9 +99,9 @@ class LocationHistoryAdapter(
             adapter: LocationHistoryAdapter
         ) {
             lblPlaceName.text = data.location
-            lblAddress.text = getAddressFromLocation(data.latitude,data.longitude)
+            lblAddress.text = getAddressFromLocation(data.latitude, data.longitude)
             lblLatLang.text = data.latitude + " - " + data.longitude
-            lblDistance.text ="±"+data.distance + " "+context.getString(R.string.Meters)
+            lblDistance.text = "±" + data.distance + " " + context.getString(R.string.Meters)
 
 
             rytImgDelete.setOnClickListener {
