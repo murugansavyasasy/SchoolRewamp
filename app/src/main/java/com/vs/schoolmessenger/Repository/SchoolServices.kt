@@ -4600,6 +4600,13 @@ class SchoolServices {
                                 reviewpost.postValue(response.body())
                             }
                         }
+                        else{
+                            reviewpost.postValue(null)
+                        }
+                    }
+                    else{
+                        reviewpost.postValue(null)
+
                     }
                 }
 
