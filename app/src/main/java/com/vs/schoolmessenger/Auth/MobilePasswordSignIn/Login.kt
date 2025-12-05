@@ -67,6 +67,15 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
+        binding.txtPassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
+        }
+
+        binding.imgHide.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
+        }
+
+
         authViewModel!!.isUserValidation?.observe(this) { response ->
             Constant.hideLoading(this@Login)
             if (response != null) {
