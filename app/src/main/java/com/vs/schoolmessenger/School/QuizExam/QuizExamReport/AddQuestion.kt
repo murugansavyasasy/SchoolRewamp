@@ -248,10 +248,13 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         isFetchQuizQuestionReport()
 
         binding.lblAddQuestion.setOnClickListener {
+
             if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
                 Log.d("QuestionLimit", Constant.isQuestionLimit.toString())
                 Log.d("FinalListSize", quizAdapter!!.getUpdatedList().size.toString())
                 if (Constant.isQuestionLimit > 0) {
+                    binding.rcAddQuestion.visibility=View.VISIBLE
+                    binding.lytList.visibility=View.GONE
                     quizAdapter!!.addItem(binding.rcAddQuestion)
                     UpdateQuestionCount()
                 } else {
@@ -552,12 +555,22 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 alertDialog.dismiss()
                 isDialogShowing = false
 
+                if(quizAdapter!!.getUpdatedList().size>0){
+                    binding.rcAddQuestion.visibility=View.VISIBLE
+                    binding.lytList.visibility=View.GONE
+                }else{
+                    binding.rcAddQuestion.visibility=View.GONE
+                    binding.lytList.visibility=View.VISIBLE
+                }
+
             } else {
                 // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
                     this, getString(R.string.alert), getString(R.string.question_limit_reached)
                 )
             }
+
+
         }
 
 
