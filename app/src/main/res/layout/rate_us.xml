@@ -94,23 +94,31 @@
                     android:visibility="visible" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerCategories"
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/recyclerScroll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_marginTop="@dimen/ten"
+                    android:fillViewport="true"
                     android:layout_below="@+id/ratingBar"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:layout_marginTop="@dimen/ten"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:nestedScrollingEnabled="false"
+                        android:padding="10dp" />
+                </androidx.core.widget.NestedScrollView>
+
 
 
                 <TextView
                     android:id="@+id/lblMayBeLater"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerCategories"
+                    android:layout_below="@+id/recyclerScroll"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/thirty"
@@ -132,7 +140,7 @@
                     android:id="@+id/lnrRatingContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerCategories"
+                    android:layout_below="@+id/recyclerScroll"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -160,7 +168,7 @@
                     <EditText
                         android:id="@+id/edtSuggestions"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/one_fifty"
+                        android:layout_height="@dimen/one_twenty"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/fifteen"
@@ -213,7 +221,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:padding="20dp">
 
 

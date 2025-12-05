@@ -130,6 +130,7 @@ class RateUsDialog(   private val fromScreen: String?,
     private fun bindCategoryList(list: List<CategoryItem>) {
         val recycler = binding.recyclerCategories
         recycler.visibility = View.VISIBLE
+        binding.recyclerScroll.visibility = View.VISIBLE
 
         val layoutManager = FlexboxLayoutManager(requireContext()).apply {
             flexDirection = FlexDirection.ROW
@@ -147,6 +148,7 @@ class RateUsDialog(   private val fromScreen: String?,
         lblMayBeLater.visibility = View.GONE
         lnrRatingContent.visibility = View.VISIBLE
         recyclerCategories.visibility = View.VISIBLE
+        binding.recyclerScroll.visibility = View.VISIBLE
     }
 
     private fun showMaybeLater() = with(binding) {
@@ -154,6 +156,7 @@ class RateUsDialog(   private val fromScreen: String?,
         lblMayBeLater.visibility = View.VISIBLE
         lnrRatingContent.visibility = View.GONE
         recyclerCategories.visibility = View.GONE
+        binding.recyclerScroll.visibility = View.GONE
     }
 
     override fun onClick(v: View?) {

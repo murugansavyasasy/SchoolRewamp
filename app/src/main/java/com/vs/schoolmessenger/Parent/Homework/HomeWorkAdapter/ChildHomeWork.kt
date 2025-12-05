@@ -501,8 +501,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             }
 
                             if (type == FileType.AUDIO) {
+                                Constant.showLoading(this@ChildHomeWork)
                                 lifecycleScope.launch {
                                     val wavFile = Constant.convertToWav(this@ChildHomeWork, uri)
+                                    Constant.hideLoading(this@ChildHomeWork)
                                     if (wavFile != null) {
                                         selectedFiles.add(
                                             FileItem(
@@ -1512,8 +1514,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         mediaRecorder?.release()
         mediaRecorder = null
 
+        Constant.showLoading(this@ChildHomeWork)
         recordingFilePath?.let { path ->
             val file = File(path)
+            Constant.hideLoading(this@ChildHomeWork)
             if (file.exists() && file.length() > 0) {
                 if (selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
                     selectedFiles.add(FileItem(path, FileType.AUDIO))
