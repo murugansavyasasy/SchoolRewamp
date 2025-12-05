@@ -36,6 +36,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
+
     var authViewModel: Auth? = null
 
 
@@ -208,8 +209,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             popupWindow.dismiss()
             isLogout(
                 activity = this,
-                viewModel =authViewModel,
-                secure_id = Constant.getAndroidSecureId(this) ,
+                viewModel = authViewModel,
+                secure_id = Constant.getAndroidSecureId(this),
                 device_type = Constant.isDeviceType,
                 mobile_number = SharedPreference.getMobileNumber(this).toString()
             ) { isSuccess, message ->
@@ -222,7 +223,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
-                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
+                    Constant.showErrorAlert(this, getString(R.string.Oops), message)
                 }
             }
         }

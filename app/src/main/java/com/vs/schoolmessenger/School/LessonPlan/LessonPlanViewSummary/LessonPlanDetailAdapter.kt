@@ -21,7 +21,7 @@ import java.util.Locale
 class LessonPlanDetailAdapter(
     private val details: List<LessonPlanViewSummaryDetail>,
     private val context: Context
-    ) : RecyclerView.Adapter<LessonPlanDetailAdapter.DetailViewHolder>() {
+) : RecyclerView.Adapter<LessonPlanDetailAdapter.DetailViewHolder>() {
 
     inner class DetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val flowLayout: FlowLayout = itemView.findViewById(R.id.flowLayout)
@@ -38,7 +38,8 @@ class LessonPlanDetailAdapter(
         holder.flowLayout.removeAllViews()
 
         // Only include allowed items (skip Activity and Topic)
-        val filteredDetails = details.filter { it.name != Constant.Activity && it.name != Constant.Topic }
+        val filteredDetails =
+            details.filter { it.name != Constant.Activity && it.name != Constant.Topic }
 
         filteredDetails.forEach { detail ->
             val chipView = LayoutInflater.from(holder.itemView.context)

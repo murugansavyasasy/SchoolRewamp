@@ -7,7 +7,7 @@ import android.util.Log
 
 class NotificationDismissService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null && "NOTIFICATION_DISMISSED" == intent.getAction()) {
+        if (intent != null && "NOTIFICATION_DISMISSED" == intent.action) {
             Log.d("Notification", "Notification was dismissed")
             Constant.mediaPlayer.stop()
         }

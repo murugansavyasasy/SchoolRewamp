@@ -1,5 +1,5 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel
 
-class GetCheckLevelData (
+class GetCheckLevelData(
     val level: Int
 )

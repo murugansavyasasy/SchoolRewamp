@@ -6,7 +6,7 @@ enum class QuestionSource {
     USER, API, QBANK
 }
 
-data class GetQuizQuestionReportData (
+data class GetQuizQuestionReportData(
     val id: String,
     val quiz_id: String,
     var question: String,

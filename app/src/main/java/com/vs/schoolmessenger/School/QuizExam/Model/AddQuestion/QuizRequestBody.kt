@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion
 
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 
 data class QuizRequestBody(
     val quiz_id: String,
@@ -25,7 +24,7 @@ data class QuizQuestionRequest(
     val iframe: String? = null,
     val file_size: String? = null,
     val thumbnail: String? = null,
-    val file_path: List<FilePath>?= emptyList()
+    val file_path: List<FilePath>? = emptyList()
 )
 
 

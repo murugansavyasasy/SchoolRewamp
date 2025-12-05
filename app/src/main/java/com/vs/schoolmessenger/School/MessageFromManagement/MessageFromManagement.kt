@@ -112,7 +112,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             )
 
             val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
-            SharedPreference.putStaffDetails(this,matchedChild!!)
+            SharedPreference.putStaffDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -202,14 +202,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         if (isMultipleSchool) {
                             binding.rytSpinner.visibility = View.VISIBLE//last fix
 
-                            Log.d("IsComing", "AAAAAAAAAAAAAAAAAA")
                             if (selectedSchoolId == Constant.All_Schools) {
-                                Log.d("IsComing", "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
-                                Log.d("IsComing", isMultipleSchool.toString())
                                 adapter.AppendData(response.data)
                             } else {
-                                Log.d("IsComing", "BBBBBBBBBBBBBBBBBBBBBBBB")
-                                Log.d("IsComing", selectedSchoolId.toString())
                                 val filteredList =
                                     completeAttachmentList.filter { it.school_id == selectedSchoolId }
                                 Log.d(
@@ -220,13 +215,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             }
                         } else {
                             binding.rytSpinner.visibility = View.GONE//last fix
-                            Log.d("IsComing", "CCCCCCCCCCCCCCCCCCCCCCCC")
                             //if role is staff or only handle one school means we are directly update the response direclty to adapter
                             adapter.AppendData(response.data)
                         }
 
                         if (adapter!!.getCurrentListSize() > 0) {
-                            Log.d("Item","Item There")
+                            Log.d("Item", "Item There")
                             binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                             binding.txtSearch1.text.clear()
@@ -235,17 +229,15 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             binding.rcMessageStaff.visibility = View.VISIBLE//last fix
                             binding.lytList.visibility = View.GONE//last fix
                             //last fix
-                            if (isMultipleSchool){
+                            if (isMultipleSchool) {
                                 binding.rytSpinner.visibility = View.VISIBLE
-                            }
-                            else{
+                            } else {
                                 binding.rytSpinner.visibility = View.GONE
                             }
 
 
-
                         } else {
-                            Log.d("Item"," No Item")
+                            Log.d("Item", " No Item")
 
                             binding.rytSearch1.visibility = View.GONE
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -376,7 +368,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         if (msg_id == -1) return
 
         completeAttachmentList?.let { list ->
-            val index = list.indexOfFirst { it.header_id== headerId }
+            val index = list.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcMessageStaff.post {
@@ -389,7 +381,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         }
         Log.d("ScrollDebug", "No index found for headerId $headerId")
     }
-
 
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
@@ -589,7 +580,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         val recyclerView = dialogView.findViewById<RecyclerView>(R.id.rcAttachement)
         val indicator = dialogView.findViewById<CircleIndicator2>(R.id.indicator)
-        val lblSentTime = dialogView.findViewById<TextView>(R.id.lblSentTime)
+        dialogView.findViewById<TextView>(R.id.lblSentTime)
         val lblSendBy = dialogView.findViewById<TextView>(R.id.lblSendBy)
         val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
         val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)

@@ -33,7 +33,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.OnClickListener, LessonPlanCreateClickListener {
+class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.OnClickListener,
+    LessonPlanCreateClickListener {
 
     override fun getViewBinding(): LessonPlanCreateBinding {
         return LessonPlanCreateBinding.inflate(layoutInflater)
@@ -84,7 +85,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_list_found)
                 binding.rcyLessonPlanEdit.visibility = View.GONE
             }
         }
@@ -106,7 +107,10 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
                 }
             } else {
                 Log.e("UpdateError", "Null response received from server.")
-                showTopLessonPlanAlertPopup(getString(R.string.something_went_wrong_please_try_again_later), this)
+                showTopLessonPlanAlertPopup(
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
 
@@ -141,6 +145,7 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
             R.id.createbutton -> {
                 showTopEditAlertPopup()
             }
+
             R.id.cancelbutton -> {
                 lessonplaneditcancel()
             }
@@ -219,7 +224,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun showTopLessonPlanAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
@@ -270,8 +274,10 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
                 activity.finish()
             } catch (e: Exception) {
                 Log.e("LessonPlanPopup", "Redirection failed: ${e.localizedMessage}")
-                Toast.makeText(activity,
-                    getString(R.string.oops_couldn_t_go_back), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    getString(R.string.oops_couldn_t_go_back), Toast.LENGTH_SHORT
+                ).show()
             } finally {
                 closePopup()
             }

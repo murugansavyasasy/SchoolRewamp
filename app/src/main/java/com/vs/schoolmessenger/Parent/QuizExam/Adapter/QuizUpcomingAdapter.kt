@@ -1,5 +1,5 @@
-
 package com.vs.schoolmessenger.Parent.QuizExam.Adapter
+
 
 import android.content.Context
 import android.content.Intent
@@ -11,13 +11,9 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-
-
-import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
 import com.vs.schoolmessenger.Parent.QuizExam.AttendQuiz
+import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamListData
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -36,7 +32,8 @@ class QuizUpcomingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.reciver_quiz_upcoming_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.reciver_quiz_upcoming_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -57,6 +54,7 @@ class QuizUpcomingAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList?.size ?: 0
     }
+
     fun updateData(newList: List<GetQuizExamListData>) {
         itemList = newList
         notifyDataSetChanged()
@@ -83,12 +81,14 @@ class QuizUpcomingAdapter(
             lblLevel.text = data.level.toString()
             lblQuestion.text = data.no_of_questions.toString()
             lblPostedby.text = "${context.getString(R.string.posted_by)}: ${data.SentBy}"
-            lblCreatedOn.text = "${context.getString(R.string.created_on)} ${Constant.convertDateFormatType(data.created_on)}"
+            lblCreatedOn.text =
+                "${context.getString(R.string.created_on)} ${Constant.convertDateFormatType(data.created_on)}"
 
             lblPlayNow.visibility = View.VISIBLE
             lblnext.visibility = View.GONE
             (lblPostedby.layoutParams as RelativeLayout.LayoutParams).apply {
-                    addRule(RelativeLayout.START_OF, R.id.lblPlayNow)}
+                addRule(RelativeLayout.START_OF, R.id.lblPlayNow)
+            }
 
 
             // Open QuizExam on click

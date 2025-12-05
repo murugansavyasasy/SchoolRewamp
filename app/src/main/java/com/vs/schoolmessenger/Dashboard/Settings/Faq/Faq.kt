@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Faq
 
-import android.content.Intent
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -16,7 +15,6 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FaqBinding
-import kotlin.jvm.java
 
 class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
     private var isAccessToken: String? = null
@@ -64,13 +62,13 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
         appViewModel?.isfrequentlyasked?.observe(this) { response ->
             if (response != null && response.status) {
                 binding.rcyfaq.visibility = View.VISIBLE
-                binding.lytList.visibility=View.GONE
+                binding.lytList.visibility = View.GONE
                 getFaqData(response.data)
 
             } else {
                 binding.rcyfaq.visibility = View.GONE
-                binding.lytList.visibility=View.VISIBLE
-                binding.txtNoData.text= response?.message
+                binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message
             }
         }
     }

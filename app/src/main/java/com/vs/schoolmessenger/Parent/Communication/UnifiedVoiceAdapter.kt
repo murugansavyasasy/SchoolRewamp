@@ -219,7 +219,7 @@ class UnifiedVoiceAdapter(
                 if (data.is_unread == true) {
                     lblnewiconText.visibility = View.VISIBLE
                     lblSeeMore.visibility = View.VISIBLE
-                    lblSeeMore.text=context.getString(R.string.view)
+                    lblSeeMore.text = context.getString(R.string.view)
                 } else {
                     lblnewiconText.visibility = View.GONE
                     if (lblContentText.lineCount > 3) {
@@ -232,7 +232,7 @@ class UnifiedVoiceAdapter(
 //                        lblSeeMore.visibility = View.GONE//san
                         lblContentText.maxLines = Int.MAX_VALUE
                         lblSeeMore.text = context.getString(R.string.see_less)
-                        Log.d("Gone","Gone...................")
+                        Log.d("Gone", "Gone...................")
                     }
                 }
 
@@ -257,13 +257,13 @@ class UnifiedVoiceAdapter(
                     isExpanded = !isExpanded
 //                    lblSeeMore.visibility = View.GONE //san
                     if (isExpanded) {
-                        Log.d("ShowALl","ShowAll")
+                        Log.d("ShowALl", "ShowAll")
                         lblContentText.maxLines = Int.MAX_VALUE
-                        lblSeeMore.text=context.getString(R.string.see_less) //san
+                        lblSeeMore.text = context.getString(R.string.see_less) //san
                     } else {
-                        Log.d("ShowALl","SeeLess")
+                        Log.d("ShowALl", "SeeLess")
                         lblContentText.maxLines = 3
-                        lblSeeMore.text=context.getString(R.string.see_more_2) //san
+                        lblSeeMore.text = context.getString(R.string.see_more_2) //san
 
                     }
 
@@ -301,7 +301,7 @@ class UnifiedVoiceAdapter(
             lblContent.post {
                 if (lblContent.lineCount > 3) {
                     tvSeeMore.visibility = View.VISIBLE
-                  //  lblnewiconText.visibility = View.GONE
+                    //  lblnewiconText.visibility = View.GONE
                     lblSeeMore.text = context.getString(R.string.see_more_2)
                     lblContent.maxLines = 3
                     lblContent.ellipsize = TextUtils.TruncateAt.END
@@ -331,6 +331,7 @@ class UnifiedVoiceAdapter(
             startAudioProgressUpdate()
             updatePlayPauseIcon(true)
         }
+
         fun stopAudioPlayback() {
             mediaPlayer?.let {
                 if (it.isPlaying) it.stop()
@@ -386,6 +387,7 @@ class UnifiedVoiceAdapter(
         currentlyPlayingHolder?.pauseIfPlaying()
         currentlyPlayingHolder = null
     }
+
     fun onDestroyMediaPlayer() {
         currentlyPlayingHolder?.releasePlayer()
         currentlyPlayingHolder = null

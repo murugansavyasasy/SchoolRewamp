@@ -37,7 +37,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -48,20 +47,14 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Attachment.Attachment
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.ExamList
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.MapActivity
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
-import com.vs.schoolmessenger.Utils.ProgressDialogHelper
-
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.UploadMarkSheetBinding
 import java.io.File
@@ -188,11 +181,11 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
                             if (Constant.selectedFiles.size > 0) {
                                 binding.lblFileName.text = fileName.toString()
-                                binding.lnrUpload.visibility=View.VISIBLE
+                                binding.lnrUpload.visibility = View.VISIBLE
                             } else {
                                 binding.lblFileName.text =
                                     getString(R.string.click_to_upload_or_drag_and_drop)
-                                binding.lnrUpload.visibility=View.GONE
+                                binding.lnrUpload.visibility = View.GONE
 
                             }
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
@@ -326,7 +319,9 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
                                 if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                     Log.d(
-                                        "UploadSuccess", Constant.isAwsUploadedFiles.get(0).isFileUrl)
+                                        "UploadSuccess",
+                                        Constant.isAwsUploadedFiles.get(0).isFileUrl
+                                    )
                                     // need to do a api call
                                 }
                             }
@@ -445,6 +440,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         super.onRestoreInstanceState(savedInstanceState)
         cameraImageFilePath = savedInstanceState.getString("cameraImageFilePath")
     }
+
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -524,11 +520,11 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             if (Constant.selectedFiles.isNotEmpty()) {
                 binding.lblFileName.text = fileName
-                binding.lnrUpload.visibility=View.VISIBLE
+                binding.lnrUpload.visibility = View.VISIBLE
 
             } else {
                 binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
-                binding.lnrUpload.visibility=View.GONE
+                binding.lnrUpload.visibility = View.GONE
             }
 
             for (item in Constant.selectedFiles) {
@@ -764,22 +760,22 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             R.id.cardManual -> {
-                Log.d("LastSaved",Constant.selectedFiles.toString())
-                Log.d("LastSaved",Constant.isAwsUploadedFiles.toString())
-                Log.d("LastSaved",Constant.isAwsUploadedFiles.toString())
+                Log.d("LastSaved", Constant.selectedFiles.toString())
+                Log.d("LastSaved", Constant.isAwsUploadedFiles.toString())
+                Log.d("LastSaved", Constant.isAwsUploadedFiles.toString())
 
                 Constant.selectedFiles.clear()
                 Constant.isAwsUploadedFiles.clear()
                 Constant.Remaining = MAX_FILES
 
                 binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
-                binding.lnrUpload.visibility=View.GONE
+                binding.lnrUpload.visibility = View.GONE
 
 
 
-                Log.d("After",Constant.selectedFiles.toString())
-                Log.d("After",Constant.isAwsUploadedFiles.toString())
-                Log.d("After",Constant.isAwsUploadedFiles.toString())
+                Log.d("After", Constant.selectedFiles.toString())
+                Log.d("After", Constant.isAwsUploadedFiles.toString())
+                Log.d("After", Constant.isAwsUploadedFiles.toString())
 
                 binding.lnrContainer.visibility = View.GONE
 

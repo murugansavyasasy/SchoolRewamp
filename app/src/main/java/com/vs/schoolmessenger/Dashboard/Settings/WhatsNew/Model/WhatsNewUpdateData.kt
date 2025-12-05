@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model
 
-data class WhatsNewUpdateData (
+data class WhatsNewUpdateData(
     val id: Int,
     val name: String,
     val description: String,

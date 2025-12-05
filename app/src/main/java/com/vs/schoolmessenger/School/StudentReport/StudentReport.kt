@@ -86,7 +86,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaSort.setOnClickListener(this)
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearchBar.isVisible) {
                 binding.rytSearchBar.visibility = View.GONE
                 binding.txtSearchMenu.text.clear()
@@ -145,16 +145,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     mAdapter.updateData(emptyList())
                     binding.tabLayout.visibility = View.GONE
                     ErrorMessage(response.message)
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytSearchBar.visibility = View.GONE
                 }
-            }else{
+            } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
                 mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rytSearchBar.visibility = View.GONE
             }
         }
@@ -173,7 +173,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             isSection = isGetStandard!!.get(0).sections
                         }
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         binding.rytSearchBar.visibility = View.GONE
                         isGetStudentReport()
                     } else {
@@ -183,19 +183,18 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         binding.tabLayout.visibility = View.GONE
                         binding.rlaStandardPicking.visibility = View.GONE
                         ErrorMessage(response.message)
-                        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                         binding.rytSearchBar.visibility = View.GONE
                     }
                 }
-            }
-            else{
+            } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
                 mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 binding.rlaStandardPicking.visibility = View.GONE
                 ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later))
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.rytSearchBar.visibility = View.GONE
 
             }
@@ -258,23 +257,27 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             SortType.ROLL_ASC -> currentFilteredList.sortedWith(
                 compareBy(Constant.naturalComparator) { it.roll_no }
             )
+
             SortType.ROLL_DESC -> currentFilteredList.sortedWith(
                 compareByDescending(Constant.naturalComparator) { it.roll_no }
             )
+
             SortType.NO_ASC -> currentFilteredList.sortedWith(
                 compareBy(Constant.naturalComparator) { it.admission_no }
             )
+
             SortType.NO_DESC -> currentFilteredList.sortedWith(
                 compareByDescending(Constant.naturalComparator) { it.admission_no }
             )
+
             SortType.NAME_ASC -> currentFilteredList.sortedBy { it.name?.lowercase() }
             SortType.NAME_DESC -> currentFilteredList.sortedByDescending { it.name?.lowercase() }
         }
         mAdapter.updateData(sortedList)
 
-        if (binding.txtSearchMenu.text.isNotEmpty()){
+        if (binding.txtSearchMenu.text.isNotEmpty()) {
             filter(binding.txtSearchMenu.text.toString())
-        }else{
+        } else {
             binding.txtSearchMenu.text.clear()
         }
 
@@ -300,14 +303,13 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
-        if(studentReportData.isNullOrEmpty()){
+        if (studentReportData.isNullOrEmpty()) {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rytSearchBar.visibility = View.GONE
-        }
-        else{
+        } else {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 

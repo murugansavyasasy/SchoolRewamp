@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.Assignment
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +13,14 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
-import androidx.core.graphics.toColorInt
-import com.vs.schoolmessenger.Utils.Constant
 
 class AssignmentStudentListAdapter(
     private var itemList: List<StudentSubmission>?,
@@ -38,7 +37,8 @@ class AssignmentStudentListAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var originalList: MutableList<StudentSubmission> = (itemList ?: emptyList()).toMutableList()
+    private var originalList: MutableList<StudentSubmission> =
+        (itemList ?: emptyList()).toMutableList()
     private var filteredList: MutableList<StudentSubmission> = originalList.toMutableList()
 
     var onDataChange: ((Boolean) -> Unit)? = null
@@ -54,7 +54,7 @@ class AssignmentStudentListAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.assignment_student_list, parent, false)
-            DataViewHolder(view, context, listener, createdDate,title,assignmentSubject)
+            DataViewHolder(view, context, listener, createdDate, title, assignmentSubject)
         }
     }
 
@@ -85,16 +85,21 @@ class AssignmentStudentListAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charString = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+                val charString =
+                    constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
                 val resultList = if (charString.isEmpty()) {
                     originalList
                 } else {
                     originalList.filter { student ->
-                        student.student_name?.lowercase(Locale.getDefault())?.contains(charString) == true ||
-                                student.standard?.lowercase(Locale.getDefault())?.contains(charString) == true ||
-                                student.section?.lowercase(Locale.getDefault())?.contains(charString) == true ||
-                                student.submit_status?.lowercase(Locale.getDefault())?.contains(charString) == true
+                        student.student_name?.lowercase(Locale.getDefault())
+                            ?.contains(charString) == true ||
+                                student.standard?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true ||
+                                student.section?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true ||
+                                student.submit_status?.lowercase(Locale.getDefault())
+                                    ?.contains(charString) == true
                     }
                 }
 
@@ -151,7 +156,8 @@ class AssignmentStudentListAdapter(
                 Log.d("created_date", Constant.formatCreatedDate(createdDate))
             } else {
                 submittedLabel.text = "${data.submit_status} : "
-                submittedDate.text = Constant.convertSubmittedDateAssignment(submissionDetails?.submitted_on)
+                submittedDate.text =
+                    Constant.convertSubmittedDateAssignment(submissionDetails?.submitted_on)
             }
 
             lblStudentName.text = data.student_name
@@ -168,8 +174,8 @@ class AssignmentStudentListAdapter(
                         )
                         putExtra("title", title)
                         putExtra(Constant.assignmentsubject, assignmentSubject)
-                        Log.d("titleAssignmentStudentlist",title.toString())
-                        Log.d("descriptionAssignmentStudentlist",assignmentSubject.toString())
+                        Log.d("titleAssignmentStudentlist", title.toString())
+                        Log.d("descriptionAssignmentStudentlist", assignmentSubject.toString())
 
                     }
                     context.startActivity(intent)

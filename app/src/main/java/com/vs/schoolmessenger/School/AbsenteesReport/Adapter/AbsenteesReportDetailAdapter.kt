@@ -6,14 +6,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.OnAbsenteeClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.SectionWise
-
 
 
 class AbsenteesReportDetailAdapter(
@@ -55,16 +53,40 @@ class AbsenteesReportDetailAdapter(
             progressBar.progress = absent
 
             if (isSelected) {
-                root.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_container)
+                root.background =
+                    ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_container)
                 tvClassName.setTextColor(ContextCompat.getColor(tvClassName.context, R.color.white))
-                tvSectionName.setTextColor(ContextCompat.getColor(tvSectionName.context, R.color.white))
-                tvAbsentCount.setTextColor(ContextCompat.getColor(tvAbsentCount.context, R.color.PrimaryColor))
+                tvSectionName.setTextColor(
+                    ContextCompat.getColor(
+                        tvSectionName.context,
+                        R.color.white
+                    )
+                )
+                tvAbsentCount.setTextColor(
+                    ContextCompat.getColor(
+                        tvAbsentCount.context,
+                        R.color.PrimaryColor
+                    )
+                )
                 progressBar.visibility = View.VISIBLE
             } else {
-                root.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_card_containe_unselectedr)
+                root.background = ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.bg_card_containe_unselectedr
+                )
                 tvClassName.setTextColor(ContextCompat.getColor(tvClassName.context, R.color.black))
-                tvSectionName.setTextColor(ContextCompat.getColor(tvSectionName.context, R.color.black))
-                tvAbsentCount.setTextColor(ContextCompat.getColor(tvAbsentCount.context, R.color.black))
+                tvSectionName.setTextColor(
+                    ContextCompat.getColor(
+                        tvSectionName.context,
+                        R.color.black
+                    )
+                )
+                tvAbsentCount.setTextColor(
+                    ContextCompat.getColor(
+                        tvAbsentCount.context,
+                        R.color.black
+                    )
+                )
                 progressBar.visibility = View.INVISIBLE
             }
 

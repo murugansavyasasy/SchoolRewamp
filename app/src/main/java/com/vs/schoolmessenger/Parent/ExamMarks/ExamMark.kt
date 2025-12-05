@@ -184,7 +184,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                 isLoadExamList(response.data)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             } else {
-                showErrorUI(response.message ?:getString(R.string.no_data_available))
+                showErrorUI(response.message ?: getString(R.string.no_data_available))
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             }
         }

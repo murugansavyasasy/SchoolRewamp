@@ -38,7 +38,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-
     private val handler = Handler()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -48,25 +47,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         // Example: Extract fields safely
         val title = remoteMessage.data[Constant.title_] ?: Constant.School_Chimes
-        val body = remoteMessage.data[Constant.body_] ?: Constant.You_have_a_new_message_from_your_school
+        val body =
+            remoteMessage.data[Constant.body_] ?: Constant.You_have_a_new_message_from_your_school
         val tone = remoteMessage.data[Constant.tone_] ?: Constant.normal
         val type = remoteMessage.data[Constant.type_] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
-        val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
+        val msgId =
+            remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
             val json = JSONObject(msgInfo)
-           val menuId = json.optString(Constant.menu_id)
-           val menuName = json.optString(Constant.menu_name)
-           val receiver_type = json.optString(Constant.receiver_type)
-           val receiver_id = json.optString(Constant.receiverid)
-           val header_id = json.optString(Constant.header_id)
-           val institute_id = json.optString(Constant.institute_id)
+            val menuId = json.optString(Constant.menu_id)
+            val menuName = json.optString(Constant.menu_name)
+            val receiver_type = json.optString(Constant.receiver_type)
+            val receiver_id = json.optString(Constant.receiverid)
+            val header_id = json.optString(Constant.header_id)
+            val institute_id = json.optString(Constant.institute_id)
 
             if (type.equals(Constant.isCall)) {
-                sendNotificationCall(title, body,receiver_id.toString(),header_id.toString(),receiver_type.toString())
+                sendNotificationCall(
+                    title,
+                    body,
+                    receiver_id.toString(),
+                    header_id.toString(),
+                    receiver_type.toString()
+                )
             } else {
                 sendNotification(
                     title,
@@ -96,7 +103,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "New FCM Token: $token")
     }
 
-    private fun sendNotificationCall(title: String, body: String,receiver_id : String,headerId : String,receiverType: String) {
+    private fun sendNotificationCall(
+        title: String,
+        body: String,
+        receiver_id: String,
+        headerId: String,
+        receiverType: String
+    ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -346,7 +359,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private val stopMediaPlayerRunnable = Runnable {
-        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying()) {
+        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying) {
             Constant.mediaPlayer.stop()
             Constant.mediaPlayer.release()
             Constant.mediaPlayer = MediaPlayer()

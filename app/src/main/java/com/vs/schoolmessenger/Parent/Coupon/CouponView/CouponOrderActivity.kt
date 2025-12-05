@@ -134,7 +134,8 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             calendar.time = expiryDateParsed!!
 
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val month = SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
+            val month =
+                SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
             val suffix = getDaySuffix(day)
 
             val displayText = "${getString(R.string.expires_on)} $day$suffix $month"
@@ -216,7 +217,8 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             clipboard.setPrimaryClip(clip)
             Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

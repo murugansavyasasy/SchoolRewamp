@@ -81,7 +81,8 @@ class SchoolStrengthAdapter(
         ) {
             boyslabel.text = "${context.getString(R.string.boys)} : ${data.boys_count}"
             girlslabel.text = "${context.getString(R.string.girls)} : ${data.girls_count}"
-            totallabel.text = "${context.getString(R.string.total_students)} : ${data.total_students}"
+            totallabel.text =
+                "${context.getString(R.string.total_students)} : ${data.total_students}"
             header1.text = "${context.getString(R.string.Standard)} - ${data.name}"
 
 
@@ -137,7 +138,7 @@ class SchoolStrengthAdapter(
             }
 
             val detailRecyclerView: RecyclerView = itemView.findViewById(R.id.rlaabsenteesreport3)
-            val expandableLayout: LinearLayout = itemView.findViewById(R.id.linear_layout2)
+//            itemView.findViewById(R.id.linear_layout2)
 
             detailRecyclerView.layoutManager = LinearLayoutManager(context)
 

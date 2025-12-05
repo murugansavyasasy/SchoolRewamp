@@ -49,7 +49,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private var originalLeaveFrom: String = ""
     private var originalLeaveTo: String = ""
     private var originalLeaveType: String = ""
-    private var originalLeaveID: Int =0
+    private var originalLeaveID: Int = 0
     private var originalFromSession: String = ""
     private var originalToSession: String = ""
 
@@ -76,10 +76,20 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.lblParentToolBar.text = getString(R.string.new_leave)
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.lblStudentName.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.toolbarLayout.lblStudentSection.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -150,7 +160,12 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             if (response != null) {
                 if (response.status) {
                     leaveCategories.clear()
-                    leaveCategories.add(getCatorgiesData(0,Constant.Select_a_leave_type)) // Default
+                    leaveCategories.add(
+                        getCatorgiesData(
+                            0,
+                            Constant.Select_a_leave_type
+                        )
+                    ) // Default
                     leaveCategories.addAll(response.data)
                     isLeaveCategorySpinner()
                     getIntentValuesIfEditing()
@@ -358,7 +373,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             }
 
             R.id.btnupdate -> {
-                Log.d("hasChangesMade",hasChangesMade().toString())
+                Log.d("hasChangesMade", hasChangesMade().toString())
                 if (hasChangesMade()) {
                     Constant.showSendConfirmationDialog(
                         this,
@@ -395,8 +410,14 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 toDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
             )
             addProperty(APIKeyNames.reason, binding.etLeaveReason.text.toString().trim())
-            addProperty(APIKeyNames.f_session, if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
-            addProperty(APIKeyNames.t_session, if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf)
+            addProperty(
+                APIKeyNames.f_session,
+                if (isFromSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf
+            )
+            addProperty(
+                APIKeyNames.t_session,
+                if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf
+            )
             addProperty(APIKeyNames.leave_type, isLeaveCatoryID)
 
 
@@ -434,7 +455,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             originalLeaveFrom = intent.getStringExtra(Constant.isLeaveFrom) ?: ""
             originalLeaveTo = intent.getStringExtra(Constant.isLeaveTo) ?: ""
             originalLeaveType = intent.getStringExtra(Constant.isLeaveType) ?: Constant.Others2
-            originalLeaveID = intent.getIntExtra(Constant.isLeaveTypeID,0)
+            originalLeaveID = intent.getIntExtra(Constant.isLeaveTypeID, 0)
             originalFromSession = intent.getStringExtra(Constant.isFromSession) ?: Session[0]
             originalToSession = intent.getStringExtra(Constant.isToSession) ?: Session[1]
 
@@ -491,18 +512,18 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         val currentTSession = isToSession
         val currentLeaveCatoryID = isLeaveCatoryID
 
-Log.d("isLeaveFinalID",isLeaveCatoryID.toString())
-Log.d("isLeaveFinalID",currentTSession.toString())
-Log.d("isLeaveFinalID",currentFSession.toString())
-Log.d("isLeaveFinalID",currentTo.toString())
-Log.d("isLeaveFinalID",currentFrom.toString())
-Log.d("isLeaveFinalID",currentReason.toString())
-Log.d("isLeaveFinalID",originalReason.toString())
-Log.d("isLeaveFinalID",originalLeaveFrom.toString())
-Log.d("isLeaveFinalID",originalLeaveTo.toString())
-Log.d("isLeaveFinalID",originalFromSession.toString())
-Log.d("isLeaveFinalID",originalToSession.toString())
-Log.d("isLeaveFinalID",originalLeaveID.toString())
+        Log.d("isLeaveFinalID", isLeaveCatoryID.toString())
+        Log.d("isLeaveFinalID", currentTSession.toString())
+        Log.d("isLeaveFinalID", currentFSession.toString())
+        Log.d("isLeaveFinalID", currentTo.toString())
+        Log.d("isLeaveFinalID", currentFrom.toString())
+        Log.d("isLeaveFinalID", currentReason.toString())
+        Log.d("isLeaveFinalID", originalReason.toString())
+        Log.d("isLeaveFinalID", originalLeaveFrom.toString())
+        Log.d("isLeaveFinalID", originalLeaveTo.toString())
+        Log.d("isLeaveFinalID", originalFromSession.toString())
+        Log.d("isLeaveFinalID", originalToSession.toString())
+        Log.d("isLeaveFinalID", originalLeaveID.toString())
 
 
         return originalReason != currentReason ||
@@ -522,7 +543,7 @@ Log.d("isLeaveFinalID",originalLeaveID.toString())
 //        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == Constant.Select_a_leave_type) {
 //            errors.add(getString(R.string.leave_type_is_required))
 //        }
-        if (isLeaveCatoryID<0||isLeaveCategoryType == Constant.Select_a_leave_type) {
+        if (isLeaveCatoryID < 0 || isLeaveCategoryType == Constant.Select_a_leave_type) {
             errors.add(getString(R.string.leave_type_is_required))
         }
 
@@ -587,8 +608,10 @@ Log.d("isLeaveFinalID",originalLeaveID.toString())
             if (totalDays % 1 == 0f) totalDays.toInt().toString() else totalDays.toString()
         val dayText = if (totalDays == 1f) getString(R.string.Day) else getString(R.string.days)
 
-        binding.btnApplyLeave.text = "${getString(R.string.Apply_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
-        binding.btnupdate.text = "${getString(R.string.Update_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
+        binding.btnApplyLeave.text =
+            "${getString(R.string.Apply_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
+        binding.btnupdate.text =
+            "${getString(R.string.Update_for)} $formattedDays $dayText ${getString(R.string.Leave)}"
 
         enableButtons()
         return true

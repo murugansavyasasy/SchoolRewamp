@@ -11,7 +11,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import de.hdodenhof.circleimageview.CircleImageView
 
 class NotificationAdapter(
     private var itemList: List<NotificationDataClass>?,
@@ -65,12 +64,12 @@ class NotificationAdapter(
                 val lastIndex = list.lastIndex
                 val nextIsHeader = position < lastIndex && list[position + 1].isHeader
                 val showDivider = position < lastIndex && !nextIsHeader
-                holder.bind(item, showDivider,listener)
+                holder.bind(item, showDivider, listener)
             }
+
             is HeaderViewHolder -> holder.bind(item)
         }
     }
-
 
 
     override fun getItemCount(): Int {
@@ -88,9 +87,13 @@ class NotificationAdapter(
         private val line: View = itemView.findViewById(R.id.line)
         private val notification_date: TextView = itemView.findViewById(R.id.notification_date)
 
-        private val fab : RelativeLayout = itemView.findViewById(R.id.fab)
+        private val fab: RelativeLayout = itemView.findViewById(R.id.fab)
 
-        fun bind(data: NotificationDataClass, showDivider: Boolean,listener: NotificationClickListener){
+        fun bind(
+            data: NotificationDataClass,
+            showDivider: Boolean,
+            listener: NotificationClickListener
+        ) {
             lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")
@@ -107,7 +110,6 @@ class NotificationAdapter(
     }
 
 
-
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtHeader: TextView = itemView.findViewById(R.id.txtHeader)
         private val imgHeader: View = itemView.findViewById(R.id.imgHeader)
@@ -116,12 +118,12 @@ class NotificationAdapter(
             txtHeader.text = data.category
 
             when (data.menu_id) {
-                1  -> imgHeader.setBackgroundResource(R.drawable.attendance_report_icon)
-                2  -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
-                3  -> imgHeader.setBackgroundResource(R.drawable.attendance_marking)
-                7  -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
-                8  -> imgHeader.setBackgroundResource(R.drawable.collect)
-                9  -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
+                1 -> imgHeader.setBackgroundResource(R.drawable.attendance_report_icon)
+                2 -> imgHeader.setBackgroundResource(R.drawable.assignment_icon_school)
+                3 -> imgHeader.setBackgroundResource(R.drawable.attendance_marking)
+                7 -> imgHeader.setBackgroundResource(R.drawable.communication_icon_dashboard)
+                8 -> imgHeader.setBackgroundResource(R.drawable.collect)
+                9 -> imgHeader.setBackgroundResource(R.drawable.graduationevent)
                 14 -> imgHeader.setBackgroundResource(R.drawable.fee_pending_reports)
                 15 -> imgHeader.setBackgroundResource(R.drawable.home_work_icon_school)
                 18 -> imgHeader.setBackgroundResource(R.drawable.leave_request_icon_school)

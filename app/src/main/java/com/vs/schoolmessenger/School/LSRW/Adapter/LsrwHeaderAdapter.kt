@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.LSRW.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwHeaderItem
@@ -49,13 +48,13 @@ class LsrwHeaderAdapter(
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (item.title == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.title == Constant.Reading){
+            } else if (item.title == Constant.Reading) {
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.title == Constant.Writing){
+            } else if (item.title == Constant.Writing) {
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else if (item.title == "Today Submitted") {
                 imgIcon.setImageResource(R.drawable.correcticonsvg)
-            }else {
+            } else {
                 imgIcon.setImageResource(R.drawable.questionmark)
             }
 

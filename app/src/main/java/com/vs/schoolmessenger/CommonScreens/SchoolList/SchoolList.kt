@@ -24,7 +24,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -139,7 +138,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE||SELECTED_MENU_ID == M_LEAVE_REQUEST || SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_MENU_ID == M_STUDENT_REPORT || SELECTED_MENU_ID == M_LESSON_PLAN || SELECTED_MENU_ID == M_SCHOOL_STRENGTH || SELECTED_MENU_ID == M_ABSENTEES_REPORT || SELECTED_MENU_ID == M_DAILY_COLLECTION || SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == M_FEE_PENDING_REPORT || SELECTED_MENU_ID == M_ATTENDANCE_MARKING || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == Constant.M_PTM || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM || SELECTED_MENU_ID == Constant.M_MESSAGES_FROM_MANAGEMENT|| SELECTED_MENU_ID == M_UPLOAD_MARKS) {
+        } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE || SELECTED_MENU_ID == M_LEAVE_REQUEST || SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_MENU_ID == M_STUDENT_REPORT || SELECTED_MENU_ID == M_LESSON_PLAN || SELECTED_MENU_ID == M_SCHOOL_STRENGTH || SELECTED_MENU_ID == M_ABSENTEES_REPORT || SELECTED_MENU_ID == M_DAILY_COLLECTION || SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == M_FEE_PENDING_REPORT || SELECTED_MENU_ID == M_ATTENDANCE_MARKING || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_PTM || SELECTED_MENU_ID == M_QUIZ_EXAM || SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT || SELECTED_MENU_ID == M_UPLOAD_MARKS) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -353,91 +352,109 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_HOMEWORK -> {
                     val intent = Intent(this, HomeWorkCreate::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_SCHOOL_CLASS_EVENTS -> {
                     val intent = Intent(this, CreateEvent::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_ABSENTEES_REPORT -> {
                     val intent = Intent(this, AbsenteesReport::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_SCHOOL_STRENGTH -> {
                     val intent = Intent(this, SchoolStrength::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_MESSAGES_FROM_MANAGEMENT -> {
                     val intent = Intent(this, MessageFromManagement::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_DAILY_COLLECTION -> {
                     val intent = Intent(this, DailyCollection::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_INTERACTION_WITH_STUDENT -> {
                     val intent = Intent(this, InteractionWithStudent::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_LSRW -> {
                     val intent = Intent(this, LsrwMain::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_STUDENT_REPORT -> {
                     val intent = Intent(this, StudentReport::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_LESSON_PLAN -> {
                     val intent = Intent(this, LessonPlan::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_FEE_PENDING_REPORT -> {
                     val intent = Intent(this, FeePendingReport::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_MARK_YOUR_ATTENDANCE -> {
                     val intent = Intent(this, MarkYourAttendance::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_STAFF_WISE_ATTENDANCE_REPORT -> {
                     val intent = Intent(this, StaffWiseAttendanceReport::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_PTM -> {
                     val intent = Intent(this, PTM::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_ASSIGNMENT -> {
                     val intent = Intent(this, AssignmentCreate::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_QUIZ_EXAM -> {
                     val intent = Intent(this, ExamQuiz::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_LEAVE_REQUEST -> {
                     val intent = Intent(this, LeaveRequests::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
+
                 M_UPLOAD_MARKS -> {
                     val intent = Intent(this, ClassList::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -496,6 +513,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
                 totalTasks,
                 { completedTasks++; updateProgress() })
+
             else -> {
                 ProgressDialogHelper.dismiss()
                 when (SELECTED_MENU_ID) {
@@ -707,7 +725,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
 
-
 //    private fun videoUploading(
 //        totalTasks: Int,
 //        onTaskComplete: () -> Unit
@@ -827,7 +844,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         var intendedFor = ""
 
         if (selectedRadioId != -1) {
-            val selectedRadioButton = findViewById<RadioButton>(selectedRadioId)
+            findViewById<RadioButton>(selectedRadioId)
             intendedFor = when (selectedRadioId) {
                 R.id.radioAll -> Constant.all__
                 R.id.radioStaff -> Constant.staff

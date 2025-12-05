@@ -44,14 +44,13 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             PorterDuff.Mode.SRC_IN
         )
 
-        if (childDetails!!.profile!=""){
+        if (childDetails!!.profile != "") {
             Glide.with(this)
                 .load(childDetails!!.profile)
                 .placeholder(R.drawable.user_vector_icon)
                 .error(R.drawable.user_vector_icon)
                 .into(binding.profileImage1)
-        }
-        else{
+        } else {
             Glide.with(this)
                 .load(binding.profileImage1)
                 .placeholder(R.drawable.user_vector_icon)
@@ -70,7 +69,8 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         if (Constant.isLeaveData!!.no_of_days == Constant.one) {
             binding.lblDays.text = "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.Day)}"
         } else {
-            binding.lblDays.text = "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.days)}"
+            binding.lblDays.text =
+                "${Constant.isLeaveData!!.no_of_days} ${getString(R.string.days)}"
         }
         binding.lblApprovalBy.text = Constant.isLeaveData!!.approved_by
         binding.lblReason.text = Constant.isLeaveData!!.reason
@@ -81,7 +81,8 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.btn_ok->{
+
+            R.id.btn_ok -> {
                 onBackPressed()
             }
         }

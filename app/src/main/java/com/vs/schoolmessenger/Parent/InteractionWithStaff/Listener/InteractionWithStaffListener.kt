@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener
 
-import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 
 interface InteractionWithStaffListener {

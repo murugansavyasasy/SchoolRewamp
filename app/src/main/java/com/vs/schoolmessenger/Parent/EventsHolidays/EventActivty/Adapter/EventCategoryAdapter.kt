@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -16,7 +15,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import okhttp3.internal.cache2.Relay
 
 class EventCategoryAdapter(
     private var itemList: List<Category>?,
@@ -147,7 +145,7 @@ class EventCategoryAdapter(
                 else ContextCompat.getColor(context, R.color.black)
             )
 
-        itemView.setOnClickListener {
+            itemView.setOnClickListener {
                 adapter.onCategorySelected(adapterPosition)
                 adapter.listener.onCategoryClicked(Category(0, Constant.All_, ""))
             }

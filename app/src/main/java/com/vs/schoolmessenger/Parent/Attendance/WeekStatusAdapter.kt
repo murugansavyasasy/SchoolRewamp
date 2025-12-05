@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 
 class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
     RecyclerView.Adapter<WeekStatusAdapter.WeekStatusViewHolder>() {
@@ -61,7 +60,7 @@ class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
             "OD/P~" -> holder.lnrBackground.setBackgroundResource(R.drawable.od_and_l)
             "OD/-" -> holder.lnrBackground.setBackgroundResource(R.drawable.od_and_n)
 
-            "H"->holder.lnrBackground.setBackgroundResource(R.drawable.holiday_icon)
+            "H" -> holder.lnrBackground.setBackgroundResource(R.drawable.holiday_icon)
 
             else -> holder.lnrBackground.setBackgroundResource(R.drawable.not_taken_icon)
         }

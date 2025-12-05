@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
@@ -16,7 +17,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ProfileUpdateResponse
-import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationResponse
@@ -418,7 +418,6 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
     var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
-
 
 
     fun init() {
@@ -861,9 +860,19 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getabsenteesstudentbydate(
-        isToken: String, absent_on: String, standard_id: String, section_id: String, activity: Activity
+        isToken: String,
+        absent_on: String,
+        standard_id: String,
+        section_id: String,
+        activity: Activity
     ) {
-        apiSchoolRepositories.getabsenteesstudentbydate(isToken, absent_on,standard_id, section_id, activity)
+        apiSchoolRepositories.getabsenteesstudentbydate(
+            isToken,
+            absent_on,
+            standard_id,
+            section_id,
+            activity
+        )
     }
 
     fun getStudentAttendanceReport(
@@ -1090,6 +1099,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isEventDelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
+
     fun isLsrwDelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isLsrwDelete(isToken, request, activity)
     }
@@ -1311,7 +1321,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         type: String,
         status_type: String,
-        ) {
+    ) {
         apiParentRepositories.isQuizExamList(isToken, type, status_type)
     }
 
@@ -1501,7 +1511,13 @@ class App(application: Application) : AndroidViewModel(application) {
         date: String,
         attendance_type: String,
     ) {
-        apiSchoolRepositories.isGetAttendanceStudentList(isToken, class_id, section_id, date,attendance_type)
+        apiSchoolRepositories.isGetAttendanceStudentList(
+            isToken,
+            class_id,
+            section_id,
+            date,
+            attendance_type
+        )
     }
 
 

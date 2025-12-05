@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
 
-import android.R.attr.height
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -13,7 +12,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -28,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.InteractionWithStudent.Listener.ReplyClickListener
@@ -54,6 +51,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     override fun getViewBinding(): InteractionwithStudentChatscreenBinding {
         return InteractionwithStudentChatscreenBinding.inflate(layoutInflater)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -115,6 +113,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
         enableEdgeToEdge()
     }
+
     private fun enableEdgeToEdge() {
         ViewCompat.setWindowInsetsAnimationCallback(binding.root, null)
         window.setDecorFitsSystemWindows(false)
@@ -131,7 +130,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             // Optional: Scroll to bottom when keyboard is visible
             if (insets.bottom > 0 && ::interactionWithQuestionAdapter.isInitialized) {
                 binding.rcystaffQuestionchatdata.post {
-                    val adapter = binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
+                    val adapter =
+                        binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
                     adapter?.let {
                         binding.rcystaffQuestionchatdata.scrollToPosition(it.itemCount - 1)
                     }
@@ -140,6 +140,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             WindowInsetsCompat.CONSUMED
         }
     }
+
     private fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -179,6 +180,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             closePopup()
         }
     }
+
     private fun fetchQuestionData() {
         appViewModel?.getstaffquestions(
             isAccessToken ?: "",
@@ -188,6 +190,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             0
         )
     }
+
     private fun isLoadChatQuestionData(data: List<QuestionData>) {
         if (data.isNullOrEmpty()) {
             showErrorUI(getString(R.string.no_staff_data_available))
@@ -210,12 +213,14 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.rcystaffQuestionchatdata.adapter = interactionWithQuestionAdapter
         binding.rcystaffQuestionchatdata.scrollToPosition(sortedData.size - 1)
     }
+
     private fun showErrorUI(message: String) {
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
         binding.rcystaffQuestionchatdata.visibility = View.GONE
     }
+
     private fun isMessageSend(replyType: String) {
         val question = binding.edtMessage.text.toString()
         if (question.isEmpty()) {
@@ -244,26 +249,31 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.edtMessage.text?.clear()
         selectedQuestionId = null
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.replytext -> {
                 isMessageSend(Constant.two)
             }
+
             R.id.replyalltext -> {
                 isMessageSend(Constant.one)
             }
+
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.imgCloseReply -> {
                 binding.replyLinearlayout.visibility = View.GONE
                 binding.btnAdd.visibility = View.GONE
                 binding.edtMessage.visibility = View.GONE
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
             }
         }
     }
+
     override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "${getString(R.string.Replying_To)} ${chat.student_name}"
@@ -274,6 +284,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         selectedQuestionId = chat.id
         Log.d("Selected Question ID", selectedQuestionId.toString())
     }
+
     override fun onUpdateAnswerClick(
         chat: QuestionData, position: Int, type: Boolean
     ) {
@@ -287,6 +298,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         selectedQuestionId = chat.id
         Log.d("Selected Question ID", selectedQuestionId.toString())
     }
+
     override fun onBlockStudent(chat: QuestionData, reason: String) {
         if (chat.student_id.isNullOrEmpty()) {
             Constant.showDataValidation(

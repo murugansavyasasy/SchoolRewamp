@@ -20,8 +20,8 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
-        binding.toolbarLayout.lblParentToolBar.text=Constant.isSelectedMenuName
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         Constant.loadWebView(
             this,

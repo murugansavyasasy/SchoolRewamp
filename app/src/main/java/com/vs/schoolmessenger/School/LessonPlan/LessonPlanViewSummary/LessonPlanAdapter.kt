@@ -9,7 +9,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.PopupMenu
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -58,7 +57,14 @@ class LessonPlanAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
             filteredList.getOrNull(position)?.let { data ->
-                holder.bind(data, context, subject_name, items_completed, completed_items, total_items)
+                holder.bind(
+                    data,
+                    context,
+                    subject_name,
+                    items_completed,
+                    completed_items,
+                    total_items
+                )
             }
         }
     }
@@ -70,7 +76,14 @@ class LessonPlanAdapter(
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: LessonPlanViewSummaryItem, context: Context, subject_name: String,items_completed: String,completed_items: String,total_items: String) {
+        fun bind(
+            item: LessonPlanViewSummaryItem,
+            context: Context,
+            subject_name: String,
+            items_completed: String,
+            completed_items: String,
+            total_items: String
+        ) {
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.detailsRecyclerView)
             val lblSubjectId = itemView.findViewById<TextView>(R.id.lblSubjectId)
             val lblTeaching = itemView.findViewById<TextView>(R.id.lblTeaching)
@@ -78,18 +91,19 @@ class LessonPlanAdapter(
             val status_text1label = itemView.findViewById<ImageView>(R.id.status_text1label)
 
 
-            val activityDetail = item.details.find { it.name.equals(Constant.Activity, ignoreCase = true) }
-            val topicDetail = item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
+            item.details.find { it.name.equals(Constant.Activity, ignoreCase = true) }
+            item.details.find { it.name.equals(Constant.Topic, ignoreCase = true) }
 
             lblSubjectId.text = subject_name
-            lblTeaching.text = context.getString(R.string.chapters_completed)+ completed_items + " - " + total_items
-            lblLevel.text = item.lesson_plan_status.toString()?: ""
+            lblTeaching.text =
+                context.getString(R.string.chapters_completed) + completed_items + " - " + total_items
+            lblLevel.text = item.lesson_plan_status.toString() ?: ""
 
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
-            val btndelete = itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
+            itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
 
             recyclerView.layoutManager = LinearLayoutManager(this@LessonPlanAdapter.context)
-            recyclerView.adapter = LessonPlanDetailAdapter(item.details,context)
+            recyclerView.adapter = LessonPlanDetailAdapter(item.details, context)
 
 
             when (item.lesson_plan_status) {
@@ -106,7 +120,10 @@ class LessonPlanAdapter(
                 1 -> {
                     status_text1label.setImageResource(R.drawable.sandclockicon)
                     status_text1label.setColorFilter(
-                        ContextCompat.getColor(this@LessonPlanAdapter.context, R.color.dark_orange),   // your color
+                        ContextCompat.getColor(
+                            this@LessonPlanAdapter.context,
+                            R.color.dark_orange
+                        ),   // your color
                         PorterDuff.Mode.SRC_IN
                     )
 
@@ -115,7 +132,8 @@ class LessonPlanAdapter(
 
             btnedit.setOnClickListener {
 
-                val popupView = LayoutInflater.from(context).inflate(R.layout.popup_edit_delete, null)
+                val popupView =
+                    LayoutInflater.from(context).inflate(R.layout.popup_edit_delete, null)
                 val popupWindow = PopupWindow(
                     popupView,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -128,7 +146,8 @@ class LessonPlanAdapter(
                 val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
 
-                layoutDelete.visibility = if (requestType == Constant.myclass) View.VISIBLE else View.GONE
+                layoutDelete.visibility =
+                    if (requestType == Constant.myclass) View.VISIBLE else View.GONE
 
                 layoutEdit.setOnClickListener {
                     listener.onEditItem(item)
@@ -142,7 +161,6 @@ class LessonPlanAdapter(
 
                 popupWindow.showAsDropDown(btnedit, 0, 10)
             }
-
 
 
         }

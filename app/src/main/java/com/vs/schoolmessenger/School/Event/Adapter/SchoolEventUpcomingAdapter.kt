@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -28,7 +27,6 @@ import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import me.relex.circleindicator.CircleIndicator2
 
 class SchoolEventUpcomingAdapter(
     private var itemList: List<SchoolEventItem>?,
@@ -127,7 +125,6 @@ class SchoolEventUpcomingAdapter(
     }
 
 
-
     fun updateList(newList: List<SchoolEventItem>?) {
         if (newList != null) {
             filteredList = newList
@@ -164,7 +161,8 @@ class SchoolEventUpcomingAdapter(
             adapter: SchoolEventUpcomingAdapter
         ) {
             event_header.text = data.title
-            event_time.text = data.category + " " + data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
+            event_time.text =
+                data.category + " " + data.time + " - " + Constant.convertEventDateTimeFormat(data.date)
             event_location.text = data.venue
             eventdesc.text = data.description
 

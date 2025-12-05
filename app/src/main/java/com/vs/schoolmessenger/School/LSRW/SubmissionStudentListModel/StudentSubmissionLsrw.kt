@@ -1,5 +1,5 @@
 package com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel
-import com.google.gson.annotations.SerializedName
+
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 
 data class StudentSubmissionLsrw(

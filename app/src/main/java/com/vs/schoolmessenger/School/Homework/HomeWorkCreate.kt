@@ -738,8 +738,14 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
 
         }
 //        ProgressDialogHelper.updateProgress(80)
@@ -780,7 +786,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                 videoUploading(totalTasks, onTaskComplete)
             }
         } else {
-            val numToCompress = Constant.selectedFiles.size
+            Constant.selectedFiles.size
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
@@ -879,8 +885,10 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
     }
 
-    private fun videoUploading(  totalTasks: Int,
-                                 onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()

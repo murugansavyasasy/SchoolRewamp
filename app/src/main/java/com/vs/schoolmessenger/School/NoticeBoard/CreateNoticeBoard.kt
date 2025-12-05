@@ -86,6 +86,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     override fun getViewBinding(): CreateNoticeBoardBinding {
         return CreateNoticeBoardBinding.inflate(layoutInflater)
     }
+
     private var noticeboardData: NoticeStaffData? = null
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
@@ -109,7 +110,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isTotalSelectedItem = 0
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -139,7 +139,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.lnrEndCalendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.btnNext.text = getString(R.string.NEXT)
-        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
+        val (_, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
 
         binding.lblDay.text = dayOfWeek
         binding.lblEndDay.text = dayOfWeek
@@ -147,7 +147,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         txtStartDate = fullDate
         txtEndDate = fullDate
 
-        binding.txtStartDate.text =txtStartDate
+        binding.txtStartDate.text = txtStartDate
         binding.txtEndDate.text = txtEndDate
 
 
@@ -158,7 +158,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
-            Constant.selectedFiles.add(
+            selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
                 )
@@ -166,7 +166,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        mAdapter = ImagePickingAdapter(this, selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
@@ -181,7 +181,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
                     if (Constant.Remaining > 0 && !selectedUris.isNullOrEmpty()) {
 
-                        val previousCount = Constant.selectedFiles.size
+                        val previousCount = selectedFiles.size
                         Constant.Remaining -= selectedUris.size
                         selectedUris.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
@@ -202,17 +202,29 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
 
                             Log.d("MAX_FILES", MAX_FILES.toString())
 
-                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            if (selectedFiles.size < MAX_FILES + 1) {
+                                selectedFiles.add(FileItem(uri.toString(), type))
                             } else {
                                 Constant.Remaining = 0
                             }
@@ -220,19 +232,25 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                             Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
                         mAdapter?.notifyDataSetChanged()
-                        val addedCount = Constant.selectedFiles.size - previousCount
-                        val totalCount = Constant.selectedFiles.size
+                        val addedCount = selectedFiles.size - previousCount
+                        val totalCount = selectedFiles.size
 
                         Toast.makeText(
                             this,
-                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${if (addedCount > 1) "${getString(R.string.s_)}" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
+                                if (addedCount > 1) "${
+                                    getString(
+                                        R.string.s_
+                                    )
+                                }" else ""
+                            }",
                             Toast.LENGTH_SHORT
                         ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                      //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                        //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -249,8 +267,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         initializeDefaultDates()
     }
-
-
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -298,7 +314,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -392,8 +412,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
     override fun onBackPressed() {
-        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
+        selectedFiles.clear()
+        isAwsUploadedFiles.clear()
         Constant.Remaining = MAX_FILES
 
         super.onBackPressed()
@@ -407,8 +427,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
-                Constant.selectedFiles.clear()
-                Constant.isAwsUploadedFiles.clear()
+                selectedFiles.clear()
+                isAwsUploadedFiles.clear()
                 onBackPressed()
             }
 
@@ -428,11 +448,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     }
                 }
 
-                Constant.DatePicker(this, false,  defaultDate = defaultCal) { selectedDate ->
+                Constant.DatePicker(this, false, defaultDate = defaultCal) { selectedDate ->
                     txtStartDate = Constant.covertDateFormate(selectedDate)
-                    val (day, formattedDate) = Constant.getDayAndDateOnly2(txtStartDate.toString())// 13 Monday
+                    val (_, formattedDate) = Constant.getDayAndDateOnly2(txtStartDate.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
-                    binding.txtStartDate.text =txtStartDate
+                    binding.txtStartDate.text = txtStartDate
 
                     val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                     val startDate = sdf.parse(txtStartDate!!) ?: Date()
@@ -441,7 +461,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     cal.add(Calendar.DAY_OF_MONTH, 30)
                     val endDate = cal.time
                     txtEndDate = sdf.format(endDate)
-                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
+                    val (_, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())// 13 Monday
 
                     binding.lblEndDay.text = endformattedDate
                     binding.txtEndDate.text = txtEndDate
@@ -453,8 +473,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 selectedDateField = 2
 
                 if (txtStartDate.isNullOrEmpty()) {
-                    Toast.makeText(this,
-                        getString(R.string.please_select_a_start_date_first), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.please_select_a_start_date_first), Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
 
@@ -482,7 +504,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     maxDate = maxDate
                 ) { selectedDate ->
                     txtEndDate = Constant.covertDateFormate(selectedDate)
-                    val (endday, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())
+                    val (_, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())
                     binding.lblEndDay.text = endformattedDate
                     binding.txtEndDate.text = txtEndDate
                 }
@@ -496,6 +518,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     isRedirectToSchoolList()
                 }
             }
+
             R.id.rytHistory -> startActivity(Intent(this, NoticeBoardReport::class.java))
         }
     }
@@ -504,7 +527,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         val today = Calendar.getInstance().time
         txtStartDate = sdf.format(today)
-        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
         binding.txtStartDate.text = txtStartDate
         val cal = Calendar.getInstance()
@@ -513,7 +536,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val endDate = cal.time
 
         txtEndDate = sdf.format(endDate)
-        val (endday, endformattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        val (_, endformattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
 
         binding.lblEndDay.text = endformattedDate
         binding.txtEndDate.text = txtEndDate
@@ -553,11 +576,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         rlaVideoPick.setOnClickListener {
-            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                if (selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
                 } else if (selectedVideoCount == 1) {
                     Constant.isFileLimit = 1
@@ -606,7 +633,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -619,7 +650,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -645,13 +680,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
-                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            if (selectedFiles.size < MAX_FILES + 1) {
+                selectedFiles.add(FileItem(uri.toString(), type))
+            } else {
                 Constant.Remaining = 0
             }
-            for (item in Constant.selectedFiles) {
+            for (item in selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
         }
@@ -673,11 +707,19 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_image_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -747,7 +789,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
     override fun onDateSelected(date: String) {
@@ -782,7 +828,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
 
-
     fun showSendConfirmationDialog(isNoticeBoardUpdate: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
@@ -811,13 +856,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     fun isUploadFilesInServer(isFileType: String?) {
 
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
-            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+            selectedFiles.removeAt(0) // Remove '+' placeholder
         }
 //        ProgressDialogHelper.updateProgress(50)
-        isTotalSelectedItem = Constant.selectedFiles.size
+        isTotalSelectedItem = selectedFiles.size
         isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        isAwsUploadedFiles.clear()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val file = iterator.next()
             if (file.type == FileType.VIDEO) {
@@ -826,7 +871,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
         }
 
-        val numNonVideoFiles = Constant.selectedFiles.size
+        val numNonVideoFiles = selectedFiles.size
         val numVideos = isVideoSelectedArrayList.size
 
         val videoSteps = 10
@@ -847,8 +892,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType, totalTasks, { completedTasks++ ; updateProgress() })
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(totalTasks, { completedTasks++ ; updateProgress() })
+            selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
         }
 //        ProgressDialogHelper.updateProgress(80)
     }
@@ -859,12 +910,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         totalTasks: Int,
         onTaskComplete: () -> Unit
     ) {
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        isAwsUploadedFiles.clear()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
@@ -874,7 +925,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
-        if (Constant.selectedFiles.isEmpty()) {
+        if (selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
                 isUpdateNoticeBoard()
@@ -888,7 +939,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             val newSelectedFiles = mutableListOf<FileItem>()
             Constant.compressImageFilesOnly(
                 context = this,
-                files = Constant.selectedFiles,
+                files = selectedFiles,
                 outputDir = outputDir.absolutePath,
                 format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
@@ -921,14 +972,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     onTaskComplete()
                 },
                 onComplete = {
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    selectedFiles.clear()
+                    selectedFiles.addAll(newSelectedFiles)
                     val isAwsUploadingFile = ArrayList<String>()
 
-                    val isSelectedFileCount = Constant.selectedFiles.size
-                    for (i in Constant.selectedFiles.indices) {
+                    val isSelectedFileCount = selectedFiles.size
+                    for (i in selectedFiles.indices) {
                         isAwsUploadingPreSigned?.getPreSignedUrl(
-                            Constant.selectedFiles[i].path,
+                            selectedFiles[i].path,
                             isStaffDetails!!.school_id,
                             isFileType!!,
                             this,
@@ -940,15 +991,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                                     response: String?, isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
-                                    Constant.isAwsUploadedFiles.add(
+                                    isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded,
-                                            isFileType = Constant.selectedFiles[i].type.name
+                                            isFileType = selectedFiles[i].type.name
                                         )
                                     )
                                     onTaskComplete()
 
-                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                    if (isTotalSelectedItem == isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isUpdateNoticeBoard()
                                     } else {
@@ -970,13 +1021,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-    private fun videoUploading(  totalTasks: Int,
-                                 onTaskComplete: () -> Unit) {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
@@ -1008,13 +1061,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     ) {
         runOnUiThread {
             Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
+            isAwsUploadedFiles.add(
                 AwsUploadedFiles(
                     isFileUrl = link.toString(), isFileType = Constant.VIDEO
                 )
             )
 
-            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+            if (isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
                 isUpdateNoticeBoard()
             }
@@ -1028,12 +1081,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
 
-
     fun isEditProcess(data: NoticeStaffData?) {
-        Constant.isAwsUploadedFiles.clear()
-        Constant.selectedFiles.clear()
+        isAwsUploadedFiles.clear()
+        selectedFiles.clear()
         saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
-            Constant.selectedFiles.add(
+            selectedFiles.add(
                 FileItem(
                     it, FileType.IMAGE
                 )
@@ -1059,15 +1111,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             binding.lblEndDay.text = endDate?.let { dayFormat.format(it) } ?: ""
 
 
-            binding.txtStartDate.setText(startDate?.let { displayFormat.format(it) } ?: "")
-            binding.txtEndDate.setText(endDate?.let { displayFormat.format(it) } ?: "")
+            binding.txtStartDate.text = startDate?.let { displayFormat.format(it) } ?: ""
+            binding.txtEndDate.text = endDate?.let { displayFormat.format(it) } ?: ""
 
         } catch (e: Exception) {
             e.printStackTrace()
             binding.lblDay.text = ""
             binding.lblEndDay.text = ""
-            binding.txtStartDate.setText("")
-            binding.txtEndDate.setText("")
+            binding.txtStartDate.text = ""
+            binding.txtEndDate.text = ""
         }
 
 
@@ -1081,16 +1133,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
                 FileItem(path = filePath.url, type = fileType)
             }
-            Constant.selectedFiles.addAll(mappedList)
+            selectedFiles.addAll(mappedList)
         }
-        if (Constant.selectedFiles.size > 1) {
+        if (selectedFiles.size > 1) {
             binding.rcyImages.visibility = View.VISIBLE
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            mAdapter = ImagePickingAdapter(this, selectedFiles, this)
             binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
             binding.rcyImages.adapter = mAdapter
         } else {
             binding.rcyImages.visibility = View.VISIBLE
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            mAdapter = ImagePickingAdapter(this, selectedFiles, this)
             binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
             binding.rcyImages.adapter = mAdapter
         }
@@ -1111,11 +1163,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         jsonObject.addProperty(APIKeyNames.visible_to, txtEndDate)
         jsonObject.addProperty(APIKeyNames.file_size, "")
         jsonObject.addProperty(APIKeyNames.thumbnail, "")
-        for (i in Constant.isAwsUploadedFiles.indices) {
+        for (i in isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
-            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.url, isAwsUploadedFiles[i].isFileUrl)
             isSelectedObject.addProperty(
-                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+                APIKeyNames.type, isAwsUploadedFiles[i].isFileType
             )
             filePathArray.add(isSelectedObject)
         }

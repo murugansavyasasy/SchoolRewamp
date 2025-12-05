@@ -7,7 +7,6 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import com.vs.schoolmessenger.databinding.QuizBinding
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
@@ -25,6 +24,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.QuizBinding
 
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
@@ -47,8 +47,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
-
-
 
 
     override fun getViewBinding(): QuizBinding {
@@ -79,7 +77,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
 //            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
@@ -95,7 +93,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
         binding.root.post {
 //            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.toolbarLayout.lblParentToolBar.text = finalName
             binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
@@ -383,6 +382,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
         appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, ParentDashboard::class.java)

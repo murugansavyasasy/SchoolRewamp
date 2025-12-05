@@ -107,7 +107,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isAcademicYearId = -1
     var isAcademicYear: List<AcademicYear>? = null
     var isFileName: String? = null
-//    var isFromTime = true
+
+    //    var isFromTime = true
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -193,8 +194,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
                     binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
-                    binding.rlaRecordVoice.visibility= View.GONE
-                    binding.rlaMessageFromText.visibility= View.GONE
+                    binding.rlaRecordVoice.visibility = View.GONE
+                    binding.rlaMessageFromText.visibility = View.GONE
                     val isGetHistory = response.data
                     isVoiceHistoryData = isGetHistory
                     loadVoiceData(isVoiceHistoryData)
@@ -211,8 +212,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
                     binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
-                    binding.rlaRecordVoice.visibility= View.GONE
-                    binding.rlaMessageFromText.visibility= View.GONE
+                    binding.rlaRecordVoice.visibility = View.GONE
+                    binding.rlaMessageFromText.visibility = View.GONE
                     val isTextHistory = response.data
                     isTextHistoryData = isTextHistory
                     loadTextHistoryData(isTextHistoryData)
@@ -856,7 +857,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaFromTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = true
-                isShowTimePickerDialog(this, this,
+                isShowTimePickerDialog(
+                    this, this,
                     preSelectedHour = fromHour24,
                     preSelectedMinute = fromMinute
                 )
@@ -865,7 +867,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaToTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = false
-                isShowTimePickerDialog(this, this,
+                isShowTimePickerDialog(
+                    this, this,
                     preSelectedHour = toHour24,
                     preSelectedMinute = toMinute
                 )
@@ -883,17 +886,72 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     dateAdapter.removeSelectedDate(removedDate)
                 }
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
-
                 val datePickerPopup = CustomDatePicker(
                     context = this,
                     preSelectedDates = selectedDates.toList(),
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val tf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+                    val pickedTimeText = binding.lblStartTime.text.toString()
+                    val now = Calendar.getInstance()
+                    val validDates = mutableListOf<String>()
+                    newSelectedDates.forEach { dateStr ->
+                        val selectedCal = Calendar.getInstance()
+                        selectedCal.time = sdf.parse(dateStr)!!
+                        val isToday =
+                            now.get(Calendar.YEAR) == selectedCal.get(Calendar.YEAR) &&
+                                    now.get(Calendar.DAY_OF_YEAR) == selectedCal.get(Calendar.DAY_OF_YEAR)
+                        if (isToday && pickedTimeText.isNotEmpty()) {
+                            val pickedTimeOnly = tf.parse(pickedTimeText)!!
+                            val pickedCal = Calendar.getInstance().apply {
+                                time = pickedTimeOnly
+                                set(Calendar.YEAR, selectedCal.get(Calendar.YEAR))
+                                set(Calendar.MONTH, selectedCal.get(Calendar.MONTH))
+                                set(Calendar.DAY_OF_MONTH, selectedCal.get(Calendar.DAY_OF_MONTH))
+                            }
+                            if (pickedCal.before(now)) {
+                                Toast.makeText(
+                                    this,
+                                    "You cannot select today's date with past time.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                validDates.add(dateStr)
+                            }
+                        } else {
+                            validDates.add(dateStr)
+                        }
+                    }
                     selectedDates.clear()
-                    selectedDates.addAll(newSelectedDates)
-                    selectedDatesAdapter!!.submitSelectedDates(selectedDates.toList())
+                    selectedDates.addAll(validDates)
+                    selectedDatesAdapter?.submitSelectedDates(validDates)
                 }
+
                 datePickerPopup.show(window.decorView.rootView)
+
+
+//                val dateAdapter = DateAdapter(this) { updatedList -> }
+//                selectedDatesAdapter = SelectedDatesAdapter(
+//                    context = this,
+//                    selectedDates = selectedDates.toMutableList(),
+//                    dateAdapter = dateAdapter
+//                ) { removedDate ->
+//                    selectedDates.remove(removedDate)
+//                    dateAdapter.removeSelectedDate(removedDate)
+//                }
+//                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
+//
+//                val datePickerPopup = CustomDatePicker(
+//                    context = this,
+//                    preSelectedDates = selectedDates.toList(),
+//                    dateAdapter = dateAdapter
+//                ) { newSelectedDates ->
+//                    selectedDates.clear()
+//                    selectedDates.addAll(newSelectedDates)
+//                    selectedDatesAdapter!!.submitSelectedDates(selectedDates.toList())
+//                }
+//                datePickerPopup.show(window.decorView.rootView)
             }
 
 
@@ -956,7 +1014,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
-                                if (binding.lblStartTime.text.toString() != "Select time" &&  binding.lblEndTime.text.toString() != "Select time") {
+                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
                                     if (selectedDates.isNotEmpty()) {
                                         isGoToRecipient()
                                     } else {
@@ -990,7 +1048,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
-                                if (binding.lblStartTime.text.toString() != "Select time" &&  binding.lblEndTime.text.toString() != "Select time") {
+                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
                                     if (selectedDates.isNotEmpty()) {
                                         isGoToRecipient()
                                     } else {
@@ -1222,7 +1280,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-
     private fun validateAndSetTime(hour: Int, minute: Int, amPm: String): Boolean {
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
         val currentDateStr = sdf.format(Date())
@@ -1245,8 +1302,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             if (selectedCal.before(calNow)) {
-                Toast.makeText(this,
-                    getString(R.string.you_cannot_select_a_past_time_for_today), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.you_cannot_select_a_past_time_for_today), Toast.LENGTH_SHORT
+                ).show()
 
                 // Clear the respective label
                 if (isFromTime) {
@@ -1260,7 +1319,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         return true
     }
-
 
 
     private fun isGoToRecipient() {

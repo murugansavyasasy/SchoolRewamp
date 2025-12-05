@@ -3,9 +3,7 @@ package com.vs.schoolmessenger.Auth.Base
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -18,6 +16,7 @@ class MyApp : Application(), LifecycleObserver {
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
     }
+
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)

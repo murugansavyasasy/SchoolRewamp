@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.PTM.Adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +58,7 @@ class ClassesLoadAdapter(
             }
         }
 
-}
+    }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

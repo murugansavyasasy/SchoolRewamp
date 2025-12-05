@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.FeeDetails
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.view.View
@@ -17,7 +16,11 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeeReceiptViewActivityBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -37,7 +40,12 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
         isToolBarPrimaryTheme()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.imgDownload.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.downloadicon))
+        binding.imgDownload.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.downloadicon
+            )
+        )
         binding.imgDownload.visibility = View.VISIBLE
         binding.lytDownload.setOnClickListener(this)
         binding.lytShare.setOnClickListener(this)
@@ -95,6 +103,7 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
                 if (checkStoragePermission()) downloadFeeReceipt()
                 else requestStoragePermission()
             }
+
             R.id.lytShare -> {
                 if (checkStoragePermission()) shareFeeReceipt()
                 else requestStoragePermission()

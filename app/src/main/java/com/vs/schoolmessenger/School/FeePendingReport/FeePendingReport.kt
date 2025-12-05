@@ -44,9 +44,13 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             statusBarBgView = binding.statusBarBackground
         )
 
-        val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+        val params =
+            binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
         params.removeRule(RelativeLayout.START_OF)// Remove the old rule
-        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)// Add the new rule -> align to start of rlaSpinner
+        params.addRule(
+            RelativeLayout.START_OF,
+            R.id.rlaSpinner
+        )// Add the new rule -> align to start of rlaSpinner
         binding.toolbarLayout.lytTitleAndName.layoutParams = params// Re-apply params
 
 
@@ -62,7 +66,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE
+        binding.toolbarLayout.rlaSpinner.visibility = View.VISIBLE
 
 
         isLoadAcademicYear(isAcademicYearList)
@@ -206,31 +210,32 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = NewAcademicYearAdapter(this, isAcademicYear)
         binding.toolbarLayout.isAcademicSpinner.adapter = adapter
-        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                if (isFirstLoad) {
-                    val selectedOption = isAcademicYear!![position]
-                    isAcademicYearId = selectedOption.id
-                    isCurrentAcademicYear = selectedOption.current_academic_year
+        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    if (isFirstLoad) {
+                        val selectedOption = isAcademicYear!![position]
+                        isAcademicYearId = selectedOption.id
+                        isCurrentAcademicYear = selectedOption.current_academic_year
 
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-                    )
+                        Log.d(
+                            "DropdownMenu",
+                            "Clicked Academic Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                        )
 
-                    if (isClassWiseSelected) {
-                        isGetDailyWiseCollection()
-                    } else {
-                        isGetDailyCollection()
+                        if (isClassWiseSelected) {
+                            isGetDailyWiseCollection()
+                        } else {
+                            isGetDailyCollection()
+                        }
                     }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     override fun onClick(p0: View?) {
@@ -239,7 +244,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 onBackPressed()
             }
 
-            R.id.lnrTabTwoName->{
+            R.id.lnrTabTwoName -> {
                 if (isClassWiseSelected) return
                 isClassWiseSelected = true
                 binding.lnrTabOneName.isEnabled = true
@@ -251,7 +256,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isGetDailyWiseCollection()
             }
 
-            R.id.lnrTabOneName->{
+            R.id.lnrTabOneName -> {
                 if (!isClassWiseSelected) return
                 isClassWiseSelected = false
                 binding.lnrTabOneName.isEnabled = false

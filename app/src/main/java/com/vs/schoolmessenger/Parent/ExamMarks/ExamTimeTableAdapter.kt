@@ -34,7 +34,8 @@ class ExamTimeTableAdapter(
                 subjectRecyclerView.visibility = View.VISIBLE
                 subjectRecyclerView.layoutManager =
                     LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-                val examSubjectAdapter = ExamSubjectAdapter(examTimeTable.exam_subject_details,
+                val examSubjectAdapter = ExamSubjectAdapter(
+                    examTimeTable.exam_subject_details,
                     this@ExamTimeTableAdapter.context
                 )
                 subjectRecyclerView.isNestedScrollingEnabled = false
@@ -52,7 +53,7 @@ class ExamTimeTableAdapter(
     }
 
     override fun onBindViewHolder(holder: ExamTimeTableViewHolder, position: Int) {
-        holder.bind(filteredList[position],context)
+        holder.bind(filteredList[position], context)
     }
 
     override fun getItemCount(): Int = filteredList.size

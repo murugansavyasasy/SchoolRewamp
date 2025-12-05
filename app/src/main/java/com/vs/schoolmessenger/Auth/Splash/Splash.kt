@@ -17,8 +17,6 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +33,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -73,25 +70,15 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Assignment.AssignmentReport
-import com.vs.schoolmessenger.School.Attachment.AttachmentReport
-import com.vs.schoolmessenger.School.Communication.CommunicationSchool
-import com.vs.schoolmessenger.School.Event.EventReport
-import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
-import com.vs.schoolmessenger.School.Homework.HomeworkReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
-import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
-import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardReport
-import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
-import com.vs.schoolmessenger.Utils.AppDataCleaner
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.ActivitySplashBinding
-import com.vs.schoolmessenger.databinding.SplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -184,7 +171,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         authViewModel!!.init()
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
-        connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         // Define the callback
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
@@ -228,7 +215,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             handleNotificationIntent(intent)
         } else {
-             //Run cleanup
+            //Run cleanup
 //            val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
 //            if (cleaned) {
 //                Log.d("Cleanup", "cleaned")
@@ -237,8 +224,8 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 //                    askNotificationPermission()
 //                }, 1500) // small delay after cleanup
 //            } else {
-                askNotificationPermission()
-           // }
+            askNotificationPermission()
+            // }
 
         }
 
@@ -256,7 +243,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             Constant.hideLoading(this@Splash)
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
 
 
@@ -401,6 +388,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 //            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 //        }, 3000)
     }
+
     private fun playBubbleAnimation() {
         val container = binding.confettiContainer
         val centerX = container.width / 2f
@@ -411,11 +399,19 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         repeat(bubbleCount) { i ->
             val isLastBubble = i == bubbleCount - 1
-            container.postDelayed({ createBubble(container, centerX, centerY, bubbleDuration, isLastBubble)
+            container.postDelayed({
+                createBubble(container, centerX, centerY, bubbleDuration, isLastBubble)
             }, i * bubbleDelay)
         }
     }
-    private fun createBubble(container: FrameLayout, centerX: Float, centerY: Float, duration: Long, isLastBubble: Boolean) {
+
+    private fun createBubble(
+        container: FrameLayout,
+        centerX: Float,
+        centerY: Float,
+        duration: Long,
+        isLastBubble: Boolean
+    ) {
         val bubble = View(this)
         val size = (10..15).random()
         bubble.layoutParams = FrameLayout.LayoutParams(size, size)
@@ -435,7 +431,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val clusterSpread = 70
         val finalX = centerX + (-clusterSpread..clusterSpread).random() - size / 2
         val finalY = centerY + (-clusterSpread..clusterSpread).random() - size / 2
-        bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).withEndAction { container.removeView(bubble)
+        bubble.animate().x(finalX).y(finalY).alpha(0f).setDuration(duration)
+            .setInterpolator(AccelerateDecelerateInterpolator()).withEndAction {
+            container.removeView(bubble)
             if (isLastBubble) {
                 startWaveAnimation()
                 container.visibility = View.GONE
@@ -446,6 +444,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             .start()
 
     }
+
     private fun startWaveAnimation() {
         val waves = listOf(binding.wave1, binding.wave2, binding.wave3)
         waves.forEachIndexed { index, wave ->
@@ -453,9 +452,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             wave.scaleY = 0f
             wave.alpha = 0f
             wave.visibility = View.VISIBLE
-            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 200L).setDuration(1000).withEndAction { wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(600).start() }.start()
+            wave.animate().alpha(0.4f).scaleX(1.7f).scaleY(1.7f).setStartDelay(index * 200L)
+                .setDuration(1000).withEndAction {
+                wave.animate().alpha(0f).scaleX(2.2f).scaleY(2.2f).setDuration(600).start()
+            }.start()
         }
     }
+
     private fun startAllSplashAnimations() {
         animateTopText()
         animateBottomText()
@@ -465,7 +468,8 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         binding.imgLogo.alpha = 0f
         binding.imgLogo.scaleX = 0f
         binding.imgLogo.scaleY = 0f
-        binding.imgLogo.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(500).setInterpolator(OvershootInterpolator(1.4f)).start()
+        binding.imgLogo.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(500)
+            .setInterpolator(OvershootInterpolator(1.4f)).start()
     }
 
     private fun animateTopText() {
@@ -480,6 +484,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             start()
         }
     }
+
     private fun animateBottomText() {
         llBottomText.translationY = 50f
         llBottomText.alpha = 0f
@@ -500,6 +505,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         expand.interpolator = AccelerateDecelerateInterpolator()
         expand.start()
     }
+
     private fun animateCardEntrance() {
         val scaleX = ObjectAnimator.ofFloat(binding.bigCard, "scaleX", 0.9f, 1f)
         val scaleY = ObjectAnimator.ofFloat(binding.bigCard, "scaleY", 0.9f, 1f)
@@ -511,6 +517,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             start()
         }
     }
+
     private fun animateFirstDotWithEmphasis() {
         binding.root.postDelayed({
             val alpha = ObjectAnimator.ofFloat(binding.dot1, "alpha", 0f, 1f)
@@ -540,6 +547,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             }, 300)
         }, 500)
     }
+
     private fun animateRemainingDots() {
         binding.root.postDelayed({
             val alpha = ObjectAnimator.ofFloat(binding.dot2, "alpha", 0f, 1f)
@@ -588,6 +596,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         }
 //        }, 3000)
     }
+
     override fun isToolBarNoticeCallTheme() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = this.window
@@ -743,7 +752,10 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
 
                 (menu_id == Constant.M_PTM && receiverType == Constant.Staff___) -> {
-                    val detailIntent = Intent(this, com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java).apply {
+                    val detailIntent = Intent(
+                        this,
+                        com.vs.schoolmessenger.School.PTM.Activity.PTM::class.java
+                    ).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
                         putExtra(Constant.institute_id, instituteId)
@@ -1223,6 +1235,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         }
     }
+
     private fun openPlayStore() {
         val appPackageName = packageName
         try {

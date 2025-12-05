@@ -31,7 +31,8 @@ import java.util.Locale
 
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
-    AbsenteesClickListener, AbsenteesStudentDetailClickListener, CustomAbsenteesCalendarFragment.AbsenteesCalendarDateListener {
+    AbsenteesClickListener, AbsenteesStudentDetailClickListener,
+    CustomAbsenteesCalendarFragment.AbsenteesCalendarDateListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -95,7 +96,11 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         appViewModel?.getabsenteesstudentbydate?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response == null) {
-                Toast.makeText(this, getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@observe
             }
             if (response.status) {
@@ -103,7 +108,11 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 bindStudentList(studentList)
             } else {
                 errorMessage = response.message
-                Toast.makeText(this, response.message ?: getString(R.string.no_student_found), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this,
+                    response.message ?: getString(R.string.no_student_found),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 bindStudentList(emptyList())
             }
@@ -119,11 +128,15 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendarWithAbsentDates() {
-        val fragment = supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomAbsenteesCalendarFragment
+        val fragment =
+            supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomAbsenteesCalendarFragment
         fragment?.let {
             val absentDates = absenteeList.mapNotNull { data ->
                 try {
-                    LocalDate.parse(data.absent_date_only, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                    LocalDate.parse(
+                        data.absent_date_only,
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    )
                 } catch (e: Exception) {
                     null
                 }
@@ -189,7 +202,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
                     // Update basic info
                     binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
-                    binding.totalstudentscount.text = "${getString(R.string.total_students)} : $student_counts"
+                    binding.totalstudentscount.text =
+                        "${getString(R.string.total_students)} : $student_counts"
                     binding.classDetailname.text = "$classname - $sectionname"
 
                     // Safely parse to Int
@@ -222,7 +236,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             val sectiontotal = sectionWise.student_counts.toIntOrNull() ?: 1
             // Set initial UI values for the first item
             binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
-            binding.totalstudentscount.text = "${getString(R.string.total_students)} : $sectiontotal"
+            binding.totalstudentscount.text =
+                "${getString(R.string.total_students)} : $sectiontotal"
             binding.classDetailname.text = "${classWise.class_name} - ${sectionWise.section_name}"
 
             binding.progressAbsent.max = total
@@ -230,7 +245,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
             showStudentShimmer()
             appViewModel?.getabsenteesstudentbydate(
-                isAccessToken ?: "", selectedDate,classWise.class_id, sectionWise.section_id, this
+                isAccessToken ?: "", selectedDate, classWise.class_id, sectionWise.section_id, this
             )
         }
     }
@@ -272,7 +287,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.rlaabsenteesreport2.visibility = View.GONE
         binding.lytNoDataFound.visibility = View.VISIBLE
-        binding.noDataFound.setText(message)
+        binding.noDataFound.text = message
         binding.selectedDateText.visibility = View.GONE
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.absentListTitle.visibility = View.GONE
@@ -291,7 +306,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     override fun onFooterItemClicked(position: Int, data: Student) {
 //        Toast.makeText(this, "Clicked: ${data.student_name}", Toast.LENGTH_SHORT).show()
-        Log.d("Profile Clicked","Profile Clicked response checked")
+        Log.d("Profile Clicked", "Profile Clicked response checked")
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {

@@ -40,7 +40,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        binding.termsCheckbox.buttonTintList=null
+        binding.termsCheckbox.buttonTintList = null
 
 
         Log.d("CountryScreen", "onCreate triggered")
@@ -87,7 +87,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     private fun loadCountry(countryList: List<Country>) {
         val updatedList = countryList.toMutableList()
         updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
-        mAdapter = CountryListAdapter(this,updatedList,this) { selectedCountry ->
+        mAdapter = CountryListAdapter(this, updatedList, this) { selectedCountry ->
             isCountrySelected = true
             Constant.country_details = selectedCountry
         }
@@ -102,24 +102,22 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     }
 
 
-
     override fun onClick(v: View?) {
         when (v?.id) {
 
             R.id.btnContinue -> {
                 if (isCountrySelected == true) {
                     if (isAgree) {
-                    ToastManager.cancelToast()
-                    SharedPreference.putCountryId(
-                        this,
-                        Constant.country_details!!.id
-                    )
-                    SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
-                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
-                    val intent = Intent(this@CountryScreen, MobileNumber::class.java)
-                    startActivity(intent)
-                     }
-                    else {
+                        ToastManager.cancelToast()
+                        SharedPreference.putCountryId(
+                            this,
+                            Constant.country_details!!.id
+                        )
+                        SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
+                        RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
+                        val intent = Intent(this@CountryScreen, MobileNumber::class.java)
+                        startActivity(intent)
+                    } else {
                         ToastManager.showToast(this, R.string.AgreeTermsConditions)
                     }
                 } else {
@@ -143,7 +141,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             binding.lytList.visibility = View.VISIBLE
             binding.recycleCountry.visibility = View.GONE
             binding.lblPopular.visibility = View.GONE
-            binding.txtNoData.text=getString(R.string.no_country_found)
+            binding.txtNoData.text = getString(R.string.no_country_found)
         } else {
             binding.recycleCountry.visibility = View.VISIBLE
             binding.lblPopular.visibility = View.VISIBLE

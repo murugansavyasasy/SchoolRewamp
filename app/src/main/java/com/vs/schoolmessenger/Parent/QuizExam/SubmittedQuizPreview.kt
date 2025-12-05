@@ -24,9 +24,9 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-    var isQuizID=""
-    var isSubmittedOn=""
-    var isSubject=""
+    var isQuizID = ""
+    var isSubmittedOn = ""
+    var isSubject = ""
 
 
     override fun getViewBinding(): SubmittedQuizPreviewBinding {
@@ -50,7 +50,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken=isChildDetails!!.access_token
+        isAccessToken = isChildDetails!!.access_token
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
@@ -61,23 +61,21 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
 
         appViewModel?.isGetMySubmission?.observe(this) { response ->
 
-            if(response != null){
+            if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
-                    isMySubmission=response.data
+                    isMySubmission = response.data
                     isLoadSubmittedQuiz(isMySubmission)
-                    binding.lytList.visibility= View.GONE
+                    binding.lytList.visibility = View.GONE
 
-                }
-                else{
+                } else {
                     Constant.hideLoading(this)
-                    binding.lytList.visibility= View.VISIBLE
+                    binding.lytList.visibility = View.VISIBLE
                     ErrorMessage(response.message)
                 }
-            }
-            else{
+            } else {
                 Constant.hideLoading(this)
-                binding.lytList.visibility= View.VISIBLE
+                binding.lytList.visibility = View.VISIBLE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
@@ -88,9 +86,9 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     private fun isLoadSubmittedQuiz(data: List<GetMySubmissionData>) {
 
         val rightAnswer = data.get(0).right_answer
-        val wrongAnswer =  data.get(0).wrong_answer
-        val unAnswer =  data.get(0).un_answer
-        binding.lblMessage.text=data.get(0).message
+        val wrongAnswer = data.get(0).wrong_answer
+        val unAnswer = data.get(0).un_answer
+        binding.lblMessage.text = data.get(0).message
 
         val rightParts = rightAnswer.split("/")
         val wrongParts = wrongAnswer.split("/")
@@ -107,34 +105,33 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         } else 0
 
 
-        binding.lblCompletedAt.text="${getString(R.string.completed_at)} ${Constant.convertDateFormatType(isSubmittedOn)}"
-        binding.lblSubjectTitle.text=isSubject
-        binding.lblQuizPercent.text=percentage.toString()
-        animateProgress(binding.quizPercent,percentage, 100)
+        binding.lblCompletedAt.text =
+            "${getString(R.string.completed_at)} ${Constant.convertDateFormatType(isSubmittedOn)}"
+        binding.lblSubjectTitle.text = isSubject
+        binding.lblQuizPercent.text = percentage.toString()
+        animateProgress(binding.quizPercent, percentage, 100)
 
-        binding.lblCorrectAnswer.text="${getString(R.string.correct)}: ${rightAnswer}"
-        if (total==right){
+        binding.lblCorrectAnswer.text = "${getString(R.string.correct)}: ${rightAnswer}"
+        if (total == right) {
 
-            binding.lblWrongAnswer.text="${getString(R.string.wrong)}: ${wrong}"
-            binding.lblNotAnswer.text="${getString(R.string.not_answered)}${un_answer}"
+            binding.lblWrongAnswer.text = "${getString(R.string.wrong)}: ${wrong}"
+            binding.lblNotAnswer.text = "${getString(R.string.not_answered)}${un_answer}"
+        } else {
+            binding.lblWrongAnswer.text = "${getString(R.string.wrong)}: ${wrongAnswer}"
+            binding.lblNotAnswer.text = "${getString(R.string.not_answered)} ${unAnswer}"
         }
-        else{
-            binding.lblWrongAnswer.text="${getString(R.string.wrong)}: ${wrongAnswer}"
-            binding.lblNotAnswer.text="${getString(R.string.not_answered)} ${unAnswer}"
-        }
 
-        if (data.get(0).quiz_details.size>0){
+        if (data.get(0).quiz_details.size > 0) {
             binding.lytList.visibility = View.GONE
             binding.rcSubmitedQuiz.visibility = View.VISIBLE
-            adapter1 = QuizCompletedAdapter(data.get(0).quiz_details,this, false)
+            adapter1 = QuizCompletedAdapter(data.get(0).quiz_details, this, false)
             binding.rcSubmitedQuiz.layoutManager = object : LinearLayoutManager(this) {
                 override fun canScrollVertically(): Boolean {
                     return false
                 }
             }
             binding.rcSubmitedQuiz.adapter = adapter1
-        }
-        else{
+        } else {
             binding.lytList.visibility = View.VISIBLE
             binding.rcSubmitedQuiz.visibility = View.GONE
         }
@@ -142,13 +139,13 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     }
 
 
-    fun ErrorMessage(errorMessage:String){
+    fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
     }
 
     private fun isFetchSubmittedQuiz() {
-        adapter1 = QuizCompletedAdapter(null, this,true)
+        adapter1 = QuizCompletedAdapter(null, this, true)
         binding.rcSubmitedQuiz.layoutManager = object : LinearLayoutManager(this) {
             override fun canScrollVertically(): Boolean {
                 return false
@@ -156,7 +153,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         }
 
         binding.rcSubmitedQuiz.adapter = adapter1
-        appViewModel?.isGetMySubmission(isAccessToken ?: "",isQuizID)
+        appViewModel?.isGetMySubmission(isAccessToken ?: "", isQuizID)
     }
 
     override fun onClick(p0: View?) {

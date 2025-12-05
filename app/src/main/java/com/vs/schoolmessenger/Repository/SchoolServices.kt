@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardCountResponse
@@ -14,7 +15,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileListResponse
-import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FrequentlyModelResponse
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.DeleteNotificationResponse
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewResponse
@@ -35,7 +35,6 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequ
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -4623,12 +4622,12 @@ class SchoolServices {
         get() = reviewpost
 
 
-
     fun isGetStaffWiseExam(
         isToken: String,
         section_id: String,
     ) {
-        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id,)?.enqueue(object : Callback<getStaffWisExam?> {
+        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id)
+            ?.enqueue(object : Callback<getStaffWisExam?> {
                 override fun onResponse(
                     call: Call<getStaffWisExam?>,
                     response: Response<getStaffWisExam?>
@@ -4664,49 +4663,45 @@ class SchoolServices {
         get() = isgetStaffWiseExam
 
 
-
     fun isGetSubjectWiseActivities(
         isToken: String,
         exam_id: String,
     ) {
-        RestClient.apiInterfaces.getSubjectWiseActivities(isToken, exam_id,)?.enqueue(object : Callback<getSubjectWiseACtivities?> {
-            override fun onResponse(
-                call: Call<getSubjectWiseACtivities?>,
-                response: Response<getSubjectWiseACtivities?>
-            ) {
-                Log.d(
-                    "isgetSubjectWiseActivities Response",
-                    response.code().toString() + " - " + response.toString()
-                )
-                if (response.code() == 200) {
-                    if (response.body() != null) {
-                        val status = response.body()!!.status
-                        if (status) {
-                            Log.d("isgetSubjectWiseActivities", response.body().toString())
-                            isgetSubjectWiseActivities.postValue(response.body())
-                        } else {
-                            Log.d("isgetSubjectWiseActivities", response.body().toString())
-                            isgetSubjectWiseActivities.postValue(response.body())
+        RestClient.apiInterfaces.getSubjectWiseActivities(isToken, exam_id)
+            ?.enqueue(object : Callback<getSubjectWiseACtivities?> {
+                override fun onResponse(
+                    call: Call<getSubjectWiseACtivities?>,
+                    response: Response<getSubjectWiseACtivities?>
+                ) {
+                    Log.d(
+                        "isgetSubjectWiseActivities Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isgetSubjectWiseActivities", response.body().toString())
+                                isgetSubjectWiseActivities.postValue(response.body())
+                            } else {
+                                Log.d("isgetSubjectWiseActivities", response.body().toString())
+                                isgetSubjectWiseActivities.postValue(response.body())
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onFailure(
-                call: Call<getSubjectWiseACtivities?>, t: Throwable
-            ) {
-                isgetSubjectWiseActivities.postValue(null)
-                t.printStackTrace()
-            }
-        })
+                override fun onFailure(
+                    call: Call<getSubjectWiseACtivities?>, t: Throwable
+                ) {
+                    isgetSubjectWiseActivities.postValue(null)
+                    t.printStackTrace()
+                }
+            })
     }
 
     val getSubjectWiseActivitiesLiveData: LiveData<getSubjectWiseACtivities?>
         get() = isgetSubjectWiseActivities
-
-
-
-
 
 
 }

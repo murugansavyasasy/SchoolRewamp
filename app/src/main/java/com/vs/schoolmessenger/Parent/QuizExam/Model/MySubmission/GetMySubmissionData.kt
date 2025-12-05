@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission
 
-import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuestionDetails
-
-class GetMySubmissionData (
+class GetMySubmissionData(
     val student_id: String,
     val right_answer: String,
     val wrong_answer: String,

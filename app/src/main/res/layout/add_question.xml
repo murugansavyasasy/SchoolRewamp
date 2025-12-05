@@ -116,14 +116,14 @@
                         android:id="@+id/nomessage"
                         android:layout_width="@dimen/two_fifty"
                         android:layout_height="@dimen/two_fifty"
-                        android:src="@drawable/no_data_found" />
+                        android:src="@drawable/no_school_quiz_message" />
 
                     <TextView
                         android:id="@+id/txtNoData"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no_list_found"
+                        android:text="@string/no_question_have_been_added_yet"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
 

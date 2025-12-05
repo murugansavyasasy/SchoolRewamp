@@ -37,6 +37,7 @@ class SchoolMenuAdapter(
                 val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.dashboard_app_item)
                 ShimmerViewHolder(shimmerView)
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.dashboard_app_item, parent, false)
@@ -57,6 +58,7 @@ class SchoolMenuAdapter(
                     holder.bind(menuDetail, position, listener, itemCountList)
                 }
             }
+
             is ShimmerViewHolder -> holder.startShimmer()
         }
     }
@@ -127,7 +129,10 @@ class SchoolMenuAdapter(
                 listener.onClick(data)
                 Constant.isSchoolMenuCount = itemCountList?.getOrNull(position)?.unread_count ?: 0
                 val CountMenuname = itemCountList?.getOrNull(position)?.name ?: 0
-                Log.d("Menu Count", "${Constant.isSchoolMenuCount},Selected Menu Dashboard: ${data.name},CountMenuName: ${CountMenuname}",)
+                Log.d(
+                    "Menu Count",
+                    "${Constant.isSchoolMenuCount},Selected Menu Dashboard: ${data.name},CountMenuName: ${CountMenuname}",
+                )
             }
         }
     }

@@ -17,7 +17,6 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockedStudent
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
@@ -75,7 +74,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             )
 
             val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
-            SharedPreference.putStaffDetails(this,matchedChild!!)
+            SharedPreference.putStaffDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
 

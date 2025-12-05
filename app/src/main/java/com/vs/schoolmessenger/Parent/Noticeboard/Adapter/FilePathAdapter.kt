@@ -121,7 +121,7 @@ class FilePathAdapter(
                 }
 
                 Constant.VIDEO -> {
-                    DefaultImage.setImageResource(R.drawable.video_play)
+                    DefaultImage.setImageResource(R.drawable.video_icon_2)
                     openDocumentInWebView(data.url)
                 }
             }

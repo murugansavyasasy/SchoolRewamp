@@ -12,10 +12,11 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamSubjectDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
-class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>,
-                         private var context: Context,
+class ExamSubjectAdapter(
+    private var subjectList: List<ExamSubjectDetail>,
+    private var context: Context,
 
-                         ) :
+    ) :
     RecyclerView.Adapter<ExamSubjectAdapter.SubjectViewHolder>() {
 
     fun updateData(newList: List<ExamSubjectDetail>) {
@@ -38,7 +39,8 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>,
             datevalue.text = Constant.convertToReadableDate(subject.exam_date)
             syllabusvalue.text = subject.syllabus
             lblTime.text = subject.start_time
-            maxmarkvalue.text = "${this@ExamSubjectAdapter.context.getString(R.string.Marks)} : ${subject.max_mark}"
+            maxmarkvalue.text =
+                "${this@ExamSubjectAdapter.context.getString(R.string.Marks)} : ${subject.max_mark}"
 
             val background = rootHeader.background?.mutate()
 
@@ -154,7 +156,7 @@ class ExamSubjectAdapter(private var subjectList: List<ExamSubjectDetail>,
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.bind(subjectList[position],context)
+        holder.bind(subjectList[position], context)
     }
 
     override fun getItemCount(): Int = subjectList.size

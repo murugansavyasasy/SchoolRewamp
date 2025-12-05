@@ -10,7 +10,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
@@ -77,7 +76,7 @@ class InteractionWithStaffAdapter(
                 } else {
                     fullList.filter {
                         it.subject_name.lowercase().contains(query) ||
-                        it.name.lowercase().contains(query)
+                                it.name.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -146,6 +145,7 @@ class InteractionWithStaffAdapter(
             }
 
         }
+
         fun getRelativeTime(apiTime: String): String {
             return try {
                 val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
@@ -162,7 +162,14 @@ class InteractionWithStaffAdapter(
                     minutes < 1 -> context.getString(R.string.just_now)
                     minutes < 60 -> "$minutes ${context.getString(R.string.min_ago)}"
                     hours < 24 -> "$hours ${context.getString(R.string.hr_ago)}"
-                    days < 7 -> "$days ${context.getString(R.string.day_)}${if (days > 1) "${context.getString(R.string.s_)}" else ""} ${context.getString(R.string.ago)}"
+                    days < 7 -> "$days ${context.getString(R.string.day_)}${
+                        if (days > 1) "${
+                            context.getString(
+                                R.string.s_
+                            )
+                        }" else ""
+                    } ${context.getString(R.string.ago)}"
+
                     else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
                 }
             } catch (e: Exception) {

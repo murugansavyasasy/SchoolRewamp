@@ -15,8 +15,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewData
-import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.Model.WhatsNewUpdateData
-import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -76,7 +74,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 
             } else {
 
-                Log.d("Reviewlist loaded failed"," Review list has been not loaded")
+                Log.d("Reviewlist loaded failed", " Review list has been not loaded")
             }
         }
 
@@ -155,11 +153,13 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 
 
     private fun loadrateusdata() {
-        if(Constant.isParentChoose){
+        if (Constant.isParentChoose) {
             appViewModel!!.getreviewlist(isAccessToken!!, isChildDetails!!.whatsapp_number)
-        }
-        else{
-            appViewModel!!.getreviewlist(isAccessToken!!, Constant.user_details!!.staff_details[0].mobile_no)
+        } else {
+            appViewModel!!.getreviewlist(
+                isAccessToken!!,
+                Constant.user_details!!.staff_details[0].mobile_no
+            )
         }
     }
 

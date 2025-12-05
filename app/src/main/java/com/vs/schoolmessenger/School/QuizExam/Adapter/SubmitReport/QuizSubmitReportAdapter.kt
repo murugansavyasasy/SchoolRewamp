@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -69,23 +68,22 @@ class QuizSubmitReportAdapter(
         private val tvSubmittedOn: TextView = itemView.findViewById(R.id.tvSubmittedOn)
 
 
-
         fun bind(data: GetQuizSubmissionListData, position: Int) {
             lblName.text = data.student_name
-            lblStandardSection.text = "${context.getString(R.string.Class_)}: ${data.standard}-${data.section}"
-            if (data.is_submit){
+            lblStandardSection.text =
+                "${context.getString(R.string.Class_)}: ${data.standard}-${data.section}"
+            if (data.is_submit) {
 //                tvSubmittedOn.visibility=View.VISIBLE
-                tvSubmittedOn.text =Constant.convertDateFormatType2(data.submitted_on)
-                tvStatus1.text =context.getString(R.string.submitted)
+                tvSubmittedOn.text = Constant.convertDateFormatType2(data.submitted_on)
+                tvStatus1.text = context.getString(R.string.submitted)
                 tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
-                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+                tvStatus1.setTextColor(ContextCompat.getColor(context, R.color.white))
 
-            }
-            else{
+            } else {
 //                tvSubmittedOn.visibility=View.GONE
-                tvStatus1.text =context.getString(R.string.pending)
-                tvStatus.background.setTint(ContextCompat.getColor(context,R.color.orange))
-                tvStatus1.setTextColor(ContextCompat.getColor(context,R.color.white))
+                tvStatus1.text = context.getString(R.string.pending)
+                tvStatus.background.setTint(ContextCompat.getColor(context, R.color.orange))
+                tvStatus1.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
             if (data.gender.equals("male", ignoreCase = true)) {
@@ -104,9 +102,6 @@ class QuizSubmitReportAdapter(
                     .placeholder(R.drawable.person_circle)
                     .into(imgAvatar)
             }
-
-
-
 
 
         }

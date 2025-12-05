@@ -2,9 +2,9 @@ package com.vs.schoolmessenger.Repository
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Utils.Constant
 import java.text.SimpleDateFormat
 import java.util.Locale
-import com.vs.schoolmessenger.Utils.Constant
 
 object ApiCallRequest {
 
@@ -321,8 +321,6 @@ object ApiCallRequest {
     }
 
 
-
-
     fun isSendLsrwSkill(
         targetType: Int,
         iframe: String,
@@ -374,7 +372,6 @@ object ApiCallRequest {
 
         return jsonObject
     }
-
 
 
     fun islsrwSkillSubmit(

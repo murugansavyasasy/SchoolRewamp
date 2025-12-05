@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.vs.schoolmessenger.R
 import de.hdodenhof.circleimageview.CircleImageView
+
 class CountryListAdapter(
     private val context: Context,
     private val countryList: List<Country>,

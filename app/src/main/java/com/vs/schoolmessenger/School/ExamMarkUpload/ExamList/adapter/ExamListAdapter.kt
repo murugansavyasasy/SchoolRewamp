@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.OnExamSelectListener
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ExamListAdapter(
@@ -107,8 +107,18 @@ class ExamListAdapter(
             if (isSelected) {
                 imgCheck.setImageResource(R.drawable.double_circle)
                 title.setTextColor(ContextCompat.getColor(context, R.color.dark_bg_orange_2))
-                leftRibbon.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_bg_orange_2))
-                header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_bg_orange_3))
+                leftRibbon.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.dark_bg_orange_2
+                    )
+                )
+                header.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.light_bg_orange_3
+                    )
+                )
             } else {
                 imgCheck.setImageResource(R.drawable.circle_icon)
                 title.setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -142,11 +152,13 @@ class ExamListAdapter(
                         subjectsRv.visibility = View.VISIBLE
                         lblNoDataFound.visibility = View.GONE
                     }
+
                     getSubjectActivitiesList!!.isNotEmpty() -> {
                         subjectsRv.adapter = SubjectListAdapter(getSubjectActivitiesList!!, context)
                         subjectsRv.visibility = View.VISIBLE
                         lblNoDataFound.visibility = View.GONE
                     }
+
                     else -> {
                         subjectsRv.visibility = View.GONE
                         lblNoDataFound.visibility = View.VISIBLE
