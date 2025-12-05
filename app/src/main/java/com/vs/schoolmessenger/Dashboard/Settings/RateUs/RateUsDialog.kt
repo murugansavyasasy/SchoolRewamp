@@ -18,6 +18,7 @@ import com.google.android.flexbox.JustifyContent
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.CategoryItem
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RemarkItem
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.ReviewData
 import com.vs.schoolmessenger.R
@@ -25,7 +26,8 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RateUsBinding
 
-class RateUsDialog : DialogFragment(), View.OnClickListener {
+class RateUsDialog(   private val fromScreen: String?,
+                      private val listener: RateUsListener?) : DialogFragment(), View.OnClickListener {
 
     private var _binding: RateUsBinding? = null
     private val binding get() = _binding!!
@@ -155,48 +157,55 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.lblClose, R.id.lblMayBeLater, R.id.btnBackHome -> dismiss()
+            R.id.lblClose, R.id.lblMayBeLater, R.id.btnBackHome -> dialogdismiss()
             R.id.btnsubmit -> submitReview()
+        }
+    }
+
+    private fun dialogdismiss() {
+        dismiss()
+        if (fromScreen == Constant.SplashScreen__) {
+            listener?.onRateUsCompleted(false)
         }
     }
 
     private fun submitReview() {
         val description = binding.edtSuggestions.text.toString().trim()
 
-        // Build the full categories array (allRemarks contains rating 1–5 groups)
+
         val categoriesArray = JsonArray()
 
         allRemarks?.forEach { remark ->
             val remarkObj = JsonObject().apply {
-                addProperty("name", remark.name)
-                addProperty("rating", remark.rating)
+                addProperty(Constant.name__, remark.name)
+                addProperty(Constant.rating, remark.rating)
             }
 
             val categoryItemsArray = JsonArray()
 
             remark.category?.forEach { item ->
                 val itemObj = JsonObject().apply {
-                    addProperty("name", item.name)
-                    addProperty("selected", item.selected == true)
+                    addProperty(Constant.name__, item.name)
+                    addProperty(Constant.selected__, item.selected == true)
                 }
                 categoryItemsArray.add(itemObj)
             }
 
-            remarkObj.add("category", categoryItemsArray)
+            remarkObj.add(Constant.category, categoryItemsArray)
             categoriesArray.add(remarkObj)
         }
 
-        // Final JSON body
+
         val json = JsonObject().apply {
-            add("categories", categoriesArray)
-            addProperty("rating", ratingValue)
-            addProperty("description", description)
-            addProperty("mobile_number", mobileNumber)
+            add(Constant.categories, categoriesArray)
+            addProperty(Constant.rating, ratingValue)
+            addProperty(Constant.description, description)
+            addProperty(Constant.mobile_number, mobileNumber)
         }
 
         Log.d("FINAL_JSON", json.toString())
 
-        // Send to API
+
         appViewModel.reviewpost("", json)
 
         observeSubmitReviewResponse()
@@ -205,9 +214,27 @@ class RateUsDialog : DialogFragment(), View.OnClickListener {
 
     private fun observeSubmitReviewResponse() {
         appViewModel.reviewpost!!.observe(viewLifecycleOwner) { response ->
-            if (response?.status == true) {
-                binding.rateUs.visibility = View.GONE
-                binding.rateusSuccess.visibility = View.VISIBLE
+
+            if(response != null) {
+                if (response?.status == true) {
+                    binding.rateUs.visibility = View.GONE
+                    binding.rateusSuccess.visibility = View.VISIBLE
+
+//                    if (fromScreen == Constant.SplashScreen__) {
+//                        listener?.onRateUsCompleted(true)
+//                    }
+                } else {
+                    dismiss()
+                    if (fromScreen == Constant.SplashScreen__) {
+                        listener?.onRateUsCompleted(false)
+                    }
+                }
+            }
+            else{
+                dismiss()
+                if (fromScreen == Constant.SplashScreen__) {
+                    listener?.onRateUsCompleted(false)
+                }
             }
         }
     }

@@ -195,6 +195,9 @@ object Constant {
     var msg_id = "msg_id"
     var msg_info = "msg_info"
     var header_id = "header_id"
+    var SplashScreen__ = "SplashScreen"
+    var categories = "categories"
+    var rating = "rating"
     var institute_id = "institute_id"
     var receiver_type = "receiver_type"
     var receiverid = "receiver_id"
@@ -637,6 +640,9 @@ object Constant {
 
 
     var category_name = "category_name"
+    var category = "category"
+    var name__ = "name"
+    var selected__ = "selected"
     var discount = "discount"
     var address = "address"
     var merchant_name = "merchant_name"

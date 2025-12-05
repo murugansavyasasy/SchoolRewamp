@@ -50,6 +50,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
@@ -341,11 +343,35 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     SharedPreference.putCountryId(this, Constant.country_details!!.id)
                     SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
-                    if (isVersionData!![0].update_available) {
-                        isShowUpdateAvailable(isVersionData!!)
+
+                    val isRateUs = true
+                    val isMobileNumber = SharedPreference.getMobileNumber(this)
+
+                    if (isRateUs && isMobileNumber!!.isNotEmpty()) {
+                        val dialog = RateUsDialog(
+                            fromScreen = Constant.SplashScreen__,
+                            listener = object : RateUsListener {
+                                override fun onRateUsCompleted(isSuccess: Boolean) {
+                                    if (isVersionData!![0].update_available) {
+                                        isShowUpdateAvailable(isVersionData!!)
+                                    } else {
+                                        autoLoginFlowCheck(isVersionData!!)
+                                    }
+                                }
+                            }
+                        )
+                        dialog.isCancelable = false
+                        dialog.show(supportFragmentManager, "RateUsDialog")
+
                     } else {
-                        autoLoginFlowCheck(isVersionData!!)
+                        if (isVersionData!![0].update_available) {
+                            isShowUpdateAvailable(isVersionData!!)
+                        } else {
+                            autoLoginFlowCheck(isVersionData!!)
+                        }
                     }
+
+
                 }
             }
         }

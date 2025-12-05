@@ -35,6 +35,7 @@ import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
@@ -210,8 +211,18 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrFeedBack -> {
-                val dialog = RateUsDialog()
+                val dialog = RateUsDialog(
+                    fromScreen = "",
+                    listener = object : RateUsListener {
+                        override fun onRateUsCompleted(isSuccess: Boolean) {
+
+                        }
+                    }
+                )
                 dialog.show(parentFragmentManager, "RateUsDialog")
+
+//                val dialog = RateUsDialog("",this)
+//                dialog.show(parentFragmentManager, "RateUsDialog")
             }
 
             R.id.lnrFaq -> {
