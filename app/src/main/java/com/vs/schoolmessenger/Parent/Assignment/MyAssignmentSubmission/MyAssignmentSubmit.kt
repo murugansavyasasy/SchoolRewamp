@@ -44,6 +44,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.SubmittedAssignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -165,9 +166,10 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             Constant.hideLoading(this@MyAssignmentSubmit)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, this)
                 if (response.status == true) {
-                    finish()
+                    showTopAlertPopup(response.message, this)
+                } else {
+                    Constant.showTopAlertPopup(response.message, this)
                 }
             }
         }
@@ -176,12 +178,14 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             Constant.hideLoading(this@MyAssignmentSubmit)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                showTopAlertPopup(response.message, this)
                 if (response.status == true) {
-                    finish()
+                    showTopAlertPopup(response.message, this)
+                } else {
+                    showTopAlertPopup(response.message, this)
                 }
             }
         }
+
 
         mAdapter = ImagePickingAdapter(this, selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
@@ -261,7 +265,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
-            isClickable = true // prevent clicks on background
+            isClickable = true
         }
 
         val marginInPx = TypedValue.applyDimension(
@@ -287,7 +291,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             isAwsUploadedFiles.clear()
             selectedFiles.clear()
             isCommunicationType = 1
-            val intent = Intent(activity, Mysubmission::class.java)
+            val intent = Intent(activity, Assignment::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             activity.startActivity(intent)
             closePopup()

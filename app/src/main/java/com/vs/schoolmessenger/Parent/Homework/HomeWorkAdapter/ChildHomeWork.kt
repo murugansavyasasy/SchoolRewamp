@@ -1012,10 +1012,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
+        Constant.showLoading(this)
         binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
+            Constant.hideLoading(this)
             binding.childlsrwlayoutxml.editDescription.error =
                 getString(R.string.Description_required)
             binding.childlsrwlayoutxml.editDescription.requestFocus()
@@ -1023,6 +1025,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
         if (totalSizeKB <= 0) {
+            Constant.hideLoading(this)
             Toast.makeText(
                 this,
                 getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT
