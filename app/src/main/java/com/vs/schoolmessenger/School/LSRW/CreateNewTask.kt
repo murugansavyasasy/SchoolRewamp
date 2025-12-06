@@ -238,8 +238,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         }
 
                         if (type == FileType.AUDIO) {
+                            Constant.showLoading(this@CreateNewTask)
                             lifecycleScope.launch {
                                 val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
+                                Constant.hideLoading(this@CreateNewTask)
                                 if (wavFile != null) {
                                     Constant.selectedFiles.add(
                                         FileItem(
@@ -492,8 +494,12 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         mediaRecorder?.release()
         mediaRecorder = null
 
+
+
+        Constant.showLoading(this@CreateNewTask)
         recordingFilePath?.let { path ->
             val file = File(path)
+            Constant.hideLoading(this@CreateNewTask)
             if (file.exists() && file.length() > 0) {
                 if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))

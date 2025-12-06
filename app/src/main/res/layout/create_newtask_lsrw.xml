@@ -314,8 +314,9 @@
                 android:hint="@string/dd_mm_yyyy"
                 android:padding="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"/>
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
 
             <RelativeLayout

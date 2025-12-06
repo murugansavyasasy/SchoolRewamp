@@ -1,29 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
-    android:layout_alignParentBottom="true"
-    android:background="@drawable/dual_color_background"
     android:layout_height="match_parent"
-  >
+    android:background="@drawable/dual_color_background"
+    android:fitsSystemWindows="true">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Content Area -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/zero"
-        android:layout_weight="1" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomlnrtab"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusBarBackground" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomlnrtab"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/fifty_five"
         android:layout_marginBottom="@dimen/fifteen"
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
         app:cardCornerRadius="@dimen/thirty_five"
         app:cardElevation="@dimen/eight"
-        app:cardBackgroundColor="@android:color/white">
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/segmentedControl"
@@ -74,5 +89,5 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</LinearLayout>
 
+</androidx.constraintlayout.widget.ConstraintLayout>

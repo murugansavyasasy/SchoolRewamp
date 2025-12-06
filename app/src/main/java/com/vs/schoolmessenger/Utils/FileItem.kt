@@ -16,5 +16,6 @@ enum class FileType {
 
 data class FileItem(
     val path: String,
-    val type: FileType
+    val type: FileType,
+    var durationMs: Long? = null
 )
