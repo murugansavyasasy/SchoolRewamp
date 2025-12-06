@@ -7,8 +7,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.media.ExifInterface
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
@@ -44,6 +47,7 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
@@ -65,6 +69,7 @@ import com.vs.schoolmessenger.databinding.CreateNewtaskLsrwBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -305,20 +310,24 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA
+                this,
+                Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             openCameraIntent()
         } else {
-
+            // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.CAMERA
+                    this,
+                    Manifest.permission.CAMERA
                 )
             ) {
                 showCameraPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_REQUEST_CODE
                 )
             }
         }
@@ -676,11 +685,13 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this, "${applicationContext.packageName}.fileprovider", photoFile
+                    this,
+                    "${applicationContext.packageName}.fileprovider",
+                    photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(
                     this,
@@ -693,21 +704,127 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
     }
 
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
+//            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
+//                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//            return
+//        }
+//
+//        fun addPath(uri: Uri) {
+//            val mimeType = contentResolver.getType(uri)
+//            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+//                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+//                return
+//            }
+//
+//            val fileName = getFileName(uri)
+//            val type = when {
+//                fileName.endsWith(".pdf", true) -> FileType.PDF
+//                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+//                fileName.endsWith(".xls", true) || fileName.endsWith(
+//                    ".xlsx",
+//                    true
+//                ) -> FileType.EXCEL
+//
+//                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+//                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
+//                fileName.endsWith(".txt", true) -> FileType.TXT
+//                else -> FileType.OTHER
+//            }
+//
+//            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+//                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//            } else {
+//                Constant.Remaining = 0
+//            }
+//            for (item in Constant.selectedFiles) {
+//                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+//            }
+//        }
+//
+//        when (requestCode) {
+//            CAMERA_IMAGE_REQUEST -> {
+//                cameraImageFilePath?.let { filePath ->
+//                    var file = File(filePath)
+//                    if (file.exists()) {
+//                        if (!file.name.endsWith(".jpg", true)) {
+//                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
+//                            if (file.renameTo(newFile)) {
+//                                cameraImageFilePath = newFile.absolutePath
+//                                file = newFile
+//                            }
+//                        }
+//
+//                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+//                        if (fixedBitmap != null) {
+//                            val outputStream = FileOutputStream(file)
+//                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+//                            outputStream.flush()
+//                            outputStream.close()
+//                        }
+//                        val uri = Uri.fromFile(file)
+//                        Constant.Remaining = Constant.Remaining - 1
+//                        addPath(uri)
+//
+//                    } else {
+//                        Toast.makeText(
+//                            this,
+//                            getString(R.string.camera_image_file_not_found),
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//                    }
+//                } ?: run {
+//                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            PICK_DOCUMENT_REQUEST -> {
+//                val clipData = data?.clipData
+//                val singleUri = data?.data
+//
+//                if (clipData != null) {
+//                    for (i in 0 until clipData.itemCount) {
+//                        val uri = clipData.getItemAt(i).uri
+//                        addPath(uri)
+//                    }
+//                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+//
+//                } else if (singleUri != null) {
+//                    addPath(singleUri)
+//                    Constant.Remaining = Constant.Remaining - 1
+//
+//                }
+//            }
+//        }
+//
+//        mAdapter?.notifyDataSetChanged()
+//        updateRemainingCount()
+//    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
-            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
-                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
-                    .show()
-            }
+        if (resultCode != RESULT_OK) return
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
-        fun addFile(uri: Uri) {
-            if (Constant.selectedFiles.size >= MAX_FILES + 1) return
-
+        fun addPath(uri: Uri) {
             val mimeType = contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
+            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+                return
+            }
 
             val fileName = getFileName(uri)
             val type = when {
@@ -724,35 +841,115 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            } else {
+                Constant.Remaining = 0
+            }
+            for (item in Constant.selectedFiles) {
+                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+            }
         }
 
         when (requestCode) {
             CAMERA_IMAGE_REQUEST -> {
-                cameraImageFilePath?.let { path ->
-                    val file = File(path)
+                cameraImageFilePath?.let { filePath ->
+                    var file = File(filePath)
                     if (file.exists()) {
-                        val finalFile = if (!file.name.endsWith(".jpg", true)) {
+                        if (!file.name.endsWith(".jpg", true)) {
                             val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-                            file.renameTo(newFile)
-                            newFile
-                        } else file
-                        addFile(Uri.fromFile(finalFile))
+                            if (file.renameTo(newFile)) {
+                                cameraImageFilePath = newFile.absolutePath
+                                file = newFile
+                            }
+                        }
+
+                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+
+                        if (fixedBitmap != null) {
+                            val outputStream = FileOutputStream(file)
+                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                            outputStream.flush()
+                            outputStream.close()
+                        }
+
+                        val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+                        addPath(uri)
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
+                } ?: run {
+                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
 
-            PICK_DOCUMENT_REQUEST -> {
-                data?.clipData?.let { clip ->
-                    for (i in 0 until clip.itemCount) {
-                        addFile(clip.getItemAt(i).uri)
+       PICK_DOCUMENT_REQUEST -> {
+                val clipData = data?.clipData
+                val singleUri = data?.data
+
+                if (clipData != null) {
+                    for (i in 0 until clipData.itemCount) {
+                        val uri = clipData.getItemAt(i).uri
+                        addPath(uri)
                     }
-                } ?: data?.data?.let { addFile(it) }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
+                } else if (singleUri != null) {
+                    addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
+                }
             }
         }
-
         mAdapter?.notifyDataSetChanged()
-        updateRemainingCount()
+    }
+
+    private fun fixImageOrientation(imagePath: String): Bitmap? {
+        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
+        val exif = ExifInterface(imagePath)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                matrix.setRotate(180f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+            ExifInterface.ORIENTATION_NORMAL -> return bitmap
+            else -> return bitmap
+        }
+
+        return try {
+            val fixedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            bitmap.recycle()  // Free up memory from the original bitmap
+            fixedBitmap
+        } catch (e: OutOfMemoryError) {
+            null
+        }
     }
 
     private fun getPathFromUri(uri: Uri): String? {
@@ -806,6 +1003,59 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             storageDir
         )
     }
+
+
+//    private fun getPathFromUri(uri: Uri): String? {
+//        // Content scheme
+//        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
+//            val projection = arrayOf(MediaStore.Images.Media.DATA)
+//            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+//                if (cursor.moveToFirst()) {
+//                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+//                    return cursor.getString(columnIndex)
+//                }
+//            }
+//        }
+//
+//        // File scheme fallback
+//        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
+//            return uri.path
+//        }
+//        return null
+//    }
+//
+//    @SuppressLint("Range")
+//    private fun getFileName(uri: Uri): String {
+//        var result: String? = null
+//        if (uri.scheme == Constant.content_) {
+//            val cursor = contentResolver.query(uri, null, null, null, null)
+//            cursor?.use {
+//                if (it.moveToFirst()) {
+//                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+//                }
+//            }
+//        }
+//        if (result == null) {
+//            result = uri.path
+//            val cut = result?.lastIndexOf('/')
+//            if (cut != null && cut != -1) {
+//                result = result?.substring(cut + 1)
+//            }
+//        }
+//        return result ?: ""
+//    }
+//
+//    @Throws(IOException::class)
+//    private fun createImageFile(): File {
+//        val timeStamp: String =
+//            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+//        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
+//        return File.createTempFile(
+//            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+//            ".jpg",
+//            storageDir
+//        )
+//    }
 
     private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
@@ -1065,7 +1315,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
         }
     }
-
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {

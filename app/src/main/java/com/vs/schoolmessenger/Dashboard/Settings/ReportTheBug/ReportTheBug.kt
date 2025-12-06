@@ -308,17 +308,19 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                     // not used
                 }
 
-                override fun remove(isRemovingId: Int) {
-                    if (isRemovingId >= 0 && isRemovingId < isImageSelected.size) {
-                        isImageSelected.removeAt(isRemovingId)
-                        if (isRemovingId < Constant.selectedFiles.size) {
-                            Constant.selectedFiles.removeAt(isRemovingId)
-                        }
+                override fun remove(pos: Int) {
+                    if (pos >= 0 && pos < isImageSelected.size) {
 
-                        // Refresh adapter and height
-                        binding.imgPreview.adapter = this@ReportTheBug.let { courseAdapter }
+                        val removedItem = isImageSelected[pos]
+
+                        // Remove from UI list
+                        isImageSelected.removeAt(pos)
+
+                        // Remove the SAME item from selectedFiles safely
+                        Constant.selectedFiles.remove(removedItem)
+
+                        courseAdapter?.notifyDataSetChanged()
                         Constant.setGridViewHeight(binding.imgPreview, 2)
-
                     }
                 }
             }
@@ -335,7 +337,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
         } else {
-
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
             intent.putExtra("isWithOutHotCodeImage", true)

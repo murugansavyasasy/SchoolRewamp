@@ -369,7 +369,6 @@ object Constant {
     var VOICE_UNREAD = "VOICE_UNREAD"
     var VOICE_READ = "VOICE_READ"
     var TEXT = "TEXT"
-
     var TEXT_UNREAD = "TEXT_UNREAD"
     var TEXT_READ = "TEXT_READ"
     var TEXT_ALL = "TEXT_ALL"
@@ -780,7 +779,6 @@ object Constant {
         return networkInfo != null && networkInfo.isConnected
     }
 
-
     fun setGridViewHeight(gridView: GridView, columns: Int) {
         val adapter = gridView.adapter ?: return
         if (columns <= 0) return
@@ -793,18 +791,28 @@ object Constant {
         }
 
         // Calculate number of rows
-        val rows = (totalItems + columns - 1) / columns
+        val rows = if (totalItems % columns == 0) {
+            totalItems / columns
+        } else {
+            totalItems / columns + 1
+        }
 
-        // Measure the first item height (assuming all are same height)
-        val listItem = adapter.getView(0, null, gridView)
-        listItem.measure(
-            View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
-            View.MeasureSpec.UNSPECIFIED
-        )
-        val itemHeight = listItem.measuredHeight
+        var totalHeight = 0
 
-        // Correct total height (height per row × number of rows)
-        val totalHeight = (itemHeight * rows) + (gridView.verticalSpacing * (rows - 1))
+        for (row in 0 until rows) {
+            val index = row * columns // first item in each row
+            val listItem = adapter.getView(index, null, gridView)
+
+            listItem.measure(
+                View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
+                View.MeasureSpec.UNSPECIFIED
+            )
+
+            totalHeight += listItem.measuredHeight
+        }
+
+        // Add spacing between rows
+        totalHeight += gridView.verticalSpacing * (rows - 1)
 
         val params = gridView.layoutParams
         params.height = totalHeight
