@@ -6,6 +6,11 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -52,9 +57,19 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        enableEdgeToEdge()
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            binding.statusBarBackground.layoutParams =
+                (binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams).apply {
+                    height = statusBars.top
+                }
+            binding.statusBarBackground.requestLayout()
+
+            insets
+        }
 
         bottomSheetBehavior = BottomSheetBehavior.from<View?>(binding.bottomLayout.bottomSheet)
 

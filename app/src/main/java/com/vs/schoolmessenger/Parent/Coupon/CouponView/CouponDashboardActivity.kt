@@ -31,17 +31,17 @@ class CouponDashboardActivity : BaseActivity<FragmentCouponDashboardBinding>(),
         super.setupViews()
         enableEdgeToEdge()
 
-            ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
-                val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
 
-                binding.statusBarBackground.layoutParams =
-                    (binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams).apply {
-                        height = statusBars.top
-                    }
-                binding.statusBarBackground.requestLayout()
+            binding.statusBarBackground.layoutParams =
+                (binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams).apply {
+                    height = statusBars.top
+                }
+            binding.statusBarBackground.requestLayout()
 
-                insets
-            }
+            insets
+        }
 
 
         binding = FragmentCouponDashboardBinding.inflate(layoutInflater)

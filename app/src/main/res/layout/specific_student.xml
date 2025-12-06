@@ -1,105 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:id="@+id/main"
+    android:background="@color/light_white">
 
+    <!-- STATUS BAR -->
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- TOOLBAR -->
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcySpecificStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/rytSend"
-        android:layout_below="@+id/toolbarLayout"
+    <!-- MAIN CONTENT AREA -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlaAssignmentReport"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten">
+        android:layout_marginEnd="@dimen/ten"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toTopOf="@+id/rytSend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <!-- RECYCLER VIEW -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcySpecificStudent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/ten"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/lytNoDataFound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rcySpecificStudent"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
+        <!-- NO DATA FOUND (Image + Text) -->
+        <LinearLayout
+            android:id="@+id/lytNoDataFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:layout_width="@dimen/two_hundred"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/no_data_found"></ImageView>
+            <ImageView
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/no_data_found" />
 
+            <TextView
+                android:id="@+id/noDataFound"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty" />
+        </LinearLayout>
+
+        <!-- SIMPLE NO RECORDS TEXT -->
         <TextView
-            android:id="@+id/noDataFound"
+            android:id="@+id/lblNoRecordsFound"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="">
+            android:text="@string/no_student_found"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/lblNoRecordsFound"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/no_student_found"
-        android:visibility="gone">
-
-    </TextView>
-
+    <!-- SEND BUTTON -->
     <RelativeLayout
         android:id="@+id/rytSend"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/fifty"
         android:layout_marginEnd="@dimen/fifty"
         android:layout_marginBottom="@dimen/ten"
-        android:layout_weight="0.5"
         android:background="@drawable/bg_orange"
         android:gravity="center"
         android:padding="@dimen/eight"
-        android:visibility="visible">
-
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/lblSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:fontFamily="@font/poppins_regular"
-            android:gravity="center_horizontal"
             android:text="@string/Send"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="normal"
-            android:visibility="visible">
-
-        </TextView>
-
+            android:textSize="@dimen/fifteen_sp" />
 
         <ImageView
             android:id="@+id/imgSend1"
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
-            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/lblSend"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="@dimen/five"
-            android:layout_toEndOf="@+id/lblSend"
             android:src="@drawable/send_icon_white" />
 
-
     </RelativeLayout>
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
