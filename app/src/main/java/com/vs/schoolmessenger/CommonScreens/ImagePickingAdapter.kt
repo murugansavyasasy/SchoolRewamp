@@ -36,6 +36,7 @@ class ImagePickingAdapter(
         val del: ImageView = v.findViewById(R.id.imgDelete)
         val delete: ImageView = v.findViewById(R.id.imgaudiodelete)
         val imgVideoPlay: ImageView = v.findViewById(R.id.imgVideoPlay)
+        val imgVideo: ImageView = v.findViewById(R.id.imgVideo)
         val lblTime: TextView = v.findViewById(R.id.lblTime)
 
     }
@@ -59,12 +60,6 @@ class ImagePickingAdapter(
         layoutParams.topMargin = defaultTopMargin
 
         holder.itemView.layoutParams = layoutParams
-
-        if (item.type.toString() == Constant.VIDEO) {
-            holder.imgVideoPlay.visibility = VISIBLE
-        } else {
-            holder.imgVideoPlay.visibility = GONE
-        }
 
         val filePath = item.path
         val fileUri = when {
@@ -105,6 +100,11 @@ class ImagePickingAdapter(
             notifyItemRangeChanged(pos, items.size)
         }
 
+        if (item.type.toString() == Constant.VIDEO) {
+            holder.imgVideo.visibility = VISIBLE
+        } else {
+            holder.imgVideo.visibility = GONE
+        }
         holder.itemView.setOnClickListener {
             if (pos != 0) {
                 if (!item.path.contains("amazonaws.")) {
