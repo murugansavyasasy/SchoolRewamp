@@ -108,7 +108,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         pInfo.longVersionCode
         binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
 
-        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
 
@@ -411,8 +411,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             .setCancelable(true)
             .create()
 
-
-
         imgClose = dialogView.findViewById(R.id.imgClose)
 
         chEnglish = dialogView.findViewById(R.id.chEnglish)
@@ -532,19 +530,25 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         var isAppLanguage = SharedPreference.getLanguage(requireActivity()) ?: "en"
         Log.d("isAppLanguage", isAppLanguage.toString())
-        if (isAppLanguage.equals("")) {
+        if (isAppLanguage == "") {
             isAppLanguage = Constant.en
         }
-        if (isAppLanguage.equals(Constant.ta)) {
-            chTamil.isChecked = true
-        } else if (isAppLanguage.equals(Constant.th)) {
-            chThai.isChecked = true
-        } else if (isAppLanguage.equals(Constant.hi)) {
-            chHindi.isChecked = true
-        } else if (isAppLanguage.equals(Constant.en)) {
-            chEnglish.isChecked = true
-        } else if (isAppLanguage.equals(Constant.ar)) {
-            chArabic.isChecked = true
+        when (isAppLanguage) {
+            Constant.ta -> {
+                chTamil.isChecked = true
+            }
+            Constant.th -> {
+                chThai.isChecked = true
+            }
+            Constant.hi -> {
+                chHindi.isChecked = true
+            }
+            Constant.en -> {
+                chEnglish.isChecked = true
+            }
+            Constant.ar -> {
+                chArabic.isChecked = true
+            }
         }
 
         btnConfirm.setOnClickListener {

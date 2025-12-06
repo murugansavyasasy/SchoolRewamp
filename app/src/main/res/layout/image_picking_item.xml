@@ -29,6 +29,15 @@
         android:background="@drawable/white_circle_bg"
         android:src="@drawable/del_icon" />
 
+    <ImageView
+        android:id="@+id/imgVideo"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/video_play" />
+
     <RelativeLayout
         android:id="@+id/audioBubble"
         android:layout_width="match_parent"

@@ -63,7 +63,7 @@ class FileGridAdapter(
 
             mimeType?.startsWith("video/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
-                binding.videoIcon.visibility = View.VISIBLE
+//                binding.videoIcon.visibility = View.VISIBLE
 
                 // Check size and disable if too large
                 val size = videoSizeCache.getOrPut(uri) { getFileSize(context, uri) }
