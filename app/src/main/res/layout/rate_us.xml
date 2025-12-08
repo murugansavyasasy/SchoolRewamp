@@ -19,7 +19,9 @@
             android:id="@+id/rate_us"
             android:layout_width="match_parent"
             android:visibility="visible"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:scrollIndicators="top|bottom">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -208,7 +210,9 @@
             android:id="@+id/rateus_success"
             android:layout_width="match_parent"
             android:visibility="gone"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:scrollIndicators="top|bottom">
 
             <RelativeLayout
                 android:layout_width="match_parent"

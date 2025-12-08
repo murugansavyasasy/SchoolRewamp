@@ -99,7 +99,7 @@ class LessonPlanAdapter(
                 context.getString(R.string.chapters_completed) + completed_items + " - " + total_items
             lblLevel.text = item.lesson_plan_status.toString() ?: ""
 
-            val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
+            val btnedit = itemView.findViewById<ImageView>(R.id.edit_icon)
             itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
 
             recyclerView.layoutManager = LinearLayoutManager(this@LessonPlanAdapter.context)
