@@ -189,73 +189,67 @@ class LSRWImagePickingAdapter(
                 return@setOnClickListener
             }
 
-            if (item.path.contains("amazonaws.", ignoreCase = true)) {
 
-                Constant.commonFileList = Constant.selectedFiles.map {
-                    CommonFileData(it.type.toString(), it.path)
-                }.toMutableList()
-
-                Constant.selectedFileIndex = pos - 1
-
-                context.startActivity(Intent(context, FilesViewActivity::class.java))
-                return@setOnClickListener
-            }
-
-            if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
-
-                val realFiles = Constant.selectedFiles.drop(1) // Exclude placeholder at index 0
-                val filtered = realFiles.filter {
-                    it.type.toString() in listOf(Constant.IMAGE, Constant.VIDEO)
-                }
-
-                Constant.commonFileList = filtered.map {
-                    CommonFileData(it.type.toString(), it.path)
-                }.toMutableList()
-
-                Constant.selectedFileIndex =
-                    filtered.indexOfFirst { it.path == item.path }.coerceAtLeast(0)
-
-                context.startActivity(Intent(context, FilesViewActivity::class.java))
-                return@setOnClickListener
-            }
-
-            // Case 3: All other docs → open using external app
-            try {
-                val uri = if (item.path.startsWith("content://")) {
-                    Uri.parse(item.path)
+            if (!item.path.contains("amazonaws.")) {
+                if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
+                    val filteredFiles = Constant.selectedFiles.filter {
+                        it.type.toString() == Constant.IMAGE || it.type.toString() == Constant.VIDEO
+                    }
+                    Constant.commonFileList = filteredFiles.map {
+                        CommonFileData(
+                            type = it.type.toString(),
+                            path = it.path
+                        )
+                    }
+                        .toMutableList()
+                    val clickedPath = item.path
+                    val indexInFiltered = filteredFiles.indexOfFirst { it.path == clickedPath }
+                        .let { if (it >= 0) it else 0 }
+                    Constant.selectedFileIndex = indexInFiltered - 1
+                    val intent = Intent(context, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, "Your Files")
+                    context.startActivity(intent)
                 } else {
-                    FileProvider.getUriForFile(
-                        context,
-                        "${context.packageName}.fileprovider",
-                        File(item.path)
+
+                    val uri = if (item.path.startsWith("content://")) {
+                        Uri.parse(item.path)
+                    } else {
+                        FileProvider.getUriForFile(
+                            context,
+                            "${context.packageName}.fileprovider",
+                            File(item.path)
+                        )
+                    }
+
+                    val mimeType = getMimeTypeFromUri(uri)
+                    val openIntent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(uri, mimeType)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    val activities = context.packageManager.queryIntentActivities(
+                        openIntent,
+                        PackageManager.MATCH_DEFAULT_ONLY
                     )
+                    if (activities.isNotEmpty()) {
+                        context.startActivity(Intent.createChooser(openIntent, "Open with"))
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Please download an app to view this file.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-
-                val mimeType = getMimeTypeFromUri(uri)
-
-                val openIntent = Intent(Intent.ACTION_VIEW).apply {
-                    setDataAndType(uri, mimeType)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-
-                val apps = context.packageManager.queryIntentActivities(
-                    openIntent,
-                    PackageManager.MATCH_DEFAULT_ONLY
-                )
-
-                if (apps.isNotEmpty()) {
-                    context.startActivity(Intent.createChooser(openIntent, "Open with"))
-                } else {
-                    Toast.makeText(context, "No app found to open this file.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-            } catch (e: Exception) {
-                Toast.makeText(context, "Unable to open file", Toast.LENGTH_SHORT).show()
+            } else {
+                Constant.commonFileList = Constant.selectedFiles.map {
+                    CommonFileData(type = it.type.toString(), path = it.path)
+                }.toMutableList()
+                Constant.selectedFileIndex = pos - 1
+                val intent = Intent(context, FilesViewActivity::class.java)
+                intent.putExtra(Constant.subjectName, "Your Files")
+                context.startActivity(intent)
             }
         }
-
     }
 
 

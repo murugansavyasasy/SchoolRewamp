@@ -1899,8 +1899,6 @@ class ParentServices {
 
     val isprofilelistLiveData: LiveData<ProfileListResponse?>
         get() = isParentprofilelist
-
-
     var isFeeInvoices: MutableLiveData<FeeInvoiceResponse?> = MutableLiveData()
 
     fun getStudentInvoices(
