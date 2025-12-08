@@ -61,15 +61,22 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
 
             binding.statusBarBackground.layoutParams =
                 (binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams).apply {
                     height = statusBars.top
                 }
-            binding.statusBarBackground.requestLayout()
+
+            (binding.btnActivateCoupon.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                bottomMargin = navBars.bottom + resources.getDimensionPixelSize(R.dimen.fourty)
+            }.also {
+                binding.btnActivateCoupon.layoutParams = it
+            }
 
             insets
         }
+
 
         bottomSheetBehavior = BottomSheetBehavior.from<View?>(binding.bottomLayout.bottomSheet)
 
