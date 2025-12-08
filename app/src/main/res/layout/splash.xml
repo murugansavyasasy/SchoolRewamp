@@ -90,7 +90,7 @@
         android:layout_below="@+id/imgSplash"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/minus_one_nineteen"
-        android:src="@mipmap/school_chimes_logo" />
+        android:src="@mipmap/school_app_logo" />
 
     <RelativeLayout
         android:layout_alignParentBottom="true"
