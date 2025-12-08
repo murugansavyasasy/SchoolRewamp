@@ -63,6 +63,22 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
             }
         }
 
+        binding.txtCreatePassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytMobile.isSelected = hasFocus
+        }
+
+        binding.imgHide.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytMobile.isSelected = hasFocus
+        }
+
+        binding.txtConfirmPassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
+        }
+
+        binding.rytPassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
+        }
+
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
             Constant.hideLoading(this@PasswordGeneration)
             if (response != null) {

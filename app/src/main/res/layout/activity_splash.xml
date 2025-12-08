@@ -124,7 +124,7 @@
                 android:layout_height="@dimen/three"
                 android:layout_marginTop="@dimen/six"
                 android:alpha="0"
-                android:background="@color/purple_color_lite_2"
+                android:background="@drawable/gradient_purple_blue"
                 app:layout_constraintEnd_toEndOf="@+id/llBottomText"
                 app:layout_constraintStart_toStartOf="@+id/llBottomText"
                 app:layout_constraintTop_toBottomOf="@+id/llBottomText" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">School Chimes-Beta</string>
+    <string name="app_name">School Chimes</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
     <string name="EnterTheNewPassword">Enter the new password</string>
@@ -1319,6 +1319,9 @@
     <string name="verify_the_data_and_make_any_necessary_corrections">Verify the data and make any necessary corrections</string>
     <string name="save_all_marks">Save All Marks</string>
     <string name="current_date_selected_time_expired">Current date is selected and the time is expired</string>
+    <string name="select_module">Select Module</string>
+    <string name="remark">Remark</string>
+    <string name="send_mail">Send Mail</string>
     <string name="no_question_have_been_added_yet">No question have been added yet</string>
 
 
