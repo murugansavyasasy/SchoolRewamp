@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/dashboard_view"
-        android:title="@string/dashboard"
+        android:title="@string/lblHome"
         android:icon="@drawable/ic_home"/>
     <item android:id="@+id/view_profile"
-        android:title="@string/view_profile"
+        android:title="@string/lblProfile"
         android:icon="@drawable/person_circle"/>
     <item android:id="@+id/setting_click"
         android:title="@string/settings"

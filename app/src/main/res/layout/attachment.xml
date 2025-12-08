@@ -80,10 +80,9 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_marginTop="@dimen/twenty"
-                            android:layout_marginEnd="@dimen/fifteen"
                             android:paddingHorizontal="@dimen/ten">
 
-                            <ImageView
+                        <ImageView
                                 android:id="@+id/imgHistory"
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"

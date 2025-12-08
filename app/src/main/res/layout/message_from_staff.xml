@@ -38,13 +38,44 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/ten">
                 <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/ryrEmergencyvoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/imgEmergency"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:src="@drawable/emergencyvoice_indicator"
+                        android:layout_height="@dimen/twenty">
+
+                    </ImageView>
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imgEmergency"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/lblEmergency"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/red"
+                        android:text="@string/emergency_message"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_below="@+id/ryrEmergencyvoice"
                     android:id="@+id/lnrDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/lblLogo"
-                        android:layout_width="@dimen/fourty"
-                        android:layout_height="@dimen/fourty"
+                        android:layout_width="@dimen/fifty"
+                        android:layout_height="@dimen/fifty"
                         android:gravity="center"
                         android:text="SA"
                         android:layout_centerVertical="true"
@@ -54,7 +85,7 @@
                         android:background="@drawable/bg_light_blue_circle"
                         android:backgroundTint="@color/PrimaryColor" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_marginEnd="@dimen/ten"
                         android:id="@+id/rlaNRDetails"
                         android:layout_marginStart="@dimen/ten"
@@ -62,33 +93,31 @@
                         android:layout_toEndOf="@+id/lblLogo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         >
 
                         <TextView
                             android:id="@+id/lblName"
-                            android:layout_alignParentStart="true"
                             android:layout_width="wrap_content"
-                            android:layout_toStartOf="@+id/lblRole"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:text="Dr. Senthana Abert"
-                            style="@style/CustomTextStylePoppinsMedium" />
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="@dimen/fourteen_sp"
+                            />
 
                         <TextView
+                            android:layout_marginTop="@dimen/five"
                             android:id="@+id/lblRole"
-                            android:layout_alignParentEnd="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/ten"
                             android:paddingVertical="@dimen/four"
                             android:paddingHorizontal="@dimen/thirteen"
                             android:text=" Vice Principal "
+                            android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/twele_sp"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:background="@drawable/gray_bg_radius" />
-                    </RelativeLayout>
+                            android:background="@drawable/light_blue_radius_bg" />
+                    </LinearLayout>
                 </RelativeLayout>
                 <!-- Logo -->
 
@@ -100,7 +129,7 @@
                     android:id="@+id/rlaDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginStart="@dimen/six"
                     android:orientation="vertical">
 
 
@@ -120,58 +149,72 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="Please attend the meeting scheduled at 5 PM."
-                        style="@style/CustomTextStylePoppinsMedium" />
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:textColor="@color/gnt_gray"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:text="@string/view"
-                        android:layout_gravity="end"
-                        android:id="@+id/lblView"
-                        android:paddingVertical="@dimen/four"
-                        android:paddingHorizontal="@dimen/thirteen"
-                        android:textColor="@color/iconBlue"
-                        android:drawableStart="@drawable/eye_open_icon"
-                        android:drawableTint="@color/PrimaryColor"
-                        android:gravity="center"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:drawablePadding="@dimen/three"
-                        android:background="@drawable/rect_stoke_bg"
-                        android:layout_marginTop="@dimen/ten"
+                        />
+                    <View
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_width="match_parent"
+                        android:background="@color/light_white_2"
+                        android:layout_height="@dimen/one">
+
+                    </View>
+
+                    <RelativeLayout
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/lblTimeDate"
+                            android:drawablePadding="@dimen/five"
+                            android:drawableStart="@drawable/clock_icon_small"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gnt_gray"
+                            android:layout_marginTop="@dimen/five"
+                            android:text="Today 04:45 PM  "
+                            android:layout_toStartOf="@+id/lblView"
+                            android:textSize="@dimen/twele_sp"
+                            >
+                        </TextView>
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:text="@string/view"
+                            android:layout_gravity="end"
+                            android:id="@+id/lblView"
+                            android:paddingVertical="@dimen/four"
+                            android:paddingHorizontal="@dimen/thirteen"
+                            android:textColor="@color/white"
+                            android:drawableStart="@drawable/eye_fill_icon"
+                            android:gravity="center"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:drawablePadding="@dimen/three"
+                            android:background="@drawable/rect_fill_primary_colour"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_height="wrap_content">
+                        </TextView>
+
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/lblSchoolName"
+                        android:layout_toStartOf="@+id/lblTimeDate"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@color/gnt_gray"
+                        android:text=""
+                        android:textSize="@dimen/twele_sp"
+                        >
 
                     </TextView>
-                   <RelativeLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-                       <TextView
-                           android:id="@+id/lblSchoolName"
-                           android:layout_toStartOf="@+id/lblTimeDate"
-                           style="@style/CustomTextStylePoppinsMedium"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_alignParentStart="true"
-                           android:textColor="@color/gnt_gray"
-                           android:layout_marginTop="@dimen/five"
-                           android:text="ABC Scvybircyvbnmetyvbnjmktyuimkctyvbnmrytguijokrytuioftgyhujik"
-                           android:layout_marginEnd="@dimen/five"
-                           android:textSize="@dimen/twele_sp"
-                           >
-
-                       </TextView>
-                       <TextView
-                           android:layout_alignParentEnd="true"
-                           android:id="@+id/lblTimeDate"
-                           style="@style/CustomTextStylePoppinsMedium"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:textColor="@color/gnt_gray"
-                           android:layout_marginTop="@dimen/five"
-                           android:text="Today 04:45 PM  "
-                           android:textSize="@dimen/twele_sp"
-                           >
-
-                       </TextView>
-                   </RelativeLayout>
 
                 </LinearLayout>
 
@@ -179,3 +222,186 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:id="@+id/rlaHeader"-->
+<!--    android:clipToPadding="false"-->
+<!--    android:clipChildren="false"-->
+<!--    android:paddingTop="@dimen/fifteen"-->
+<!--    android:paddingStart="@dimen/five"-->
+<!--    android:paddingBottom="@dimen/five"-->
+<!--    android:paddingEnd="@dimen/five"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgReadStatus"-->
+<!--            android:layout_width="@dimen/thirty"-->
+<!--            android:layout_height="@dimen/thirty"-->
+<!--            android:layout_marginStart="@dimen/five"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:elevation="@dimen/ten"-->
+<!--            android:src="@drawable/new_icon1"-->
+<!--            android:visibility="gone">-->
+
+<!--        </ImageView>-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardCornerRadius="@dimen/fifteen"-->
+<!--            app:cardElevation="4dp">-->
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="@dimen/ten">-->
+<!--                <RelativeLayout-->
+<!--                    android:id="@+id/lnrDetails"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblLogo"-->
+<!--                        android:layout_width="@dimen/fourty"-->
+<!--                        android:layout_height="@dimen/fourty"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="SA"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="@dimen/sixteen_sp"-->
+<!--                        style="@style/CustomTextStylePoppinsBold"-->
+<!--                        android:background="@drawable/bg_light_blue_circle"-->
+<!--                        android:backgroundTint="@color/PrimaryColor" />-->
+
+<!--                    <RelativeLayout-->
+<!--                        android:layout_marginEnd="@dimen/ten"-->
+<!--                        android:id="@+id/rlaNRDetails"-->
+<!--                        android:layout_marginStart="@dimen/ten"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_toEndOf="@+id/lblLogo"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        >-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/lblName"-->
+<!--                            android:layout_alignParentStart="true"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_toStartOf="@+id/lblRole"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_centerVertical="true"-->
+<!--                            android:text="Dr. Senthana Abert"-->
+<!--                            style="@style/CustomTextStylePoppinsMedium" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/lblRole"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_centerVertical="true"-->
+<!--                            android:layout_marginStart="@dimen/ten"-->
+<!--                            android:paddingVertical="@dimen/four"-->
+<!--                            android:paddingHorizontal="@dimen/thirteen"-->
+<!--                            android:text=" Vice Principal "-->
+<!--                            android:textSize="@dimen/twele_sp"-->
+<!--                            style="@style/CustomTextStylePoppinsBold"-->
+<!--                            android:background="@drawable/gray_bg_radius" />-->
+<!--                    </RelativeLayout>-->
+<!--                </RelativeLayout>-->
+<!--                &lt;!&ndash; Logo &ndash;&gt;-->
+
+
+<!--                &lt;!&ndash; Details Section &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:layout_marginTop="@dimen/five"-->
+<!--                    android:layout_below="@+id/lnrDetails"-->
+<!--                    android:id="@+id/rlaDetails"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/ten"-->
+<!--                    android:orientation="vertical">-->
+
+
+<!--                    &lt;!&ndash; Title &ndash;&gt;-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:text="Meeting Reminder"-->
+<!--                        style="@style/CustomTextStylePoppinsBold" />-->
+
+<!--                    &lt;!&ndash; Description &ndash;&gt;-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblDescription"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="2dp"-->
+<!--                        android:text="Please attend the meeting scheduled at 5 PM."-->
+<!--                        style="@style/CustomTextStylePoppinsMedium" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:text="@string/view"-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:id="@+id/lblView"-->
+<!--                        android:paddingVertical="@dimen/four"-->
+<!--                        android:paddingHorizontal="@dimen/thirteen"-->
+<!--                        android:textColor="@color/iconBlue"-->
+<!--                        android:drawableStart="@drawable/eye_open_icon"-->
+<!--                        android:drawableTint="@color/PrimaryColor"-->
+<!--                        android:gravity="center"-->
+<!--                        android:layout_marginEnd="@dimen/ten"-->
+<!--                        android:drawablePadding="@dimen/three"-->
+<!--                        android:background="@drawable/rect_stoke_bg"-->
+<!--                        android:layout_marginTop="@dimen/ten"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                    </TextView>-->
+<!--                   <RelativeLayout-->
+<!--                       android:layout_width="match_parent"-->
+<!--                       android:layout_height="wrap_content">-->
+<!--                       <TextView-->
+<!--                           android:id="@+id/lblSchoolName"-->
+<!--                           android:layout_toStartOf="@+id/lblTimeDate"-->
+<!--                           style="@style/CustomTextStylePoppinsMedium"-->
+<!--                           android:layout_width="wrap_content"-->
+<!--                           android:layout_height="wrap_content"-->
+<!--                           android:layout_alignParentStart="true"-->
+<!--                           android:textColor="@color/gnt_gray"-->
+<!--                           android:layout_marginTop="@dimen/five"-->
+<!--                           android:text="ABC Scvybircyvbnmetyvbnjmktyuimkctyvbnmrytguijokrytuioftgyhujik"-->
+<!--                           android:layout_marginEnd="@dimen/five"-->
+<!--                           android:textSize="@dimen/twele_sp"-->
+<!--                           >-->
+
+<!--                       </TextView>-->
+<!--                       <TextView-->
+<!--                           android:layout_alignParentEnd="true"-->
+<!--                           android:id="@+id/lblTimeDate"-->
+<!--                           style="@style/CustomTextStylePoppinsMedium"-->
+<!--                           android:layout_width="wrap_content"-->
+<!--                           android:layout_height="wrap_content"-->
+<!--                           android:textColor="@color/gnt_gray"-->
+<!--                           android:layout_marginTop="@dimen/five"-->
+<!--                           android:text="Today 04:45 PM  "-->
+<!--                           android:textSize="@dimen/twele_sp"-->
+<!--                           >-->
+
+<!--                       </TextView>-->
+<!--                   </RelativeLayout>-->
+
+<!--                </LinearLayout>-->
+
+<!--            </RelativeLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
+<!--    </RelativeLayout>-->
+<!--</RelativeLayout>-->
