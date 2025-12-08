@@ -1,34 +1,23 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
-import android.Manifest
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -43,12 +32,13 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
-import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Faq
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
+import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
@@ -56,7 +46,6 @@ import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
-import java.io.ByteArrayOutputStream
 
 
 class SettingsFragment : Fragment(), View.OnClickListener {
@@ -116,17 +105,17 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
         val versionName = pInfo.versionName
-        val versionCode = pInfo.longVersionCode
+        pInfo.longVersionCode
         binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
 
-        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
 
         authViewModel!!.isLogout?.observe(requireActivity()) { response ->
             Constant.hideLoading(requireActivity())
             if (response != null) {
-                if(response.status){
+                if (response.status) {
                     // Dismiss popup to prevent WindowLeaked
                     popupWindow?.dismiss()
                     popupWindow = null
@@ -140,10 +129,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     startActivity(intent)
                     requireActivity().finish()
                     Toast.makeText(requireActivity(), response.message, Toast.LENGTH_SHORT).show()
-                }
-                else {
-//                Toast.makeText(requireActivity(), response?.message?:getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
-                    Constant.showErrorAlert(requireActivity(),getString(R.string.Oops),response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
+                } else {
+                    Constant.showErrorAlert(
+                        requireActivity(),
+                        getString(R.string.Oops),
+                        response?.message
+                            ?: getString(R.string.something_went_wrong_please_try_again_later)
+                    )
                 }
             }
 
@@ -161,9 +153,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
             Toast.makeText(
                 requireActivity(),
-                "${getString(R.string.Fingerprint_login)} ${if (isChecked) getString(R.string.enabled) else getString(
-                    R.string.disabled
-                )}",
+                "${getString(R.string.Fingerprint_login)} ${
+                    if (isChecked) getString(R.string.enabled) else getString(
+                        R.string.disabled
+                    )
+                }",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -217,8 +211,18 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrFeedBack -> {
-                val dialog = RateUsDialog()
+                val dialog = RateUsDialog(
+                    fromScreen = "",
+                    listener = object : RateUsListener {
+                        override fun onRateUsCompleted(isSuccess: Boolean) {
+
+                        }
+                    }
+                )
                 dialog.show(parentFragmentManager, "RateUsDialog")
+
+//                val dialog = RateUsDialog("",this)
+//                dialog.show(parentFragmentManager, "RateUsDialog")
             }
 
             R.id.lnrFaq -> {
@@ -262,12 +266,17 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 val reviewInfo: ReviewInfo = task.result
                 val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
                 flow.addOnCompleteListener {
-                    Toast.makeText(requireActivity(),
-                        getString(R.string.review_flow_completed_debug_simulation), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.review_flow_completed_debug_simulation),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
-                Toast.makeText(requireActivity(),
-                    getString(R.string.failed_to_start_review_flow), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.failed_to_start_review_flow), Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -279,9 +288,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     }
 
 
-   private fun showInAppReview(requireActivity: FragmentActivity) {
+    private fun showInAppReview(requireActivity: FragmentActivity) {
         val manager = ReviewManagerFactory.create(requireActivity())
-        val request: Task<com.google.android.play.core.review.ReviewInfo> = manager.requestReviewFlow()
+        val request: Task<ReviewInfo> =
+            manager.requestReviewFlow()
 
         request.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -320,8 +330,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
-
     private fun isShowLogoutPopup() {
 
         if (!isAdded || requireActivity().isFinishing || requireActivity().isDestroyed) {
@@ -351,31 +359,21 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             popupWindow!!.dismiss()
 
             val jsonObject = JsonObject().apply {
-                addProperty(APIKeyNames.Req_mobile_number,SharedPreference.getMobileNumber(requireActivity()).toString())
+                addProperty(
+                    APIKeyNames.Req_mobile_number,
+                    SharedPreference.getMobileNumber(requireActivity()).toString()
+                )
                 addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
-                addProperty(APIKeyNames.Req_secure_id, Constant.getAndroidSecureId(requireActivity()))
+                addProperty(
+                    APIKeyNames.Req_secure_id,
+                    Constant.getAndroidSecureId(requireActivity())
+                )
             }
 
             authViewModel!!.isLogout(jsonObject, requireActivity())
             Constant.showLoading(requireActivity())
 
-//            SharedPreference.putLogout(requireActivity(), true)
-//            SharedPreference.setLoggedIn(requireActivity(), false)
-//
-//            val intent = Intent(requireActivity(), Login::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
-//            requireActivity().finish()
-
         }
-
-//        val rootView = requireActivity().window.decorView.rootView
-//        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
-//
-//        popupWindow.setOnDismissListener {
-//            clearDim()
-//        }
-
         val activity = activity ?: return
         if (activity.isFinishing || activity.isDestroyed) return
 
@@ -413,8 +411,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             .setCancelable(true)
             .create()
 
-
-
         imgClose = dialogView.findViewById(R.id.imgClose)
 
         chEnglish = dialogView.findViewById(R.id.chEnglish)
@@ -437,11 +433,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         rlaHindi = dialogView.findViewById(R.id.rlaHindi)
         rlaArabic = dialogView.findViewById(R.id.rlaArabic)
 
-        chTamil.buttonTintList=null
-        chEnglish.buttonTintList=null
-        chHindi.buttonTintList=null
-        chArabic.buttonTintList=null
-        chThai.buttonTintList=null
+        chTamil.buttonTintList = null
+        chEnglish.buttonTintList = null
+        chHindi.buttonTintList = null
+        chArabic.buttonTintList = null
+        chThai.buttonTintList = null
 
 
         isRemoveCheckBox()
@@ -532,21 +528,27 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        var isAppLanguage = SharedPreference.getLanguage(requireActivity())?: "en"
+        var isAppLanguage = SharedPreference.getLanguage(requireActivity()) ?: "en"
         Log.d("isAppLanguage", isAppLanguage.toString())
-        if (isAppLanguage.equals("")) {
+        if (isAppLanguage == "") {
             isAppLanguage = Constant.en
         }
-        if (isAppLanguage.equals(Constant.ta)) {
-            chTamil.isChecked = true
-        } else if (isAppLanguage.equals(Constant.th)) {
-            chThai.isChecked = true
-        } else if (isAppLanguage.equals(Constant.hi)) {
-            chHindi.isChecked = true
-        } else if (isAppLanguage.equals(Constant.en)) {
-            chEnglish.isChecked = true
-        } else if (isAppLanguage.equals(Constant.ar)) {
-            chArabic.isChecked = true
+        when (isAppLanguage) {
+            Constant.ta -> {
+                chTamil.isChecked = true
+            }
+            Constant.th -> {
+                chThai.isChecked = true
+            }
+            Constant.hi -> {
+                chHindi.isChecked = true
+            }
+            Constant.en -> {
+                chEnglish.isChecked = true
+            }
+            Constant.ar -> {
+                chArabic.isChecked = true
+            }
         }
 
         btnConfirm.setOnClickListener {

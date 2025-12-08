@@ -37,7 +37,7 @@ class AddQuestionAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    var isLastAnswerIndex=0
+    var isLastAnswerIndex = 0
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -81,7 +81,7 @@ class AddQuestionAdapter(
 
 
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
-        val startPosition = itemList!!.size
+        itemList!!.size
         itemList!!.addAll(newItems)
 //        notifyItemRangeInserted(startPosition, newItems.size)
         notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
@@ -102,9 +102,9 @@ class AddQuestionAdapter(
                 c_option = "",
                 d_option = "",
                 mark = 0,
-                iframe="",
-                file_size="",
-                thumbnail="",
+                iframe = "",
+                file_size = "",
+                thumbnail = "",
                 sourceType = QuestionSource.USER,
                 file_path = emptyList()
             )
@@ -136,7 +136,10 @@ class AddQuestionAdapter(
             notifyItemRemoved(position)
 //            notifyItemRangeChanged(position, itemList!!.size)
 
-            notifyItemRangeChanged(0, itemList!!.size)// Rebind all items so lblremove visibility updates correctly
+            notifyItemRangeChanged(
+                0,
+                itemList!!.size
+            )// Rebind all items so lblremove visibility updates correctly
             Constant.isQuestionLimit += 1
             listener?.onCountUpdated()
         }
@@ -155,26 +158,31 @@ class AddQuestionAdapter(
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.question.isBlank() -> {
                     holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.a_option.isBlank() -> {
                     holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.b_option.isBlank() -> {
                     holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.c_option.isBlank() -> {
                     holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.d_option.isBlank() -> {
                     holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
@@ -183,8 +191,10 @@ class AddQuestionAdapter(
 
                 //here "0" means means option if option is 0 need to show Please select correct option
                 item.answer.isBlank() || item.answer == "0" -> {
-                    Toast.makeText(context,
-                        context.getString(R.string.please_select_correct_option), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.please_select_correct_option), Toast.LENGTH_SHORT
+                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
@@ -194,8 +204,10 @@ class AddQuestionAdapter(
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
+
                 item.mark!! <= 0 -> {
-                    holder?.edtMark?.error = context.getString(R.string.mark_should_be_greater_than_zero)
+                    holder?.edtMark?.error =
+                        context.getString(R.string.mark_should_be_greater_than_zero)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
@@ -212,7 +224,8 @@ class AddQuestionAdapter(
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                             rv.removeOnScrollListener(this)
 
-                            val holder = rv.findViewHolderForAdapterPosition(invalidIndex) as? DataViewHolder
+                            val holder =
+                                rv.findViewHolderForAdapterPosition(invalidIndex) as? DataViewHolder
                             holder?.let {
                                 when {
                                     itemList!![invalidIndex].chapter.isBlank() -> it.edtChapterName.requestFocus()
@@ -258,7 +271,7 @@ class AddQuestionAdapter(
         holder.spinnerCorrectAnswer.setSelection(isLastAnswerIndex)
         spinnerAdapter.selectedPosition = isLastAnswerIndex
         spinnerAdapter.notifyDataSetChanged()
-        Log.d("pos",isLastAnswerIndex.toString())
+        Log.d("pos", isLastAnswerIndex.toString())
 
     }
 
@@ -280,8 +293,8 @@ class AddQuestionAdapter(
 
         fun bind(data: GetQuizQuestionReportData, position: Int) {
 
-            rytSpinnerHeader.visibility=View.VISIBLE
-            edtCorrectAns.visibility=View.GONE
+            rytSpinnerHeader.visibility = View.VISIBLE
+            edtCorrectAns.visibility = View.GONE
 
             edtChapterName.setText(data.chapter)
             edtQuestion.setText(data.question)
@@ -317,19 +330,25 @@ class AddQuestionAdapter(
             spinnerCorrectAnswer.setSelection(selectedIndex)
             spinnerAdapter.selectedPosition = selectedIndex
 
-            spinnerCorrectAnswer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        itemList!![adapterPosition].answer = pos.toString()
-                        isLastAnswerIndex=pos
-                        spinnerAdapter.selectedPosition = pos
+            spinnerCorrectAnswer.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View?,
+                        pos: Int,
+                        id: Long
+                    ) {
+                        if (adapterPosition != RecyclerView.NO_POSITION) {
+                            itemList!![adapterPosition].answer = pos.toString()
+                            isLastAnswerIndex = pos
+                            spinnerAdapter.selectedPosition = pos
 
-                        spinnerAdapter.notifyDataSetChanged()
+                            spinnerAdapter.notifyDataSetChanged()
+                        }
                     }
-                }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
+                    override fun onNothingSelected(parent: AdapterView<*>) {}
+                }
 
 
             edtChapterName.doAfterTextChanged { text ->
@@ -380,11 +399,10 @@ class AddQuestionAdapter(
             }
 
             //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
-            if(itemList!!.size==1){
-                lblremove.visibility= View.GONE
-            }
-            else{
-                lblremove.visibility= View.VISIBLE
+            if (itemList!!.size == 1) {
+                lblremove.visibility = View.GONE
+            } else {
+                lblremove.visibility = View.VISIBLE
             }
 
             lblremove.setOnClickListener {

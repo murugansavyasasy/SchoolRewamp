@@ -24,7 +24,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -114,27 +113,22 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         val menu = navigationView.menu
         val menuItem = menu.findItem(R.id.role_click)
-        if(userDetails!!.is_parent && userDetails!!.is_staff){
+        if (userDetails!!.is_parent && userDetails!!.is_staff) {
             menuItem.isVisible = true  // show
-        }
-        else if(userDetails!!.is_parent){
-            if(userDetails!!.child_details.size > 1){
+        } else if (userDetails!!.is_parent) {
+            if (userDetails!!.child_details.size > 1) {
                 menuItem.isVisible = true  // show
-            }
-            else{
+            } else {
                 menuItem.isVisible = false  // hide
             }
-        }
-        else if(userDetails!!.is_staff){
+        } else if (userDetails!!.is_staff) {
             if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                if(userDetails!!.staff_details.size > 1){
+                if (userDetails!!.staff_details.size > 1) {
                     menuItem.isVisible = true  // show
-                }
-                else{
+                } else {
                     menuItem.isVisible = false  // hide
                 }
-            }
-            else{
+            } else {
                 menuItem.isVisible = false
             }
         }
@@ -178,16 +172,19 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         // ✅ Use correct lifecycle-aware callback
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                val currentFragment =
+                    supportFragmentManager.findFragmentById(R.id.fragment_container)
                 when (currentFragment) {
                     is ParentHomeFragment -> {
                         // Exit app when on HomeFragment
                         finish()
                     }
+
                     else -> {
                         // Navigate to HomeFragment
                         updateNavBar(R.id.icon_home)
-                        supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, ParentHomeFragment())?.commit()
+                        supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.fragment_container, ParentHomeFragment())?.commit()
                     }
                 }
             }
@@ -252,8 +249,8 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             popupWindow.dismiss()
             isLogout(
                 activity = this,
-                viewModel =authViewModel,
-                secure_id = Constant.getAndroidSecureId(this) ,
+                viewModel = authViewModel,
+                secure_id = Constant.getAndroidSecureId(this),
                 device_type = Constant.isDeviceType,
                 mobile_number = SharedPreference.getMobileNumber(this).toString()
             ) { isSuccess, message ->
@@ -267,7 +264,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     startActivity(Intent(this, Login::class.java))
                 } else {
 //                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-                    Constant.showErrorAlert(this,getString(R.string.Oops),message)
+                    Constant.showErrorAlert(this, getString(R.string.Oops), message)
                 }
             }
 

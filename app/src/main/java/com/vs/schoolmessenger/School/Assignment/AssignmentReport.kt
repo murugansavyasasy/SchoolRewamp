@@ -55,6 +55,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     override fun getViewBinding(): AssignmentReportBinding {
         return AssignmentReportBinding.inflate(layoutInflater)
     }
+
     var isAssignmentId = ""
     var isAssignmentPosition = 0
     var isTotalSelectedItem = 0
@@ -82,6 +83,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -89,7 +91,8 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        val params = binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+        val params =
+            binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
         params.removeRule(RelativeLayout.START_OF)
         params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
         binding.toolbarLayout.lytTitleAndName.layoutParams = params
@@ -109,23 +112,23 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
             val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
-            SharedPreference.putStaffDetails(this,matchedChild!!)
+            SharedPreference.putStaffDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
         binding.toolbarLayout.layoutCreateSlot.visibility = View.GONE
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.rlaSpinner.visibility=View.VISIBLE
-        binding.toolbarLayout.imgBack.setOnClickListener{onBackPressed()}
+        binding.toolbarLayout.rlaSpinner.visibility = View.GONE
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        isAcademicYear = Constant.isAcademicYearList
+        isAcademicYear = isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
         if (!isAcademicYear.isNullOrEmpty()) {
-            isValidAcademicYear =
-                isAcademicYear!!.any { it.current_academic_year == true }
+            isValidAcademicYear = isAcademicYear!!.any { it.current_academic_year == true }
             isAcademicYearId = isAcademicYear!![0].id
+            isAcademicYearId = Constant.isCurrentAcademicYearId
             isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         }
         if (fromNotification) {
@@ -171,6 +174,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                     updateNoDataVisibility()
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -192,6 +196,9 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 if (isAcademicYearList == data) return@observe
                 isAcademicYearList = data
                 isAcademicYear = data
+                val activeYear = data.find { it.current_academic_year == true }
+                Constant.isCurrentAcademicYearId = activeYear?.id!!
+                isAcademicYearId = Constant.isCurrentAcademicYearId
                 isLoadAcademicYear(isAcademicYear)
             }
         }
@@ -254,6 +261,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             }
         }
     }
+
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(isAccessToken!!, this)
     }
@@ -293,7 +301,6 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     }
 
 
-
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         // Try a few times if not yet bound.
         val maxRetries = 6
@@ -313,7 +320,10 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             } else if (attempt < maxRetries) {
                 recyclerView.postDelayed({ tryHighlight(attempt + 1) }, retryDelay)
             } else {
-                Log.d("ScrollDebug", "Failed to highlight position $position after $maxRetries attempts")
+                Log.d(
+                    "ScrollDebug",
+                    "Failed to highlight position $position after $maxRetries attempts"
+                )
             }
         }
 
@@ -324,23 +334,26 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = NewAcademicYearAdapter(this, isAcademicYear)
         binding.toolbarLayout.isAcademicSpinner.adapter = adapter
-        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                val selectedOption = isAcademicYear!![position]
-                isAcademicYearId = selectedOption.id
-                isCurrentAcademicYear = selectedOption.current_academic_year
-                Log.d(
-                    "DropdownMenu",
-                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
-                )
-                fetchAssignmentReportData()
+        binding.toolbarLayout.isAcademicSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYearId = selectedOption.id
+                    isCurrentAcademicYear = selectedOption.current_academic_year
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                    )
+                    fetchAssignmentReportData()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
+
     private fun fetchAssignmentReportData() {
         Constant.showLoading(this@AssignmentReport)
         binding.toolbarLayout.rytSearch.visibility = View.GONE
@@ -354,6 +367,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         binding.rcyAssignmentReport.adapter = isAssignmentAdapter
         appViewModel?.isGetAssignmentReport(isAccessToken!!, isAcademicYearId, this)
     }
+
     private fun loadAssignmentReportData() {
         val query = binding.toolbarLayout.txtSearch.text.toString().trim() // Capture current query
         val hasData = !isAssignmentReportData.isNullOrEmpty()
@@ -366,7 +380,8 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             isAssignmentAdapter = null
         } else {
             binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.VISIBLE
-            binding.toolbarLayout.rytSearch.visibility = View.GONE // Hide search layout, but keep input visible if active
+            binding.toolbarLayout.rytSearch.visibility =
+                View.GONE // Hide search layout, but keep input visible if active
             binding.rcyAssignmentReport.visibility = View.VISIBLE
             binding.lytNoDataFound.visibility = View.GONE
             isAssignmentAdapter = AssignmentAdapter(
@@ -383,12 +398,14 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             }
         }
     }
+
     override fun onSubmittedClick(data: AssignmentData) {
         val intent = Intent(this, AssignmentStudentList::class.java)
         intent.putExtra(Constant.assignment_id, data.id)
         intent.putExtra(Constant.type, Constant.SUBMITTED)
         startActivity(intent)
     }
+
     override fun onEditAndDeleteClick(
         data: AssignmentData, anchorView: View, adapterPosition: Int
     ) {
@@ -396,24 +413,28 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         isAssignmentPosition = adapterPosition
         showEditDeletePopup(data, anchorView)
     }
+
     override fun onNotSubmittedClick(data: AssignmentData) {
         val intent = Intent(this, AssignmentStudentList::class.java)
         intent.putExtra(Constant.assignment_id, data.id)
         intent.putExtra(Constant.type, Constant.NOTSUBMITTED)
         startActivity(intent)
     }
+
     override fun onItemClick(
         data: AssignmentData,
         holder: AssignmentAdapter.DataViewHolder
     ) {
         TODO("Not yet implemented")
     }
+
     override fun onReadStatusClick(
         isData: ParentAssignmentData,
         isPosition: Int
     ) {
         TODO("Not yet implemented")
     }
+
     override fun onClickListener(
         data: SubmittedAssignment,
         anchorView: View,
@@ -421,20 +442,23 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     ) {
         TODO("Not yet implemented")
     }
+
     private fun updateNoDataVisibility() {
         if (isAssignmentAdapter?.itemCount == 0) {
             binding.rcyAssignmentReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
-            binding.noDataFound.text = if (binding.toolbarLayout.txtSearch.text.toString().trim().isNotEmpty()) {
-                getString(R.string.no_data_found)
-            } else {
-                getString(R.string.no_data_found)
-            }
+            binding.noDataFound.text =
+                if (binding.toolbarLayout.txtSearch.text.toString().trim().isNotEmpty()) {
+                    getString(R.string.no_data_found)
+                } else {
+                    getString(R.string.no_data_found)
+                }
         } else {
             binding.rcyAssignmentReport.visibility = View.VISIBLE
             binding.lytNoDataFound.visibility = View.GONE
         }
     }
+
     fun showEditDeletePopup(data: AssignmentData, anchor: View) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
         val popupWindow = PopupWindow(
@@ -447,7 +471,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Constant.isClickEdit = true
             val intent = Intent(this, AssignmentCreate::class.java)
             intent.putExtra(Constant.assignment_data, data)
             startActivity(intent)
@@ -460,6 +484,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         }
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
+
     fun showSendConfirmationDialog(isEventUpdate: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
@@ -479,6 +504,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
+
     override fun onResume() {
         super.onResume()
         if (isAcademicYearId != -1) {
@@ -487,9 +513,10 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.txtSearch.setText("")
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        if(fromNotification) {
+        if (fromNotification) {
             val intent = Intent(this, SchoolDashboard::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

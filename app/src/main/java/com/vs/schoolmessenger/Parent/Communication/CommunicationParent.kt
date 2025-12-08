@@ -100,7 +100,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.root.post {
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("lblHeaderTitle", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
@@ -138,33 +139,36 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
             if (response != null) {
                 if (response?.status == true) {
-                if (response.data.isNotEmpty()) {
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                    appendData(response.data, archiveFlag = true)
-                    if (fromNotification) {
-                        scrollToMessageId(headerId)
+                    if (response.data.isNotEmpty()) {
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                        appendData(response.data, archiveFlag = true)
+                        if (fromNotification) {
+                            scrollToMessageId(headerId)
+                        }
+                    } else {
+                        hasFetchedMore = true
+                        if (allVoiceData.isNotEmpty()) {
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                        } else {
+                            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                        }
+                        checkAndShowNoData(
+                            filteredList = allVoiceData,
+                            message = response.message
+                        )
                     }
                 } else {
-                    hasFetchedMore = true
                     if (allVoiceData.isNotEmpty()) {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     } else {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     }
                     checkAndShowNoData(
-                        filteredList = allVoiceData,
-                        message = response.message
+                        message = response?.message
+                            ?: getString(R.string.something_went_wrong_please_try_again_later)
                     )
                 }
-            } else {
-                    if (allVoiceData.isNotEmpty()) {
-                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                    } else {
-                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                    }
-                checkAndShowNoData(message = response?.message?:getString(R.string.something_went_wrong_please_try_again_later))
             }
-        }
         }
 
 
@@ -241,7 +245,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         if (msg_id == -1) return
 
         allVoiceData?.let { list ->
-            val index = list.indexOfFirst { it.header_id== headerId }
+            val index = list.indexOfFirst { it.header_id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.recyclerInitial.post {

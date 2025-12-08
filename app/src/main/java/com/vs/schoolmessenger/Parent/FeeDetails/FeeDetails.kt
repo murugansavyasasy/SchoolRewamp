@@ -145,7 +145,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
-                binding.txtNoData.text = response?.message?:getString(R.string.no_data_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
                 Log.d("FeeDetails_Response", "No invoices found or response null")
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
@@ -158,7 +158,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
             R.id.btnPayment -> {
-                Log.d("isClickedTap",isClickedTap.toString())
+                Log.d("isClickedTap", isClickedTap.toString())
                 if (isClickedTap != 2) {
                     isClickedTap = 2
                     Constant.hideLoading(this)
@@ -308,8 +308,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     }
 
                     url.contains("/#/paymentsucccess/failed") -> {
-                        paymentFailed(getString(R.string.payment_failed),
-                            getString(R.string.please_try_again_later))
+                        paymentFailed(
+                            getString(R.string.payment_failed),
+                            getString(R.string.please_try_again_later)
+                        )
                     }
                 }
             }

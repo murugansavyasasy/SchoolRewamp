@@ -10,8 +10,6 @@ import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentListData
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
@@ -58,7 +56,7 @@ class AbsenteesMarkAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position],isCurrentAttendanceType, position)
+            holder.bind(itemList!![position], isCurrentAttendanceType, position)
 
         }
     }
@@ -73,7 +71,7 @@ class AbsenteesMarkAdapter(
         private val context: Context,
         private val itemList: MutableList<GetAttendanceStudentListData>,
         private val selectionListener: AbsenteesSelectionListener,
-        ) :
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val lblName: TextView = itemView.findViewById(R.id.lblName)
         private val lblRollNo: TextView = itemView.findViewById(R.id.lblRollNo)
@@ -85,7 +83,11 @@ class AbsenteesMarkAdapter(
         private val switchOD: ODCustomSwitch = itemView.findViewById(R.id.switchOD)
         private val cbLaterComer: CheckBox = itemView.findViewById(R.id.cbLaterComer)
 
-        fun bind(data: GetAttendanceStudentListData, isCurrentAttendanceType: String, position: Int) {
+        fun bind(
+            data: GetAttendanceStudentListData,
+            isCurrentAttendanceType: String,
+            position: Int
+        ) {
 
             if (data.roll_no.isNotEmpty()) {
                 lblRollNo.text = data.roll_no
@@ -131,7 +133,7 @@ class AbsenteesMarkAdapter(
 
             // -------- UI update based on att_status --------
             fun updateUI() {
-                Log.d("CurrentAttendanceType",isCurrentAttendanceType)
+                Log.d("CurrentAttendanceType", isCurrentAttendanceType)
                 when (getCurrentHalfStatus()) {
                     "P" -> {
                         lnrEntirePresent.visibility = View.VISIBLE
@@ -140,6 +142,7 @@ class AbsenteesMarkAdapter(
                         switchOD.setChecked(false)
                         cbLaterComer.isChecked = false
                     }
+
                     "A" -> {
                         lnrEntirePresent.visibility = View.GONE
                         lnrAbsent.visibility = View.VISIBLE
@@ -147,6 +150,7 @@ class AbsenteesMarkAdapter(
                         switchOD.setChecked(false)
                         cbLaterComer.isChecked = false
                     }
+
                     "OD" -> {
                         lnrEntirePresent.visibility = View.GONE
                         lnrAbsent.visibility = View.GONE
@@ -154,6 +158,7 @@ class AbsenteesMarkAdapter(
                         switchOD.setChecked(true)
                         cbLaterComer.isChecked = false
                     }
+
                     "P~" -> {
                         lnrEntirePresent.visibility = View.VISIBLE
                         lnrAbsent.visibility = View.GONE
@@ -249,12 +254,11 @@ class AbsenteesMarkAdapter(
 
 
     fun updateData(newList: List<GetAttendanceStudentListData>) {
-        Log.d("OldList",itemList.toString()+itemList!!.size.toString())
+        Log.d("OldList", itemList.toString() + itemList!!.size.toString())
         itemList = newList.toMutableList()
-        Log.d("newList",itemList.toString()+itemList!!.size.toString())
+        Log.d("newList", itemList.toString() + itemList!!.size.toString())
         notifyDataSetChanged()
     }
-
 
 
     fun unselectStudents(dataList: List<GetAttendanceStudentListData>) {

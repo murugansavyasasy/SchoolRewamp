@@ -157,11 +157,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         binding.lblImportQuestion.setOnClickListener(this)
         binding.lblSendQuiz.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
-        if (isSubmittedCount > 0) {
-            isOkFlag = true
-        } else {
-            isOkFlag = false
-        }
+        isOkFlag = isSubmittedCount > 0
 
         appViewModel?.isGetQuizQuestionReport?.observe(this) { response ->
             if (response != null) {
@@ -219,7 +215,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
 
         appViewModel?.isGetPickFromQBank?.observe(this) { response ->
-            binding.lblImportQuestion.isEnabled=true//now enable after api call
+            binding.lblImportQuestion.isEnabled = true//now enable after api call
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
@@ -227,31 +223,33 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     showResumeListDialog(this, pickQBankList)
                 } else {
                     Constant.hideLoading(this)
-                    pickQBankList= emptyList()
-                    isQuestionBankErrorMsg=response.message
+                    pickQBankList = emptyList()
+                    isQuestionBankErrorMsg = response.message
                     Constant.showErrorAlert(
                         this, getString(R.string.alert), response.message
                     )
                 }
-            }
-            else {
+            } else {
                 Constant.hideLoading(this)
-                pickQBankList= emptyList()
+                pickQBankList = emptyList()
                 Constant.showErrorAlert(
                     this,
                     getString(R.string.fail),
                     getString(R.string.Something_went_wrong_Please_try_again)
                 )
-                isQuestionBankErrorMsg=getString(R.string.Something_went_wrong_Please_try_again)
+                isQuestionBankErrorMsg = getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
         isFetchQuizQuestionReport()
 
         binding.lblAddQuestion.setOnClickListener {
+
             if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
                 Log.d("QuestionLimit", Constant.isQuestionLimit.toString())
                 Log.d("FinalListSize", quizAdapter!!.getUpdatedList().size.toString())
                 if (Constant.isQuestionLimit > 0) {
+                    binding.rcAddQuestion.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
                     quizAdapter!!.addItem(binding.rcAddQuestion)
                     UpdateQuestionCount()
                 } else {
@@ -387,8 +385,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     fun showResumeListDialog(
         activity: Activity, pickFomQbank: List<GetPickFromQBankData>
     ) {
-        if (isDialogShowing||activity.isFinishing || activity.isDestroyed) return
-        isDialogShowing = true//This is to ensure next time if it is clicked multiple times it will not open the dialog more than one time
+        if (isDialogShowing || activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing =
+            true//This is to ensure next time if it is clicked multiple times it will not open the dialog more than one time
 
         val dialogView =
             LayoutInflater.from(activity).inflate(R.layout.pick_question_from_qbank, null)
@@ -483,8 +482,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
             //Prevent import if no question is selected
             if (!adapter2.hasAnySelected()) {
-                Toast.makeText(this,
-                    getString(R.string.please_select_at_least_one_question_from_question_bank), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.please_select_at_least_one_question_from_question_bank),
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -552,12 +554,22 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 alertDialog.dismiss()
                 isDialogShowing = false
 
+                if (quizAdapter!!.getUpdatedList().size > 0) {
+                    binding.rcAddQuestion.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                } else {
+                    binding.rcAddQuestion.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
+                }
+
             } else {
                 // not enough slots; do nothing (no removals), just show error
                 Constant.showErrorAlert(
                     this, getString(R.string.alert), getString(R.string.question_limit_reached)
                 )
             }
+
+
         }
 
 
@@ -577,7 +589,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     fun UpdateQuestionCount() {
-        val text = "${isSavedQuestionLimit-Constant.isQuestionLimit}/$isSavedQuestionLimit"
+        val text = "${isSavedQuestionLimit - Constant.isQuestionLimit}/$isSavedQuestionLimit"
         val spannable = SpannableString(text)
 
         // Apply blue color only to part before "/"
@@ -756,24 +768,24 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         val allQuestions = quizAdapter!!.getUpdatedList()
 
         val apiUserQuestions = allQuestions
-        .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
-        .map {
-            QuizQuestionRequest(
-                ques_no = it.id,
-                chapter = it.chapter,
-                question = it.question,
-                a_option = it.a_option,
-                b_option = it.b_option,
-                c_option = it.c_option,
-                d_option = it.d_option,
-                answer = it.answer,
-                mark = it.mark,
-                iframe = it.iframe ?: "",
-                file_size = "",
-                thumbnail = it.thumbnail ?: "",
-                file_path = emptyList()
-            )
-        }
+            .filter { it.sourceType == QuestionSource.API || it.sourceType == QuestionSource.USER || it.sourceType == QuestionSource.QBANK }
+            .map {
+                QuizQuestionRequest(
+                    ques_no = it.id,
+                    chapter = it.chapter,
+                    question = it.question,
+                    a_option = it.a_option,
+                    b_option = it.b_option,
+                    c_option = it.c_option,
+                    d_option = it.d_option,
+                    answer = it.answer,
+                    mark = it.mark,
+                    iframe = it.iframe ?: "",
+                    file_size = "",
+                    thumbnail = it.thumbnail ?: "",
+                    file_path = emptyList()
+                )
+            }
 
         val updateQBankList: List<UpdateQBankItem> = allQuestions
             .filter { it.sourceType == QuestionSource.QBANK }
@@ -851,8 +863,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
 
         } else {
-             Constant.showLoading(this)
-                appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
+            Constant.showLoading(this)
+            appViewModel?.isQuizAddQuestion(isAccessToken!!, jsonObject)
         }
     }
 
@@ -913,15 +925,19 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     Constant.showLoading(this)
                     isFetchFromQuestionBank()
                     isFirstClick = false
-                    binding.lblImportQuestion.isEnabled=false //to avoid clicking multiple times i have disabled the button to api call
+                    binding.lblImportQuestion.isEnabled =
+                        false //to avoid clicking multiple times i have disabled the button to api call
 
                 } else {
-                    if (pickQBankList.isEmpty()){
-                        Log.d("isEmpty","isEmpty")
-                        Constant.showErrorAlert(this, getString(R.string.alert), isQuestionBankErrorMsg.toString())
-                    }
-                    else{
-                        Log.d("isEmpty","isNotEmpty")
+                    if (pickQBankList.isEmpty()) {
+                        Log.d("isEmpty", "isEmpty")
+                        Constant.showErrorAlert(
+                            this,
+                            getString(R.string.alert),
+                            isQuestionBankErrorMsg.toString()
+                        )
+                    } else {
+                        Log.d("isEmpty", "isNotEmpty")
                         showResumeListDialog(this, pickQBankList)
                     }
                 }
@@ -1397,39 +1413,39 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 //            }
         //  } else {
         var isCompressUrl = ""
-            val outputDir =
-                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
-            outputDir.mkdirs()
-        val newSelectedFiles = mutableListOf<QuizAttachmentData>()
+        val outputDir =
+            File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+        outputDir.mkdirs()
+        mutableListOf<QuizAttachmentData>()
         Constant.quizCompressImageFilesOnly(
-                context = this,
+            context = this,
             files = isFileUrl!!,
-                outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.JPEG,
-                quality = 80,
-                maxWidth = 1280,
-                maxHeight = 1280,
+            outputDir = outputDir.absolutePath,
+            format = Bitmap.CompressFormat.JPEG,
+            quality = 80,
+            maxWidth = 1280,
+            maxHeight = 1280,
             onEachProcessed = { outputPath, success ->
-                    if (success && outputPath != null) {
-                        val compressedFile = File(outputPath)
-                        val originalSizeKB = try {
-                            if (outputPath.startsWith("content://")) {
-                                contentResolver.openFileDescriptor(
-                                    Uri.parse(outputPath), "r"
-                                )?.statSize ?: 0
-                            } else {
-                                File(outputPath).length()
-                            }
-                        } catch (e: Exception) {
-                            0L
+                if (success && outputPath != null) {
+                    val compressedFile = File(outputPath)
+                    val originalSizeKB = try {
+                        if (outputPath.startsWith("content://")) {
+                            contentResolver.openFileDescriptor(
+                                Uri.parse(outputPath), "r"
+                            )?.statSize ?: 0
+                        } else {
+                            File(outputPath).length()
                         }
+                    } catch (e: Exception) {
+                        0L
+                    }
 
-                        Log.d(
-                            "Compressor",
-                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
-                        )
+                    Log.d(
+                        "Compressor",
+                        "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                    )
 
-                        isCompressUrl = outputPath
+                    isCompressUrl = outputPath
 //                        newSelectedFiles.add(
 //                            QuizAttachmentData(
 //                                isUrl = outputPath,
@@ -1437,31 +1453,31 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 //                                isPosition = isAttachmentAdapterPosition
 //                            )
 //                        )
-                    } else {
+                } else {
 //                        Log.e("Compressor", "Failed: ${original.isType}")
-                    }
-                },
-                onComplete = {
+                }
+            },
+            onComplete = {
 //                    Constant.selectedFiles.clear()
 //                    isQuizUploadedFiles.addAll(newSelectedFiles)
-                    val isAwsUploadingFile = ArrayList<String>()
+                ArrayList<String>()
 
 //                    val isSelectedFileCount = Constant.selectedFiles.size
 //                    for (i in isQuizUploadedFiles.indices) {
-                        isAwsUploadingPreSigned?.getPreSignedUrl(
-                            isCompressUrl,
-                            isStaffDetails!!.school_id,
-                            isType!!,
-                            this,
-                            isCountryId!!,
-                            false,
-                            object : UploadCallback {
+                isAwsUploadingPreSigned?.getPreSignedUrl(
+                    isCompressUrl,
+                    isStaffDetails!!.school_id,
+                    isType!!,
+                    this,
+                    isCountryId!!,
+                    false,
+                    object : UploadCallback {
 
-                                override fun onUploadSuccess(
-                                    response: String?, isFileUploaded: String?
-                                ) {
-                                    Log.d("isFileUploaded", isFileUploaded.toString())
-                                    //  isAwsUploadingFile.add(isFileUploaded!!)
+                        override fun onUploadSuccess(
+                            response: String?, isFileUploaded: String?
+                        ) {
+                            Log.d("isFileUploaded", isFileUploaded.toString())
+                            //  isAwsUploadingFile.add(isFileUploaded!!)
 //                                    Constant.isAwsUploadedFiles.add(
 //                                        AwsUploadedFiles(
 //                                            isFileUrl = isFileUploaded,
@@ -1478,45 +1494,45 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 //                                        }
 //                                    }
 
-                                    isQuizUploadedFiles.add(
-                                        QuizAttachmentData(
-                                            isUrl = isFileUploaded.toString(),
-                                            isType = isType,
-                                            isPosition = isAttachmentAdapterPosition
-                                        )
+                            isQuizUploadedFiles.add(
+                                QuizAttachmentData(
+                                    isUrl = isFileUploaded.toString(),
+                                    isType = isType,
+                                    isPosition = isAttachmentAdapterPosition
+                                )
+                            )
+                            Log.d(
+                                "isQuizUploadedFiles",
+                                isQuizUploadedFiles.size.toString()
+                            )
+
+                            if (quizAttachments.size == isQuizUploadedFiles.size) {
+                                Log.d("isSameSize", "isSameSize")
+                                for (i in isQuizUploadedFiles.indices) {
+                                    Log.d(
+                                        "isUploadedFileList++++++Url",
+                                        isQuizUploadedFiles.get(i).isUrl
                                     )
                                     Log.d(
-                                        "isQuizUploadedFiles",
-                                        isQuizUploadedFiles.size.toString()
+                                        "isUploadedFileList++++++Position",
+                                        isQuizUploadedFiles.get(i).isPosition.toString()
                                     )
-
-                                    if (quizAttachments.size == isQuizUploadedFiles.size) {
-                                        Log.d("isSameSize", "isSameSize")
-                                        for (i in isQuizUploadedFiles.indices) {
-                                            Log.d(
-                                                "isUploadedFileList++++++Url",
-                                                isQuizUploadedFiles.get(i).isUrl
-                                            )
-                                            Log.d(
-                                                "isUploadedFileList++++++Position",
-                                                isQuizUploadedFiles.get(i).isPosition.toString()
-                                            )
-                                            Log.d(
-                                                "isUploadedFileList++++++Type",
-                                                isQuizUploadedFiles.get(i).isType.toString()
-                                            )
-                                        }
-                                    }
+                                    Log.d(
+                                        "isUploadedFileList++++++Type",
+                                        isQuizUploadedFiles.get(i).isType.toString()
+                                    )
                                 }
+                            }
+                        }
 
-                                override fun onUploadError(error: String?) {
-                                    Log.d("isUploadIssue", error.toString())
-                                }
-                            })
-                    //   }
+                        override fun onUploadError(error: String?) {
+                            Log.d("isUploadIssue", error.toString())
+                        }
+                    })
+                //   }
 
-                    Log.d("Compressor", "All files compressed and uploaded.")
-                })
+                Log.d("Compressor", "All files compressed and uploaded.")
+            })
         // }
     }
 

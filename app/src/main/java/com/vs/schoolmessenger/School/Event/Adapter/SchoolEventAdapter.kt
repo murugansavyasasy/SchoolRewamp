@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -55,7 +54,7 @@ class SchoolEventAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.event_ongoing_recyclerview, parent, false)
-            DataViewHolder(view,context)
+            DataViewHolder(view, context)
         }
     }
 
@@ -127,7 +126,8 @@ class SchoolEventAdapter(
     }
 
 
-    class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(itemView: View, private val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
         private val event_header: TextView = itemView.findViewById(R.id.event_header)
         private val event_time: TextView = itemView.findViewById(R.id.event_time)
         private val event_location: TextView = itemView.findViewById(R.id.event_location)

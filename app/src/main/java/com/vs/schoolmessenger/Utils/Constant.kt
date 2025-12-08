@@ -43,7 +43,6 @@ import android.widget.GridView
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -77,9 +76,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
-import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.Model.ClassSectionData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
-import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.getExamListData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -198,6 +195,9 @@ object Constant {
     var msg_id = "msg_id"
     var msg_info = "msg_info"
     var header_id = "header_id"
+    var SplashScreen__ = "SplashScreen"
+    var categories = "categories"
+    var rating = "rating"
     var institute_id = "institute_id"
     var receiver_type = "receiver_type"
     var receiverid = "receiver_id"
@@ -228,7 +228,8 @@ object Constant {
 //    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
-   // var isParentMenuName = ""
+
+    // var isParentMenuName = ""
     var isSelectedMenuName = ""
     var isSchoolMenuCount = -1
 
@@ -242,7 +243,7 @@ object Constant {
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
 
-//    var isMarkUploadClassSectionDetails: ClassSectionData? = null
+    //    var isMarkUploadClassSectionDetails: ClassSectionData? = null
     var isMarkUploadClassSectionDetails: StandardSection? = null
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
 
@@ -368,7 +369,6 @@ object Constant {
     var VOICE_UNREAD = "VOICE_UNREAD"
     var VOICE_READ = "VOICE_READ"
     var TEXT = "TEXT"
-
     var TEXT_UNREAD = "TEXT_UNREAD"
     var TEXT_READ = "TEXT_READ"
     var TEXT_ALL = "TEXT_ALL"
@@ -456,7 +456,7 @@ object Constant {
     var current = "current"
     var wav = ".wav"
     var wav_ = "wav"
-    var isCurrentAcademicYearId=0
+    var isCurrentAcademicYearId = 0
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
     var ALL_STUDENTS = "All students"
@@ -504,7 +504,7 @@ object Constant {
     var claimed = "claimed"
     var expired = "expired"
     var All_ = "All"
-    var All_Schools= "All_Schools"
+    var All_Schools = "All_Schools"
     var all__ = "all"
     var st = "st"
     var nd = "nd"
@@ -552,7 +552,7 @@ object Constant {
     var isFromSession = "isFromSession"
     var isToSession = "isToSession"
     var isLeaveType = "isLeaveType"
-    var isLeaveTypeID ="isLeaveTypeID"
+    var isLeaveTypeID = "isLeaveTypeID"
     var isRequestEdit = "isRequestEdit"
     var Select_a_leave_type = "Select a leave type"
     var FROM_DATE = "FROM_DATE"
@@ -639,6 +639,9 @@ object Constant {
 
 
     var category_name = "category_name"
+    var category = "category"
+    var name__ = "name"
+    var selected__ = "selected"
     var discount = "discount"
     var address = "address"
     var merchant_name = "merchant_name"
@@ -769,15 +772,12 @@ object Constant {
     var user_type_as_staff = 2
 
 
-
-
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
-
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {
         val adapter = gridView.adapter ?: return
@@ -791,18 +791,28 @@ object Constant {
         }
 
         // Calculate number of rows
-        val rows = (totalItems + columns - 1) / columns
+        val rows = if (totalItems % columns == 0) {
+            totalItems / columns
+        } else {
+            totalItems / columns + 1
+        }
 
-        // Measure the first item height (assuming all are same height)
-        val listItem = adapter.getView(0, null, gridView)
-        listItem.measure(
-            View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
-            View.MeasureSpec.UNSPECIFIED
-        )
-        val itemHeight = listItem.measuredHeight
+        var totalHeight = 0
 
-        // Correct total height (height per row × number of rows)
-        val totalHeight = (itemHeight * rows) + (gridView.verticalSpacing * (rows - 1))
+        for (row in 0 until rows) {
+            val index = row * columns // first item in each row
+            val listItem = adapter.getView(index, null, gridView)
+
+            listItem.measure(
+                View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
+                View.MeasureSpec.UNSPECIFIED
+            )
+
+            totalHeight += listItem.measuredHeight
+        }
+
+        // Add spacing between rows
+        totalHeight += gridView.verticalSpacing * (rows - 1)
 
         val params = gridView.layoutParams
         params.height = totalHeight
@@ -1002,7 +1012,8 @@ object Constant {
     }
 
     fun hideKeyboardIfOpen(activity: Activity) {
-        val inputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val currentFocusView = activity.currentFocus
 
         if (currentFocusView != null) {
@@ -1042,7 +1053,6 @@ object Constant {
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
         return outputFormat.format(inputDate)
     }
-
 
 
     /**
@@ -1099,8 +1109,6 @@ object Constant {
     }
 
 
-
-
     //"dd-MM-yyyy" to "dd MMMM, yyyy"
     fun formatDate(dateStr: String): String {
         val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -1108,7 +1116,7 @@ object Constant {
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
 
-        val calendar = Calendar.getInstance()
+        Calendar.getInstance()
 
         // Today
         val today = Calendar.getInstance()
@@ -1132,7 +1140,7 @@ object Constant {
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
 
-        val calendar = Calendar.getInstance()
+        Calendar.getInstance()
 
         // Today
         val today = Calendar.getInstance()
@@ -1175,7 +1183,6 @@ object Constant {
             }
         }
     }
-
 
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
@@ -1318,9 +1325,6 @@ object Constant {
         }
         datePickerDialog.show()
     }
-
-
-
 
 
     fun showDatePicker12(
@@ -1573,8 +1577,6 @@ object Constant {
     }
 
 
-
-
     fun showRedirecttoMenu(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -1622,8 +1624,6 @@ object Constant {
             closePopup()
         }
     }
-
-
 
 
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
@@ -1904,7 +1904,8 @@ object Constant {
     fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
         return try {
             val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH) // force English
-            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault())   // still localized day name
+            val dayNameFormat =
+                SimpleDateFormat("EEEE", Locale.getDefault())   // still localized day name
             val dayNumberFormat = SimpleDateFormat("dd", Locale.ENGLISH)        // day number
 
             val date = inputFormat.parse(inputDateStr)!!
@@ -2036,7 +2037,6 @@ object Constant {
     }
 
 
-
     //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)
     fun convertToReadableDateformat(inputDate: String): String {
         return try {
@@ -2126,7 +2126,6 @@ object Constant {
             SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(date)
         }
     }
-
 
 
     fun CustomisedconvertDateTimeFormat(input: String): String {
@@ -2571,7 +2570,7 @@ object Constant {
     fun setupBiometricPrompt(
         activity: FragmentActivity,
         listener: fingerPrintAunthenticateListener,
-        isSplash : Boolean
+        isSplash: Boolean
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         biometricPrompt = BiometricPrompt(
@@ -2615,7 +2614,10 @@ object Constant {
                                 }
                             }
                             dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Unlock now") { _, _ -> }
-                            dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Proceed with credentials") { _, _ -> }
+                            dialog.setButton(
+                                AlertDialog.BUTTON_POSITIVE,
+                                "Proceed with credentials"
+                            ) { _, _ -> }
 
                             dialog.show()
                         }
@@ -2789,8 +2791,6 @@ object Constant {
 //    }
 
 
-
-
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {
         val delayMillis = 300L
         editText.setOnFocusChangeListener { v, hasFocus ->
@@ -2863,7 +2863,13 @@ object Constant {
                     val buffer = decoder.getInputBuffer(inBuff)!!
                     val size = extractor.readSampleData(buffer, 0)
                     if (size < 0) {
-                        decoder.queueInputBuffer(inBuff, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                        decoder.queueInputBuffer(
+                            inBuff,
+                            0,
+                            0,
+                            0,
+                            MediaCodec.BUFFER_FLAG_END_OF_STREAM
+                        )
                         end = true
                     } else {
                         decoder.queueInputBuffer(inBuff, 0, size, extractor.sampleTime, 0)

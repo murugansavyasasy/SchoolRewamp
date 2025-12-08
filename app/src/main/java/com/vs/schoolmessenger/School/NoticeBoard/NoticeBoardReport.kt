@@ -126,22 +126,20 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        if (userDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.rytSpinner.visibility=View.GONE
+        if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
+            binding.rytSpinner.visibility = View.GONE
             isAccessToken = isStaffDetails!!.access_token
             isGetNoticeBoardList()
             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        }
-        else{
+        } else {
             if (userDetails?.staff_details?.size!! > 1) {
                 binding.rytSpinner.visibility = View.VISIBLE
                 //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
                 userDetails?.let { setupSchoolSpinner(it.staff_details) }
-            }
-            else{
+            } else {
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
-                binding.rytSpinner.visibility=View.GONE
+                binding.rytSpinner.visibility = View.GONE
                 isGetNoticeBoardList()
                 binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                 binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -260,7 +258,8 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                             val selectedSchoolId = selectedStaff.school_id
 
                             // Filter list by school ID
-                            val filteredList = completeNoticeList.filter { it.school_id == selectedSchoolId }
+                            val filteredList =
+                                completeNoticeList.filter { it.school_id == selectedSchoolId }
 
                             Log.d(
                                 "SpinnerSelection",
@@ -292,8 +291,8 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
 
         if (newData != null && newData.isNotEmpty()) {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-            binding.rytSearch323.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+            binding.rytSearch323.visibility = View.GONE
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
 
@@ -311,8 +310,8 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
                 "Data loaded successfully, adapter item count: ${noticeboardadapter.itemCount}"
             )
         } else {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
-            binding.rytSearch323.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            binding.rytSearch323.visibility = View.GONE
 
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
@@ -342,7 +341,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         noticeboardadapter.isLoading = true
         noticeboardadapter.notifyDataSetChanged()
 
-        if(userDetails!!.staff_role == Constant.isStaffRole) {
+        if (userDetails!!.staff_role == Constant.isStaffRole) {
             appViewModel!!.isNoticeBoardReport(isAccessToken!!, this)
         } else {
             appViewModel!!.isNoticeBoardStaffReport(isAccessToken!!, this)
@@ -364,11 +363,11 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
-        layoutEdit.visibility=if(data.can_edit)View.VISIBLE else View.GONE
-        layoutDelete.visibility=if(data.can_delete)View.VISIBLE else View.GONE
+        layoutEdit.visibility = if (data.can_edit) View.VISIBLE else View.GONE
+        layoutDelete.visibility = if (data.can_delete) View.VISIBLE else View.GONE
 
         layoutEdit.setOnClickListener {
-            Constant.isClickEdit=true
+            Constant.isClickEdit = true
             val intent = Intent(this, CreateNoticeBoard::class.java)
             intent.putExtra(Constant.notice_data, data)
             startActivity(intent)
@@ -383,7 +382,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     }
 
 
-        override fun onClickListener(
+    override fun onClickListener(
         data: NoticeStaffData,
         anchorView: View,
         adapterPosition: Int
@@ -396,12 +395,12 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         Log.d("SearchResult", "Search result empty? $isEmpty for query '${binding.edtSearch.text}'")
         if (isEmpty) {
-            Log.d("NOData","NoData")
+            Log.d("NOData", "NoData")
             binding.rcyNoticeBoard.visibility = View.GONE
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
         } else {
-            Log.d("NOData","Data")
+            Log.d("NOData", "Data")
             binding.rcyNoticeBoard.visibility = View.VISIBLE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE

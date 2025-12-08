@@ -3,10 +3,7 @@ package com.vs.schoolmessenger.CommonScreens
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +11,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -41,6 +36,7 @@ class ImagePickingAdapter(
         val del: ImageView = v.findViewById(R.id.imgDelete)
         val delete: ImageView = v.findViewById(R.id.imgaudiodelete)
         val imgVideoPlay: ImageView = v.findViewById(R.id.imgVideoPlay)
+        val imgVideo: ImageView = v.findViewById(R.id.imgVideo)
         val lblTime: TextView = v.findViewById(R.id.lblTime)
 
     }
@@ -59,17 +55,11 @@ class ImagePickingAdapter(
         // Layout margins
         val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
 
-            layoutParams.marginStart = defaultStartEndMargin
-            layoutParams.marginEnd = defaultStartEndMargin
-            layoutParams.topMargin = defaultTopMargin
+        layoutParams.marginStart = defaultStartEndMargin
+        layoutParams.marginEnd = defaultStartEndMargin
+        layoutParams.topMargin = defaultTopMargin
 
         holder.itemView.layoutParams = layoutParams
-
-        if (item.type.toString() == Constant.VIDEO) {
-            holder.imgVideoPlay.visibility = VISIBLE
-        } else {
-            holder.imgVideoPlay.visibility = GONE
-        }
 
         val filePath = item.path
         val fileUri = when {
@@ -110,6 +100,11 @@ class ImagePickingAdapter(
             notifyItemRangeChanged(pos, items.size)
         }
 
+        if (item.type.toString() == Constant.VIDEO) {
+            holder.imgVideo.visibility = VISIBLE
+        } else {
+            holder.imgVideo.visibility = GONE
+        }
         holder.itemView.setOnClickListener {
             if (pos != 0) {
                 if (!item.path.contains("amazonaws.")) {
@@ -181,6 +176,7 @@ class ImagePickingAdapter(
         val contentResolver = context.contentResolver
         return contentResolver.getType(uri) ?: "*/*"
     }
+
     override fun getItemCount() = items.size
 }
 

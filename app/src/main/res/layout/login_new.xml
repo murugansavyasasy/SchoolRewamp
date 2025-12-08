@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/tools"
     android:background="@color/PrimaryColor">
 
     <View
@@ -18,9 +18,9 @@
 
     <ScrollView
         android:id="@+id/scrollRoot"
-        android:layout_marginTop="@dimen/eighty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/eighty"
         android:background="@drawable/bg_rect_white_large_top_radius"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,13 +44,14 @@
                 android:textSize="@dimen/twenty_sp">
 
             </TextView>
+
             <TextView
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="start"
-                style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -110,14 +111,15 @@
 
                         <EditText
                             android:id="@+id/txtMobileNumber"
-                            android:layout_width="match_parent"
                             style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_toEndOf="@+id/vwMobile"
+                            android:background="@drawable/edittext_background_selector"
                             android:hint="@string/_00000_00000"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:background="@drawable/edittext_background_selector"
+                            android:imeOptions="actionDone"
                             android:paddingHorizontal="@dimen/ten"
                             android:textColor="@color/black"
                             android:textColorHint="@color/light_gray_"
@@ -140,18 +142,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty_five"
                         android:layout_below="@+id/lblPassword"
+                        android:focusable="true"
+                        android:background="@drawable/ryt_password_selector"
+                        android:focusableInTouchMode="true"
                         android:layout_marginTop="@dimen/ten"
-                        android:background="@drawable/login_bg_rect_grey">
+                        >
 
                         <EditText
                             android:id="@+id/txtPassword"
                             style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/edittext_background_selector"
                             android:hint="@string/star"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
                             android:inputType="textPassword|textCapSentences"
                             android:paddingHorizontal="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_toStartOf="@+id/imgHide"
                             android:textColor="@color/black"
                             android:textColorHint="@color/grey"
                             android:textSize="@dimen/thirteen_sp" />
@@ -194,30 +202,30 @@
 
                     <RelativeLayout
                         android:id="@+id/rytFingerPrint"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_below="@+id/btnLoginContinue"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/btnLoginContinue"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/ten"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/imgFingerPrint"
                             android:layout_width="@dimen/fourty"
                             android:layout_height="@dimen/fourty"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_fingerprint"/>
+                            android:src="@drawable/ic_fingerprint" />
 
                         <TextView
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_toEndOf="@+id/imgFingerPrint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/thirteen_sp"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_toEndOf="@+id/imgFingerPrint"
+                            android:text="@string/use_fingerprint_or_mobile_number_to_login"
                             android:textColor="@color/black"
-                            android:text="@string/use_fingerprint_or_mobile_number_to_login"/>
+                            android:textSize="@dimen/thirteen_sp" />
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

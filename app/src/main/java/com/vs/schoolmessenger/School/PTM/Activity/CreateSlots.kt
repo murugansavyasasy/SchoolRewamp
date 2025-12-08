@@ -136,7 +136,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                     selectedSlots = emptyList()
                     isSelectedList.clear()
                     Constant.showTopAlertPopup1(
-                        response.message?: getString(R.string.no_standards_found_for_selected_academic_year),
+                        response.message
+                            ?: getString(R.string.no_standards_found_for_selected_academic_year),
                         this,
                         true
                     )
@@ -363,8 +364,10 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             R.id.rytToTime -> {
                 if (startCalendar == null) {
-                    Toast.makeText(this,
-                        getString(R.string.please_select_start_time_first), Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.please_select_start_time_first), Toast.LENGTH_SHORT
+                    )
                         .show()
                     return
                 }
@@ -655,7 +658,14 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         val allSlotsList = data.filter { it.slots.isNotEmpty() }
 
         if (allSlotsList.isEmpty()) {
-            Constant.showSendConfirmationDialog(this,"Oops","Ok","Cancel","",getString(R.string.no_slots_found_for_selected_date_s_and_time))
+            Constant.showSendConfirmationDialog(
+                this,
+                "Oops",
+                "Ok",
+                "Cancel",
+                "",
+                getString(R.string.no_slots_found_for_selected_date_s_and_time)
+            )
             { confirmed ->
                 if (confirmed) {
                     return@showSendConfirmationDialog
@@ -767,28 +777,38 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (isSelectedList.isEmpty()) {
-            Toast.makeText(this, getString(R.string.select_section_and_standard), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.select_section_and_standard),
+                Toast.LENGTH_SHORT
+            ).show()
             return null
         }
 
         if (selectedDates.isEmpty()) {
-            Toast.makeText(this, getString(R.string.kindly_select_the_date), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.kindly_select_the_date), Toast.LENGTH_SHORT)
+                .show()
             return null
         }
 
         if (binding.lblFromTime.text.toString() == "Start with") {
-            Toast.makeText(this,
-                getString(R.string.kindly_select_the_start_time), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.kindly_select_the_start_time), Toast.LENGTH_SHORT
+            ).show()
             return null
         }
 
         if (binding.lblToTime.text.toString() == "End with") {
-            Toast.makeText(this, getString(R.string.kindly_select_the_end_time), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.kindly_select_the_end_time), Toast.LENGTH_SHORT)
+                .show()
             return null
         }
         if (isSlotDuration == "Select Slot Duration") {
-            Toast.makeText(this,
-                getString(R.string.kindly_select_the_slot_duration), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.kindly_select_the_slot_duration), Toast.LENGTH_SHORT
+            ).show()
             return null
         }
 
@@ -811,7 +831,8 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         if (binding.switchBreak.isChecked() && isBreakDuration.isEmpty()) {
-            Toast.makeText(this, getString(R.string.select_the_break_duration), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.select_the_break_duration), Toast.LENGTH_SHORT)
+                .show()
             return null
         }
         if (isSlotDurationCustom) {
@@ -842,7 +863,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    isSlotDuration=itemsCategory.get(position)
+                    isSlotDuration = itemsCategory.get(position)
 
                     if (position != 0 && itemsCategory[position] != "Custom") {
                         val parts = itemsCategory[position].split(" ")

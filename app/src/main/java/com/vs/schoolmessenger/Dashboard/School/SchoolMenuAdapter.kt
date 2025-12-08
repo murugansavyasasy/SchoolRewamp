@@ -37,6 +37,7 @@ class SchoolMenuAdapter(
                 val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.dashboard_app_item)
                 ShimmerViewHolder(shimmerView)
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.dashboard_app_item, parent, false)
@@ -57,6 +58,7 @@ class SchoolMenuAdapter(
                     holder.bind(menuDetail, position, listener, itemCountList)
                 }
             }
+
             is ShimmerViewHolder -> holder.startShimmer()
         }
     }
@@ -93,6 +95,7 @@ class SchoolMenuAdapter(
                 Constant.M_ASSIGNMENT -> imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 Constant.M_HOMEWORK -> imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 Constant.M_ATTENDANCE_MARKING -> imgMenu.setImageResource(R.drawable.attendance_marking)
+                Constant.M_INTERACTION_WITH_STUDENT -> imgMenu.setImageResource(R.drawable.very_important_icon)
                 Constant.M_ABSENTEES_REPORT -> imgMenu.setImageResource(R.drawable.absentees_report)
                 Constant.M_SCHOOL_STRENGTH -> imgMenu.setImageResource(R.drawable.school_strength)
                 Constant.M_QUIZ_EXAM -> imgMenu.setImageResource(R.drawable.quiz_icon)
@@ -126,7 +129,10 @@ class SchoolMenuAdapter(
                 listener.onClick(data)
                 Constant.isSchoolMenuCount = itemCountList?.getOrNull(position)?.unread_count ?: 0
                 val CountMenuname = itemCountList?.getOrNull(position)?.name ?: 0
-                Log.d("Menu Count", "${Constant.isSchoolMenuCount},Selected Menu Dashboard: ${data.name},CountMenuName: ${CountMenuname}",)
+                Log.d(
+                    "Menu Count",
+                    "${Constant.isSchoolMenuCount},Selected Menu Dashboard: ${data.name},CountMenuName: ${CountMenuname}",
+                )
             }
         }
     }

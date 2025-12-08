@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails
 
-data class AssignmentTargetDetail (
+data class AssignmentTargetDetail(
     val name: String,
     val `class`: String,
     val section: String,

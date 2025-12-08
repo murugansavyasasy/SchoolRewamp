@@ -131,11 +131,13 @@ class LessonPlanEditAdapter(
 
                         override fun beforeTextChanged(
                             s: CharSequence?, start: Int, count: Int, after: Int
-                        ) {}
+                        ) {
+                        }
 
                         override fun onTextChanged(
                             s: CharSequence?, start: Int, before: Int, count: Int
-                        ) {}
+                        ) {
+                        }
                     })
 
                     valueTextView.visibility = View.VISIBLE
@@ -173,8 +175,10 @@ class LessonPlanEditAdapter(
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
 
-                                    val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                                    val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                                    val displayFormat =
+                                        SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                    val apiFormat =
+                                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
                                     // ✅ show pretty format on screen
                                     val formattedDisplayDate = displayFormat.format(cal.time)
@@ -220,10 +224,12 @@ class LessonPlanEditAdapter(
                         valueTextView.setTextColor(black)
                         valueTextView.setBackgroundResource(R.drawable.field_background)
                     }
+
                     Constant.datepicker -> {
                         headerdatelabe1l.setTextColor(black)
                         headerdatelabe1l.setBackgroundResource(R.drawable.field_background)
                     }
+
                     Constant.dropdown -> {
                         spinnerItem.setBackgroundResource(R.drawable.field_background)
                     }

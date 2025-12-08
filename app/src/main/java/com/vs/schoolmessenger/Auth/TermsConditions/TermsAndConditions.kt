@@ -20,7 +20,7 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
             statusBarBgView = binding.statusBarBackground
         )
         // Enable JavaScript
-        val screen_name = intent.getStringExtra("screen_name")  ?: ""
+        val screen_name = intent.getStringExtra("screen_name") ?: ""
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         var URL = ""
@@ -29,18 +29,22 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
                 URL = Constant.terms_condition
                 "Terms and Conditions"
             }
+
             "isPrivacy" -> {
                 URL = Constant.isGlobalVariableData?.privacy_policy ?: ""
                 "Privacy Policy"
             }
+
             "isAboutTheApp" -> {
                 URL = Constant.isGlobalVariableData?.about_the_app ?: ""
                 "About the App"
             }
+
             "HowToUse" -> {
                 URL = Constant.isGlobalVariableData?.how_to_use ?: ""
                 "How to Use?"
             }
+
             else -> ""
         }
         Constant.loadWebView(

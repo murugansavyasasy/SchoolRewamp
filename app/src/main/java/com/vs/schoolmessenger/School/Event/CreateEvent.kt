@@ -80,20 +80,23 @@ import java.util.Locale
 
 class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener,
-     VimeoVideoUpload.UploadCompletionListener {
+    VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): CreateEventBinding {
         return CreateEventBinding.inflate(layoutInflater)
     }
+
     private var isSchoolEventItem: SchoolEventItem? = null
     var isTotalSelectedItem = 0
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
+
     var isSelectedCategory = ""
     var isSelectedCategoryId = 0
     private var cameraImageFilePath: String? = null
@@ -151,7 +154,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        val (dayOnly, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
+        val (_, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
         binding.lblDay.text = dayOfWeek
         binding.txtStartDate.text = fullDate
 
@@ -188,9 +191,21 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -218,8 +233,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                       // Toast.makeText(this,
-                         //   getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this,
+                        //   getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -320,7 +335,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -396,7 +415,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text =
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
-                    val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+                    val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
                 }
             }
@@ -447,7 +466,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
-
     fun showDatePicker11(
         context: Context,
         dateFormatType: Boolean,
@@ -494,8 +512,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 // FIXED: Validate AFTER selection (reliable enforcement)
                 val today = Calendar.getInstance()
                 val effectiveSelectedDate = selectedDate ?: today  // Fallback to today if not set
-                val isSameDay = effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-                        effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+                val isSameDay =
+                    effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                            effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
 
                 if (isSameDay) {
                     val selectedCal = Calendar.getInstance().apply {
@@ -514,17 +533,25 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         val resetHour12 = if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
                         else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12) currentCal.get(Calendar.HOUR_OF_DAY) - 12
                         else currentCal.get(Calendar.HOUR_OF_DAY)
-                        val resetAmPm = if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
-                        listener.onTimeSelected(resetHour12, currentCal.get(Calendar.MINUTE), resetAmPm)
-                        Toast.makeText(context,
-                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT).show()  // Add this string to strings.xml: "Time cannot be in the past"
+                        val resetAmPm =
+                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
+                        listener.onTimeSelected(
+                            resetHour12,
+                            currentCal.get(Calendar.MINUTE),
+                            resetAmPm
+                        )
+                        Toast.makeText(
+                            context,
+                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT
+                        ).show()  // Add this string to strings.xml: "Time cannot be in the past"
                         return@TimePickerDialog
                     }
                 }
 
                 // Valid: Proceed with 12-hour format
                 val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
-                val hourIn12Format = if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                val hourIn12Format =
+                    if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
                 listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
             },
             currentHour,
@@ -536,8 +563,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         timePickerDialog.show()
     }
-
-
 
 
     private fun showBottomDialog() {
@@ -568,7 +593,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -621,7 +650,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -634,7 +667,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -661,10 +698,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            } else {
                 Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
@@ -688,11 +724,19 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         Constant.Remaining = Constant.Remaining - 1
                         addPath(uri)
                     } else {
-                        Toast.makeText(this, getString(R.string.camera_image_file_not_found), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(this, getString(R.string.camera_image_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_image_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -762,7 +806,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
 
@@ -840,9 +888,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-                ProgressDialogHelper.show(this)
-                ProgressDialogHelper.updateProgress(10)
-                isUploadFilesInServer(Constant.file_)
+            ProgressDialogHelper.show(this)
+//                ProgressDialogHelper.updateProgress(10)
+            isUploadFilesInServer(Constant.file_)
 
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
@@ -855,7 +903,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-        ProgressDialogHelper.updateProgress(50)
+//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -868,15 +916,43 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
 
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
         }
-        ProgressDialogHelper.updateProgress(80)
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
+        }
+//        ProgressDialogHelper.updateProgress(80)
     }
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -898,7 +974,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 ProgressDialogHelper.dismiss()
                 isUpdateEvent()
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val outputDir =
@@ -937,6 +1013,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
@@ -964,19 +1041,21 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    onTaskComplete()
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isUpdateEvent()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
 
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
+                                    onTaskComplete()
                                 }
                             })
                     }
@@ -986,7 +1065,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
     }
 
-    private fun videoUploading() {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1002,6 +1084,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
@@ -1061,7 +1149,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
         try {
-            val sdfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())  // Adjust if data.date format differs
+            val sdfInput = SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            )  // Adjust if data.date format differs
             val parsedDate = sdfInput.parse(binding.txtStartDate.text.toString())
             selectedDate = Calendar.getInstance().apply { time = parsedDate!! }
         } catch (e: Exception) {

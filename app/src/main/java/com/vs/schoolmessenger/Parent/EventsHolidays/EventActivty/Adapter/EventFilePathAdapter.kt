@@ -2,13 +2,11 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.FilePath
@@ -107,7 +105,7 @@ class EventFilePathAdapter(
                 Constant.TXT -> R.drawable.txt_file_img
                 Constant.PPT, Constant.PPTX -> R.drawable.ppt_icon
                 Constant.EXCEL -> R.drawable.excel_icon
-                Constant.VIDEO -> R.drawable.video_play
+                Constant.VIDEO -> R.drawable.video_icon_2
                 else -> R.drawable.doc_icon
             }
         }

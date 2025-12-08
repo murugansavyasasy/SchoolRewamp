@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -19,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.SpinnerMarkUploadAdapter
-import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
-import org.w3c.dom.Text
 
 class ActivitySubjectListAdapter(
     private val subjects: List<getActivityPaperNameData>,
@@ -54,7 +51,12 @@ class ActivitySubjectListAdapter(
         fun bind(item: getActivityPaperNameData, position: Int) {
 
             subjectName.text = item.name
-            val defaultItems = listOf("ACTIONS","\uD83D\uDEAB\u00A0\u00A0Ignore(Skip this activity)", "✏\uFE0F\u00A0\u00A0Enter marks manually", "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
+            val defaultItems = listOf(
+                "ACTIONS",
+                "\uD83D\uDEAB\u00A0\u00A0Ignore(Skip this activity)",
+                "✏\uFE0F\u00A0\u00A0Enter marks manually",
+                "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE"
+            )
             val fullList = defaultItems + item.activities  // api values appended
             spinnerContainer.setOnClickListener {
                 isSpinnerColumn.performClick()
@@ -74,23 +76,40 @@ class ActivitySubjectListAdapter(
                 val bg = lblHint.background as GradientDrawable
 
                 when (pos) {
-                    -1,0, 3 -> {   // hide for 1st & 4th
+                    -1, 0, 3 -> {   // hide for 1st & 4th
                         lblHint.visibility = View.GONE
                     }
 
                     1 -> {      // Ignore (Skip this activity)
                         lblHint.visibility = View.VISIBLE
                         lblHint.text = "\uD83D\uDEAB\u00A0\u00A0This activity will be skipped"
-                        bg.setColor(ContextCompat.getColor(context, R.color.light_dark_gray_4))  // fill
-                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.very_dark_gray_5)) // stroke
-                        lblHint.setTextColor(ContextCompat.getColor(context, R.color.very_dark_gray2))
+                        bg.setColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.light_dark_gray_4
+                            )
+                        )  // fill
+                        bg.setStroke(
+                            1.dpToPx(),
+                            ContextCompat.getColor(context, R.color.very_dark_gray_5)
+                        ) // stroke
+                        lblHint.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.very_dark_gray2
+                            )
+                        )
                     }
 
                     2 -> {      // Enter manual entry
                         lblHint.visibility = View.VISIBLE
-                        lblHint.text = "✏\uFE0F\u00A0\u00A0Marks will be entered manually in the review step"
+                        lblHint.text =
+                            "✏\uFE0F\u00A0\u00A0Marks will be entered manually in the review step"
                         bg.setColor(ContextCompat.getColor(context, R.color.pale_light_blue))
-                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.pale_light_blue_3))
+                        bg.setStroke(
+                            1.dpToPx(),
+                            ContextCompat.getColor(context, R.color.pale_light_blue_3)
+                        )
                         lblHint.setTextColor(ContextCompat.getColor(context, R.color.dark_blue_10))
 
                     }
@@ -98,24 +117,32 @@ class ActivitySubjectListAdapter(
                     else -> {   // for api dropdown value
                         lblHint.visibility = View.VISIBLE
                         bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_3))
-                        bg.setStroke(1.dpToPx(), ContextCompat.getColor(context, R.color.dark_bg_orange_2))
+                        bg.setStroke(
+                            1.dpToPx(),
+                            ContextCompat.getColor(context, R.color.dark_bg_orange_2)
+                        )
                         setMappedHint(selected) // here we just change some part of text to different colour
                     }
                 }
             }
 
 
-
             // Apply initial state after view recycling
             updateHintUi(item.selectedValue, adapter.selectedPosition)
 
             isSpinnerColumn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    pos: Int,
+                    id: Long
+                ) {
 
                     // disable 1st & 4th row – allow opening dropdown but revert
                     if (pos == 0 || pos == 3) {
                         isSpinnerColumn.setSelection(
-                            if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition, false
+                            if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
+                            false
                         )
                         updateHintUi(item.selectedValue, adapter.selectedPosition)
                         return
@@ -134,6 +161,7 @@ class ActivitySubjectListAdapter(
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
         }
+
         fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
         fun setMappedHint(selected: String?) {

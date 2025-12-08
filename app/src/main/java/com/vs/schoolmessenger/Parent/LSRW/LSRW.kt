@@ -68,7 +68,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -77,7 +77,8 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
 
         binding.root.post {
-            val finalName = Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+            val finalName =
+                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
@@ -131,22 +132,22 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             Constant.hideLoading(this)
             if (response != null) {
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rcyrecyclerview.visibility = View.VISIBLE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                binding.rlNoDataContainer.visibility = View.GONE
-                allItems = response.data
-                adapter.updateList(allItems)
-                if (fromNotification) {
-                    scrollToMessageId(headerId)
+                    binding.rcyrecyclerview.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    binding.rlNoDataContainer.visibility = View.GONE
+                    allItems = response.data
+                    adapter.updateList(allItems)
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
+                } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.rcyrecyclerview.visibility = View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.rlNoDataContainer.visibility = View.VISIBLE
+                    binding.noDataFound.text = response.message ?: getString(R.string.no_data_found)
                 }
-            } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.rcyrecyclerview.visibility = View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.rlNoDataContainer.visibility = View.VISIBLE
-                binding.noDataFound.text = response.message?:getString(R.string.no_data_found)
             }
-        }
         }
 
     }
@@ -156,7 +157,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         if (msg_id == -1) return
 
         allItems?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
+            val index = list.indexOfFirst { it.id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyrecyclerview.post {
@@ -217,11 +218,12 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             binding.rcyrecyclerview.visibility = View.GONE
             binding.rlRecyclerContainer.visibility = View.GONE
             binding.rlNoDataContainer.visibility = View.VISIBLE
-            binding.noDataFound.text=getString(R.string.no_data_found)
+            binding.noDataFound.text = getString(R.string.no_data_found)
         }
 
         binding.rcyrecyclerview.scrollToPosition(0)
     }
+
     override fun onBackPressed() {
         Constant.selectedFiles.clear()
         super.onBackPressed()

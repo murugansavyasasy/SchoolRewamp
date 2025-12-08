@@ -1,31 +1,31 @@
 package com.vs.schoolmessenger.School.LSRW
 
 import android.content.Context
-import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
-import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
-import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
-import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 
 
-class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener,lsrwskillreportlistener {
+class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener,
+    lsrwskillreportlistener {
 
     override fun getViewBinding(): ActivityTasklistBinding {
         return ActivityTasklistBinding.inflate(layoutInflater)
     }
+
     private lateinit var adapter: LsrwAdapter
     private lateinit var LsrwTaskList: List<LsrwTask>
 
@@ -56,17 +56,17 @@ class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickList
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.active_task)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        val taskList = intent.getParcelableArrayListExtra<LsrwTask>(Constant.TASK_LIST) ?: arrayListOf()
-        LsrwTaskList= taskList
+        val taskList =
+            intent.getParcelableArrayListExtra<LsrwTask>(Constant.TASK_LIST) ?: arrayListOf()
+        LsrwTaskList = taskList
 
 
-        if (taskList.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        if (taskList.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
-        }
-        else{
+        } else {
             ShowData()
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rcyactivetaskrcy.layoutManager = LinearLayoutManager(this)
             adapter = LsrwAdapter(
                 itemList = taskList,
@@ -95,7 +95,7 @@ class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickList
     }
 
     fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 

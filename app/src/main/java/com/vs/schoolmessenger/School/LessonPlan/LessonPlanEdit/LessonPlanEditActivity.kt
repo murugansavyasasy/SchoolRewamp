@@ -83,7 +83,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_list_found)
                 binding.rcyLessonPlanEdit.visibility = View.GONE
             }
         }
@@ -104,7 +104,10 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 }
             } else {
                 Log.e("UpdateError", "Null response received from server.")
-                showTopLessonPlanAlertPopup(getString(R.string.something_went_wrong_please_try_again_later), this)
+                showTopLessonPlanAlertPopup(
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
 
@@ -137,6 +140,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
             R.id.updatebutton -> {
                 showTopEditAlertPopup()
             }
+
             R.id.cancelbutton -> {
                 lessonplaneditcancel()
             }
@@ -148,7 +152,8 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     fun lessonplaneditupdate() {
         val keyValueData = lessonplaneditAdapter.getUpdatedFieldsForApi()
         if (keyValueData.length() == 0) {
-            Toast.makeText(this, getString(R.string.no_editable_data_to_update), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_editable_data_to_update), Toast.LENGTH_SHORT)
+                .show()
             return
         }
         val requestJson = JSONObject().apply {
@@ -262,8 +267,10 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
                 activity.finish()
             } catch (e: Exception) {
                 Log.e("LessonPlanPopup", "Redirection failed: ${e.localizedMessage}")
-                Toast.makeText(activity,
-                    getString(R.string.oops_couldn_t_go_back), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    getString(R.string.oops_couldn_t_go_back), Toast.LENGTH_SHORT
+                ).show()
             } finally {
                 closePopup()
             }

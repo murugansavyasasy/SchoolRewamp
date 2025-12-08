@@ -45,7 +45,7 @@
     <string name="lblFamilyDetails">Family Details</string>
     <string name="lblChoosecountry">Choose your country</string>
     <string name="lblHerearetermsandconditions">Here are the terms and conditions >></string>
-    <string name="lblIagreetotheTermsandConditions"><u>I agree to the Terms and Conditions</u></string>
+    <string name="lblIagreetotheTermsandConditions">I agree to the <u>Terms and Conditions</u></string>
     <string name="lblIndia">India</string>
     <string name="lblThailand">Thailand</string>
     <string name="lblUSA">USA</string>
@@ -754,8 +754,8 @@
     <string name="no_of_question_greater_than_zero">No of questions should be greater than zero</string>
     <string name="ReOpen">ReOpen</string>
     <string name="emergency_voice">Emergency voice</string>
-    <string name="post_on">Post on</string>
-    <string name="posted_by">Posted by</string>
+    <string name="post_on">post on</string>
+    <string name="posted_by">posted by</string>
     <string name="correct_answer">Correct answer :</string>
     <string name="correct_answer1">Correct answer</string>
     <string name="wrong_answer">Wrong answer :</string>
@@ -840,7 +840,7 @@
     <string name="fee_receipt">Fee Receipt</string>
     <string name="lsrw">LSRW</string>
     <string name="listening_speaking_reading_writing">Listening,Speaking,Reading,Writing</string>
-    <string name="posted_on">Posted on</string>
+    <string name="posted_on">posted on</string>
     <string name="Well_done">Well done!</string>
     <string name="img">IMG</string>
     <string name="vid">VID</string>
@@ -1322,6 +1322,7 @@
     <string name="select_module">Select Module</string>
     <string name="remark">Remark</string>
     <string name="send_mail">Send Mail</string>
+    <string name="no_question_have_been_added_yet">No question have been added yet</string>
 
 
 </resources>

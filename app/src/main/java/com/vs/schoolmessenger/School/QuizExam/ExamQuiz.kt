@@ -20,7 +20,6 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
-import kotlin.math.log
 
 
 class ExamQuiz : BaseActivity<ExamQuizBinding>(),
@@ -45,7 +44,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        binding.rbNextLvl.buttonTintList=null
+        binding.rbNextLvl.buttonTintList = null
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -54,7 +53,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSchoolName.text=isStaffDetails!!.school_name
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 //        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
 //        binding.edtDescription.filters =
@@ -89,7 +88,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         binding.rbNextLvl.setOnCheckedChangeListener { _, isChecked ->
             isNextLevelChecked = isChecked
-            Log.d("isNextLevelChecked",isNextLevelChecked.toString())
+            Log.d("isNextLevelChecked", isNextLevelChecked.toString())
         }
 
 
@@ -103,7 +102,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
-                Log.d("Search",s.toString())
+                Log.d("Search", s.toString())
 
 
             }
@@ -117,10 +116,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                     binding.lytList.visibility = View.GONE
                     if (isType == "2") {
                         isLoadEQReport(response.data)
-                        isSubmission=response.data
+                        isSubmission = response.data
                     }
-                }
-                else {
+                } else {
                     binding.rlaQuizExamReport.visibility = View.VISIBLE
                     binding.rcQuizExamReport.visibility = View.GONE
                     ErrorMessage(response.message)
@@ -189,20 +187,20 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     }
 
     fun ShowData() {
-        binding.rcQuizExamReport.visibility=View.VISIBLE
+        binding.rcQuizExamReport.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
 
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
         if (data.isNotEmpty()) {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             adapter = ExamQuizReportAdapter(data, this, Constant.isShimmerViewDisable)
             binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
             binding.rcQuizExamReport.adapter = adapter
             binding.rcQuizExamReport.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
         } else {
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.rcQuizExamReport.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)
@@ -242,7 +240,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.edtQuestion.requestFocus()
             return
         }
-        if (no_of_questions.toInt()<=0) {
+        if (no_of_questions.toInt() <= 0) {
             binding.edtQuestion.error = getString(R.string.no_of_question_greater_than_zero)
             binding.edtQuestion.requestFocus()
             return
@@ -250,7 +248,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         val SaveCreateExamQuizDetails =
             SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
-        Log.d("SaveCreateExamQuizDetails",SaveCreateExamQuizDetails.title)
+        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.title)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)
@@ -263,7 +261,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
         binding.rlaQuizExamReport.visibility = View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
         binding.svOverallCreateQE.visibility = View.VISIBLE
     }
 

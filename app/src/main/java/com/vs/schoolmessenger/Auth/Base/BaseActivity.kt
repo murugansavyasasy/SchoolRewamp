@@ -44,8 +44,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.ParentProfileRewampFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -67,7 +67,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected abstract fun getViewBinding(): VB
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
@@ -77,10 +76,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
     override fun attachBaseContext(newBase: Context) {
-        var isAppLanguage = SharedPreference.getLanguage(newBase)?: "en"
+        var isAppLanguage = SharedPreference.getLanguage(newBase) ?: "en"
         val context = LocalHelperForLanguage.wrapContext(newBase, isAppLanguage.toString())
         super.attachBaseContext(context)
     }
@@ -113,11 +110,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         viewModel!!.isLogout?.observe(activity) { response ->
             Constant.hideLoading(activity)
 
-            if (response != null ) {
+            if (response != null) {
                 if (response.status) {
                     onResult(true, response.message ?: "Success")
-                }
-                else {
+                } else {
                     onResult(false, response?.message ?: "Something went wrong")
                 }
             }
@@ -250,56 +246,136 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+//    when navigation bar is in gesture this code below is not working only for button it is working
+//    @SuppressLint("UseCompatLoadingForColorStateLists")
+//    fun isToolBarPrimaryIntroduction(mainViewId: Int, statusBarBgView: View) {
+//        // Enables edge-to-edge rendering
+//        enableEdgeToEdge()
+//
+//        val mainView = findViewById<View>(mainViewId)
+//        val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
+//        val headerView = findViewById<View?>(R.id.rytHeader)
+//
+//        // Apply window insets to the main view (safe call)
+//        mainView?.let { view ->
+//            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+//                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//                v.updatePadding(
+//                    left = systemBars.left,
+//                    right = systemBars.right,
+//                    bottom = systemBars.bottom
+//                )
+//                // Adjust status bar background height
+//                statusBarBgView.updateLayoutParams {
+//                    height = systemBars.top
+//                }
+//                insets
+//            }
+//        }
+//
+//        // Apply window insets to toolbarLayout if it exists
+//        toolbarLayout?.let { toolbar ->
+//            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+//                insets // no custom handling, just consume
+//            }
+//        }
+//
+//        // Apply window insets to headerView if it exists
+//        headerView?.let { header ->
+//            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+//                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//                v.updatePadding(top = systemBars.top)
+//                WindowInsetsCompat.CONSUMED
+//            }
+//        }
+//
+//        // Customize window colors and theme
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            val window = this.window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//            window.statusBarColor = resources.getColor(R.color.bpWhite, theme)
+//            window.navigationBarColor = resources.getColor(R.color.PrimaryColor, theme)
+//            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+//        }
+//    }
+
+
     @SuppressLint("UseCompatLoadingForColorStateLists")
     fun isToolBarPrimaryIntroduction(mainViewId: Int, statusBarBgView: View) {
-        // Enables edge-to-edge rendering
+        // Enable edge-to-edge (safe on all versions, no-op before API 29)
         enableEdgeToEdge()
 
         val mainView = findViewById<View>(mainViewId)
         val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
         val headerView = findViewById<View?>(R.id.rytHeader)
 
-        // Apply window insets to the main view (safe call)
-        mainView?.let { view ->
-            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        // Find the navigation bar background view and frame container (MUST exist in your layout)
+        val navigationBarBgView = findViewById<View>(R.id.navigationBarBackground)
+        val frameContainer = findViewById<View>(R.id.frameContainer)
+
+        // Apply insets to root (only left/right, NO bottom padding here anymore)
+        mainView?.let { root ->
+            ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.updatePadding(
+
+                // Only apply side padding to root
+                root.updatePadding(
+                    left = systemBars.left,
+                    right = systemBars.right
+                    // Do NOT apply bottom padding here → that was causing white flash!
+                )
+
+                // Status bar background height
+                statusBarBgView.updateLayoutParams {
+                    height = systemBars.top
+                }
+
+                // Navigation bar background height → fixes white in gesture mode
+                navigationBarBgView.updateLayoutParams {
+                    height = systemBars.bottom
+                }
+
+                // Push actual content (RecyclerView + buttons) away from navigation bar
+                frameContainer.updatePadding(
                     left = systemBars.left,
                     right = systemBars.right,
                     bottom = systemBars.bottom
                 )
-                // Adjust status bar background height
-                statusBarBgView.updateLayoutParams {
-                    height = systemBars.top
-                }
+
                 insets
             }
         }
 
-        // Apply window insets to toolbarLayout if it exists
+        // Toolbar & header handling (unchanged)
         toolbarLayout?.let { toolbar ->
-            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-                insets // no custom handling, just consume
-            }
+            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { _, insets -> insets }
         }
 
-        // Apply window insets to headerView if it exists
         headerView?.let { header ->
-            ViewCompat.setOnApplyWindowInsetsListener(header) { v, insets ->
+            ViewCompat.setOnApplyWindowInsetsListener(header) { _, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.updatePadding(top = systemBars.top)
+                header.updatePadding(top = systemBars.top)
                 WindowInsetsCompat.CONSUMED
             }
         }
 
-        // Customize window colors and theme
+        // Window colors – works perfectly from Android 5.0 up
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = this.window
+            val window = window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
             window.statusBarColor = resources.getColor(R.color.bpWhite, theme)
             window.navigationBarColor = resources.getColor(R.color.PrimaryColor, theme)
+
+            // Optional: nice gradient background
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+
+        // Optional but recommended: better scrim on Android 10+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
         }
     }
 
@@ -440,7 +516,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
     fun isPrioritySelection(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
@@ -528,6 +603,49 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isToolBarTimeTable(mainViewId: Int, statusBarBgView: View) {
+        enableEdgeToEdge()
+
+        val mainView = findViewById<View>(mainViewId)
+        val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
+        val headerView = findViewById<View>(R.id.rytHeader)
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+
+            statusBarBgView.updateLayoutParams {
+                height = systemBars.top
+            }
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
+
 
     fun isToolBarCoupon(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
@@ -567,11 +685,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
-
-
-
-
-
 
 
     fun isToolBarPrimaryParentInteractionwithStaff(mainViewId: Int, statusBarBgView: View) {
@@ -617,9 +730,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
-
-
-
 
 
     // Method to allow child activities to access specific views
@@ -914,7 +1024,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             if (currentFragment != null && currentFragment::class == fragment::class) {
                 return
             }
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, fragment)?.commit()
 
         }
     }
@@ -943,11 +1054,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
-
-
-
     fun showDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener
@@ -972,7 +1078,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
     fun dailycollectionshowDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener,
@@ -987,7 +1092,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             try {
                 val parsed = sdf.parse(preSelectedDate)
                 if (parsed != null) calendar.time = parsed
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+            }
         }
 
         val year = calendar.get(Calendar.YEAR)
@@ -1014,10 +1120,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-
-
 
 
     fun CustomshowDatePickerDialog(
@@ -1141,8 +1243,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-
-
     fun lsrwshowDatePickerDialog(
         context: Context,
         listener: OnDateSelectedListener,
@@ -1181,8 +1281,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
-
 
 
     //Homework report sender
@@ -1225,7 +1323,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    fun showSuccessPopup(message: String, status: Boolean){
+    fun showSuccessPopup(message: String, status: Boolean) {
 
         val inflater = LayoutInflater.from(this)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -1264,10 +1362,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
 
         okButton.setOnClickListener {
-            if(status) {
+            if (status) {
                 closePopup()
                 finish()
-            }else{
+            } else {
                 closePopup()
             }
         }

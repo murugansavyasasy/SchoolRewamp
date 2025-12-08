@@ -2,19 +2,15 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -23,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockedStudent
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
@@ -65,7 +60,6 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,7 +79,8 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
                 if (response.status) {
                     showDataValidation(
                         resources.getString(R.string.success),
-                        response.message ?: getString(R.string.updated_successfully), requireActivity()
+                        response.message ?: getString(R.string.updated_successfully),
+                        requireActivity()
                     )
                 } else {
                     showDataValidation(

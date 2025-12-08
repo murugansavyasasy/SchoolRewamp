@@ -48,6 +48,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun getViewBinding(): SpecificStudentBinding {
         return SpecificStudentBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var selectedIds = mutableListOf<String>()
@@ -70,7 +71,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.toolbarLayout.cbSelect.buttonTintList = null
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
@@ -166,7 +170,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
-                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
                 }
@@ -241,7 +245,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 Constant.isShimmerViewDisable
             )
         binding.rcySpecificStudent.adapter = mAdapter
-
     }
 
     private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
@@ -262,8 +265,109 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         )
     }
 
+
+    fun voiceSendApi() {
+        val isVoiceData = Constant.isVoiceSendingData
+
+        val jsonObject = ApiCallRequest.isVoiceSend(
+            isAcademicYearId = isAcademicYearId,
+            isCommunicationType = isVoiceData!!.isCommunicationType,
+            selectedDates = isVoiceData.selectedDates,
+            isStartTimeText = isVoiceData.isStartTimeText,
+            isEndTimeText = isVoiceData.isEndTimeText,
+            title = isVoiceData.title,
+            isEmergency = isVoiceData.isEmergency,
+            isScheduleCall = isVoiceData.isScheduleCall,
+            schoolId = selectedIds,
+            targetType = isTargetType!!,
+            circularType = isCircularType!!,
+            fileName = isVoiceData.isFileName
+        )
+        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+    }
+
+    fun attachmentSendApi() {
+
+        isTargetType = Constant.isStudent
+        isCircularType = Constant.student
+        val jsonObject = ApiCallRequest.isSendAttachment(
+            isAcademicYearId = isAcademicYearId,
+            selectedIds = selectedIds,
+            title = Constant.isCommonTitle,
+            description = Constant.isCommonDescription,
+            targetType = isTargetType!!,
+            iframe = isIframe,
+            fileSize = isFileSize,
+        )
+        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+    }
+
+
+    fun isUploadFilesInServer(isFileType: String?) {
+
+        ProgressDialogHelper.show(this)
+//        ProgressDialogHelper.updateProgress(10)
+
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK ||
+            SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT
+        ) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+        }
+//        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+
+        when {
+//            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+//            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
+        }
+//        ProgressDialogHelper.updateProgress(80)
+    }
+
+
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -292,7 +396,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     isAssignmentSend()
                 }
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val outputDir =
@@ -333,6 +437,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
@@ -361,6 +466,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    onTaskComplete()
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
@@ -373,13 +479,14 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                         }
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
 
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
+                                    onTaskComplete()
                                 }
                             })
                     }
@@ -390,71 +497,113 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    fun voiceSendApi() {
-        val isVoiceData = Constant.isVoiceSendingData
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
 
-        val jsonObject = ApiCallRequest.isVoiceSend(
-            isAcademicYearId = isAcademicYearId,
-            isCommunicationType = isVoiceData!!.isCommunicationType,
-            selectedDates = isVoiceData.selectedDates,
-            isStartTimeText = isVoiceData.isStartTimeText,
-            isEndTimeText = isVoiceData.isEndTimeText,
-            title = isVoiceData.title,
-            isEmergency = isVoiceData.isEmergency,
-            isScheduleCall = isVoiceData.isScheduleCall,
-            schoolId = selectedIds,
-            targetType = isTargetType!!,
-            circularType = isCircularType!!,
-            fileName = isVoiceData.isFileName
-        )
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
-
-    }
-
-    fun attachmentSendApi() {
-
-        isTargetType = Constant.isStudent
-        isCircularType = Constant.student
-        val jsonObject = ApiCallRequest.isSendAttachment(
-            isAcademicYearId = isAcademicYearId,
-            selectedIds = selectedIds,
-            title = Constant.isCommonTitle,
-            description = Constant.isCommonDescription,
-            targetType = isTargetType!!,
-            iframe = isIframe,
-            fileSize = isFileSize,
-        )
-        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
-
-    }
-
-    fun isUploadFilesInServer(isFileType: String?) {
-
-        ProgressDialogHelper.show(this)
-        ProgressDialogHelper.updateProgress(10)
-
-        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK ||
-            SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT
-        ) {
-            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
-        }
-        ProgressDialogHelper.updateProgress(50)
-        isTotalSelectedItem = Constant.selectedFiles.size
-        isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
-            val file = iterator.next()
-            if (file.type == FileType.VIDEO) {
-                isVideoSelectedArrayList.add(file)
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
+                    )
+                )
                 iterator.remove()
             }
         }
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+
+
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (video in isVideoSelectedArrayList) {
+
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
+
+
+//                VimeoVideoUpload.uploadVideo(
+//                    this,
+//                    "quiz",
+//                    "quiz",
+//                    video.path,
+//                    object : VimeoVideoUpload.UploadCompletionListener {
+//
+//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//
+//                            Log.e("VIDEO_DEBUG", "Callback fired")
+//
+//                            Constant.isAwsUploadedFiles.add(
+//                                AwsUploadedFiles(
+//                                    isFileUrl = link.toString(),
+//                                    isFileType = Constant.VIDEO
+//                                )
+//                            )
+//
+//                            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+//                                ProgressDialogHelper.dismiss()
+//
+//                                when (SELECTED_MENU_ID) {
+//                                    M_ATTACHMENTS -> attachmentSendApi()
+//                                    M_ASSIGNMENT -> isAssignmentSend()
+//                                }
+//                            }
+//                        }
+//
+//                        override fun onFailure(errorMessage: String?) {
+//                            Log.e("VIDEO_DEBUG", "Upload failed: $errorMessage")
+//                        }
+//                    }
+//                )
+
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", video.path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+            if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                isAssignmentSend()
+            } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
+                attachmentSendApi()
+            }
         }
-        ProgressDialogHelper.updateProgress(80)
+    }
+
+    override fun onUploadComplete(
+        success: Boolean,
+        iframe: String?,
+        link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                if (SELECTED_MENU_ID == M_ATTACHMENTS) {
+                    attachmentSendApi()
+                } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                    isAssignmentSend()
+                }
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
     }
 
 
@@ -524,68 +673,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    private fun videoUploading() {
-
-        val iterator = isVideoSelectedArrayList.iterator()
-        while (iterator.hasNext()) {
-            val fileItem = iterator.next()
-            if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = fileItem.path,
-                        isFileType = fileItem.type.name
-                    )
-                )
-                iterator.remove()
-            }
-        }
-
-
-        if (isVideoSelectedArrayList.isNotEmpty()) {
-            for (i in isVideoSelectedArrayList.indices) {
-                VimeoVideoUpload.uploadVideo(
-                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
-                )
-            }
-        } else {
-            ProgressDialogHelper.dismiss()
-            if (SELECTED_MENU_ID == M_ASSIGNMENT) {
-                isAssignmentSend()
-            } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
-                attachmentSendApi()
-            }
-        }
-    }
-
-    override fun onUploadComplete(
-        success: Boolean,
-        iframe: String?,
-        link: String?
-    ) {
-        runOnUiThread {
-            Log.d("link", link.toString())
-            Constant.isAwsUploadedFiles.add(
-                AwsUploadedFiles(
-                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
-                )
-            )
-
-            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                ProgressDialogHelper.dismiss()
-                if (SELECTED_MENU_ID == M_ATTACHMENTS) {
-                    attachmentSendApi()
-                }else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
-                    isAssignmentSend()
-                }
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-        }
-    }
 
     override fun onResume() {
         super.onResume()

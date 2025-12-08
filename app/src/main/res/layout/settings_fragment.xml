@@ -89,7 +89,7 @@
                     </ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -151,7 +151,7 @@
                         android:layout_weight="0.8">
 
                         <TextView
-                            style="@style/CustomTextStylePoppinsBold"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/enable_fingerprint_login"
@@ -221,7 +221,7 @@
                         android:src="@drawable/notification_icon_gray"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -272,7 +272,7 @@
                         android:src="@drawable/ic_language"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -340,7 +340,7 @@
                         android:src="@drawable/faq_icon"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -391,7 +391,7 @@
                         android:src="@drawable/contact_us"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -442,7 +442,7 @@
                         android:src="@drawable/terms_and_conditions"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -493,7 +493,7 @@
                         android:src="@drawable/privacy_policy"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -545,7 +545,7 @@
                         android:src="@drawable/info_circle_fill"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -596,7 +596,7 @@
                         android:src="@drawable/questionmark_circle"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -651,7 +651,7 @@
                     </ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -717,7 +717,7 @@
                         android:src="@drawable/send_feedback_icon"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -767,7 +767,7 @@
                         android:src="@drawable/report_bug_icon"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -820,7 +820,7 @@
                         android:src="@drawable/logout"></ImageView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

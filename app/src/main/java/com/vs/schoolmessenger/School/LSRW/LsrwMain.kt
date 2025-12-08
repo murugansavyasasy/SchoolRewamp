@@ -20,8 +20,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsRwDashboardAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwCompletedAdapter
@@ -33,7 +31,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LsrwSkillMainBinding
 
-class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsrwskillreportlistener {
+class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener,
+    lsrwskillreportlistener {
 
     override fun getViewBinding(): LsrwSkillMainBinding {
         return LsrwSkillMainBinding.inflate(layoutInflater)
@@ -129,9 +128,13 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
                 allCompletedItems = data.completed
                 completedviewadapter.updateList(allCompletedItems)
                 setupFilters(allTaskItems, allCompletedItems)
-                handleVisibility(allTaskItems, allCompletedItems,"")
+                handleVisibility(allTaskItems, allCompletedItems, "")
             } else {
-                handleVisibility(emptyList(), emptyList(),response!!.message?:getString(R.string.no_data_found))
+                handleVisibility(
+                    emptyList(),
+                    emptyList(),
+                    response!!.message ?: getString(R.string.no_data_found)
+                )
             }
         }
 
@@ -203,7 +206,13 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
         )
 
 
-        val rearrangedFilters = desiredOrder.filter { it in availableFilters || it in listOf(allFilter, pendingFilter, completedFilter) }
+        val rearrangedFilters = desiredOrder.filter {
+            it in availableFilters || it in listOf(
+                allFilter,
+                pendingFilter,
+                completedFilter
+            )
+        }
 
         filterAdapter = LsrwFilterAdapter(rearrangedFilters) { selectedFilter ->
             val filteredActive: List<LsrwTask>
@@ -214,17 +223,21 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
                     filteredActive = allTaskItems
                     filteredCompleted = allCompletedItems
                 }
+
                 "Pending" -> {
                     filteredActive = allTaskItems
                     filteredCompleted = emptyList()
                 }
+
                 "Completed" -> {
                     filteredActive = emptyList()
                     filteredCompleted = allCompletedItems
                 }
+
                 else -> {
                     filteredActive = allTaskItems.filter { it.activity_type == selectedFilter }
-                    filteredCompleted = allCompletedItems.filter { it.activity_type == selectedFilter }
+                    filteredCompleted =
+                        allCompletedItems.filter { it.activity_type == selectedFilter }
                 }
             }
 
@@ -239,9 +252,11 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
     }
 
 
-
-
-    private fun handleVisibility(active: List<LsrwTask>, completed: List<LsrwTask>,ErrorMsg: String) {
+    private fun handleVisibility(
+        active: List<LsrwTask>,
+        completed: List<LsrwTask>,
+        ErrorMsg: String
+    ) {
         val hasActive = active.isNotEmpty()
         val hasCompleted = completed.isNotEmpty()
         binding.rcylsrwreport.visibility = if (hasActive) View.VISIBLE else View.GONE
@@ -252,7 +267,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.noDataFound.visibility = View.VISIBLE
             binding.noDataImage.visibility = View.VISIBLE
-            binding.noDataFound.text=ErrorMsg
+            binding.noDataFound.text = ErrorMsg
 
         } else {
             binding.lytNoDataFound.visibility = View.GONE
@@ -288,13 +303,13 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
-        if(data.can_edit) {
+        if (data.can_edit) {
             layoutEdit.visibility = View.GONE
         } else {
             layoutEdit.visibility = View.GONE
         }
 
-        if(data.can_delete) {
+        if (data.can_delete) {
             layoutDelete.visibility = View.VISIBLE
         } else {
             layoutDelete.visibility = View.GONE
@@ -306,7 +321,6 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener, lsr
         }
         popupWindow.showAsDropDown(anchor, 0, 10)
     }
-
 
 
     fun showSendConfirmationDialog(isEventUpdate: Boolean) {

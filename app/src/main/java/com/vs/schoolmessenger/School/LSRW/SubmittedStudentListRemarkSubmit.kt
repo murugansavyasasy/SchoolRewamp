@@ -32,11 +32,13 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentlistRemarksubmitBinding
 
-class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBinding>(), View.OnClickListener,
+class SubmittedStudentListRemarkSubmit : BaseActivity<StudentlistRemarksubmitBinding>(),
+    View.OnClickListener,
     OnImageClickListener {
     override fun getViewBinding(): StudentlistRemarksubmitBinding {
         return StudentlistRemarksubmitBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
@@ -45,7 +47,6 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
     var userDetails: UserDetails? = null
 
     private var audioAdapter: AudioAdapter? = null
-
 
 
     private var data: FilePreview? = null
@@ -67,7 +68,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = data!!.description
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSchoolName.text = data!!.subjectName + " - " +  data!!.sentBy
+        binding.toolbarLayout.lblSchoolName.text = data!!.subjectName + " - " + data!!.sentBy
 
 
 //        binding.descriptionValue.text = data!!.description
@@ -201,6 +202,7 @@ class SubmittedStudentListRemarkSubmit: BaseActivity<StudentlistRemarksubmitBind
             closePopup()
         }
     }
+
     override fun onImageClick(position: Int) {
         TODO("Not yet implemented")
     }

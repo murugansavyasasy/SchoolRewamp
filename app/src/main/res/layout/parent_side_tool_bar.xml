@@ -76,7 +76,7 @@
                     android:visibility="gone"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@color/white"
-                    android:text=""
+                    android:text="jkasndkjnsjakdjk"
                     android:layout_marginEnd="@dimen/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -85,34 +85,6 @@
 
             </LinearLayout>
 
-<!--<<<<<<< HEAD-->
-<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/lblSubjectName"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:visibility="gone"&ndash;&gt;-->
-<!--&lt;!&ndash;                style="@style/CustomTextStylePoppinsMedium"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textColor="@color/white"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:text="ahcbakdbcakdjbcakjdbcakdakd"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_below="@+id/rlaStudentName"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_toStartOf="@+id/imgSearchToolBar"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_toEndOf="@id/imgBack"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginEnd="@dimen/five"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content">&ndash;&gt;-->
-<!--=======-->
-<!--            <TextView-->
-<!--                android:id="@+id/lblSubjectName"-->
-<!--                style="@style/CustomTextStylePoppinsMedium"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/rlaStudentName"-->
-<!--                android:layout_marginEnd="@dimen/five"-->
-<!--                android:layout_toStartOf="@+id/imgSearchToolBar"-->
-<!--                android:layout_toEndOf="@id/imgBack"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:visibility="gone">-->
-<!--&gt;>>>>>> a1e842f11796d36c86271237232ec5be9d524971-->
-
-<!--&lt;!&ndash;            </TextView>&ndash;&gt;-->
 
             <TextView
                 android:id="@+id/lblPostedOn"

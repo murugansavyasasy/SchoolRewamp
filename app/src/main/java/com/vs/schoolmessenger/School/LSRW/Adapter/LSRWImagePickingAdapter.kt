@@ -3,33 +3,31 @@ package com.vs.schoolmessenger.School.LSRW.Adapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FileItem
-import com.vs.schoolmessenger.Utils.FileType
-import java.io.File
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import kotlin.apply
-import kotlin.text.toLong
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
+import java.io.File
 
 class LSRWImagePickingAdapter(
     private val context: Context,
@@ -111,6 +109,7 @@ class LSRWImagePickingAdapter(
                     override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
                         if (fromUser) mp.seekTo(progress)
                     }
+
                     override fun onStartTrackingTouch(sb: SeekBar?) {}
                     override fun onStopTrackingTouch(sb: SeekBar?) {}
                 })
@@ -248,7 +247,8 @@ class LSRWImagePickingAdapter(
                 if (apps.isNotEmpty()) {
                     context.startActivity(Intent.createChooser(openIntent, "Open with"))
                 } else {
-                    Toast.makeText(context, "No app found to open this file.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No app found to open this file.", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
             } catch (e: Exception) {
@@ -334,6 +334,7 @@ class LSRWImagePickingAdapter(
                 override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) mp.seekTo(progress)
                 }
+
                 override fun onStartTrackingTouch(sb: SeekBar?) {}
                 override fun onStopTrackingTouch(sb: SeekBar?) {}
             })
@@ -366,7 +367,8 @@ class LSRWImagePickingAdapter(
                     if (mp.isPlaying)
                         handler.postDelayed(this, 200)
 
-                } catch (_: Exception) {}
+                } catch (_: Exception) {
+                }
             }
         }
         handler.post(updateTask)
@@ -376,7 +378,8 @@ class LSRWImagePickingAdapter(
         mediaPlayer?.let { mp ->
             try {
                 if (mp.isPlaying) mp.stop()
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+            }
 
             mp.release()
         }

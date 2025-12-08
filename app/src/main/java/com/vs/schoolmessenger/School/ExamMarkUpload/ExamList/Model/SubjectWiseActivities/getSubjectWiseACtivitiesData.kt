@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities
 
-class getSubjectWiseACtivitiesData (
+class getSubjectWiseACtivitiesData(
     val section_id: String,
     val section_name: String,
     val class_id: String,

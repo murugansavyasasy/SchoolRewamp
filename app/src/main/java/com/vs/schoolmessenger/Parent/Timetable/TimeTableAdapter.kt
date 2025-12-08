@@ -83,7 +83,8 @@ class TimeTableAdapter(
                 Constant.two -> {
                     // Hour Type 2: Show name and staff_name
                     subjectValue.text = if (data.name.isNotEmpty()) data.name else Constant.iffin
-                    facultyName.text = if (data.staff_name.isNotEmpty()) data.staff_name else Constant.iffin
+                    facultyName.text =
+                        if (data.staff_name.isNotEmpty()) data.staff_name else Constant.iffin
                 }
 
                 else -> {

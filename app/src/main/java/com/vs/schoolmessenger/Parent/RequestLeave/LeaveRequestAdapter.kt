@@ -100,7 +100,8 @@ class LeaveRequestAdapter(
             data: LeaveData,
             listener: LeaveRequestClickListener,
             isExpanded: Boolean,
-            context: Context,) {
+            context: Context,
+        ) {
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.firstOrNull()?.toString() ?: "?"
 
@@ -108,7 +109,11 @@ class LeaveRequestAdapter(
                 Constant.convertDateTimeFormat2(data.leave_to ?: "")
             }"
             textNoOfDays.text =
-                "${data.no_of_days} ${if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(R.string.days)} ${context.getString(R.string.Application)}"
+                "${data.no_of_days} ${
+                    if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(
+                        R.string.days
+                    )
+                } ${context.getString(R.string.Application)}"
             textReason.text = data.reason
 
             if (data.leave_type == "") {

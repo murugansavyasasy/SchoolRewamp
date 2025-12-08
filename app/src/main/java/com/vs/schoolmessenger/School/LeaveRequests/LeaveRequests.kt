@@ -62,7 +62,6 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var fromNotification: Boolean = false
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -93,7 +92,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
             )
 
             val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
-            SharedPreference.putStaffDetails(this,matchedChild!!)
+            SharedPreference.putStaffDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -157,14 +156,14 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.rcyleaverequest.post {
                     val count = mAdapter.filteredList.size
                     if (count == 0) {
-                        Log.d("NOdata","No Data")
+                        Log.d("NOdata", "No Data")
                         binding.toolbarLayout.rytSearch.visibility = View.GONE
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                         binding.txtNoData.visibility = View.VISIBLE
                         binding.nomessage.visibility = View.VISIBLE
                         binding.rcyleaverequest.visibility = View.GONE
                     } else {
-                        Log.d("data","Data")
+                        Log.d("data", "Data")
                         binding.toolbarLayout.rytSearch.visibility = View.GONE
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         binding.txtNoData.visibility = View.GONE
@@ -297,7 +296,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         isButtonClick: Boolean,
         resultCallback: (Boolean) -> Unit
     ) {
-        Log.d("isStatus",isButtonClick.toString())
+        Log.d("isStatus", isButtonClick.toString())
         isApproveRejectId = data.id
         var isMessage = ""
         if (isButtonClick) {
@@ -328,7 +327,6 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     override fun onUpdateStatus(leaveData: LeaveData) {
         mAdapter.notifyDataSetChanged()
     }
-
 
 
     private fun scrollToMessageId(headerId: String?) {
@@ -392,7 +390,10 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         val innerRV = outerVH?.rvMonthWiseHistory
 
         if (innerRV == null) {
-            Log.d("ScrollDebug", "Inner RV not found for month index $targetMonthIndex — retrying shortly")
+            Log.d(
+                "ScrollDebug",
+                "Inner RV not found for month index $targetMonthIndex — retrying shortly"
+            )
             // small retry to give RecyclerView time to layout the inner recycler
             binding.rcyleaverequest.postDelayed({
                 performInnerScrollAndHighlight(targetMonthIndex, headerId)
@@ -401,7 +402,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         }
 
         // find inner index
-        val innerPosition = mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
+        val innerPosition =
+            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
         if (innerPosition == -1) {
             Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
             return
@@ -423,7 +425,10 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                         innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
                     retryInnerVH?.itemView?.let { itemView ->
                         highlightItemView(itemView)
-                    } ?: Log.d("ScrollDebug", "Inner VH still null after retry for pos $innerPosition")
+                    } ?: Log.d(
+                        "ScrollDebug",
+                        "Inner VH still null after retry for pos $innerPosition"
+                    )
                 }, 100)
             } else {
                 innerVH.itemView?.let { itemView ->
@@ -442,15 +447,12 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     }
 
 
-
-
     private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
 
-        if(newData.isNullOrEmpty()) {
+        if (newData.isNullOrEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
-        }
-        else{
+        } else {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
             mAdapter = MonthwiseLeaveAdapter(

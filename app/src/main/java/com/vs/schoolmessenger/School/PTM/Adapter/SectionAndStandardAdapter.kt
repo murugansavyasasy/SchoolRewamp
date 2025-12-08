@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.PTM.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

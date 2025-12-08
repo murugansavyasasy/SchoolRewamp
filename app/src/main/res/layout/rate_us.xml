@@ -94,11 +94,23 @@
                     android:visibility="visible" />
 
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+
                 <TextView
                     android:id="@+id/lblMayBeLater"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ratingBar"
+                    android:layout_below="@+id/recyclerCategories"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/thirty"
@@ -120,7 +132,7 @@
                     android:id="@+id/lnrRatingContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ratingBar"
+                    android:layout_below="@+id/recyclerCategories"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -169,14 +181,7 @@
                         android:textSize="@dimen/fifteen" />
 
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="@dimen/fifteen"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:background="@color/grey" />
+
 
                     <Button
                         android:id="@+id/btnsubmit"
@@ -184,7 +189,6 @@
                         android:layout_height="@dimen/fourty_five"
                         android:layout_margin="@dimen/fifteen"
                         android:background="@drawable/rect_btn_orange"
-                        android:enabled="false"
                         android:text="@string/lblSubmit"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/white"
@@ -273,6 +277,5 @@
 
     </androidx.cardview.widget.CardView>
 </FrameLayout>
-
 
 

@@ -66,7 +66,6 @@ class HomeworkParentAdapter(
     }
 
 
-
     fun updateList(newData: List<GetHomeworkDetails>, date: String) {
         isHomeWorkData = newData
         originalList = newData
@@ -108,7 +107,7 @@ class HomeworkParentAdapter(
                 binding.redDot.visibility = View.INVISIBLE
             }
             binding.cardRoot.setOnClickListener {
-                Log.d("data",item.id)
+                Log.d("data", item.id)
 
 //                item.is_unread = false
                 binding.redDot.visibility = View.INVISIBLE

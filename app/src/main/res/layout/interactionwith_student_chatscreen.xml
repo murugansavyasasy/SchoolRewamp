@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/AthensGray">
-
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
@@ -14,32 +13,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
-
         <RelativeLayout
             android:id="@+id/toolbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_theme_school"
+            android:background="@drawable/bg_header_rounded"
             android:paddingVertical="@dimen/fifteen">
-
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_width="@dimen/thirty_five"
                 android:layout_height="@dimen/thirty_five"
                 android:layout_centerVertical="true"
                 android:src="@drawable/arrow_left_white">
-
             </ImageView>
-
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/fourty"
@@ -50,8 +45,6 @@
                 android:src="@drawable/default_profile"
                 android:visibility="gone"
                 app:shapeAppearanceOverlay="@style/CircleImageShape" />
-
-
             <LinearLayout
                 android:id="@+id/rlaStudentName"
                 android:layout_width="wrap_content"
@@ -61,7 +54,6 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toEndOf="@+id/profileImage"
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/lblStudentName"
                     style="@style/CustomTextStylePoppinsBold"
@@ -69,9 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="SARAN"
                     android:textColor="@color/white">
-
                 </TextView>
-
                 <TextView
                     android:id="@+id/lblStudentSection"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -80,11 +70,8 @@
                     android:layout_below="@+id/lblStudentName"
                     android:text="ENGLISH"
                     android:textColor="@color/white">
-
                 </TextView>
-
             </LinearLayout>
-
         </RelativeLayout>
 
 
@@ -95,8 +82,6 @@
             android:layout_above="@+id/bottomChatInput"
             android:layout_below="@+id/toolbarlayout"
             android:nestedScrollingEnabled="false" />
-
-
         <LinearLayout
             android:id="@+id/bottomChatInput"
             android:layout_width="match_parent"
@@ -106,7 +91,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/ten">
-
             <ImageView
                 android:id="@+id/btnAdd"
                 android:layout_width="wrap_content"
@@ -117,14 +101,12 @@
                 android:contentDescription="Attachment"
                 android:src="@drawable/ic_plus"
                 android:visibility="gone" />
-
             <LinearLayout
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:id="@+id/reply_linearlayout"
                     android:layout_width="match_parent"
@@ -133,14 +115,12 @@
                     android:background="@drawable/bg_message_input"
                     android:orientation="vertical"
                     android:visibility="gone">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/five"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
-
                         <TextView
                             android:id="@+id/txtReplyingTo"
                             style="@style/CustomTextStylePoppinsBold"
@@ -150,9 +130,7 @@
                             android:paddingBottom="@dimen/four"
                             android:text="Replying "
                             android:textColor="@color/black"
-
                             android:textSize="@dimen/twele_sp" />
-
                         <ImageView
                             android:id="@+id/imgCloseReply"
                             android:layout_width="@dimen/twenty"
@@ -161,8 +139,6 @@
                             android:contentDescription="@string/close_reply"
                             android:src="@drawable/close_red_color" />
                     </LinearLayout>
-
-
                     <TextView
                         android:id="@+id/txtquestion"
                         style="@style/CustomTextStylePoppinsMedium"
@@ -172,8 +148,6 @@
                         android:paddingBottom="@dimen/four"
                         android:text="Hi How are you"
                         android:textSize="@dimen/twele_sp" />
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,8 +155,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:weightSum="2">
-
-
                         <TextView
                             android:id="@+id/replytext"
                             style="@style/CustomTextStylePoppinsBold"
@@ -195,8 +167,6 @@
                             android:text="@string/reply"
                             android:textColor="@color/iconBlue"
                             android:textSize="@dimen/fifteen_sp" />
-
-
                         <TextView
                             android:id="@+id/replyalltext"
                             style="@style/CustomTextStylePoppinsBold"
@@ -209,10 +179,8 @@
                             android:text="@string/reply_all"
                             android:textColor="@color/iconBlue"
                             android:textSize="@dimen/fifteen_sp" />
-
                     </LinearLayout>
                 </LinearLayout>
-
                 <EditText
                     android:id="@+id/edtMessage"
                     android:layout_width="match_parent"
@@ -226,17 +194,13 @@
                     android:textSize="@dimen/fourteen_sp"
                     android:visibility="gone" />
             </LinearLayout>
-
         </LinearLayout>
-
-
         <LinearLayout
             android:id="@+id/lytList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical">
-
             <ImageView
                 android:id="@+id/nomessage"
                 android:layout_width="@dimen/two_fifty"
@@ -248,7 +212,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
-
             <TextView
                 android:id="@+id/txtNoData"
                 style="@style/CustomTextStylePoppinsBold"
@@ -259,11 +222,6 @@
                 android:text="@string/no_list_found"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
-
-
         </LinearLayout>
-
-
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

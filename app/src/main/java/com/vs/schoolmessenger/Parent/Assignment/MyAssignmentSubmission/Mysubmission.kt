@@ -24,8 +24,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
-import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
-import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MysubmissionAssignmentBinding
@@ -67,7 +65,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
-        binding.lblHeaderTitle.setText("My Submission")
+        binding.lblHeaderTitle.text = "My Submission"
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token

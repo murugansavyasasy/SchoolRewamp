@@ -13,7 +13,6 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionDeleteResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.MySubmissionEditResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
@@ -33,11 +32,9 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Re
 import com.vs.schoolmessenger.Parent.LSRW.Model.LSRWSkillSubmitResponse
 import com.vs.schoolmessenger.Parent.LSRW.Model.LsrwSkillResponse
 import com.vs.schoolmessenger.Parent.LSRW.MySubmissionModel.ActivityResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.AvailableSlotsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingHistoryResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotCountResponse
-import com.vs.schoolmessenger.Parent.PTM.DataClass.SlotDetailsResponse
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectResponse
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
@@ -52,8 +49,6 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateR
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
-import com.vs.schoolmessenger.School.LSRW.Model.LsrwSkillSendResponse
-import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrwResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -150,10 +145,10 @@ class ParentServices {
         isSpentPoints = MutableLiveData()
         isAddRewardPoints = MutableLiveData()
         islsrwmysubmission = MutableLiveData()
-        isParentprofilelist= MutableLiveData()
-        ispresubmission= MutableLiveData()
-        getmysubmissionedit= MutableLiveData()
-        ismysubmissiondelete= MutableLiveData()
+        isParentprofilelist = MutableLiveData()
+        ispresubmission = MutableLiveData()
+        getmysubmissionedit = MutableLiveData()
+        ismysubmissiondelete = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -330,8 +325,7 @@ class ParentServices {
                         response.body()?.let {
                             isNotificationResponse.postValue(it)
                         }
-                    }
-                    else{
+                    } else {
                         isNotificationResponse.postValue(null)
                     }
                 }
@@ -342,7 +336,6 @@ class ParentServices {
                 }
             })
     }
-
 
 
     val isNotificationResponseLiveData: LiveData<NotificationResponse?>
@@ -1218,8 +1211,7 @@ class ParentServices {
             isToken,
             event_date,
             subject_id,
-            class_teacher_id
-            ,isManagement
+            class_teacher_id, isManagement
         )
             ?.enqueue(object : Callback<MeetingResponse?> {
                 override fun onResponse(
@@ -1426,7 +1418,7 @@ class ParentServices {
         type: String,
         status_type: String,
     ) {
-        RestClient.apiInterfaces.isQuizExamList(isToken,type,status_type)
+        RestClient.apiInterfaces.isQuizExamList(isToken, type, status_type)
             ?.enqueue(object : Callback<GetQuizExamList?> {
                 override fun onResponse(
                     call: Call<GetQuizExamList?>,
@@ -1464,12 +1456,11 @@ class ParentServices {
         get() = isQuizExamList
 
 
-
     fun isGetQuestions(
         isToken: String,
         id: String,
     ) {
-        RestClient.apiInterfaces.isGetQuestion(isToken,id)
+        RestClient.apiInterfaces.isGetQuestion(isToken, id)
             ?.enqueue(object : Callback<GetQuizQuestions?> {
                 override fun onResponse(
                     call: Call<GetQuizQuestions?>,
@@ -1511,7 +1502,7 @@ class ParentServices {
         isToken: String,
         jsonObject: JsonObject,
     ) {
-        RestClient.apiInterfaces.isSubmitQuiz(isToken,jsonObject)
+        RestClient.apiInterfaces.isSubmitQuiz(isToken, jsonObject)
             ?.enqueue(object : Callback<SubmitQuizResponse?> {
                 override fun onResponse(
                     call: Call<SubmitQuizResponse?>,
@@ -1549,14 +1540,11 @@ class ParentServices {
         get() = isSubmitQuiz
 
 
-
-
-
     fun isSpentPoints(
         isToken: String,
         jsonObject: JsonObject,
     ) {
-        RestClient.apiInterfaces.isSpentPoints(isToken,jsonObject)
+        RestClient.apiInterfaces.isSpentPoints(isToken, jsonObject)
             ?.enqueue(object : Callback<SpentPointsModel?> {
                 override fun onResponse(
                     call: Call<SpentPointsModel?>,
@@ -1594,12 +1582,11 @@ class ParentServices {
         get() = isSpentPoints
 
 
-
     fun isAddRewardPoints(
         isToken: String,
         jsonObject: JsonObject,
     ) {
-        RestClient.apiInterfaces.isAddRewardPoints(isToken,jsonObject)
+        RestClient.apiInterfaces.isAddRewardPoints(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -1637,8 +1624,7 @@ class ParentServices {
         get() = isAddRewardPoints
 
 
-
-    fun ispresubmission(isToken: String, jsonObject: JsonObject, activity: Activity ) {
+    fun ispresubmission(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.ispresubmission(isToken, jsonObject)
             ?.enqueue(object : Callback<ProfileUpdateResponse?> {
@@ -1678,14 +1664,11 @@ class ParentServices {
         get() = ispresubmission
 
 
-
-
-
     fun isGetMySubmission(
         isToken: String,
         id: String,
     ) {
-        RestClient.apiInterfaces.isGetMySubmission(isToken,id)
+        RestClient.apiInterfaces.isGetMySubmission(isToken, id)
             ?.enqueue(object : Callback<GetMySubmission?> {
                 override fun onResponse(
                     call: Call<GetMySubmission?>,
@@ -1721,7 +1704,6 @@ class ParentServices {
 
     val isMySubmissionLiveData: LiveData<GetMySubmission?>
         get() = isGetMySubmission
-
 
 
     fun islsrwSkilllist(
@@ -1765,16 +1747,14 @@ class ParentServices {
         get() = islsrwSkilllist
 
 
-
-
-
-        fun islsrwSkillSubmit(isToken: String, jsonObject: JsonObject, activity: Activity ) {
-            RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-            RestClient.apiInterfaces.islsrwSkillSubmit(isToken, jsonObject)
-                ?.enqueue(object : Callback<LSRWSkillSubmitResponse?> {
+    fun islsrwSkillSubmit(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.islsrwSkillSubmit(isToken, jsonObject)
+            ?.enqueue(object : Callback<LSRWSkillSubmitResponse?> {
 
                 override fun onResponse(
-                    call: Call<LSRWSkillSubmitResponse?>, response: Response<LSRWSkillSubmitResponse?>
+                    call: Call<LSRWSkillSubmitResponse?>,
+                    response: Response<LSRWSkillSubmitResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         islsrwSkillSubmit.postValue(response.body())
@@ -1797,16 +1777,12 @@ class ParentServices {
         get() = islsrwSkillSubmit
 
 
-
-
-
-
     fun isGetPauketPoints(
         isToken: String,
         mobile_number: Long,
         user_type: Int,
     ) {
-        RestClient.apiInterfaces.isGetPauketPoints(isToken,mobile_number,user_type)
+        RestClient.apiInterfaces.isGetPauketPoints(isToken, mobile_number, user_type)
             ?.enqueue(object : Callback<PauketPointsResponse?> {
                 override fun onResponse(
                     call: Call<PauketPointsResponse?>,
@@ -1848,7 +1824,7 @@ class ParentServices {
         isToken: String,
         id: String,
     ) {
-        RestClient.apiInterfaces.islsrwmysubmission(isToken,id)
+        RestClient.apiInterfaces.islsrwmysubmission(isToken, id)
             ?.enqueue(object : Callback<ActivityResponse?> {
                 override fun onResponse(
                     call: Call<ActivityResponse?>,
@@ -1884,7 +1860,6 @@ class ParentServices {
 
     val islsrwmysubmissionLiveData: LiveData<ActivityResponse?>
         get() = islsrwmysubmission
-
 
 
     fun isParentprofilelist(
@@ -1976,8 +1951,7 @@ class ParentServices {
     }
 
 
-
-    fun getmysubmissionedit(isToken: String, jsonObject: JsonObject,  activity: Activity ) {
+    fun getmysubmissionedit(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.getmysubmissionedit(isToken, jsonObject)
             ?.enqueue(object : Callback<MySubmissionEditResponse?> {
@@ -2017,15 +1991,14 @@ class ParentServices {
         get() = getmysubmissionedit
 
 
-
-
     fun ismysubmissiondelete(
-        isToken: String, jsonObject: JsonObject,  activity: Activity
+        isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
-        RestClient.apiInterfaces.ismysubmissiondelete(isToken,jsonObject)
+        RestClient.apiInterfaces.ismysubmissiondelete(isToken, jsonObject)
             ?.enqueue(object : Callback<MySubmissionDeleteResponse?> {
                 override fun onResponse(
-                    call: Call<MySubmissionDeleteResponse?>, response: Response<MySubmissionDeleteResponse?>
+                    call: Call<MySubmissionDeleteResponse?>,
+                    response: Response<MySubmissionDeleteResponse?>
                 ) {
                     Log.d(
                         "GetMessagesStaff Response",
@@ -2056,8 +2029,6 @@ class ParentServices {
 
     val ismysubmissiondeleteLiveData: LiveData<MySubmissionDeleteResponse?>
         get() = ismysubmissiondelete
-
-
 
 
 }

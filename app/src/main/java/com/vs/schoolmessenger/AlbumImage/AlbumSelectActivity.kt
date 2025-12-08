@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.AlbumImage
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -47,12 +46,12 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
-        binding.toolbarLayout.lytTitleAndName.visibility= View.GONE
-        binding.toolbarLayout.monthSelectorLayout.visibility= View.GONE
-        binding.toolbarLayout.rlaStudentName.visibility= View.GONE
-        binding.toolbarLayout.rlaSpinner.visibility= View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
-        binding.toolbarLayout.blocktoolbar.visibility= View.GONE
+        binding.toolbarLayout.lytTitleAndName.visibility = View.GONE
+        binding.toolbarLayout.monthSelectorLayout.visibility = View.GONE
+        binding.toolbarLayout.rlaStudentName.visibility = View.GONE
+        binding.toolbarLayout.rlaSpinner.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.toolbarLayout.blocktoolbar.visibility = View.GONE
 
         binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 

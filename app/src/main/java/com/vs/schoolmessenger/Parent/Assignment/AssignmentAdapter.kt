@@ -153,13 +153,11 @@ class AssignmentAdapter(
         ) {
 
 
-
-
             lblDescription.text = data.description
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblassigned.text =
-                 "${context.getString(R.string.Assigned)} - ${Constant.convertToReadableDate(data.created_date)}"
+                "${context.getString(R.string.Assigned)} - ${Constant.convertToReadableDate(data.created_date)}"
             createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubject.text = data.subject
             lbldeadline.text =
@@ -167,9 +165,11 @@ class AssignmentAdapter(
             lblSendby.text = data.created_date
 
             lblSubmitted.text = "${context.getString(R.string.submitted)} - ${data.submitted_count}"
-            lblNotSubmitted.text = "${context.getString(R.string.not_submitted)} - ${data.total_count}"
+            lblNotSubmitted.text =
+                "${context.getString(R.string.not_submitted)} - ${data.total_count}"
 
-            lblSubmittedCount.text = data.submitted_count.toString()+"/"+data.total_count.toString()
+            lblSubmittedCount.text =
+                data.submitted_count.toString() + "/" + data.total_count.toString()
 
 
             val submittedCount = data.submitted_count ?: 0
@@ -185,15 +185,15 @@ class AssignmentAdapter(
 
             rytList2.setOnClickListener {
 
-             val targetType = when (data.recipient_type.trim()) {
-                 "SCHOOL" -> 1
-                 "STANDARD" -> 2
-                 "SECTION" -> 3
-                 "GROUP" -> 4
-                 "STUDENT" -> 5
-                 "STAFF" -> 6
-                 else -> 0
-             }
+                val targetType = when (data.recipient_type.trim()) {
+                    "SCHOOL" -> 1
+                    "STANDARD" -> 2
+                    "SECTION" -> 3
+                    "GROUP" -> 4
+                    "STUDENT" -> 5
+                    "STAFF" -> 6
+                    else -> 0
+                }
 
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(

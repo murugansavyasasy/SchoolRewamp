@@ -89,7 +89,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 //        binding.lnrTabOneName.setOnClickListener(this)
 //        binding.lnrTabTwoName.setOnClickListener(this)
 
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
 
             Constant.hideKeyboardIfOpen(this)
 
@@ -111,22 +111,20 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         isUserDetails = SharedPreference.getUserDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
-        if (isUserDetails?.staff_role.equals(Constant.isStaffRole)){
-            binding.rytSpinner.visibility=View.GONE
+        if (isUserDetails?.staff_role.equals(Constant.isStaffRole)) {
+            binding.rytSpinner.visibility = View.GONE
             isAccessToken = isStaffDetails!!.access_token
             isGetAttachmentReport()
             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        }
-        else{
+        } else {
             if (isUserDetails?.staff_details?.size!! > 1) {
                 binding.rytSpinner.visibility = View.VISIBLE
                 //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
                 isUserDetails?.let { setupSchoolSpinner(it.staff_details) }
-            }
-            else{
+            } else {
                 isAccessToken = isUserDetails!!.staff_details.get(0).access_token
-                binding.rytSpinner.visibility=View.GONE
+                binding.rytSpinner.visibility = View.GONE
                 isGetAttachmentReport()
                 binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
                 binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -143,12 +141,12 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         appViewModel!!.isDeleteAttachment?.observe(this) { response ->
             if (response != null) {
                 Constant.hideLoading(this@AttachmentReport)
-                if (response.status){
+                if (response.status) {
                     mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
                     Constant.showDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
-                }else{
+                } else {
                     mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
                     Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
@@ -161,26 +159,26 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         appViewModel!!.isAttachmentReportResponse?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
-                    binding.rcyAttachment.visibility= View.VISIBLE
-                    binding.txtNoData.visibility= View.GONE
-                    binding.nomessage.visibility= View.GONE
-                    completeAttachmentList=response.data
+                    binding.rcyAttachment.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.GONE
+                    binding.nomessage.visibility = View.GONE
+                    completeAttachmentList = response.data
                     isLoadAttachmentReportList(response.data)
-                }else{
-                    binding.rcyAttachment.visibility= View.GONE
-                    binding.txtNoData.visibility= View.VISIBLE
-                    binding.txtNoData.text=response.message
-                    binding.nomessage.visibility= View.VISIBLE
+                } else {
+                    binding.rcyAttachment.visibility = View.GONE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility = View.VISIBLE
                     binding.search.visibility = View.GONE
-                    binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 }
-            }else{
-                binding.rcyAttachment.visibility= View.GONE
-                binding.txtNoData.visibility= View.VISIBLE
-                binding.txtNoData.text=response?.message?:getString(R.string.no_list_found)
-                binding.nomessage.visibility= View.VISIBLE
+            } else {
+                binding.rcyAttachment.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_list_found)
+                binding.nomessage.visibility = View.VISIBLE
                 binding.search.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
 
             }
         }
@@ -198,14 +196,13 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
     fun isLoadAttachmentReportList(isHomeAttachmentReport: List<AttachmentDataReport>) {
 
-        if (isHomeAttachmentReport.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        if (isHomeAttachmentReport.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.search.visibility = View.GONE
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
-        }
-        else{
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        } else {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.search.visibility = View.GONE
 
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -280,7 +277,8 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
                             val selectedSchoolId = selectedStaff.school_id
 
                             // Filter attachment list by selected school
-                            val filteredList = completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                            val filteredList =
+                                completeAttachmentList.filter { it.school_id == selectedSchoolId }
 
                             Log.d(
                                 "SpinnerSelection",

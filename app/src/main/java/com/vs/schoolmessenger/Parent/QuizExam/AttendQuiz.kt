@@ -37,8 +37,8 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-    var isQuizID=""
-    var isUnansweredCount=0
+    var isQuizID = ""
+    var isUnansweredCount = 0
     private val selectedAnswersMap = mutableMapOf<String, Int>()
 
 
@@ -65,7 +65,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken=isChildDetails!!.access_token
+        isAccessToken = isChildDetails!!.access_token
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
@@ -74,31 +74,29 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         appViewModel?.isGetQuestion?.observe(this) { response ->
 
-            if(response != null){
+            if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
-                    isAllQuestionData=response.data
-                    isQuestionList=isAllQuestionData.get(0).question_details
-                    Log.d("isQuestionList",isQuestionList.toString())
+                    isAllQuestionData = response.data
+                    isQuestionList = isAllQuestionData.get(0).question_details
+                    Log.d("isQuestionList", isQuestionList.toString())
                     isSetQuestion(isQuestionList)
-                    binding.lnrQuiz.visibility=View.VISIBLE
-                    binding.quizStatus.visibility=View.GONE
-                    binding.lytList.visibility=View.GONE
+                    binding.lnrQuiz.visibility = View.VISIBLE
+                    binding.quizStatus.visibility = View.GONE
+                    binding.lytList.visibility = View.GONE
 
-                }
-                else{
+                } else {
                     Constant.hideLoading(this)
-                    binding.lnrQuiz.visibility=View.GONE
-                    binding.quizStatus.visibility=View.GONE
-                    binding.lytList.visibility=View.VISIBLE
+                    binding.lnrQuiz.visibility = View.GONE
+                    binding.quizStatus.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
                     ErrorMessage(response.message)
                 }
-            }
-            else{
+            } else {
                 Constant.hideLoading(this)
-                binding.lnrQuiz.visibility=View.GONE
-                binding.quizStatus.visibility=View.GONE
-                binding.lytList.visibility=View.VISIBLE
+                binding.lnrQuiz.visibility = View.GONE
+                binding.quizStatus.visibility = View.GONE
+                binding.lytList.visibility = View.VISIBLE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
@@ -111,7 +109,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                         resources.getString(R.string.success), response.message, this
                     )
                     binding.apply {
-                        lnrQuiz.visibility=View.GONE
+                        lnrQuiz.visibility = View.GONE
                         quizStatus.visibility = View.VISIBLE
                     }
                 } else {
@@ -120,11 +118,12 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
-            }
-            else {
+            } else {
                 Constant.hideLoading(this@AttendQuiz)
                 Constant.showParentDataValidation(
-                    resources.getString(R.string.fail), getString(R.string.something_went_wrong_please_try_again_later), this
+                    resources.getString(R.string.fail),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
                 )
             }
         }
@@ -156,14 +155,14 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     }
 
-    fun ErrorMessage(errorMessage:String){
+    fun ErrorMessage(errorMessage: String) {
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = errorMessage
     }
 
     private fun isFetchQuizQuestionList() {
         Constant.showLoading(this)
-        appViewModel?.isGetQuestions(isAccessToken ?: "",isQuizID)
+        appViewModel?.isGetQuestions(isAccessToken ?: "", isQuizID)
     }
 
 
@@ -192,7 +191,6 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     }
 
 
-
     private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
         val adapter = recyclerView.adapter ?: return
         this.createIndicators(adapter.itemCount, 0)
@@ -216,7 +214,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         val currentQuestion = questionList[currentQuestionIndex]
 
         // Set question text
-        binding.questionText.text ="${currentQuestionIndex+1}) ${currentQuestion.question}"
+        binding.questionText.text = "${currentQuestionIndex + 1}) ${currentQuestion.question}"
 
         val options = listOf(
             currentQuestion.option1,
@@ -294,19 +292,20 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         updateProgressBar()
         binding.prevButton.isEnabled = currentQuestionIndex > 0
         binding.nextButton1.text =
-            if (currentQuestionIndex == questionList.size - 1) getString(R.string.SUBMIT) else getString(R.string.NEXT)
-        binding.nextButton.background.setTint(ContextCompat.getColor(this,R.color.navi_blue1))
+            if (currentQuestionIndex == questionList.size - 1) getString(R.string.SUBMIT) else getString(
+                R.string.NEXT
+            )
+        binding.nextButton.background.setTint(ContextCompat.getColor(this, R.color.navi_blue1))
 
 
-        if (currentQuestionIndex == 0){
-            binding.prevButton.isEnabled=false
-            binding.prevButton.background.setTint(ContextCompat.getColor(this,R.color.light_gray))
+        if (currentQuestionIndex == 0) {
+            binding.prevButton.isEnabled = false
+            binding.prevButton.background.setTint(ContextCompat.getColor(this, R.color.light_gray))
             binding.igLeftImage.setColorFilter(ContextCompat.getColor(this, R.color.white))
             binding.prevButton1.setTextColor(ContextCompat.getColor(this, R.color.white))
-        }
-        else{
-            binding.prevButton.isEnabled=true
-            binding.prevButton.background.setTint(ContextCompat.getColor(this,R.color.navi_blue1))
+        } else {
+            binding.prevButton.isEnabled = true
+            binding.prevButton.background.setTint(ContextCompat.getColor(this, R.color.navi_blue1))
             binding.igLeftImage.setColorFilter(ContextCompat.getColor(this, R.color.white))
             binding.prevButton1.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
@@ -319,7 +318,12 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         // Apply blue color only to part before "/"
         val slashIndex = text.indexOf("/")
         spannable.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.PrimaryColor)), // your blue color
+            ForegroundColorSpan(
+                ContextCompat.getColor(
+                    this,
+                    R.color.PrimaryColor
+                )
+            ), // your blue color
             0,
             slashIndex,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -351,7 +355,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         binding.progressBar.max = totalQuestions
         binding.progressBar.progress = answeredCount
         binding.questionCounter.text = "$answeredCount  /  $totalQuestions"
-        updateQuestionCounter(answeredCount,totalQuestions) //Just Changing the Colour in UI
+        updateQuestionCounter(answeredCount, totalQuestions) //Just Changing the Colour in UI
     }
 
     private fun buildAnswerJson(): JsonObject {
@@ -373,8 +377,9 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun showSubmitDialog() {
         isUnansweredCount = questionList.size - selectedAnswersMap.values.count { it != 0 }
-        if (isUnansweredCount>0){
-            var ques=if (isUnansweredCount==1)getString(R.string.question_) else getString(R.string.questions_)
+        if (isUnansweredCount > 0) {
+            var ques =
+                if (isUnansweredCount == 1) getString(R.string.question_) else getString(R.string.questions_)
             Constant.showSendConfirmationDialog(
                 this,
                 getString(R.string.confirmation),
@@ -385,13 +390,12 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             ) { confirmed ->
                 if (confirmed) {
                     Constant.showLoading(this)
-                    val jsonObject=buildAnswerJson()
-                    Log.d("FinalAnswer",jsonObject.toString())
+                    val jsonObject = buildAnswerJson()
+                    Log.d("FinalAnswer", jsonObject.toString())
                     appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
                 }
             }
-        }
-        else{
+        } else {
             Constant.showSendConfirmationDialog(
                 this,
                 getString(R.string.confirmation),
@@ -402,8 +406,8 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             ) { confirmed ->
                 if (confirmed) {
                     Constant.showLoading(this)
-                    val jsonObject=buildAnswerJson()
-                    Log.d("FinalAnswer",jsonObject.toString())
+                    val jsonObject = buildAnswerJson()
+                    Log.d("FinalAnswer", jsonObject.toString())
                     appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
                 }
             }

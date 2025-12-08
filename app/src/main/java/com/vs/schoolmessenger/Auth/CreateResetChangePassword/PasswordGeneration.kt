@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -32,7 +31,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isToolBarPrimaryTheme1(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         binding.imgHide.setOnClickListener(this)
         binding.imgHide1.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
@@ -58,6 +61,22 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                 binding.btnCreate.text = getString(R.string.lblReset)
 
             }
+        }
+
+        binding.txtCreatePassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytMobile.isSelected = hasFocus
+        }
+
+        binding.imgHide.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytMobile.isSelected = hasFocus
+        }
+
+        binding.txtConfirmPassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
+        }
+
+        binding.rytPassword.setOnFocusChangeListener { _, hasFocus ->
+            binding.rytPassword.isSelected = hasFocus
         }
 
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
@@ -123,8 +142,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                             startActivity(intent)
                         }
                     }
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@PasswordGeneration, "", message)
                 }
             }
@@ -146,8 +164,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                     Constant.isForgotPassword = false
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@PasswordGeneration, "", message)
                 }
             }
@@ -168,8 +185,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@PasswordGeneration, "", message)
                 }
             }

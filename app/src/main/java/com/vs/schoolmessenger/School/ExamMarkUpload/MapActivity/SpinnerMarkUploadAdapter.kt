@@ -1,11 +1,10 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import com.vs.schoolmessenger.R
 
@@ -37,7 +36,8 @@ class SpinnerMarkUploadAdapter(
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_new, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_new, parent, false)
         val textView = view.findViewById<TextView>(R.id.textViewItem)
         val viewDiv = view.findViewById<View>(R.id.viewDiv)
 

@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
 
-
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater

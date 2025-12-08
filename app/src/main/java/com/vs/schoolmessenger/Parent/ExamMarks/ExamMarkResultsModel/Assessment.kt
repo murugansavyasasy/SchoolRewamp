@@ -14,4 +14,4 @@ data class Assessment(
     val total_obtained: String,
     val grade: String,
     val message: String
-    )
+)

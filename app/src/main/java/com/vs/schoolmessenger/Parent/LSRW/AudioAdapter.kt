@@ -3,13 +3,11 @@ package com.vs.schoolmessenger.Parent.LSRW
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AudioItemBinding
 
 class AudioAdapter(
@@ -23,8 +21,8 @@ class AudioAdapter(
     private var currentlyPlayingPos = -1
     private var previousHolder: AudioViewHolder? = null
 
-    inner class AudioViewHolder(val binding: AudioItemBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    inner class AudioViewHolder(val binding: AudioItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
         val binding = AudioItemBinding.inflate(
@@ -60,6 +58,7 @@ class AudioAdapter(
                     mediaPlayer?.seekTo(progress * 1000)
                 }
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })

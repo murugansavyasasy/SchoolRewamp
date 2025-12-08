@@ -29,7 +29,11 @@ class StudentSubmittedListRemarkAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val binding =
-            SubmittedstudentListViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            SubmittedstudentListViewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return DataViewHolder(binding)
     }
 
@@ -71,7 +75,7 @@ class StudentSubmittedListRemarkAdapter(
                             override fun onLoadFailed(
                                 e: GlideException?,
                                 model: Any?,
-                                target: com.bumptech.glide.request.target.Target<Drawable?>,
+                                target: Target<Drawable?>,
                                 isFirstResource: Boolean
                             ): Boolean {
                                 binding.progressBar.visibility = View.GONE

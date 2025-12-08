@@ -19,7 +19,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
 import com.vs.schoolmessenger.Utils.Constant
@@ -79,7 +78,8 @@ class LsrwAdapter(
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val imgIcon: ImageView = itemView.findViewById(R.id.imgIcon)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.headerrelative_layout)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.headerrelative_layout)
 
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
 
@@ -92,7 +92,7 @@ class LsrwAdapter(
             txtsubdesc.text = item.description
             txtDate.text = getFormattedDateText(item.created_on)
 
-            txtSubmitted.text = item.submitted_average + " "+context.getString(R.string.submitted)
+            txtSubmitted.text = item.submitted_average + " " + context.getString(R.string.submitted)
 
 
             if (item.can_edit || item.can_delete) {
@@ -102,16 +102,16 @@ class LsrwAdapter(
             }
 
             imgEditAndDelete.setOnClickListener {
-                listener.onEditAndDeleteCompleted(item, it, adapterPosition,"ACTIVE")
+                listener.onEditAndDeleteCompleted(item, it, adapterPosition, "ACTIVE")
             }
 
             if (item.activity_type == Constant.Listening) {
                 imgIcon.setImageResource(R.drawable.headphonesvgformat)
             } else if (item.activity_type == Constant.Speaking) {
                 imgIcon.setImageResource(R.drawable.micsvgformatstyle)
-            } else if (item.activity_type == Constant.Reading){
+            } else if (item.activity_type == Constant.Reading) {
                 imgIcon.setImageResource(R.drawable.booksvg_formatstyle)
-            } else if (item.activity_type == Constant.Writing){
+            } else if (item.activity_type == Constant.Writing) {
                 imgIcon.setImageResource(R.drawable.pensvgformatstyle)
             } else {
                 imgIcon.setImageResource(R.drawable.questionmark)

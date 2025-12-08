@@ -93,7 +93,7 @@ class ImageSliderAdapter(
                 Constant.TXT -> R.drawable.txt_file_img
                 Constant.PPT, Constant.PPTX -> R.drawable.ppt_icon
                 Constant.EXCEL -> R.drawable.excel_icon
-                Constant.VIDEO -> R.drawable.video_play
+                Constant.VIDEO -> R.drawable.video_icon_2
                 Constant.M4A -> R.drawable.mic_icon_black
                 else -> R.drawable.doc_icon
             }

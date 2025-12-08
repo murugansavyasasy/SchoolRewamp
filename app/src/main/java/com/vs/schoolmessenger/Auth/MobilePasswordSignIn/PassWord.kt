@@ -53,14 +53,14 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
             Constant.hideLoading(this@PassWord)
             if (response != null) {
                 val status = response.status
-               val message = response.message
+                val message = response.message
                 if (status) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
                         addProperty(APIKeyNames.activity, Constant.add_points_login)
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                        addProperty(APIKeyNames.menu_id,Constant.SELECTED_MENU_ID )
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
 
@@ -96,21 +96,21 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                    if (Constant.user_data!![0].user_details.staff_details.size > 1) {
-                                        val intent =
-                                            Intent(this@PassWord, PrioritySelection::class.java)
-                                        startActivity(intent)
-                                    } else {
-                                        val intent = Intent(
-                                            this@PassWord,
-                                            SchoolDashboard::class.java
-                                        )
-                                        SharedPreference.putStaffDetails(
-                                            this,
-                                            Constant.user_data!![0].user_details.staff_details[0]
-                                        )
-                                        startActivity(intent)
-                                    }
+                                if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                    val intent =
+                                        Intent(this@PassWord, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(
+                                        this@PassWord,
+                                        SchoolDashboard::class.java
+                                    )
+                                    SharedPreference.putStaffDetails(
+                                        this,
+                                        Constant.user_data!![0].user_details.staff_details[0]
+                                    )
+                                    startActivity(intent)
+                                }
 
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
@@ -133,8 +133,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                             }
                         }
                     }
-                }
-                else{
+                } else {
                     Constant.errorAlert(this@PassWord, "", message)
                 }
             }

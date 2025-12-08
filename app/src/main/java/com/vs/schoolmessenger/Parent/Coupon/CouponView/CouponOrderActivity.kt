@@ -11,6 +11,10 @@ import android.text.Html
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -53,12 +57,19 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        enableEdgeToEdge()
 
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+
+            binding.statusBarBackground.layoutParams =
+                (binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams).apply {
+                    height = statusBars.top
+                }
+            binding.statusBarBackground.requestLayout()
+
+            insets
+        }
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomLayout.bottomSheet)
 
@@ -134,7 +145,8 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             calendar.time = expiryDateParsed!!
 
             val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val month = SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
+            val month =
+                SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
             val suffix = getDaySuffix(day)
 
             val displayText = "${getString(R.string.expires_on)} $day$suffix $month"
@@ -216,7 +228,8 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             clipboard.setPrimaryClip(clip)
             Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.failed_to_access_clipboard), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

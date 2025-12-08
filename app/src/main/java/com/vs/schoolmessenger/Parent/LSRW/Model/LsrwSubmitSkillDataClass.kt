@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class LsrwSubmitSkillDataClass (
+data class LsrwSubmitSkillDataClass(
     val id: String,
     val isDescription: String,
     val thumbnail: String

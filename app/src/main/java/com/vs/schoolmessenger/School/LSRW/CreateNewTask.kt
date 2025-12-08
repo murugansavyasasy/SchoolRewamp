@@ -7,8 +7,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.media.ExifInterface
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
@@ -44,6 +47,7 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
@@ -65,6 +69,7 @@ import com.vs.schoolmessenger.databinding.CreateNewtaskLsrwBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -183,13 +188,18 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
-                    val selectedUris = result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+                    val selectedUris =
+                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                     if (selectedUris.isNullOrEmpty()) return@registerForActivityResult
 
                     var addedCount = 0
                     selectedUris.forEach { uri ->
                         if (Constant.selectedFiles.size >= MAX_FILES + 1) {
-                            Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                getString(R.string.max_10_files_allowed),
+                                Toast.LENGTH_SHORT
+                            ).show()
                             return@forEach
                         }
 
@@ -208,28 +218,49 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                             mimeType?.startsWith("video/") == true -> FileType.VIDEO
                             mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                             fileName.endsWith(".pdf", true) -> FileType.PDF
-                            fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                            fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                            fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                            fileName.endsWith(".doc", true) || fileName.endsWith(
+                                ".docx",
+                                true
+                            ) -> FileType.DOC
+
+                            fileName.endsWith(".xls", true) || fileName.endsWith(
+                                ".xlsx",
+                                true
+                            ) -> FileType.EXCEL
+
+                            fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                ".pptx",
+                                true
+                            ) -> FileType.PPT
+
                             fileName.endsWith(".txt", true) -> FileType.TXT
                             else -> FileType.OTHER
                         }
 
                         if (type == FileType.AUDIO) {
+                            Constant.showLoading(this@CreateNewTask)
                             lifecycleScope.launch {
                                 val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
+                                Constant.hideLoading(this@CreateNewTask)
                                 if (wavFile != null) {
-                                    Constant.selectedFiles.add(FileItem(wavFile.absolutePath, FileType.AUDIO))
+                                    Constant.selectedFiles.add(
+                                        FileItem(
+                                            wavFile.absolutePath,
+                                            FileType.AUDIO
+                                        )
+                                    )
                                     mAdapter?.notifyDataSetChanged()
                                     updateRemainingCount()
                                 } else {
-                                    Toast.makeText(this@CreateNewTask, "Audio convert failed!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        this@CreateNewTask,
+                                        "Audio convert failed!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                             return@forEach
                         }
-
-
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
                         addedCount++
                     }
@@ -239,7 +270,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                         updateRemainingCount()
 
                         if (addedCount < selectedUris.size) {
-                            Toast.makeText(this, getString(R.string.only_x_files_added, Constant.Remaining), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                getString(R.string.only_x_files_added, Constant.Remaining),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -273,24 +308,26 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
 
-
-
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA
+                this,
+                Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             openCameraIntent()
         } else {
-
+            // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.CAMERA
+                    this,
+                    Manifest.permission.CAMERA
                 )
             ) {
                 showCameraPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_REQUEST_CODE
                 )
             }
         }
@@ -310,7 +347,9 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 showAudioPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             }
         }
@@ -331,7 +370,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -346,7 +389,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 ) {
                     showAudioPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.microphone_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.microphone_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -442,24 +489,41 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         isRecording = false
         try {
             mediaRecorder?.stop()
-        } catch (e: RuntimeException) { }
+        } catch (e: RuntimeException) {
+        }
         mediaRecorder?.release()
         mediaRecorder = null
 
+
+
+        Constant.showLoading(this@CreateNewTask)
         recordingFilePath?.let { path ->
             val file = File(path)
+            Constant.hideLoading(this@CreateNewTask)
             if (file.exists() && file.length() > 0) {
                 if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
                     mAdapter?.notifyDataSetChanged()
                     updateRemainingCount()
-                    Toast.makeText(this, getString(R.string.audio_recorded_and_added), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.audio_recorded_and_added),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.max_10_files_allowed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     file.delete()
                 }
             } else {
-                Toast.makeText(this, getString(R.string.recording_failed_file_empty), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.recording_failed_file_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
                 file.delete()
             }
         }
@@ -495,7 +559,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(intent, CreateNewTask.Companion.PICK_DOCUMENT_REQUEST)
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
     override fun onBackPressed() {
@@ -568,7 +632,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         rlaVideoPick.setOnClickListener {
             val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
@@ -617,73 +685,271 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this, "${applicationContext.packageName}.fileprovider", photoFile
+                    this,
+                    "${applicationContext.packageName}.fileprovider",
+                    photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
 
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
+//            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
+//                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//            return
+//        }
+//
+//        fun addPath(uri: Uri) {
+//            val mimeType = contentResolver.getType(uri)
+//            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+//                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+//                return
+//            }
+//
+//            val fileName = getFileName(uri)
+//            val type = when {
+//                fileName.endsWith(".pdf", true) -> FileType.PDF
+//                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+//                fileName.endsWith(".xls", true) || fileName.endsWith(
+//                    ".xlsx",
+//                    true
+//                ) -> FileType.EXCEL
+//
+//                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+//                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
+//                fileName.endsWith(".txt", true) -> FileType.TXT
+//                else -> FileType.OTHER
+//            }
+//
+//            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+//                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+//            } else {
+//                Constant.Remaining = 0
+//            }
+//            for (item in Constant.selectedFiles) {
+//                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+//            }
+//        }
+//
+//        when (requestCode) {
+//            CAMERA_IMAGE_REQUEST -> {
+//                cameraImageFilePath?.let { filePath ->
+//                    var file = File(filePath)
+//                    if (file.exists()) {
+//                        if (!file.name.endsWith(".jpg", true)) {
+//                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
+//                            if (file.renameTo(newFile)) {
+//                                cameraImageFilePath = newFile.absolutePath
+//                                file = newFile
+//                            }
+//                        }
+//
+//                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+//                        if (fixedBitmap != null) {
+//                            val outputStream = FileOutputStream(file)
+//                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+//                            outputStream.flush()
+//                            outputStream.close()
+//                        }
+//                        val uri = Uri.fromFile(file)
+//                        Constant.Remaining = Constant.Remaining - 1
+//                        addPath(uri)
+//
+//                    } else {
+//                        Toast.makeText(
+//                            this,
+//                            getString(R.string.camera_image_file_not_found),
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//                    }
+//                } ?: run {
+//                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            PICK_DOCUMENT_REQUEST -> {
+//                val clipData = data?.clipData
+//                val singleUri = data?.data
+//
+//                if (clipData != null) {
+//                    for (i in 0 until clipData.itemCount) {
+//                        val uri = clipData.getItemAt(i).uri
+//                        addPath(uri)
+//                    }
+//                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+//
+//                } else if (singleUri != null) {
+//                    addPath(singleUri)
+//                    Constant.Remaining = Constant.Remaining - 1
+//
+//                }
+//            }
+//        }
+//
+//        mAdapter?.notifyDataSetChanged()
+//        updateRemainingCount()
+//    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
-            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
-                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
-            }
+        if (resultCode != RESULT_OK) return
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
-        fun addFile(uri: Uri) {
-            if (Constant.selectedFiles.size >= MAX_FILES + 1) return
-
+        fun addPath(uri: Uri) {
             val mimeType = contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
+            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+                return
+            }
 
             val fileName = getFileName(uri)
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            } else {
+                Constant.Remaining = 0
+            }
+            for (item in Constant.selectedFiles) {
+                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+            }
         }
 
         when (requestCode) {
             CAMERA_IMAGE_REQUEST -> {
-                cameraImageFilePath?.let { path ->
-                    val file = File(path)
+                cameraImageFilePath?.let { filePath ->
+                    var file = File(filePath)
                     if (file.exists()) {
-                        val finalFile = if (!file.name.endsWith(".jpg", true)) {
+                        if (!file.name.endsWith(".jpg", true)) {
                             val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-                            file.renameTo(newFile)
-                            newFile
-                        } else file
-                        addFile(Uri.fromFile(finalFile))
+                            if (file.renameTo(newFile)) {
+                                cameraImageFilePath = newFile.absolutePath
+                                file = newFile
+                            }
+                        }
+
+                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+
+                        if (fixedBitmap != null) {
+                            val outputStream = FileOutputStream(file)
+                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                            outputStream.flush()
+                            outputStream.close()
+                        }
+
+                        val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+                        addPath(uri)
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
+                } ?: run {
+                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
-            PICK_DOCUMENT_REQUEST -> {
-                data?.clipData?.let { clip ->
-                    for (i in 0 until clip.itemCount) {
-                        addFile(clip.getItemAt(i).uri)
+
+       PICK_DOCUMENT_REQUEST -> {
+                val clipData = data?.clipData
+                val singleUri = data?.data
+
+                if (clipData != null) {
+                    for (i in 0 until clipData.itemCount) {
+                        val uri = clipData.getItemAt(i).uri
+                        addPath(uri)
                     }
-                } ?: data?.data?.let { addFile(it) }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
+                } else if (singleUri != null) {
+                    addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
+                }
             }
         }
-
         mAdapter?.notifyDataSetChanged()
-        updateRemainingCount()
+    }
+
+    private fun fixImageOrientation(imagePath: String): Bitmap? {
+        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
+        val exif = ExifInterface(imagePath)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                matrix.setRotate(180f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+            ExifInterface.ORIENTATION_NORMAL -> return bitmap
+            else -> return bitmap
+        }
+
+        return try {
+            val fixedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            bitmap.recycle()  // Free up memory from the original bitmap
+            fixedBitmap
+        } catch (e: OutOfMemoryError) {
+            null
+        }
     }
 
     private fun getPathFromUri(uri: Uri): String? {
@@ -731,8 +997,65 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
+
+
+//    private fun getPathFromUri(uri: Uri): String? {
+//        // Content scheme
+//        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
+//            val projection = arrayOf(MediaStore.Images.Media.DATA)
+//            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+//                if (cursor.moveToFirst()) {
+//                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+//                    return cursor.getString(columnIndex)
+//                }
+//            }
+//        }
+//
+//        // File scheme fallback
+//        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
+//            return uri.path
+//        }
+//        return null
+//    }
+//
+//    @SuppressLint("Range")
+//    private fun getFileName(uri: Uri): String {
+//        var result: String? = null
+//        if (uri.scheme == Constant.content_) {
+//            val cursor = contentResolver.query(uri, null, null, null, null)
+//            cursor?.use {
+//                if (it.moveToFirst()) {
+//                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+//                }
+//            }
+//        }
+//        if (result == null) {
+//            result = uri.path
+//            val cut = result?.lastIndexOf('/')
+//            if (cut != null && cut != -1) {
+//                result = result?.substring(cut + 1)
+//            }
+//        }
+//        return result ?: ""
+//    }
+//
+//    @Throws(IOException::class)
+//    private fun createImageFile(): File {
+//        val timeStamp: String =
+//            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+//        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
+//        return File.createTempFile(
+//            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+//            ".jpg",
+//            storageDir
+//        )
+//    }
 
     private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
@@ -757,7 +1080,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             return
         }
 
-
         val isLsrwnewTaskSendingData = LsrwnewTaskSendingData(
             title,
             description,
@@ -769,7 +1091,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         startActivity(intent)
     }
 
-
     fun View.shake() {
         val anim = AnimationUtils.loadAnimation(context, R.anim.shake)
         startAnimation(anim)
@@ -779,7 +1100,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD || SELECTED_MENU_ID == M_LSRW) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-        ProgressDialogHelper.updateProgress(50)
+//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -792,16 +1113,44 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
         }
 
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
         }
-        ProgressDialogHelper.updateProgress(80)
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
+        }
+//        ProgressDialogHelper.updateProgress(80)
     }
 
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -823,7 +1172,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 ProgressDialogHelper.dismiss()
                 //   isUpdateEvent()
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val outputDir =
@@ -862,6 +1211,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
@@ -889,18 +1239,20 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    onTaskComplete()
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         //   isUpdateEvent()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
 
                                 override fun onUploadError(error: String?) {
+                                    onTaskComplete()
                                     Log.d("isUploadIssue", error.toString())
                                 }
                             })
@@ -911,7 +1263,10 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
     }
 
-    private fun videoUploading() {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -927,6 +1282,12 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
                 )
@@ -954,7 +1315,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             }
         }
     }
-
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {

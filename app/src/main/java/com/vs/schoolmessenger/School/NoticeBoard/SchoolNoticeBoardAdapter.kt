@@ -28,7 +28,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
@@ -108,6 +107,7 @@ class SchoolNoticeBoardAdapter(
                 filterResults.values = result
                 return filterResults
             }
+
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 currentQuery = constraint?.toString()?.trim() ?: ""
                 filteredList =
@@ -160,7 +160,7 @@ class SchoolNoticeBoardAdapter(
             listener.onSearchResultEmpty(nowEmpty)
             handleEmptyState(nowEmpty, currentQuery)
             if (filteredList.isEmpty()) {
-              handleEmptyState(true,"")
+                handleEmptyState(true, "")
             }
         }
     }
@@ -272,17 +272,17 @@ class SchoolNoticeBoardAdapter(
                 title = noticeData.title,
                 description = noticeData.description,
                 subjectName = "",
-                sentBy =noticeData.sent_by,
+                sentBy = noticeData.sent_by,
                 thumbnail = "",
                 isUnread = true,
                 intended_for = noticeData.intended_for,
                 school_name = noticeData.school_name,
-                created_date=noticeData.created_on,
+                created_date = noticeData.created_on,
                 isCompleted = true,
                 isMenuType = Constant.M_NOTICEBOARD,
                 fileList = convertedList
             )
-            Log.d("previewData",preview.toString())
+            Log.d("previewData", preview.toString())
             val intent = Intent(context, ChildHomeWork::class.java)
             intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

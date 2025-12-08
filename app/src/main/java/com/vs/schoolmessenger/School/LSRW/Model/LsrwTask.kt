@@ -1,10 +1,11 @@
 package com.vs.schoolmessenger.School.LSRW.Model
+
 import android.os.Parcelable
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class LsrwTask (
+data class LsrwTask(
     val id: String,
     val title: String,
     val description: String,
@@ -20,4 +21,4 @@ data class LsrwTask (
     val can_edit: Boolean,
     val can_delete: Boolean,
     val file_path: List<FilePath>
-): Parcelable
+) : Parcelable

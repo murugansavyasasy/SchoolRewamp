@@ -102,7 +102,11 @@ class AssignmentParentAdapter(
         return if (isLoading) 20 else filteredList.size
     }
 
-    class DataViewHolder(itemView: View, private val context: Context,  private val listener: AssignmentClickListener) :
+    class DataViewHolder(
+        itemView: View,
+        private val context: Context,
+        private val listener: AssignmentClickListener
+    ) :
         RecyclerView.ViewHolder(itemView) {
 
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
@@ -137,10 +141,12 @@ class AssignmentParentAdapter(
             lblTitle.text = data.title
             lblCategory.text = data.category
             lblsubject.text = data.subject
-            lblassigned.text = "${context.getString(R.string.Assigned)} - ${ Constant.convertToReadableDate(data?.created_date ?: "")}"
-            lbldeadline.text = "${context.getString(R.string.Deadline)} - ${ Constant.convertToReadableDate(data?.end_date ?: "")}"
+            lblassigned.text =
+                "${context.getString(R.string.Assigned)} - ${Constant.convertToReadableDate(data?.created_date ?: "")}"
+            lbldeadline.text =
+                "${context.getString(R.string.Deadline)} - ${Constant.convertToReadableDate(data?.end_date ?: "")}"
 
-            if(data.submitted_count == 0) {
+            if (data.submitted_count == 0) {
                 lblSubmitted.visibility = View.GONE
             } else {
                 lblSubmitted.visibility = View.VISIBLE

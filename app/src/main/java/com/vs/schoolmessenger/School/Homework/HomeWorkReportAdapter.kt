@@ -92,7 +92,11 @@ class HomeWorkReportAdapter(
     class DataViewHolder(private val binding: HomeworkParentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HomeWorkReportData, listener: HomeWorkReportClickListener, context: Context) {
+        fun bind(
+            item: HomeWorkReportData,
+            listener: HomeWorkReportClickListener,
+            context: Context
+        ) {
             binding.lblSubject.text = item.subject_name
             binding.lblTitle.text = item.title
             binding.redDot.visibility = View.GONE
@@ -100,7 +104,7 @@ class HomeWorkReportAdapter(
             binding.progressContainer.visibility = View.GONE
             if (item.can_edit && item.can_delete) {
                 binding.imgEditAndDelete.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.imgEditAndDelete.visibility = View.GONE
             }
 
@@ -126,7 +130,7 @@ class HomeWorkReportAdapter(
                     subjectName = item.subject_name,
                     sentBy = item.sent_by,
                     thumbnail = "",
-                    created_date=item.created_on,
+                    created_date = item.created_on,
                     isUnread = true,
                     isCompleted = true,
                     isMenuType = Constant.M_HOMEWORK,

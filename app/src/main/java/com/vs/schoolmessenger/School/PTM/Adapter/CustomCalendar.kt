@@ -6,7 +6,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.GridView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -132,7 +137,8 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
 
                 if (isPastDate(tempCal2)) return@setOnItemClickListener
 
-                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
+                val fullDate =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
                 if (selectedDates.contains(fullDate)) {
                     selectedDates.remove(fullDate)
                 } else {

@@ -155,7 +155,11 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.errorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
+                        Constant.errorAlert(
+                            activity,
+                            activity.getString(R.string.Oops),
+                            errorModel.message
+                        )
                     }
 
                 }
@@ -236,7 +240,11 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.errorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
+                        Constant.errorAlert(
+                            activity,
+                            activity.getString(R.string.Oops),
+                            errorModel.message
+                        )
 
                     }
                 }
@@ -405,7 +413,6 @@ class AuthServices {
         get() = isDeviceTokenUpdate
 
 
-
     fun isLogout(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isLogout(jsonObject)
             ?.enqueue(object : Callback<LogoutResponse?> {
@@ -431,7 +438,11 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.showErrorAlert(activity, activity.getString(R.string.Oops), errorModel.message)
+                        Constant.showErrorAlert(
+                            activity,
+                            activity.getString(R.string.Oops),
+                            errorModel.message
+                        )
                     }
                 }
 
@@ -444,7 +455,6 @@ class AuthServices {
 
     val isLogoutLiveData: LiveData<LogoutResponse?>
         get() = isLogout
-
 
 
 }

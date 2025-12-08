@@ -32,13 +32,24 @@
         <ImageView
             android:id="@+id/imgGallery"
             android:layout_width="match_parent"
-            android:src="@drawable/red_box"
+
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_height="@dimen/one_twenty"
             android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/imgVideo"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:src="@drawable/video_play"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!--    </androidx.cardview.widget.CardView>-->
 

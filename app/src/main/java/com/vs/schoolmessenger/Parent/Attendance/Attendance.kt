@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.Parent.Attendance.Model.GetWeekStatusData
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
@@ -58,7 +57,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
-        binding.lblHeaderTitle.setText(Constant.isSelectedMenuName)
+        binding.lblHeaderTitle.text = Constant.isSelectedMenuName
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -66,7 +65,8 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
         val dateDetails = Constant.getCurrentDateDetails()
         binding.lblDate.text = dateDetails[Constant.day]
-        binding.lblDateSuffix.text = Constant.getDaySuffix(dateDetails[Constant.day]?.toIntOrNull() ?: 1)
+        binding.lblDateSuffix.text =
+            Constant.getDaySuffix(dateDetails[Constant.day]?.toIntOrNull() ?: 1)
         binding.lblDay.text = dateDetails[Constant.weekday]
         binding.lblMonthYear.text = dateDetails[Constant.monthYear]
         loadStudentStats()
@@ -83,23 +83,23 @@ class Attendance : BaseActivity<AttendanceBinding>() {
             if (response != null) {
                 if (response.status) {
                     isStudentStatsData = response.data.firstOrNull()
-                    binding.lblErrorMessage.visibility=View.GONE
+                    binding.lblErrorMessage.visibility = View.GONE
                     isLoadStudentStats(isStudentStatsData!!)
-                    binding.lblHeading.visibility=View.VISIBLE
-                }
-                else {
-                    binding.lblErrorMessage.visibility=View.VISIBLE
-                    binding.lblErrorMessage.text=response.message
-                    binding.lblHeading.visibility=View.GONE
+                    binding.lblHeading.visibility = View.VISIBLE
+                } else {
+                    binding.lblErrorMessage.visibility = View.VISIBLE
+                    binding.lblErrorMessage.text = response.message
+                    binding.lblHeading.visibility = View.GONE
                     binding.rcWeekStatus.visibility = View.GONE
                 }
-            }
-            else {
+            } else {
                 binding.rcWeekStatus.visibility = View.GONE
-                binding.lblHeading.visibility=View.GONE
-                binding.lblErrorMessage.visibility=View.GONE
+                binding.lblHeading.visibility = View.GONE
+                binding.lblErrorMessage.visibility = View.GONE
                 Constant.showDataValidationNoDashboardRedirect(
-                    getString(R.string.Oops),getString(R.string.Something_went_wrong_Please_try_again), this
+                    getString(R.string.Oops),
+                    getString(R.string.Something_went_wrong_Please_try_again),
+                    this
                 )
             }
 
@@ -127,6 +127,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         }
 
     }
+
     private fun isLoadStudentStats(data: getStudentStatsData) {
 
         val attendancePercentage = data.attendance_percentage.toDoubleOrNull() ?: 0.0
@@ -139,7 +140,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
         // Show text values
         binding.lblAttendancePercentage.text = attendancePercentage.roundToInt().toString()
         binding.lblLeaveTakenPercentage.text = absentDays.roundToInt().toString()
-        binding.lblOngoingDaysPercentage.text =ongoingPercentage.toString()
+        binding.lblOngoingDaysPercentage.text = ongoingPercentage.toString()
 
 
         // Animate progress bars
@@ -194,8 +195,6 @@ class Attendance : BaseActivity<AttendanceBinding>() {
     }
 
 
-
-
     private fun loadStudentStats() {
         appViewModel!!.isStudentStats(isAccessToken!!)
     }
@@ -208,7 +207,8 @@ class Attendance : BaseActivity<AttendanceBinding>() {
                     field.isAccessible = true
                     val helper = field.get(menu)
                     val classPopup = Class.forName(helper.javaClass.name)
-                    val setIcons = classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
+                    val setIcons =
+                        classPopup.getMethod(Constant.setForceShowIcon, Boolean::class.java)
                     setIcons.invoke(helper, true)
                 }
             }

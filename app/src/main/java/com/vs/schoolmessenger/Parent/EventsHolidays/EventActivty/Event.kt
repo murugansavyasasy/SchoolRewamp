@@ -28,7 +28,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.EventRewampBinding
@@ -88,7 +87,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this,matchedChild!!)
+            SharedPreference.putChildDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -163,15 +162,22 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
                     binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.headerview.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.dotindicator.visibility = if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
+                    binding.rcyongoingevent.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.headerview.visibility =
+                        if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.dotindicator.visibility =
+                        if (mAdapter.itemCount > 1) View.VISIBLE else View.GONE
 
-                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.upcomingeventHeaderview.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcyupcomingevent.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.upcomingeventHeaderview.visibility =
+                        if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
 
-                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
-                    binding.completedeventHeaderview.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcycompletedevent.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.completedeventHeaderview.visibility =
+                        if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
 
                     updateDotIndicator()
                 }, 100)
@@ -188,7 +194,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             Constant.hideLoading(this)
             if (response != null) {
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
-                val data = response.data[0]
+                    val data = response.data[0]
 
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
@@ -198,49 +204,54 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
-                allOngoingEvents = data.on_going
-                allUpcomingEvents = data.up_coming
-                allCompletedEvents = data.completed
+                    allOngoingEvents = data.on_going
+                    allUpcomingEvents = data.up_coming
+                    allCompletedEvents = data.completed
 
-                val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
-                        allUpcomingEvents.isNullOrEmpty() &&
-                        allCompletedEvents.isNullOrEmpty()
+                    val isAllEmpty = allOngoingEvents.isNullOrEmpty() &&
+                            allUpcomingEvents.isNullOrEmpty() &&
+                            allCompletedEvents.isNullOrEmpty()
 
-                binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+                    binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
 
-                val CategoryList = data.categories
+                    val CategoryList = data.categories
 
-                updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview)
-                updateVisibility(CategoryList, binding.rcycategoryEvent, binding.categoryHeaderview)
-                updateVisibility(
-                    allUpcomingEvents,
-                    binding.rcyupcomingevent,
-                    binding.upcomingeventHeaderview
-                )
-                updateVisibility(
-                    allCompletedEvents,
-                    binding.rcycompletedevent,
-                    binding.completedeventHeaderview
-                )
+                    updateVisibility(allOngoingEvents, binding.rcyongoingevent, binding.headerview)
+                    updateVisibility(
+                        CategoryList,
+                        binding.rcycategoryEvent,
+                        binding.categoryHeaderview
+                    )
+                    updateVisibility(
+                        allUpcomingEvents,
+                        binding.rcyupcomingevent,
+                        binding.upcomingeventHeaderview
+                    )
+                    updateVisibility(
+                        allCompletedEvents,
+                        binding.rcycompletedevent,
+                        binding.completedeventHeaderview
+                    )
 
-                isloadeventData(allOngoingEvents)
-                isloadCategoryData(CategoryList)
-                isloadUpcomingData(allUpcomingEvents)
-                isloadCompletedData(allCompletedEvents)
+                    isloadeventData(allOngoingEvents)
+                    isloadCategoryData(CategoryList)
+                    isloadUpcomingData(allUpcomingEvents)
+                    isloadCompletedData(allCompletedEvents)
 
-                updateDotIndicator()
+                    updateDotIndicator()
 
-                Log.d("Message Id Value Indication", msg_id.toString())
-                scrollToMessageId(headerId)
-            } else {
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                hideAllSections()
-                binding.lytNoDataFound.visibility = View.VISIBLE
-                binding.txtNoDataFound.text=response.message?:getString(R.string.no_data_found)
+                    Log.d("Message Id Value Indication", msg_id.toString())
+                    scrollToMessageId(headerId)
+                } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    hideAllSections()
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.txtNoDataFound.text =
+                        response.message ?: getString(R.string.no_data_found)
+                }
             }
-        }
         }
     }
 
@@ -288,6 +299,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             binding.rcyongoingevent.adapter = mAdapter
         }
     }
+
     private fun isloadCategoryData(newData: List<Category>?) {
         categoryadapter = EventCategoryAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcycategoryEvent.adapter = categoryadapter
@@ -297,15 +309,18 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         if (::eventupcomingadapter.isInitialized) {
             eventupcomingadapter.updateList(newData)
         } else {
-            eventupcomingadapter = EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            eventupcomingadapter =
+                EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
             binding.rcyupcomingevent.adapter = eventupcomingadapter
         }
     }
+
     private fun isloadCompletedData(newData: List<EventItem>?) {
         if (::eventcompletedadapter.isInitialized) {
             eventcompletedadapter.updateList(newData)
         } else {
-            eventcompletedadapter = EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
+            eventcompletedadapter =
+                EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
             binding.rcycompletedevent.adapter = eventcompletedadapter
         }
     }
@@ -349,7 +364,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     private fun scrollToMessageId(headerId: String?) {
 
         allOngoingEvents?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
+            val index = list.indexOfFirst { it.id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcyongoingevent.post {
@@ -362,7 +377,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         }
 
         allUpcomingEvents?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
+            val index = list.indexOfFirst { it.id == headerId }
 
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
@@ -376,7 +391,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         }
 
         allCompletedEvents?.let { list ->
-            val index = list.indexOfFirst { it.id== headerId }
+            val index = list.indexOfFirst { it.id == headerId }
             if (index != -1) {
                 Log.d("ScrollDebug", "Scrolling to index $index in ongoing")
                 binding.rcycompletedevent.post {
@@ -442,24 +457,26 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         val hasOngoing = !ongoingFiltered.isNullOrEmpty()
-        binding.rcyongoingevent.visibility   = if (hasOngoing) View.VISIBLE else View.GONE
-        binding.headerview.visibility        = if (hasOngoing) View.VISIBLE else View.GONE
-        binding.dotindicator.visibility      = if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
+        binding.rcyongoingevent.visibility = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.headerview.visibility = if (hasOngoing) View.VISIBLE else View.GONE
+        binding.dotindicator.visibility =
+            if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
 
 
         val hasUpcoming = !upcomingFiltered.isNullOrEmpty()
-        binding.rcyupcomingevent.visibility        = if (hasUpcoming) View.VISIBLE else View.GONE
+        binding.rcyupcomingevent.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
         binding.upcomingeventHeaderview.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
 
 
         val hasCompleted = !completedFiltered.isNullOrEmpty()
-        binding.rcycompletedevent.visibility        = if (hasCompleted) View.VISIBLE else View.GONE
+        binding.rcycompletedevent.visibility = if (hasCompleted) View.VISIBLE else View.GONE
         binding.completedeventHeaderview.visibility = if (hasCompleted) View.VISIBLE else View.GONE
 
 
         val allEmpty = !hasOngoing && !hasUpcoming && !hasCompleted
         binding.lytNoDataFound.visibility = if (allEmpty) View.VISIBLE else View.GONE
-        binding.toolbarLayout.imgSearchToolBar.visibility = if (allEmpty) View.GONE else View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility =
+            if (allEmpty) View.GONE else View.VISIBLE
         binding.toolbarLayout.rytSearch.visibility = if (allEmpty) View.GONE else View.VISIBLE
     }
 
@@ -488,7 +505,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 eventcompletedadapter.itemCount == 0
 
         binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
-        binding.txtNoDataFound.text=getString(R.string.no_data_found)
+        binding.txtNoDataFound.text = getString(R.string.no_data_found)
 
         updateDotIndicator()
     }

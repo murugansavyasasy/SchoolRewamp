@@ -47,7 +47,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentAdapter
 import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentData
@@ -126,6 +125,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
+
     var isValidAcademicYear = false
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
@@ -185,9 +185,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         isSelectedDate = Constant.getCurrentDate()
 
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
-        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
-        Log.d("formattedDate",formattedDate)
+        Log.d("formattedDate", formattedDate)
         Log.d("formattedDate", binding.lblDay.text.toString())
         binding.lblTimePick.text = Constant.getCurrentTime()
 
@@ -222,9 +222,21 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
@@ -245,14 +257,20 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
                         Toast.makeText(
                             this,
-                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${if (addedCount > 1) "${getString(R.string.s_)}" else ""}",
+                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
+                                if (addedCount > 1) "${
+                                    getString(
+                                        R.string.s_
+                                    )
+                                }" else ""
+                            }",
                             Toast.LENGTH_SHORT
                         ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                      //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
+                        //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -297,8 +315,10 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString() == getString(R.string.update_assignment)) {
                     if (!hasChanges()) {
-                        Toast.makeText(this,
-                            getString(R.string.no_changes_detected), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.no_changes_detected), Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         showSendConfirmationDialog(true)
                     }
@@ -313,7 +333,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
 
             R.id.rytStartDate -> {
-                AssignmentCustomshowDatePickerDialog(this, this,isSelectedDate)
+                AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }
 
             R.id.rytHistory -> startActivity(Intent(this, AssignmentReport::class.java))
@@ -416,7 +436,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     }
 
 
-
     override fun onPause() {
         super.onPause()
         Constant.stopDelay()
@@ -501,7 +520,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     override fun onDateSelected(date: String) {
         isSelectedDate = date
         binding.txtStartDate.text = Constant.convertToReadableDate(date)
-        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
         Log.d("isSelectedDate", date)
     }
@@ -541,7 +560,11 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         if (resultCode != RESULT_OK) return
 
         if (Constant.Remaining!! == 0) {
-            Toast.makeText(this, "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -567,10 +590,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            if(Constant.selectedFiles.size < MAX_FILES +1) {
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
                 Constant.selectedFiles.add(FileItem(uri.toString(), type))
-            }
-            else{
+            } else {
                 Constant.Remaining = 0
             }
             for (item in Constant.selectedFiles) {
@@ -796,7 +818,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             alertDialog.dismiss()
             // if (isEventUpdate) {
             ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
+//            ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
 
         }
@@ -810,7 +832,8 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-        ProgressDialogHelper.updateProgress(50)
+//        ProgressDialogHelper.updateProgress(50)
+        ProgressDialogHelper.updateProgress(0)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -823,16 +846,45 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
         }
 
-        when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
         }
-        ProgressDialogHelper.updateProgress(80)
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
+        }
+//        ProgressDialogHelper.updateProgress(80)
     }
 
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -854,7 +906,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 ProgressDialogHelper.dismiss()
                 isAssignmentUpdate()
             } else {
-                videoUploading()
+                videoUploading(totalTasks, onTaskComplete)
             }
         } else {
             val outputDir =
@@ -893,6 +945,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
+                    onTaskComplete()
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
@@ -920,19 +973,21 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                                             isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
+                                    onTaskComplete()
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
                                         isAssignmentUpdate()
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
-                                            videoUploading()
+                                            videoUploading(totalTasks, onTaskComplete)
                                         }
                                     }
                                 }
 
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
+                                    onTaskComplete()
                                 }
                             })
                     }
@@ -942,7 +997,10 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         }
     }
 
-    private fun videoUploading() {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -958,6 +1016,13 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
+
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, Constant.quiz, Constant.quiz, isVideoSelectedArrayList[i].path, this
                 )
@@ -1047,7 +1112,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         }
 
         binding.txtStartDate.text = Constant.covertDateFormate(data.created_date)
-        val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
+        val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
         binding.lblTimePick.text = data.created_time
 
@@ -1109,7 +1174,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         }
         appViewModel!!.assignmentUpdate(isAccessToken!!, jsonObject, this)
     }
-
 
 
     override fun onBackPressed() {

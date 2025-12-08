@@ -1,70 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-  >
+    android:background="@drawable/dual_color_background">
 
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/relative_layout2"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusBarBackground">
 
 
-        <ImageView
-            android:id="@+id/image_banner"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relative_layout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            />
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/image_banner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/image_top_left"
-            android:layout_width="@dimen/fourty"
+            <ImageView
+                android:id="@+id/image_top_left"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_margin="@dimen/twele"
+                android:background="@drawable/rounded_bg"
+                android:padding="@dimen/eight"
+                android:scaleType="centerInside"
+                android:src="@drawable/left_arrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/isProgressBar"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginTop="@dimen/fourty"
+            android:visibility="visible"
+            app:layout_anchor="@id/relative_layout2"
+            app:layout_anchorGravity="bottom|center_horizontal" />
+
+        <include
+            android:id="@+id/bottom_layout"
+            layout="@layout/layout_coupon_bottom_sheet" />
+
+        <Button
+            android:id="@+id/btn_activate_coupon"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
-            android:layout_margin="@dimen/twele"
-            android:src="@drawable/left_arrow"
-            android:scaleType="centerInside"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/eight"
-            android:layout_gravity="top|start" />
-    </RelativeLayout>
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginStart="@dimen/twele"
+            android:layout_marginTop="@dimen/one_thirty"
+            android:layout_marginEnd="@dimen/twele"
+            android:layout_marginBottom="@dimen/fourty"
+            android:background="@drawable/bg_background_coupon"
+            android:gravity="center"
+            android:text="@string/activate_coupon"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
 
-    <ProgressBar
-        android:id="@+id/isProgressBar"
-        android:layout_width="@dimen/fifty"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/fourty"
-        android:layout_gravity="center"
-        android:layout_below="@+id/relative_layout2"
-        android:layout_height="@dimen/fifty">
-    </ProgressBar>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <include
-        android:id="@+id/bottom_layout"
-        layout="@layout/layout_coupon_bottom_sheet"/>
-
-
-    <Button
-        android:id="@+id/btn_activate_coupon"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
-        android:text="@string/activate_coupon"
-        android:textColor="@color/white"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textSize="@dimen/thirteen_sp"
-        android:gravity="center"
-        android:background="@drawable/bg_background_coupon"
-        android:layout_marginBottom="@dimen/fourty"
-        android:layout_marginStart="@dimen/twele"
-        android:layout_marginEnd="@dimen/twele"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="@dimen/one_thirty" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

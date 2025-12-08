@@ -1,8 +1,6 @@
-
 package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +9,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Spinner
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class PickQuestionAdapter(
     private var itemList: MutableList<GetPickFromQBankData>?,
     private var context: Context,
@@ -81,7 +79,6 @@ class PickQuestionAdapter(
     }
 
 
-
     fun uncheckItemById(id: String) {
         val index = itemList?.indexOfFirst { it.id == id } ?: -1
         if (index != -1) {
@@ -114,7 +111,6 @@ class PickQuestionAdapter(
     }
 
 
-
     fun getSelected(): List<GetPickFromQBankData> {
         return itemList!!.filter { tempSelection[it.id] ?: it.checked }
     }
@@ -132,7 +128,6 @@ class PickQuestionAdapter(
     }
 
 
-
     fun clearSelections() {
         tempSelection.clear()
         itemList!!.forEachIndexed { index, item ->
@@ -145,8 +140,6 @@ class PickQuestionAdapter(
     fun hasAnySelected(): Boolean {
         return itemList?.any { tempSelection[it.id] == true || it.checked } == true
     }
-
-
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -165,10 +158,9 @@ class PickQuestionAdapter(
         val lnrAttachment: LinearLayout = itemView.findViewById(R.id.lnrAttachment)
 
 
-
         fun bind(data: GetPickFromQBankData) {
-            rytSpinnerHeader.visibility=View.GONE
-            edtCorrectAns.visibility=View.VISIBLE
+            rytSpinnerHeader.visibility = View.GONE
+            edtCorrectAns.visibility = View.VISIBLE
             cbQuestion.setOnCheckedChangeListener(null)
 
             // show from tempSelection first, else permanent checked
@@ -180,8 +172,8 @@ class PickQuestionAdapter(
             }
 
             lblremove.visibility = View.GONE
-            lnrAttachment.visibility=View.GONE
-            cbQuestion.visibility=View.VISIBLE
+            lnrAttachment.visibility = View.GONE
+            cbQuestion.visibility = View.VISIBLE
             edtChapterName.setText(data.chapter)
             edtQuestion.setText(data.question)
             edtOptionA.setText(data.a_option)

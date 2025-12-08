@@ -56,7 +56,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.LSRW.AudioAdapter
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
@@ -82,6 +81,7 @@ import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -100,6 +100,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun getViewBinding(): ChildHomeworkActivityBinding {
         return ChildHomeworkActivityBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     var isHomeworkId = ""
     var isHomeWorkDate: String? = ""
@@ -148,7 +149,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun updateRemainingCount() {
-        val usedSlots = Constant.selectedFiles.size - 1
+        val usedSlots = selectedFiles.size - 1
         Constant.Remaining = (CreateNewTask.Companion.MAX_FILES - usedSlots).coerceAtLeast(0)
     }
 
@@ -178,8 +179,14 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
         binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
-        binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSubjectName.text = data!!.subjectName
+        val subject = data?.subjectName
+        if (subject.isNullOrEmpty()) {
+            binding.toolbarLayout.lblSubjectName.visibility = View.GONE
+        } else {
+            binding.toolbarLayout.lblSubjectName.visibility = View.VISIBLE
+            binding.toolbarLayout.lblSubjectName.text = subject
+        }
+
 
         binding.childlsrwlayoutxml.btnSubmit.setOnClickListener {
             LsrwSubmitSkill()
@@ -226,7 +233,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if(SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.my_submissionadapter == true) {
+        if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.my_submissionadapter == true) {
             binding.toolbarLayout.lblSubjectName.visibility = View.GONE
 
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
@@ -238,12 +245,12 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             binding.toolbarLayout.rlaStudentName.layoutParams = params
             binding.toolbarLayout.lblPostedOn.text =
-                "${getString(R.string.posted_on)} : ${Constant.formatDatepostedby(data!!.created_date.toString())}"
+                "${getString(R.string.posted_on)} - ${Constant.formatDatepostedby(data!!.created_date.toString())}"
             Log.d("Posted On isStudentlistdetail", data!!.created_date.toString())
 
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
+                binding.lblPostedBy.text = "${getString(R.string.posted_by)} - " + data!!.sentBy
             }
         }
 
@@ -256,7 +263,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
 
-        if (SELECTED_MENU_ID == Constant.M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
+        if (SELECTED_MENU_ID == M_ASSIGNMENT && data!!.isStudentlistdetail == true) {
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
             val params =
                 binding.toolbarLayout.rlaStudentName.layoutParams as RelativeLayout.LayoutParams
@@ -320,7 +327,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 binding.childlsrwlayoutxml.imgIcon.setImageResource(R.drawable.questionmark)
             }
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
+                getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
                 getString(R.string.listening_speaking_reading_writing)
@@ -356,9 +364,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
         } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text = getString(R.string.lsrw)
+            binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
+                getString(R.string.lsrw)
             binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =getString(R.string.listening_speaking_reading_writing)
+            binding.childlsrwlayoutxml.toolbarLayout.lblSchoolName.text =
+                getString(R.string.listening_speaking_reading_writing)
             binding.toolbarLayout.imgBack.visibility = View.GONE
             binding.scrollView.visibility = View.GONE
             binding.childlsrwlayoutxml.footerLabel.visibility = View.GONE
@@ -421,17 +431,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
                 }
             }
-            Constant.selectedFiles.clear()
+            selectedFiles.clear()
             dummyPath = saveDrawableToCache(R.drawable.attachment_with_bg)
             dummyPath?.let {
-                Constant.selectedFiles.add(
+                selectedFiles.add(
                     FileItem(
                         it, FileType.IMAGE
                     )
                 )
             }
 
-            mAdapter = LSRWImagePickingAdapter(this, Constant.selectedFiles!!, this)
+            mAdapter = LSRWImagePickingAdapter(this, selectedFiles!!, this)
             binding.childlsrwlayoutxml.rcyImages.layoutManager = GridLayoutManager(this, 1)
             binding.childlsrwlayoutxml.rcyImages.adapter = mAdapter
 
@@ -441,13 +451,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             albumResultLauncher =
                 registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        val selectedUris = result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+                        val selectedUris =
+                            result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
                         if (selectedUris.isNullOrEmpty()) return@registerForActivityResult
 
                         var addedCount = 0
                         selectedUris.forEach { uri ->
-                            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-                                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.max_10_files_allowed),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 return@forEach
                             }
 
@@ -466,29 +481,52 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                                 mimeType?.startsWith("video/") == true -> FileType.VIDEO
                                 mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
                                 fileName.endsWith(".txt", true) -> FileType.TXT
                                 else -> FileType.OTHER
                             }
 
                             if (type == FileType.AUDIO) {
+                                Constant.showLoading(this@ChildHomeWork)
                                 lifecycleScope.launch {
                                     val wavFile = Constant.convertToWav(this@ChildHomeWork, uri)
+                                    Constant.hideLoading(this@ChildHomeWork)
                                     if (wavFile != null) {
-                                        Constant.selectedFiles.add(FileItem(wavFile.absolutePath, FileType.AUDIO))
+                                        selectedFiles.add(
+                                            FileItem(
+                                                wavFile.absolutePath,
+                                                FileType.AUDIO
+                                            )
+                                        )
                                         mAdapter?.notifyDataSetChanged()
                                         updateRemainingCount()
                                     } else {
-                                        Toast.makeText(this@ChildHomeWork, "Audio convert failed!", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this@ChildHomeWork,
+                                            "Audio convert failed!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
                                 return@forEach
                             }
 
 
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            selectedFiles.add(FileItem(uri.toString(), type))
                             addedCount++
                         }
 
@@ -497,7 +535,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             updateRemainingCount()
 
                             if (addedCount < selectedUris.size) {
-                                Toast.makeText(this, getString(R.string.only_x_files_added, Constant.Remaining), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.only_x_files_added, Constant.Remaining),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -513,7 +555,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             if (audioList.isNotEmpty()) {
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                 audioAdapter = AudioAdapter(audioList)
+                audioAdapter = AudioAdapter(audioList)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
                     LinearLayoutManager(binding.root.context)
                 binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
@@ -584,6 +626,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS) {
 
+
             if (data!!.created_date.isNullOrBlank()) {
                 binding.toolbarLayout.lblPostedOn.visibility = View.GONE
             } else {
@@ -605,6 +648,24 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.lblClickComplete.visibility = View.GONE
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
+
+            if (data!!.isMenuType == Constant.M_NOTICEBOARD) {
+
+                val schoolName = data?.school_name
+
+                if (schoolName.isNullOrEmpty()) {
+                    binding.sendtostandardLabel.visibility = View.GONE
+                    binding.noticeboardcardview.visibility = View.GONE
+                } else {
+
+                    binding.sendtostandardLabel.visibility = View.VISIBLE
+                    binding.standardValue.text = "\uD83C\uDF93" + " " + "Message sent to SCHOOL"
+                    binding.noticeboardcardview.visibility = View.VISIBLE
+                    binding.lblschoolvalue.text = data!!.school_name
+
+                }
+            }
+
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
@@ -668,19 +729,19 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.rcyImages.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
 
-                    val submittedFiles = Constant.isAwsUploadedFiles.map { aws ->
+                    val submittedFiles = isAwsUploadedFiles.map { aws ->
                         FileItem(aws.isFileUrl, FileType.valueOf(aws.isFileType))
                     }
 
                     if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-                        Constant.selectedFiles.removeAll { it.path == dummyPath }
+                        selectedFiles.removeAll { it.path == dummyPath }
                     }
 
-                    Constant.selectedFiles.clear()
-                    Constant.selectedFiles.addAll(submittedFiles)
+                    selectedFiles.clear()
+                    selectedFiles.addAll(submittedFiles)
                     mAdapter?.notifyDataSetChanged()
 
-                    Constant.isAwsUploadedFiles.clear()
+                    isAwsUploadedFiles.clear()
                     isVideoSelectedArrayList.clear()
                 }
                 showTopAlertParentPopup(it.message, this)
@@ -951,34 +1012,40 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
 
     private fun LsrwSubmitSkill() {
+        Constant.showLoading(this)
         binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
         val description = binding.childlsrwlayoutxml.editDescription.text.toString().trim()
         val file_size = calculateFileSize()
         if (description.isEmpty()) {
-            binding.childlsrwlayoutxml.editDescription.error = getString(R.string.Description_required)
+            Constant.hideLoading(this)
+            binding.childlsrwlayoutxml.editDescription.error =
+                getString(R.string.Description_required)
             binding.childlsrwlayoutxml.editDescription.requestFocus()
             return
         }
         val totalSizeKB = file_size.split(" ")[0].toIntOrNull() ?: 0
         if (totalSizeKB <= 0) {
-            Toast.makeText(this,
-                getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT).show()
+            Constant.hideLoading(this)
+            Toast.makeText(
+                this,
+                getString(R.string.at_least_one_attachment_is_required), Toast.LENGTH_SHORT
+            ).show()
             return
         }
-        Constant.showLoading(this@ChildHomeWork)
+//        Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
 
 
     fun isUploadFilesInServer(isFileType: String?) {
-        Log.d("ChildHomeWork", "Starting file upload, total: ${Constant.selectedFiles.size}")
+        Log.d("ChildHomeWork", "Starting file upload, total: ${selectedFiles.size}")
         if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
-            Constant.selectedFiles.removeAt(0)
+            selectedFiles.removeAt(0)
         }
-        isTotalSelectedItem = Constant.selectedFiles.size
+        isTotalSelectedItem = selectedFiles.size
         isVideoSelectedArrayList.clear()
-        Constant.isAwsUploadedFiles.clear()
-        val iterator = Constant.selectedFiles.iterator()
+        isAwsUploadedFiles.clear()
+        val iterator = selectedFiles.iterator()
         while (iterator.hasNext()) {
             val file = iterator.next()
             if (file.type == FileType.VIDEO) {
@@ -987,17 +1054,45 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
 
+        val numNonVideoFiles = selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
         when {
-            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+            selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
         }
     }
 
 
     private fun isFileUploadInAws(
-        isFileType: String?
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
     ) {
-        val allNonVideos = Constant.selectedFiles.toList()
+        val allNonVideos = selectedFiles.toList()
         val imagesToCompress = allNonVideos.filter { it.type == FileType.IMAGE }
         val nonImages = allNonVideos.filter { it.type != FileType.IMAGE }
         val newSelectedFiles = mutableListOf<FileItem>()
@@ -1038,17 +1133,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     newSelectedFiles.add(original)
                     Log.e("Compressor", "Failed: ${original.path}")
                 }
+                onTaskComplete()
             },
             onComplete = {
                 val updatedFiles = newSelectedFiles + nonImages
-                Constant.selectedFiles.clear()
-                Constant.selectedFiles.addAll(updatedFiles)
-                val nonVideoCount = Constant.selectedFiles.size
+                selectedFiles.clear()
+                selectedFiles.addAll(updatedFiles)
+                val nonVideoCount = selectedFiles.size
                 var awsCompleted = 0
                 val isCountryId = SharedPreference.getCountryId(this)
-                for (i in Constant.selectedFiles.indices) {
+                for (i in selectedFiles.indices) {
                     isAwsUploadingPreSigned?.getPreSignedUrl(
-                        Constant.selectedFiles[i].path,
+                        selectedFiles[i].path,
                         isChildDetails!!.school_id,
                         isFileType!!,
                         this,
@@ -1059,31 +1155,33 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                             override fun onUploadSuccess(
                                 response: String?, isFileUploaded: String?
                             ) {
-                                Constant.isAwsUploadedFiles.add(
+                                isAwsUploadedFiles.add(
                                     AwsUploadedFiles(
                                         isFileUrl = isFileUploaded!!,
-                                        isFileType = Constant.selectedFiles[i].type.name
+                                        isFileType = selectedFiles[i].type.name
                                     )
                                 )
+                                onTaskComplete()
 
                                 awsCompleted++
                                 if (awsCompleted == nonVideoCount) {
                                     if (isVideoSelectedArrayList.isEmpty()) {
                                         onAllUploadsComplete()
                                     } else {
-                                        videoUploading()
+                                        videoUploading(totalTasks, onTaskComplete)
                                     }
                                 }
                             }
 
                             override fun onUploadError(error: String?) {
+                                onTaskComplete()
                                 Log.d("isUploadIssue", error.toString())
                                 awsCompleted++
                                 if (awsCompleted == nonVideoCount) {
                                     if (isVideoSelectedArrayList.isEmpty()) {
                                         onAllUploadsComplete()
                                     } else {
-                                        videoUploading()
+                                        videoUploading(totalTasks, onTaskComplete)
                                     }
                                 }
                             }
@@ -1095,12 +1193,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-    private fun videoUploading() {
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("player.vimeo.com")) {
-                Constant.isAwsUploadedFiles.add(
+                isAwsUploadedFiles.add(
                     AwsUploadedFiles(
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
@@ -1110,15 +1211,54 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
         Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
         if (isVideoSelectedArrayList.isNotEmpty()) {
-            var videoCompleted = 0
-            val videoCount = isVideoSelectedArrayList.size
             for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
                 VimeoVideoUpload.uploadVideo(
                     this, "lsrw", "lsrw", isVideoSelectedArrayList[i].path, this
                 )
             }
         } else {
             onAllUploadsComplete()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            var videoCompleted = 0
+            if (success && link != null) {
+                isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = link, isFileType = "VIDEO"
+                    )
+                )
+                if (!iframe.isNullOrEmpty()) {
+                    isIframe = iframe
+                }
+            }
+            videoCompleted++
+            val videoCount = isVideoSelectedArrayList.size
+            if (videoCompleted == videoCount) {
+                onAllUploadsComplete()
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            var videoCompleted = 0
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            videoCompleted++
+            val videoCount = isVideoSelectedArrayList.size
+            if (videoCompleted == videoCount) {
+                onAllUploadsComplete()
+            }
         }
     }
 
@@ -1182,12 +1322,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 showAudioPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.RECORD_AUDIO), RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                    this,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             }
         }
     }
-
 
 
     override fun onRequestPermissionsResult(
@@ -1205,7 +1346,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -1220,7 +1365,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 ) {
                     showAudioPermissionSettingsDialog()
                 } else {
-                    Toast.makeText(this, getString(R.string.microphone_permission_is_required), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.microphone_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -1363,24 +1512,39 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         isRecording = false
         try {
             mediaRecorder?.stop()
-        } catch (e: RuntimeException) { }
+        } catch (e: RuntimeException) {
+        }
         mediaRecorder?.release()
         mediaRecorder = null
 
+        Constant.showLoading(this@ChildHomeWork)
         recordingFilePath?.let { path ->
             val file = File(path)
+            Constant.hideLoading(this@ChildHomeWork)
             if (file.exists() && file.length() > 0) {
-                if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
-                    Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
+                if (selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                    selectedFiles.add(FileItem(path, FileType.AUDIO))
                     mAdapter?.notifyDataSetChanged()
                     updateRemainingCount()
-                    Toast.makeText(this, getString(R.string.audio_recorded_and_added), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.audio_recorded_and_added),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.max_10_files_allowed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     file.delete()
                 }
             } else {
-                Toast.makeText(this, getString(R.string.recording_failed_file_empty), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.recording_failed_file_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
                 file.delete()
             }
         }
@@ -1416,13 +1580,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(intent, ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST)
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
 
     private fun calculateFileSize(): String {
         var totalSize = 0L
-        Constant.selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
+        selectedFiles.filter { it.path != dummyPath }.forEach { fileItem ->
             val size = getFileSize(fileItem.path)  // Pass path directly as String
             Log.d("FileSizeDebug", "File: ${fileItem.path}, Size: $size bytes")
             totalSize += size
@@ -1441,6 +1605,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                         afd.length
                     } ?: 0L
                 }
+
                 "file" -> File(uri.path ?: path).length()
                 null -> File(path).length()
                 else -> 0L
@@ -1458,7 +1623,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             stopVoiceRecording()
         }
 //        Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
+        isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES
         updateRemainingCount()
@@ -1483,41 +1648,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     override fun onImageClick(position: Int) {
         if (position == 0) {
             showBottomDialog()
-        }
-    }
-
-    override fun onUploadComplete(
-        success: Boolean, iframe: String?, link: String?
-    ) {
-        runOnUiThread {
-            var videoCompleted = 0
-            if (success && link != null) {
-                Constant.isAwsUploadedFiles.add(
-                    AwsUploadedFiles(
-                        isFileUrl = link, isFileType = "VIDEO"
-                    )
-                )
-                if (!iframe.isNullOrEmpty()) {
-                    isIframe = iframe
-                }
-            }
-            videoCompleted++
-            val videoCount = isVideoSelectedArrayList.size
-            if (videoCompleted == videoCount) {
-                onAllUploadsComplete()
-            }
-        }
-    }
-
-    override fun onFailure(errorMessage: String?) {
-        runOnUiThread {
-            var videoCompleted = 0
-            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-            videoCompleted++
-            val videoCount = isVideoSelectedArrayList.size
-            if (videoCompleted == videoCount) {
-                onAllUploadsComplete()
-            }
         }
     }
 
@@ -1557,11 +1687,15 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         rlaVideoPick.setOnClickListener {
-            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            val selectedVideoCount = selectedFiles.count { it.type == FileType.VIDEO }
             if (selectedVideoCount >= 2) {
-                Toast.makeText(this, getString(R.string.only_2_videos_are_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.only_2_videos_are_allowed),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                if (selectedFiles.size == 1 || selectedVideoCount == 0) {
                     Constant.isFileLimit = 2
                 } else if (selectedVideoCount == 1) {
                     Constant.isFileLimit = 1
@@ -1597,7 +1731,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -1616,7 +1749,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
             } else {
-                Toast.makeText(this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.could_not_create_file_for_photo),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
@@ -1625,15 +1762,16 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT).show()
+        if (resultCode != RESULT_OK || selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
+                    .show()
             }
             return
         }
 
         fun addFile(uri: Uri) {
-            if (Constant.selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) return
+            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
@@ -1642,14 +1780,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            selectedFiles.add(FileItem(uri.toString(), type))
         }
 
         when (requestCode) {
@@ -1666,7 +1808,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     }
                 }
             }
-            ChildHomeWork.Companion.PICK_DOCUMENT_REQUEST -> {
+
+            PICK_DOCUMENT_REQUEST -> {
                 data?.clipData?.let { clip ->
                     for (i in 0 until clip.itemCount) {
                         addFile(clip.getItemAt(i).uri)
@@ -1724,7 +1867,11 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         val timeStamp: String =
             SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-        return File.createTempFile("${Constant.IMG_}${timeStamp}${Constant.underscore}", ".jpg", storageDir)
+        return File.createTempFile(
+            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
+            ".jpg",
+            storageDir
+        )
     }
 
 

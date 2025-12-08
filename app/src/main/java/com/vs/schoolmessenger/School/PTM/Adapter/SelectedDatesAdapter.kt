@@ -38,7 +38,7 @@ class SelectedDatesAdapter(
         } catch (e: Exception) {
             rawDate
         }
-        Log.d("formattedDate",formattedDate)
+        Log.d("formattedDate", formattedDate)
 
         holder.tvDate.text = formattedDate
 

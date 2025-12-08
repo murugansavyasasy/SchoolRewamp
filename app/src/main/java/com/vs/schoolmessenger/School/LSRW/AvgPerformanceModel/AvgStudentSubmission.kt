@@ -1,10 +1,9 @@
 package com.vs.schoolmessenger.School.LSRW.AvgPerformanceModel
-import android.os.Parcelable
+
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
-import kotlinx.parcelize.Parcelize
 
 
-data class AvgStudentSubmission (
+data class AvgStudentSubmission(
     val id: String,
     val title: String,
     val subject: String,

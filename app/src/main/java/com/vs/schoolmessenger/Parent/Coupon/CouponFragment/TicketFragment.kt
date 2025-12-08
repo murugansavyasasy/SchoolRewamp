@@ -28,7 +28,8 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     private lateinit var appViewModel: App
     private lateinit var ticketcouponadapter: TicketCouponAdapter
     private var previouslySelectedView: View? = null
-    private var currentStatus: String = Constant.all__  // Added to track current tab status for race condition prevention
+    private var currentStatus: String =
+        Constant.all__  // Added to track current tab status for race condition prevention
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -52,7 +53,8 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         binding.imgSearchToolBar.setOnClickListener {
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             if (binding.linearlayout.visibility == View.VISIBLE) {
                 binding.linearlayout.visibility = View.GONE
                 binding.editSearch.setText("")
@@ -122,7 +124,6 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-
 
 
     private fun isLoadCouponSummaryData(data: List<TicketSummary>) {

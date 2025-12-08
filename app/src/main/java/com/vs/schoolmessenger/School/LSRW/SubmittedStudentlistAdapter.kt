@@ -16,15 +16,13 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Model.lsrwskilldata
 import com.vs.schoolmessenger.School.LSRW.SubmissionStudentListModel.StudentSubmissionLsrw
 import com.vs.schoolmessenger.Utils.Constant
 
-class SubmittedStudentlistAdapter (
+class SubmittedStudentlistAdapter(
     private var itemList: List<StudentSubmissionLsrw>,
     private val context: Context
 ) : RecyclerView.Adapter<SubmittedStudentlistAdapter.HeaderViewHolder>() {
@@ -61,12 +59,13 @@ class SubmittedStudentlistAdapter (
         private val avatarText: TextView = itemView.findViewById(R.id.avatarText)
         private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
         private val cancelimage: ImageView = itemView.findViewById(R.id.cancelimage)
-        private val headerrelative_layout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
+        private val headerrelative_layout: RelativeLayout =
+            itemView.findViewById(R.id.rlarelativelayout)
         private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
 
         fun bind(item: StudentSubmissionLsrw) {
             lblStudentName.text = item.student_name
-            sectionlabel.text = item.standard +" - "+ item.section
+            sectionlabel.text = item.standard + " - " + item.section
 
             if (item.submit_status == Constant.NOTSUBMITTED) {
                 submittedDate.text = Constant.convertDateAndTimeFormat(item.created_on)
@@ -100,9 +99,6 @@ class SubmittedStudentlistAdapter (
             }
 
 
-
-
-
             val hasFiles = !item.file_path.isNullOrEmpty()
 
 
@@ -111,11 +107,11 @@ class SubmittedStudentlistAdapter (
 
 
 
-                rytList2.setOnClickListener {
-                    if(item.submit_status==Constant.NOTSUBMITTED) {
-                        Log.d("Not Submitted the list"," Not submitted any records")
-                        return@setOnClickListener
-                    } else {
+            rytList2.setOnClickListener {
+                if (item.submit_status == Constant.NOTSUBMITTED) {
+                    Log.d("Not Submitted the list", " Not submitted any records")
+                    return@setOnClickListener
+                } else {
                     val convertedList = item.file_path.map {
                         GetFilePathDetails(
                             type = it.type,
@@ -150,8 +146,8 @@ class SubmittedStudentlistAdapter (
 
 
             headerrelative_layout.setOnClickListener {
-                if(item.submit_status==Constant.NOTSUBMITTED) {
-                    Log.d("Not Submitted the list"," Not submitted any records")
+                if (item.submit_status == Constant.NOTSUBMITTED) {
+                    Log.d("Not Submitted the list", " Not submitted any records")
                     return@setOnClickListener
                 } else {
                     val convertedList = item.file_path.map {
@@ -188,50 +184,53 @@ class SubmittedStudentlistAdapter (
             }
 
             rcyAssignment.addOnItemTouchListener(
-                if(item.submit_status==Constant.NOTSUBMITTED) {
-                    Log.d("Not Submitted the list"," Not submitted any records")
+                if (item.submit_status == Constant.NOTSUBMITTED) {
+                    Log.d("Not Submitted the list", " Not submitted any records")
                     return
                 } else {
-                object : RecyclerView.SimpleOnItemTouchListener() {
-                    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                        val child = rv.findChildViewUnder(e.x, e.y)
-                        if (child != null && e.action == MotionEvent.ACTION_UP) {
-                            rv.getChildAdapterPosition(child)
-                            val convertedList = item.file_path.map {
-                                GetFilePathDetails(
-                                    type = it.type,
-                                    url = it.url,
+                    object : RecyclerView.SimpleOnItemTouchListener() {
+                        override fun onInterceptTouchEvent(
+                            rv: RecyclerView,
+                            e: MotionEvent
+                        ): Boolean {
+                            val child = rv.findChildViewUnder(e.x, e.y)
+                            if (child != null && e.action == MotionEvent.ACTION_UP) {
+                                rv.getChildAdapterPosition(child)
+                                val convertedList = item.file_path.map {
+                                    GetFilePathDetails(
+                                        type = it.type,
+                                        url = it.url,
+                                    )
+                                }
+                                val isHomeWorkData = FilePreview(
+                                    id = item.id,
+                                    title = item.student_id,
+                                    description = item.student_name,
+                                    subjectName = item.standard,
+                                    sentBy = item.section,
+                                    thumbnail = item.thumbnail,
+                                    isUnread = true,
+                                    isCompleted = true,
+                                    isMenuType = Constant.M_LSRW,
+                                    fileList = convertedList,
+                                    submittedCount = 0,
+                                    totalCount = 0,
+                                    assignmentid = "",
+                                    created_date = "",
+                                    category = "",
+                                    assignmentsubject = "",
+                                    isParentAssignment = false
                                 )
-                            }
-                            val isHomeWorkData = FilePreview(
-                                id = item.id,
-                                title = item.student_id,
-                                description = item.student_name,
-                                subjectName = item.standard,
-                                sentBy = item.section,
-                                thumbnail = item.thumbnail,
-                                isUnread = true,
-                                isCompleted = true,
-                                isMenuType = Constant.M_LSRW,
-                                fileList = convertedList,
-                                submittedCount = 0,
-                                totalCount = 0,
-                                assignmentid = "",
-                                created_date = "",
-                                category = "",
-                                assignmentsubject = "",
-                                isParentAssignment = false
-                            )
 
-                            val intent =
-                                Intent(context, SubmittedStudentListRemarkSubmit::class.java)
-                            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            context.startActivity(intent)
+                                val intent =
+                                    Intent(context, SubmittedStudentListRemarkSubmit::class.java)
+                                intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                context.startActivity(intent)
+                            }
+                            return false
                         }
-                        return false
                     }
-                }
                 }
             )
 

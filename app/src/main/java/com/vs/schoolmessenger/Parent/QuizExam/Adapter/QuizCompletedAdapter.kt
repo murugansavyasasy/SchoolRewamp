@@ -1,5 +1,5 @@
-
 package com.vs.schoolmessenger.Parent.QuizExam.Adapter
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +31,8 @@ class QuizCompletedAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.submitted_quiz_preview_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.submitted_quiz_preview_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -93,7 +94,8 @@ class QuizCompletedAdapter(
             } else {
                 indicator.visibility = View.VISIBLE
                 rcAttachement.visibility = View.VISIBLE
-                rcAttachement.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcAttachement.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcAttachement.adapter = AttachmentMediaAdapter(
                     data.file_path,
                     context,
@@ -103,16 +105,22 @@ class QuizCompletedAdapter(
             }
 
 
-            questionText.text="${position+1}) ${data.question}"
-            option1.text=data.a_option
-            option2.text=data.b_option
-            option3.text=data.c_cption
-            option4.text=data.d_option
+            questionText.text = "${position + 1}) ${data.question}"
+            option1.text = data.a_option
+            option2.text = data.b_option
+            option3.text = data.c_cption
+            option4.text = data.d_option
 
-            val options = listOf(option1, option2,option3, option4)
+            val options = listOf(option1, option2, option3, option4)
             options.forEach { option ->
-                val defaultDrawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
-                defaultDrawable?.setTint(ContextCompat.getColor(context, R.color.mild_grey3)) // default color
+                val defaultDrawable =
+                    ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
+                defaultDrawable?.setTint(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.mild_grey3
+                    )
+                ) // default color
                 option.background = defaultDrawable
                 option.setTextColor(ContextCompat.getColor(context, R.color.azure_radiance))
             }
@@ -130,7 +138,8 @@ class QuizCompletedAdapter(
             if (studentAns.equals(Constant.N_A, ignoreCase = true)) {
                 //  No Answer Selected
                 optionMap[correctAns]?.let { tv ->
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
+                    val drawable =
+                        ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
                     drawable?.setTint(ContextCompat.getColor(context, R.color.green))
                     tv.background = drawable
                     tv.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -145,7 +154,8 @@ class QuizCompletedAdapter(
             } else if (studentAns.equals(correctAns, ignoreCase = true)) {
                 // Correct
                 optionMap[correctAns]?.let { tv ->
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
+                    val drawable =
+                        ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
                     drawable?.setTint(ContextCompat.getColor(context, R.color.green))
                     tv.background = drawable
                     tv.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -156,14 +166,16 @@ class QuizCompletedAdapter(
             } else {
                 //  Wrong
                 optionMap[studentAns]?.let { tv ->
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
+                    val drawable =
+                        ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
                     drawable?.setTint(ContextCompat.getColor(context, R.color.red))
                     tv.background = drawable
                     tv.setTextColor(ContextCompat.getColor(context, R.color.white))
                 }
 
                 optionMap[correctAns]?.let { tv ->
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
+                    val drawable =
+                        ContextCompat.getDrawable(context, R.drawable.quiz_option_bg)?.mutate()
                     drawable?.setTint(ContextCompat.getColor(context, R.color.green))
                     tv.background = drawable
                     tv.setTextColor(ContextCompat.getColor(context, R.color.white))

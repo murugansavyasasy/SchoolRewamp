@@ -94,8 +94,10 @@ class StudentDetailAdapter(
             listener.onItemClick(item)
         }
 
-        holder.binding.lblRegisterNumber.text = context.getString(R.string.Roll_No) + item.roll_number
-        holder.binding.lblClassTeacher.text = context.getString(R.string.Class_Teacher) + item.class_teacher
+        holder.binding.lblRegisterNumber.text =
+            context.getString(R.string.Roll_No) + item.roll_number
+        holder.binding.lblClassTeacher.text =
+            context.getString(R.string.Class_Teacher) + item.class_teacher
         if (item.school_name_regional == "") {
             holder.binding.lblSchoolRegionalName.visibility = View.GONE
         } else {
@@ -106,7 +108,8 @@ class StudentDetailAdapter(
         holder.binding.lblClass.text = item.standard_name + " - " + item.section_name
         holder.binding.lblSchoolName.text = item.school_name
         holder.binding.lblSchoolPlace.text = item.school_city
-        holder.binding.lblacademicyear.text = "${context.getString(R.string.academic_year)} : ${item.academic_year_name}"
+        holder.binding.lblacademicyear.text =
+            "${context.getString(R.string.academic_year)} : ${item.academic_year_name}"
 
         Glide.with(context)
             .load(item.profile)

@@ -5,7 +5,6 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import kotlinx.parcelize.Parcelize
 
 
-
 @Parcelize
 data class SubmittedAssignment(
     val id: String,

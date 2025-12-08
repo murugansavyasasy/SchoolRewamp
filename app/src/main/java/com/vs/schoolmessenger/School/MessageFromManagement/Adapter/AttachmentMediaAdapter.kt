@@ -10,24 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
-import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import android.webkit.WebView
-import android.webkit.WebViewClient
 
 
 class AttachmentMediaAdapter(
@@ -77,7 +74,8 @@ class AttachmentMediaAdapter(
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
-        private val WebViewThumbnail:  android.webkit.WebView = itemView.findViewById(R.id.wvWebViewThumbnail)
+        private val WebViewThumbnail: WebView =
+            itemView.findViewById(R.id.wvWebViewThumbnail)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val fileItem: RelativeLayout = itemView.findViewById(R.id.fileItem)
 
@@ -104,31 +102,31 @@ class AttachmentMediaAdapter(
 
                 Constant.PDF -> {
 //                    DefaultImage.setImageResource(R.drawable.hw_pdf_img)
-                    openDocumentInWebView(data.url,"")
+                    openDocumentInWebView(data.url, "")
                 }
 
                 Constant.DOC, Constant.DOCX -> {
 //                    DefaultImage.setImageResource(R.drawable.microsoft_word_img)
-                    openDocumentInWebView(data.url,"")
+                    openDocumentInWebView(data.url, "")
                 }
 
                 Constant.TXT -> {
 //                    DefaultImage.setImageResource(R.drawable.txt_file_img)
-                    openDocumentInWebView(data.url,"")
+                    openDocumentInWebView(data.url, "")
                 }
 
                 Constant.PPT, Constant.PPTX -> {
 //                    DefaultImage.setImageResource(R.drawable.ppt_icon)
-                    openDocumentInWebView(data.url,"")
+                    openDocumentInWebView(data.url, "")
                 }
 
                 Constant.EXCEL -> {
 //                    DefaultImage.setImageResource(R.drawable.excel_icon)
-                    openDocumentInWebView(data.url,"")
+                    openDocumentInWebView(data.url, "")
                 }
 
                 Constant.VIDEO -> {
-                    DefaultImage.setImageResource(R.drawable.video_type_icon)
+                    DefaultImage.setImageResource(R.drawable.video_icon_2)
                 }
             }
 
@@ -146,14 +144,13 @@ class AttachmentMediaAdapter(
 
         }
 
-        private fun openDocumentInWebView(urlPath: String,type:String) {
+        private fun openDocumentInWebView(urlPath: String, type: String) {
             loadingBar.visibility = View.VISIBLE
-            var googleDocsUrl=""
+            var googleDocsUrl = ""
 
-            if (type==Constant.VIDEO){
-                 googleDocsUrl = urlPath
-            }
-            else{
+            if (type == Constant.VIDEO) {
+                googleDocsUrl = urlPath
+            } else {
                 googleDocsUrl = "${Constant.google_g_view_embedded}$urlPath"
             }
 
