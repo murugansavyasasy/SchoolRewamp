@@ -437,7 +437,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         // Convert image to byte array (for contact photo)
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.school_chimes_logo)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()

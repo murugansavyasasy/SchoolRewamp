@@ -54,12 +54,6 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
         Log.d("Access Token Values", isAccessToken.toString())
         fetchMySubmissionList()
 
-
-
-
-
-
-
         appViewModel.islsrwmysubmission?.observe(this) { response ->
             Constant.hideLoading(this)
 
@@ -97,7 +91,6 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                     binding.imageslabel.visibility = View.GONE
                 }
 
-
                 if (audioList.isNotEmpty()) {
                     binding.rcSeekBarAndTitle.visibility = View.VISIBLE
                     audioAdapter = AudioAdapter(audioList)
@@ -117,14 +110,11 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                 } else {
                     binding.lytNoDataFound.visibility = View.GONE
                 }
-
             } else {
                 binding.lytNoDataFound.visibility = View.VISIBLE
                 binding.noDataFound.text = response?.message ?: Constant.NO_DATA_FOUND
             }
         }
-
-
     }
 
     private fun fetchMySubmissionList() {

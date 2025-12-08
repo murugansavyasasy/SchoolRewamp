@@ -8,8 +8,11 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.media.ExifInterface
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
@@ -87,6 +90,7 @@ import com.vs.schoolmessenger.databinding.ChildHomeworkActivityBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -1760,23 +1764,35 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK || selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
-                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
-                    .show()
-            }
+        if (resultCode != RESULT_OK) return
+        if (Constant.Remaining!! == 0) {
+            Toast.makeText(
+                this,
+                "${getString(R.string.Max)} ${CreateNewTask.Companion.MAX_FILES} ${getString(R.string.files_allowed)}",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
-        fun addFile(uri: Uri) {
-            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) return
+        fun addPath(uri: Uri) {
 
+            val contentResolver = this.contentResolver
             val mimeType = contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) return
+
+            // Skip audio/video
+            if (mimeType?.startsWith("video/") == true ||
+                mimeType?.startsWith("audio/") == true
+            ) {
+                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+                return
+            }
 
             val fileName = getFileName(uri)
+
+            // Detect FileType
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
@@ -1784,43 +1800,136 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     ".xlsx",
                     true
                 ) -> FileType.EXCEL
-
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
 
-            selectedFiles.add(FileItem(uri.toString(), type))
+            // RAW PATH (important)
+            var cleanPath: String? = uri.path
+
+            cleanPath = cleanPath!!
+                .replace("file:///file:", "/")
+                .replace("file:///", "/")
+                .replace("file://", "/")
+                .replace("file:/", "/")
+                .replace("file%3A", "")
+
+            // DO NOT convert to Uri FOR STORAGE!
+            // Store raw path ONLY.
+            if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                Constant.selectedFiles.add(FileItem(cleanPath, type))
+            } else {
+                Constant.Remaining = 0
+            }
+
+            // Debug output
+            for (item in Constant.selectedFiles) {
+                Log.d("SelectedFileValue", "Path: ${item.path}, Type: ${item.type}")
+            }
         }
 
         when (requestCode) {
             CreateNewTask.Companion.CAMERA_IMAGE_REQUEST -> {
-                cameraImageFilePath?.let { path ->
-                    val file = File(path)
+                cameraImageFilePath?.let { filePath ->
+                    var file = File(filePath)
                     if (file.exists()) {
-                        val finalFile = if (!file.name.endsWith(".jpg", true)) {
+                        if (!file.name.endsWith(".jpg", true)) {
                             val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-                            file.renameTo(newFile)
-                            newFile
-                        } else file
-                        addFile(Uri.fromFile(finalFile))
+                            if (file.renameTo(newFile)) {
+                                cameraImageFilePath = newFile.absolutePath
+                                file = newFile
+                            }
+                        }
+
+                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+
+                        if (fixedBitmap != null) {
+                            val outputStream = FileOutputStream(file)
+                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                            outputStream.flush()
+                            outputStream.close()
+                        }
+
+                        val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
+                        addPath(uri)
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.camera_image_file_not_found),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
+                } ?: run {
+                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
-
             PICK_DOCUMENT_REQUEST -> {
-                data?.clipData?.let { clip ->
-                    for (i in 0 until clip.itemCount) {
-                        addFile(clip.getItemAt(i).uri)
+                val clipData = data?.clipData
+                val singleUri = data?.data
+
+                if (clipData != null) {
+                    for (i in 0 until clipData.itemCount) {
+                        val uri = clipData.getItemAt(i).uri
+                        addPath(uri)
                     }
-                } ?: data?.data?.let { addFile(it) }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
+                } else if (singleUri != null) {
+                    addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
+                }
             }
         }
-
         mAdapter?.notifyDataSetChanged()
-        updateRemainingCount()
     }
+
+    private fun fixImageOrientation(imagePath: String): Bitmap? {
+        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
+        val exif = ExifInterface(imagePath)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                matrix.setRotate(180f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+            ExifInterface.ORIENTATION_NORMAL -> return bitmap
+            else -> return bitmap
+        }
+
+        return try {
+            val fixedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            bitmap.recycle()  // Free up memory from the original bitmap
+            fixedBitmap
+        } catch (e: OutOfMemoryError) {
+            null
+        }
+    }
+
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
