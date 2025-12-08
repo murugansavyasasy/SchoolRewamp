@@ -18,7 +18,9 @@ android {
     compileSdk = 35
     ndkVersion = "28.0.12433566"
 
+
     defaultConfig {
+
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
@@ -55,7 +57,11 @@ android {
         viewBinding = true
         buildConfig = true
 
+
     }
+
+
+
     packagingOptions {
         jniLibs {
             // Make sure new packaging is used so libs can be aligned properly

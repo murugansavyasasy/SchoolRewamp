@@ -4,26 +4,26 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dual_color_background"
-    android:fitsSystemWindows="true">
+    android:background="@drawable/dual_color_background">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/root_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusBarBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statusBarBackground">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -46,6 +46,7 @@
                         android:adjustViewBounds="true"
                         android:scaleType="fitStart" />
 
+                    <!-- Back arrow is now 100% visible and never hidden under status bar -->
                     <ImageView
                         android:id="@+id/image_top_left"
                         android:layout_width="@dimen/fourty"
@@ -57,7 +58,6 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/left_arrow" />
                 </FrameLayout>
-
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animationView"
@@ -81,6 +81,5 @@
             android:layout_height="match_parent"
             android:clickable="false" />
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
