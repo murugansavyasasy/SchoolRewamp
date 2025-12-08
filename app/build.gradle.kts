@@ -156,7 +156,7 @@ android {
                     """
                 |<?xml version="1.0" encoding="utf-8"?>
                 |<resources>
-                |    <color name="primaryColor">$schoolColor</color>
+                |    <color name="PrimaryColor">$schoolColor</color>
                 |</resources>
                 """.trimMargin()
                 )
