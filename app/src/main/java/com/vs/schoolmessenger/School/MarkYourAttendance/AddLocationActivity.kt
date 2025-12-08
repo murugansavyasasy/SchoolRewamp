@@ -80,15 +80,22 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
             val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
 
             val params = binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams
             params.height = statusBarHeight
             binding.statusBarBackground.layoutParams = params
-            binding.statusBarBackground.requestLayout()
 
             val scrollParams = binding.rootLayout.getChildAt(1).layoutParams as ConstraintLayout.LayoutParams
             scrollParams.topMargin = statusBarHeight
             binding.rootLayout.getChildAt(1).layoutParams = scrollParams
+
+            binding.rootLayout.setPadding(
+                binding.rootLayout.paddingLeft,
+                binding.rootLayout.paddingTop,
+                binding.rootLayout.paddingRight,
+                navBarHeight
+            )
 
             insets
         }

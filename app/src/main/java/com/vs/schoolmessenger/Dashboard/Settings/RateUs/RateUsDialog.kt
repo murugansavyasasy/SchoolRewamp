@@ -171,45 +171,7 @@ class RateUsDialog(   private val fromScreen: String?,
     }
 
     private fun submitReview() {
-        val description = binding.edtSuggestions.text.toString().trim()
-
-
-        val categoriesArray = JsonArray()
-
-        allRemarks?.forEach { remark ->
-            val remarkObj = JsonObject().apply {
-                addProperty(Constant.name__, remark.name)
-                addProperty(Constant.rating, remark.rating)
-            }
-
-            val categoryItemsArray = JsonArray()
-
-            remark.category?.forEach { item ->
-                val itemObj = JsonObject().apply {
-                    addProperty(Constant.name__, item.name)
-                    addProperty(Constant.selected__, item.selected == true)
-                }
-                categoryItemsArray.add(itemObj)
-            }
-
-            remarkObj.add(Constant.category, categoryItemsArray)
-            categoriesArray.add(remarkObj)
-        }
-
-
-        val json = JsonObject().apply {
-            add(Constant.categories, categoriesArray)
-            addProperty(Constant.rating, ratingValue)
-            addProperty(Constant.description, description)
-            addProperty(Constant.mobile_number, mobileNumber)
-        }
-
-        Log.d("FINAL_JSON", json.toString())
-
-
-        appViewModel.reviewpost("", json)
-
-        observeSubmitReviewResponse()
+        throw RuntimeException("Test Crash")
     }
 
 
