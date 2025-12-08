@@ -276,7 +276,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 currentEditMode = "profile_photo"
                 showBottomDialog()
             }
-
         }
     }
 
@@ -569,6 +568,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         } else {
             val intent = Intent(requireContext(), AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
+            intent.putExtra("isWithOutHotCodeImage", true)
             albumResultLauncher.launch(intent)
         }
     }
