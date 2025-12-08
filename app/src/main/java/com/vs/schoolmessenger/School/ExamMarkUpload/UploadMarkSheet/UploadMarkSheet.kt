@@ -453,8 +453,9 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this, "${applicationContext.packageName}." +
-                            "", photoFile
+                    this,
+                    "${applicationContext.packageName}.fileprovider",
+                    photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
