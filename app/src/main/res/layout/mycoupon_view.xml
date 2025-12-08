@@ -23,121 +23,123 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/outer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@id/linear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/back"
-            app:srcCompat="@drawable/subtract1" />
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/hundred"
-            android:layout_marginTop="@dimen/eighty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/outer"
-            app:srcCompat="@drawable/dizzeworldlogo" />
-
-        <ImageView
-            android:id="@+id/vector"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/sixty"
-            android:layout_marginEnd="@dimen/twenty"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo"
-            app:srcCompat="@drawable/vectorimage" />
-
-        <LinearLayout
-            android:id="@+id/linear"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/coupon_bg_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eighty"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/subtract1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vector">
-
-            <TextView
-                android:id="@+id/header"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="McDonald's"
-                android:textSize="@dimen/twenty_four_sp" />
-
-            <TextView
-                android:id="@+id/offer"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="40% Off"
-                android:textColor="@color/clr_red"
-                android:textSize="@dimen/twenty_four_sp" />
-
-            <TextView
-                android:id="@+id/description"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Let staff  QR or use the coupon code to claim the offer"
-                android:textSize="@dimen/fourteen_sp" />
+            app:layout_constraintTop_toBottomOf="@id/back">
 
             <ImageView
-                android:id="@+id/qrCode"
+                android:id="@+id/logo"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                android:contentDescription="QR Code" />
+                android:layout_height="@dimen/hundred"
+                android:layout_marginTop="@dimen/eighty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dizzeworldlogo" />
+
+            <ImageView
+                android:id="@+id/vector"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/sixty"
+                android:layout_marginEnd="@dimen/twenty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo"
+                app:srcCompat="@drawable/vectorimage" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linear"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/seventy"
-                android:background="@drawable/dashed_bordercouponview"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/twele">
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/eighty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vector">
 
                 <TextView
-                    android:id="@+id/couponCode"
+                    android:id="@+id/header"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="McDonald's"
+                    android:textSize="@dimen/twenty_four_sp" />
+
+                <TextView
+                    android:id="@+id/offer"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40% Off"
+                    android:textColor="@color/clr_red"
+                    android:textSize="@dimen/twenty_four_sp" />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:gravity="center"
-                    android:text="jhav-bvbu-vffno"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sixteen_sp" />
+                    android:text="Let staff scan QR or use the coupon code to claim the offer"
+                    android:textSize="@dimen/fourteen_sp" />
 
                 <ImageView
-                    android:id="@+id/copyIcon"
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
-                    android:layout_marginStart="@dimen/eight"
-                    android:contentDescription="Copy"
-                    android:src="@drawable/copy1" />
+                    android:id="@+id/qrCode"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    android:contentDescription="QR Code"
+                    tools:visibility="gone"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/seventy"
+                    android:background="@drawable/dashed_bordercouponview"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/twele">
+
+                    <TextView
+                        android:id="@+id/couponCode"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="jhav-bvbu-vffno"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp" />
+
+                    <ImageView
+                        android:id="@+id/copyIcon"
+                        android:layout_width="@dimen/twenty_four"
+                        android:layout_height="@dimen/twenty_four"
+                        android:layout_marginStart="@dimen/eight"
+                        android:contentDescription="Copy"
+                        android:src="@drawable/copy1" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearlayout"
@@ -152,7 +154,7 @@
             android:padding="@dimen/sixteen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/outer">
+            app:layout_constraintTop_toBottomOf="@id/coupon_bg_container">
 
             <TextView
                 style="@style/CustomTextStylePoppinsMedium"
@@ -167,7 +169,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
