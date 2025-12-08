@@ -704,109 +704,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
     }
 
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode != RESULT_OK || Constant.selectedFiles.size >= MAX_FILES + 1) {
-//            if (Constant.selectedFiles.size >= MAX_FILES + 1) {
-//                Toast.makeText(this, getString(R.string.max_10_files_allowed), Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//            return
-//        }
-//
-//        fun addPath(uri: Uri) {
-//            val mimeType = contentResolver.getType(uri)
-//            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
-//                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
-//                return
-//            }
-//
-//            val fileName = getFileName(uri)
-//            val type = when {
-//                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-//                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                    ".xlsx",
-//                    true
-//                ) -> FileType.EXCEL
-//
-//                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
-//                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
-//                fileName.endsWith(".txt", true) -> FileType.TXT
-//                else -> FileType.OTHER
-//            }
-//
-//            if (Constant.selectedFiles.size < MAX_FILES + 1) {
-//                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-//            } else {
-//                Constant.Remaining = 0
-//            }
-//            for (item in Constant.selectedFiles) {
-//                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
-//            }
-//        }
-//
-//        when (requestCode) {
-//            CAMERA_IMAGE_REQUEST -> {
-//                cameraImageFilePath?.let { filePath ->
-//                    var file = File(filePath)
-//                    if (file.exists()) {
-//                        if (!file.name.endsWith(".jpg", true)) {
-//                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-//                            if (file.renameTo(newFile)) {
-//                                cameraImageFilePath = newFile.absolutePath
-//                                file = newFile
-//                            }
-//                        }
-//
-//                        val fixedBitmap = fixImageOrientation(file.absolutePath)
-//                        if (fixedBitmap != null) {
-//                            val outputStream = FileOutputStream(file)
-//                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-//                            outputStream.flush()
-//                            outputStream.close()
-//                        }
-//                        val uri = Uri.fromFile(file)
-//                        Constant.Remaining = Constant.Remaining - 1
-//                        addPath(uri)
-//
-//                    } else {
-//                        Toast.makeText(
-//                            this,
-//                            getString(R.string.camera_image_file_not_found),
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//                    }
-//                } ?: run {
-//                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            PICK_DOCUMENT_REQUEST -> {
-//                val clipData = data?.clipData
-//                val singleUri = data?.data
-//
-//                if (clipData != null) {
-//                    for (i in 0 until clipData.itemCount) {
-//                        val uri = clipData.getItemAt(i).uri
-//                        addPath(uri)
-//                    }
-//                    Constant.Remaining = Constant.Remaining - clipData.itemCount
-//
-//                } else if (singleUri != null) {
-//                    addPath(singleUri)
-//                    Constant.Remaining = Constant.Remaining - 1
-//
-//                }
-//            }
-//        }
-//
-//        mAdapter?.notifyDataSetChanged()
-//        updateRemainingCount()
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != RESULT_OK) return
@@ -820,34 +717,51 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         }
 
         fun addPath(uri: Uri) {
+
+            val contentResolver = this.contentResolver
             val mimeType = contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+
+            // Skip audio/video
+            if (mimeType?.startsWith("video/") == true ||
+                mimeType?.startsWith("audio/") == true) {
                 Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
                 return
             }
 
             val fileName = getFileName(uri)
+
+            // Detect FileType
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx",
-                    true
-                ) -> FileType.EXCEL
-
+                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
 
+            // RAW PATH (important)
+            var cleanPath: String? = uri.path
+
+            cleanPath = cleanPath!!
+                .replace("file:///file:", "/")
+                .replace("file:///", "/")
+                .replace("file://", "/")
+                .replace("file:/", "/")
+                .replace("file%3A", "")
+
+            // DO NOT convert to Uri FOR STORAGE!
+            // Store raw path ONLY.
             if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                Constant.selectedFiles.add(FileItem(cleanPath, type))
             } else {
                 Constant.Remaining = 0
             }
+
+            // Debug output
             for (item in Constant.selectedFiles) {
-                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+                Log.d("SelectedFileValue", "Path: ${item.path}, Type: ${item.type}")
             }
         }
 
@@ -1003,59 +917,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             storageDir
         )
     }
-
-
-//    private fun getPathFromUri(uri: Uri): String? {
-//        // Content scheme
-//        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
-//            val projection = arrayOf(MediaStore.Images.Media.DATA)
-//            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-//                if (cursor.moveToFirst()) {
-//                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-//                    return cursor.getString(columnIndex)
-//                }
-//            }
-//        }
-//
-//        // File scheme fallback
-//        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
-//            return uri.path
-//        }
-//        return null
-//    }
-//
-//    @SuppressLint("Range")
-//    private fun getFileName(uri: Uri): String {
-//        var result: String? = null
-//        if (uri.scheme == Constant.content_) {
-//            val cursor = contentResolver.query(uri, null, null, null, null)
-//            cursor?.use {
-//                if (it.moveToFirst()) {
-//                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-//                }
-//            }
-//        }
-//        if (result == null) {
-//            result = uri.path
-//            val cut = result?.lastIndexOf('/')
-//            if (cut != null && cut != -1) {
-//                result = result?.substring(cut + 1)
-//            }
-//        }
-//        return result ?: ""
-//    }
-//
-//    @Throws(IOException::class)
-//    private fun createImageFile(): File {
-//        val timeStamp: String =
-//            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
-//        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
-//        return File.createTempFile(
-//            "${Constant.IMG_}${timeStamp}${Constant.underscore}",
-//            ".jpg",
-//            storageDir
-//        )
-//    }
 
     private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
