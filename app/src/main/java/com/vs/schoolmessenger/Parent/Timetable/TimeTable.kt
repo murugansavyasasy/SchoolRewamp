@@ -45,7 +45,11 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
