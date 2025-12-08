@@ -147,60 +147,135 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/rlaPickImage"
+                android:id="@+id/rlaFilePicking"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/sixty"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/field_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/imgUpload"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/upload" />
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rlaTitleDescription"
+                android:layout_marginTop="@dimen/five">
 
                 <TextView
+                    android:id="@+id/lblAddPhoto"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_toEndOf="@id/imgUpload"
-                    android:text="@string/lblAttachment"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/add_attachment">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStar3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/eight"
+                    android:layout_toEndOf="@id/lblAddPhoto"
+                    android:text="@string/mandatory"
+                    android:visibility="gone"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    android:id="@+id/lblOptional"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/eight"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblAddPhoto"
+                    android:text="@string/Optional"
+                    android:textColor="@color/mild_grey1"
+                    android:visibility="gone">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:src="@drawable/ic_attach_file"
+                    android:visibility="invisible">
+
+                </ImageView>
+
+                <RelativeLayout
+                    android:id="@+id/rytRecyclewview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblAddPhoto">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/btnReportBug"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytRecyclewview"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:layout_marginBottom="@dimen/twenty"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="@string/send_mail"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp" />
+
             </RelativeLayout>
 
-            <GridView
-                android:id="@+id/imgPreview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:horizontalSpacing="8dp"
-                android:numColumns="2"
-                android:padding="@dimen/ten"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="8dp" />
 
-            <TextView
-                android:id="@+id/btnReportBug"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/twenty"
-                android:layout_marginEnd="@dimen/twenty_five"
-                android:layout_marginBottom="@dimen/twenty"
-                android:background="@drawable/background_radius_button"
-                android:gravity="center"
-                android:padding="@dimen/ten"
-                android:text="@string/send_mail"
-                android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp" />
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rlaPickImage"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="@dimen/sixty"-->
+            <!--                android:layout_marginStart="@dimen/ten"-->
+            <!--                android:layout_marginTop="@dimen/ten"-->
+            <!--                android:layout_marginEnd="@dimen/ten"-->
+            <!--                android:background="@drawable/field_background"-->
+            <!--                android:gravity="center">-->
 
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/imgUpload"-->
+            <!--                    android:layout_width="@dimen/thirty"-->
+            <!--                    android:layout_height="@dimen/thirty"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:src="@drawable/upload" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginStart="@dimen/ten"-->
+            <!--                    android:layout_toEndOf="@id/imgUpload"-->
+            <!--                    android:text="@string/lblAttachment"-->
+            <!--                    android:textSize="@dimen/thirteen_sp"-->
+            <!--                    android:textStyle="bold" />-->
+            <!--            </RelativeLayout>-->
+
+            <!--            <GridView-->
+            <!--                android:id="@+id/imgPreview"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/ten"-->
+            <!--                android:horizontalSpacing="8dp"-->
+            <!--                android:numColumns="2"-->
+            <!--                android:padding="@dimen/ten"-->
+            <!--                android:stretchMode="columnWidth"-->
+            <!--                android:verticalSpacing="8dp" />-->
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

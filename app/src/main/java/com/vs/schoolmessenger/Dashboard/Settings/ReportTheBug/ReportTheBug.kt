@@ -6,10 +6,15 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -27,31 +32,30 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
+import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.ReportBugBinding
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
+class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnImageClickListener {
 
     override fun getViewBinding(): ReportBugBinding {
         return ReportBugBinding.inflate(layoutInflater)
     }
-
-    val filePaths = ArrayList<String>()
-
-    private val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 102
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     private val PICK_DOCUMENT_REQUEST = 1003
@@ -66,7 +70,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        binding.rlaPickImage.setOnClickListener(this)
+//        binding.rlaPickImage.setOnClickListener(this)
         binding.btnReportBug.setOnClickListener(this)
 
 
@@ -78,62 +82,90 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblReportbug)
 
+        saveDrawableToCache(R.drawable.attachment_with_bg)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
+
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = MAX_FILES - Constant.selectedFiles.size
 
-                    selectedUris?.take(remaining)?.forEach { uri ->
-                        val mimeType = contentResolver.getType(uri)
-                        val path = when (uri.scheme) {
-                            Constant.file_ -> uri.path
-                            else -> getPathFromUri(uri)
+                    Log.d("Constant.Remaining", Constant.Remaining.toString())
+
+                    if (Constant.Remaining > 0 && !selectedUris.isNullOrEmpty()) {
+
+                        val previousCount = Constant.selectedFiles.size
+                        Constant.Remaining -= selectedUris.size
+                        selectedUris.forEach { uri ->
+                            val mimeType = contentResolver.getType(uri)
+                            val path = when (uri.scheme) {
+                                Constant.file_ -> uri.path
+                                else -> getPathFromUri(uri)
+                            }
+
+                            if (path == null) {
+                                Log.w("addPath", "Could not resolve path from URI: $uri")
+                                return@forEach
+                            }
+
+                            val fileName = getFileName(uri).ifEmpty { File(path).name }
+
+                            val type = when {
+                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                                fileName.endsWith(".pdf", true) -> FileType.PDF
+                                fileName.endsWith(".doc", true) || fileName.endsWith(
+                                    ".docx",
+                                    true
+                                ) -> FileType.DOC
+
+                                fileName.endsWith(".xls", true) || fileName.endsWith(
+                                    ".xlsx",
+                                    true
+                                ) -> FileType.EXCEL
+
+                                fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                    ".pptx",
+                                    true
+                                ) -> FileType.PPT
+
+                                fileName.endsWith(".txt", true) -> FileType.TXT
+                                else -> FileType.OTHER
+                            }
+
+                            Log.d("MAX_FILES", MAX_FILES.toString())
+
+                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                            } else {
+                                Constant.Remaining = 0
+                            }
+
+                            Log.d("SelectedFile", "URI: $uri, Type: $type")
                         }
+                        mAdapter?.notifyDataSetChanged()
+                        val addedCount = Constant.selectedFiles.size - previousCount
+                        val totalCount = Constant.selectedFiles.size
 
-                        if (path == null) {
-                            Log.w("addPath", "Could not resolve path from URI: $uri")
-                            return@forEach
-                        }
-
-                        val fileName = getFileName(uri).ifEmpty { File(path).name }
-                        val type = when {
-                            mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                            mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                            mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                            fileName.endsWith(".pdf", true) -> FileType.PDF
-                            fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx", true
-                            ) -> FileType.DOC
-
-                            fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx", true
-                            ) -> FileType.EXCEL
-
-                            fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx", true
-                            ) -> FileType.PPT
-
-                            fileName.endsWith(".txt", true) -> FileType.TXT
-                            else -> FileType.OTHER
-                        }
-
-                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-                        Constant.selectedFiles.forEach {
-                            filePaths.add(it.path)
-                        }
-
-                        isLoadTheReportImage(Constant.selectedFiles)
-                    }
-
-                    if ((selectedUris?.size ?: 0) > remaining) {
-                        Toast.makeText(
-                            this,
-                            "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)}$MAX_FILES)",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
+                    } else if (Constant.Remaining <= 0) {
+//                        Toast.makeText(
+//                            this,
+//                            getString(R.string.you_have_reached_the_maximum_file_limit),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 }
             }
@@ -144,31 +176,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.rlaPickImage -> {
-                // Check the SDK version and request the appropriate permission
-                val readImagePermission =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        Manifest.permission.READ_MEDIA_IMAGES  // Android 13 (API 33) and later
-                    } else {
-                        Manifest.permission.READ_EXTERNAL_STORAGE  // Pre-Android 13
-                    }
-
-                // Check if the permission is granted
-                if (ContextCompat.checkSelfPermission(
-                        this, readImagePermission
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    // Permission granted, proceed to show the bottom dialog or picker
-                    showBottomDialog()
-                } else {
-                    // Request permission if not granted
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(readImagePermission),
-                        READ_EXTERNAL_STORAGE_PERMISSION_CODE // Define your constant for the permission code
-                    )
-                }
-            }
 
             R.id.btnReportBug -> {
                 if (selectedMenu != "Select the menu") {
@@ -191,11 +198,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         val email = Constant.isGlobalVariableData!!.support_email
         val subject = selectedMenu
         val message = binding.edtReportBug.text.toString().trim()
-
-//        if (Constant.selectedFiles.isEmpty()) {
-//            Toast.makeText(this, "Please attach at least one file", Toast.LENGTH_SHORT).show()
-//            return
-//        }
 
         val uris = arrayListOf<Uri>()
 
@@ -242,96 +244,119 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
             Toast.makeText(this, getString(R.string.gmail_not_installed), Toast.LENGTH_SHORT).show()
         }
     }
+    private fun loadMenu() {
+        Log.d("DropdownMenuList", Constant.menuNameList.toString())
 
-    // Handle the result of the permission request
+        val adapter = SpinnerLoadingAdapter(this, Constant.menuNameList)
+        binding.isMenuSpinner.adapter = adapter
+
+        binding.isMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+
+                selectedMenu = Constant.menuNameList[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("cameraImageFilePath", cameraImageFilePath)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        cameraImageFilePath = savedInstanceState.getString("cameraImageFilePath")
+    }
+
+    private fun checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            openCameraIntent()
+        } else {
+            // Show rationale if user has denied permission before
+            if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.CAMERA
+                )
+            ) {
+                showCameraPermissionSettingsDialog()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        when (requestCode) {
-            READ_EXTERNAL_STORAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted, proceed to show the bottom dialog or picker
-                    showBottomDialog()
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCameraIntent()
+            } else {
+                cameraPermissionDeniedCount++
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    showCameraPermissionSettingsDialog()
                 } else {
-                    // Permission denied
-                    if (shouldShowRequestPermissionRationale(permissions[0])) {
-                        // If the user denied the permission but didn't check "Don't ask again"
-                        Toast.makeText(
-                            this,
-                            getString(R.string.permission_denied_please_allow_access_to_images),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        // If the user checked "Don't ask again"
-                        showPermissionDeniedDialog()
-                    }
+                    Toast.makeText(
+                        this,
+                        getString(R.string.camera_permission_is_required),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
-    // Show a dialog explaining why the permission is needed and guide the user to app settings
-    private fun showPermissionDeniedDialog() {
-        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
-            .setMessage(getString(R.string.this_app_requires_permission_to_access_your_images_please_enable_it_in_the_app_settings))
+    private fun showCameraPermissionSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false)
             .setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }.setNegativeButton(getString(R.string.Cancel), null).show()
+            }
+            .setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
+
 
     override fun onBackPressed() {
-        super.onBackPressed()
         Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        Constant.Remaining = MAX_FILES
+        super.onBackPressed()
     }
 
-    override fun onResume() {
-        // Constant.selectedFiles.clear()
-        super.onResume()
+    override fun onImageClick(position: Int) {
+        if (position == 0) {
+            showBottomDialog()
+        }
     }
-
-    private fun isLoadTheReportImage(isImageSelected: MutableList<FileItem>) {
-        binding.imgPreview.numColumns = 2
-        binding.imgPreview.verticalSpacing = 8
-        binding.imgPreview.horizontalSpacing = 8 // optional, spacing between columns
-        var courseAdapter: ImagePreviewAdapter? = null
-
-        courseAdapter = ImagePreviewAdapter(
-            isImageSelected,
-            this,
-            object : ImagePreviewRemoveListener {
-                override fun add(isAddingId: Int?) {
-                    // not used
-                }
-
-                override fun remove(pos: Int) {
-                    if (pos >= 0 && pos < isImageSelected.size) {
-
-                        val removedItem = isImageSelected[pos]
-
-                        // Remove from UI list
-                        isImageSelected.removeAt(pos)
-
-                        // Remove the SAME item from selectedFiles safely
-                        Constant.selectedFiles.remove(removedItem)
-
-                        courseAdapter?.notifyDataSetChanged()
-                        Constant.setGridViewHeight(binding.imgPreview, 2)
-                    }
-                }
-            }
-        )
-        binding.imgPreview.adapter = courseAdapter
-        Constant.setGridViewHeight(binding.imgPreview, 2)
-    }
-
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -339,7 +364,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra("isWithOutHotCodeImage", true)
             albumResultLauncher.launch(intent)
         }
     }
@@ -368,8 +392,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
-            Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
-
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
@@ -420,40 +442,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         dialog.show()
     }
 
-    private fun checkCameraPermissionAndOpenCamera() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            openCameraIntent()
-        } else {
-            // Show rationale if user has denied permission before
-            if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.CAMERA
-                )
-            ) {
-                showCameraPermissionSettingsDialog()
-            } else {
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
-                )
-            }
-        }
-    }
-
-    private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
-            .setMessage(getString(R.string.camera_permission_is_permanently_denied_please_enable_it_from_app_settings))
-            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.parse("package:$packageName")
-                }
-                startActivity(intent)
-            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
-                dialog.dismiss()
-            }.show()
-    }
-
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
@@ -466,7 +454,9 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this, "${applicationContext.packageName}.fileprovider", photoFile
+                    this,
+                    "${applicationContext.packageName}.fileprovider",
+                    photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -485,11 +475,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode != RESULT_OK) return
-
-        val remaining = MAX_FILES - Constant.selectedFiles.size
-        if (remaining <= 0) {
+        if (Constant.Remaining!! == 0) {
             Toast.makeText(
                 this,
                 "${getString(R.string.Max)} ${MAX_FILES} ${getString(R.string.files_allowed)}",
@@ -499,9 +486,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         }
 
         fun addPath(uri: Uri) {
-            Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= MAX_FILES) return
-
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
                 Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
@@ -513,7 +497,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
                 fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx", true
+                    ".xlsx",
+                    true
                 ) -> FileType.EXCEL
 
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
@@ -522,19 +507,19 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                 else -> FileType.OTHER
             }
 
-            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            if (Constant.selectedFiles.size < MAX_FILES + 1) {
+                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            } else {
+                Constant.Remaining = 0
+            }
             for (item in Constant.selectedFiles) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
-            Constant.selectedFiles.forEach {
-                filePaths.add(it.path)
-            }
-
-            isLoadTheReportImage(Constant.selectedFiles)
         }
 
         when (requestCode) {
-            CAMERA_IMAGE_REQUEST -> {
+
+           CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {
@@ -545,8 +530,20 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                                 file = newFile
                             }
                         }
+
+                        val fixedBitmap = fixImageOrientation(file.absolutePath)
+
+                        if (fixedBitmap != null) {
+                            val outputStream = FileOutputStream(file)
+                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                            outputStream.flush()
+                            outputStream.close()
+                        }
+
                         val uri = Uri.fromFile(file)
+                        Constant.Remaining = Constant.Remaining - 1
                         addPath(uri)
+
                     } else {
                         Toast.makeText(
                             this,
@@ -556,14 +553,9 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                             .show()
                     }
                 } ?: run {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.camera_image_failed),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
-
             PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
@@ -573,13 +565,59 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
                         val uri = clipData.getItemAt(i).uri
                         addPath(uri)
                     }
+                    Constant.Remaining = Constant.Remaining - clipData.itemCount
+
                 } else if (singleUri != null) {
                     addPath(singleUri)
+                    Constant.Remaining = Constant.Remaining - 1
+
                 }
             }
         }
         mAdapter?.notifyDataSetChanged()
     }
+
+    private fun fixImageOrientation(imagePath: String): Bitmap? {
+        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
+        val exif = ExifInterface(imagePath)
+        val orientation =
+            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
+                matrix.setRotate(180f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                matrix.setRotate(90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                matrix.setRotate(-90f)
+                matrix.postScale(-1f, 1f)
+            }
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
+            ExifInterface.ORIENTATION_NORMAL -> return bitmap
+            else -> return bitmap
+        }
+
+        return try {
+            val fixedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            bitmap.recycle()  // Free up memory from the original bitmap
+            fixedBitmap
+        } catch (e: OutOfMemoryError) {
+            null
+        }
+    }
+
 
     private fun getPathFromUri(uri: Uri): String? {
         // Content scheme
@@ -633,24 +671,4 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         )
     }
 
-
-    private fun loadMenu() {
-        Log.d("DropdownMenuList", Constant.menuNameList.toString())
-
-        val adapter = SpinnerLoadingAdapter(this, Constant.menuNameList)
-        binding.isMenuSpinner.adapter = adapter
-
-        binding.isMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                adapter.notifyDataSetChanged()
-
-                selectedMenu = Constant.menuNameList[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-    }
 }
