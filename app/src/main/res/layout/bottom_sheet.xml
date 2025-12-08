@@ -10,7 +10,7 @@
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/PrimaryColor"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
             android:layout_width="@dimen/fifty"
             android:layout_height="@dimen/fifty"
             android:layout_marginTop="@dimen/fourty"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_anchor="@id/relative_layout2"
             app:layout_anchorGravity="bottom|center_horizontal" />
 

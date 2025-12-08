@@ -224,11 +224,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         val addedCount = Constant.selectedFiles.size - previousCount
                         val totalCount = Constant.selectedFiles.size
 
-                        Toast.makeText(
-                            this,
-                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)} ${if (addedCount > 1) "s" else ""}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this,
+//                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)} ${if (addedCount > 1) "s" else ""}",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
 
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")

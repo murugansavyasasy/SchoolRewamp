@@ -122,10 +122,12 @@ android {
                 val drawableDir = File(flavorResDir, "drawable")
                 val valuesDir = File(flavorResDir, "values")
                 val layoutDir = File(flavorResDir, "layout")
+                val mipmapDir = File(flavorResDir, "mipmap")
 
                 drawableDir.mkdirs()
                 valuesDir.mkdirs()
                 layoutDir.mkdirs()
+                mipmapDir.mkdirs()
                 // Copy logo to drawable folder
                 val logoFile = file("${rootDir}/logos/$iconName.png")
                 if (logoFile.exists()) {
@@ -156,7 +158,7 @@ android {
                     """
                 |<?xml version="1.0" encoding="utf-8"?>
                 |<resources>
-                |    <color name="primaryColor">$schoolColor</color>
+                |    <color name="PrimaryColor">$schoolColor</color>
                 |</resources>
                 """.trimMargin()
                 )

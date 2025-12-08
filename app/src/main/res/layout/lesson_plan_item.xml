@@ -101,10 +101,18 @@
             <ImageView
                 android:layout_alignParentEnd="true"
                 android:layout_width="@dimen/twenty"
+                android:src="@drawable/ic_more_vert"
+                android:id="@+id/edit_icon"
+                android:layout_height="@dimen/twenty">
+            </ImageView>
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/twenty"
                 android:src="@drawable/completed_green"
                 android:id="@+id/status_text1label"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/edit_icon"
                 android:layout_height="@dimen/twenty">
-
             </ImageView>
         </RelativeLayout>
         <View
@@ -135,6 +143,7 @@
             android:id="@+id/editdeletelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@+id/detailsRecyclerView"
             android:layout_marginBottom="@dimen/eight"
             android:padding="@dimen/two">

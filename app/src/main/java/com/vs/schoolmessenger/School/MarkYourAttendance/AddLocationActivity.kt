@@ -20,9 +20,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -68,7 +72,27 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbarBlueWhite()
+        enableEdgeToEdge()
+
+        window.statusBarColor = Color.TRANSPARENT
+        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        insetsController.isAppearanceLightStatusBars = true
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+
+            val params = binding.statusBarBackground.layoutParams as ConstraintLayout.LayoutParams
+            params.height = statusBarHeight
+            binding.statusBarBackground.layoutParams = params
+            binding.statusBarBackground.requestLayout()
+
+            val scrollParams = binding.rootLayout.getChildAt(1).layoutParams as ConstraintLayout.LayoutParams
+            scrollParams.topMargin = statusBarHeight
+            binding.rootLayout.getChildAt(1).layoutParams = scrollParams
+
+            insets
+        }
+
         binding.btnAddLocation.setOnClickListener(this)
         binding.btnViewLocations.setOnClickListener(this)
         binding.webViewMap.setOnClickListener(this)
@@ -86,7 +110,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             if (response != null) {
                 Constant.hideLoading(this@AddLocationActivity)
                 showSuccessPopup(response.message, response.status)
-//                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
@@ -133,6 +156,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             }
         }
     }
+
 
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -322,7 +346,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         edtLocationName.setText(data.location)
         edtDistance.setText(data.distance)
 
-
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
             layoutParams = ViewGroup.LayoutParams(
@@ -372,7 +395,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
         dimView.setOnClickListener { closePopup() }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(data: LocationHistoryData, isType: String) {

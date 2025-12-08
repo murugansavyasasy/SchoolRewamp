@@ -318,7 +318,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         }
     }
 
-
     fun viewInvoice(invoiceId: String) {
         Constant.showLoading(this)
         appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId)
@@ -326,12 +325,14 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null && response.status && response.data.isNotEmpty()) {
-                val pdfUrl =
-                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+//                val pdfUrl =
+//                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-11-01/samplepptx.pptx"
+//                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
                 val intent = Intent(this, FeeReceiptViewActivity::class.java)
-                intent.putExtra("pdf_url", pdfUrl)
+                intent.putExtra("pdf_url", response.data[0])
                 startActivity(intent)
-            } else {
+            }
+            else {
                 Toast.makeText(
                     this,
                     response?.message ?: getString(R.string.unable_to_fetch_invoice),
