@@ -379,7 +379,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val container = binding.confettiContainer
         val centerX = container.width / 2f
         val centerY = container.height / 2f
-        val bubbleCount = 40
+        val bubbleCount = 30
         val bubbleDuration = 1000L
         val bubbleDelay = 25L
 

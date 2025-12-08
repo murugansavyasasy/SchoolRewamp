@@ -49,8 +49,8 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         appViewModel?.init()
         recyclerViewDays = binding.recyclerViewDays
         dayHeader = binding.bottomsheettimetable.dayHeader
-        binding.tvClass.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.tvName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         recyclerViewSchedule = binding.bottomsheettimetable.recyclerViewSchedule
         setupRecyclerViewDays()
 
@@ -103,7 +103,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         val dateFormat = SimpleDateFormat(Constant.EEE_comma_dd_MMM_yy, Locale.getDefault())
         val shortDate = dateFormat.format(calendar.time)
         binding.tvToday.text = shortDate
-        binding.ivBack.setOnClickListener {
+        binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
     }
