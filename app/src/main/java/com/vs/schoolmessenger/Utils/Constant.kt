@@ -339,6 +339,8 @@ object Constant {
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var type_ = "type"
+    var isVoiceUrlNotifi = "voice_url"
+    var isWelcomeUrlNotifi = "welcome_url"
     var isTitle = "isTitle"
     var imageurl = "image_url"
     var isWebLink = "isWebLink"

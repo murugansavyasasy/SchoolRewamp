@@ -68,8 +68,8 @@ class ParentMeetingAdapter(
         holder.tvProfileIcon.text = firstLetter
 
         val modeIconRes = when (mode.lowercase()) {
-            "in person", "in-person", "person" -> R.drawable.person_white_bg
-            "phone call", "call", "phone" -> R.drawable.phone_icon_bg
+            "in person", "in-person", "person","In Person" -> R.drawable.person_white_bg
+            "phone call", "call", "phone","Phone","Call" -> R.drawable.phone_icon_bg
             "virtual", "online", "video call", "zoom" -> R.drawable.network
             else -> R.drawable.phone_icon_bg
         }

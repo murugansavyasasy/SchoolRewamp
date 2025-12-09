@@ -41,9 +41,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val handler = Handler()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
         Log.d(TAG, "onMessageReceived called")
         if (remoteMessage.data.isNotEmpty()) {
             Log.d("FCM_PAYLOAD", "FCM Payload: ${remoteMessage.data}")
+            Log.d("FCM_PAYLOAD", "FCM remoteMessage: ${remoteMessage.toString()}")
         }
         // Example: Extract fields safely
         val title = remoteMessage.data[Constant.title_] ?: Constant.School_Chimes
@@ -51,6 +53,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             remoteMessage.data[Constant.body_] ?: Constant.You_have_a_new_message_from_your_school
         val tone = remoteMessage.data[Constant.tone_] ?: Constant.normal
         val type = remoteMessage.data[Constant.type_] ?: Constant.normal
+        val isVoiceUrl = remoteMessage.data[Constant.isVoiceUrlNotifi] ?: Constant.normal
+        val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
         val msgId =
             remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
@@ -72,7 +76,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     body,
                     receiver_id.toString(),
                     header_id.toString(),
-                    receiver_type.toString()
+                    receiver_type.toString(),isWelcomeUrl,isVoiceUrl
                 )
             } else {
                 sendNotification(
@@ -98,6 +102,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "New FCM Token: $token")
@@ -108,7 +113,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         body: String,
         receiver_id: String,
         headerId: String,
-        receiverType: String
+        receiverType: String,
+        isWelcomeUrl: String,
+        isVoiceUrl: String
     ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -141,6 +148,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.school_name, "")
             putExtra(Constant.member_name, "")
             putExtra(Constant.call_title, "")
+            putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
+            putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
@@ -218,6 +227,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
         }
+    }
+
+    private fun createDeleteIntent(): PendingIntent {
+        val intent = Intent(this, NotificationDismissService::class.java)
+        intent.action = Constant.NOTIFICATION_DISMISSED
+
+        return PendingIntent.getService(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     private fun sendNotification(
@@ -364,17 +385,5 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Constant.mediaPlayer.release()
             Constant.mediaPlayer = MediaPlayer()
         }
-    }
-
-    // Creates a delete intent for handling notification dismissal
-    private fun createDeleteIntent(): PendingIntent? {
-        val dismissIntent: Intent = Intent(this, NotificationDismissService::class.java)
-        dismissIntent.setAction(Constant.NOTIFICATION_DISMISSED)
-        return PendingIntent.getService(
-            this,
-            0,
-            dismissIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
     }
 }

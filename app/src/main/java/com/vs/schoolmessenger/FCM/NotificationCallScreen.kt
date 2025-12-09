@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.media.MediaPlayer.OnCompletionListener
-import android.media.MediaPlayer.OnPreparedListener
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -16,54 +14,44 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.NotificationCallScreenBinding
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-
-class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
+class NotificationCallScreen :
+    BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
 
     private var dX = 0f
     private var originalX = 0f
     private var isCallConnected = false
     private var isActivityClosing = false
+    private var isCallAccepted = false
+
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
-    var voiceUrl: String? = ""
-    var isReceiverId: String? = ""
-    var isUserResponse: String = "NO"
-    var retrycount: String? = ""
-    var circularId: String? = ""
-    var ei1: String? = ""
-    var ei2: String? = ""
-    var ei3: String? = ""
-    var ei4: String? = ""
-    var ei5: String? = ""
-    var role: String? = ""
-    var menuId: String? = ""
-    var notificationId: Int = 0
 
-    var audioUrls: Array<String?>? = null
+    private var voiceUrl: String? = null
+    private var welcomeUrl: String? = null
 
-    var audioList: MutableList<String?>? = null
-    var welcome_file: String? = ""
-    var school_name: String? = ""
-    var member_name: String? = ""
-    var call_title: String? = ""
+    private var notificationId: Int = 0
+    private var audioUrls: Array<String?>? = null
+    private var audioList: MutableList<String?> = ArrayList()
+
+    private var welcome_file: String? = ""
+    private var school_name: String? = ""
+    private var member_name: String? = ""
+    private var call_title: String? = ""
+
     private var updateRunnable: Runnable? = null
     private var totalElapsed = 0
-
-    var isStartTime: String? = null
-    var isEndTime: String? = null
-    var isListeningDuration: String = "00:00"
-
     private var currentTrack = 0
     private var preparedCount = 0
     private var totalDurationMs: Long = 0
-    private val trackDurations: MutableList<Int?> = java.util.ArrayList<Int?>()
 
+    private var isStartTime: String? = null
+    private var isEndTime: String? = null
+    private var isListeningDuration = "00:00"
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -73,10 +61,51 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     override fun setupViews() {
         super.setupViews()
         isToolBarNoticeCallTheme()
+
         startCallAnimation()
-
         handleIntent(intent)
+        setupSwipeActions()
 
+        binding.callEndButton.setOnClickListener { stopAndFinishCall() }
+        binding.declineButton.setOnClickListener { endCallWithoutListening() }
+
+        calculateTotalDuration {
+            binding.lblTotalDuration.text = formatDuration(totalDurationMs)
+        }
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        if (intent == null) return
+
+        voiceUrl = intent.getStringExtra(Constant.isVoiceUrlNotifi)
+        welcomeUrl = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
+        notificationId = intent.getIntExtra(Constant.isNotificationId, -1)
+
+        welcome_file = intent.getStringExtra("welcome")
+        school_name = intent.getStringExtra("school_name")
+        member_name = intent.getStringExtra("member_name")
+        call_title = intent.getStringExtra("call_title")
+
+        binding.lblSchoolName.text = school_name
+        binding.lblMemberName.text = "Calling - $member_name from"
+        binding.lblCallTitle.text = call_title
+
+        audioList.clear()
+
+        // Add welcome first if valid
+        if (!welcomeUrl.isNullOrEmpty() && welcomeUrl != "null" && welcomeUrl!!.isNotBlank()) {
+            audioList.add(welcomeUrl)
+        }
+        // Add voice second if valid
+        if (!voiceUrl.isNullOrEmpty() && voiceUrl != "null" && voiceUrl!!.isNotBlank()) {
+            audioList.add(voiceUrl)
+        }
+
+        audioUrls = audioList.toTypedArray()
+        Log.d("AUDIO_ORDER", "Audio order: $audioList")
+    }
+
+    private fun setupSwipeActions() {
         binding.acceptButton.setOnTouchListener { view, event ->
             if (isActivityClosing) return@setOnTouchListener false
 
@@ -85,114 +114,53 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                     dX = view.x - event.rawX
                     originalX = view.x
                 }
-
                 MotionEvent.ACTION_MOVE -> {
                     val newX = event.rawX + dX
                     if (newX in binding.declineButton.x..binding.messageButton.x) {
                         view.x = newX
                     }
                 }
-
                 MotionEvent.ACTION_UP -> {
-                    val movedDistance = view.x - originalX
+                    val moved = view.x - originalX
                     when {
-                        movedDistance > 150 -> showConnectedState()
-                        movedDistance < -150 -> {
-                            //end call
-                            isUserResponse = "NO"
-                            if (Constant.mediaPlayer.isPlaying) {
-                                Constant.mediaPlayer.stop()
-                            }
-                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                            isEndTime = sdf.format(Date())
-                            isStartTime = isEndTime
-                            updateNotificationCallLog(isStartTime!!, isEndTime!!)
-                        }
-
+                        moved > 150 -> showConnectedState()
+                        moved < -150 -> endCallWithoutListening()
                         else -> view.animate().x(originalX).setDuration(200).start()
                     }
                 }
             }
             true
         }
-
-        binding.callEndButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                mediaPlayer!!.stop()
-                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                isEndTime = sdf.format(Date())
-                isListeningDuration = binding.lblCurrentDuration.getText().toString()
-                updateNotificationCallLog(isStartTime!!, isEndTime!!)
-            }
-        })
-
-
-        // Step 1: Calculate total duration before playing
-        calculateTotalDuration(Runnable {
-            val formatted: String = formatDuration(totalDurationMs)
-            Log.d("Total_Duration:", formatted)
-            binding.lblTotalDuration.text = formatted
-        })
-
-
-        binding.declineButton.setOnClickListener {
-            if (Constant.mediaPlayer.isPlaying) {
-                Constant.mediaPlayer.stop()
-            }
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            isEndTime = sdf.format(Date())
-            isStartTime = isEndTime
-            updateNotificationCallLog(isStartTime!!, isEndTime!!)
-        }
     }
 
+    private fun showConnectedState() {
+        if (isCallConnected || isActivityClosing) return
 
-    private fun calculateTotalDuration(onComplete: Runnable) {
-        for (url in audioUrls!!) {
-            val tempPlayer = MediaPlayer()
-            try {
-                tempPlayer.setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
-                tempPlayer.setDataSource(url)
+        isCallConnected = true
+        isCallAccepted = true
 
-                tempPlayer.setOnPreparedListener(OnPreparedListener { mp: MediaPlayer? ->
-                    val duration = mp!!.duration
-                    totalDurationMs += duration.toLong()
-                    trackDurations.add(duration)
-                    preparedCount++
-                    mp.release()
-                    if (preparedCount == audioUrls!!.size) {
-                        onComplete.run()
-                    }
-                })
+        stopCallAnimation()
+        binding.declineButton.visibility = View.GONE
+        binding.messageButton.visibility = View.GONE
 
-                tempPlayer.setOnErrorListener(MediaPlayer.OnErrorListener { mp: MediaPlayer?, what: Int, extra: Int ->
-                    preparedCount++
-                    mp!!.release()
-                    if (preparedCount == audioUrls!!.size) {
-                        onComplete.run()
-                    }
-                    true
-                })
+        binding.acceptButton.animate()
+            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
+            .setDuration(300)
+            .withEndAction {
+                binding.ringContainer.visibility = View.GONE
+                binding.acceptButton.visibility = View.GONE
+                binding.callEndButton.visibility = View.VISIBLE
 
-                tempPlayer.prepareAsync()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
+                if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
+
+                isStartTime = getNow()
+                playAudio(currentTrack)
+            }.start()
     }
-
 
     private fun playAudio(index: Int) {
-        binding.callEndButton.setVisibility(View.VISIBLE)
-        if (index >= audioUrls!!.size) {
-            Log.d("AUDIO_PLAYER", "All tracks completed")
-            stopUpdatingProgress()
-
+        if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
+            finishPlayback()
             return
         }
 
@@ -209,154 +177,161 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             mediaPlayer!!.setDataSource(audioUrls!![index])
             mediaPlayer!!.prepareAsync()
 
-            mediaPlayer!!.setOnPreparedListener(OnPreparedListener { mp: MediaPlayer? ->
-                Log.d(
-                    "AUDIO_PLAYER", "Playing: " + (index + 1) +
-                            " | Duration: " + formatDuration(mp!!.duration.toLong())
-                )
+            mediaPlayer!!.setOnPreparedListener { mp ->
                 mp.start()
-                startUpdatingProgress() // 🕒 start updating duration
-            })
+                startUpdatingProgress()
+            }
 
-            mediaPlayer!!.setOnCompletionListener(OnCompletionListener { mp: MediaPlayer? ->
-                totalElapsed += mp!!.duration
+            mediaPlayer!!.setOnCompletionListener { mp ->
+                totalElapsed += mp.duration
                 currentTrack++
-                if (currentTrack < audioUrls!!.size) {
-                    playAudio(currentTrack)
-                } else {
-                    stopUpdatingProgress()
-                    Log.d("AUDIO_PLAYER", "Playback finished")
-                    releasePlayer()
-                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                    val currentTime = sdf.format(Date())
-                    isEndTime = currentTime
-                    isListeningDuration = binding.lblCurrentDuration.getText().toString()
-                    updateNotificationCallLog(isStartTime!!, isEndTime!!)
-                }
-            })
-        } catch (e: IOException) {
+                playAudio(currentTrack)
+            }
+        } catch (e: Exception) {
             e.printStackTrace()
+            currentTrack++
+            playAudio(currentTrack)
         }
     }
 
-
     private fun startUpdatingProgress() {
-        stopUpdatingProgress() // avoid duplicates
+        stopUpdatingProgress()
 
         updateRunnable = object : Runnable {
             override fun run() {
-                if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
-                    val currentPosition = mediaPlayer!!.currentPosition
-                    mediaPlayer!!.duration
-                    val totalProgress = totalElapsed + currentPosition // ✅ accumulated time
-
-                    Log.d(
-                        "AUDIO_PROGRESS", ("Current: " + formatDuration(totalProgress.toLong())
-                                + " / Total: " + formatDuration(totalProgress.toLong()))
-                    )
-
-                    binding.lblCurrentDuration.text = formatDuration(totalProgress.toLong())
+                mediaPlayer?.let { mp ->
+                    if (mp.isPlaying) {
+                        val current = totalElapsed + mp.currentPosition
+                        binding.lblCurrentDuration.text = formatDuration(current.toLong())
+                    }
                 }
-                handler.postDelayed(this, 1000) // update every second
+                handler.postDelayed(this, 1000)
             }
         }
         handler.postDelayed(updateRunnable!!, 1000)
     }
 
-    private fun updateNotificationCallLog(startTime: String?, endTime: String?) {
-
+    private fun stopUpdatingProgress() {
+        updateRunnable?.let { handler.removeCallbacks(it) }
     }
 
-    private fun stopUpdatingProgress() {
-        if (updateRunnable != null) {
-            handler.removeCallbacks(updateRunnable!!)
+    private fun calculateTotalDuration(onComplete: () -> Unit) {
+        if (audioUrls.isNullOrEmpty()) return
+
+        totalDurationMs = 0
+        preparedCount = 0
+
+        for (url in audioUrls!!) {
+            val tempPlayer = MediaPlayer()
+            try {
+                tempPlayer.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+                tempPlayer.setDataSource(url)
+                tempPlayer.setOnPreparedListener { mp ->
+                    totalDurationMs += mp.duration
+                    preparedCount++
+                    mp.release()
+                    if (preparedCount == audioUrls!!.size) onComplete()
+                }
+                tempPlayer.prepareAsync()
+            } catch (_: Exception) {
+                preparedCount++
+                tempPlayer.release()
+                if (preparedCount == audioUrls!!.size) onComplete()
+            }
         }
     }
 
+    private fun finishPlayback() {
+        stopUpdatingProgress()
+        releasePlayer()
+        isEndTime = getNow()
+        isListeningDuration = binding.lblCurrentDuration.text.toString()
+        updateNotificationCallLog(isStartTime!!, isEndTime!!)
+    }
 
-    private fun formatDuration(durationMs: Long): String {
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(durationMs)
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(durationMs) % 60
-        return String.format("%02d:%02d", minutes, seconds)
+    private fun endCallWithoutListening() {
+        if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
+        isStartTime = getNow()
+        isEndTime = isStartTime
+        updateNotificationCallLog(isStartTime!!, isEndTime!!)
+    }
+
+    private fun stopAndFinishCall() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        isEndTime = getNow()
+        isListeningDuration = binding.lblCurrentDuration.text.toString()
+        updateNotificationCallLog(isStartTime!!, isEndTime!!)
+    }
+
+    private fun updateNotificationCallLog(start: String, end: String) {
+        // TODO: call your API if needed
+        finish()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (!isFinishing && isCallConnected) {
+            mediaPlayer?.pause()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isFinishing && isCallConnected) {
+            mediaPlayer?.start()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!isCallAccepted && isFinishing) {
+            try {
+                mediaPlayer?.stop()
+                mediaPlayer?.release()
+                mediaPlayer = null
+            } catch (ignored: Exception) {}
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopUpdatingProgress()
+        try {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+        } catch (ignored: Exception) {}
+        mediaPlayer = null
+    }
+
+    private fun getNow(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
+    private fun formatDuration(ms: Long): String {
+        val min = TimeUnit.MILLISECONDS.toMinutes(ms)
+        val sec = TimeUnit.MILLISECONDS.toSeconds(ms) % 60
+        return String.format("%02d:%02d", min, sec)
     }
 
     private fun releasePlayer() {
-        stopUpdatingProgress()
-        if (mediaPlayer != null) {
-            mediaPlayer!!.release()
-            mediaPlayer = null
-        }
-    }
-
-    private fun handleIntent(intent: Intent?) {
-        if (intent != null) {
-            notificationId = intent.getIntExtra("isNotificationId", -1)
-            voiceUrl = intent.getStringExtra("isVoiceUrl")!!
-            isReceiverId = intent.getStringExtra("isReceiverId")
-            retrycount = intent.getStringExtra("retrycount")
-            circularId = intent.getStringExtra("circularId")
-            ei1 = intent.getStringExtra("ei1")
-            ei2 = intent.getStringExtra("ei2")
-            ei3 = intent.getStringExtra("ei3")
-            ei4 = intent.getStringExtra("ei4")
-            ei5 = intent.getStringExtra("ei5")
-            role = intent.getStringExtra("role")
-            menuId = intent.getStringExtra("menuId")
-
-            welcome_file = intent.getStringExtra("welcome")
-            school_name = intent.getStringExtra("school_name")
-            member_name = intent.getStringExtra("member_name")
-            call_title = intent.getStringExtra("call_title")
-
-            binding.lblSchoolName.text = school_name
-            binding.lblMemberName.text = "Calling - " + member_name + " from"
-            binding.lblCallTitle.text = call_title
-
-
-            audioList = ArrayList<String?>()
-            if (welcome_file != "") {
-                audioList!!.add(welcome_file)
-            }
-            audioList!!.add(voiceUrl)
-            audioUrls = audioList!!.toTypedArray<String?>()
-        }
-    }
-
-    private fun showConnectedState() {
-        if (isCallConnected || isActivityClosing) return
-        isCallConnected = true
-        stopCallAnimation()
-        binding.declineButton.setVisibility(View.GONE)
-        binding.messageButton.setVisibility(View.GONE)
-
-
-        binding.acceptButton.animate()
-            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
-            .setDuration(300)
-            .withEndAction(Runnable {
-                binding.ringContainer.visibility = View.GONE
-                binding.acceptButton.setVisibility(View.GONE)
-                binding.callEndButton.setVisibility(View.VISIBLE)
-
-                if (Constant.mediaPlayer.isPlaying) {
-                    Constant.mediaPlayer.stop()
-                }
-                isUserResponse = "OC"
-                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                isStartTime = sdf.format(Date())
-                isEndTime = "00:00"
-                playAudio(currentTrack)
-            })
-            .start()
+        try {
+            mediaPlayer?.release()
+        } catch (ignored: Exception) {}
+        mediaPlayer = null
     }
 
     private fun startCallAnimation() {
-        val wave1 = AnimationUtils.loadAnimation(this, R.anim.call_wave1)
-        val wave2 = AnimationUtils.loadAnimation(this, R.anim.call_wave2)
-        val wave3 = AnimationUtils.loadAnimation(this, R.anim.call_wave3)
-        binding.ring1.startAnimation(wave1)
-        binding.ring2.startAnimation(wave2)
-        binding.ring3.startAnimation(wave3)
+        binding.ring1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave1))
+        binding.ring2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave2))
+        binding.ring3.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave3))
     }
 
     private fun stopCallAnimation() {
@@ -369,10 +344,4 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     override fun onClick(v: View?) {}
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopCallAnimation()
-        releasePlayer()
-    }
 }

@@ -87,6 +87,10 @@
         <receiver android:name=".Parent.Noticeboard.Adapter.ReminderBroadcastReceiver" />
 
         <service
+            android:name=".Utils.NotificationDismissService"
+            android:exported="false" />
+
+        <service
             android:name=".FCM.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
