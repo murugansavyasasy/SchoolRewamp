@@ -262,6 +262,29 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/lblWaitingBooking"
+            style="@style/CustomTextStylePoppinsMedium1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/fifteen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/lblTitle"
+            app:layout_constraintStart_toStartOf="@id/lblTitle"
+            app:layout_constraintTop_toBottomOf="@id/lblDuration"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:background="@drawable/bg_light_radious_blue"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:padding="@dimen/ten"
+            android:visibility="gone"
+            android:text=""
+            android:textColor="@color/dark_blue_2">
+
+        </TextView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
