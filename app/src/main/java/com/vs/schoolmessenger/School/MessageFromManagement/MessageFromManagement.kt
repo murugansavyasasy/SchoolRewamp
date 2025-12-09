@@ -130,8 +130,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (userDetails?.staff_details?.size!! > 1) {
                 binding.rytSpinner.visibility = View.VISIBLE
                 isMultipleSchool = true
+                isAccessToken = userDetails!!.staff_details.get(0).access_token
+                isGetMessageFromStaff()
                 //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
-                userDetails?.let { setupSchoolSpinner(it.staff_details) }
+//                userDetails?.let { setupSchoolSpinner(it.staff_details) }
             } else {
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
                 binding.rytSpinner.visibility = View.GONE
@@ -146,11 +148,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         isMenuCount = Constant.isSchoolMenuCount
 
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
-            Constant.hideLoading(this)
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             if (response != null) {
                 if (response.status) {
+                    userDetails?.let { setupSchoolSpinner(it.staff_details) }
                     binding.rcMessageStaff.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
@@ -424,7 +426,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                         if (position == 0) {
                             // “All” selected
-                            isLoadMsgStaff(completeAttachmentList)
+//                            if (completeAttachmentList.isNotEmpty()){
+                                isLoadMsgStaff(completeAttachmentList)
+//                            }
+                          //  isLoadMsgStaff(completeAttachmentList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.GONE
                             binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
                             selectedSchoolId = Constant.All_Schools
@@ -457,12 +462,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         // Initial fetch for all schools
-        if (staffList.isNotEmpty()) {
-            isAccessToken = staffList[0].access_token
-            isStaffDetails = staffList[0]
-            Log.d("DefaultSelection", "Default token: $isAccessToken")
-            isGetMessageFromStaff()
-        }
+//        if (staffList.isNotEmpty()) {
+//            isAccessToken = staffList[0].access_token
+//            isStaffDetails = staffList[0]
+//            Log.d("DefaultSelection", "Default token: $isAccessToken")
+//            isGetMessageFromStaff()
+//        }
     }
 
 
@@ -539,7 +544,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
 
     fun isGetMessageFromStaff() {
-        Constant.showLoading(this)
         adapter = MessageFromStaffAdapter(mutableListOf(), this, this, Constant.isShimmerViewShow)
         binding.rcMessageStaff.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
