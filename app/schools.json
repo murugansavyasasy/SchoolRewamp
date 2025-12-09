@@ -2,14 +2,14 @@
   {
     "id": "SchoolChimesRewamp",
     "name": "school Chimes-Beta",
-    "package_suffix": ".SchoolChimesRewamp",
+    "package_suffix": "com.sss.schoolchimesrewamp",
     "color": "#4085ef",
     "icon": "ic_school_a"
   },
   {
     "id": "schoolB",
     "name": "School B",
-    "package_suffix": ".schoolB",
+    "package_suffix": "com.sss.schoolB",
     "color": "#4085ef",
     "icon": "ic_school_b"
   }
