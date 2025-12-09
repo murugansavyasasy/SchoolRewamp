@@ -8,18 +8,20 @@
         android:id="@+id/rytSlots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/ten"
+        android:layout_margin="@dimen/five"
         android:background="@drawable/outline_gray"
         android:padding="@dimen/ten">
 
         <RelativeLayout
+            android:paddingHorizontal="@dimen/eight"
             android:id="@+id/rltStatus"
+            android:paddingVertical="@dimen/five"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/bg_light_green"
-            android:padding="@dimen/five">
+            android:background="@drawable/bg_light_green_radious"
+           >
 
             <ImageView
                 android:id="@+id/imgStatus"
@@ -52,28 +54,31 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/rounded_bg"
-            android:padding="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:tint="@color/PrimaryColor"
+            android:padding="@dimen/eight"
             android:src="@drawable/threedot">
 
         </ImageView>
 
         <TextView
             android:id="@+id/lblTime"
-            style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rltStatus"
+            android:drawableStart="@drawable/clock_icon_2"
+            android:drawablePadding="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp">
+            android:textStyle="bold"
+            android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/lblDuration"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
@@ -93,9 +98,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblDuration"
-            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/bg_light_radious_blue"
             android:gravity="center"
             android:padding="@dimen/ten"
@@ -118,13 +123,13 @@
 
             <TextView
                 android:id="@+id/lblBookedBy"
-                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="Booked By : "
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp">
+                android:textSize="@dimen/fourteen_sp">
 
             </TextView>
 
