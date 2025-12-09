@@ -93,7 +93,7 @@ class StaffSlotStatusAdapter(
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
-            lblTime.text = data.from_time + " - " + data.to_time
+            lblTime.text = "${data.from_time} - ${data.to_time} (${data.meeting_duration ?: ""} Minutes)"
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
 
 
@@ -111,6 +111,7 @@ class StaffSlotStatusAdapter(
                 "Available" -> {
                     rltStatus.background = context.getDrawable(R.drawable.bg_light_radious_blue)
                     lblWaitingBooking.visibility = View.VISIBLE
+                    lblStatus.setTextColor(context.getColor(R.color.black))
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.exclamationmark_circle))
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
@@ -122,14 +123,15 @@ class StaffSlotStatusAdapter(
                     lblStatus.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
-                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.cancelled))
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.red_close_icon_))
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
 
                 "Expired" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.gray_bg_radius)
+                    rltStatus.background = context.getDrawable(R.drawable.gray_bg_raidus_2)
                     lblWaitingBooking.visibility = View.VISIBLE
                     lblWaitingBooking.text = "Slot Expired"
+                    lblStatus.setTextColor(context.getColor(R.color.gnt_gray))
                     lblWaitingBooking.setTextColor(context.getColor(R.color.black))
                     lblWaitingBooking.background = context.getDrawable(R.drawable.gray_bg_radius)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.expired))
@@ -137,28 +139,34 @@ class StaffSlotStatusAdapter(
                 }
 
                 "Completed" -> {
-                    rltStatus.background = context.getDrawable(R.drawable.bg_light_green)
-                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    lblWaitingBooking.visibility = View.GONE
+                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                     imgDot.visibility = View.GONE
+                    lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by
                 }
 
                 "Booked" -> {
+                    lblWaitingBooking.visibility = View.GONE
                     rltStatus.background =
-                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
-                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
 
                 "Upcoming" -> {
+                    lblWaitingBooking.visibility = View.GONE
                     rltStatus.background =
-                        context.getDrawable(R.drawable.rect_bg_light_green_present)
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     lblStatus.text = "Booked"
-                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle))
+                    lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
+                    imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                     lblBookedName.visibility = View.VISIBLE
                     rltBookedBy.visibility = View.VISIBLE
                     lblBookedName.text = data.booked_by

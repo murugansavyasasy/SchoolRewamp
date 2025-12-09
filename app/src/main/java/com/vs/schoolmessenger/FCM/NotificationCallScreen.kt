@@ -29,10 +29,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private var originalX = 0f
     private var isCallConnected = false
     private var isActivityClosing = false
-
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
-
     var voiceUrl: String? = ""
     var isReceiverId: String? = ""
     var isUserResponse: String = "NO"
