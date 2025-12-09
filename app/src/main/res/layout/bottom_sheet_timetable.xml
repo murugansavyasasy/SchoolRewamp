@@ -1,57 +1,67 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/timetable_item_bg"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/day_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/ten"
-        android:padding="@dimen/sixteen_sp"
-        android:text="@string/monday"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textSize="@dimen/eighteen"
-         />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSchedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten" />
+    android:layout_height="match_parent"
+  >
 
     <LinearLayout
-        android:id="@+id/lnrNoRecords"
+        android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imgNoData"
-            android:layout_width="@dimen/three_hundred"
-            android:layout_height="@dimen/three_hundred"
-            android:contentDescription="@string/no_data"
-            android:src="@drawable/time_table_error_msg" />
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtNoData"
-            android:layout_width="wrap_content"
+            android:id="@+id/day_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/sixteen_sp"
+            android:text="@string/monday"
             style="@style/CustomTextStylePoppinsBold"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/no_timetable_available"
-            android:textSize="@dimen/sixteen"
-             />
+            android:textSize="@dimen/eighteen_sp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten" />
+
+        <LinearLayout
+            android:id="@+id/lnrNoRecords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgNoData"
+                android:layout_width="@dimen/three_hundred"
+                android:layout_height="@dimen/three_hundred"
+                android:contentDescription="@string/no_data"
+                android:src="@drawable/time_table_error_msg" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/no_timetable_available"
+                android:textSize="@dimen/sixteen_sp"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
-</LinearLayout>
+
+</ScrollView>

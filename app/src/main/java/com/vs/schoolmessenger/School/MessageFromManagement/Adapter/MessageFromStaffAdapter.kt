@@ -94,6 +94,7 @@ class MessageFromStaffAdapter(
         private val lblSchoolName: TextView = itemView.findViewById(R.id.lblSchoolName)
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
         private val imgReadStatus: View = itemView.findViewById(R.id.imgReadStatus)
+        private val ryrEmergencyvoice: RelativeLayout = itemView.findViewById(R.id.ryrEmergencyvoice)
         private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
 
         fun bind(data: GetMessagesStaffData, position: Int) {
@@ -108,6 +109,12 @@ class MessageFromStaffAdapter(
             } else {
                 lblRole.visibility = View.GONE
             }
+            if (data.is_emergency) {
+                ryrEmergencyvoice.visibility = View.VISIBLE
+            } else {
+                ryrEmergencyvoice.visibility = View.GONE
+            }
+
 
             lblSchoolName.text = data.school_name
 

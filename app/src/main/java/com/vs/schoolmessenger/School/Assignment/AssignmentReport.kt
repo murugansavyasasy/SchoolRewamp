@@ -91,11 +91,12 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        val params =
-            binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
-        params.removeRule(RelativeLayout.START_OF)
-        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
-        binding.toolbarLayout.lytTitleAndName.layoutParams = params
+        //in futher if you want the rlaSpinner to be visible in the toolbar in the postion make sure gone the imgSearchToolBar and visible the imgSearchToolBarforCreate
+//        val params =
+//            binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
+//        params.removeRule(RelativeLayout.START_OF)
+//        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
+//        binding.toolbarLayout.lytTitleAndName.layoutParams = params
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         userDetails = SharedPreference.getUserDetails(this)
@@ -134,7 +135,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         if (fromNotification) {
             isGetAcademicYear()
         }
-        binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.isVisible) {
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.toolbarLayout.txtSearch.text.clear()
@@ -209,7 +210,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.VISIBLE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
 // adapter.updateList(response.data)
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
@@ -220,7 +221,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                 } else {
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-                    binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
@@ -372,14 +373,14 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
         val query = binding.toolbarLayout.txtSearch.text.toString().trim() // Capture current query
         val hasData = !isAssignmentReportData.isNullOrEmpty()
         if (!hasData) {
-            binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
             binding.rcyAssignmentReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
             binding.noDataFound.text = getString(R.string.no_data_found) // Set message if needed
             isAssignmentAdapter = null
         } else {
-            binding.toolbarLayout.imgSearchToolBarforCreate.visibility = View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.toolbarLayout.rytSearch.visibility =
                 View.GONE // Hide search layout, but keep input visible if active
             binding.rcyAssignmentReport.visibility = View.VISIBLE

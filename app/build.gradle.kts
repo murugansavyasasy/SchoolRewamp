@@ -18,7 +18,9 @@ android {
     compileSdk = 35
     ndkVersion = "28.0.12433566"
 
+
     defaultConfig {
+
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
@@ -55,7 +57,11 @@ android {
         viewBinding = true
         buildConfig = true
 
+
     }
+
+
+
     packagingOptions {
         jniLibs {
             // Make sure new packaging is used so libs can be aligned properly
@@ -75,7 +81,9 @@ android {
     productFlavors {
         create("defaultFlavor") {
             dimension = "school"
-            applicationIdSuffix = "" // No suffix for the main app
+//            applicationIdSuffix = "" // No suffix for the main app
+            applicationId = "com.vs.schoolmessenger"
+
         }
 
         // ✅ 2️⃣ Dynamically Generate Other Flavors
@@ -86,11 +94,13 @@ android {
 
             schools.forEach { school ->
                 val id = school["id"] as String
-                val suffix = school["package_suffix"] as String
+                val package_name = school["package_suffix"] as String
 
                 create(id) {
                     dimension = "school"
-                    applicationIdSuffix = suffix
+//                    applicationIdSuffix = suffix
+                    applicationId = package_name
+
                 }
             }
         } else {
@@ -190,7 +200,8 @@ android {
 
             schools.forEach { school ->
                 val schoolId = school["id"].toString()
-                val packageName = "com.vs.schoolmessenger.$schoolId"
+                val packageName = school["package_suffix"] as String
+//                val packageName = "com.vs.schoolmessenger.$schoolId"
                 val flavorDir = File("${rootDir}/app/src/$schoolId/")
 
                 if (!flavorDir.exists()) {

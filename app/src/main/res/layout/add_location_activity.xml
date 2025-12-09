@@ -1,128 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fitsSystemWindows="false">
 
-    <RelativeLayout
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
 
         <RelativeLayout
-            android:id="@+id/rytGPSRedirect"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/fifteen"
-            android:background="@drawable/bg_rect_location"
-            android:padding="@dimen/twenty"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/imgLocationIllustrate"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/one_fifty"
-                android:src="@drawable/password_illustrate" />
-
-
-            <TextView
-                android:id="@+id/lblTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgLocationIllustrate"
-                android:layout_marginTop="@dimen/ten"
-                android:text="@string/allow_location_access_to_mark_your_attendance"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                style="@style/CustomTextStylePoppinsBold" />
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/rytContetnt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblTitle"
-                android:layout_marginTop="@dimen/twenty">
-
-                <ImageView
-                    android:id="@+id/imgLocation"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_location" />
-
-                <TextView
-                    android:id="@+id/lbl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_toEndOf="@+id/imgLocation"
-                    android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/fifteen_sp" />
-
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/btnEnableLocation"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/fifty"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/twenty"
-                android:background="@drawable/bg_rect_location"
-                android:gravity="center"
-                android:text="@string/enable_location"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-
-        <FrameLayout
-            android:id="@+id/frmAddLocationLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/fifteen"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/gifImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:alpha="0.1" />
-
-
-            <RelativeLayout
-                android:id="@+id/rytProgressBar"
+                android:id="@+id/rytGPSRedirect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_margin="@dimen/fifteen"
+                android:background="@drawable/bg_rect_location"
+                android:padding="@dimen/twenty"
                 android:visibility="gone">
 
-                <ProgressBar
-                    android:id="@+id/custom_progress_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/five"
-                    android:indeterminate="true"
-                    android:indeterminateTint="@color/yellow"
-                    android:indeterminateTintMode="src_atop"
-                    android:max="100" />
+                <ImageView
+                    android:id="@+id/imgLocationIllustrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/one_fifty"
+                    android:src="@drawable/password_illustrate" />
 
                 <TextView
-                    android:id="@+id/idTVHeading"
+                    android:id="@+id/lblTitle"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/custom_progress_bar"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/five"
+                    android:layout_below="@+id/imgLocationIllustrate"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/allow_location_access_to_mark_your_attendance"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twenty_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytContetnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblTitle"
+                    android:layout_marginTop="@dimen/twenty">
+
+                    <ImageView
+                        android:id="@+id/imgLocation"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_location" />
+
+                    <TextView
+                        android:id="@+id/lbl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_toEndOf="@+id/imgLocation"
+                        android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/fifteen_sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/btnEnableLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/twenty"
+                    android:background="@drawable/bg_rect_location"
                     android:gravity="center"
-                    android:text="@string/fetching_location"
+                    android:text="@string/enable_location"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"
@@ -130,287 +100,318 @@
 
             </RelativeLayout>
 
-
-            <ScrollView
+            <FrameLayout
+                android:id="@+id/frmAddLocationLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/fifteen"
+                android:visibility="visible">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/gifImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:alpha="0.1" />
+
+                <RelativeLayout
+                    android:id="@+id/rytProgressBar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/ten">
+                    android:gravity="center"
+                    android:visibility="gone">
 
-                    <RelativeLayout
+                    <ProgressBar
+                        android:id="@+id/custom_progress_bar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/yellow"
+                        android:indeterminateTintMode="src_atop"
+                        android:max="100" />
 
-                        <ImageView
-                            android:id="@+id/imgBack"
-                            android:layout_width="@dimen/twenty_five"
-                            android:layout_height="@dimen/twenty_five"
-                            android:src="@drawable/arrow_back_black">
+                    <TextView
+                        android:id="@+id/idTVHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/custom_progress_bar"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/five"
+                        android:gravity="center"
+                        android:text="@string/fetching_location"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold" />
 
-                        </ImageView>
+                </RelativeLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imgBack"
+                                android:layout_width="@dimen/twenty_five"
+                                android:layout_height="@dimen/twenty_five"
+                                android:src="@drawable/arrow_back_black" />
+
+                            <TextView
+                                android:id="@+id/lblNote"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/imgBack"
+                                android:gravity="center"
+                                android:text="@string/important"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/fifteen_sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/lblNote"
+                                android:layout_marginTop="@dimen/ten"
+                                android:background="@drawable/outline_gray">
+
+                                <View
+                                    android:id="@+id/stripe"
+                                    android:layout_width="@dimen/eight"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignTop="@id/instructionText"
+                                    android:layout_alignBottom="@id/instructionText"
+                                    android:layout_alignParentStart="true"
+                                    android:background="@drawable/bg_start_side_radious" />
+
+                                <TextView
+                                    android:id="@+id/instructionText"
+                                    style="@style/CustomTextStylePoppinsBold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toEndOf="@id/stripe"
+                                    android:gravity="start"
+                                    android:padding="@dimen/five"
+                                    android:text="@string/location_add_instructions_attendance"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/thirteen_sp" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/lblNote"
+                            android:id="@+id/lblLocationTitle"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/imgBack"
-                            android:gravity="center"
-                            android:text="@string/important"
-                            android:textColor="@color/red"
+                            android:layout_marginTop="@dimen/fifteen"
+                            android:text="@string/enter_location_name"
+                            android:textSize="@dimen/fifteen_sp" />
+
+                        <EditText
+                            android:id="@+id/txtLocationName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/outline_gray"
+                            android:hint="@string/pin_your_location_name"
+                            android:inputType="text"
+                            android:padding="@dimen/eight"
+                            android:textColorHint="@color/jumbo"
+                            android:textSize="@dimen/fifteen_sp" />
+
+                        <TextView
+                            android:id="@+id/lblDistanceTitle"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="@string/distance"
                             android:textSize="@dimen/fifteen_sp" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/lblNote"
-                            android:layout_marginTop="@dimen/ten"
+                            android:layout_height="@dimen/fifty_five"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginTop="@dimen/five"
                             android:background="@drawable/outline_gray">
 
-                            <View
-                                android:id="@+id/stripe"
-                                android:layout_width="@dimen/eight"
-                                android:layout_height="match_parent"
-                                android:layout_alignTop="@id/instructionText"
-                                android:layout_alignBottom="@id/instructionText"
-                                android:layout_alignParentStart="true"
-                                android:background="@drawable/bg_start_side_radious" />
+                            <RelativeLayout
+                                android:id="@+id/rytSpinnerMetres"
+                                android:layout_width="@dimen/one_twenty"
+                                android:layout_height="@dimen/fifty_five"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/two"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:background="@drawable/bg_white_light_radious"
+                                android:gravity="center">
 
-                            <TextView
-                                android:id="@+id/instructionText"
-                                style="@style/CustomTextStylePoppinsBold"
+                                <Spinner
+                                    android:id="@+id/spinnerMetres"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/custom_spinner_background"
+                                    android:gravity="center"
+                                    android:spinnerMode="dropdown" />
+
+                            </RelativeLayout>
+
+                            <EditText
+                                android:id="@+id/txtMeters"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/stripe"
-                                android:gravity="start"
-                                android:padding="@dimen/five"
-                                android:text="@string/location_add_instructions_attendance"
+                                android:layout_height="match_parent"
+                                android:layout_toStartOf="@+id/lblMeter"
+                                android:layout_toEndOf="@+id/rytSpinnerMetres"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:hint="@string/drop_your_location"
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
-                        </RelativeLayout>
 
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/lblLocationTitle"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/fifteen"
-                        android:text="@string/enter_location_name"
-                        android:textSize="@dimen/fifteen_sp" />
-
-                    <EditText
-                        android:id="@+id/txtLocationName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/five"
-                        android:layout_marginTop="@dimen/ten"
-                        android:background="@drawable/outline_gray"
-                        android:hint="@string/pin_your_location_name"
-                        android:inputType="text"
-                        android:padding="@dimen/eight"
-                        android:textColorHint="@color/jumbo"
-                        android:textSize="@dimen/fifteen_sp" />
-
-                    <TextView
-                        android:id="@+id/lblDistanceTitle"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
-                        android:text="@string/distance"
-                        android:textSize="@dimen/fifteen_sp" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fifty_five"
-                        android:layout_marginStart="@dimen/five"
-                        android:layout_marginTop="@dimen/five"
-                        android:background="@drawable/outline_gray">
-
-                        <RelativeLayout
-                            android:id="@+id/rytSpinnerMetres"
-                            android:layout_width="@dimen/one_twenty"
-                            android:layout_height="@dimen/fifty_five"
-                            android:layout_marginStart="@dimen/two"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/ten"
-                            android:background="@drawable/bg_white_light_radious"
-                            android:gravity="center">
-
-                            <Spinner
-                                android:id="@+id/spinnerMetres"
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/lblMeter"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_centerVertical="true"
-                                android:background="@drawable/custom_spinner_background"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="@dimen/ten"
                                 android:gravity="center"
-                                android:spinnerMode="dropdown" />
-
+                                android:text="@string/meter_s"
+                                android:textSize="@dimen/thirteen_sp" />
 
                         </RelativeLayout>
 
-                        <EditText
-                            android:id="@+id/txtMeters"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/lblMeter"
-                            android:layout_toEndOf="@+id/rytSpinnerMetres"
-                            android:background="@null"
-                            android:gravity="center"
-                            android:hint="@string/drop_your_location"
-                            android:inputType="number"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
-
-
                         <TextView
-                            android:id="@+id/lblMeter"
-                            style="@style/CustomTextStylePoppinsMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/ten"
-                            android:gravity="center"
-                            android:text="@string/meter_s"
-                            android:textSize="@dimen/thirteen_sp">
-
-                        </TextView>
-
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:id="@+id/lblGetLocation"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginTop="@dimen/thirty"
-                        android:text="@string/get_your_location"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:visibility="visible" />
-
-                    <ImageView
-                        android:id="@+id/webViewMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/one_fifty"
-                        android:src="@drawable/map">
-
-                    </ImageView>
-
-                    <TextView
-
-                        android:id="@+id/btnViewLocations"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginTop="@dimen/ten"
-                        android:background="@drawable/rect_skyblue"
-                        android:gravity="center"
-                        android:text="@string/tap_to_view_your_existing_punch_locations"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:visibility="visible" />
-
-                    <TextView
-                        android:id="@+id/btnPickLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginTop="@dimen/thirty"
-                        android:gravity="center"
-                        android:text="@string/pick_your_location"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:visibility="gone" />
-
-
-                    <LinearLayout
-                        android:id="@+id/lnrAddressLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
-                        android:background="@drawable/gray_bg_radius"
-                        android:orientation="vertical"
-                        android:visibility="visible">
-
-                        <TextView
-                            android:id="@+id/lblAddressTitle"
+                            android:id="@+id/lblGetLocation"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ten"
-                            android:text="@string/your_address"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/lblAddress"
-                            style="@style/CustomTextStylePoppinsMedium"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ten"
-                            android:text=""
-                            android:layout_marginStart="@dimen/ten"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginTop="@dimen/thirty"
+                            android:text="@string/get_your_location"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal" />
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/webViewMap"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/one_fifty"
+                            android:src="@drawable/map" />
 
                         <TextView
-                            android:id="@+id/lblLateLongTitle"
+                            android:id="@+id/btnViewLocations"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/rect_skyblue"
+                            android:gravity="center"
+                            android:text="@string/tap_to_view_your_existing_punch_locations"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/btnPickLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginTop="@dimen/thirty"
+                            android:gravity="center"
+                            android:text="@string/pick_your_location"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/lnrAddressLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/gray_bg_radius"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/lblAddressTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten"
+                                android:text="@string/your_address"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/fifteen_sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/lblAddress"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_marginTop="@dimen/ten"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:id="@+id/lblLateLongTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/twenty"
+                                android:text="@string/current_latitude_and_longitude_is"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/fifteen_sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/lbllatLong"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_marginTop="@dimen/ten"
+                                android:text=""
+                                android:textColor="@color/jumbo"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="normal"
+                                android:visibility="visible" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/btnAddLocation"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_marginHorizontal="@dimen/sixty"
                             android:layout_marginTop="@dimen/twenty"
-                            android:text="@string/current_latitude_and_longitude_is"
-                            android:textColor="@color/black"
+                            android:background="@drawable/rect_skyblue"
+                            android:gravity="center"
+                            android:text="@string/lblSubmit"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/fifteen_sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/lbllatLong"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/ten"
-                            android:text=""
-                            android:layout_marginStart="@dimen/ten"
-                            android:textColor="@color/jumbo"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="normal"
                             android:visibility="visible" />
 
                     </LinearLayout>
 
+                </ScrollView>
 
-                    <TextView
-                        android:id="@+id/btnAddLocation"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_marginHorizontal="@dimen/sixty"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:background="@drawable/rect_skyblue"
-                        android:gravity="center"
-                        android:text="@string/lblSubmit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:visibility="visible" />
+            </FrameLayout>
+        </RelativeLayout>
 
+    </ScrollView>
 
-                </LinearLayout>
-
-            </ScrollView>
-
-        </FrameLayout>
-    </RelativeLayout>
-
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

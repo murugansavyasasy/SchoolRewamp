@@ -1324,6 +1324,7 @@
     <string name="send_mail">Send Mail</string>
     <string name="no_question_have_been_added_yet">No question have been added yet</string>
     <string name="welcome_splash_message">CONNECTING EDUCATION\nCOMMUNITIES</string>
+    <string name="emergency_message">EMERGENCY MESSAGE</string>
 
 
 </resources>

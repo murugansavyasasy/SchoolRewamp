@@ -213,10 +213,13 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                 if (task.isSuccessful) {
                     val token = task.result
                     Log.d("FCM", "Token: $token")
+                    Log.d("TOKEN_TEST", "Token = ${task.result}")
                     isUpdateDeviceToken(token)
                 }
+                else{
+                    Log.e("FCM", "Failed to get token", task.exception)
+                }
             }
-
 
     }
 
