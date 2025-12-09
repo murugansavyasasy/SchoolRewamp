@@ -469,13 +469,12 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
 
             R.id.layoutDatePicking -> {
                 Constant.showDatePickerNormal(
-                    this, preSelectedDate = isSelectedDate // <-- pass previous date
+                    this, preSelectedDate = isSelectedDate
                 ) { selectedDate ->
                     isSelectedDate = toDashDate(selectedDate)
                     binding.imgDelete.visibility = View.VISIBLE
                     binding.lblDatePicking.text = Constant.convertDateTimeFormat(selectedDate)
                     isAllSlot = false
-
                     if (!isBookedSlot) {
                         isLoadData(isSlotCategory)
                     } else {
@@ -489,7 +488,11 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 binding.lblDatePicking.text = "All"
                 binding.imgDelete.visibility = View.GONE
                 isAllSlot = true
-                isLoadData(isSlotCategory)
+                if (!isBookedSlot) {
+                    isLoadData(isSlotCategory)
+                } else {
+                    isLoadBookedData(isBookedSlotData)
+                }
             }
 
             R.id.imgBack -> onBackPressed()
@@ -606,8 +609,15 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
 
         val layout_reopen = popupView.findViewById<LinearLayout>(R.id.layout_reopen)
         val layout_cancel = popupView.findViewById<LinearLayout>(R.id.layout_cancel)
-        layout_reopen.visibility = View.GONE
-        layout_cancel.visibility = View.VISIBLE
+
+        if (data.is_cancelled!!) {
+            layout_reopen.visibility = View.VISIBLE
+            layout_cancel.visibility = View.GONE
+        } else {
+            layout_reopen.visibility = View.GONE
+            layout_cancel.visibility = View.VISIBLE
+        }
+
 
         layout_reopen.setOnClickListener {
             showSendConfirmationDialogCancel(true, data)
@@ -657,7 +667,6 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             } else {
                 appViewModel.isSlotCancelClose(isAccessToken!!, mainObject)
             }
-
             alertDialog.dismiss()
             Constant.showLoading(this)
         }
