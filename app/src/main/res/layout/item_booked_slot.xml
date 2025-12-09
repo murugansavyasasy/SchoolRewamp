@@ -58,15 +58,15 @@
                 android:id="@+id/lblDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="@dimen/thirteen_sp"
-                android:padding="@dimen/five"
-                android:textColor="@color/white"
                 android:layout_centerVertical="true"
-                android:background="@drawable/bg_blue_radious"
-                android:layout_toStartOf="@+id/imgDot"
                 android:layout_marginEnd="@dimen/ten"
-                android:maxLines="1"/>
+                android:layout_toStartOf="@+id/imgDot"
+                android:background="@drawable/bg_blue_radious"
+                android:maxLines="1"
+                android:padding="@dimen/five"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
             <ImageView
                 android:id="@+id/imgDot"
                 android:layout_width="@dimen/thirty_five"
