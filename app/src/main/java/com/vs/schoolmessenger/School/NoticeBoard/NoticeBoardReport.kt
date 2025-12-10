@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.NoticeboardReportBinding
+import androidx.core.view.isVisible
 
 class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardClickListener,
     View.OnClickListener {
@@ -86,13 +87,18 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch323.visibility == View.VISIBLE) {
+            if (binding.rytSearch323.isVisible) {
                 binding.rytSearch323.visibility = View.GONE
                 binding.edtSearch.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
 
             } else {
                 binding.rytSearch323.visibility = View.VISIBLE
                 binding.edtSearch.text.clear()
+                binding.edtSearch.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.edtSearch, InputMethodManager.SHOW_IMPLICIT)
             }
         }
 
