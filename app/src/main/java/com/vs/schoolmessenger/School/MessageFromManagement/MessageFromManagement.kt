@@ -147,12 +147,19 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMenuCount = Constant.isSchoolMenuCount
 
+        binding.rytSpinner.setOnClickListener {
+            binding.schoollistfilter.performClick()
+        }
+
         appViewModel?.isGetMessageStaff?.observe(this) { response ->
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
             if (response != null) {
+
                 if (response.status) {
-                    userDetails?.let { setupSchoolSpinner(it.staff_details) }
+                    if(isMultipleSchool){
+                        userDetails?.let { setupSchoolSpinner(it.staff_details) }
+                    }
                     binding.rcMessageStaff.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
                     isLoadMsgStaff(response.data)
@@ -709,6 +716,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
+
 
             R.id.lblArchiveMsg -> {
                 binding.txtSearch1.text.clear()
