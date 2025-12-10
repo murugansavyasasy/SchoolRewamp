@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -111,35 +112,45 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.lblStudentName.text =
             "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
-        enableEdgeToEdge()
+
+            enableEdgeToEdge()
+
+
     }
 
     private fun enableEdgeToEdge() {
+        // Works on all API levels
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         ViewCompat.setWindowInsetsAnimationCallback(binding.root, null)
-        window.setDecorFitsSystemWindows(false)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             )
-            // Handle status bar
+
+            // Status bar height
             binding.statusBarBackground.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 height = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).top
             }
-            // Apply combined bottom insets (nav bar + keyboard) to the header layout
+
+            // Bottom inset (nav bar + keyboard)
             binding.rytHeader.updatePadding(bottom = insets.bottom)
-            // Optional: Scroll to bottom when keyboard is visible
+
+            // Scroll chat to bottom on keyboard open
             if (insets.bottom > 0 && ::interactionWithQuestionAdapter.isInitialized) {
                 binding.rcystaffQuestionchatdata.post {
-                    val adapter =
-                        binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
+                    val adapter = binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
                     adapter?.let {
                         binding.rcystaffQuestionchatdata.scrollToPosition(it.itemCount - 1)
                     }
                 }
             }
+
             WindowInsetsCompat.CONSUMED
         }
     }
+
 
     private fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
