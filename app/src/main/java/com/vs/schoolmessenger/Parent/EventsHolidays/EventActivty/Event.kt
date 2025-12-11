@@ -301,11 +301,11 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     }
 
     private fun isloadUpcomingData(newData: List<EventItem>?) {
-        eventupcomingadapter.setData(newData) // Assuming EventUpcomingAdapter has setData similar to EventAdapter
+        eventupcomingadapter.setData(newData)
     }
 
     private fun isloadCompletedData(newData: List<EventItem>?) {
-        eventcompletedadapter.setData(newData) // Assuming EventCompletedAdapter has setData similar to EventAdapter
+        eventcompletedadapter.setData(newData)
     }
 
     private fun loadeventdata() {
