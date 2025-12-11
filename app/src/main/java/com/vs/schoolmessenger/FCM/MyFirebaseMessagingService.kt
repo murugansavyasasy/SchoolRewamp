@@ -56,8 +56,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val isVoiceUrl = remoteMessage.data[Constant.isVoiceUrlNotifi] ?: Constant.normal
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
-        val msgId =
-            remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
+        val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
@@ -308,7 +307,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 description = Constant.Channel_for_custom_notifications
                 enableLights(true)
                 enableVibration(true)
-                setSound(notificationSound, audioAttributes)  // ✅ Custom tone for this channel
+                setSound(notificationSound, audioAttributes)
 
             }
             manager.createNotificationChannel(channel)
@@ -323,7 +322,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .setSound(notificationSound) // ✅ custom tone for pre-Oreo devices
+            .setSound(notificationSound)
 
         // Handle custom notification with RemoteViews
         try {

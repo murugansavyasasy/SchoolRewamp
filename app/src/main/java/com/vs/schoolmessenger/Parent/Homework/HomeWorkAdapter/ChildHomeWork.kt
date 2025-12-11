@@ -386,6 +386,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             if (data!!.assignmentid == "Listening") {
                 if (data!!.is_submitted == true) {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.GONE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
                     binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
@@ -393,6 +395,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
                 } else {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
@@ -403,6 +407,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else if (data!!.assignmentid == "Reading") {
                 if (data!!.is_submitted == true) {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.GONE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
                     binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
@@ -410,6 +416,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
                 } else {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
@@ -420,6 +428,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             } else {
                 if (data!!.is_submitted == true) {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.GONE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.GONE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.GONE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.GONE
                     binding.childlsrwlayoutxml.rcyImages.visibility = View.GONE
@@ -427,6 +437,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.GONE
                 } else {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.rytRecyclewview.visibility = View.VISIBLE
@@ -726,6 +738,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 Log.d("Response", it.status.toString())
                 if (it.status) {
                     binding.childlsrwlayoutxml.descriptionLabel.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar8.visibility = View.VISIBLE
+                    binding.childlsrwlayoutxml.lblStar9.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.editDescription.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.attachmentLabel.visibility = View.VISIBLE
                     binding.childlsrwlayoutxml.btnSubmit.visibility = View.VISIBLE
