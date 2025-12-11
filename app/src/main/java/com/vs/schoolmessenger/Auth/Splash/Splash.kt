@@ -344,7 +344,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
 
-                    val isRateUs = true
+                    val isRateUs = response.data[0].country_details.is_rate_as
                     val isMobileNumber = SharedPreference.getMobileNumber(this)
 
                     if (isRateUs && isMobileNumber!!.isNotEmpty()) {

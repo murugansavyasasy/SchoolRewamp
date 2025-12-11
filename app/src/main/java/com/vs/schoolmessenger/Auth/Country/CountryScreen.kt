@@ -86,7 +86,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     private fun loadCountry(countryList: List<Country>) {
         val updatedList = countryList.toMutableList()
-        updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
+        updatedList.add(3, Country(0, "", 0, 0, "", "", "", "",false))
         mAdapter = CountryListAdapter(this, updatedList, this) { selectedCountry ->
             isCountrySelected = true
             Constant.country_details = selectedCountry

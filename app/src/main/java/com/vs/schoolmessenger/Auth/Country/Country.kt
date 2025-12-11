@@ -8,5 +8,6 @@ data class Country(
     val mobile_no_hint: String,
     val base_url: String,
     val reporting_url: String,
-    val flag_url: String
+    val flag_url: String,
+    val is_rate_as: Boolean
 )
