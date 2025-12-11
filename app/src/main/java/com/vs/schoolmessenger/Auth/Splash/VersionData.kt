@@ -10,5 +10,6 @@ data class VersionData(
     val country_details: Country,
     val toaster_title: String,
     val play_store_market_id: String,
-    val play_store_link: String
+    val play_store_link: String,
+    val is_rate_as: Boolean
 )
