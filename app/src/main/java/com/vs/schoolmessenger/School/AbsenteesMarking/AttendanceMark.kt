@@ -7,9 +7,11 @@ import android.os.Build
 import android.support.annotation.DrawableRes
 import android.text.Editable
 import android.text.Spannable
+import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -850,11 +852,18 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         var lateCount = 0
         var validCount = 0
 
+        var totalODStudents = 0
+
         for (student in studentReportData) {
             val statusParts = student.att_status
                 ?.split("/")    // split P/A/OD/-
                 ?.map { it.trim() }
                 ?.filter { it.isNotEmpty() && it != "-" } ?: emptyList()
+
+            // Count OD student once per student
+            if (statusParts.any { it.equals("P~", true)}) {
+                totalODStudents++
+            }
 
             for (status in statusParts) {
                 when {
@@ -868,24 +877,41 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
 
 // Calculate percentages safely
-        val presentPercentage = if (validCount > 0) (presentCount * 100f) / validCount else 0f
+
+
+        // Combine Present + Late for percentage
+        val presentPlusLateCount = presentCount + lateCount
+
+        val presentPlusLatePercentage =
+            if (validCount > 0) (presentPlusLateCount * 100f) / validCount else 0f
+
+//        val presentPercentage = if (validCount > 0) (presentCount * 100f) / validCount else 0f
         val absentPercentage = if (validCount > 0) (absentCount * 100f) / validCount else 0f
         val odPercentage = if (validCount > 0) (odCount * 100f) / validCount else 0f
-        val latePercentage = if (validCount > 0) (lateCount * 100f) / validCount else 0f
+//        val latePercentage = if (validCount > 0) (lateCount * 100f) / validCount else 0f
+
+
 
 // Format to two decimal places
-        val presentFormatted = String.format("%.1f", presentPercentage)
+//        val presentFormatted = String.format("%.1f", presentPercentage)
+
+        val presentPlusLateFormatted = String.format("%.1f", presentPlusLatePercentage)
+
         val absentFormatted = String.format("%.1f", absentPercentage)
         val odFormatted = String.format("%.1f", odPercentage)
-        val lateFormatted = String.format("%.1f", latePercentage)
+//        val lateFormatted = String.format("%.1f", latePercentage)
+
 
 // Set to UI
-        binding.lblPresentRate.text = "$presentFormatted%"
+//        binding.lblPresentRate.text = "$presentFormatted%"
+        binding.lblPresentRate.text = "$presentPlusLateFormatted%"
         binding.lblAbsentRate.text = "$absentFormatted%"
         binding.lblODRate.text = "$odFormatted%"
-        binding.lblLateRate.text = "$lateFormatted%"
+//        binding.lblLateRate.text = "$lateFormatted%"
 
 
+        // Show total OD students
+        binding.lblLateRate.text = "\uD83D\uDC68\uD83C\uDFFB\u200D\uD83C\uDF93"+" "+totalODStudents.toString()
 
         mAdapter =
             AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
@@ -893,6 +919,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rcyAttendanceReport.adapter = mAdapter
 
     }
+
 
     private fun showCustomPopupMenu() {
         val inflater = LayoutInflater.from(this)
@@ -903,7 +930,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             Triple("-", getString(R.string.not_taken), R.drawable.report_nottaken_icon),
             Triple("P", getString(R.string.present), R.drawable.report_present_icon),
             Triple("OD", getString(R.string.OD), R.drawable.report_od_icon),
-            Triple("LA", getString(R.string.Late_2), R.drawable.report_latercomer_icon),
+            //            Triple("LA", getString(R.string.Late_2), R.drawable.report_latercomer_icon),
+            Triple("P ᴸᴬ", getString(R.string.present_late), R.drawable.report_present_icon), // Late
             Triple("A", getString(R.string.absent), R.drawable.report_absent_icon),
         )
 
@@ -914,7 +942,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             true
         )
 
-        // --- Add FN : Forenoon and AN : Afternoon text block at top ---
+        // --- Header FN / AN block ---
         val headerTextView = TextView(this).apply {
             setPadding(18, 12, 16, 12)
             setTextColor(ContextCompat.getColor(this@AttendanceMark, android.R.color.black))
@@ -928,41 +956,19 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             val fnLabelStart = text.length
             text.append(fnLabel)
-            text.setSpan(
-                AbsoluteSizeSpan(16, true),
-                fnLabelStart,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+            text.setSpan(AbsoluteSizeSpan(16, true), fnLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            // Forenoon
             val fnValueStart = text.length
             text.append(fnValue)
-            text.setSpan(
-                AbsoluteSizeSpan(13, true),
-                fnValueStart,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+            text.setSpan(AbsoluteSizeSpan(13, true), fnValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            // AN :
             val anLabelStart = text.length
             text.append(anLabel)
-            text.setSpan(
-                AbsoluteSizeSpan(16, true),
-                anLabelStart,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+            text.setSpan(AbsoluteSizeSpan(16, true), anLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
             val anValueStart = text.length
             text.append(anValue)
-            text.setSpan(
-                AbsoluteSizeSpan(13, true),
-                anValueStart,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+            text.setSpan(AbsoluteSizeSpan(13, true), anValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
             textAlignment = TextView.TEXT_ALIGNMENT_VIEW_START
             this.text = text
@@ -970,21 +976,46 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         container.addView(headerTextView)
 
-        // --- Add icon items ---
+
         for ((code, title, iconRes) in items) {
             val itemView = inflater.inflate(R.layout.item_popup_icon_text, container, false)
             val txtInside = itemView.findViewById<TextView>(R.id.txtInsideIcon)
             val txtTitle = itemView.findViewById<TextView>(R.id.txtTitle)
 
-            txtInside.text = code
             txtTitle.text = title
 
+            // Background icon
             if (iconRes != 0) {
                 txtInside.setBackgroundResource(iconRes)
-                txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.white))
             } else {
                 txtInside.background = null
-                txtInside.setTextColor(ContextCompat.getColor(this, R.color.gray))
+            }
+
+            //we are Applying P ᴸᴬ special color
+            if (code == "P ᴸᴬ") {
+
+                val text = "P ᴸᴬ"
+                val spannable = SpannableString(text)
+
+                // P = white
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(this, android.R.color.white)),
+                    0, 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                // ᴸᴬ = dark_orange
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(this, R.color.dark_orange)),
+                    2, text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                txtInside.text = spannable
+            } else {
+                // All other status → white text
+                txtInside.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+                txtInside.text = code
             }
 
             itemView.setOnClickListener {
@@ -1004,5 +1035,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         popupWindow.isOutsideTouchable = true
         popupWindow.showAsDropDown(binding.imgInfo, -30, 10)
     }
+
 
 }

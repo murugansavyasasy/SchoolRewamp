@@ -2,6 +2,9 @@ package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,22 +101,48 @@ class AttendanceStudentReportAdapter(
 
         private fun setStatusView(view: TextView, status: String) {
             val drawableRes = when (status.uppercase()) {
-                "P" -> R.drawable.report_present_icon
-                "A" -> R.drawable.report_absent_icon
-                "P~" -> R.drawable.report_latercomer_icon
+                "P"  -> R.drawable.report_present_icon
+                "P~" -> R.drawable.report_present_icon
+                "A"  -> R.drawable.report_absent_icon
                 "OD" -> R.drawable.report_od_icon
-                else -> R.drawable.report_nottaken_icon // or "-"
+                else -> R.drawable.report_nottaken_icon
             }
 
-            // Set background drawable
             view.background = ContextCompat.getDrawable(context, drawableRes)
 
-            // set the status text (P, A, etc.)
-            view.text = if (status == "-") "-"
-            else if (status == "P~") "LA"
-            else status
+            if (status == "-") {
+                view.setTextColor(ContextCompat.getColor(context, android.R.color.white))
+                view.text = "-"
+                return
+            }
 
+            if (status == "P~") {
+                val text = "P ᴸᴬ"
+                val spannable = SpannableString(text)
+
+                // P = white
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.white)),
+                    0, 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                // ᴸᴬ = dark_orange
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_orange)),
+                    2, text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                view.text = spannable
+                return
+            }
+
+            // Any other status → full white
+            view.setTextColor(ContextCompat.getColor(context, android.R.color.white))
+            view.text = status
         }
+
     }
 
 
