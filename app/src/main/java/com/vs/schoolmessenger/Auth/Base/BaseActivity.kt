@@ -480,23 +480,24 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val headerView = findViewById<View>(R.id.cltDateSelection)
 
 
-        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
-            )
+//        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.updatePadding(
+//                left = systemBars.left,
+//                right = systemBars.right,
+//                bottom = systemBars.bottom
+//            )
+//
+//            statusBarBgView.updateLayoutParams {
+//                height = systemBars.top / 2
+////                height = systemBars.top
+//            }
+//            insets
+//        }
 
-            statusBarBgView.updateLayoutParams {
-                height = systemBars.top
-            }
-            insets
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
+//            insets
+//        }
 
         ViewCompat.setOnApplyWindowInsetsListener(headerView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

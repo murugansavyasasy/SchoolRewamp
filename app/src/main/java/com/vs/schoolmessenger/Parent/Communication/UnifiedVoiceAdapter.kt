@@ -215,56 +215,27 @@ class UnifiedVoiceAdapter(
                 lblTimeText.text = data.time ?: ""
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-
-                if (data.is_unread == true) {
-                    lblnewiconText.visibility = View.VISIBLE
-                    lblSeeMore.visibility = View.VISIBLE
-                    lblSeeMore.text = context.getString(R.string.view)
-                } else {
-                    lblnewiconText.visibility = View.GONE
-                    if (lblContentText.lineCount > 3) {
-                        lblSeeMore.visibility = View.VISIBLE
-//                        lblnewiconText.visibility = View.GONE //san
-                        lblContentText.maxLines = 3
-                        lblContentText.ellipsize = TextUtils.TruncateAt.END
-                        lblSeeMore.text = context.getString(R.string.see_more_2)
-                    } else {
-//                        lblSeeMore.visibility = View.GONE//san
-                        lblContentText.maxLines = Int.MAX_VALUE
-                        lblSeeMore.text = context.getString(R.string.see_less)
-                        Log.d("Gone", "Gone...................")
-                    }
-                }
-
-                isSeeMoreVisibility(lblContentText, lblSeeMore)
-
+                isSeeMoreVisibility(lblContentText, lblSeeMore, data.is_unread)
                 rlaText.setOnClickListener {
-//                    isExpanded = !isExpanded //san
-//                    if (data.is_unread == true) {
-//                        lblnewiconText.visibility=View.GONE//san
-//                        if (data.is_archive == true)
-//                            listener.onUpdateArchiveStatus(data.type, data.id)
-//                        else
-//                            listener.onUpdateCommunicationStatus(data.type, data.id)
-//                        data.is_unread = false
-//                    }
-//                    listener.onItemClick(data, this@DataViewHolder)
                     lblSeeMore.performClick()
                 }
 
                 lblSeeMore.setOnClickListener {
                     lblnewiconText.visibility = View.GONE
                     isExpanded = !isExpanded
-//                    lblSeeMore.visibility = View.GONE //san
-                    if (isExpanded) {
-                        Log.d("ShowALl", "ShowAll")
-                        lblContentText.maxLines = Int.MAX_VALUE
-                        lblSeeMore.text = context.getString(R.string.see_less) //san
+                    if (lblContentText.lineCount > 3) {
+                        lblSeeMore.visibility = View.VISIBLE
+                        if (isExpanded) {
+                            Log.d("ShowALl", "ShowAll")
+                            lblContentText.maxLines = Int.MAX_VALUE
+                            lblSeeMore.text = context.getString(R.string.see_less) //san
+                        } else {
+                            Log.d("ShowALl", "SeeLess")
+                            lblContentText.maxLines = 3
+                            lblSeeMore.text = context.getString(R.string.see_more_2) //san
+                        }
                     } else {
-                        Log.d("ShowALl", "SeeLess")
-                        lblContentText.maxLines = 3
-                        lblSeeMore.text = context.getString(R.string.see_more_2) //san
-
+                        lblSeeMore.visibility = View.GONE
                     }
 
                     if (data.is_unread == true) {
@@ -297,14 +268,25 @@ class UnifiedVoiceAdapter(
             }
         }
 
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+        private fun isSeeMoreVisibility(
+            lblContent: TextView,
+            tvSeeMore: TextView,
+            isUnread: Boolean?
+        ) {
             lblContent.post {
-                if (lblContent.lineCount > 3) {
+                if (isUnread!!) {
+                    lblnewiconText.visibility = View.VISIBLE
                     tvSeeMore.visibility = View.VISIBLE
-                    //  lblnewiconText.visibility = View.GONE
-                    lblSeeMore.text = context.getString(R.string.see_more_2)
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                    tvSeeMore.text = context.getString(R.string.view)
+                } else {
+                    if (lblContent.lineCount > 3) {
+                        tvSeeMore.visibility = View.VISIBLE
+                        lblnewiconText.visibility = View.GONE
+                        lblSeeMore.text = context.getString(R.string.see_more_2)
+                    }else{
+                        tvSeeMore.visibility = View.GONE
+                        lblnewiconText.visibility = View.GONE
+                    }
                 }
             }
         }

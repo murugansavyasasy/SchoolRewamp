@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
@@ -13,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -110,6 +112,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
+        isHomeMenuBackgroundChange()
 
         val menu = navigationView.menu
         val menuItem = menu.findItem(R.id.role_click)
@@ -134,6 +137,11 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         }
 
         binding.navigationView.setNavigationItemSelectedListener { item ->
+
+            resetMenuBackgrounds()
+            val selectedView = navigationView.findViewById<View>(item.itemId)
+            selectedView?.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
+
             when (item.itemId) {
                 R.id.dashboard_view -> {
                     loadFragment(this, ParentHomeFragment())
@@ -215,12 +223,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     Log.d("FCM", "Token: $token")
                     Log.d("TOKEN_TEST", "Token = ${task.result}")
                     isUpdateDeviceToken(token)
-                }
-                else{
+                } else {
                     Log.e("FCM", "Failed to get token", task.exception)
                 }
             }
-
     }
 
 
@@ -300,8 +306,59 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 
+    private fun isHomeMenuBackgroundChange() {
+        navigationView.post {
+
+            val home = navigationView.findViewById<View>(R.id.dashboard_view)
+            val profile = navigationView.findViewById<View>(R.id.view_profile)
+            val settings = navigationView.findViewById<View>(R.id.setting_click)
+            val help = navigationView.findViewById<View>(R.id.help_click)
+            val role = navigationView.findViewById<View>(R.id.role_click)
+            val logout = navigationView.findViewById<View>(R.id.log_out)
+
+            // Highlight home
+            home?.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
+
+            fun applyMargin(view: View?) {
+                if (view == null) return
+                val params = view.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+                params.marginStart = dpToPx(15)
+                params.marginEnd = dpToPx(15)
+                view.layoutParams = params
+            }
+            applyMargin(home)
+            applyMargin(profile)
+            applyMargin(settings)
+            applyMargin(help)
+            applyMargin(role)
+            applyMargin(logout)
+        }
+    }
+
+    private fun resetMenuBackgrounds() {
+        val home = navigationView.findViewById<View>(R.id.dashboard_view)
+        val profile = navigationView.findViewById<View>(R.id.view_profile)
+        val settings = navigationView.findViewById<View>(R.id.setting_click)
+        val help = navigationView.findViewById<View>(R.id.help_click)
+        val role = navigationView.findViewById<View>(R.id.role_click)
+        val logout = navigationView.findViewById<View>(R.id.log_out)
+
+        val allItems = listOf(home, profile, settings, help, role, logout)
+
+        allItems.forEach { view ->
+            view?.setBackgroundColor(Color.WHITE)
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+
+
     fun openDrawer() {
         if (::drawerLayout.isInitialized) {
+            resetMenuBackgrounds()
+            isHomeMenuBackgroundChange()
             drawerLayout.openDrawer(GravityCompat.START)
         }
     }

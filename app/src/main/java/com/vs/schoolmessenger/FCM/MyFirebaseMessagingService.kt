@@ -362,9 +362,52 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .setSound(notificationSound) // ✅ custom tone for pre-Oreo devices
             .setCustomContentView(remoteViewCollapsed) // Collapsed state
             .setCustomBigContentView(remoteViewExpanded) // Expanded state
+
+        // Handle custom notification with RemoteViews
+        try {
+            val remoteView = RemoteViews(packageName, R.layout.custom_notification).apply {
+                setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
+                setTextViewText(
+                    R.id.notification_body,
+                    messageBody ?: Constant.You_have_a_new_message_from_your_school
+                )
+            }
+
+            // Handle image download
+            var bitmap: Bitmap? = null
+            if (!imageUrl.isNullOrEmpty() && imageUrl != Constant.Default) {
+                try {
+                    val url = URL(imageUrl)
+                    val connection = url.openConnection() as HttpURLConnection
+                    connection.doInput = true
+                    connection.connectTimeout = 5000
+                    connection.readTimeout = 5000
+                    connection.connect()
+                    val input = connection.inputStream
+                    bitmap = BitmapFactory.decodeStream(input)
+                    input.close()
+                    connection.disconnect()
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to download image: ${e.message}")
+                }
+            }
+
+            if (bitmap != null) {
+                remoteView.setImageViewBitmap(R.id.notification_imageview, bitmap)
+                remoteView.setViewVisibility(R.id.notification_imageview, View.VISIBLE)
+                Log.d(TAG, "Image set in notification")
+            } else {
+                remoteView.setViewVisibility(R.id.notification_imageview, View.GONE)
+                Log.d(TAG, "No image set in notification")
+            }
+
+            builder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(remoteView)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up custom notification: ${e.message}")
+        }
 
         try {
             val uniqueID = (receiverId + headerId).hashCode()
