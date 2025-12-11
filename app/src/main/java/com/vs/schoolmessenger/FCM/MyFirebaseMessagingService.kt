@@ -308,7 +308,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 description = Constant.Channel_for_custom_notifications
                 enableLights(true)
                 enableVibration(true)
-                setSound(notificationSound, audioAttributes)  // ✅ Custom tone for this channel
+                setSound(notificationSound, audioAttributes)
 
             }
             manager.createNotificationChannel(channel)
@@ -323,7 +323,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .setSound(notificationSound) // ✅ custom tone for pre-Oreo devices
+            .setSound(notificationSound)
 
         // Handle custom notification with RemoteViews
         try {
