@@ -18,13 +18,13 @@
 
     <TextView
         android:id="@+id/notification_title"
-        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:layout_alignTop="@id/notification_icon"
         android:layout_toStartOf="@id/notification_icon"
         android:text="School Chimes"
-        android:textSize="@dimen/fifteen_sp" />
+        android:textSize="@dimen/thirteen_sp" />
 
     <TextView
         android:id="@+id/notification_body"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/notification_title"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_toStartOf="@id/notification_icon"
         android:text="This is a new message from your school"
         android:textSize="@dimen/thirteen_sp" />
