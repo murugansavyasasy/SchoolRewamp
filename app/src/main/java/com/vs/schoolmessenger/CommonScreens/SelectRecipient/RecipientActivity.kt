@@ -353,15 +353,52 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             ProgressDialogHelper.dismiss()
             if (response != null) {
-                Constant.showTopAlertPopup(response.message, this)
+                if (response.status) {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
+                }
+            } else {
+                Constant.showDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
+
 
         appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             ProgressDialogHelper.dismiss()
             if (response != null) {
-                Constant.showTopAlertPopup(response.message, this)
+                if (response.status) {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
+                }
+            } else {
+                Constant.showDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
             }
         }
 

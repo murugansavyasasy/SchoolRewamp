@@ -56,8 +56,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val isVoiceUrl = remoteMessage.data[Constant.isVoiceUrlNotifi] ?: Constant.normal
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
-        val msgId =
-            remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
+        val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {

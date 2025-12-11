@@ -226,6 +226,18 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
 
+            <TextView
+                android:id="@+id/lblStar9"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_below="@+id/headerrelative_layout"
+                android:layout_toEndOf="@id/attachment_label"
+                android:text="@string/mandatory"
+                android:visibility="gone"
+                android:textColor="@color/red" />
+
             <RelativeLayout
                 android:id="@+id/rytRecyclewview"
                 android:layout_width="match_parent"
@@ -256,6 +268,19 @@
                 android:text="@string/add_description"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/lblStar8"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two"
+                android:layout_below="@+id/rytRecyclewview"
+                android:layout_toEndOf="@id/description_label"
+                android:text="@string/mandatory"
+                android:visibility="gone"
+                android:textColor="@color/red" />
+
 
             <EditText
                 android:id="@+id/edit_description"
