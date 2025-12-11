@@ -53,7 +53,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     private var allUpcomingEvents: List<EventItem>? = null
     private var allCompletedEvents: List<EventItem>? = null
 
-
     private var msg_id: Int = -1
     private var headerId: String? = null
     private var receiverId: String? = null
@@ -61,6 +60,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
     private var fromNotification: Boolean = false
 
     var userDetails: UserDetails? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -190,6 +190,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
 
+
         appViewModel?.IsGetEventReport?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
@@ -292,70 +293,57 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
     private fun isloadeventData(newData: List<EventItem>?) {
-        if (::mAdapter.isInitialized) {
-            mAdapter.updateList(newData)
-        } else {
-            mAdapter = EventAdapter(newData, this, this, Constant.isShimmerViewDisable)
-            binding.rcyongoingevent.adapter = mAdapter
-        }
+        mAdapter.setData(newData)
     }
 
     private fun isloadCategoryData(newData: List<Category>?) {
-        categoryadapter = EventCategoryAdapter(newData, this, this, Constant.isShimmerViewDisable)
-        binding.rcycategoryEvent.adapter = categoryadapter
+        categoryadapter.updateList(newData)
     }
 
     private fun isloadUpcomingData(newData: List<EventItem>?) {
-        if (::eventupcomingadapter.isInitialized) {
-            eventupcomingadapter.updateList(newData)
-        } else {
-            eventupcomingadapter =
-                EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
-            binding.rcyupcomingevent.adapter = eventupcomingadapter
-        }
+        eventupcomingadapter.setData(newData) // Assuming EventUpcomingAdapter has setData similar to EventAdapter
     }
 
     private fun isloadCompletedData(newData: List<EventItem>?) {
-        if (::eventcompletedadapter.isInitialized) {
-            eventcompletedadapter.updateList(newData)
-        } else {
-            eventcompletedadapter =
-                EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
-            binding.rcycompletedevent.adapter = eventcompletedadapter
-        }
+        eventcompletedadapter.setData(newData) // Assuming EventCompletedAdapter has setData similar to EventAdapter
     }
-
 
     private fun loadeventdata() {
         Constant.showLoading(this)
-        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewDisable)
+        mAdapter = EventAdapter(null, this, this, true) // true to enable shimmer
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyongoingevent.isNestedScrollingEnabled = false
         binding.rcyongoingevent.adapter = mAdapter
 
-
-        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
+        categoryadapter = EventCategoryAdapter(null, this, this, true) // true to enable shimmer
         binding.rcycategoryEvent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 
-
-        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
+        eventupcomingadapter = EventUpcomingAdapter(
+            null,
+            this,
+            this,
+            true
+        ) // true to enable shimmer; assume constructor supports
         binding.rcyupcomingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcyupcomingevent.isNestedScrollingEnabled = false
         binding.rcyupcomingevent.adapter = eventupcomingadapter
 
-
         eventcompletedadapter =
-            EventCompletedAdapter(null, this, this, Constant.isShimmerViewDisable)
+            EventCompletedAdapter(
+                null,
+                this,
+                this,
+                true
+            ) // true to enable shimmer; assume constructor supports
         binding.rcycompletedevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false
         binding.rcycompletedevent.adapter = eventcompletedadapter
-
 
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)
     }
@@ -431,7 +419,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         val selectedId = selectedCategory?.name
         Log.d("selectedId", selectedId.toString())
 
-
         val ongoingFiltered: List<EventItem>? = when {
             selectedId.isNullOrEmpty() -> allOngoingEvents
             selectedId.equals("All", ignoreCase = true) -> allOngoingEvents
@@ -450,11 +437,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             else -> allCompletedEvents?.filter { it.category.equals(selectedId, ignoreCase = true) }
         }
 
-
         mAdapter.updateList(ongoingFiltered)
         eventupcomingadapter.updateList(upcomingFiltered)
         eventcompletedadapter.updateList(completedFiltered)
-
 
         val hasOngoing = !ongoingFiltered.isNullOrEmpty()
         binding.rcyongoingevent.visibility = if (hasOngoing) View.VISIBLE else View.GONE
@@ -462,16 +447,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         binding.dotindicator.visibility =
             if (hasOngoing && ongoingFiltered!!.size > 1) View.VISIBLE else View.GONE
 
-
         val hasUpcoming = !upcomingFiltered.isNullOrEmpty()
         binding.rcyupcomingevent.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
         binding.upcomingeventHeaderview.visibility = if (hasUpcoming) View.VISIBLE else View.GONE
 
-
         val hasCompleted = !completedFiltered.isNullOrEmpty()
         binding.rcycompletedevent.visibility = if (hasCompleted) View.VISIBLE else View.GONE
         binding.completedeventHeaderview.visibility = if (hasCompleted) View.VISIBLE else View.GONE
-
 
         val allEmpty = !hasOngoing && !hasUpcoming && !hasCompleted
         binding.lytNoDataFound.visibility = if (allEmpty) View.VISIBLE else View.GONE
@@ -480,12 +462,12 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.rytSearch.visibility = if (allEmpty) View.GONE else View.VISIBLE
     }
 
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
 
         }
     }
+
 
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
@@ -509,7 +491,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         updateDotIndicator()
     }
-
 
     override fun onCategoryClicked(data: Category) {
         selectedCategory = data

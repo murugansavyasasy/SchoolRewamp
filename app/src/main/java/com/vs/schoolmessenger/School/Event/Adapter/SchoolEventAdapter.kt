@@ -105,6 +105,12 @@ class SchoolEventAdapter(
         notifyDataSetChanged()
     }
 
+    fun setData(newFullList: List<SchoolEventItem>?) {
+        fullList = newFullList ?: emptyList()
+        filteredList = fullList
+        isLoading = false
+        notifyDataSetChanged()
+    }
     fun getCurrentList(): List<SchoolEventItem> {
         return filteredList
     }

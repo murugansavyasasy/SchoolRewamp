@@ -89,6 +89,14 @@ class EventCategoryAdapter(
         notifyItemChanged(newPosition)
     }
 
+    fun updateList(newList: List<Category>?) {
+        itemList = newList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
+
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
