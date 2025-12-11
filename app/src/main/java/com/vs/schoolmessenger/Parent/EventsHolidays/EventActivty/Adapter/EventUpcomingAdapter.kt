@@ -81,6 +81,15 @@ class EventUpcomingAdapter(
     }
 
 
+    fun setData(newFullList: List<EventItem>?) {
+        fullList = newFullList ?: emptyList()
+        filteredList = fullList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
+
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {

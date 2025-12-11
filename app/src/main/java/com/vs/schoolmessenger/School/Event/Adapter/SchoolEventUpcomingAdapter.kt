@@ -132,6 +132,13 @@ class SchoolEventUpcomingAdapter(
         notifyDataSetChanged()
     }
 
+    fun setData(newFullList: List<SchoolEventItem>?) {
+        fullList = newFullList ?: emptyList()
+        filteredList = fullList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 

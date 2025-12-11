@@ -247,8 +247,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         imageUrl: String?,
         menu_name: String,
         menuId: Int,
-        headerId: String,  // Changed to String
-        msgId: Int,     // Top-level msg_id from payload
+        headerId: String, // Changed to String
+        msgId: Int, // Top-level msg_id from payload
         receiverType: String,
         receiverId: String,
         instituteId: String
@@ -264,7 +264,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 return
             }
         }
-
         // Create Intent for notification tap
         val intent = Intent(this, Splash::class.java).apply {
             putExtra(Constant.menu_name, menu_name)
@@ -277,25 +276,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.fromNotification, true)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-
         val uniqueID = (receiverId + headerId).hashCode()
         val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
-
         val pendingIntent = PendingIntent.getActivity(
             this, requestCode, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val message = Uri.parse("android.resource://${packageName}/raw/message")
         val emergency_message = Uri.parse("android.resource://${packageName}/raw/emergencyvoice")
-
         var notificationSound: Uri? = null
         if (tone.equals(Constant.normal)) {
             notificationSound = message
         } else if (tone.equals(Constant.emergency_voice)) {
             notificationSound = emergency_message
         }
-
-
         // Create notification channel
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -307,22 +301,69 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 description = Constant.Channel_for_custom_notifications
                 enableLights(true)
                 enableVibration(true)
-                setSound(notificationSound, audioAttributes)
-
+                setSound(notificationSound, audioAttributes) // ✅ Custom tone for this channel
             }
             manager.createNotificationChannel(channel)
             Log.d(TAG, "Notification channel created")
         }
+        // Download image bitmap early (shared for both views)
+        var bitmap: Bitmap? = null
+        if (!imageUrl.isNullOrEmpty() && imageUrl != Constant.Default) {
+            try {
+                val url = URL(imageUrl)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connectTimeout = 5000
+                connection.readTimeout = 5000
+                connection.connect()
+                val input = connection.inputStream
+                bitmap = BitmapFactory.decodeStream(input)
+                input.close()
+                connection.disconnect()
+                Log.d(TAG, "Image downloaded successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to download image: ${e.message}")
+            }
+        }
 
-        // Try simple notification first to isolate RemoteViews issues
+        // Create collapsed RemoteViews (1 line for body with ellipsis)
+        val remoteViewCollapsed = RemoteViews(packageName, R.layout.custom_notification).apply {
+            setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
+            setTextViewText(R.id.notification_body, messageBody ?: Constant.You_have_a_new_message_from_your_school)
+            setInt(R.id.notification_body, "setMaxLines", 1) // Show only 1 line initially
+            // Handle image for collapsed (will hide if no space)
+            if (bitmap != null) {
+                setImageViewBitmap(R.id.notification_imageview, bitmap)
+                setViewVisibility(R.id.notification_imageview, View.VISIBLE)
+            } else {
+                setViewVisibility(R.id.notification_imageview, View.GONE)
+            }
+        }
+
+        // Create expanded RemoteViews (up to 5 lines for body)
+        val remoteViewExpanded = RemoteViews(packageName, R.layout.custom_notification).apply {
+            setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
+            setTextViewText(R.id.notification_body, messageBody ?: Constant.You_have_a_new_message_from_your_school)
+            setInt(R.id.notification_body, "setMaxLines", 5) // Show full multi-line content
+            // Handle image for expanded (always visible if present)
+            if (bitmap != null) {
+                setImageViewBitmap(R.id.notification_imageview, bitmap)
+                setViewVisibility(R.id.notification_imageview, View.VISIBLE)
+            } else {
+                setViewVisibility(R.id.notification_imageview, View.GONE)
+            }
+        }
+
+        // Build notification with separate views for collapsed/expanded states
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_splash_logo)
             .setContentTitle(title ?: Constant.School_Chimes)
-            .setContentText(messageBody ?: Constant.You_have_a_new_message_from_your_school)
+            .setContentText(messageBody ?: Constant.You_have_a_new_message_from_your_school) // Fallback text
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
-            .setSound(notificationSound)
+            .setCustomContentView(remoteViewCollapsed) // Collapsed state
+            .setCustomBigContentView(remoteViewExpanded) // Expanded state
 
         // Handle custom notification with RemoteViews
         try {
@@ -372,7 +413,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val uniqueID = (receiverId + headerId).hashCode()
             val notificationId = uniqueID ?: (0..999999).random()
             manager.notify(notificationId, builder.build())
-            Log.d(TAG, "Notification sent successfully")
+            Log.d(TAG, "Expandable notification sent successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
         }

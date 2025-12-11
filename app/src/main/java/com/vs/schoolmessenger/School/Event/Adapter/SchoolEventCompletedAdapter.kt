@@ -83,6 +83,13 @@ class SchoolEventCompletedAdapter(
         }
     }
 
+    fun setData(newFullList: List<SchoolEventItem>?) {
+        fullList = newFullList ?: emptyList()
+        filteredList = fullList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
