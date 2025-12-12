@@ -344,7 +344,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val remoteViewExpanded = RemoteViews(packageName, R.layout.custom_notification).apply {
             setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
             setTextViewText(R.id.notification_body, messageBody ?: Constant.You_have_a_new_message_from_your_school)
-            setInt(R.id.notification_body, "setMaxLines", 5) // Show full multi-line content
+            setInt(R.id.notification_body, "setMaxLines", 100) // Show full multi-line content
             // Handle image for expanded (always visible if present)
             if (bitmap != null) {
                 setImageViewBitmap(R.id.notification_imageview, bitmap)
