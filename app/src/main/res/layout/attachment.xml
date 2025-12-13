@@ -73,8 +73,6 @@
                             android:textColor="@color/red" />
 
                         <RelativeLayout
-                            android:layout_marginEnd="-20dp"
-                            android:background="@drawable/rect_left_right_curve_bg"
                             android:id="@+id/rytHistory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -93,11 +91,9 @@
                                 android:layout_marginEnd="@dimen/five"
                                 android:backgroundTint="@color/PrimaryColor"
                                 android:src="@drawable/ic_history">
-
                             </ImageView>
 
                             <TextView
-                                android:layout_marginEnd="20dp"
                                 android:id="@+id/btnNoticeBoardReport"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
