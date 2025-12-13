@@ -126,9 +126,9 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
         binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
 
         appViewModel?.isAssignmentlist?.observe(this) { response ->
-
+            Constant.hideLoading(this)
             if (response != null) {
-//                Constant.hideLoading(this)
+
                 if (response?.status == true && !response.data.isNullOrEmpty()) {
                     val mobileNumber = SharedPreference.getMobileNumber(this)
 
@@ -187,7 +187,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
     }
 
     private fun fetchAssignmentReportData() {
-//        Constant.showLoading(this)
+        Constant.showLoading(this)
         binding.rcyAssignment.visibility = View.VISIBLE
         isAssignmentAdapter =
             AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
@@ -298,8 +298,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     override fun onResume() {
         super.onResume()
-        fetchAssignmentReportData()
-        binding.toolbarLayout.rytSearch.visibility = View.GONE
-        binding.toolbarLayout.txtVideoMenu.setText("")
+        appViewModel?.isAssignmentlist(isAccessToken!!)
     }
+
 }
