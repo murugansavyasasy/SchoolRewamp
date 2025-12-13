@@ -105,7 +105,6 @@ object Constant {
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
-    var isShimmerView = false
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var isParentChoose = false
