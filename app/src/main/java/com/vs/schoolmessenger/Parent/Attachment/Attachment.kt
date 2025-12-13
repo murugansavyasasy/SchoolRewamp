@@ -254,6 +254,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     fun isLoadData(data: List<AttachmentDataReport>) {
+
         mAttachmentReportAdapter = AttachmentAdapter(
             data,
             this,
@@ -262,24 +263,25 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.nomessage,
             binding.txtNoData
         )
-        binding.recycleracademic.layoutManager = LinearLayoutManager(this)
+        binding.recycleracademic.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         binding.recycleracademic.isNestedScrollingEnabled = false
         binding.recycleracademic.adapter = mAttachmentReportAdapter
+
     }
 
 
     private fun isGetAttachment() {
-
+        binding.recycleracademic.visibility = View.VISIBLE
         mAttachmentReportAdapter =
-            AttachmentAdapter(
-                emptyList(),
+            AttachmentAdapter(null,
                 this,
                 this,
-                Constant.isShimmerView
+                Constant.isShimmerViewShow
             )
-        binding.recycleracademic.layoutManager = LinearLayoutManager(this)
-        binding.recycleracademic.isNestedScrollingEnabled = false
+        binding.recycleracademic.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
         binding.recycleracademic.adapter = mAttachmentReportAdapter
+        binding.recycleracademic.isNestedScrollingEnabled = false
+
 
         appViewModel?.getAttachment(isAccessToken.orEmpty(), this)
     }
@@ -346,10 +348,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onItemClick(
