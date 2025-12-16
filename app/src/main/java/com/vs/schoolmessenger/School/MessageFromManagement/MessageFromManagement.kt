@@ -419,49 +419,61 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         binding.schoollistfilter.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
+
                 private var lastSelectedPosition: Int = -1
 
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
-                    // update adapter UI selection
+                    // Update spinner UI
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
 
-                    if (position != lastSelectedPosition) {
-                        lastSelectedPosition = position
+                    if (position == lastSelectedPosition) return
+                    lastSelectedPosition = position
+
+                    Constant.showLoading(this@MessageFromManagement)
+
+
+                    binding.schoollistfilter.postDelayed({
 
                         if (position == 0) {
-                            // “All” selected
-//                            if (completeAttachmentList.isNotEmpty()){
-                                isLoadMsgStaff(completeAttachmentList)
-//                            }
-                          //  isLoadMsgStaff(completeAttachmentList)
-                            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
                             selectedSchoolId = Constant.All_Schools
 
+                            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+                            binding.toolbarLayout.lblSchoolName.text =
+                                isStaffDetails?.school_name ?: ""
+
+                            isLoadMsgStaff(completeAttachmentList)
+
                         } else {
-                            // Specific school selected
                             val selectedStaff = staffList[position - 1]
+
                             isAccessToken = selectedStaff.access_token
                             isStaffDetails = selectedStaff
                             selectedSchoolId = selectedStaff.school_id
 
                             val filteredList =
-                                completeAttachmentList.filter { it.school_id == selectedSchoolId }
+                                completeAttachmentList.filter {
+                                    it.school_id == selectedSchoolId
+                                }
+
                             Log.d(
                                 "SpinnerSelection",
                                 "Selected school: ${selectedStaff.school_name}, " +
-                                        "Selected school id: ${selectedStaff.school_id}, " +
-                                        "Data: $filteredList, Token: $isAccessToken"
+                                        "Selected school id: ${selectedStaff.school_id}"
                             )
 
-                            isLoadMsgStaff(filteredList)
                             binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-                            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+                            binding.toolbarLayout.lblSchoolName.text =
+                                selectedStaff.school_name
+
+                            isLoadMsgStaff(filteredList)
                         }
-                    }
+
+                        Constant.hideLoading(this@MessageFromManagement)
+
+                    }, 200)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
