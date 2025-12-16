@@ -11,12 +11,11 @@
         android:paddingVertical="20dp">
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:src="@drawable/arrow_left_white">
-        </ImageView>
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_left_white"></ImageView>
 
         <TextView
             android:id="@+id/lblParentToolBar"
@@ -27,19 +26,19 @@
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
             android:text=""
-            android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp">
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/imgSearchToolBar"
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_toStartOf="@+id/imgSearchToolBar"
             android:layout_toEndOf="@id/imgBack"
             android:orientation="vertical">
 
@@ -57,12 +56,12 @@
             <TextView
                 android:id="@+id/lblStudentSection"
                 style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/eleven_sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
-                android:textColor="@color/white">
+                android:textColor="@color/white"
+                android:textSize="@dimen/eleven_sp">
 
             </TextView>
         </LinearLayout>
@@ -91,19 +90,19 @@
 
         <TextView
             android:id="@+id/lblRightSideBar"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
             android:layout_weight="1"
             android:background="@drawable/white_radious"
             android:gravity="center"
+            android:padding="@dimen/eight"
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
-            android:layout_marginTop="@dimen/two"
-            android:layout_marginBottom="@dimen/two"
-            android:layout_marginStart="@dimen/two"
-            android:padding="@dimen/eight"
             android:textStyle="bold" />
 
         <TextView
@@ -111,15 +110,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/two"
+            android:layout_marginEnd="@dimen/two"
+            android:layout_marginBottom="@dimen/two"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="@dimen/eight"
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
-            android:layout_marginTop="@dimen/two"
-            android:layout_marginBottom="@dimen/two"
-            android:layout_marginEnd="@dimen/two"
-            android:padding="@dimen/eight"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -129,8 +128,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@id/lnrParent"
-        android:layout_marginTop="@dimen/fifteen"
         android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone">

@@ -1353,9 +1353,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 videoUploading(totalTasks, onTaskComplete)
             }
         } else {
+
             Constant.selectedFiles.size
-            val outputDir =
-                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            val outputDir = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             outputDir.mkdirs()
             val newSelectedFiles = mutableListOf<FileItem>()
             Constant.compressImageFilesOnly(
@@ -1827,7 +1827,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
         }
     }
-
 
     fun isHomeWorkSend() {
 //        ProgressDialogHelper.updateProgress(100)

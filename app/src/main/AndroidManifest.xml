@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.vs.schoolmessenger"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.vs.schoolmessenger">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -86,17 +89,17 @@
         </receiver>
         <receiver android:name=".Parent.Noticeboard.Adapter.ReminderBroadcastReceiver" />
 
-        <service
-            android:name=".Utils.NotificationDismissService"
-            android:exported="false" />
+                <service
+                    android:name=".Utils.NotificationDismissService"
+                    android:exported="false" />
 
-        <service
-            android:name=".FCM.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+                <service
+                    android:name=".FCM.MyFirebaseMessagingService"
+                    android:exported="false">
+                    <intent-filter>
+                        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                    </intent-filter>
+                </service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -109,8 +112,8 @@
         <activity
             android:name=".FCM.NotificationCallScreen"
             android:exported="true"
-            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|adjustPan" />
 
         <activity
@@ -231,8 +234,8 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Homework.HomeWorkCreate"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Parent.ParentDashboard"
@@ -240,8 +243,8 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Assignment.AssignmentCreate"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
@@ -261,9 +264,9 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Auth.MobilePasswordSignIn.Login"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"
@@ -275,8 +278,7 @@
         <activity
             android:name=".Parent.InteractionWithStaff.InteractionwithStaffChatScreen"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudentChatScreen"
             android:theme="@style/AppTheme"
@@ -354,9 +356,9 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Communication.CommunicationSchool"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".CommonScreens.SpecificStudentData.SpecificStudent"
             android:theme="@style/AppTheme"
@@ -398,8 +400,8 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.ActiveTaskList"
@@ -570,8 +572,8 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Attachment.Attachment"
-            android:theme="@style/AppTheme"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.FilesViewActivity"
@@ -628,10 +630,81 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
+
+<!--        <service-->
+<!--            android:name=".Utils.CallTesting.MyFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
+<!--        <service-->
+<!--            android:name=".Utils.CallTesting.IncomingCallService"-->
+<!--            android:exported="false" />-->
+
+<!--        <activity-->
+<!--            android:name=".Utils.CallTesting.CallActivity"-->
+<!--            android:exported="true"-->
+<!--            android:showWhenLocked="true"-->
+<!--            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"-->
+<!--            android:turnScreenOn="true" />-->
+
+<!--        <receiver-->
+<!--            android:name=".Utils.CallTesting.RejectReceiver"-->
+<!--            android:exported="false" />-->
+
+<!--        <service-->
+<!--            android:name=".Utils.CallTesting.MyFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
+<!--        <service-->
+<!--            android:name=".Utils.CallTesting.MyConnectionService"-->
+<!--            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.telecom.ConnectionService" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+
         <activity
-            android:name=".School.InteractionWithStudent.BlockListStudentActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:name=".Utils.CallTesting.CallActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity
+            android:name=".Utils.CallTesting.EnableVoipActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity
+            android:name=".Utils.CallTesting.IncomingActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@style/IncomingFullScreenTheme" />
+
+
+<!--        <receiver-->
+<!--            android:name=".Utils.CallTesting.CallActionReceiver"-->
+<!--            android:exported="true" />-->
+
+        <!-- Foreground Service to bypass Android 12 trampoline restriction -->
+<!--        <service-->
+<!--            android:name=".Utils.CallTesting.CallForegroundService"-->
+<!--            android:exported="false"-->
+<!--            android:foregroundServiceType="mediaPlayback"/>-->
+
+
     </application>
 </manifest>

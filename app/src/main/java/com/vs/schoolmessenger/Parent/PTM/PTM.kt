@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.PTM
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -101,10 +100,21 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.toolbarLayout.lblStudentName1.text = childDetails?.name
+        binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         isSelectedDate = Constant.getCurrentDate()
+
+        binding.toolbarLayout.lblScheduleMeeting.setOnClickListener {
+            isChangeBackGroundTab(binding.lblScheduleMeeting)
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        }
+        binding.toolbarLayout.lblYourMeeting.setOnClickListener {
+            isChangeBackGroundTab(binding.lblYourMeeting)
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        }
+
+
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
@@ -402,16 +412,16 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.lblScheduleMeeting -> {
-                isChangeBackGroundTab(binding.lblScheduleMeeting)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-
-            }
-
-            R.id.lblYourMeeting -> {
-                isChangeBackGroundTab(binding.lblYourMeeting)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-            }
+//            R.id.lblScheduleMeeting -> {
+//                isChangeBackGroundTab(binding.lblScheduleMeeting)
+//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+//
+//            }
+//
+//            R.id.lblYourMeeting -> {
+//                isChangeBackGroundTab(binding.lblYourMeeting)
+//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+//            }
 
             R.id.lblBookSlots -> {
                 showSendConfirmationDialog(getString(R.string.are_you_sure_want_to_book_this_slots))

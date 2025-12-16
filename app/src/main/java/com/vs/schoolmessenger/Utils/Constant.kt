@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.ImageDecoder
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
@@ -84,7 +85,9 @@ import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.io.RandomAccessFile
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -2343,6 +2346,21 @@ object Constant {
     }
 
 
+    fun Context.safeOpenInputStream(path: String): InputStream? {
+        return try {
+            val uri = Uri.parse(path)
+            when (uri.scheme) {
+                "content" -> contentResolver.openInputStream(uri)
+                "file" -> FileInputStream(File(uri.path!!))
+                else -> FileInputStream(File(path))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+
     fun compressImageFilesOnly(
         context: Context,
         files: List<FileItem>,
@@ -2372,8 +2390,12 @@ object Constant {
                         continue
                     }
 
-                    val inputStream = context.contentResolver.openInputStream(uri)
-                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
+                    // ✅ ONLY THIS LINE IS CHANGED
+                    val inputStream = context.safeOpenInputStream(fileItem.path)
+
+                    val bitmap = inputStream?.use {
+                        BitmapFactory.decodeStream(it)
+                    }
 
                     if (bitmap != null) {
                         val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
@@ -2382,6 +2404,7 @@ object Constant {
                             outputDir,
                             "IMG_${System.currentTimeMillis()}.jpg"
                         )
+
                         FileOutputStream(compressedFile).use { out ->
                             scaledBitmap.compress(format, quality, out)
                             out.flush()
@@ -2393,6 +2416,7 @@ object Constant {
                         Log.e("Compressor", "❌ Failed to decode: ${fileItem.path}")
                         onEachProcessed(fileItem, null, false)
                     }
+
                 } catch (e: Exception) {
                     Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
                     onEachProcessed(fileItem, null, false)
@@ -2404,6 +2428,69 @@ object Constant {
             }
         }.start()
     }
+
+
+//    fun compressImageFilesOnly(
+//        context: Context,
+//        files: List<FileItem>,
+//        outputDir: String,
+//        format: Bitmap.CompressFormat,
+//        quality: Int,
+//        maxWidth: Int,
+//        maxHeight: Int,
+//        onEachProcessed: (original: FileItem, outputPath: String?, success: Boolean) -> Unit,
+//        onComplete: () -> Unit
+//    ) {
+//        Thread {
+//            val newList = mutableListOf<FileItem>()
+//
+//            for (fileItem in files.toList()) {
+//                try {
+//                    val uri = Uri.parse(fileItem.path)
+//                    val mimeType = context.contentResolver.getType(uri)
+//
+//                    val isImage = mimeType?.startsWith("image/") == true ||
+//                            fileItem.path.endsWith(".jpg", true) ||
+//                            fileItem.path.endsWith(".jpeg", true) ||
+//                            fileItem.path.endsWith(".png", true)
+//
+//                    if (!isImage) {
+//                        onEachProcessed(fileItem, fileItem.path, true)
+//                        continue
+//                    }
+//
+//                    val inputStream = context.contentResolver.openInputStream(uri)
+//                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
+//
+//                    if (bitmap != null) {
+//                        val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
+//
+//                        val compressedFile = File(
+//                            outputDir,
+//                            "IMG_${System.currentTimeMillis()}.jpg"
+//                        )
+//                        FileOutputStream(compressedFile).use { out ->
+//                            scaledBitmap.compress(format, quality, out)
+//                            out.flush()
+//                        }
+//
+//                        onEachProcessed(fileItem, compressedFile.absolutePath, true)
+//                        newList.add(fileItem)
+//                    } else {
+//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.path}")
+//                        onEachProcessed(fileItem, null, false)
+//                    }
+//                } catch (e: Exception) {
+//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
+//                    onEachProcessed(fileItem, null, false)
+//                }
+//            }
+//
+//            Handler(Looper.getMainLooper()).post {
+//                onComplete()
+//            }
+//        }.start()
+//    }
 
 
     fun quizCompressImageFilesOnly(

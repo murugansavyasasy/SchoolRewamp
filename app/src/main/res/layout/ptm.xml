@@ -17,7 +17,7 @@
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar_without_curve"
+        layout="@layout/ptm_toolbar_parent_side"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_right_left_radious"
         android:paddingBottom="@dimen/thirty"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout">

@@ -125,6 +125,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 }
             } else {
                 binding.tvNoData.visibility = View.VISIBLE
+                binding.imgNoData.visibility = View.VISIBLE
                 binding.tvNoData.text =
                     response!!.message ?: getString(R.string.no_meeting_available)
                 binding.rcyToday.adapter = null
@@ -139,6 +140,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 isLoadBookedData(isBookedSlotData)
             } else {
                 binding.tvNoData.visibility = View.VISIBLE
+                binding.imgNoData.visibility = View.VISIBLE
                 binding.tvNoData.text =
                     response!!.message ?: getString(R.string.no_meeting_available)
                 binding.rcyToday.adapter = null
@@ -173,6 +175,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
     private fun isLoadBookedData(isBookedSlotData: List<BookedSlotData>?) {
         if (isBookedSlotData.isNullOrEmpty()) {
             binding.tvNoData.visibility = View.VISIBLE
+            binding.imgNoData.visibility = View.VISIBLE
             binding.tvNoData.text = getString(R.string.no_meeting_available)
             return
         }
@@ -222,7 +225,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         val hasData =
             isTodaySlots.isNotEmpty() || isUpcomingSlots.isNotEmpty() || isCompletedSlots.isNotEmpty()
         binding.tvNoData.visibility = if (hasData) View.GONE else View.VISIBLE
-        binding.imgNoData.visibility = binding.tvNoData.visibility
+        binding.imgNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         binding.lblSlotCount.visibility = View.VISIBLE
 //        binding.lblSlotCount.text = if (todaySlots.isNotEmpty()) {
 //            "${getString(R.string.You_have)} ${todaySlots.size} ${getString(R.string.meeting_s_today)}"
@@ -444,6 +447,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.lblUpComing.visibility = View.GONE
         binding.lblComplete.visibility = View.GONE
         binding.tvNoData.visibility = View.GONE
+        binding.imgNoData.visibility = View.GONE
 
         // Clear lists before loading
         todaySlots.clear()
@@ -542,10 +546,10 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 )
             )
 
-            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.gray))
+            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.mild_grey6))
             binding.viewTabBookedSlots.setBackgroundColor(
                 ContextCompat.getColor(
-                    this, R.color.gray
+                    this, R.color.mild_grey6
                 )
             )
             isBookedSlot = false
@@ -557,8 +561,13 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                     this, R.color.PrimaryColor
                 )
             )
-            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.gray))
-            binding.viewTabMeeting.setBackgroundColor(ContextCompat.getColor(this, R.color.gray))
+            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.mild_grey6))
+            binding.viewTabMeeting.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.mild_grey6
+                )
+            )
             isBookedSlot = true
             isBookedSlotDetails()
         }
@@ -569,6 +578,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.lblUpComing.visibility = View.GONE
         binding.lblComplete.visibility = View.GONE
         binding.tvNoData.visibility = View.GONE
+        binding.imgNoData.visibility = View.GONE
 
         todaySlots.clear()
         upcomingSlots.clear()

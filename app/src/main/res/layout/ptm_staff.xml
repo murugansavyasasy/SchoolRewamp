@@ -17,13 +17,13 @@
 
 
     <!--    <View-->
-<!--        android:id="@+id/statusBarBackground"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/ten"-->
-<!--        android:background="@color/PrimaryColor"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        android:id="@+id/statusBarBackground"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/ten"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <RelativeLayout
         android:id="@+id/toolbarLayout"
@@ -47,8 +47,7 @@
                 android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:src="@drawable/arrow_left_white">
-            </ImageView>
+                android:src="@drawable/arrow_left_white"></ImageView>
 
             <TextView
                 android:id="@+id/lblMenuName"
@@ -59,8 +58,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:text="@string/ptm"
                 android:textColor="@color/white"
-                android:textSize="@dimen/twenty">
-            </TextView>
+                android:textSize="@dimen/twenty"></TextView>
 
             <TextView
                 android:id="@+id/lblSchoolName"
@@ -72,8 +70,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
-            </TextView>
+                android:textSize="@dimen/thirteen_sp"></TextView>
 
             <RelativeLayout
                 android:id="@+id/layoutDatePicking"
@@ -116,8 +113,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:background="@drawable/white_circle_bg"
                 android:src="@drawable/del_icon"
-                android:visibility="gone">
-            </ImageView>
+                android:visibility="gone"></ImageView>
 
             <TextView
                 android:id="@+id/lblSlotCount"
@@ -130,8 +126,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:text="You have a 0 meeting's today"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sixteen">
-            </TextView>
+                android:textSize="@dimen/sixteen"></TextView>
 
             <RelativeLayout
                 android:id="@+id/layoutCreateSlot"
@@ -199,8 +194,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:paddingVertical="@dimen/five">
 
                         <TextView
@@ -208,9 +203,9 @@
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
                             android:gravity="center"
-                            android:text="Meetings" />
+                            android:text="Meetings"
+                            android:textColor="@color/black" />
 
                         <View
                             android:id="@+id/viewTabMeeting"
@@ -226,8 +221,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
                         android:paddingVertical="@dimen/five">
 
                         <TextView
@@ -237,15 +232,14 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Booked Slots"
-                            android:textColor="@color/gray" />
+                            android:textColor="@color/mild_grey6" />
 
                         <View
                             android:id="@+id/viewTabBookedSlots"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
                             android:layout_marginTop="6dp"
-                            android:background="@color/gray"
-                        />
+                            android:background="@color/mild_grey6" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -255,14 +249,13 @@
                     android:id="@+id/lblToday"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
-                    android:layout_below="@+id/lnrTabsContainer"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrTabsContainer"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Today Meetings"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp">
-                </TextView>
+                    android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyToday"
@@ -273,8 +266,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:overScrollMode="never"></androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
                     android:id="@+id/lblUpComing"
@@ -286,8 +278,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/upcoming_meetings"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp">
-                </TextView>
+                    android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyUpcoming"
@@ -299,8 +290,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"
-                    android:padding="@dimen/five">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:padding="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
                     android:id="@+id/lblComplete"
@@ -312,8 +302,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:text="Completed Meetings"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp">
-                </TextView>
+                    android:textSize="@dimen/fifteen_sp"></TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyComplete"
@@ -324,15 +313,14 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:overScrollMode="never"></androidx.recyclerview.widget.RecyclerView>
 
                 <ImageView
                     android:id="@+id/imgNoData"
                     android:layout_width="@dimen/two_fifty"
                     android:layout_height="@dimen/two_fifty"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/lnrTabsContainer"
                     android:src="@drawable/no_ptm_school_message"
                     android:visibility="gone" />
 
@@ -351,5 +339,4 @@
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

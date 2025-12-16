@@ -124,6 +124,7 @@ class SchoolMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
+                Constant.selectedFiles.clear()
                 Constant.isSelectedMenuName = data.name
                 Constant.SELECTED_MENU_ID = data.id
                 listener.onClick(data)
