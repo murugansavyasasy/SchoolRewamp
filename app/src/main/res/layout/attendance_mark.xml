@@ -724,13 +724,12 @@
                                         android:gravity="center"
                                         style="@style/CustomTextStylePoppinsMedium"
                                         android:layout_width="match_parent"
-                                        android:text="@string/late_rate"
+                                        android:text="@string/late_count"
                                         android:layout_height="wrap_content">
                                     </TextView>
                                     <TextView
                                         android:id="@+id/lblLateRate"
                                         android:layout_width="match_parent"
-                                        android:text="0%"
                                         android:layout_marginTop="@dimen/three"
                                         style="@style/CustomTextStylePoppinsBold"
                                         android:gravity="center"

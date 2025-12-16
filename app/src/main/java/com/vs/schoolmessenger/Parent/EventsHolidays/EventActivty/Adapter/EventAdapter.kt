@@ -31,7 +31,6 @@ class EventAdapter(
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
@@ -106,12 +105,22 @@ class EventAdapter(
         }
     }
 
+
     fun updateList(newList: List<EventItem>?) {
         if (newList != null) {
             filteredList = newList
         }
         notifyDataSetChanged()
     }
+
+
+    fun setData(newFullList: List<EventItem>?) {
+        fullList = newFullList ?: emptyList()
+        filteredList = fullList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
 
 
     class DataViewHolder(itemView: View, private val context: Context) :

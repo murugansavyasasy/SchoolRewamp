@@ -1325,6 +1325,9 @@
     <string name="no_question_have_been_added_yet">No question have been added yet</string>
     <string name="welcome_splash_message">CONNECTING EDUCATION\nCOMMUNITIES</string>
     <string name="emergency_message">EMERGENCY MESSAGE</string>
+    <string name="late_count">Late Count</string>
+    <string name="present_late">Present/Late </string>
+
 
 
 </resources>
