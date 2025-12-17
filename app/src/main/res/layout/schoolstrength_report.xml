@@ -80,7 +80,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-
                 android:tint="@color/color_blue_primary"
                 android:src="@drawable/schoolstrengthmale"
                 android:gravity="end" />
@@ -90,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-
                 android:src="@drawable/schoolstrengthfemale"
                 android:tint="@color/pinkcolorcustom"
                 android:gravity="end" />
@@ -100,10 +98,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-
                 android:src="@drawable/schoolstrengthfemale"
                 android:tint="@color/pinkcolorcustom"
                 android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/unknownimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/unknownimagesvg"
+                android:gravity="end" />
+
+            <ImageView
+                android:id="@+id/unknownimage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/unknownimagesvg"
+                android:gravity="end" />
+
+
 
         </LinearLayout>
 

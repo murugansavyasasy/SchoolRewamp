@@ -1328,6 +1328,8 @@
     <string name="late_count">Late Count</string>
     <string name="present_late">Present/Late </string>
     <string name="not_specified">Not specified</string>
+    <string name="enter_mark_here">Enter mark here</string>
+
 
 
 </resources>

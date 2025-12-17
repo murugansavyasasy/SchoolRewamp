@@ -69,6 +69,8 @@ class SchoolStrengthAdapter(
         private val boyslabel2: ImageView = itemView.findViewById(R.id.boyslabel2)
         private val girlslabel2: ImageView = itemView.findViewById(R.id.girlslabel2)
         private val girlslabel1: ImageView = itemView.findViewById(R.id.girlslabel1)
+        private val unknownimage: ImageView = itemView.findViewById(R.id.unknownimage)
+        private val unknownimage1: ImageView = itemView.findViewById(R.id.unknownimage1)
         private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
         private val unspecifiedcount: TextView = itemView.findViewById(R.id.unspecified_count)
         private val viewUnspecified: View = itemView.findViewById(R.id.viewUnspecified)
@@ -98,34 +100,56 @@ class SchoolStrengthAdapter(
             val otherCount = data.other_count.toIntOrNull() ?: 0
             val total = boysCount + girlsCount + otherCount
 
-            // Handle icons visibility based on boys and girls counts (unspecified has no icons)
+            // Handle icons visibility based on counts
             val showBoysIcon = boysCount > 0
             val showGirlsIcon = girlsCount > 0
+            val showOtherIcon = otherCount > 0
 
-            if (!showBoysIcon && !showGirlsIcon) {
-                // Both boys and girls are zero → hide all icons
+            val numCategories = (if (showBoysIcon) 1 else 0) + (if (showGirlsIcon) 1 else 0) + (if (showOtherIcon) 1 else 0)
+
+            if (numCategories == 0) {
+                // All zero → hide all icons
                 boyslabel1.visibility = View.GONE
                 boyslabel2.visibility = View.GONE
                 girlslabel1.visibility = View.GONE
                 girlslabel2.visibility = View.GONE
-            } else if (!showGirlsIcon) {
-                // Only boys non-zero → show two boys icons, hide girls
-                boyslabel1.visibility = View.VISIBLE
-                boyslabel2.visibility = View.VISIBLE
-                girlslabel1.visibility = View.GONE
-                girlslabel2.visibility = View.GONE
-            } else if (!showBoysIcon) {
-                // Only girls non-zero → show two girls icons, hide boys
-                boyslabel1.visibility = View.GONE
-                boyslabel2.visibility = View.GONE
-                girlslabel1.visibility = View.VISIBLE
-                girlslabel2.visibility = View.VISIBLE
+                unknownimage.visibility = View.GONE
+                unknownimage1.visibility = View.GONE
+            } else if (numCategories == 1) {
+                // Only one category non-zero → show two icons for that category
+                if (showBoysIcon) {
+                    // Only boys
+                    boyslabel1.visibility = View.VISIBLE
+                    boyslabel2.visibility = View.VISIBLE
+                    girlslabel1.visibility = View.GONE
+                    girlslabel2.visibility = View.GONE
+                    unknownimage.visibility = View.GONE
+                    unknownimage1.visibility = View.GONE
+                } else if (showGirlsIcon) {
+                    // Only girls
+                    boyslabel1.visibility = View.GONE
+                    boyslabel2.visibility = View.GONE
+                    girlslabel1.visibility = View.VISIBLE
+                    girlslabel2.visibility = View.VISIBLE
+                    unknownimage.visibility = View.GONE
+                    unknownimage1.visibility = View.GONE
+                } else {
+                    // Only other
+                    boyslabel1.visibility = View.GONE
+                    boyslabel2.visibility = View.GONE
+                    girlslabel1.visibility = View.GONE
+                    girlslabel2.visibility = View.GONE
+                    unknownimage.visibility = View.VISIBLE
+                    unknownimage1.visibility = View.VISIBLE
+                }
             } else {
-                // Both non-zero → show first icons only
-                boyslabel1.visibility = View.VISIBLE
-                girlslabel1.visibility = View.VISIBLE
+                // 2 or 3 categories non-zero → show one icon for each present category
+                boyslabel1.visibility = if (showBoysIcon) View.VISIBLE else View.GONE
                 boyslabel2.visibility = View.GONE
+                girlslabel1.visibility = if (showGirlsIcon) View.VISIBLE else View.GONE
                 girlslabel2.visibility = View.GONE
+                unknownimage.visibility = if (showOtherIcon) View.VISIBLE else View.GONE
+                unknownimage1.visibility = View.GONE
             }
 
             // Always show labels (including :0 for zero counts); unspecified treated same as others
