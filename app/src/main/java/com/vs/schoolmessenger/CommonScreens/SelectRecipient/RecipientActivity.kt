@@ -1637,6 +1637,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     if (isQuizData != null) {
                         Log.d("isQuizData", isQuizData.title)
 
+
+
+
                         val jsonObject = JsonObject().apply {
                             addProperty("title", isQuizData.title)
                             addProperty("description", isQuizData.description)
@@ -1647,11 +1650,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             addProperty("subject_id", isSubjectId!!.toString())
                             addProperty("class_id", isStandardId)
 
+
                             val jsonArray = JsonArray()
                             selectedIds.forEach { id ->
                                 jsonArray.add(id)
                             }
                             add("target_code", jsonArray)
+
+                            //if the user click Later in Popup  means by default the below should be given
+                            if (isQuizData.type=="LATER"){
+                                add("questions", JsonArray())
+                                add("update_question_bank", JsonArray())
+                                addProperty("max_mark", 0)
+                                addProperty("open_to_student", false)
+                            }
+
                         }
 
                         Log.d("CreateQuizRequest", jsonObject.toString())

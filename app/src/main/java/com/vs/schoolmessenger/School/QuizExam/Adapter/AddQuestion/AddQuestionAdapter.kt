@@ -136,12 +136,11 @@ class AddQuestionAdapter(
             notifyItemRemoved(position)
 //            notifyItemRangeChanged(position, itemList!!.size)
 
-            notifyItemRangeChanged(
-                0,
-                itemList!!.size
-            )// Rebind all items so lblremove visibility updates correctly
+            notifyItemRangeChanged(0, itemList!!.size)// Rebind all items so lblremove visibility updates correctly
             Constant.isQuestionLimit += 1
             listener?.onCountUpdated()
+            listener?.onUICheck(itemList!!)
+
         }
     }
 

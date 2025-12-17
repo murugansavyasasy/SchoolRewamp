@@ -1328,8 +1328,11 @@
     <string name="late_count">Late Count</string>
     <string name="present_late">Present/Late </string>
     <string name="enter_mark_here">Enter mark here</string>
-
-
+    <string name="allow_students_to_continue_to_the_next_level_on_completion_of_next_level">&#160;Allow students to continue to the next level on completion of next level</string>
+    <string name="you_haven_t_added_questions_to_this_quiz_yet_would_you_like_to_add_them_now_or_do_it_later">You haven’t added questions to this quiz yet. Would you like to add them now or do it later?</string>
+    <string name="later">Later</string>
+    <string name="add_now">Add Now</string>
+    <string name="switch_login">Switch Login</string>
 
 
 </resources>

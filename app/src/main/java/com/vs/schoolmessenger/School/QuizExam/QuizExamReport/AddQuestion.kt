@@ -997,6 +997,18 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         UpdateQuestionCount()
     }
 
+    override fun onUICheck(list: List<GetQuizQuestionReportData>) {
+        if (list.isEmpty()) {
+            Log.d("isLog","isEmpty")
+            binding.rcAddQuestion.visibility = View.GONE
+            binding.lytList.visibility = View.VISIBLE
+        } else {
+            Log.d("isLog","isNotEmpty")
+            binding.rcAddQuestion.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+        }
+    }
+
     override fun onAttachmentPick(
         position: Int, item: MutableList<GetQuizQuestionReportData>?
     ) {

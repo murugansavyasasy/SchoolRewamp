@@ -297,11 +297,12 @@
                 style="@style/CustomCheckbox"
                 android:id="@+id/rbNextLvl"
                 android:focusable="true"
-                android:gravity="center"
+                android:gravity="start"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:layout_below="@+id/edtQuestion"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/five"
-                android:text="@string/check_the_box_to_continue_next_level"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/allow_students_to_continue_to_the_next_level_on_completion_of_next_level"
                />
 
 <!--            <RadioButton-->

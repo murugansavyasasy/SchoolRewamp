@@ -1,11 +1,16 @@
 package com.vs.schoolmessenger.School.QuizExam
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +22,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamQuizBinding
@@ -221,10 +227,12 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         appViewModel?.isGetQuizExamReport(isAccessToken ?: "", isType)
     }
 
-    private fun isRedirectToSectionStudents() {
+    private fun isRedirectToSectionStudents(Type: String) {
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         val no_of_questions = binding.edtQuestion.text.toString().trim()
+
+
         if (title.isEmpty()) {
             binding.edtTitle.error = getString(R.string.This_field_required)
             binding.edtTitle.requestFocus()
@@ -246,13 +254,43 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             return
         }
 
-        val SaveCreateExamQuizDetails =
-            SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked)
-        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.title)
-        val intent = Intent(this, RecipientActivity::class.java)
-        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
-        startActivity(intent)
+
+
     }
+
+    private fun isQuizBasicValidationPassed(): Boolean {
+
+        val title = binding.edtTitle.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        val noOfQuestions = binding.edtQuestion.text.toString().trim()
+
+        if (title.isEmpty()) {
+            binding.edtTitle.error = getString(R.string.This_field_required)
+            binding.edtTitle.requestFocus()
+            return false
+        }
+
+        if (description.isEmpty()) {
+            binding.edtDescription.error = getString(R.string.This_field_required)
+            binding.edtDescription.requestFocus()
+            return false
+        }
+
+        if (noOfQuestions.isEmpty()) {
+            binding.edtQuestion.error = getString(R.string.This_field_required)
+            binding.edtQuestion.requestFocus()
+            return false
+        }
+
+        if (noOfQuestions.toInt() <= 0) {
+            binding.edtQuestion.error = getString(R.string.no_of_question_greater_than_zero)
+            binding.edtQuestion.requestFocus()
+            return false
+        }
+
+        return true
+    }
+
 
     private fun showTabOne() {
         binding.lytList.visibility = View.GONE
@@ -281,8 +319,58 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
 
             R.id.btnChooseRecipient -> {
-                isRedirectToSectionStudents()
+                val title = binding.edtTitle.text.toString().trim()
+                val description = binding.edtDescription.text.toString().trim()
+                val no_of_questions = binding.edtQuestion.text.toString().trim()
+
+                if (!isQuizBasicValidationPassed()) {
+                    return
+                }
+
+                val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(dialogView)
+                val alertDialog = builder.create()
+
+                alertDialog.setCancelable(false)
+                alertDialog.setCanceledOnTouchOutside(false)
+                alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                alertDialog.show()
+
+                val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+                val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
+                val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+                val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+                val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+                alertMessage.text = getString(R.string.you_haven_t_added_questions_to_this_quiz_yet_would_you_like_to_add_them_now_or_do_it_later)
+                okButton.text = getString(R.string.add_now)
+                lblalertTitle.text = getString(R.string.alert)
+                btnCancel.text = getString(R.string.later)
+
+                lblSelectTarget.visibility = View.GONE
+
+                okButton.setOnClickListener {
+                    alertDialog.dismiss()
+                    val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"ADD_NOW")
+                    val intent = Intent(this, AddQuestion::class.java)
+                    intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+                    startActivity(intent)
+
+
+                }
+
+                btnCancel.setOnClickListener {
+                    alertDialog.dismiss()
+                    val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"LATER")
+                    Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
+                    val intent = Intent(this, RecipientActivity::class.java)
+                    intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+                    startActivity(intent)
+                }
             }
+
+
         }
     }
 }
