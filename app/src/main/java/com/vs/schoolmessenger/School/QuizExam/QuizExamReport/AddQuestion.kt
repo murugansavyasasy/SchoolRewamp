@@ -168,12 +168,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map {
                         it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
+
                     Constant.isQuestionLimit -= savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
                 } else {
-                    Constant.showErrorAlert(
-                        this, getString(R.string.alert), response.message
-                    )
+
+//                    Constant.showErrorAlert(
+//                        this, getString(R.string.alert), response.message
+//                    )
 
                     savedQuizQuestionReportList = response.data
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map {
