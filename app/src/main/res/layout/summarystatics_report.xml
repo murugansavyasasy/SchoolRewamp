@@ -61,15 +61,6 @@
                 android:weightSum="2"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/total_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Staffs 3"
-                    android:layout_weight="1"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="@color/light_gray"
-                    android:textSize="12sp" />
 
 
             </LinearLayout>
@@ -85,22 +76,46 @@
                 android:layout_marginTop="6dp" />
 
 
-            <TextView
-                android:id="@+id/total_female"
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Students 3"
-                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="15dp"
+                android:id="@+id/linear_layodasndkut">
+
+
+            <TextView
+                android:id="@+id/total_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Staffs 3"
+                android:layout_weight="1"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/light_gray"
-                android:textSize="12sp"
+                android:textSize="11sp" />
+
+
+
+            <TextView
+                android:id="@+id/total_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Students 3"
+                android:textColor="@color/light_gray"
+                android:textSize="11sp"
+                android:layout_weight="1"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:gravity="end" />
 
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -170,15 +185,7 @@
                 android:weightSum="2"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/boyscount1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="boys 3"
-                    android:layout_weight="1"
-                    android:textColor="@color/light_gray"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="12sp" />
+
 
 
             </LinearLayout>
@@ -193,22 +200,58 @@
                 android:progressDrawable="@drawable/progress_custom21"
                 android:layout_marginTop="6dp" />
 
-            <TextView
-                android:id="@+id/girlscount1"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="girls 3"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/light_gray"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:gravity="end" />
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="13dp"
+                android:id="@+id/linear_layout">
+
+                <TextView
+                    android:id="@+id/boyscount1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="boys 3"
+                    android:gravity="start"
+                    android:layout_weight="1"
+                    android:textColor="@color/light_gray"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/girlscount1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="girls 3"
+                    android:textColor="@color/light_gray"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    style="@style/CustomTextStylePoppinsMedium" />
+
+                <TextView
+                    android:id="@+id/otherscount1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="others 3"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/light_gray"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -279,15 +322,7 @@
                 android:weightSum="2"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/malestaff_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="male 3"
-                    android:layout_weight="1"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="@color/light_gray"
-                    android:textSize="12sp" />
+
 
 
             </LinearLayout>
@@ -302,22 +337,53 @@
                 android:progressDrawable="@drawable/progress_custom21"
                 android:layout_marginTop="6dp" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="13dp"
+                android:id="@+id/linear_layout45">
+            <TextView
+                android:id="@+id/malestaff_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="male 3"
+                android:layout_weight="1"
+                android:gravity="start"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@color/light_gray"
+                android:textSize="11sp" />
+
             <TextView
                 android:id="@+id/female_staffcount"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="female 3"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/light_gray"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:gravity="end" />
+                android:textSize="11sp"
+                android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/othersstaffcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="others 3"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/light_gray"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center_vertical">
 
                 <TextView
