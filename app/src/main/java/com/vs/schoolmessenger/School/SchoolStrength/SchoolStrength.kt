@@ -185,17 +185,18 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         }
 
 
-        val boysStrength = firstItem.totalBoysStrength.toIntOrNull() ?: 0
-        val girlsStrength = firstItem.totalGirlsStrength.toIntOrNull() ?: 0
-        val totalStrength = boysStrength + girlsStrength
+        val boys = firstItem.totalBoysStrength.toIntOrNull() ?: 0
+        val girls = firstItem.totalGirlsStrength.toIntOrNull() ?: 0
+        val others = firstItem.totalOthersStrength.toIntOrNull() ?: 0
 
-        val boysPercentage = if (totalStrength > 0) {
-            (boysStrength * 100) / totalStrength
-        } else {
-            0
+        val totalvalues = boys + girls + others
+
+        binding.summaryStaticscardview.progressbar1.apply {
+            max = totalvalues
+            progress = boys                     // Blue
+            secondaryProgress = boys + girls    // Pink
         }
 
-        binding.summaryStaticscardview.progressbar1.progress = boysPercentage
 
 
         val staffStrength1 = firstItem.totalStaffStrength.toIntOrNull() ?: 0
@@ -219,18 +220,19 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             getString(R.string.female_) + " " + firstItem.totalfemalestaffsstrength
 
 
+
+
         val malestaffStrength = firstItem.totalmalestaffsstrength.toIntOrNull() ?: 0
         val femalestaffStrength = firstItem.totalfemalestaffsstrength.toIntOrNull() ?: 0
-        val totalStaffStrength = malestaffStrength + femalestaffStrength
+        val othersstaffStrength = firstItem.totalotherstaffsstrength.toIntOrNull() ?: 0
 
-        val totalstaffpercentage = if (totalStaffStrength > 0) {
-            (malestaffStrength * 100) / totalStaffStrength
-        } else {
-            0
+        val totalStaffStrength = malestaffStrength + femalestaffStrength + othersstaffStrength
+
+        binding.summaryStaticscardview.progressbar2.apply {
+            max = totalStaffStrength
+            progress = malestaffStrength                     // Blue
+            secondaryProgress = malestaffStrength + femalestaffStrength    // Pink
         }
-
-        binding.summaryStaticscardview.progressbar2.progress = totalstaffpercentage
-
 
 
         binding.progressBarGender.othersCount.text =
@@ -239,15 +241,14 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             getString(R.string.Staffs) + " " + firstItem.totalStaffStrength
         binding.summaryStaticscardview.totalFemale.text =
             getString(R.string.Students) + " " + firstItem.totalStudentStrength
-        binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
+//        binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
         binding.summaryStaticscardview.boyscount1.text =
             getString(R.string.boys) + " " + firstItem.totalBoysStrength
+        binding.summaryStaticscardview.otherscount1.text = "Others" + " " + firstItem.totalOthersStrength
+        binding.summaryStaticscardview.othersstaffcount.text = "Others" + " " + firstItem.totalotherstaffsstrength
         binding.summaryStaticscardview.girlscount1.text =
             getString(R.string.girls) + " " + firstItem.totalGirlsStrength
-        binding.summaryStaticscardview.othersCount.text =
-            ((firstItem.totalStaffStrength?.toIntOrNull()
-                ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull()
-                ?: 0) + (firstItem.totalOthersStrength?.toIntOrNull() ?: 0)).toString()
+        binding.summaryStaticscardview.othersCount.text = ((firstItem.totalStaffStrength?.toIntOrNull() ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull() ?: 0)).toString()
 
 
         if (firstItem.previous.message.isNullOrEmpty()) {

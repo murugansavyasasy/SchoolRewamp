@@ -136,12 +136,11 @@ class AddQuestionAdapter(
             notifyItemRemoved(position)
 //            notifyItemRangeChanged(position, itemList!!.size)
 
-            notifyItemRangeChanged(
-                0,
-                itemList!!.size
-            )// Rebind all items so lblremove visibility updates correctly
+            notifyItemRangeChanged(0, itemList!!.size)// Rebind all items so lblremove visibility updates correctly
             Constant.isQuestionLimit += 1
             listener?.onCountUpdated()
+            listener?.onUICheck(itemList!!)
+
         }
     }
 
@@ -397,12 +396,12 @@ class AddQuestionAdapter(
 //                isListener.onAttachmentPick(adapterPosition, itemList)
 //            }
 
-            //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
-            if (itemList!!.size == 1) {
-                lblremove.visibility = View.GONE
-            } else {
-                lblremove.visibility = View.VISIBLE
-            }
+//            //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
+//            if (itemList!!.size == 1) {
+//                lblremove.visibility = View.GONE
+//            } else {
+//                lblremove.visibility = View.VISIBLE
+//            }
 
             lblremove.setOnClickListener {
                 removeItem(position)

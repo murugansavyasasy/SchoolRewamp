@@ -90,5 +90,6 @@
         android:text="0 Unspecified"
         android:textColor="#9E9E9E"
         android:textSize="11sp"
+        android:visibility="gone"
         style="@style/CustomTextStylePoppinsBold" />
 </LinearLayout>

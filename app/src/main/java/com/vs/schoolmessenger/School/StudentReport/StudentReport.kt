@@ -52,7 +52,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private lateinit var filterCaterotyType: List<String>
     private var originalStudentList: List<StudentReportData> = listOf()
     private var currentFilteredList: List<StudentReportData> = listOf()
-    private var currentSortType: SortType = SortType.NO_ASC
+//    private var currentSortType: SortType = SortType.NO_ASC
+private var currentSortType: SortType? = null
+
     private lateinit var genderSpinnerAdapter: SpinnerLoadingAdapter
 
 
@@ -297,8 +299,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         } else {
             ShowData()
+            mAdapter.updateData(currentFilteredList)
         }
-        sortList(currentSortType)
+//        sortList(currentSortType) // this will actually call the default sort at initial to avoid the sort at initial i have commet and added the  mAdapter.updateData(currentFilteredList)
 
     }
 
@@ -327,8 +330,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             genderSpinnerAdapter.notifyDataSetChanged()
             binding.isGenderCatory.setSelection(0)
             filterByGender(GenderType.ALL)
-            highlightSelectedTab(binding.tapNameAsc)
-            sortList(SortType.NAME_ASC)
+//            highlightSelectedTab(binding.tapNameAsc)
+//            sortList(SortType.NAME_ASC)
         }
     }
 
@@ -539,31 +542,37 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
             R.id.tapRollAsc -> {
                 highlightSelectedTab(binding.tapRollAsc)
+                currentSortType = SortType.ROLL_ASC
                 sortList(SortType.ROLL_ASC)
             }
 
             R.id.tapRollDsc -> {
                 highlightSelectedTab(binding.tapRollDsc)
+                currentSortType = SortType.ROLL_DESC
                 sortList(SortType.ROLL_DESC)
             }
 
             R.id.tapNoAsc -> {
                 highlightSelectedTab(binding.tapNoAsc)
+                currentSortType = SortType.NO_ASC
                 sortList(SortType.NO_ASC)
             }
 
             R.id.tapNoDsc -> {
                 highlightSelectedTab(binding.tapNoDsc)
+                currentSortType = SortType.NO_DESC
                 sortList(SortType.NO_DESC)
             }
 
             R.id.tapNameAsc -> {
                 highlightSelectedTab(binding.tapNameAsc)
+                currentSortType = SortType.NAME_ASC
                 sortList(SortType.NAME_ASC)
             }
 
             R.id.tapNameDsc -> {
                 highlightSelectedTab(binding.tapNameDsc)
+                currentSortType = SortType.NAME_DESC
                 sortList(SortType.NAME_DESC)
             }
         }

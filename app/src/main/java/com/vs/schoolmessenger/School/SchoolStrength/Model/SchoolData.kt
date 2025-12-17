@@ -9,6 +9,9 @@ data class SchoolData(
     @SerializedName("total_staff_strength")
     val totalStaffStrength: String,
 
+    @SerializedName("total_other_staffs_strength")
+    val totalotherstaffsstrength: String,
+
 
     @SerializedName("total_male_staffs_strength")
     val totalmalestaffsstrength: String,

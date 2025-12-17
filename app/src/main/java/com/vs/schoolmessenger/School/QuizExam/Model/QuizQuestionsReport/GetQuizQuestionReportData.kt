@@ -21,7 +21,6 @@ data class GetQuizQuestionReportData(
     var d_option: String,
 
     var mark: Int,
-
     val iframe: String? = "",
     val file_size: String? = "",
     val thumbnail: String? = "",

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,9 +21,7 @@ class SchoolStrengthAdapter(
     private var itemList: List<Standard>,
     private var context: Context,
     private var isLoading: Boolean,
-
-
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -70,8 +69,11 @@ class SchoolStrengthAdapter(
         private val boyslabel2: ImageView = itemView.findViewById(R.id.boyslabel2)
         private val girlslabel2: ImageView = itemView.findViewById(R.id.girlslabel2)
         private val girlslabel1: ImageView = itemView.findViewById(R.id.girlslabel1)
+        private val unknownimage: ImageView = itemView.findViewById(R.id.unknownimage)
+        private val unknownimage1: ImageView = itemView.findViewById(R.id.unknownimage1)
         private val viewGirls: View = itemView.findViewById(R.id.viewGirls)
-
+        private val unspecifiedcount: TextView = itemView.findViewById(R.id.unspecified_count)
+        private val viewUnspecified: View = itemView.findViewById(R.id.viewUnspecified)
 
         @SuppressLint("SetTextI18n")
         fun bind(
@@ -81,67 +83,106 @@ class SchoolStrengthAdapter(
         ) {
             boyslabel.text = "${context.getString(R.string.boys)} : ${data.boys_count}"
             girlslabel.text = "${context.getString(R.string.girls)} : ${data.girls_count}"
+            unspecifiedcount.text = "${context.getString(R.string.not_specified)} : ${data.other_count}"
             totallabel.text =
                 "${context.getString(R.string.total_students)} : ${data.total_students}"
             header1.text = "${context.getString(R.string.Standard)} - ${data.name}"
 
+            val greyColor = ContextCompat.getColor(context, android.R.color.darker_gray)
 
-            if (data.girls_count == "0" && data.boys_count == "0") {
-                // Both are zero → hide all
-                boyslabel1.visibility = View.GONE
-                boyslabel2.visibility = View.GONE
-                girlslabel1.visibility = View.GONE
-                girlslabel2.visibility = View.GONE
-
-            } else if (data.girls_count == "0") {
-                // Only girls count is zero → hide girls, show boys
-                girlslabel1.visibility = View.GONE
-                girlslabel2.visibility = View.GONE
-                boyslabel1.visibility = View.VISIBLE
-                boyslabel2.visibility = View.VISIBLE
-
-            } else if (data.boys_count == "0") {
-                // Only boys count is zero → hide boys, show girls
-                boyslabel1.visibility = View.GONE
-                boyslabel2.visibility = View.GONE
-                girlslabel1.visibility = View.VISIBLE
-                girlslabel2.visibility = View.VISIBLE
-
-            } else {
-                // Both have non-zero counts → show first labels only
-                boyslabel1.visibility = View.VISIBLE
-                girlslabel1.visibility = View.VISIBLE
-                boyslabel2.visibility = View.GONE
-                girlslabel2.visibility = View.GONE
-            }
-
+            // Set default backgrounds
+            viewBoys.setBackgroundResource(R.color.PrimaryColor)
+            viewGirls.setBackgroundResource(R.color.pink)
+            viewUnspecified.setBackgroundColor(greyColor)
 
             val boysCount = data.boys_count.toIntOrNull() ?: 0
             val girlsCount = data.girls_count.toIntOrNull() ?: 0
-            val totalStudents = data.total_students.toIntOrNull() ?: 0
+            val otherCount = data.other_count.toIntOrNull() ?: 0
+            val total = boysCount + girlsCount + otherCount
 
-            if (totalStudents > 0) {
-                val boysWeight = boysCount.toFloat() / totalStudents
-                val girlsWeight = girlsCount.toFloat() / totalStudents
+            // Handle icons visibility based on counts
+            val showBoysIcon = boysCount > 0
+            val showGirlsIcon = girlsCount > 0
+            val showOtherIcon = otherCount > 0
 
-                val layoutBoys = viewBoys.layoutParams as LinearLayout.LayoutParams
-                val layoutGirls = viewGirls.layoutParams as LinearLayout.LayoutParams
+            val numCategories = (if (showBoysIcon) 1 else 0) + (if (showGirlsIcon) 1 else 0) + (if (showOtherIcon) 1 else 0)
 
-                layoutBoys.weight = boysWeight
-                layoutGirls.weight = girlsWeight
-
-                viewBoys.layoutParams = layoutBoys
-                viewGirls.layoutParams = layoutGirls
+            if (numCategories == 0) {
+                // All zero → hide all icons
+                boyslabel1.visibility = View.GONE
+                boyslabel2.visibility = View.GONE
+                girlslabel1.visibility = View.GONE
+                girlslabel2.visibility = View.GONE
+                unknownimage.visibility = View.GONE
+                unknownimage1.visibility = View.GONE
+            } else if (numCategories == 1) {
+                // Only one category non-zero → show two icons for that category
+                if (showBoysIcon) {
+                    // Only boys
+                    boyslabel1.visibility = View.VISIBLE
+                    boyslabel2.visibility = View.VISIBLE
+                    girlslabel1.visibility = View.GONE
+                    girlslabel2.visibility = View.GONE
+                    unknownimage.visibility = View.GONE
+                    unknownimage1.visibility = View.GONE
+                } else if (showGirlsIcon) {
+                    // Only girls
+                    boyslabel1.visibility = View.GONE
+                    boyslabel2.visibility = View.GONE
+                    girlslabel1.visibility = View.VISIBLE
+                    girlslabel2.visibility = View.VISIBLE
+                    unknownimage.visibility = View.GONE
+                    unknownimage1.visibility = View.GONE
+                } else {
+                    // Only other
+                    boyslabel1.visibility = View.GONE
+                    boyslabel2.visibility = View.GONE
+                    girlslabel1.visibility = View.GONE
+                    girlslabel2.visibility = View.GONE
+                    unknownimage.visibility = View.VISIBLE
+                    unknownimage1.visibility = View.VISIBLE
+                }
             } else {
-                viewBoys.layoutParams.width = 0
-                viewGirls.layoutParams.width = 0
+                // 2 or 3 categories non-zero → show one icon for each present category
+                boyslabel1.visibility = if (showBoysIcon) View.VISIBLE else View.GONE
+                boyslabel2.visibility = View.GONE
+                girlslabel1.visibility = if (showGirlsIcon) View.VISIBLE else View.GONE
+                girlslabel2.visibility = View.GONE
+                unknownimage.visibility = if (showOtherIcon) View.VISIBLE else View.GONE
+                unknownimage1.visibility = View.GONE
             }
 
+            // Always show labels (including :0 for zero counts); unspecified treated same as others
+            boyslabel.visibility = View.VISIBLE
+            girlslabel.visibility = View.VISIBLE
+            unspecifiedcount.visibility = View.VISIBLE
+
+            // Set weights proportionally (or equal grey split if total == 0)
+            val layoutBoys = viewBoys.layoutParams as LinearLayout.LayoutParams
+            val layoutGirls = viewGirls.layoutParams as LinearLayout.LayoutParams
+            val layoutUnspecified = viewUnspecified.layoutParams as LinearLayout.LayoutParams
+
+            if (total > 0) {
+                layoutBoys.weight = boysCount.toFloat() / total
+                layoutGirls.weight = girlsCount.toFloat() / total
+                layoutUnspecified.weight = otherCount.toFloat() / total
+            } else {
+                // All zero → grey bar split equally across all three views
+                viewBoys.setBackgroundColor(greyColor)
+                viewGirls.setBackgroundColor(greyColor)
+                viewUnspecified.setBackgroundColor(greyColor)
+                layoutBoys.weight = 1f
+                layoutGirls.weight = 1f
+                layoutUnspecified.weight = 1f
+            }
+
+            viewBoys.layoutParams = layoutBoys
+            viewGirls.layoutParams = layoutGirls
+            viewUnspecified.layoutParams = layoutUnspecified
+
             val detailRecyclerView: RecyclerView = itemView.findViewById(R.id.rlaabsenteesreport3)
-//            itemView.findViewById(R.id.linear_layout2)
 
             detailRecyclerView.layoutManager = LinearLayoutManager(context)
-
 
             val dividerItemDecoration =
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL)

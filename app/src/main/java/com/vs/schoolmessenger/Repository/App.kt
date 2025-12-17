@@ -131,6 +131,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuiz.DeleteQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
@@ -381,6 +382,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetMySubmission: LiveData<GetMySubmission?>? = null
     var islsrwStudentlist: LiveData<StudentSubmissionLsrwResponse?>? = null
     var isCreateQuiz: LiveData<CreateQuizResponse?>? = null
+    var isDeleteQuiz: LiveData<DeleteQuizResponse?>? = null
     var isGetQuizExamReport: LiveData<GetQuizExamReport?>? = null
     var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
     var islsrwSkillCreate: LiveData<LsrwSkillSendResponse?>? = null

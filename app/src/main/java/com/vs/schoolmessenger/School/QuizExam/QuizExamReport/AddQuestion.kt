@@ -180,12 +180,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map {
                         it.copy(sourceType = QuestionSource.API)
                     }.toMutableList()
+
                     Constant.isQuestionLimit -= savedQuizQuestionReportList.size
                     isLoadQuizQuestionReport()
                 } else {
-                    Constant.showErrorAlert(
-                        this, getString(R.string.alert), response.message
-                    )
+
+//                    Constant.showErrorAlert(
+//                        this, getString(R.string.alert), response.message
+//                    )
 
                     savedQuizQuestionReportList = response.data
                     editableQuizQuestionReportList = savedQuizQuestionReportList.map {
@@ -802,6 +804,18 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
     override fun onCountUpdated() {
         UpdateQuestionCount()
+    }
+
+    override fun onUICheck(list: List<GetQuizQuestionReportData>) {
+        if (list.isEmpty()) {
+            Log.d("isLog","isEmpty")
+            binding.rcAddQuestion.visibility = View.GONE
+            binding.lytList.visibility = View.VISIBLE
+        } else {
+            Log.d("isLog","isNotEmpty")
+            binding.rcAddQuestion.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+        }
     }
 
     override fun onAttachmentPick(

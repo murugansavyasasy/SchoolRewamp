@@ -19,7 +19,7 @@
     <item
         android:id="@+id/role_click"
         android:icon="@drawable/arrow_squarepath"
-        android:title="@string/switch_role" />
+        android:title="@string/switch_login" />
 
     <item
         android:id="@+id/log_out"
