@@ -1,16 +1,31 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Grey → Others (Background / Remaining) -->
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="4dp"/>
-            <solid android:color="@color/pink"/>
+            <corners android:radius="4dp" />
+            <solid android:color="#9E9E9E" />
         </shape>
     </item>
-    <item android:id="@android:id/progress">
+
+    <!-- Pink → Girls (Secondary Progress) -->
+    <item android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
-                <corners android:radius="4dp"/>
-                <solid android:color="#1976D2"/>
+                <corners android:radius="4dp" />
+                <solid android:color="@color/pink" />
             </shape>
         </clip>
     </item>
+
+    <!-- Blue → Boys (Primary Progress) -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="4dp" />
+                <solid android:color="#1976D2" />
+            </shape>
+        </clip>
+    </item>
+
 </layer-list>
