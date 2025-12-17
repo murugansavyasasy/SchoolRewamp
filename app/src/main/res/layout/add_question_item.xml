@@ -108,7 +108,22 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:hint="@string/enter_question_here"
-            android:padding="@dimen/eight" />
+            android:padding="@dimen/eight"
+            android:drawableEnd="@drawable/attachment_icon_2"
+            android:drawablePadding="10dp"
+            android:focusable="true"
+            android:clickable="true"/>
+
+
+        <!--        <EditText-->
+<!--            android:id="@+id/edtQuestion"-->
+<!--            style="@style/CustomTextStylePoppinsMedium"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/five"-->
+<!--            android:background="@drawable/rect_gray_radius"-->
+<!--            android:hint="@string/enter_question_here"-->
+<!--            android:padding="@dimen/eight" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -143,6 +158,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:hint="@string/enter_option_a"
+            android:drawableEnd="@drawable/attachment_icon_2"
+            android:drawablePadding="10dp"
             android:padding="@dimen/eight" />
 
         <RelativeLayout
@@ -178,6 +195,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:hint="@string/enter_option_b"
+            android:drawableEnd="@drawable/attachment_icon_2"
+            android:drawablePadding="10dp"
             android:padding="@dimen/eight" />
 
         <RelativeLayout
@@ -213,6 +232,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:hint="@string/enter_option_c"
+            android:drawableEnd="@drawable/attachment_icon_2"
+            android:drawablePadding="10dp"
             android:padding="@dimen/eight" />
 
 
@@ -249,6 +270,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:hint="@string/enter_option_d"
+            android:drawableEnd="@drawable/attachment_icon_2"
+            android:drawablePadding="10dp"
             android:padding="@dimen/eight" />
 
 

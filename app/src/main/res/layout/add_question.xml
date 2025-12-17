@@ -1,167 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/athens_gray"
-    android:id="@+id/main"
-    >
-
-    
-        <View
-            android:id="@+id/statusBarBackground"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/PrimaryColor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    android:background="@color/athens_gray">
 
 
-        <include
-            android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar"
-            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-            <RelativeLayout
-                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:id="@+id/lnrQuesheader"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/lblImportQuestion">
-
-                    <TextView
-                        android:id="@+id/lblQuestionCount"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/question_limit"></TextView>
-
-                    <TextView
-                        android:id="@+id/tvQuestionCount"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/two"
-                        android:layout_toEndOf="@+id/lblQuestionCount"
-                        android:textColor="@color/PrimaryColor"></TextView>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
-                </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lnrQuesheader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
-                <TextView
-                    android:id="@+id/lblImportQuestion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableStart="@drawable/import_icon"
-                    android:drawablePadding="@dimen/three"
-                    android:text="@string/import_from_question_bank"
-                    android:textColor="@color/iconBlue"></TextView>
-
-            </RelativeLayout>
-
-
-            <LinearLayout
-                app:layout_constraintTop_toBottomOf="@+id/lnrQuesheader"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/lblSendQuiz"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:id="@+id/lnrCompleteQuestion"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcAddQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <LinearLayout
-                    android:id="@+id/lytList"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                  >
-
-                    <ImageView
-                        android:id="@+id/nomessage"
-                        android:layout_width="@dimen/two_fifty"
-                        android:layout_height="@dimen/two_fifty"
-                        android:src="@drawable/no_school_quiz_message" />
-
-                    <TextView
-                        android:id="@+id/txtNoData"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_question_have_been_added_yet"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/lblAddQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_marginTop="@dimen/ten"
-                    android:drawableStart="@drawable/add_icon"
-                    android:drawablePadding="@dimen/three"
-                    android:drawableTint="@color/iconBlue"
-                    android:text="@string/add_question"
-                    android:textColor="@color/iconBlue"></TextView>
-            </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/lblImportQuestion">
 
             <TextView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/lblSendQuiz"
+                android:id="@+id/lblQuestionCount"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/question_limit"></TextView>
+
+            <TextView
+                android:id="@+id/tvQuestionCount"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/bg_light_orange"
-                android:drawableStart="@drawable/send_icon"
-                android:drawablePadding="@dimen/five"
-                android:backgroundTint="@color/PrimaryColor"
-                android:gravity="center"
-                android:paddingStart="@dimen/twenty_five"
-                android:paddingTop="@dimen/five"
-                android:paddingEnd="@dimen/twenty_five"
-                android:layout_marginBottom="@dimen/ten"
-                android:paddingBottom="@dimen/five"
-                android:text="@string/send_quiz"
-                android:textColor="@color/white"></TextView>
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/two"
+                android:layout_toEndOf="@+id/lblQuestionCount"
+                android:textColor="@color/PrimaryColor"></TextView>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/lblImportQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:drawableStart="@drawable/import_icon"
+            android:drawablePadding="@dimen/three"
+            android:text="@string/import_from_question_bank"
+            android:textColor="@color/iconBlue"></TextView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/lnrCompleteQuestion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/lblSendQuiz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnrQuesheader">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcAddQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:src="@drawable/no_school_quiz_message" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_question_have_been_added_yet"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblAddQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/add_icon"
+            android:drawablePadding="@dimen/three"
+            android:drawableTint="@color/iconBlue"
+            android:text="@string/add_question"
+            android:textColor="@color/iconBlue"></TextView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblSendQuiz"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/bg_light_orange"
+        android:backgroundTint="@color/PrimaryColor"
+        android:drawableStart="@drawable/send_icon"
+        android:drawablePadding="@dimen/five"
+        android:gravity="center"
+        android:paddingStart="@dimen/twenty_five"
+        android:paddingTop="@dimen/five"
+        android:paddingEnd="@dimen/twenty_five"
+        android:paddingBottom="@dimen/five"
+        android:text="@string/send_quiz"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

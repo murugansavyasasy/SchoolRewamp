@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -106,7 +107,7 @@ class AddQuestionAdapter(
                 file_size = "",
                 thumbnail = "",
                 sourceType = QuestionSource.USER,
-                file_path = emptyList()
+                file_path = mutableListOf()
             )
         )
         Constant.isQuestionLimit -= 1
@@ -114,7 +115,6 @@ class AddQuestionAdapter(
 
 
         notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
-
 
         recyclerView.post {
             recyclerView.smoothScrollToPosition(itemList!!.size - 1)
@@ -350,7 +350,6 @@ class AddQuestionAdapter(
                     override fun onNothingSelected(parent: AdapterView<*>) {}
                 }
 
-
             edtChapterName.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].chapter = text.toString()
@@ -394,9 +393,9 @@ class AddQuestionAdapter(
                 }
             }
 
-            lnrAttachmentPick.setOnClickListener {
-                isListener.onAttachmentPick(adapterPosition, itemList)
-            }
+//            lnrAttachmentPick.setOnClickListener {
+//                isListener.onAttachmentPick(adapterPosition, itemList)
+//            }
 
             //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
             if (itemList!!.size == 1) {
@@ -407,6 +406,81 @@ class AddQuestionAdapter(
 
             lblremove.setOnClickListener {
                 removeItem(position)
+            }
+
+            edtQuestion.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+
+                    val drawableEnd = 2 // index for drawableEnd
+
+                    edtQuestion.compoundDrawables[drawableEnd]?.let { drawable ->
+                        if (event.rawX >= (edtQuestion.right - drawable.bounds.width() - edtQuestion.paddingEnd)) {
+                            isListener.onAttachmentPick(adapterPosition, itemList, true, edtOptionA)
+                            return@setOnTouchListener true
+                        }
+                    }
+                }
+                false
+            }
+
+            edtOptionA.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+
+                    val drawableEnd = 2 // index for drawableEnd
+
+                    edtOptionA.compoundDrawables[drawableEnd]?.let { drawable ->
+                        if (event.rawX >= (edtOptionA.right - drawable.bounds.width() - edtOptionA.paddingEnd)) {
+                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionA)
+                            return@setOnTouchListener true
+                        }
+                    }
+                }
+                false
+            }
+
+            edtOptionB.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+
+                    val drawableEnd = 2 // index for drawableEnd
+
+                    edtOptionB.compoundDrawables[drawableEnd]?.let { drawable ->
+                        if (event.rawX >= (edtOptionB.right - drawable.bounds.width() - edtOptionB.paddingEnd)) {
+                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionB)
+                            return@setOnTouchListener true
+                        }
+                    }
+                }
+                false
+            }
+
+            edtOptionC.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+
+                    val drawableEnd = 2 // index for drawableEnd
+
+                    edtOptionC.compoundDrawables[drawableEnd]?.let { drawable ->
+                        if (event.rawX >= (edtOptionC.right - drawable.bounds.width() - edtOptionC.paddingEnd)) {
+                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionC)
+                            return@setOnTouchListener true
+                        }
+                    }
+                }
+                false
+            }
+
+            edtOptionD.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+
+                    val drawableEnd = 2 // index for drawableEnd
+
+                    edtOptionD.compoundDrawables[drawableEnd]?.let { drawable ->
+                        if (event.rawX >= (edtOptionD.right - drawable.bounds.width() - edtOptionD.paddingEnd)) {
+                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionD)
+                            return@setOnTouchListener true
+                        }
+                    }
+                }
+                false
             }
         }
     }

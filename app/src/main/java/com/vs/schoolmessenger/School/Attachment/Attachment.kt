@@ -164,6 +164,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
                         val previousCount = Constant.selectedFiles.size
                         Constant.Remaining -= selectedUris.size
+
                         selectedUris.forEach { uri ->
                             val mimeType = contentResolver.getType(uri)
                             val path = when (uri.scheme) {
@@ -216,25 +217,8 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                         val addedCount = Constant.selectedFiles.size - previousCount
                         val totalCount = Constant.selectedFiles.size
 
-//                        Toast.makeText(
-//                            this,
-//                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
-//                                if (addedCount > 1) "${
-//                                    getString(
-//                                        R.string.s_
-//                                    )
-//                                }" else ""
-//                            }",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-//                        Toast.makeText(
-//                            this,
-//                            getString(R.string.you_have_reached_the_maximum_file_limit),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
                     }
                 }
             }
@@ -462,6 +446,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
 
         fun addPath(uri: Uri) {
+
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
                 Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
