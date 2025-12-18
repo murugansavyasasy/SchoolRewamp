@@ -166,6 +166,9 @@ object APIMethods {
     const val isGetMySubmission = "lms/api/quiz/my-submissions"
 
     const val isCreateQuiz = "lms/api/quiz/create-quiz"
+
+    const val isDeleteQuiz = "lms/api/quiz/delete"
+    const val isEditQuiz = "lms/api/quiz/update"
     const val isGetExamQuizReport = "lms/api/quiz/report"
     const val isGetCheckLevel = "lms/api/quiz/check-level"
     const val isGetQuizQuestionReport = "lms/api/quiz/questions-report"

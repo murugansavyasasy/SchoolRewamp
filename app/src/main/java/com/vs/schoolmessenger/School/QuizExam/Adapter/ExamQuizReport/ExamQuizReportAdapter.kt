@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.QuizExam.ExamQuizReportListener
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.SubmitReport
@@ -20,6 +22,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 class ExamQuizReportAdapter(
     private var itemList: List<GetQuizExamReportData>?,
     private var context: Context,
+    private val listener: ExamQuizReportListener,
     private var isLoading: Boolean
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,6 +61,17 @@ class ExamQuizReportAdapter(
         itemList = newList
         notifyDataSetChanged()
     }
+    fun removeItemById(id: String) {
+        val mutableList = itemList?.toMutableList() ?: return
+        val index = mutableList.indexOfFirst { it.id == id }
+
+        if (index != -1) {
+            mutableList.removeAt(index)
+            itemList = mutableList
+            notifyItemRemoved(index)
+        }
+    }
+
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
@@ -69,6 +83,7 @@ class ExamQuizReportAdapter(
         private val lblLevelStatus: TextView = itemView.findViewById(R.id.lblLevelStatus)
         private val lblAdd: TextView = itemView.findViewById(R.id.lblAdd)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
+        private val imgOptions: ImageView = itemView.findViewById(R.id.imgOptions)
 
         fun bind(data: GetQuizExamReportData, position: Int) {
             lblTitle.text = data.title
@@ -97,6 +112,59 @@ class ExamQuizReportAdapter(
                 .load(imageRes)
                 .placeholder(R.drawable.image_placeholder)
                 .into(imgItem)
+
+
+            imgOptions.setOnClickListener {
+
+//                if (data.can_edit != true && data.can_delete != true) return@setOnClickListener
+
+                val popup = PopupMenu(context, imgOptions)
+                popup.menuInflater.inflate(R.menu.edit_delete_menu, popup.menu)
+
+                // Force show icons
+                try {
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields) {
+                        if (field.name == "mPopup") {
+                            field.isAccessible = true
+                            val menuPopupHelper = field.get(popup)
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcons = classPopupHelper
+                                .getMethod("setForceShowIcon", Boolean::class.java)
+                            setForceIcons.invoke(menuPopupHelper, true)
+                            break
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+//                In future try to hide the options
+//                popup.menu.findItem(R.id.menu_edit).isVisible = data.can_edit == true
+//                popup.menu.findItem(R.id.menu_delete).isVisible = data.can_delete == true
+
+                popup.menu.findItem(R.id.nav_edit).isVisible = true
+                popup.menu.findItem(R.id.nav_delete).isVisible = true
+
+                popup.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+
+                        R.id.nav_edit -> {
+                            listener.onEditClick(data, adapterPosition)
+                            true
+                        }
+
+                        R.id.nav_delete -> {
+                            listener.onDeleteClick(data.id, adapterPosition)
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+
+                popup.show()
+            }
 
 
             lblAdd.setOnClickListener {

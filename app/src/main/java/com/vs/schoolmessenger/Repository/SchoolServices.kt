@@ -94,6 +94,8 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotResponse
 import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuiz.DeleteQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.EditQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
@@ -214,6 +216,8 @@ class SchoolServices {
     var isDateWiseSlot: MutableLiveData<SlotBookingResponse?>
     var isSlotValidation: MutableLiveData<SlotValidationResponse?>
     var isCreateQuiz: MutableLiveData<CreateQuizResponse?>
+    var isDeleteQuiz: MutableLiveData<DeleteQuizResponse?>
+    var isEditQuiz: MutableLiveData<EditQuizResponse?>
     var isGetQuizExamReport: MutableLiveData<GetQuizExamReport?>
     var isGetCheckLevel: MutableLiveData<GetCheckLevel?>
     var isGetQuizQuestionReport: MutableLiveData<GetQuizQuestionReport?>
@@ -359,6 +363,8 @@ class SchoolServices {
         isgetfeature = MutableLiveData()
         isgetStaffWiseExam = MutableLiveData()
         isgetSubjectWiseActivities = MutableLiveData()
+        isDeleteQuiz = MutableLiveData()
+        isEditQuiz = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4702,6 +4708,87 @@ class SchoolServices {
 
     val getSubjectWiseActivitiesLiveData: LiveData<getSubjectWiseACtivities?>
         get() = isgetSubjectWiseActivities
+
+
+    fun isDeleteQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isDeleteQuiz(isToken, jsonObject)
+            ?.enqueue(object : Callback<DeleteQuizResponse?> {
+                override fun onResponse(
+                    call: Call<DeleteQuizResponse?>, response: Response<DeleteQuizResponse?>
+                ) {
+                    Log.d(
+                        "DeleteQuiz Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("DeleteQuizResponse", response.body().toString())
+                                isDeleteQuiz.postValue(response.body())
+                            } else {
+                                Log.d("DeleteQuizResponse", response.body().toString())
+                                isDeleteQuiz.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<DeleteQuizResponse?>, t: Throwable
+                ) {
+                    isDeleteQuiz.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isDeleteQuizLiveData: LiveData<DeleteQuizResponse?>
+        get() = isDeleteQuiz
+
+
+
+    fun isEditQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isEditQuiz(isToken, jsonObject)
+            ?.enqueue(object : Callback<EditQuizResponse?> {
+                override fun onResponse(
+                    call: Call<EditQuizResponse?>, response: Response<EditQuizResponse?>
+                ) {
+                    Log.d(
+                        "DeleteQuiz Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("DeleteQuizResponse", response.body().toString())
+                                isEditQuiz.postValue(response.body())
+                            } else {
+                                Log.d("DeleteQuizResponse", response.body().toString())
+                                isEditQuiz.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<EditQuizResponse?>, t: Throwable
+                ) {
+                    isEditQuiz.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isEditQuizLiveData: LiveData<EditQuizResponse?>
+        get() = isEditQuiz
+
+
 
 
 }
