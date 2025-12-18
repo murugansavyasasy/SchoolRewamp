@@ -429,8 +429,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                     startActivity(intent)
                 }
             }
-
-
         }
     }
 

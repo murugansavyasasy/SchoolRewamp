@@ -66,7 +66,7 @@
     <string name="lblVerificationcode">Verification code has been sent to your registered Email/Mobile Number</string>
     <string name="lblDidntreceive">Didn\'t receive a verification code ?</string>
     <string name="lblValidate">Validate</string>
-    <string name="lblChooseyourrole">Choose your role</string>
+    <string name="lblChooseyourrole">Choose Your Role</string>
     <string name="lblLoginteacherparent">Login As Principal or Student</string>
     <string name="lblTeacher">Teacher</string>
     <string name="lblParent">Parent</string>
@@ -840,7 +840,7 @@
     <string name="fee_receipt">Fee Receipt</string>
     <string name="lsrw">LSRW</string>
     <string name="listening_speaking_reading_writing">Listening,Speaking,Reading,Writing</string>
-    <string name="posted_on">posted on</string>
+    <string name="posted_on">Posted On</string>
     <string name="Well_done">Well done!</string>
     <string name="img">IMG</string>
     <string name="vid">VID</string>
@@ -997,7 +997,7 @@
     <string name="submitted_students">Submitted Students</string>
     <string name="all_country">All Country</string>
     <string name="find_your_country">Find your country</string>
-    <string name="powered_by_savyasasy">Powered by savyasasy</string>
+    <string name="powered_by_savyasasy">Powered By Savyasasy</string>
     <string name="history"><![CDATA[History >>]]></string>
     <string name="listening">Listening</string>
     <string name="speaking">Speaking</string>
