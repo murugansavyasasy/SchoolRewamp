@@ -1654,7 +1654,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             val jsonArray = JsonArray()
                             selectedIds.forEach { id ->
                                 jsonArray.add(id)
-                            }
+                            }   
                             add("target_code", jsonArray)
 
                             //if the user click Later in Popup  means by default the below should be given
