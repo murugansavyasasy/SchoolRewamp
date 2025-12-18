@@ -328,6 +328,7 @@ object Constant {
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
     var create_quiz_exam_data = "create_quiz_exam_data"
+    var edit_quiz_exam_data = "edit_quiz_exam_data"
     var notice_data = "notice_data"
     var message = "message"
     var emergency_voice = "emergency_voice"

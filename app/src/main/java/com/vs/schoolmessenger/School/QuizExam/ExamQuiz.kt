@@ -47,6 +47,10 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private lateinit var adapter: ExamQuizReportAdapter
     private var isSubmission: List<GetQuizExamReportData>? = emptyList()
 
+    private var isQuizEditData: SaveCreateExamQuizDetails? = null
+
+
+
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -66,6 +70,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
+        isQuizEditData = intent.getSerializableExtra(Constant.edit_quiz_exam_data)
+                    as? SaveCreateExamQuizDetails
+
 //        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
 //        binding.edtDescription.filters =
 //            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
@@ -75,38 +82,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 //        Constant.editTextCounter(
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
 //        )
-
-        val isQuizEditData =
-            intent.getSerializableExtra(Constant.create_quiz_exam_data)
-                    as? SaveCreateExamQuizDetails
-
-        if (isQuizEditData?.type == "EDIT") {
-
-            binding.tabOneName.text = getString(R.string.edit)
-            binding.edtTitle.setText(isQuizEditData.title)
-            binding.edtDescription.setText(isQuizEditData.description)
-            binding.edtQuestion.setText(isQuizEditData.no_of_question)
-            binding.rbNextLvl.isChecked = isQuizEditData.level_flag
-
-            // visually + functionally disable
-            binding.edtQuestion.isEnabled = false
-            binding.rbNextLvl.isEnabled = false
-            binding.edtQuestion.alpha = 0.4f
-            binding.rbNextLvl.alpha = 0.4f
-
-        } else {
-
-            binding.tabOneName.text = getString(R.string.Create)
-            binding.edtTitle.text = null
-            binding.edtDescription.text = null
-            binding.edtQuestion.text = null
-
-            binding.rbNextLvl.isChecked = false
-            binding.edtQuestion.isEnabled = true
-            binding.rbNextLvl.isEnabled = true
-            binding.edtQuestion.alpha = 1.0f
-            binding.rbNextLvl.alpha = 1.0f
-        }
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -134,6 +109,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             isNextLevelChecked = isChecked
             Log.d("isNextLevelChecked", isNextLevelChecked.toString())
         }
+
+        //This function is to check whether we are at EDIT or CREATE page in QUIZ accordingly we are change the UI Behaviour and functionality
+        CheckQuizMode()
 
 
         binding.txtSearch1.addTextChangedListener(object : TextWatcher {
@@ -208,6 +186,12 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         }
 
         binding.lnrTabTwoName.setOnClickListener {
+            // clear edit data
+            isQuizEditData = null
+
+            // reset UI to CREATE mode
+            CheckQuizMode()
+
             isType = "2"
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
@@ -220,6 +204,52 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         }
     }
+
+    private fun CheckQuizMode() {
+        //Making the UI to  EDIT Create Page handling so UI Behaviour
+        if (isQuizEditData!=null){
+            if (isQuizEditData!!.type == "EDIT") {
+                Log.d("ScreenName","EditPage")
+
+                binding.tabOneName.text = getString(R.string.edit)
+                binding.btnChooseRecipient.text = getString(R.string.Update)
+
+                binding.edtTitle.setText(isQuizEditData?.title)
+                binding.edtDescription.setText(isQuizEditData?.description)
+                binding.edtQuestion.setText(isQuizEditData?.no_of_question)
+                binding.rbNextLvl.isChecked = isQuizEditData?.level_flag == true
+
+                binding.edtQuestion.isEnabled = false
+                binding.rbNextLvl.isEnabled = false
+
+                binding.edtQuestion.alpha = 0.4f
+                binding.rbNextLvl.alpha = 0.4f
+                binding.lblNoQuestion.alpha = 0.4f
+                binding.lblStq2332wear8.alpha = 0.4f
+
+            }
+        }
+         else {
+            //Making the UI to  Normal Create Page reseting all
+            Log.d("ScreenName","CreatePage")
+            binding.tabOneName.text = getString(R.string.Create)
+            binding.btnChooseRecipient.text = getString(R.string.next)
+
+            binding.edtTitle.text = null
+            binding.edtDescription.text = null
+            binding.edtQuestion.text = null
+
+            binding.rbNextLvl.isChecked = false
+            binding.edtQuestion.isEnabled = true
+            binding.rbNextLvl.isEnabled = true
+
+            binding.edtQuestion.alpha = 1f
+            binding.rbNextLvl.alpha = 1f
+            binding.lblNoQuestion.alpha = 1f
+            binding.lblStq2332wear8.alpha = 1f
+        }
+    }
+
 
     private fun onQuizDeletedSuccess(deletedId: String) {
 
@@ -439,9 +469,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         Log.d("Edit","Quiz Data: ${data} Postion: ${position}")
         val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(data.title, data.description, data.no_of_questions.toString(),true,"EDIT")
         val intent = Intent(this, ExamQuiz::class.java)
-        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+        intent.putExtra(Constant.edit_quiz_exam_data, SaveCreateExamQuizDetails)
         startActivity(intent)
-
     }
 
     override fun onDeleteClick(id: String, position: Int) {
