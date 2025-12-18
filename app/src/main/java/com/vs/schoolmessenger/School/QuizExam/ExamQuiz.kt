@@ -12,11 +12,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
@@ -29,7 +32,7 @@ import com.vs.schoolmessenger.databinding.ExamQuizBinding
 
 
 class ExamQuiz : BaseActivity<ExamQuizBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, ExamQuizReportListener {
 
     override fun getViewBinding(): ExamQuizBinding {
         return ExamQuizBinding.inflate(layoutInflater)
@@ -39,6 +42,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private var isStaffDetails: StaffDetails? = null
     var isType = "2"
     var isNextLevelChecked = false
+    var isDeletedId = ""
+
     private lateinit var adapter: ExamQuizReportAdapter
     private var isSubmission: List<GetQuizExamReportData>? = emptyList()
 
@@ -70,6 +75,39 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 //        Constant.editTextCounter(
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
 //        )
+
+        val isQuizEditData =
+            intent.getSerializableExtra(Constant.create_quiz_exam_data)
+                    as? SaveCreateExamQuizDetails
+
+        if (isQuizEditData?.type == "EDIT") {
+
+            binding.tabOneName.text = getString(R.string.edit)
+            binding.edtTitle.setText(isQuizEditData.title)
+            binding.edtDescription.setText(isQuizEditData.description)
+            binding.edtQuestion.setText(isQuizEditData.no_of_question)
+            binding.rbNextLvl.isChecked = isQuizEditData.level_flag
+
+            // visually + functionally disable
+            binding.edtQuestion.isEnabled = false
+            binding.rbNextLvl.isEnabled = false
+            binding.edtQuestion.alpha = 0.4f
+            binding.rbNextLvl.alpha = 0.4f
+
+        } else {
+
+            binding.tabOneName.text = getString(R.string.Create)
+            binding.edtTitle.text = null
+            binding.edtDescription.text = null
+            binding.edtQuestion.text = null
+
+            binding.rbNextLvl.isChecked = false
+            binding.edtQuestion.isEnabled = true
+            binding.rbNextLvl.isEnabled = true
+            binding.edtQuestion.alpha = 1.0f
+            binding.rbNextLvl.alpha = 1.0f
+        }
+
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -136,6 +174,29 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
         }
 
+        appViewModel?.isDeleteQuiz?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response.status) {
+                    Constant.showDataValidationNoDashboardRedirect(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                    onQuizDeletedSuccess(isDeletedId)
+                }
+                else {
+                    Constant.showDataValidationNoDashboardRedirect(
+                        resources.getString(R.string.Oops), response.message, this
+                    )
+                }
+            } else {
+                Constant.showDataValidationNoDashboardRedirect(
+                    resources.getString(R.string.Oops),getString(R.string.something_went_wrong_please_try_again_later), this
+                )
+            }
+        }
+
+
+
         binding.lnrTabOneName.setOnClickListener {
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
@@ -159,6 +220,35 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         }
     }
+
+    private fun onQuizDeletedSuccess(deletedId: String) {
+
+        //  Remove from original list (used for search/filter)
+        isSubmission = isSubmission?.filterNot { it.id == deletedId }
+
+        // Remove from adapter
+        adapter.removeItemById(deletedId)
+
+        // Handle empty state
+        if (isSubmission.isNullOrEmpty()) {
+            binding.rcQuizExamReport.visibility = View.GONE
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            if ( binding.rytSearch1.isVisible){
+                binding.rytSearch1.visibility = View.GONE
+            }
+        }
+        else {
+            binding.rcQuizExamReport.visibility = View.VISIBLE
+            binding.lytList.visibility = View.GONE
+            binding.rytSearch1.visibility = View.VISIBLE
+            if ( binding.rytSearch1.isVisible){
+                binding.rytSearch1.visibility = View.VISIBLE
+            }
+        }
+    }
+
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
@@ -200,7 +290,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private fun isLoadEQReport(data: List<GetQuizExamReportData>) {
         if (data.isNotEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-            adapter = ExamQuizReportAdapter(data, this, Constant.isShimmerViewDisable)
+            adapter = ExamQuizReportAdapter(data, this,this, Constant.isShimmerViewDisable)
             binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
             binding.rcQuizExamReport.adapter = adapter
             binding.rcQuizExamReport.visibility = View.VISIBLE
@@ -220,43 +310,13 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
 
     private fun isFetchEQReport() {
-        adapter = ExamQuizReportAdapter(null, this, Constant.isShimmerViewShow)
+        adapter = ExamQuizReportAdapter(null, this,this, Constant.isShimmerViewShow)
         binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
         binding.rcQuizExamReport.adapter = adapter
 
         appViewModel?.isGetQuizExamReport(isAccessToken ?: "", isType)
     }
 
-    private fun isRedirectToSectionStudents(Type: String) {
-        val title = binding.edtTitle.text.toString().trim()
-        val description = binding.edtDescription.text.toString().trim()
-        val no_of_questions = binding.edtQuestion.text.toString().trim()
-
-
-        if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.This_field_required)
-            binding.edtTitle.requestFocus()
-            return
-        }
-        if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.This_field_required)
-            binding.edtDescription.requestFocus()
-            return
-        }
-        if (no_of_questions.isEmpty()) {
-            binding.edtQuestion.error = getString(R.string.This_field_required)
-            binding.edtQuestion.requestFocus()
-            return
-        }
-        if (no_of_questions.toInt() <= 0) {
-            binding.edtQuestion.error = getString(R.string.no_of_question_greater_than_zero)
-            binding.edtQuestion.requestFocus()
-            return
-        }
-
-
-
-    }
 
     private fun isQuizBasicValidationPassed(): Boolean {
 
@@ -371,6 +431,41 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
 
 
+        }
+    }
+
+    override fun onEditClick(
+        data: GetQuizExamReportData,
+        position: Int
+    ) {
+        Log.d("Edit","Quiz Data: ${data} Postion: ${position}")
+        val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(data.title, data.description, data.no_of_questions.toString(),true,"EDIT")
+        val intent = Intent(this, ExamQuiz::class.java)
+        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+        startActivity(intent)
+
+    }
+
+    override fun onDeleteClick(id: String, position: Int) {
+        Log.d("Delete","Quiz id: ${id} Postion: ${position}")
+
+        val request = JsonObject().apply {
+            addProperty("id", id)
+        }
+
+        Constant.showSendConfirmationDialog(
+            this,
+            getString(R.string.confirmation),
+            getString(R.string.delete),
+            getString(R.string.Cancel),
+            "",
+            getString(R.string.are_you_sure_you_want_to_delete_this_quiz)
+        ) { confirmed ->
+            if (confirmed) {
+                Constant.showLoading(this)
+                isDeletedId = id
+                appViewModel?.isDeleteQuiz(isAccessToken!!, request)
+            }
         }
     }
 }

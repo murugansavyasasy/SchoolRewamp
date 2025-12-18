@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.QuizExam.Model.QuizReport
 
-class GetQuizExamReportData(
+data class GetQuizExamReportData(
     val id: String,
     val sent_time: String,
     val title: String,

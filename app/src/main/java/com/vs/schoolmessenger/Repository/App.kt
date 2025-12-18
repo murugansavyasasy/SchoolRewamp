@@ -132,6 +132,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuiz.DeleteQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.EditQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReport
@@ -382,6 +383,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetMySubmission: LiveData<GetMySubmission?>? = null
     var islsrwStudentlist: LiveData<StudentSubmissionLsrwResponse?>? = null
     var isCreateQuiz: LiveData<CreateQuizResponse?>? = null
+    var isEditQuiz: LiveData<EditQuizResponse?>? = null
     var isDeleteQuiz: LiveData<DeleteQuizResponse?>? = null
     var isGetQuizExamReport: LiveData<GetQuizExamReport?>? = null
     var isGetCheckLevel: LiveData<GetCheckLevel?>? = null
@@ -598,6 +600,8 @@ class App(application: Application) : AndroidViewModel(application) {
         reviewpost = apiSchoolRepositories.reviewpostLiveData
         getStaffWiseExam = apiSchoolRepositories.getStaffWiseExamLiveData
         getSubjectWiseActivities = apiSchoolRepositories.getSubjectWiseActivitiesLiveData
+        isDeleteQuiz = apiSchoolRepositories.isDeleteQuizLiveData
+        isEditQuiz = apiSchoolRepositories.isEditQuizLiveData
 
 
     }
@@ -1356,6 +1360,23 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String, jsonObject: JsonObject
     ) {
         apiSchoolRepositories.isSubmitQuiz(
+            isToken, jsonObject,
+        )
+    }
+
+    fun isEditQuiz(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isEditQuiz(
+            isToken, jsonObject,
+        )
+    }
+
+    fun isDeleteQuiz(
+        isToken: String, jsonObject: JsonObject
+    )
+    {
+        apiSchoolRepositories.isDeleteQuiz(
             isToken, jsonObject,
         )
     }
