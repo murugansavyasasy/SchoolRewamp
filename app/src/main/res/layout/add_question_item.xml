@@ -107,23 +107,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="@string/enter_question_here"
-            android:padding="@dimen/eight"
-            android:drawableEnd="@drawable/attachment_icon_2"
+            android:clickable="true"
             android:drawablePadding="10dp"
             android:focusable="true"
-            android:clickable="true"/>
+            android:hint="@string/enter_question_here"
+            android:padding="@dimen/eight" />
 
 
-        <!--        <EditText-->
-<!--            android:id="@+id/edtQuestion"-->
-<!--            style="@style/CustomTextStylePoppinsMedium"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:background="@drawable/rect_gray_radius"-->
-<!--            android:hint="@string/enter_question_here"-->
-<!--            android:padding="@dimen/eight" />-->
+        <TextView
+            android:id="@+id/lblQuestionPick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="Add files to question"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -157,10 +167,44 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="@string/enter_option_a"
-            android:drawableEnd="@drawable/attachment_icon_2"
             android:drawablePadding="10dp"
+            android:hint="@string/enter_option_a"
             android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="Add image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:id="@+id/framOptionA"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/imgOptionA"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+               />
+
+            <ProgressBar
+                android:id="@+id/progressOptionA"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -194,10 +238,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="@string/enter_option_b"
-            android:drawableEnd="@drawable/attachment_icon_2"
             android:drawablePadding="10dp"
+            android:hint="@string/enter_option_b"
             android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="Add image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:id="@+id/framOptionB"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/imgOptionB"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressOptionB"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -231,10 +310,44 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="@string/enter_option_c"
-            android:drawableEnd="@drawable/attachment_icon_2"
             android:drawablePadding="10dp"
+            android:hint="@string/enter_option_c"
             android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="Add image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionC"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/imgOptionC"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressOptionC"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
 
 
         <RelativeLayout
@@ -269,10 +382,44 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
-            android:hint="@string/enter_option_d"
-            android:drawableEnd="@drawable/attachment_icon_2"
             android:drawablePadding="10dp"
+            android:hint="@string/enter_option_d"
             android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="Add image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionD"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/imgOptionD"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressOptionD"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+        </FrameLayout>
 
 
         <LinearLayout
@@ -337,24 +484,24 @@
 
                     <Spinner
                         android:id="@+id/spinnerCorrectAnswer"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
-                        android:paddingVertical="@dimen/five"
-                        android:background="@null"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@+id/spinnerCorrectAnswerimg"
-                        android:drawSelectorOnTop="true"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/spinnerCorrectAnswerimg"
+                        android:background="@null"
+                        android:drawSelectorOnTop="true"
+                        android:paddingVertical="@dimen/five" />
+
                     <ImageView
                         android:id="@+id/spinnerCorrectAnswerimg"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_drop_down"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/three"
-                        android:tint="@color/black"
-                        android:layout_height="wrap_content">
+                        android:src="@drawable/ic_drop_down"
+                        android:tint="@color/black">
 
                     </ImageView>
 
@@ -400,9 +547,9 @@
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/rect_gray_radius"
                     android:ellipsize="none"
-                    android:maxLength="4"
                     android:hint="@string/enter_mark_here"
                     android:inputType="number"
+                    android:maxLength="4"
                     android:padding="@dimen/eight"
                     android:scrollHorizontally="true"
                     android:singleLine="true" />
@@ -411,12 +558,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/lnrAttachment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
-            android:gravity="end">
+            android:gravity="end"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="wrap_content"
