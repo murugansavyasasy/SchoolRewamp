@@ -33,5 +33,5 @@ data class GetQuizQuestionReportData(
     var sourceType: QuestionSource = QuestionSource.API,
 
     @SerializedName("q_file_path")
-    var file_path: MutableList<FilePath> = mutableListOf()
+    var file_path: MutableList<FilePath>? = mutableListOf()
 )
