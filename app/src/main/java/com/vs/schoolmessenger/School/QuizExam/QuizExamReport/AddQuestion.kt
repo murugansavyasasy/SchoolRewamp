@@ -51,7 +51,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
@@ -59,7 +58,6 @@ import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequ
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.UpdateQBankItem
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
-import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.SaveEditExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
@@ -994,33 +992,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
         }
     }
-
-//    private fun openCameraIntent() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent.resolveActivity(packageManager) != null) {
-//            val photoFile: File? = try {
-//                createImageFile()
-//            } catch (ex: IOException) {
-//                ex.printStackTrace()
-//                null
-//            }
-//
-//            if (photoFile != null) {
-//                val photoURI = FileProvider.getUriForFile(
-//                    this, "${applicationContext.packageName}.fileprovider", photoFile
-//                )
-//                cameraImageFilePath = photoFile.absolutePath
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
-//            } else {
-//                Toast.makeText(
-//                    this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        } else {
-//            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
-//        }
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
