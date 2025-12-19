@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.ExamQuizReport.ExamQuizReportAdapter
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
+import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.SaveEditExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.AddQuestion
 import com.vs.schoolmessenger.Utils.Constant
@@ -47,6 +48,10 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     private lateinit var adapter: ExamQuizReportAdapter
     private var isSubmission: List<GetQuizExamReportData>? = emptyList()
 
+    private var isQuizEditData: SaveEditExamQuizDetails? = null
+
+
+
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -66,6 +71,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
+        isQuizEditData = intent.getSerializableExtra(Constant.edit_quiz_exam_data)
+                    as? SaveEditExamQuizDetails
+
 //        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
 //        binding.edtDescription.filters =
 //            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
@@ -75,38 +83,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 //        Constant.editTextCounter(
 //            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
 //        )
-
-        val isQuizEditData =
-            intent.getSerializableExtra(Constant.create_quiz_exam_data)
-                    as? SaveCreateExamQuizDetails
-
-        if (isQuizEditData?.type == "EDIT") {
-
-            binding.tabOneName.text = getString(R.string.edit)
-            binding.edtTitle.setText(isQuizEditData.title)
-            binding.edtDescription.setText(isQuizEditData.description)
-            binding.edtQuestion.setText(isQuizEditData.no_of_question)
-            binding.rbNextLvl.isChecked = isQuizEditData.level_flag
-
-            // visually + functionally disable
-            binding.edtQuestion.isEnabled = false
-            binding.rbNextLvl.isEnabled = false
-            binding.edtQuestion.alpha = 0.4f
-            binding.rbNextLvl.alpha = 0.4f
-
-        } else {
-
-            binding.tabOneName.text = getString(R.string.Create)
-            binding.edtTitle.text = null
-            binding.edtDescription.text = null
-            binding.edtQuestion.text = null
-
-            binding.rbNextLvl.isChecked = false
-            binding.edtQuestion.isEnabled = true
-            binding.rbNextLvl.isEnabled = true
-            binding.edtQuestion.alpha = 1.0f
-            binding.rbNextLvl.alpha = 1.0f
-        }
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -134,6 +110,9 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             isNextLevelChecked = isChecked
             Log.d("isNextLevelChecked", isNextLevelChecked.toString())
         }
+
+        //This function is to check whether we are at EDIT or CREATE page in QUIZ accordingly we are change the UI Behaviour and functionality
+        CheckQuizMode()
 
 
         binding.txtSearch1.addTextChangedListener(object : TextWatcher {
@@ -174,10 +153,31 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
         }
 
+        appViewModel?.isEditQuiz?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response.status) {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                }
+                else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops), response.message, this
+                    )
+                }
+            } else {
+                Constant.showDataValidation(
+                    resources.getString(R.string.Oops),getString(R.string.something_went_wrong_please_try_again_later), this
+                )
+            }
+        }
+
         appViewModel?.isDeleteQuiz?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
+                    binding.txtSearch1.text.clear()
                     Constant.showDataValidationNoDashboardRedirect(
                         resources.getString(R.string.success), response.message, this
                     )
@@ -208,6 +208,12 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         }
 
         binding.lnrTabTwoName.setOnClickListener {
+            // clear edit data
+            isQuizEditData = null
+
+            // reset UI to CREATE mode
+            CheckQuizMode()
+
             isType = "2"
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
@@ -220,6 +226,59 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
 
         }
     }
+
+    private fun CheckQuizMode() {
+        //Making the UI to  EDIT Create Page handling so UI Behaviour
+        if (isQuizEditData!=null){
+            if (isQuizEditData!!.type == "EDIT") {
+                Log.d("ScreenName","EditPage")
+
+                binding.tabOneName.text = getString(R.string.edit)
+                binding.btnChooseRecipient.text = getString(R.string.Update)
+
+                binding.edtTitle.setText(isQuizEditData?.title)
+                binding.edtDescription.setText(isQuizEditData?.description)
+                binding.edtQuestion.setText(isQuizEditData?.no_of_question)
+                binding.rbNextLvl.isChecked = isQuizEditData?.level_flag == true
+                isNextLevelChecked = isQuizEditData?.level_flag == true
+
+                binding.edtQuestion.isEnabled = false
+                binding.rbNextLvl.isClickable = false
+                binding.rbNextLvl.isFocusable = false
+
+                binding.edtQuestion.alpha = 0.4f
+                binding.rbNextLvl.alpha = 0.4f
+                binding.lblNoQuestion.alpha = 0.4f
+                binding.lblStq2332wear8.alpha = 0.4f
+
+            }
+        }
+         else {
+            //Making the UI to  Normal Create Page reseting all
+            Log.d("ScreenName","CreatePage")
+            binding.tabOneName.text = getString(R.string.Create)
+            binding.btnChooseRecipient.text = getString(R.string.next)
+
+            binding.edtTitle.text = null
+            binding.edtDescription.text = null
+            binding.edtQuestion.text = null
+
+
+            binding.rbNextLvl.isChecked =false
+            isNextLevelChecked = false
+
+            binding.edtQuestion.isEnabled = true
+            binding.rbNextLvl.isClickable = true
+            binding.rbNextLvl.isFocusable = true
+
+
+            binding.edtQuestion.alpha = 1f
+            binding.rbNextLvl.alpha = 1f
+            binding.lblNoQuestion.alpha = 1f
+            binding.lblStq2332wear8.alpha = 1f
+        }
+    }
+
 
     private fun onQuizDeletedSuccess(deletedId: String) {
 
@@ -379,54 +438,83 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
 
             R.id.btnChooseRecipient -> {
-                val title = binding.edtTitle.text.toString().trim()
-                val description = binding.edtDescription.text.toString().trim()
-                val no_of_questions = binding.edtQuestion.text.toString().trim()
-
                 if (!isQuizBasicValidationPassed()) {
                     return
                 }
 
-                val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
-                val builder = AlertDialog.Builder(this)
-                builder.setView(dialogView)
-                val alertDialog = builder.create()
+                val title = binding.edtTitle.text.toString().trim()
+                val description = binding.edtDescription.text.toString().trim()
+                val no_of_questions = binding.edtQuestion.text.toString().trim()
 
-                alertDialog.setCancelable(false)
-                alertDialog.setCanceledOnTouchOutside(false)
-                alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                alertDialog.show()
-
-                val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
-                val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
-                val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
-                val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
-                val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-
-                alertMessage.text = getString(R.string.you_haven_t_added_questions_to_this_quiz_yet_would_you_like_to_add_them_now_or_do_it_later)
-                okButton.text = getString(R.string.add_now)
-                lblalertTitle.text = getString(R.string.alert)
-                btnCancel.text = getString(R.string.later)
-
-                lblSelectTarget.visibility = View.GONE
-
-                okButton.setOnClickListener {
-                    alertDialog.dismiss()
-                    val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"ADD_NOW")
-                    val intent = Intent(this, AddQuestion::class.java)
-                    intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
-                    startActivity(intent)
-
-
+                if (isQuizEditData!=null){
+                    if (isQuizEditData!!.type == "EDIT") {
+                        Constant.showSendConfirmationDialog(
+                            this,
+                            getString(R.string.confirmation),
+                            getString(R.string.Update),
+                            getString(R.string.Cancel),
+                            "",
+                            getString(R.string.are_you_sure_you_want_to_update_the_quiz)
+                        ) { confirmed ->
+                            if (confirmed) {
+                                Constant.showLoading(this)
+                                val request = JsonObject().apply {
+                                    addProperty("id",isQuizEditData!!.id)
+                                    addProperty("title",title)
+                                    addProperty("description",description)
+                                }
+                                appViewModel?.isEditQuiz(isAccessToken!!, request)
+                            }
+                        }
+                    }
                 }
+                else{
 
-                btnCancel.setOnClickListener {
-                    alertDialog.dismiss()
-                    val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"LATER")
-                    Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
-                    val intent = Intent(this, RecipientActivity::class.java)
-                    intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
-                    startActivity(intent)
+                    val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup_three_options, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(dialogView)
+                    val alertDialog = builder.create()
+
+                    alertDialog.setCancelable(false)
+                    alertDialog.setCanceledOnTouchOutside(false)
+                    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    alertDialog.show()
+
+                    val lblAddnow = dialogView.findViewById<TextView>(R.id.lblAddnow)
+                    val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
+                    val btnLater = dialogView.findViewById<TextView>(R.id.btnLater)
+                    val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+                    val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+                    val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+                    alertMessage.text = getString(R.string.you_haven_t_added_questions_to_this_quiz_yet_would_you_like_to_add_them_now_or_do_it_later)
+                    lblAddnow.text = getString(R.string.add_now)
+                    lblalertTitle.text = getString(R.string.alert)
+                    btnLater.text = getString(R.string.later)
+
+                    lblSelectTarget.visibility = View.GONE
+
+                    lblAddnow.setOnClickListener {
+                        alertDialog.dismiss()
+                        val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"ADD_NOW")
+                        val intent = Intent(this, AddQuestion::class.java)
+                        intent.putExtra(Constant.create_quiz_exam_data_add_now, SaveCreateExamQuizDetails)
+                        startActivity(intent)
+
+
+                    }
+                    btnCancel.setOnClickListener {
+                        alertDialog.dismiss()
+                    }
+
+                    btnLater.setOnClickListener {
+                        alertDialog.dismiss()
+                        val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(title, description, no_of_questions, isNextLevelChecked,"LATER")
+                        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
+                        val intent = Intent(this, RecipientActivity::class.java)
+                        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -437,11 +525,10 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         position: Int
     ) {
         Log.d("Edit","Quiz Data: ${data} Postion: ${position}")
-        val SaveCreateExamQuizDetails = SaveCreateExamQuizDetails(data.title, data.description, data.no_of_questions.toString(),true,"EDIT")
+        val SaveEditExamQuizDetails = SaveEditExamQuizDetails(data.id,data.title, data.description, data.no_of_questions.toString(),data.level_flag,"EDIT")
         val intent = Intent(this, ExamQuiz::class.java)
-        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
+        intent.putExtra(Constant.edit_quiz_exam_data, SaveEditExamQuizDetails)
         startActivity(intent)
-
     }
 
     override fun onDeleteClick(id: String, position: Int) {

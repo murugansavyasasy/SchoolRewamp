@@ -1058,13 +1058,13 @@ interface ApiInterfaces {
     ): Call<CreateQuizResponse?>?
 
 
-    @POST(APIMethods.isDeleteQuiz)
+    @PUT(APIMethods.isDeleteQuiz)
     fun isDeleteQuiz(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<DeleteQuizResponse?>?
 
-    @POST(APIMethods.isEditQuiz)
+    @PUT(APIMethods.isEditQuiz)
     fun isEditQuiz(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,

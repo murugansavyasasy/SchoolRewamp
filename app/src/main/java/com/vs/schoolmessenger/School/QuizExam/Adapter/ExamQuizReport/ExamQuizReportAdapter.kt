@@ -114,9 +114,16 @@ class ExamQuizReportAdapter(
                 .into(imgItem)
 
 
+            if (data.can_edit || data.can_delete) {
+                imgOptions.visibility = View.VISIBLE
+            }
+            else {
+                imgOptions.visibility = View.GONE
+            }
+
             imgOptions.setOnClickListener {
 
-//                if (data.can_edit != true && data.can_delete != true) return@setOnClickListener
+                if (data.can_edit != true && data.can_delete != true) return@setOnClickListener
 
                 val popup = PopupMenu(context, imgOptions)
                 popup.menuInflater.inflate(R.menu.edit_delete_menu, popup.menu)
@@ -139,9 +146,8 @@ class ExamQuizReportAdapter(
                     e.printStackTrace()
                 }
 
-//                In future try to hide the options
-//                popup.menu.findItem(R.id.menu_edit).isVisible = data.can_edit == true
-//                popup.menu.findItem(R.id.menu_delete).isVisible = data.can_delete == true
+                popup.menu.findItem(R.id.nav_edit).isVisible = data.can_edit == true
+                popup.menu.findItem(R.id.nav_delete).isVisible = data.can_delete == true
 
                 popup.menu.findItem(R.id.nav_edit).isVisible = true
                 popup.menu.findItem(R.id.nav_delete).isVisible = true

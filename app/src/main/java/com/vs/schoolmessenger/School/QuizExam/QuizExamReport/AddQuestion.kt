@@ -58,6 +58,8 @@ import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequest
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.UpdateQBankItem
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
+import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.SaveEditExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
@@ -135,6 +137,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
+    private var isQuizCreateData: SaveCreateExamQuizDetails? = null
+
+
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -150,24 +155,18 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         isAccessToken = isStaffDetails!!.access_token
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        binding.toolbarLayout.lblParentToolBar.setOnClickListener {
-            val FinalList = quizAdapter!!.getUpdatedList()
-            Log.d("FinalList", FinalList.toString())
-        }
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-        Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
-        isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
+
+        isQuizCreateData = intent.getSerializableExtra(Constant.create_quiz_exam_data_add_now)
+                as? SaveCreateExamQuizDetails
+
+
         Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-        isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
-        isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
-        isSubjectID = intent.getStringExtra(Constant.subjectID).toString()
-        isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblImportQuestion.setOnClickListener(this)
         binding.lblSendQuiz.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
-        isOkFlag = isSubmittedCount > 0
+
 
         appViewModel?.isGetQuizQuestionReport?.observe(this) { response ->
             if (response != null) {
@@ -252,7 +251,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 isQuestionBankErrorMsg = getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
-        isFetchQuizQuestionReport()
 
         binding.lblAddQuestion.setOnClickListener {
 
@@ -270,6 +268,35 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     )
                 }
             }
+        }
+
+
+        if (isQuizCreateData!=null){
+            if (isQuizCreateData!!.type == "ADD_NOW") {
+                Log.d("ScreenName", "AddNowScreen")
+                Constant.isQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
+                isSavedQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
+                isSubmittedCount =0
+                isQuizID =""
+                isSubjectID = ""
+                isQuizTitle =  isQuizCreateData!!.title
+                isOkFlag = isSubmittedCount > 0
+                binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+            }
+        }
+        else{
+            Log.d("ScreenName", "AddQuestionScreen")
+
+            Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
+            isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
+            isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
+            isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
+            isSubjectID = intent.getStringExtra(Constant.subjectID).toString()
+            isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
+            isOkFlag = isSubmittedCount > 0
+            binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+            isFetchQuizQuestionReport()
+
         }
 
 
