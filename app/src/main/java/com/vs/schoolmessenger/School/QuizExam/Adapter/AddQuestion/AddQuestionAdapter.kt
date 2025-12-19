@@ -1,21 +1,29 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.QuizExam.Adapter.QuestionAttachmentAdapter
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
@@ -34,7 +42,6 @@ class AddQuestionAdapter(
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     var isLastAnswerIndex = 0
@@ -42,7 +49,6 @@ class AddQuestionAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -79,15 +85,12 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
-
     fun addItems(newItems: List<GetQuizQuestionReportData>) {
         itemList!!.size
         itemList!!.addAll(newItems)
-//        notifyItemRangeInserted(startPosition, newItems.size)
         notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
 
     }
-
 
     fun addItem(recyclerView: RecyclerView) {
         itemList!!.add(
@@ -111,10 +114,7 @@ class AddQuestionAdapter(
         )
         Constant.isQuestionLimit -= 1
         notifyItemInserted(itemList!!.size - 1)
-
-
         notifyItemRangeChanged(0, itemList!!.size)//refresh to update remove visibility on all items
-
         recyclerView.post {
             recyclerView.smoothScrollToPosition(itemList!!.size - 1)
         }
@@ -128,14 +128,14 @@ class AddQuestionAdapter(
             // If it's a QBANK question → notify PickQuestionAdapter
             if (removed.sourceType == QuestionSource.QBANK && removed.id.isNotEmpty()) {
                 onQBankItemRemoved?.invoke(removed.id)
-//                Constant.isQuestionLimit += 1
             }
 
             itemList!!.removeAt(position)
             notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, itemList!!.size)
-
-            notifyItemRangeChanged(0, itemList!!.size)// Rebind all items so lblremove visibility updates correctly
+            notifyItemRangeChanged(
+                0,
+                itemList!!.size
+            )// Rebind all items so lblremove visibility updates correctly
             Constant.isQuestionLimit += 1
             listener?.onCountUpdated()
             listener?.onUICheck(itemList!!)
@@ -253,30 +253,14 @@ class AddQuestionAdapter(
 
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
-    private fun updateSpinnerOptions(holder: DataViewHolder, data: GetQuizQuestionReportData) {
-        val optionsList = listOf(
-            "Select correct answer",
-            data.a_option.ifBlank { "Option A" },
-            data.b_option.ifBlank { "Option B" },
-            data.c_option.ifBlank { "Option C" },
-            data.d_option.ifBlank { "Option D" }
-        )
-
-        val spinnerAdapter = SpinnerLoadingAdapter(context, optionsList)
-        holder.spinnerCorrectAnswer.adapter = spinnerAdapter
-
-        // restore previously selected answer
-        holder.spinnerCorrectAnswer.setSelection(isLastAnswerIndex)
-        spinnerAdapter.selectedPosition = isLastAnswerIndex
-        spinnerAdapter.notifyDataSetChanged()
-        Log.d("pos", isLastAnswerIndex.toString())
-
-    }
-
-
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val edtChapterName: EditText = itemView.findViewById(R.id.edtChapterName)
         val edtQuestion: EditText = itemView.findViewById(R.id.edtQuestion)
+        val lblQuestionPick: TextView = itemView.findViewById(R.id.lblQuestionPick)
+        val lblAddImageA: TextView = itemView.findViewById(R.id.lblAddImageA)
+        val lblAddImageB: TextView = itemView.findViewById(R.id.lblAddImageB)
+        val lblAddImageC: TextView = itemView.findViewById(R.id.lblAddImageC)
+        val lblAddImageD: TextView = itemView.findViewById(R.id.lblAddImageD)
         val edtOptionA: EditText = itemView.findViewById(R.id.edtOptionA)
         val edtOptionB: EditText = itemView.findViewById(R.id.edtOptionB)
         val edtOptionC: EditText = itemView.findViewById(R.id.edtOptionC)
@@ -286,32 +270,40 @@ class AddQuestionAdapter(
         val edtCorrectAns: EditText = itemView.findViewById(R.id.edtCorrectAns)
         val edtMark: EditText = itemView.findViewById(R.id.edtMark)
         val lblremove: ImageView = itemView.findViewById(R.id.lblremove)
-        val lnrAttachmentPick: LinearLayout = itemView.findViewById(R.id.lnrAttachmentPick)
+        val rcyQuestions: RecyclerView = itemView.findViewById(R.id.rcyQuestions)
+        val imgOptionA: ImageView = itemView.findViewById(R.id.imgOptionA)
+        val imgOptionB: ImageView = itemView.findViewById(R.id.imgOptionB)
+        val imgOptionC: ImageView = itemView.findViewById(R.id.imgOptionC)
+        val imgOptionD: ImageView = itemView.findViewById(R.id.imgOptionD)
+
+        val fremOptionA: FrameLayout = itemView.findViewById(R.id.framOptionA)
+        val fremOptionB: FrameLayout = itemView.findViewById(R.id.framOptionB)
+        val fremOptionC: FrameLayout = itemView.findViewById(R.id.framOptionC)
+        val fremOptionD: FrameLayout = itemView.findViewById(R.id.framOptionD)
+
+        val progressOptionA: ProgressBar = itemView.findViewById(R.id.progressOptionA)
+        val progressOptionB: ProgressBar = itemView.findViewById(R.id.progressOptionB)
+        val progressOptionC: ProgressBar = itemView.findViewById(R.id.progressOptionC)
+        val progressOptionD: ProgressBar = itemView.findViewById(R.id.progressOptionD)
 
 
         fun bind(data: GetQuizQuestionReportData, position: Int) {
+            Log.d(
+                "ATTACH_DEBUG",
+                "Question $adapterPosition attachments = ${data.file_path?.size}"
+            )
 
             rytSpinnerHeader.visibility = View.VISIBLE
             edtCorrectAns.visibility = View.GONE
-
+            bindOptionImages(data)
+            setupAttachmentRecycler(data, adapterPosition)
             edtChapterName.setText(data.chapter)
             edtQuestion.setText(data.question)
             edtOptionA.setText(data.a_option)
             edtOptionB.setText(data.b_option)
             edtOptionC.setText(data.c_option)
             edtOptionD.setText(data.d_option)
-//            edtCorrectAns.setText(data.answer)
-//            edtMark.setText(data.mark.toString())
             edtMark.setText(if (data.mark == 0) "" else data.mark.toString())
-
-//            val optionsList = listOf(
-//                "Select correct option",
-//                data.a_option.ifBlank { "Option A" },
-//                data.b_option.ifBlank { "Option B" },
-//                data.c_option.ifBlank { "Option C" },
-//                data.d_option.ifBlank { "Option D" }
-//            )
-
             val optionsList = listOf(
                 "Select correct option",
                 "Option A",
@@ -361,27 +353,21 @@ class AddQuestionAdapter(
             edtOptionA.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].a_option = text.toString()
-//                    updateSpinnerOptions(this, itemList!![adapterPosition])
                 }
             }
             edtOptionB.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].b_option = text.toString()
-//                    updateSpinnerOptions(this, itemList!![adapterPosition])
-
                 }
             }
             edtOptionC.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].c_option = text.toString()
-//                    updateSpinnerOptions(this, itemList!![adapterPosition])
-
                 }
             }
             edtOptionD.doAfterTextChanged { text ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     itemList!![adapterPosition].d_option = text.toString()
-//                    updateSpinnerOptions(this, itemList!![adapterPosition])
                 }
             }
 
@@ -391,98 +377,212 @@ class AddQuestionAdapter(
                 }
             }
 
-//            lnrAttachmentPick.setOnClickListener {
-//                isListener.onAttachmentPick(adapterPosition, itemList)
-//            }
-
-//            //we are just hiding the lblremove if the itemList size is one to avoid last item to not be removed
-//            if (itemList!!.size == 1) {
-//                lblremove.visibility = View.GONE
-//            } else {
-//                lblremove.visibility = View.VISIBLE
-//            }
+            rcyQuestions.post {
+                rcyQuestions.requestLayout()
+            }
 
             lblremove.setOnClickListener {
                 removeItem(position)
             }
 
-            edtQuestion.setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-
-                    val drawableEnd = 2 // index for drawableEnd
-
-                    edtQuestion.compoundDrawables[drawableEnd]?.let { drawable ->
-                        if (event.rawX >= (edtQuestion.right - drawable.bounds.width() - edtQuestion.paddingEnd)) {
-                            isListener.onAttachmentPick(adapterPosition, itemList, true, edtOptionA)
-                            return@setOnTouchListener true
-                        }
-                    }
-                }
-                false
+            lblQuestionPick.setOnClickListener {
+                isListener.onAttachmentPick(adapterPosition, itemList, true, lblQuestionPick)
             }
+        }
 
-            edtOptionA.setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
+        private fun setupOptionImageUI(
+            imageUrl: String?,
+            imageView: ImageView,
+            labelView: TextView,
+            isFremLayout: FrameLayout,
+            isProgressBar: ProgressBar
+        ) {
+            if (imageUrl.isNullOrEmpty()) {
+                imageView.visibility = View.GONE
+                isFremLayout.visibility = View.GONE
+                labelView.text = "Add image"
+                labelView.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.attachment_icon_2, 0, 0, 0
+                )
+            } else {
+                imageView.visibility = View.VISIBLE
+                isFremLayout.visibility = View.VISIBLE
+                Glide.with(itemView.context).load(imageUrl).into(imageView)
+                labelView.text = "Remove image"
+                labelView.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.red_close_icon_, 0, 0, 0
+                )
+                loadImageWithProgress(imageUrl, imageView, isProgressBar, isFremLayout)
 
-                    val drawableEnd = 2 // index for drawableEnd
-
-                    edtOptionA.compoundDrawables[drawableEnd]?.let { drawable ->
-                        if (event.rawX >= (edtOptionA.right - drawable.bounds.width() - edtOptionA.paddingEnd)) {
-                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionA)
-                            return@setOnTouchListener true
-                        }
-                    }
-                }
-                false
             }
+        }
 
-            edtOptionB.setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
+        private fun loadImageWithProgress(
+            imageUrl: String,
+            imageView: ImageView,
+            progressBar: ProgressBar,
+            isFremLayout: FrameLayout
+        ) {
+            progressBar.visibility = View.VISIBLE
+            imageView.visibility = View.INVISIBLE
+            isFremLayout.visibility = View.INVISIBLE
 
-                    val drawableEnd = 2 // index for drawableEnd
+            Glide.with(itemView.context)
+                .load(imageUrl)
+                .listener(object : RequestListener<Drawable> {
 
-                    edtOptionB.compoundDrawables[drawableEnd]?.let { drawable ->
-                        if (event.rawX >= (edtOptionB.right - drawable.bounds.width() - edtOptionB.paddingEnd)) {
-                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionB)
-                            return@setOnTouchListener true
-                        }
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        imageView.visibility = View.GONE
+                        isFremLayout.visibility = View.GONE
+                        return false
                     }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        progressBar.visibility = View.GONE
+                        imageView.visibility = View.VISIBLE
+                        isFremLayout.visibility = View.VISIBLE
+                        return false
+                    }
+                })
+                .into(imageView)
+        }
+
+
+        private fun handleOptionImageClick(
+            isFremLayout: FrameLayout,
+            imageUrl: String?,
+            labelView: TextView,
+            imageView: ImageView,
+            onPick: () -> Unit,
+            onRemove: () -> Unit
+        ) {
+            labelView.setOnClickListener {
+                if (imageUrl.isNullOrEmpty()) {
+                    onPick()
+                } else {
+                    onRemove()
+                    imageView.visibility = View.GONE
+                    isFremLayout.visibility = View.GONE
+                    imageView.setImageDrawable(null)
                 }
-                false
             }
+        }
 
-            edtOptionC.setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
+        private fun bindOptionImages(data: GetQuizQuestionReportData) {
 
-                    val drawableEnd = 2 // index for drawableEnd
-
-                    edtOptionC.compoundDrawables[drawableEnd]?.let { drawable ->
-                        if (event.rawX >= (edtOptionC.right - drawable.bounds.width() - edtOptionC.paddingEnd)) {
-                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionC)
-                            return@setOnTouchListener true
-                        }
-                    }
+            setupOptionImageUI(
+                data.a_image,
+                imgOptionA,
+                lblAddImageA, fremOptionA, progressOptionA
+            )
+            handleOptionImageClick(
+                fremOptionA,
+                data.a_image,
+                lblAddImageA,
+                imgOptionA,
+                onPick = {
+                    isListener.onAttachmentPick(adapterPosition, itemList, false, lblAddImageA)
+                },
+                onRemove = {
+                    data.a_image = ""
+                    notifyItemChanged(adapterPosition)
                 }
-                false
+            )
+
+            setupOptionImageUI(
+                data.b_image,
+                imgOptionB,
+                lblAddImageB, fremOptionB, progressOptionB
+            )
+            handleOptionImageClick(
+                fremOptionB,
+                data.b_image,
+                lblAddImageB,
+                imgOptionB,
+                onPick = {
+                    isListener.onAttachmentPick(adapterPosition, itemList, false, lblAddImageB)
+                },
+                onRemove = {
+                    data.b_image = ""
+                    notifyItemChanged(adapterPosition)
+                }
+            )
+
+            setupOptionImageUI(
+                data.c_image,
+                imgOptionC,
+                lblAddImageC, fremOptionC, progressOptionC
+            )
+            handleOptionImageClick(
+                fremOptionC,
+                data.c_image,
+                lblAddImageC,
+                imgOptionC,
+                onPick = {
+                    isListener.onAttachmentPick(adapterPosition, itemList, false, lblAddImageC)
+                },
+                onRemove = {
+                    data.c_image = ""
+                    notifyItemChanged(adapterPosition)
+                }
+            )
+
+            setupOptionImageUI(
+                data.d_image,
+                imgOptionD,
+                lblAddImageD, fremOptionD, progressOptionD
+            )
+            handleOptionImageClick(
+                fremOptionD,
+                data.d_image,
+                lblAddImageD,
+                imgOptionD,
+                onPick = {
+                    isListener.onAttachmentPick(adapterPosition, itemList, false, lblAddImageD)
+                },
+                onRemove = {
+                    data.d_image = ""
+                    notifyItemChanged(adapterPosition)
+                }
+            )
+        }
+
+        private fun setupAttachmentRecycler(
+            data: GetQuizQuestionReportData,
+            questionPos: Int
+        ) {
+            val attachments = data.file_path ?: return
+
+            if (attachments.isEmpty()) {
+                rcyQuestions.visibility = View.GONE
+                rcyQuestions.adapter = null
+                return
             }
+            rcyQuestions.visibility = View.VISIBLE
+            rcyQuestions.isNestedScrollingEnabled = false
+            rcyQuestions.layoutManager = GridLayoutManager(itemView.context, 3)
 
-            edtOptionD.setOnTouchListener { v, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-
-                    val drawableEnd = 2 // index for drawableEnd
-
-                    edtOptionD.compoundDrawables[drawableEnd]?.let { drawable ->
-                        if (event.rawX >= (edtOptionD.right - drawable.bounds.width() - edtOptionD.paddingEnd)) {
-                            isListener.onAttachmentPick(adapterPosition, itemList,false,edtOptionD)
-                            return@setOnTouchListener true
-                        }
-                    }
-                }
-                false
+            rcyQuestions.adapter = QuestionAttachmentAdapter(
+                itemView.context,
+                attachments
+            ) { removePos ->
+                attachments.removeAt(removePos)
+                notifyItemChanged(questionPos)
             }
         }
     }
-
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

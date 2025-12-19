@@ -51,15 +51,14 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
+import com.vs.schoolmessenger.School.QuizExam.Adapter.QuestionAttachmentAdapter
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequest
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.UpdateQBankItem
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
-import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.SaveEditExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBankData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
@@ -99,7 +98,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private var cameraPermissionDeniedCount = 0
 
     var isQuestionPick: Boolean? = null
-    var isOptionsFieldId: EditText? = null
+    var isOptionsFieldId: TextView? = null
 
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
@@ -109,10 +108,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
 
-    private val pendingVimeoVideos = mutableListOf<String>()
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
-    private var mAdapter: ImagePickingAdapter? = null
 
     var file_path: List<FilePath> = emptyList()
 
@@ -140,7 +137,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private var isQuizCreateData: SaveCreateExamQuizDetails? = null
 
 
-
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
@@ -157,11 +153,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
 
+        //Note : we are getting this from Create quiz page if user click "Add Now"
         isQuizCreateData = intent.getSerializableExtra(Constant.create_quiz_exam_data_add_now)
                 as? SaveCreateExamQuizDetails
 
-
-        Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblImportQuestion.setOnClickListener(this)
@@ -231,6 +226,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 if (response.status) {
                     Constant.hideLoading(this)
                     pickQBankList = response.data.map { it.copy(checked = false) }
+
                     showResumeListDialog(this, pickQBankList)
                 } else {
                     Constant.hideLoading(this)
@@ -270,23 +266,35 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         }
 
+//We are two scenrio are handle here
+//        Before that In Create Quiz the title, decription,no of questions,flag all details are fetched
+//        1.Here comes the main thing if user check "ADD_NOW" means it all the details will be saved and no quiz will be created directly we are redirected to "Add Question Page" here we are adding the question and then going to "Recipient page" and then taking all the target details etc and finally calling the "create quiz api" call
+//        2.Here if user already created means we used have all the details about the quiz and only need to add the questions and do "Add Question api"
 
-        if (isQuizCreateData!=null){
+        if (isQuizCreateData != null) {
             if (isQuizCreateData!!.type == "ADD_NOW") {
                 Log.d("ScreenName", "AddNowScreen")
                 Constant.isQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
                 isSavedQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
-                isSubmittedCount =0
-                isQuizID =""
+                isSubmittedCount = 0
+                isQuizID = ""
                 isSubjectID = ""
-                isQuizTitle =  isQuizCreateData!!.title
+                isQuizTitle = isQuizCreateData!!.title
                 isOkFlag = isSubmittedCount > 0
                 binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
-            }
-        }
-        else{
-            Log.d("ScreenName", "AddQuestionScreen")
+                binding.lblImportQuestion.visibility = View.GONE
 
+                //Note: we are making both savedQuizQuestionReportList and editableQuizQuestionReportList as empty because to have a one default question
+                savedQuizQuestionReportList = emptyList()
+                editableQuizQuestionReportList = mutableListOf()
+
+                //here avoid the isGetQuizQuestionReport api because we have not yet created the quiz and not yet add the question so directly load empty list
+                //Load adapter with empty list
+                isLoadQuizQuestionReport()
+
+            }
+        } else {
+            Log.d("ScreenName", "AddQuestionScreen")
             Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
@@ -295,9 +303,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
             isOkFlag = isSubmittedCount > 0
             binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+            binding.lblImportQuestion.visibility = View.VISIBLE
             isFetchQuizQuestionReport()
-
         }
+        Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
 
 
         // Attachment Code
@@ -354,7 +363,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                             type = type.toString()
                         )
                         val quizItem = itemList[isAttachmentAdapterPosition]
-                        quizItem.file_path.add(filePath)
+                        quizItem.file_path!!.add(filePath)
                         Log.d(
                             "",
                             "Saved file at position $isAttachmentAdapterPosition => $filePath"
@@ -362,26 +371,28 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     } else {
                         val quizItem = itemList[isAttachmentAdapterPosition]
                         if (resources.getResourceEntryName(isOptionsFieldId!!.id)
-                                .toString() == "edtOptionA"
+                                .toString() == "lblAddImageA"
                         ) {
                             quizItem.a_image = uri.toString()
                         } else if (resources.getResourceEntryName(isOptionsFieldId!!.id)
-                                .toString() == "edtOptionB"
+                                .toString() == "lblAddImageB"
                         ) {
                             quizItem.b_image = uri.toString()
                         } else if (resources.getResourceEntryName(isOptionsFieldId!!.id)
-                                .toString() == "edtOptionC"
+                                .toString() == "lblAddImageC"
                         ) {
                             quizItem.c_image = uri.toString()
                         } else if (resources.getResourceEntryName(isOptionsFieldId!!.id)
-                                .toString() == "edtOptionD"
+                                .toString() == "lblAddImageD"
                         ) {
                             quizItem.d_image = uri.toString()
                         }
                     }
                 }
-
-                mAdapter?.notifyItemChanged(isAttachmentAdapterPosition)
+                quizAdapter?.notifyItemChanged(isAttachmentAdapterPosition)
+                isAttachmentAdapterPosition = RecyclerView.NO_POSITION
+                isQuestionPick = false
+                isOptionsFieldId = null
             }
     }
 
@@ -668,7 +679,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             file_size = "",
             thumbnail = "",
             sourceType = QuestionSource.QBANK,
-            file_path = this.file_path as MutableList<FilePath>
+            file_path = this.file_path?.toMutableList() ?: mutableListOf()
         )
     }
 
@@ -744,7 +755,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                         showResumeListDialog(this, pickQBankList)
                     }
                 }
-
             }
 
             R.id.lblSendQuiz -> {
@@ -810,7 +820,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         position: Int,
         item: MutableList<GetQuizQuestionReportData>?,
         isQuestion: Boolean,
-        isOptionsImageId: EditText
+        isOptionsImageId: TextView
     ) {
         isAttachmentAdapterPosition = position
         itemList = item!!
@@ -995,33 +1005,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
     }
 
-//    private fun openCameraIntent() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent.resolveActivity(packageManager) != null) {
-//            val photoFile: File? = try {
-//                createImageFile()
-//            } catch (ex: IOException) {
-//                ex.printStackTrace()
-//                null
-//            }
-//
-//            if (photoFile != null) {
-//                val photoURI = FileProvider.getUriForFile(
-//                    this, "${applicationContext.packageName}.fileprovider", photoFile
-//                )
-//                cameraImageFilePath = photoFile.absolutePath
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
-//            } else {
-//                Toast.makeText(
-//                    this, getString(R.string.could_not_create_file_for_photo), Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        } else {
-//            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
-//        }
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -1062,7 +1045,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     type = type.toString()
                 )
                 val quizItem = itemList[isAttachmentAdapterPosition]
-                quizItem.file_path.add(filePath)
+                quizItem.file_path!!.add(filePath)
                 Log.d(
                     "",
                     "Saved file at position $isAttachmentAdapterPosition => $filePath"
@@ -1142,7 +1125,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 }
             }
         }
-        mAdapter?.notifyDataSetChanged()
+        quizAdapter?.notifyItemChanged(isAttachmentAdapterPosition)
+        isAttachmentAdapterPosition = RecyclerView.NO_POSITION
+        isQuestionPick = false
+        isOptionsFieldId = null
+
     }
 
     private fun fixImageOrientation(imagePath: String): Bitmap? {
@@ -1240,7 +1227,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     iframe = it.iframe ?: "",
                     file_size = "",
                     thumbnail = it.thumbnail ?: "",
-                    file_path = it.file_path
+                    file_path = it.file_path ?: mutableListOf()
                 )
             }
 
@@ -1351,6 +1338,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             uploadNextFile()
         }
     }
+
     private fun uploadNextFile() {
         if (currentIndex >= pendingFiles.size) {
             replaceUrlsInBody(pendingBody)
@@ -1485,7 +1473,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private fun callApi(body: QuizRequestBody) {
         val json = Gson().toJsonTree(body).asJsonObject
         Log.d("FINAL_JSON", json.toString())
-
         appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
     }
 

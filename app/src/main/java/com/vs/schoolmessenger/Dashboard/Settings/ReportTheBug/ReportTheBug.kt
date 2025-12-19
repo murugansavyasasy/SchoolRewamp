@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.Parent.QuizExam.QuizActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.Utils.Constant
@@ -72,6 +73,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnIm
         super.setupViews()
 //        binding.rlaPickImage.setOnClickListener(this)
         binding.btnReportBug.setOnClickListener(this)
+        binding.btnOpenNextPage.setOnClickListener(this)
+
 
 
         isToolBarPrimarySchool(
@@ -189,6 +192,11 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnIm
             R.id.imgBack -> {
                 Constant.selectedFiles.clear()
                 onBackPressed()
+            }
+
+            R.id.btnOpenNextPage -> {
+                val intent = Intent(this, QuizActivity::class.java)
+                startActivity(intent)
             }
 
         }
