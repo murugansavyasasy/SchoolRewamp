@@ -27,7 +27,7 @@ import me.relex.circleindicator.CircleIndicator2
 
 class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
-    private lateinit var isAllQuestionData: List<GetQuizQuestionsData>
+    private lateinit var isAllQuestionData: List<GetQuestionDetails>
     private lateinit var isQuestionList: List<GetQuestionDetails>
     private lateinit var questionList: List<QuestionData>
     private var currentQuestionIndex = 0
@@ -78,7 +78,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                 if (response.status) {
                     Constant.hideLoading(this)
                     isAllQuestionData = response.data
-                    isQuestionList = isAllQuestionData.get(0).question_details
+                    isQuestionList = isAllQuestionData
                     Log.d("isQuestionList", isQuestionList.toString())
                     isSetQuestion(isQuestionList)
                     binding.lnrQuiz.visibility = View.VISIBLE
@@ -141,10 +141,10 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             QuestionData(
                 id = question.id,
                 question = question.question,
-                option1 = question.options.getOrNull(0) ?: "",
-                option2 = question.options.getOrNull(1) ?: "",
-                option3 = question.options.getOrNull(2) ?: "",
-                option4 = question.options.getOrNull(3) ?: "",
+                option1 = question.options.get(0).option,
+                option2 = question.options.get(1).option,
+                option3 = question.options.get(2).option,
+                option4 = question.options.get(2).option,
                 filePath = question.file_path
             )
         }
