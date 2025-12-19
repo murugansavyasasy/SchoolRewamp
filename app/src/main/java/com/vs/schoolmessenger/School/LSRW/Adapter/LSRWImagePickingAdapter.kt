@@ -145,7 +145,7 @@ class LSRWImagePickingAdapter(
                 FileType.TXT -> R.drawable.txt_icon
                 FileType.IMAGE -> R.drawable.image_placeholder
                 FileType.VIDEO -> R.drawable.black
-                else -> R.drawable.address_icon
+                else -> R.drawable.wrong_file
             }
 
             Glide.with(context)

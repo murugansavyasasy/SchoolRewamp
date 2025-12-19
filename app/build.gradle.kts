@@ -18,6 +18,15 @@ android {
     compileSdk = 35
     ndkVersion = "28.0.12433566"
 
+//    android {
+//        ndkVersion = "26.1.10909125"
+//    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
 
     defaultConfig {
 
