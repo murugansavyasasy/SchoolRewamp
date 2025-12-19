@@ -5,9 +5,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 
 data class GetPickFromQBankData(
 
-    @SerializedName("ques_no")
     val id: String,
-
     val topic: String,
     val chapter: String,
 
@@ -24,17 +22,15 @@ data class GetPickFromQBankData(
     val b_option: String,
     val c_option: String,
     val d_option: String,
-
     val mark: Int,
-
     val correct_answer_text: String,
+    var checked: Boolean = false,
     @SerializedName("q_file_path")
     val file_path: List<FilePath> = emptyList(),
     val a_image: String? = null,
     val b_image: String? = null,
     val c_image: String? = null,
     val d_image: String? = null,
-    var checked: Boolean = false
 )
 
 
@@ -42,6 +38,8 @@ data class GetPickFromQBankData(
 
 //package com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank
 //
+//import com.google.gson.annotations.SerializedName
+//import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 //data class GetPickFromQBankData(
 //    val id: String,
 //    val topic: String,
@@ -58,5 +56,12 @@ data class GetPickFromQBankData(
 //    val d_option: String,
 //    val mark: Int,
 //    val correct_answer_text: String,
-//    var checked: Boolean = false//This we added to handle the logic
+//    var checked: Boolean = false,//This we added to handle the logic
+//
+//    @SerializedName("q_file_path")
+//    val file_path: List<FilePath> = emptyList(),
+//    val a_image: String? = null,
+//    val b_image: String? = null,
+//    val c_image: String? = null,
+//    val d_image: String? = null,
 //)

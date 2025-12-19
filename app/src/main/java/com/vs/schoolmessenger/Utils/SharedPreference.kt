@@ -175,7 +175,6 @@ object SharedPreference {
     }
 
     fun getCountryId(activity: Context): Int? {
-
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,

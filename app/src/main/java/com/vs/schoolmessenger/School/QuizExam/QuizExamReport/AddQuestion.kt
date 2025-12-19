@@ -229,7 +229,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
-                    pickQBankList = response.data.map { it.copy(checked = false) }
+                    pickQBankList = response.data
                     showResumeListDialog(this, pickQBankList)
                 } else {
                     Constant.hideLoading(this)
@@ -1499,7 +1499,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private fun callApi(body: QuizRequestBody) {
         val json = Gson().toJsonTree(body).asJsonObject
         Log.d("FINAL_JSON", json.toString())
-
         appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
     }
 
