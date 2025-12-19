@@ -1,0 +1,152 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/ivQuestionIcon"
+            android:layout_width="@dimen/twenty_four"
+            android:layout_height="@dimen/twenty_four"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/ic_document"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvQuestionNumber"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text="Question 1/10"
+            android:textSize="@dimen/eighteen_sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivQuestionIcon"
+            app:layout_constraintStart_toEndOf="@id/ivQuestionIcon"
+            app:layout_constraintTop_toTopOf="@id/ivQuestionIcon" />
+
+        <TextView
+            android:id="@+id/tvQuestionText"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty"
+            android:lineSpacingExtra="@dimen/four"
+            android:text="Analyze the provided circuit diagram (Attachment A. Which graph the four four graphs (Atrectls) reprectly represents the voltage V(t) across acss the 3 capacitor C after the switch B D is closed at t=0?"
+            android:textSize="@dimen/fourteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvQuestionNumber" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCircuitDiagram"
+            android:layout_width="@dimen/two_hundred_fifty"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            app:cardCornerRadius="@dimen/twele"
+            app:cardElevation="@dimen/two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvQuestionText"
+            app:strokeColor="@color/purble"
+            app:strokeWidth="@dimen/two">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/fifteen">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCircuitImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/tvSelectOption"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:text="Select the correct option:"
+            android:textSize="@dimen/sixteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardCircuitDiagram" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOptions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSelectOption" />
+
+        <Button
+            android:id="@+id/btnPreviousQuestion"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:background="@drawable/background_radius_button"
+            android:drawablePadding="@dimen/eight"
+            android:gravity="center"
+            android:paddingStart="@dimen/twenty"
+            android:paddingTop="@dimen/twele"
+            android:paddingEnd="@dimen/twenty"
+            android:paddingBottom="@dimen/twele"
+            android:text="Previous Question"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fourteen_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnNextQuestion"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:background="@drawable/background_radius_button"
+            android:drawablePadding="@dimen/eight"
+            android:gravity="center"
+            android:paddingStart="@dimen/twenty"
+            android:paddingTop="@dimen/twele"
+            android:paddingEnd="@dimen/twenty"
+            android:paddingBottom="@dimen/twele"
+            android:text="Next Question"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fourteen_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
