@@ -227,7 +227,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this)
-                    pickQBankList = response.data
+                    pickQBankList = response.data.map { it.copy(checked = false) }
+
                     showResumeListDialog(this, pickQBankList)
                 } else {
                     Constant.hideLoading(this)
@@ -366,7 +367,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                             type = type.toString()
                         )
                         val quizItem = itemList[isAttachmentAdapterPosition]
-                        quizItem.file_path.add(filePath)
+                        quizItem.file_path!!.add(filePath)
                         Log.d(
                             "",
                             "Saved file at position $isAttachmentAdapterPosition => $filePath"
@@ -680,7 +681,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             file_size = "",
             thumbnail = "",
             sourceType = QuestionSource.QBANK,
-            file_path = this.file_path as MutableList<FilePath>
+            file_path = this.file_path ?.toMutableList() ?: mutableListOf()
         )
     }
 
@@ -1047,7 +1048,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     type = type.toString()
                 )
                 val quizItem = itemList[isAttachmentAdapterPosition]
-                quizItem.file_path.add(filePath)
+                quizItem.file_path!!.add(filePath)
                 Log.d(
                     "",
                     "Saved file at position $isAttachmentAdapterPosition => $filePath"
@@ -1225,7 +1226,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     iframe = it.iframe ?: "",
                     file_size = "",
                     thumbnail = it.thumbnail ?: "",
-                    file_path = it.file_path
+                    file_path = it.file_path?:mutableListOf()
                 )
             }
 

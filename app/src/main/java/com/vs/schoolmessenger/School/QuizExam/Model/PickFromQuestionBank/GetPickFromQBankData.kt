@@ -26,7 +26,7 @@ data class GetPickFromQBankData(
     val correct_answer_text: String,
     var checked: Boolean = false,
     @SerializedName("q_file_path")
-    val file_path: List<FilePath> = emptyList(),
+    val file_path: List<FilePath>? = emptyList(),
     val a_image: String? = null,
     val b_image: String? = null,
     val c_image: String? = null,
