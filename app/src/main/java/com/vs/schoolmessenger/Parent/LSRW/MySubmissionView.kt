@@ -61,6 +61,9 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
                 val submission = response.data[0]
 
+                binding.description.text = submission.description
+
+
                 // IMAGE LIST (non-audio items)
                 val imageList = submission.file_path
                     .filter { !it.type.equals(Constant.AUDIO, ignoreCase = true) }

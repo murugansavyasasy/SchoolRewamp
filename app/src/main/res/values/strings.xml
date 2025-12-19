@@ -755,7 +755,7 @@
     <string name="ReOpen">ReOpen</string>
     <string name="emergency_voice">Emergency voice</string>
     <string name="post_on">post on</string>
-    <string name="posted_by">posted by</string>
+    <string name="posted_by">Posted By</string>
     <string name="correct_answer">Correct answer :</string>
     <string name="correct_answer1">Correct answer</string>
     <string name="wrong_answer">Wrong answer :</string>
@@ -1334,5 +1334,8 @@
     <string name="later">Later</string>
     <string name="add_now">Add Now</string>
     <string name="switch_login">Switch Login</string>
+    <string name="are_you_sure_you_want_to_delete_this_quiz">Are you sure you want to delete this Quiz ?</string>
+    <string name="are_you_sure_you_want_to_update_the_quiz">Are you sure you want to update the quiz?</string>
+
 
 </resources>

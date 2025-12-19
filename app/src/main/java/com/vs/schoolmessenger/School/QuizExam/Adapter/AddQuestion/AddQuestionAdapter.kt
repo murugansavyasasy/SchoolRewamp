@@ -32,7 +32,6 @@ class AddQuestionAdapter(
     private var isLoading: Boolean,
     var onQBankItemRemoved: ((String) -> Unit)? = null
 
-
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 

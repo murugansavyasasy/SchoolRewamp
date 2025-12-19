@@ -35,8 +35,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/eighty"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/rounded_top_left_bottom_end_primary"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/rounded_radius_quiz"
                 android:elevation="@dimen/ten"
                 android:gravity="center"
                 android:padding="@dimen/five"
@@ -45,6 +45,22 @@
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
+
+            <ImageView
+                android:id="@+id/imgOptions"
+                android:gravity="center"
+                android:elevation="@dimen/ten"
+                android:padding="@dimen/five"
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/thirty"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginTop="@dimen/two"
+                android:background="@drawable/circle_bg"
+                android:backgroundTint="@color/PrimaryColor"
+                android:tint="@color/white"
+                android:src="@drawable/threedot"
+                android:layout_height="@dimen/thirty">
+            </ImageView>
 
             <TextView
                 android:id="@+id/lblCreatedOn"
