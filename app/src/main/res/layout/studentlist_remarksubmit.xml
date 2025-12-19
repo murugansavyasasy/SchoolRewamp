@@ -52,6 +52,20 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginStart="@dimen/ten"/>
 
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"/>
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcSeekBarAndTitle"
                 android:layout_width="match_parent"
