@@ -157,11 +157,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
 
+        //Note : we are getting this from Create quiz page if user click "Add Now"
         isQuizCreateData = intent.getSerializableExtra(Constant.create_quiz_exam_data_add_now)
                 as? SaveCreateExamQuizDetails
 
-
-        Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblImportQuestion.setOnClickListener(this)
@@ -270,6 +269,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         }
 
+//We are two scenrio are handle here
+//        Before that In Create Quiz the title, decription,no of questions,flag all details are fetched
+//        1.Here comes the main thing if user check "ADD_NOW" means it all the details will be saved and no quiz will be created directly we are redirected to "Add Question Page" here we are adding the question and then going to "Recipient page" and then taking all the target details etc and finally calling the "create quiz api" call
+//        2.Here if user already created means we used have all the details about the quiz and only need to add the questions and do "Add Question api"
 
         if (isQuizCreateData!=null){
             if (isQuizCreateData!!.type == "ADD_NOW") {
@@ -282,11 +285,20 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 isQuizTitle =  isQuizCreateData!!.title
                 isOkFlag = isSubmittedCount > 0
                 binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+                binding.lblImportQuestion.visibility= View.GONE
+
+                //Note: we are making both savedQuizQuestionReportList and editableQuizQuestionReportList as empty because to have a one default question
+                savedQuizQuestionReportList = emptyList()
+                editableQuizQuestionReportList = mutableListOf()
+
+                //here avoid the isGetQuizQuestionReport api because we have not yet created the quiz and not yet add the question so directly load empty list
+                //Load adapter with empty list
+                isLoadQuizQuestionReport()
+
             }
         }
         else{
             Log.d("ScreenName", "AddQuestionScreen")
-
             Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
@@ -295,9 +307,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
             isOkFlag = isSubmittedCount > 0
             binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
+            binding.lblImportQuestion.visibility= View.VISIBLE
             isFetchQuizQuestionReport()
-
         }
+        Log.d("isQuestionLimit", Constant.isQuestionLimit.toString())
+
 
 
         // Attachment Code
