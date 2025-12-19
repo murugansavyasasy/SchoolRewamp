@@ -437,6 +437,12 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                 onBackPressed()
             }
 
+
+//We are two scenrio are handle here
+//        Before that In Create Quiz the title, decription,no of questions,flag all details are fetched
+//        1.Here comes the main thing if user check "ADD_NOW" means it all the details will be saved and no quiz will be created directly we are redirected to "Add Question Page" here we are adding the question and then going to "Recipient page" and then taking all the target details etc and finally calling the "create quiz api" call
+//        2.Here if user already created means we used have all the details about the quiz and only need to add the questions and do "Add Question api"
+
             R.id.btnChooseRecipient -> {
                 if (!isQuizBasicValidationPassed()) {
                     return
