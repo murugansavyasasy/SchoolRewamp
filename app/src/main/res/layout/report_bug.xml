@@ -235,6 +235,23 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp" />
 
+                <TextView
+                    android:id="@+id/btnOpenNextPage"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnReportBug"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:layout_marginBottom="@dimen/twenty"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="Open Quiz Page"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp" />
+
             </RelativeLayout>
 
 
