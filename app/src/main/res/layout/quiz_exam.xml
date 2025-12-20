@@ -45,8 +45,8 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/ivQuestionIcon"
-                    android:layout_width="@dimen/twenty_four"
-                    android:layout_height="@dimen/twenty_four"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
                     android:src="@drawable/ic_document"
                     android:tint="@color/PrimaryColor"
                     />
@@ -97,9 +97,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
                         android:orientation="vertical"
-                        android:padding="@dimen/ten">
+                        >
 
                         <TextView
                             android:id="@+id/questionText"
@@ -111,24 +110,20 @@
                             android:textSize="@dimen/fifteen_sp"
                             android:textStyle="bold" />
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/two_fifty"
-                            android:layout_height="@dimen/two_hundred"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/ten"
-                            android:elevation="@dimen/ten"
-                            app:cardCornerRadius="@dimen/twenty">
-
                             <RelativeLayout
                                 android:layout_margin="@dimen/twenty"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/five"
+                                android:background="@drawable/bg_radius_colour"
+                                android:layout_width="@dimen/two_hundred_eighty"
+                                android:layout_height="220dp"
                                 android:orientation="vertical">
 
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/rcAttachement"
+                                    android:layout_centerHorizontal="true"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/one_eighty"
                                     >
 
                                 </androidx.recyclerview.widget.RecyclerView>
@@ -136,15 +131,15 @@
                                 <me.relex.circleindicator.CircleIndicator2
                                     android:layout_below="@+id/rcAttachement"
                                     android:id="@+id/indicator"
+                                    android:layout_marginTop="@dimen/five"
                                     style="@style/IndicatorStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="@dimen/twenty"
                                     android:layout_centerHorizontal="true"
                                     android:elevation="@dimen/four"
-                                    android:visibility="gone" />
+                                     />
                             </RelativeLayout>
 
-                        </androidx.cardview.widget.CardView>
 
 
                         <TextView
@@ -192,6 +187,7 @@
                                     android:layout_toEndOf="@+id/tvOptionBullet">
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/CardOption1"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="@dimen/five"
@@ -220,7 +216,6 @@
                                                     android:layout_marginEnd="@dimen/five"
                                                     android:layout_toStartOf="@id/imgCheckmarkA"
                                                     android:clickable="true"
-                                                    android:gravity="center"
                                                     android:padding="10dp"
                                                     android:text="Option 1"
                                                     android:textColor="@color/azure_radiance"
@@ -286,6 +281,7 @@
                                     android:layout_toEndOf="@+id/tvOptionBullet1">
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/CardOption2"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="@dimen/five"
@@ -314,7 +310,6 @@
                                                     android:layout_toStartOf="@id/imgCheckmarkB"
                                                     android:clickable="true"
                                                     android:layout_marginEnd="@dimen/five"
-                                                    android:gravity="center"
                                                     android:padding="10dp"
                                                     android:text="Option 2"
                                                     android:textColor="@color/azure_radiance"
@@ -381,6 +376,7 @@
                                     android:layout_toEndOf="@+id/tvOptionBullet2">
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/CardOption3"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="@dimen/five"
@@ -409,7 +405,6 @@
                                                     android:layout_toStartOf="@id/imgCheckmarkC"
                                                     android:clickable="true"
                                                     android:layout_marginEnd="@dimen/five"
-                                                    android:gravity="center"
                                                     android:padding="10dp"
                                                     android:text="Option 3"
                                                     android:textColor="@color/azure_radiance"
@@ -476,6 +471,7 @@
                                     android:layout_toEndOf="@+id/tvOptionBullet3">
 
                                     <androidx.cardview.widget.CardView
+                                        android:id="@+id/CardOption4"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="@dimen/five"
@@ -503,7 +499,6 @@
                                                     android:layout_centerVertical="true"
                                                     android:layout_toStartOf="@id/imgCheckmarkD"
                                                     android:clickable="true"
-                                                    android:gravity="center"
                                                     android:layout_marginEnd="@dimen/five"
                                                     android:padding="10dp"
                                                     android:text="Option 4"
@@ -579,6 +574,34 @@
                         android:text="@string/no_list_found"
                         android:textSize="@dimen/fifteen_sp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/quiz_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifty"
+                        android:layout_height="@dimen/fifty"
+                        android:src="@drawable/quiz_complete"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="2"
+                        android:shadowDy="1"
+                        android:shadowRadius="3"
+                        android:text="@string/submitted_the_quiz_successfully"
+                        android:textColor="@color/neon_green"
+                        android:textSize="@dimen/twenty_sp"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 
@@ -600,7 +623,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/five"
                 android:layout_weight="0.5"
-                android:background="@drawable/bg_button_blue_color"
+                android:background="@drawable/primary_colour_bg_radius_bg"
                 android:gravity="center">
 
                 <ImageView
@@ -632,7 +655,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
                 android:layout_weight="0.5"
-                android:background="@drawable/bg_button_blue_color"
+                android:background="@drawable/primary_colour_bg_radius_bg"
                 android:gravity="center">
 
                 <TextView
@@ -656,35 +679,6 @@
 
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/quiz_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:src="@drawable/quiz_complete"></ImageView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:gravity="center"
-                android:shadowColor="@color/black"
-                android:shadowDx="2"
-                android:shadowDy="1"
-                android:shadowRadius="3"
-                android:text="@string/submitted_the_quiz_successfully"
-                android:textColor="@color/neon_green"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold"></TextView>
-        </LinearLayout>
-
 
     </RelativeLayout>
 
