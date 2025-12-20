@@ -1,20 +1,26 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
+import android.media.Image
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuestionDetails
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestionsData
+import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.OptionsData
 import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.QuestionData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -33,6 +39,8 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     private var currentQuestionIndex = 0
     private lateinit var selectedAnswers: IntArray
     private lateinit var optionsArray: Array<TextView>
+
+    private lateinit var questionImageArray: Array<ImageView>
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -71,6 +79,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         isQuizID = intent.getStringExtra(Constant.isRSQuizId).toString()
+
 
         appViewModel?.isGetQuestion?.observe(this) { response ->
 
@@ -128,7 +137,10 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             }
         }
 
+
         isFetchQuizQuestionList()
+
+
 
 
         binding.nextButton.setOnClickListener(this)
@@ -141,14 +153,19 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             QuestionData(
                 id = question.id,
                 question = question.question,
-                option1 = question.options.get(0).option,
-                option2 = question.options.get(1).option,
-                option3 = question.options.get(2).option,
-                option4 = question.options.get(2).option,
+                option1 = question.options.get(0).value,
+                option2 = question.options.get(1).value,
+                option3 = question.options.get(2).value,
+                option4 = question.options.get(3).value,
+                questionImgOption1 = question.options.get(0).image,
+                questionImgOption2 = question.options.get(1).image,
+                questionImgOption3 = question.options.get(2).image,
+                questionImgOption4 = question.options.get(3).image,
                 filePath = question.file_path
             )
         }
         optionsArray = arrayOf(binding.option1, binding.option2, binding.option3, binding.option4)
+        questionImageArray = arrayOf(binding.imgOptionA, binding.imgOptionB, binding.imgOptionC, binding.imgOptionD)
 
         selectedAnswers = IntArray(questionList.size) { -1 }
         displayQuestion()
@@ -223,13 +240,46 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             currentQuestion.option4
         )
 
+        val QuestionImage = listOf(
+            currentQuestion.questionImgOption1,
+            currentQuestion.questionImgOption2,
+            currentQuestion.questionImgOption3,
+            currentQuestion.questionImgOption4
+        )
+
+
         // Bind options dynamically
         options.forEachIndexed { index, option ->
             if (index < optionsArray.size) {
                 optionsArray[index].text = option
                 optionsArray[index].visibility = View.VISIBLE
+
             }
         }
+
+        // Bind QuestionImage dynamically
+        QuestionImage.forEachIndexed { index, imageUrl ->
+            if (index < questionImageArray.size) {
+
+                val imageView = questionImageArray[index]
+
+                if (!imageUrl.isNullOrBlank()) {
+                    imageView.visibility = View.VISIBLE
+
+                    Glide.with(imageView.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.default_image_icon)
+                        .error(R.drawable.default_image_icon)
+                        .into(imageView)
+
+                } else {
+                    imageView.visibility = View.GONE
+                }
+
+            }
+        }
+
+
 
         // Show / hide attachments
         if (!currentQuestion.filePath.isNullOrEmpty()) {
@@ -242,6 +292,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                 this,
                 Constant.isShimmerViewDisable
             )
+            binding.indicator.visibility = View.VISIBLE
             binding.indicator.attachToRecyclerView(binding.rcAttachement)
         } else {
             binding.indicator.visibility = View.GONE
@@ -312,24 +363,23 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     }
 
     private fun updateQuestionCounter(current: Int, total: Int) {
-        val text = "$current/$total"
+
+        val label = if (total > 1) "Questions " else "Question "
+        val text = "$label$current/$total"
+
         val spannable = SpannableString(text)
 
-        // Apply blue color only to part before "/"
         val slashIndex = text.indexOf("/")
+
+        // Color for answered count
         spannable.setSpan(
-            ForegroundColorSpan(
-                ContextCompat.getColor(
-                    this,
-                    R.color.PrimaryColor
-                )
-            ), // your blue color
-            0,
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.PrimaryColor)),
+            label.length,
             slashIndex,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        // Set black color for rest (after slash)
+        // Color for total count
         spannable.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             slashIndex,
@@ -354,7 +404,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         binding.progressBar.max = totalQuestions
         binding.progressBar.progress = answeredCount
-        binding.questionCounter.text = "$answeredCount  /  $totalQuestions"
+
         updateQuestionCounter(answeredCount, totalQuestions) //Just Changing the Colour in UI
     }
 
