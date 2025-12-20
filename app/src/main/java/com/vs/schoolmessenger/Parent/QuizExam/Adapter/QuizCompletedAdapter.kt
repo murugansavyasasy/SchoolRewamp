@@ -185,12 +185,16 @@ class QuizCompletedAdapter(
 
             questionText.text = "${position + 1}) ${data.question}"
 
-            if (data.q_file_path.isNullOrEmpty()) {
-                indicator.visibility = View.GONE
-                rcAttachement.visibility = View.GONE
-            } else {
-                indicator.visibility = View.VISIBLE
-                rcAttachement.visibility = View.VISIBLE
+            if (!data.q_file_path.isNullOrEmpty()) {
+                if(data.q_file_path.size==1){
+                    indicator.visibility = View.GONE
+                    rcAttachement.visibility = View.VISIBLE
+                }
+                else{
+                    indicator.visibility = View.VISIBLE
+                    rcAttachement.visibility = View.VISIBLE
+                }
+
                 rcAttachement.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcAttachement.adapter = AttachmentMediaAdapter(
@@ -199,6 +203,11 @@ class QuizCompletedAdapter(
                     Constant.isShimmerViewDisable
                 )
                 indicator.attachToRecyclerView(rcAttachement)
+
+            }
+            else {
+                indicator.visibility = View.GONE
+                rcAttachement.visibility = View.GONE
             }
 
             option1.text = data.options[0].value

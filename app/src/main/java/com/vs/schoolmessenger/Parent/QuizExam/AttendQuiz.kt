@@ -377,12 +377,17 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
 
         // Show / hide attachments
-        if (!currentQuestion.filePath.isNotEmpty()||currentQuestion.filePath.size==1) {
-            binding.indicator.visibility = View.GONE
-            binding.rcAttachement.visibility = View.GONE
-        } else {
-            binding.indicator.visibility = View.VISIBLE
-            binding.rcAttachement.visibility = View.VISIBLE
+        if (currentQuestion.filePath.isNotEmpty()) {
+
+            if (currentQuestion.filePath.size==1){
+                binding.rcAttachement.visibility = View.VISIBLE
+                binding.indicator.visibility = View.GONE
+            }
+            else{
+                binding.indicator.visibility = View.VISIBLE
+                binding.rcAttachement.visibility = View.VISIBLE
+            }
+
             binding.rcAttachement.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.rcAttachement.adapter = AttachmentMediaAdapter(
@@ -390,9 +395,11 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                 this,
                 Constant.isShimmerViewDisable
             )
-            binding.indicator.visibility = View.VISIBLE
             binding.indicator.attachToRecyclerView(binding.rcAttachement)
 
+        } else {
+            binding.indicator.visibility = View.GONE
+            binding.rcAttachement.visibility = View.GONE
         }
 
         // Reset all option colors first
