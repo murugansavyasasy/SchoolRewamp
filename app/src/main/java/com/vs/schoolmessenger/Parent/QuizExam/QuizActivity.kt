@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
@@ -119,16 +120,14 @@ class QuizActivity : BaseActivity<ActivityQuizBinding>(), View.OnClickListener {
             binding.cardCircuitDiagram.visibility = View.VISIBLE
             circuitAdapter.updateData(question.attachments)
         }
+
         val layoutManager = if (question.attachments.size == 1) {
-            LinearLayoutManager(this@QuizActivity, LinearLayoutManager.HORIZONTAL, false).apply {
-            }
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         } else {
-            GridLayoutManager(this@QuizActivity, 3).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int) = 1
-                }
-            }
+            GridLayoutManager(this, 3)
         }
+        binding.rvCircuitImages.layoutManager = layoutManager
+
 
         binding.rvCircuitImages.layoutManager = layoutManager
 
@@ -159,26 +158,76 @@ class QuizActivity : BaseActivity<ActivityQuizBinding>(), View.OnClickListener {
     }
 
     private fun setupCircuitImagesRecycler() {
+
         circuitAdapter = CircuitImageAdapter(mutableListOf()) { clickedPosition ->
+
             val fileUrl = questions[currentQuestionIndex].attachments[clickedPosition]
+
             val type = when {
                 fileUrl.lowercase().endsWith(".pdf") -> Constant.PDF
-                fileUrl.lowercase().endsWith(".mp4") || fileUrl.lowercase()
-                    .contains("video") -> Constant.VIDEO
-
+                fileUrl.lowercase().endsWith(".mp4") ||
+                        fileUrl.lowercase().contains("video") -> Constant.VIDEO
                 else -> Constant.IMAGE
             }
-            val intent = Intent(this, FilesViewActivity::class.java)
+
             Constant.commonFileList.clear()
             Constant.commonFileList.add(CommonFileData(type = type, path = fileUrl))
             Constant.selectedFileIndex = 0
-            startActivity(intent)
+
+            startActivity(Intent(this, FilesViewActivity::class.java))
         }
 
         binding.rvCircuitImages.apply {
+            adapter = circuitAdapter
+            layoutManager = GridLayoutManager(this@QuizActivity, 3)
             isNestedScrollingEnabled = false
+
+            if (itemDecorationCount == 0) {
+                addItemDecoration(
+                    gridSpacingDecoration(
+                        spanCount = 3,
+                        spacing = resources.getDimensionPixelSize(R.dimen.three),
+                        includeEdge = true
+                    )
+                )
+            }
         }
-        binding.rvCircuitImages.adapter = circuitAdapter
+    }
+
+
+    private fun gridSpacingDecoration(
+        spanCount: Int,
+        spacing: Int,
+        includeEdge: Boolean
+    ): RecyclerView.ItemDecoration {
+
+        return object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: android.graphics.Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                val position = parent.getChildAdapterPosition(view)
+                val column = position % spanCount
+
+                if (includeEdge) {
+                    outRect.left = spacing - column * spacing / spanCount
+                    outRect.right = (column + 1) * spacing / spanCount
+
+                    if (position < spanCount) {
+                        outRect.top = spacing
+                    }
+                    outRect.bottom = spacing
+                } else {
+                    outRect.left = column * spacing / spanCount
+                    outRect.right = spacing - (column + 1) * spacing / spanCount
+                    if (position >= spanCount) {
+                        outRect.top = spacing
+                    }
+                }
+            }
+        }
     }
 
     private fun selectOption(position: Int) {
