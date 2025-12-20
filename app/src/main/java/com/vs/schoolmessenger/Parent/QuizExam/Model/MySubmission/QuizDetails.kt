@@ -11,5 +11,5 @@ class QuizDetails(
     val mark: Int,
     val student_answer: String,
     val correct_answer: String,
-    val file_path: List<AttachmentFile>
+    val q_file_path: List<AttachmentFile>
 )
