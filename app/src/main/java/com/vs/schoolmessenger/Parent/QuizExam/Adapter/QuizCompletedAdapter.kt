@@ -106,10 +106,10 @@ class QuizCompletedAdapter(
 
 
             questionText.text = "${position + 1}) ${data.question}"
-            option1.text = data.a_option
-            option2.text = data.b_option
-            option3.text = data.c_cption
-            option4.text = data.d_option
+            option1.text = data.options.get(0).value
+            option2.text = data.options.get(1).value
+            option3.text = data.options.get(2).value
+            option4.text = data.options.get(3).value
 
             val options = listOf(option1, option2, option3, option4)
             options.forEach { option ->
@@ -129,10 +129,10 @@ class QuizCompletedAdapter(
             val correctAns = data.correct_answer?.trim()
 
             val optionMap = mapOf(
-                data.a_option.trim() to option1,
-                data.b_option.trim() to option2,
-                data.c_cption.trim() to option3,
-                data.d_option.trim() to option4
+                data.options.get(0).value.trim() to option1,
+                data.options.get(1).value.trim() to option2,
+                data.options.get(2).value.trim() to option3,
+                data.options.get(3).value.trim() to option4
             )
 
             if (studentAns.equals(Constant.N_A, ignoreCase = true)) {
