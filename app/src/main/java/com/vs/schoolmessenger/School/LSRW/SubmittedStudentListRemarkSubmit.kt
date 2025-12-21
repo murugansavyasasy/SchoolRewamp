@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.LSRW
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -71,7 +72,35 @@ class SubmittedStudentListRemarkSubmit : BaseActivity<StudentlistRemarksubmitBin
         binding.toolbarLayout.lblSchoolName.text = data!!.subjectName + " - " + data!!.sentBy
 
 
-//        binding.descriptionValue.text = data!!.description
+        Log.d("Description Value",data!!.category!!)
+
+        if(data!!.category.isNullOrEmpty()) {
+            binding.descriptionCardview.visibility = View.GONE
+        } else {
+            binding.descriptionCardview.visibility = View.VISIBLE
+        }
+
+        if(data!!.assignmentid.isNullOrEmpty()) {
+            binding.piechartFramelayout.visibility = View.GONE
+        } else {
+            binding.piechartFramelayout.visibility = View.VISIBLE
+        }
+
+
+        binding.description.text = data!!.category
+    //        binding.descriptionValue.text = data!!.description
+
+        val remarkString = data!!.assignmentid?.trim()?.replace("%", "")  // "68%" → "68"
+        val remark =
+            remarkString?.toIntOrNull() ?: 0
+
+        binding.txtremarkPercentage.text = "$remark%"
+        val progressLevel = remark.coerceIn(0, 100) * 100
+        binding.imgPieChart.setImageLevel(progressLevel)
+
+
+
+
 
         val adapter = StudentSubmittedListRemarkAdapter(
             this, data!!.fileList, data!!.subjectName!!, SELECTED_MENU_ID, false

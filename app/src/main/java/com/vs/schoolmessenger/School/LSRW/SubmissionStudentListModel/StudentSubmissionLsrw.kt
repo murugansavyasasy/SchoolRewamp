@@ -15,6 +15,8 @@ data class StudentSubmissionLsrw(
     val submitted_date: String,
     val iframe: String?,
     val file_size: String?,
+    val description: String?,
+    val remark: String?,
     val thumbnail: String?,
     val file_path: List<FilePath> = emptyList()
 )
