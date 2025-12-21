@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="130dp"
-    android:layout_height="130dp"
-    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/hundred_ten"
+    android:layout_margin="@dimen/eight"
     android:layout_marginEnd="@dimen/ten"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="6dp">
+    app:cardCornerRadius="@dimen/twele"
+    app:cardElevation="@dimen/six">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/ivPlayOverlay"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/fifty_six"
+            android:layout_height="@dimen/fifty_six"
             android:layout_gravity="center"
             android:contentDescription="Video"
             android:src="@drawable/video_play"

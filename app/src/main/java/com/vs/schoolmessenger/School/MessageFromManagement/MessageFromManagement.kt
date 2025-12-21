@@ -680,9 +680,16 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 if (data.file_path.isNullOrEmpty()) {
                     indicator.visibility = View.GONE
                     recyclerView.visibility = View.GONE
-                } else {
-                    indicator.visibility = View.VISIBLE
-                    recyclerView.visibility = View.VISIBLE
+                }
+                else {
+                    if (data.file_path.size==1){
+                        recyclerView.visibility = View.VISIBLE
+                        indicator.visibility = View.GONE
+                    }
+                    else{
+                        indicator.visibility = View.VISIBLE
+                        recyclerView.visibility = View.VISIBLE
+                    }
                     recyclerView.layoutManager =
                         LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                     recyclerView.adapter = AttachmentMediaAdapter(

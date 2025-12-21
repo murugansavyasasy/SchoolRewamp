@@ -27,7 +27,8 @@
             android:id="@+id/rcAttachement"
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
-            android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/five">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <me.relex.circleindicator.CircleIndicator2
             android:id="@+id/indicator"
@@ -39,59 +40,384 @@
             android:elevation="@dimen/four"
             android:visibility="gone" />
 
-        <!-- Options -->
-        <TextView
-            android:id="@+id/option1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/quiz_option_bg"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="Option 1"
-            android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/fourteen_sp" />
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/eight">
+
+            <!--                            Option A-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvOptionBullet"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_circle_dark_gray"
+                    android:gravity="center"
+                    android:text="a"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytEntireOptionA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/tvOptionBullet">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/CardOption1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardElevation="@dimen/five">
+
+                        <LinearLayout
+                            android:id="@+id/lnrChangeBgOptionA"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:paddingVertical="@dimen/ten">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RelativeLayout
+                                    android:id="@+id/rightIconContainerA"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true">
+
+                                    <ImageView
+                                        android:id="@+id/imgCheckmarkA"
+                                        android:layout_width="@dimen/thirty_five"
+                                        android:layout_height="@dimen/thirty_five"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/tick_icon_2"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/imgOptionA"
+                                        android:layout_toEndOf="@+id/imgCheckmarkA"
+                                        android:layout_width="@dimen/fourty"
+                                        android:layout_height="@dimen/fourty"
+                                        android:layout_centerVertical="true"
+                                        android:src="@drawable/default_image_icon"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/option1"
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@id/rightIconContainerA"
+                                    android:padding="10dp"
+                                    android:text="Option 1"
+                                    android:textColor="@color/azure_radiance"
+                                    android:textSize="@dimen/fourteen_sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!--                            option b-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvOptionBullet1"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_circle_dark_gray"
+                    android:gravity="center"
+                    android:text="b"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytEntireOptionB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/tvOptionBullet1">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/CardOption2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardElevation="@dimen/five">
+
+                        <LinearLayout
+                            android:id="@+id/lnrChangeBgOptionB"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:paddingVertical="@dimen/ten">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RelativeLayout
+                                    android:id="@+id/rightIconContainerB"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true">
+
+                                    <ImageView
+                                        android:id="@+id/imgCheckmarkB"
+                                        android:layout_width="@dimen/thirty_five"
+                                        android:layout_height="@dimen/thirty_five"
+                                        android:src="@drawable/tick_icon_2"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/imgOptionB"
+                                        android:layout_toEndOf="@id/imgCheckmarkB"
+                                        android:layout_width="@dimen/fourty"
+                                        android:layout_height="@dimen/fourty"
+                                        android:src="@drawable/default_image_icon"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/option2"
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/rightIconContainerB"
+                                    android:layout_centerVertical="true"
+                                    android:padding="10dp"
+                                    android:text="Option 2"
+                                    android:textColor="@color/azure_radiance"
+                                    android:textSize="@dimen/fourteen_sp" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!--                            Option C-->
 
 
-        <TextView
-            android:id="@+id/option2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/quiz_option_bg"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="Option 2"
-            android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/fourteen_sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/option3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/quiz_option_bg"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="Option 3"
-            android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/fourteen_sp" />
+                <TextView
+                    android:id="@+id/tvOptionBullet2"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_circle_dark_gray"
+                    android:gravity="center"
+                    android:text="c"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
 
-        <TextView
-            android:id="@+id/option4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/quiz_option_bg"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="Option 4"
-            android:textColor="@color/azure_radiance"
-            android:textSize="@dimen/fourteen_sp" />
+                <RelativeLayout
+                    android:id="@+id/rytEntireOptionC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/tvOptionBullet2">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/CardOption3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardElevation="@dimen/five">
+
+                        <LinearLayout
+                            android:id="@+id/lnrChangeBgOptionC"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:paddingVertical="@dimen/ten">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RelativeLayout
+                                    android:id="@+id/rightIconContainerC"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true">
+
+                                    <ImageView
+                                        android:id="@+id/imgCheckmarkC"
+                                        android:layout_width="@dimen/thirty_five"
+                                        android:layout_height="@dimen/thirty_five"
+                                        android:src="@drawable/tick_icon_2"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/imgOptionC"
+                                        android:layout_toEndOf="@id/imgCheckmarkC"
+                                        android:layout_width="@dimen/fourty"
+                                        android:layout_height="@dimen/fourty"
+                                        android:src="@drawable/default_image_icon"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/option3"
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/rightIconContainerC"
+                                    android:layout_centerVertical="true"
+                                    android:padding="10dp"
+                                    android:text="Option 3"
+                                    android:textColor="@color/azure_radiance"
+                                    android:textSize="@dimen/fourteen_sp" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <!--                            Option D-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvOptionBullet3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_circle_dark_gray"
+                    android:gravity="center"
+                    android:text="d"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytEntireOptionD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/tvOptionBullet3">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/CardOption4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/five"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardElevation="@dimen/five">
+
+                        <LinearLayout
+                            android:id="@+id/lnrChangeBgOptionD"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:paddingVertical="@dimen/ten">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RelativeLayout
+                                    android:id="@+id/rightIconContainerD"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true">
+
+                                    <ImageView
+                                        android:id="@+id/imgCheckmarkD"
+                                        android:layout_width="@dimen/thirty_five"
+                                        android:layout_height="@dimen/thirty_five"
+                                        android:src="@drawable/tick_icon_2"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/imgOptionD"
+                                        android:layout_toEndOf="@id/imgCheckmarkD"
+                                        android:layout_width="@dimen/fourty"
+                                        android:layout_height="@dimen/fourty"
+                                        android:src="@drawable/default_image_icon"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/option4"
+                                    style="@style/CustomTextStylePoppinsRegular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toStartOf="@id/rightIconContainerD"
+                                    android:layout_centerVertical="true"
+                                    android:padding="10dp"
+                                    android:text="Option 4"
+                                    android:textColor="@color/azure_radiance"
+                                    android:textSize="@dimen/fourteen_sp" />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
         <View
             android:layout_marginTop="@dimen/eight"
