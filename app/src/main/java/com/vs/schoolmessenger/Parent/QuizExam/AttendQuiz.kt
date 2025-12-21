@@ -104,13 +104,13 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     binding.lnrQuiz.visibility = View.VISIBLE
                     binding.lnrMarkDetails.visibility = View.VISIBLE
                     binding.lnrNextPreButtons.visibility = View.VISIBLE
-                    binding.quizStatus.visibility = View.GONE
+//                    binding.quizStatus.visibility = View.GONE
                     binding.lytList.visibility = View.GONE
 
                 } else {
                     Constant.hideLoading(this)
                     binding.lnrQuiz.visibility = View.GONE
-                    binding.quizStatus.visibility = View.GONE
+//                    binding.quizStatus.visibility = View.GONE
                     binding.lnrMarkDetails.visibility = View.GONE
                     binding.lnrNextPreButtons.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
@@ -119,7 +119,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             } else {
                 Constant.hideLoading(this)
                 binding.lnrQuiz.visibility = View.GONE
-                binding.quizStatus.visibility = View.GONE
+//                binding.quizStatus.visibility = View.GONE
                 binding.lnrMarkDetails.visibility = View.GONE
                 binding.lnrNextPreButtons.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
@@ -138,7 +138,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                         lnrQuiz.visibility = View.GONE
                         binding.lnrMarkDetails.visibility = View.GONE
                         binding.lnrNextPreButtons.visibility = View.GONE
-                        quizStatus.visibility = View.VISIBLE
+//                        quizStatus.visibility = View.VISIBLE
                     }
                 } else {
                     Constant.hideLoading(this@AttendQuiz)
@@ -343,6 +343,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             if (index < optionsArray.size) {
                 optionsArray[index].text = option
                 optionsArray[index].visibility = View.VISIBLE
+                Log.d("OPTION_TEXT", optionsArray[index].text.toString())
 
             }
         }
@@ -381,11 +382,13 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
             if (currentQuestion.filePath.size==1){
                 binding.rcAttachement.visibility = View.VISIBLE
+                binding.rytAttchment.visibility = View.VISIBLE
                 binding.indicator.visibility = View.GONE
             }
             else{
                 binding.indicator.visibility = View.VISIBLE
                 binding.rcAttachement.visibility = View.VISIBLE
+                binding.rytAttchment.visibility = View.VISIBLE
             }
 
             binding.rcAttachement.layoutManager =
@@ -400,6 +403,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         } else {
             binding.indicator.visibility = View.GONE
             binding.rcAttachement.visibility = View.GONE
+            binding.rytAttchment.visibility = View.GONE
         }
 
         // Reset all option colors first

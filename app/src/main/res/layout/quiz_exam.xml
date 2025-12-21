@@ -70,6 +70,7 @@
                 android:layout_height="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:max="100"
+                android:visibility="gone"
                 android:progress="0"
                 android:progressDrawable="@android:drawable/progress_horizontal"
                 android:progressTint="@color/azure_radiance" />
@@ -111,6 +112,7 @@
                             android:textStyle="bold" />
 
                             <RelativeLayout
+                                android:id="@+id/rytAttchment"
                                 android:layout_margin="@dimen/twenty"
                                 android:layout_gravity="center"
                                 android:padding="@dimen/five"
@@ -206,6 +208,32 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
 
+                                                <RelativeLayout
+                                                    android:id="@+id/rightIconContainerA"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:layout_centerVertical="true">
+
+                                                    <ImageView
+                                                        android:id="@+id/imgCheckmarkA"
+                                                        android:layout_width="@dimen/thirty_five"
+                                                        android:layout_height="@dimen/thirty_five"
+                                                        android:layout_alignParentStart="true"
+                                                        android:layout_centerVertical="true"
+                                                        android:src="@drawable/tick_icon_2"
+                                                        android:visibility="gone" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imgOptionA"
+                                                        android:layout_toEndOf="@+id/imgCheckmarkA"
+                                                        android:layout_width="@dimen/fourty"
+                                                        android:layout_height="@dimen/fourty"
+                                                        android:layout_centerVertical="true"
+                                                        android:src="@drawable/default_image_icon"
+                                                        android:visibility="gone" />
+                                                </RelativeLayout>
+
                                                 <TextView
                                                     android:id="@+id/option1"
                                                     style="@style/CustomTextStylePoppinsRegular"
@@ -213,38 +241,14 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_alignParentStart="true"
                                                     android:layout_centerVertical="true"
-                                                    android:layout_marginEnd="@dimen/five"
-                                                    android:layout_toStartOf="@id/imgCheckmarkA"
-                                                    android:clickable="true"
+                                                    android:layout_toStartOf="@id/rightIconContainerA"
                                                     android:padding="10dp"
                                                     android:text="Option 1"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
 
-                                                <ImageView
-                                                    android:id="@+id/imgCheckmarkA"
-                                                    android:layout_width="@dimen/thirty_five"
-                                                    android:layout_height="@dimen/thirty_five"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginStart="@dimen/five"
-                                                    android:layout_marginEnd="@dimen/ten"
-                                                    android:layout_toStartOf="@id/imgOptionA"
-                                                    android:src="@drawable/tick_icon_2"
-                                                    android:visibility="gone" />
-
-
-                                                <ImageView
-                                                    android:id="@+id/imgOptionA"
-                                                    android:layout_width="@dimen/fourty"
-                                                    android:layout_height="@dimen/fourty"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginEnd="@dimen/five"
-                                                    android:scaleType="fitCenter"
-                                                    android:src="@drawable/default_image_icon" />
-
-
                                             </RelativeLayout>
+
                                         </LinearLayout>
                                     </androidx.cardview.widget.CardView>
 
@@ -300,45 +304,42 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
 
+                                                <RelativeLayout
+                                                    android:id="@+id/rightIconContainerB"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:layout_centerVertical="true">
+
+                                                    <ImageView
+                                                        android:id="@+id/imgCheckmarkB"
+                                                        android:layout_width="@dimen/thirty_five"
+                                                        android:layout_height="@dimen/thirty_five"
+                                                        android:src="@drawable/tick_icon_2"
+                                                        android:visibility="gone" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imgOptionB"
+                                                        android:layout_toEndOf="@id/imgCheckmarkB"
+                                                        android:layout_width="@dimen/fourty"
+                                                        android:layout_height="@dimen/fourty"
+                                                        android:src="@drawable/default_image_icon"
+                                                        android:visibility="gone" />
+                                                </RelativeLayout>
+
                                                 <TextView
                                                     android:id="@+id/option2"
                                                     style="@style/CustomTextStylePoppinsRegular"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_alignParentStart="true"
+                                                    android:layout_toStartOf="@id/rightIconContainerB"
                                                     android:layout_centerVertical="true"
-                                                    android:layout_toStartOf="@id/imgCheckmarkB"
-                                                    android:clickable="true"
-                                                    android:layout_marginEnd="@dimen/five"
                                                     android:padding="10dp"
                                                     android:text="Option 2"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
-
-                                                <ImageView
-                                                    android:id="@+id/imgCheckmarkB"
-                                                    android:layout_width="@dimen/thirty_five"
-                                                    android:layout_height="@dimen/thirty_five"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginStart="@dimen/five"
-                                                    android:layout_marginEnd="@dimen/ten"
-                                                    android:layout_toStartOf="@id/imgOptionB"
-                                                    android:src="@drawable/tick_icon_2"
-                                                    android:visibility="gone" />
-
-
-                                                <ImageView
-                                                    android:id="@+id/imgOptionB"
-                                                    android:layout_width="@dimen/fourty"
-                                                    android:layout_height="@dimen/fourty"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginEnd="@dimen/five"
-                                                    android:scaleType="fitCenter"
-                                                    android:src="@drawable/default_image_icon" />
-
-
                                             </RelativeLayout>
+
                                         </LinearLayout>
                                     </androidx.cardview.widget.CardView>
 
@@ -395,45 +396,42 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
 
+                                                <RelativeLayout
+                                                    android:id="@+id/rightIconContainerC"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:layout_centerVertical="true">
+
+                                                    <ImageView
+                                                        android:id="@+id/imgCheckmarkC"
+                                                        android:layout_width="@dimen/thirty_five"
+                                                        android:layout_height="@dimen/thirty_five"
+                                                        android:src="@drawable/tick_icon_2"
+                                                        android:visibility="gone" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imgOptionC"
+                                                        android:layout_toEndOf="@id/imgCheckmarkC"
+                                                        android:layout_width="@dimen/fourty"
+                                                        android:layout_height="@dimen/fourty"
+                                                        android:src="@drawable/default_image_icon"
+                                                        android:visibility="gone" />
+                                                </RelativeLayout>
+
                                                 <TextView
                                                     android:id="@+id/option3"
                                                     style="@style/CustomTextStylePoppinsRegular"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_alignParentStart="true"
+                                                    android:layout_toStartOf="@id/rightIconContainerC"
                                                     android:layout_centerVertical="true"
-                                                    android:layout_toStartOf="@id/imgCheckmarkC"
-                                                    android:clickable="true"
-                                                    android:layout_marginEnd="@dimen/five"
                                                     android:padding="10dp"
                                                     android:text="Option 3"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
-
-                                                <ImageView
-                                                    android:id="@+id/imgCheckmarkC"
-                                                    android:layout_width="@dimen/thirty_five"
-                                                    android:layout_height="@dimen/thirty_five"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginStart="@dimen/five"
-                                                    android:layout_marginEnd="@dimen/ten"
-                                                    android:layout_toStartOf="@id/imgOptionC"
-                                                    android:src="@drawable/tick_icon_2"
-                                                    android:visibility="gone" />
-
-
-                                                <ImageView
-                                                    android:id="@+id/imgOptionC"
-                                                    android:layout_width="@dimen/fourty"
-                                                    android:layout_height="@dimen/fourty"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginEnd="@dimen/five"
-                                                    android:scaleType="fitCenter"
-                                                    android:src="@drawable/default_image_icon" />
-
-
                                             </RelativeLayout>
+
                                         </LinearLayout>
                                     </androidx.cardview.widget.CardView>
 
@@ -485,50 +483,46 @@
                                             android:orientation="horizontal"
                                             android:paddingHorizontal="@dimen/ten"
                                             android:paddingVertical="@dimen/ten">
-
                                             <RelativeLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content">
+
+                                                <RelativeLayout
+                                                    android:id="@+id/rightIconContainerD"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_alignParentEnd="true"
+                                                    android:layout_centerVertical="true">
+
+                                                    <ImageView
+                                                        android:id="@+id/imgCheckmarkD"
+                                                        android:layout_width="@dimen/thirty_five"
+                                                        android:layout_height="@dimen/thirty_five"
+                                                        android:src="@drawable/tick_icon_2"
+                                                        android:visibility="gone" />
+
+                                                    <ImageView
+                                                        android:id="@+id/imgOptionD"
+                                                        android:layout_toEndOf="@id/imgCheckmarkD"
+                                                        android:layout_width="@dimen/fourty"
+                                                        android:layout_height="@dimen/fourty"
+                                                        android:src="@drawable/default_image_icon"
+                                                        android:visibility="gone" />
+                                                </RelativeLayout>
 
                                                 <TextView
                                                     android:id="@+id/option4"
                                                     style="@style/CustomTextStylePoppinsRegular"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_alignParentStart="true"
+                                                    android:layout_toStartOf="@id/rightIconContainerD"
                                                     android:layout_centerVertical="true"
-                                                    android:layout_toStartOf="@id/imgCheckmarkD"
-                                                    android:clickable="true"
-                                                    android:layout_marginEnd="@dimen/five"
                                                     android:padding="10dp"
                                                     android:text="Option 4"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
-
-                                                <ImageView
-                                                    android:id="@+id/imgCheckmarkD"
-                                                    android:layout_width="@dimen/thirty_five"
-                                                    android:layout_height="@dimen/thirty_five"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginStart="@dimen/five"
-                                                    android:layout_marginEnd="@dimen/ten"
-                                                    android:layout_toStartOf="@id/imgOptionD"
-                                                    android:src="@drawable/tick_icon_2"
-                                                    android:visibility="gone" />
-
-
-                                                <ImageView
-                                                    android:id="@+id/imgOptionD"
-                                                    android:layout_width="@dimen/fourty"
-                                                    android:layout_height="@dimen/fourty"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginEnd="@dimen/five"
-                                                    android:scaleType="fitCenter"
-                                                    android:src="@drawable/default_image_icon" />
-
-
                                             </RelativeLayout>
+
                                         </LinearLayout>
                                     </androidx.cardview.widget.CardView>
 
