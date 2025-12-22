@@ -9,6 +9,7 @@ interface OnAbsenteeClickListener {
         sectionname: String,
         student_counts: String,
         absent: String,
+        totalabsenteesclasswise: String,
         total: String
     )
 }

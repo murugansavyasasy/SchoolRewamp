@@ -1,15 +1,19 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FileType
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class QuestionAttachmentAdapter(
     private val context: Context,
@@ -49,6 +53,18 @@ class QuestionAttachmentAdapter(
         }
         h.remove.setOnClickListener {
             onRemove(pos)
+        }
+
+        h.img.setOnClickListener {
+            item?.let {
+                Constant.commonFileList.isEmpty()
+                Constant.commonFileList = list?.map {
+                    CommonFileData(type = it.type, path = it.url)
+                }?.toMutableList() ?: mutableListOf()
+                Constant.selectedFileIndex = pos
+                val intent = Intent(context, FilesViewActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 }
