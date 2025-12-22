@@ -52,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/Create"
-                android:textColor="@color/iconBlue">
-            </TextView>
+                android:textColor="@color/iconBlue"></TextView>
 
             <View
                 android:id="@+id/line1"
@@ -61,8 +60,7 @@
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/iconBlue">
-            </View>
+                android:background="@color/iconBlue"></View>
         </LinearLayout>
 
 
@@ -80,8 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/Reports">
-            </TextView>
+                android:text="@string/Reports"></TextView>
 
             <View
                 android:id="@+id/line2"
@@ -89,8 +86,7 @@
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/athens_gray">
-            </View>
+                android:background="@color/athens_gray"></View>
         </LinearLayout>
 
     </LinearLayout>
@@ -119,11 +115,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/two"
-                android:layout_toEndOf="@id/lblTitle"
                 android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@id/lblTitle"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
-
 
 
             <TextView
@@ -184,9 +179,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/two"
                 android:layout_toEndOf="@id/lblDescription"
-                android:layout_below="@+id/lblTitleTextCount"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
 
@@ -255,9 +250,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTextCount"
                 android:layout_marginStart="@dimen/two"
                 android:layout_toEndOf="@id/lblNoQuestion"
-                android:layout_below="@+id/lblTextCount"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
 
@@ -290,34 +285,32 @@
             </EditText>
 
             <CheckBox
+                android:id="@+id/rbNextLvl"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:clickable="true"
-                style="@style/CustomCheckbox"
-                android:id="@+id/rbNextLvl"
-                android:focusable="true"
-                android:gravity="start"
-                android:layout_marginEnd="@dimen/fifteen"
                 android:layout_below="@+id/edtQuestion"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:text="@string/allow_students_to_continue_to_the_next_level_on_completion_of_next_level"
-               />
+                android:layout_marginEnd="@dimen/fifteen"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="@dimen/five"
+                android:text="@string/allow_students_to_continue_to_the_next_level_on_completion_of_next_level" />
 
-<!--            <RadioButton-->
-<!--                android:id="@+id/rbNextLvl"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/edtQuestion"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:buttonTint="@color/radio_button_colour"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/check_the_box_to_continue_next_level">-->
-<!--            </RadioButton>-->
+            <!--            <RadioButton-->
+            <!--                android:id="@+id/rbNextLvl"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@+id/edtQuestion"-->
+            <!--                android:layout_marginStart="@dimen/fifteen"-->
+            <!--                android:layout_marginTop="@dimen/five"-->
+            <!--                android:buttonTint="@color/radio_button_colour"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="@string/check_the_box_to_continue_next_level">-->
+            <!--            </RadioButton>-->
 
 
             <TextView
@@ -394,8 +387,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rytSearch1"
-            android:layout_marginTop="@dimen/five">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
 
 
         <LinearLayout
@@ -413,8 +405,7 @@
                 android:layout_width="@dimen/two_hundred"
                 android:layout_height="@dimen/two_hundred"
                 android:layout_marginTop="@dimen/twenty_five"
-                android:src="@drawable/no_school_quiz_message">
-            </ImageView>
+                android:src="@drawable/no_school_quiz_message"></ImageView>
 
             <TextView
                 android:id="@+id/txtNoData"
