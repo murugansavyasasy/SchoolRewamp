@@ -1345,6 +1345,7 @@
     <string name="an_option_c_or_an_image_must_be_added">An Option C or An Image must be Added</string>
     <string name="an_option_d_or_an_image_must_be_added">An Option D or An Image must be Added</string>
     <string name="remove_image">Remove image</string>
+    <string name="no_holidays_found">No Holidays found</string>
 
 
 </resources>

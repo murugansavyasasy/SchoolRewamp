@@ -36,6 +36,33 @@
             android:layout_height="match_parent"
             />
 
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/lnrErrorMsg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="@dimen/two_fifty"
+                android:src="@drawable/no_holiday_2_message"
+                android:layout_height="@dimen/two_fifty">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/errorMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:layout_margin="@dimen/fifteen"
+                android:textColor="@color/red"
+                android:textSize="@dimen/fourteen_sp"
+                style="@style/CustomTextStylePoppinsBold"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 
