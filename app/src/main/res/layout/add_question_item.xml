@@ -121,7 +121,8 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/ten"
-            android:text="Add files to question"
+            android:visibility="gone"
+            android:text="@string/add_files_to_question"
             android:textColor="@color/iconBlue"
             android:textSize="@dimen/thirteen_sp">
 
@@ -130,6 +131,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyQuestions"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:nestedScrollingEnabled="false"
@@ -176,8 +178,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
+            android:visibility="gone"
             android:drawableStart="@drawable/attachment_icon_2"
-            android:drawablePadding="@dimen/ten"
+            android:drawablePadding="@dimen/five"
             android:text="Add image"
             android:textColor="@color/iconBlue"
             android:textSize="@dimen/thirteen_sp">
@@ -185,10 +188,11 @@
         </TextView>
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/five"
+            android:layout_width="@dimen/eighty"
             android:visibility="gone"
             android:id="@+id/framOptionA"
-            android:layout_height="100dp">
+            android:layout_height="@dimen/eighty">
 
             <ImageView
                 android:id="@+id/imgOptionA"
@@ -248,18 +252,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
-            android:drawablePadding="@dimen/ten"
-            android:text="Add image"
+            android:drawablePadding="@dimen/five"
+            android:visibility="gone"
+            android:text="@string/add_image"
             android:textColor="@color/iconBlue"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/five"
+            android:layout_width="@dimen/eighty"
             android:visibility="gone"
             android:id="@+id/framOptionB"
-            android:layout_height="100dp">
+            android:layout_height="@dimen/eighty">
 
             <ImageView
                 android:id="@+id/imgOptionB"
@@ -320,18 +326,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
-            android:drawablePadding="@dimen/ten"
-            android:text="Add image"
+            android:drawablePadding="@dimen/five"
+            android:visibility="gone"
+            android:text="@string/add_image"
             android:textColor="@color/iconBlue"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
         <FrameLayout
+            android:layout_marginTop="@dimen/five"
             android:id="@+id/framOptionC"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/eighty"
             android:visibility="gone"
-            android:layout_height="100dp">
+            android:layout_height="@dimen/eighty">
 
             <ImageView
                 android:id="@+id/imgOptionC"
@@ -392,18 +400,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
-            android:drawablePadding="@dimen/ten"
-            android:text="Add image"
+            android:drawablePadding="@dimen/five"
+            android:visibility="gone"
+            android:text="@string/add_image"
             android:textColor="@color/iconBlue"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
         <FrameLayout
+            android:layout_marginTop="@dimen/five"
             android:id="@+id/framOptionD"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/eighty"
             android:visibility="gone"
-            android:layout_height="100dp">
+            android:layout_height="@dimen/eighty">
 
             <ImageView
                 android:id="@+id/imgOptionD"

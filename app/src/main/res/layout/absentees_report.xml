@@ -113,6 +113,7 @@
                         android:layout_marginStart="@dimen/eight"
                         android:text="Absentees by standard"
                         android:textColor="@color/black"
+                        android:visibility="gone"
                         android:gravity="center"
                         android:layout_gravity="center_vertical"
                         android:padding="5dp"
