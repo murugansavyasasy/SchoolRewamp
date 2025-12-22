@@ -94,13 +94,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private var itemList: MutableList<GetQuizQuestionReportData> = mutableListOf()
     private var quizAdapter: AddQuestionAdapter? = null
     private var isDialogShowing = false
-
     var isAttachmentAdapterPosition = 0
     private var cameraPermissionDeniedCount = 0
-
     var isQuestionPick: Boolean? = null
     var isOptionsFieldId: TextView? = null
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     companion object {
@@ -111,9 +108,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
-
     var file_path: List<FilePath> = emptyList()
-
     var isQuizID = ""
     var isQuizTitle = ""
     var isSubjectID = ""
@@ -125,7 +120,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private lateinit var savedQuizQuestionReportList: List<GetQuizQuestionReportData>
     private lateinit var pickQBankList: List<GetPickFromQBankData>
     private lateinit var editableQuizQuestionReportList: MutableList<GetQuizQuestionReportData>
-
     private var isAccessToken: String? = null
     private var isQuestionBankErrorMsg: String? = null
     private var isStaffDetails: StaffDetails? = null
@@ -134,7 +128,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     val isVideoSelectedArrayList = mutableListOf<QuizAttachmentData>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     private var isQuizCreateData: SaveCreateExamQuizDetails? = null
 
     private var appViewModel: App? = null
