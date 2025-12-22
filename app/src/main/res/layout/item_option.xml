@@ -32,7 +32,6 @@
         app:layout_constraintStart_toEndOf="@id/tvOptionBullet"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/optionContainer"
             android:layout_width="match_parent"
@@ -45,15 +44,15 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="Graph 3 shows a characteristic exponential rise."
                 android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp"
-                android:layout_marginStart="@dimen/eight"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivCheckmark"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@id/ivCheckmark"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView
                 android:id="@+id/ivCheckmark"
@@ -64,48 +63,31 @@
                 android:padding="@dimen/six"
                 android:src="@drawable/tick_circle_icon"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/tvOptionText"
-                app:layout_constraintEnd_toStartOf="@id/tvAttachment"
-                app:layout_constraintTop_toTopOf="@+id/tvOptionText" />
-
-            <TextView
-                android:id="@+id/tvAttachment"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Attachment D"
-                android:textSize="@dimen/ten_sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="@dimen/five"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutGraph"
+                app:layout_constraintEnd_toStartOf="@id/layoutGraph"
+                app:layout_constraintTop_toTopOf="@+id/layoutGraph"
+                app:layout_constraintVertical_bias="0.0" />
 
             <LinearLayout
                 android:id="@+id/layoutGraph"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAttachment">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0">
 
                 <ImageView
                     android:id="@+id/ivGraph"
-                    android:layout_width="@dimen/sixty_four"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/fifty_five"
+                    android:layout_height="@dimen/fifty_five"
                     android:scaleType="fitCenter"
                     android:src="@drawable/default_image_icon" />
-
-                <TextView
-                    android:id="@+id/tvGraphLabel"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Graph 1 (B)"
-                    android:textSize="@dimen/nine" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

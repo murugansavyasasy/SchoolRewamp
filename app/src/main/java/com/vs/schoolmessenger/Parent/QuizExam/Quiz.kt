@@ -272,7 +272,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                         item.description?.lowercase().orEmpty(),
                         item.subject?.lowercase().orEmpty(),
                         convertedDate.lowercase(),
-                        item.SentBy?.lowercase().orEmpty(),
+                        item.sent_by?.lowercase().orEmpty(),
                         item.max_mark.toString().lowercase(),
                         item.no_of_questions.toString().lowercase(),
                         item.level.toString().lowercase()
@@ -306,7 +306,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
                         item.title?.lowercase().orEmpty(),
                         item.description?.lowercase().orEmpty(),
                         item.subject?.lowercase().orEmpty(),
-                        item.SentBy?.lowercase().orEmpty(),
+                        item.sent_by?.lowercase().orEmpty(),
                         item.created_on?.lowercase().orEmpty(),
                         item.max_mark.toString().lowercase(),
                         item.no_of_questions.toString().lowercase(),

@@ -61,8 +61,31 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
                 val submission = response.data[0]
 
+
+                if(submission.description.isNullOrEmpty()) {
+                    binding.descriptionCardview.visibility = View.GONE
+                } else {
+                    binding.descriptionCardview.visibility = View.VISIBLE
+                }
+
+
+                if(submission.remark.isNullOrEmpty()) {
+                    binding.piechartFramelayout.visibility = View.GONE
+                } else {
+                    binding.piechartFramelayout.visibility = View.VISIBLE
+                }
+
+                // Description
                 binding.description.text = submission.description
 
+                val remarkString = submission.remark.trim().replace("%", "")  // "68%" → "68"
+                val remark =
+                    remarkString.toIntOrNull() ?: 0
+
+                binding.txtremarkPercentage.text = "$remark%"
+
+                val progressLevel = remark.coerceIn(0, 100) * 100
+                binding.imgPieChart.setImageLevel(progressLevel)
 
                 // IMAGE LIST (non-audio items)
                 val imageList = submission.file_path

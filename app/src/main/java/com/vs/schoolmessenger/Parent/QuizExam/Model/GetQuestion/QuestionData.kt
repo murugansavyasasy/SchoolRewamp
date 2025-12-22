@@ -9,5 +9,10 @@ data class QuestionData(
     val option2: String,
     val option3: String,
     val option4: String,
+    val questionImgOption1: String,
+    val questionImgOption2: String,
+    val questionImgOption3: String,
+    val questionImgOption4: String,
+
     val filePath: List<AttachmentFile>
 )

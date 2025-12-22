@@ -49,7 +49,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardCircuitDiagram"
-            android:layout_width="@dimen/two_hundred_fifty"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
@@ -65,7 +65,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/fifteen">
+                android:padding="@dimen/ten">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCircuitImages"
@@ -113,7 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginBottom="@dimen/twenty"
             android:background="@drawable/background_radius_button"
             android:drawablePadding="@dimen/eight"
             android:gravity="center"
@@ -123,9 +122,10 @@
             android:paddingBottom="@dimen/twele"
             android:text="Previous Question"
             android:textColor="@color/white"
-            android:textSize="@dimen/fourteen_sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="@dimen/twele_sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNextQuestion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnNextQuestion" />
 
         <Button
             android:id="@+id/btnNextQuestion"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/twenty"
-            android:layout_marginBottom="@dimen/twenty"
+            android:layout_marginBottom="@dimen/thirty"
             android:background="@drawable/background_radius_button"
             android:drawablePadding="@dimen/eight"
             android:gravity="center"
@@ -143,7 +143,7 @@
             android:paddingBottom="@dimen/twele"
             android:text="Next Question"
             android:textColor="@color/white"
-            android:textSize="@dimen/fourteen_sp"
+            android:textSize="@dimen/twele_sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

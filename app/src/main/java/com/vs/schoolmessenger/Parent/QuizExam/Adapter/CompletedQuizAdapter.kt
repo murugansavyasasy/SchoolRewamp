@@ -80,7 +80,7 @@ class CompletedQuizAdapter(
             lblMaxMarks.text = data.max_mark.toString()
             lblLevel.text = data.level.toString()
             lblQuestion.text = data.no_of_questions.toString()
-            lblPostedby.text = "${context.getString(R.string.posted_by)}: ${data.SentBy}"
+            lblPostedby.text = "${context.getString(R.string.posted_by)}: ${data.sent_by}"
             lblCreatedOn.text =
                 "${context.getString(R.string.created_on)} ${Constant.convertDateFormatType(data.created_on)}"
 

@@ -131,9 +131,9 @@ class SubmittedStudentlistAdapter(
                         fileList = convertedList,
                         submittedCount = 0,
                         totalCount = 0,
-                        assignmentid = "",
+                        assignmentid = item.remark,
                         created_date = "",
-                        category = "",
+                        category = item.description,
                         assignmentsubject = ""
                     )
 
@@ -169,9 +169,9 @@ class SubmittedStudentlistAdapter(
                         fileList = convertedList,
                         submittedCount = 0,
                         totalCount = 0,
-                        assignmentid = "",
+                        assignmentid = item.remark,
                         created_date = "",
-                        category = "",
+                        category = item.description,
                         assignmentsubject = "",
                         isParentAssignment = false
                     )
@@ -215,9 +215,9 @@ class SubmittedStudentlistAdapter(
                                     fileList = convertedList,
                                     submittedCount = 0,
                                     totalCount = 0,
-                                    assignmentid = "",
+                                    assignmentid = item.remark,
                                     created_date = "",
-                                    category = "",
+                                    category = item.description,
                                     assignmentsubject = "",
                                     isParentAssignment = false
                                 )

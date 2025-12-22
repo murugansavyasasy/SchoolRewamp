@@ -14,7 +14,7 @@ class GetQuizExamListData(
     val created_on: String,
     val is_submitted: Boolean,
     val is_unread: Boolean,
-    val SentBy: String,
+    val sent_by: String,
     val start_time: String,
     val end_time: String,
     val question_read_time: String,
