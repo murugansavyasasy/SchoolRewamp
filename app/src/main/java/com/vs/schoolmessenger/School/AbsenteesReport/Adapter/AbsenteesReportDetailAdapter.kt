@@ -104,6 +104,7 @@ class AbsenteesReportDetailAdapter(
                     sectionWise.section_name,
                     sectionWise.student_counts,
                     absent.toString(),
+                    classWise.total_absentees,
                     total.toString()
                 )
             }
