@@ -105,6 +105,18 @@ class AutoScrollAdapterWithDots(
                 Constant.M_PTM -> itemImage.setImageResource(R.drawable.ptm_school)
                 Constant.M_FEE_PENDING_REPORT -> itemImage.setImageResource(R.drawable.fee_pending_reports)
                 Constant.M_SCHOOL_NEEDS -> itemImage.setImageResource(R.drawable.school_needs)
+
+                //Parent Side
+                Constant.M_CERTIFICATE_REQUEST -> itemImage.setImageResource(R.drawable.certificate_request)
+                Constant.M_CLASS_TIME_TABLE -> itemImage.setImageResource(R.drawable.timetable_icon)
+                Constant.M_PARENT_CLASS_EVENTS -> itemImage.setImageResource(R.drawable.graduationevent)
+                Constant.M_EXAM -> itemImage.setImageResource(R.drawable.schedule_exam_icon)
+                Constant.M_FEE_DETAILS -> itemImage.setImageResource(R.drawable.fee_details)
+                Constant.M_INTERACTION_WITH_STAFF -> itemImage.setImageResource(R.drawable.interact_with_student)
+                Constant.M_LSRW -> itemImage.setImageResource(R.drawable.lsrw_icon)
+                Constant.M_ONLINE_TEXT_BOOK -> itemImage.setImageResource(R.drawable.book)
+                Constant.M_QUIZ_EXAM -> itemImage.setImageResource(R.drawable.quiz_icon)
+                Constant.M_COUPON_PACKET -> itemImage.setImageResource(R.drawable.ic_rewards)
             }
 
             try {

@@ -66,12 +66,16 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
                 appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
 
                 binding.calendarFragmentContainer.visibility = View.VISIBLE
+                binding.lnrErrorMsg.visibility = View.GONE
                 val calendarFragment = CalendarFragment.newInstance(response.data)
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.calendarFragmentContainer, calendarFragment)
                     .commit()
             } else {
                 binding.calendarFragmentContainer.visibility = View.GONE
+                binding.lnrErrorMsg.visibility = View.VISIBLE
+                binding.errorMsg.text = response?.message?:getString(R.string.no_holidays_found)
+
             }
         }
     }

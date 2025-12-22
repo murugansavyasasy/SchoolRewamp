@@ -29,26 +29,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/HoliDay"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_below="@+id/rytHeader"
-            android:textSize="@dimen/twenty">
-
-        </TextView>
-
-        <FrameLayout
-            android:layout_margin="@dimen/fifteen"
-            android:id="@+id/calendarFragmentContainer"
+        <ScrollView
+            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/lblParentToolBar"
-            />
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lblParentToolBar"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/HoliDay"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_below="@+id/rytHeader"
+                    android:textSize="@dimen/twenty">
+
+                </TextView>
+
+                <FrameLayout
+                    android:layout_margin="@dimen/fifteen"
+                    android:id="@+id/calendarFragmentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lblParentToolBar"
+                    />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:id="@+id/lnrErrorMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/two_fifty"
+                        android:src="@drawable/no_holiday_2_message"
+                        android:layout_height="@dimen/two_fifty">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/errorMsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:layout_margin="@dimen/fifteen"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/fourteen_sp"
+                        style="@style/CustomTextStylePoppinsBold"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
