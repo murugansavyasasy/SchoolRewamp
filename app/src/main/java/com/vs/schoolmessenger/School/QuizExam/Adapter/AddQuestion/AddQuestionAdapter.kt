@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Adapter.QuestionAttachmentAdapter
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
@@ -157,32 +160,53 @@ class AddQuestionAdapter(
                     isAllValid = false
                 }
 
-                item.question.isBlank() -> {
-                    holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
+                item.question.isBlank() && item.file_path!!.isEmpty()-> {
+//                    holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.a_question_or_an_question_image_must_be_added), Toast.LENGTH_SHORT
+                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.a_option.isBlank() -> {
-                    holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
+                item.a_option.isBlank() && item.a_image=="" -> {
+//                    holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.an_option_a_or_an_image_must_be_added), Toast.LENGTH_SHORT
+                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.b_option.isBlank() -> {
-                    holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
+                item.b_option.isBlank()&& item.b_image=="" -> {
+
+//                    holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.an_option_b_or_an_image_must_be_added), Toast.LENGTH_SHORT
+                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.c_option.isBlank() -> {
-                    holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
+                item.c_option.isBlank()&& item.c_image==""-> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.an_option_c_or_an_image_must_be_added), Toast.LENGTH_SHORT
+                    ).show()
+//                    holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.d_option.isBlank() -> {
-                    holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
+                item.d_option.isBlank()&& item.d_image=="" -> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.an_option_d_or_an_image_must_be_added), Toast.LENGTH_SHORT
+                    ).show()
+//                    holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
@@ -251,6 +275,18 @@ class AddQuestionAdapter(
         notifyDataSetChanged()
     }
 
+    private fun openImagePreview(context: Context, imageUrl: String) {
+        if (imageUrl.isBlank()) return
+
+        Constant.commonFileList.clear()
+        Constant.commonFileList.add(
+            CommonFileData(Constant.IMAGE, imageUrl)
+        )
+        Constant.selectedFileIndex = 0
+
+        context.startActivity(Intent(context, FilesViewActivity::class.java))
+    }
+
     fun getUpdatedList(): List<GetQuizQuestionReportData> = itemList!!
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -292,6 +328,13 @@ class AddQuestionAdapter(
                 "ATTACH_DEBUG",
                 "Question $adapterPosition attachments = ${data.file_path?.size}"
             )
+
+            lblAddImageD.visibility= View.VISIBLE
+            lblAddImageC.visibility= View.VISIBLE
+            lblAddImageB.visibility= View.VISIBLE
+            lblAddImageA.visibility= View.VISIBLE
+            lblQuestionPick.visibility= View.VISIBLE
+            rcyQuestions.visibility= View.VISIBLE
 
             rytSpinnerHeader.visibility = View.VISIBLE
             edtCorrectAns.visibility = View.GONE
@@ -380,6 +423,18 @@ class AddQuestionAdapter(
             rcyQuestions.post {
                 rcyQuestions.requestLayout()
             }
+            imgOptionA.setOnClickListener {
+                openImagePreview(context,data.a_image.toString())
+            }
+            imgOptionB.setOnClickListener {
+                openImagePreview(context,data.b_image.toString())
+            }
+            imgOptionC.setOnClickListener {
+                openImagePreview(context,data.c_image.toString())
+            }
+            imgOptionD.setOnClickListener {
+                openImagePreview(context,data.d_image.toString())
+            }
 
             lblremove.setOnClickListener {
                 removeItem(position)
@@ -400,7 +455,7 @@ class AddQuestionAdapter(
             if (imageUrl.isNullOrEmpty()) {
                 imageView.visibility = View.GONE
                 isFremLayout.visibility = View.GONE
-                labelView.text = "Add image"
+                labelView.text = context.getString(R.string.add_image)
                 labelView.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.attachment_icon_2, 0, 0, 0
                 )
@@ -408,9 +463,9 @@ class AddQuestionAdapter(
                 imageView.visibility = View.VISIBLE
                 isFremLayout.visibility = View.VISIBLE
                 Glide.with(itemView.context).load(imageUrl).into(imageView)
-                labelView.text = "Remove image"
+                labelView.text = context.getString(R.string.remove_image)
                 labelView.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.red_close_icon_, 0, 0, 0
+                    R.drawable.trash_bin_red_icon, 0, 0, 0
                 )
                 loadImageWithProgress(imageUrl, imageView, isProgressBar, isFremLayout)
 
@@ -581,6 +636,7 @@ class AddQuestionAdapter(
                 attachments.removeAt(removePos)
                 notifyItemChanged(questionPos)
             }
+
         }
     }
 
