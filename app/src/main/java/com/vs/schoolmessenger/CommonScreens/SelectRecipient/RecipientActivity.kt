@@ -16,9 +16,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -40,6 +42,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
+import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
@@ -48,6 +51,7 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevelData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -66,6 +70,8 @@ import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
 
 
@@ -76,6 +82,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
+    private var quizData: QuizRequestBody? = null
+    private var isQuizData: SaveCreateExamQuizDetails? = null
 
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
@@ -115,6 +123,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isStandardId = ""
     var isClickedTab = 0
     private var isAssignmentData: AssignmentSendingData? = null
+
+
+    private val uploadedFiles = mutableListOf<AwsUploadedFiles>()
+    private var pendingFiles: List<FilePath> = emptyList()
+    private var currentIndex = 0
+    private lateinit var pendingBody: QuizRequestBody
+    private var currentVideoPath: String? = null
 
 
     override fun setupViews() {
@@ -1632,44 +1647,47 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 Constant.M_QUIZ_EXAM -> {
                     Constant.showLoading(this)
-                    val isQuizData =
+                     isQuizData =
                         intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
-                    if (isQuizData != null) {
-                        Log.d("isQuizData", isQuizData.title)
+                    quizData = intent.getParcelableExtra("isQuizData")
+
+//                    if (isQuizData != null) {
+//                        Log.d("isQuizData", isQuizData.title)
+
+                        submitQuiz()
 
 
+//                        val jsonObject = JsonObject().apply {
+//                            addProperty("title", isQuizData.title)
+//                            addProperty("description", isQuizData.description)
+//                            addProperty("no_of_question", isQuizData.no_of_question.toInt())
+//                            addProperty("target_type", isTargetType)
+//                            addProperty("level", selectedLevelValue)
+//                            addProperty("level_flag", isQuizData.level_flag)
+//                            addProperty("subject_id", isSubjectId!!.toString())
+//                            addProperty("class_id", isStandardId)
+//
+//
+//                            val jsonArray = JsonArray()
+//                            selectedIds.forEach { id ->
+//                                jsonArray.add(id)
+//                            }
+//                            add("target_code", jsonArray)
+//
+//                            //if the user click Later in Popup  means by default the below should be given
+//                            if (isQuizData.type=="LATER"){
+//                                add("questions", JsonArray())
+//                                add("update_question_bank", JsonArray())
+//                                addProperty("max_mark", 0)
+//                                addProperty("open_to_student", false)
+//                            }
+//
+//
+//                        }
 
-
-                        val jsonObject = JsonObject().apply {
-                            addProperty("title", isQuizData.title)
-                            addProperty("description", isQuizData.description)
-                            addProperty("no_of_question", isQuizData.no_of_question.toInt())
-                            addProperty("target_type", isTargetType)
-                            addProperty("level", selectedLevelValue)
-                            addProperty("level_flag", isQuizData.level_flag)
-                            addProperty("subject_id", isSubjectId!!.toString())
-                            addProperty("class_id", isStandardId)
-
-
-                            val jsonArray = JsonArray()
-                            selectedIds.forEach { id ->
-                                jsonArray.add(id)
-                            }   
-                            add("target_code", jsonArray)
-
-                            //if the user click Later in Popup  means by default the below should be given
-                            if (isQuizData.type=="LATER"){
-                                add("questions", JsonArray())
-                                add("update_question_bank", JsonArray())
-                                addProperty("max_mark", 0)
-                                addProperty("open_to_student", false)
-                            }
-
-                        }
-
-                        Log.d("CreateQuizRequest", jsonObject.toString())
-                        appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
-                    }
+//                        Log.d("CreateQuizRequest", jsonObject.toString())
+//                        appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
+                  //  }
                 }
             }
         }
@@ -1884,5 +1902,262 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             fileName = isVoiceData.isFileName
         )
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+    }
+
+
+
+    // QUIZ
+
+
+    fun submitQuiz() {
+        Constant.showLoading(this)
+
+        pendingBody = quizData!!
+        uploadedFiles.clear()
+
+        val filesToUpload = collectLocalFiles(quizData!!)
+
+        if (filesToUpload.isEmpty()) {
+            callApi(quizData!!)
+        } else {
+            pendingFiles = filesToUpload
+            currentIndex = 0
+            uploadNextFile()
+        }
+    }
+
+    private fun uploadNextFile() {
+        if (currentIndex >= pendingFiles.size) {
+            replaceUrlsInBody(pendingBody)
+            callApi(pendingBody)
+            return
+        }
+
+        val file = pendingFiles[currentIndex]
+
+        if (file.type == "VIDEO") {
+            uploadVideo(file)
+        } else {
+            uploadToAws(file)
+        }
+    }
+
+    private fun uploadVideo(file: FilePath) {
+        currentVideoPath = file.url
+
+        VimeoVideoUpload.uploadVideo(
+            this,
+            Constant.quiz,
+            Constant.quiz,
+            file.url,
+            this
+        )
+    }
+
+    private fun replaceUrlsInBody(body: QuizRequestBody) {
+
+        body.questions.forEach { q ->
+
+            // Question attachments
+            q.file_path = q.file_path.map { file ->
+                if (file.url.startsWith("http")) {
+                    file
+                } else {
+                    val name = File(file.url).name
+                    val uploaded = uploadedFiles.find { it.originalFileName == name }
+
+                    if (uploaded != null) {
+                        FilePath(uploaded.isFileUrl, uploaded.isFileType)
+                    } else {
+                        file
+                    }
+                }
+            }.toMutableList()
+
+            // Option images
+            q.a_image = mapOptionImage(q.a_image)
+            q.b_image = mapOptionImage(q.b_image)
+            q.c_image = mapOptionImage(q.c_image)
+            q.d_image = mapOptionImage(q.d_image)
+        }
+    }
+
+    private fun mapOptionImage(path: String?): String? {
+        if (path.isNullOrEmpty() || path.startsWith("http")) return path
+
+        val name = File(path).name
+        return uploadedFiles.find { it.originalFileName == name }?.isFileUrl ?: path
+    }
+
+    private fun callApi(body: QuizRequestBody) {
+        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
+        val quizRequest: QuizRequestBody = quizData!!
+        val mainJson = JsonObject()
+        mainJson.addProperty("title", quizDetails.title)
+        mainJson.addProperty("description", quizDetails.description)
+        mainJson.addProperty("no_of_question", quizDetails.no_of_question.toInt())
+        mainJson.addProperty("level_flag", quizDetails.level_flag)
+        mainJson.addProperty("ok_flag", quizRequest.ok_flag)
+        mainJson.addProperty("max_mark", quizRequest.max_mark)
+        val updateQBankArray = JsonArray()
+        quizRequest.update_question_bank.forEach { item ->
+            val obj = JsonObject()
+            obj.addProperty("ques_no", item.ques_no)
+            obj.addProperty("subject_id", item.subject_id)
+            obj.addProperty("chapter", item.chapter)
+            obj.addProperty("question", item.question)
+            obj.addProperty("a_option", item.a_option)
+            obj.addProperty("b_option", item.b_option)
+            obj.addProperty("c_option", item.c_option)
+            obj.addProperty("d_option", item.d_option)
+            obj.addProperty("a_image", item.a_image)
+            obj.addProperty("b_image", item.b_image)
+            obj.addProperty("c_image", item.c_image)
+            obj.addProperty("d_image", item.d_image)
+            obj.addProperty("answer", item.answer)
+            obj.addProperty("mark", item.mark)
+
+            updateQBankArray.add(obj)
+        }
+        mainJson.add("update_question_bank", updateQBankArray)
+        val questionsArray = JsonArray()
+
+        quizRequest.questions.forEach { q ->
+            val qObj = JsonObject()
+            qObj.addProperty("ques_no", q.quesNo)
+            qObj.addProperty("chapter", q.chapter)
+            qObj.addProperty("question", q.question)
+            qObj.addProperty("a_option", q.a_option)
+            qObj.addProperty("b_option", q.b_option)
+            qObj.addProperty("c_option", q.c_option)
+            qObj.addProperty("d_option", q.d_option)
+            qObj.addProperty("answer", q.answer)
+            qObj.addProperty("mark", q.mark)
+            qObj.addProperty("iframe", q.iframe)
+            qObj.addProperty("file_size", q.file_size)
+            qObj.addProperty("thumbnail", q.thumbnail)
+            qObj.addProperty("a_image", q.a_image ?: "")
+            qObj.addProperty("b_image", q.b_image ?: "")
+            qObj.addProperty("c_image", q.c_image ?: "")
+            qObj.addProperty("d_image", q.d_image ?: "")
+
+            // file path array
+            val fileArray = JsonArray()
+            q.file_path.forEach { file ->
+                val fileObj = JsonObject()
+                fileObj.addProperty("file_path", file.url)
+                fileObj.addProperty("file_type", file.type)
+                fileArray.add(fileObj)
+            }
+            qObj.add("q_file_path", fileArray)
+
+            questionsArray.add(qObj)
+        }
+
+        mainJson.add("questions", questionsArray)
+        Log.d("FINAL_JSON", mainJson.toString())
+        appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson)
+    }
+
+
+    private fun collectLocalFiles(body: QuizRequestBody): List<FilePath> {
+        val list = mutableListOf<FilePath>()
+
+        body.questions.forEach { q ->
+
+            // Question attachments
+            q.file_path.forEach { file ->
+                if (!isAlreadyUploaded(file.url)) {
+                    list.add(file)
+                }
+            }
+
+            // Option images
+            addIfLocalFilePath(q.a_image, list)
+            addIfLocalFilePath(q.b_image, list)
+            addIfLocalFilePath(q.c_image, list)
+            addIfLocalFilePath(q.d_image, list)
+        }
+
+        return list
+    }
+
+    private fun isAlreadyUploaded(path: String?): Boolean {
+        return path.isNullOrEmpty() || path.startsWith("http")
+    }
+
+    private fun addIfLocalFilePath(
+        path: String?,
+        list: MutableList<FilePath>
+    ) {
+        if (!isAlreadyUploaded(path)) {
+            list.add(FilePath(path!!, "IMAGE"))
+        }
+    }
+
+
+//    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//        if (!success || link == null) {
+//            runOnUiThread {
+//                Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
+//            }
+//            return
+//        }
+//
+//        val fileName = File(currentVideoPath!!).name
+//
+//        uploadedFiles.add(
+//            AwsUploadedFiles(
+//                isFileUrl = link,
+//                isFileType = "VIDEO",
+//                originalFileName = fileName
+//            )
+//        )
+//
+//        currentIndex++
+//        uploadNextFile()
+//    }
+
+//    override fun onFailure(errorMessage: String?) {
+//        runOnUiThread {
+//            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+//        }
+//    }
+
+    private fun uploadToAws(file: FilePath) {
+
+        val fileName = File(file.url).name
+
+        isAwsUploadingPreSigned?.getPreSignedUrl(
+            file.url,
+            isStaffDetails!!.school_id,
+            Constant.quiz,
+            this,
+            SharedPreference.getCountryId(this)!!,
+            false,
+            object : UploadCallback {
+
+                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
+
+                    uploadedFiles.add(
+                        AwsUploadedFiles(
+                            isFileUrl = isFileUploaded!!,
+                            isFileType = file.type,
+                            originalFileName = fileName
+                        )
+                    )
+
+                    currentIndex++
+                    uploadNextFile()
+                }
+
+                override fun onUploadError(error: String?) {
+                    runOnUiThread {
+                        Toast.makeText(this@RecipientActivity, "AWS upload failed", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        )
     }
 }

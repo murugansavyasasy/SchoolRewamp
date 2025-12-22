@@ -48,6 +48,7 @@ import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -135,7 +136,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     private var isQuizCreateData: SaveCreateExamQuizDetails? = null
-
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -1307,13 +1307,19 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
-                    Constant.showLoading(this)
+//                    val intent = Intent(this, RecipientActivity::class.java)
+//                    intent.putExtra("isQuizData", body)
+//                    startActivity(intent)
+//                    Constant.showLoading(this)
                     submitQuiz(body)
                 }
             }
 
         } else {
-            Constant.showLoading(this)
+//            val intent = Intent(this, RecipientActivity::class.java)
+//            intent.putExtra("isQuizData", body)
+//            startActivity(intent)
+//            Constant.showLoading(this)
             submitQuiz(body)
         }
     }
