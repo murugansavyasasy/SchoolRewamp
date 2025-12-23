@@ -96,20 +96,24 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             val finalName =
                 Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
-            binding.toolbarLayout.lblParentToolBar.text = finalName
-            binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
+
+
+
+
+            binding.toolbarLayout.lblStudentName.text = finalName
+            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+
         }
-
-
 
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lnrParent.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails!!.access_token
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblSubjectName.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.quiz)
+
+//        binding.toolbarLayout.lblStudentName.text = getString(R.string.quiz)
 
 
         isFetchUpcomingEQList()

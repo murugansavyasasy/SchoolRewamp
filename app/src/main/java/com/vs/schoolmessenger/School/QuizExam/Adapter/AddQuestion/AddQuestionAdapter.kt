@@ -160,53 +160,53 @@ class AddQuestionAdapter(
                     isAllValid = false
                 }
 
-                item.question.isBlank() && item.file_path!!.isEmpty()-> {
-//                    holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.a_question_or_an_question_image_must_be_added), Toast.LENGTH_SHORT
-                    ).show()
+                item.question.isBlank()-> {
+                    holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.a_question_or_an_question_image_must_be_added), Toast.LENGTH_SHORT
+//                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.a_option.isBlank() && item.a_image=="" -> {
-//                    holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.an_option_a_or_an_image_must_be_added), Toast.LENGTH_SHORT
-                    ).show()
+                item.a_option.isBlank()  -> {
+                    holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.an_option_a_or_an_image_must_be_added), Toast.LENGTH_SHORT
+//                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.b_option.isBlank()&& item.b_image=="" -> {
+                item.b_option.isBlank() -> {
 
-//                    holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.an_option_b_or_an_image_must_be_added), Toast.LENGTH_SHORT
-                    ).show()
+                    holder?.edtOptionB?.error = context.getString(R.string.this_is_required)
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.an_option_b_or_an_image_must_be_added), Toast.LENGTH_SHORT
+//                    ).show()
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.c_option.isBlank()&& item.c_image==""-> {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.an_option_c_or_an_image_must_be_added), Toast.LENGTH_SHORT
-                    ).show()
-//                    holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
+                item.c_option.isBlank()-> {
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.an_option_c_or_an_image_must_be_added), Toast.LENGTH_SHORT
+//                    ).show()
+                    holder?.edtOptionC?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }
 
-                item.d_option.isBlank()&& item.d_image=="" -> {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.an_option_d_or_an_image_must_be_added), Toast.LENGTH_SHORT
-                    ).show()
-//                    holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
+                item.d_option.isBlank() -> {
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.an_option_d_or_an_image_must_be_added), Toast.LENGTH_SHORT
+//                    ).show()
+                    holder?.edtOptionD?.error = context.getString(R.string.this_is_required)
                     if (firstInvalidIndex == null) firstInvalidIndex = index
                     isAllValid = false
                 }

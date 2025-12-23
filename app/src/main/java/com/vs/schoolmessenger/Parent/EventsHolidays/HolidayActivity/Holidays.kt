@@ -54,8 +54,6 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
         loadCalendarFragment()
 
         appViewModel?.IsGetHolidayReport?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-
                 val mobileNumber = SharedPreference.getMobileNumber(this)
                 val jsonObject = JsonObject().apply {
                     addProperty(APIKeyNames.mobile_number, mobileNumber)
@@ -67,16 +65,10 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
 
                 binding.calendarFragmentContainer.visibility = View.VISIBLE
                 binding.lnrErrorMsg.visibility = View.GONE
-                val calendarFragment = CalendarFragment.newInstance(response.data)
+                val calendarFragment = CalendarFragment.newInstance(response?.data?:emptyList())
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.calendarFragmentContainer, calendarFragment)
                     .commit()
-            } else {
-                binding.calendarFragmentContainer.visibility = View.GONE
-                binding.lnrErrorMsg.visibility = View.VISIBLE
-                binding.errorMsg.text = response?.message?:getString(R.string.no_holidays_found)
-
-            }
         }
     }
 
