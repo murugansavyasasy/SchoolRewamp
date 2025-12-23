@@ -20,7 +20,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblContactSupport)
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblContact)
         binding.lblContactNo.text = Constant.isGlobalVariableData!!.support_contact
         binding.lblContacttMail.text = Constant.isGlobalVariableData!!.support_email
 
