@@ -10,8 +10,8 @@
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_fourty"
-        android:orientation="vertical"
-        android:background="@color/PrimaryColor" />
+        android:background="@color/PrimaryColor"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/topbar"
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/twenty"
-        android:orientation="vertical"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="@dimen/fifteen">
 
         <ImageView
@@ -38,51 +38,49 @@
 
 
         <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relative_layout">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/profileheader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="@string/lblProfile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold"
-                android:layout_centerInParent="true" />
+                android:textStyle="bold" />
 
 
-        <RelativeLayout
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rytEdit">
-
-            <TextView
-                android:id="@+id/btnEdit"
+            <RelativeLayout
+                android:id="@+id/rytEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/edit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/five" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true">
 
-            <ImageView
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_width="@dimen/sixteen"
-                android:layout_height="@dimen/sixteen"
-                android:layout_centerVertical="true"
-                android:src="@drawable/edit_icon_3"
-              />
+                <TextView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:text="@string/edit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/sixteen"
+                    android:layout_height="@dimen/sixteen"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:src="@drawable/edit_icon_3" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
-        </RelativeLayout>
-
 
 
         <Space
@@ -181,8 +179,8 @@
                         android:id="@+id/lblRegisterNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Register number : 1473538628"
                         android:layout_marginTop="@dimen/eight"
+                        android:text="Register number : 1473538628"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp" />
 
@@ -226,8 +224,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
-                            android:textColor="@color/black"
                             android:text="Section : A"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -388,8 +386,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/twenty"
-                                android:textColor="@color/black"
                                 android:text="Kodaikanal, Dindigul (D.T), Pin code : 624103"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
 
@@ -540,8 +538,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:textColor="@color/light_gray"
                                     android:text="Farmer"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
@@ -573,8 +571,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:textColor="@color/light_gray"
                                     android:text="Farmer"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
@@ -606,8 +604,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:textColor="@color/light_gray"
                                     android:text="6382677672"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
                         </LinearLayout>

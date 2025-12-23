@@ -85,13 +85,31 @@ class ProfileImagePickingAdapter(
         holder.itemView.setOnClickListener {
             if (!item.path.contains("amazonaws.")) {
                 if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
-                    Constant.commonFileList = Constant.selectedFiles.map {
-                        CommonFileData(type = it.type.toString(), path = it.path)
-                    }.toMutableList()
-                    Constant.selectedFileIndex = pos - 1
+                    val filteredFiles = Constant.selectedFiles.filter {
+                        it.type.toString() == Constant.IMAGE || it.type.toString() == Constant.VIDEO
+                    }
+                    Constant.commonFileList = filteredFiles.map {
+                        CommonFileData(
+                            type = it.type.toString(),
+                            path = it.path
+                        )
+                    }
+                        .toMutableList()
+                    val clickedPath = item.path
+                    val indexInFiltered = filteredFiles.indexOfFirst { it.path == clickedPath }
+                        .let { if (it >= 0) it else 0 }
+
+                    Constant.selectedFileIndex = indexInFiltered
                     val intent = Intent(context, FilesViewActivity::class.java)
                     intent.putExtra(Constant.subjectName, "Your Files")
                     context.startActivity(intent)
+//                    Constant.commonFileList = Constant.selectedFiles.map {
+//                        CommonFileData(type = it.type.toString(), path = it.path)
+//                    }.toMutableList()
+//                    Constant.selectedFileIndex = pos
+//                    val intent = Intent(context, FilesViewActivity::class.java)
+//                    intent.putExtra(Constant.subjectName, "Your Files")
+//                    context.startActivity(intent)
                 } else {
                     val uri = if (item.path.startsWith("content://")) {
                         Uri.parse(item.path)
