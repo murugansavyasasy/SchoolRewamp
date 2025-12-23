@@ -129,7 +129,7 @@
                         android:layout_height="@dimen/thirty"
                         android:paddingTop="@dimen/three"
                         android:paddingBottom="@dimen/three"
-                        android:src="@drawable/ic_settings" />
+                        android:src="@drawable/gear" />
 
                     <TextView
                         android:id="@+id/lblSettings"
@@ -155,7 +155,7 @@
                         android:layout_height="@dimen/thirty"
                         android:paddingTop="@dimen/three"
                         android:paddingBottom="@dimen/three"
-                        android:src="@drawable/ic_account" />
+                        android:src="@drawable/person_circle" />
 
                     <TextView
                         android:id="@+id/lblProfile"
