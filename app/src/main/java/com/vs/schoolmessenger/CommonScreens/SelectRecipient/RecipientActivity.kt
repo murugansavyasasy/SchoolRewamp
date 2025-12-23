@@ -2055,11 +2055,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         quizRequest.questions.forEach { q ->
             val qObj = JsonObject()
-            if (q.quesNo == "") {
+//            if (q.quesNo == "") {
                 isQuestionId++
-            } else {
-                isQuestionId=q.quesNo.toInt()
-            }
+//            } else {
+//                isQuestionId=q.quesNo.toInt()
+//            }
 
 //            qObj.addProperty("ques_no", q.quesNo)
             qObj.addProperty("ques_no", isQuestionId.toString())
