@@ -176,6 +176,8 @@ class AwsUploadingPreSigned {
             }
 
             override fun onFailure(call: Call<PreSignedUrl?>?, t: Throwable?) {
+                val isBaseUrl = SharedPreference.getBaseUrl(activity)
+                RestClient.changeApiBaseUrl(isBaseUrl.toString())
                 Log.e("Response Failure", t?.message ?: "Unknown error")
                 Toast.makeText(activity, "Check InterNet", Toast.LENGTH_SHORT).show()
                 uploadCallback.onUploadError(t?.message)
@@ -234,11 +236,15 @@ class AwsUploadingPreSigned {
                 override fun onSuccess(message: String?) {
                     Log.d("S3Upload", message ?: "Upload success")
                     Log.d("isFileUploadUrl", isFileUploadUrl.toString())
+                    val isBaseUrl = SharedPreference.getBaseUrl(activity)
+                    RestClient.changeApiBaseUrl(isBaseUrl.toString())
                     uploadCallback.onUploadSuccess(message, isFileUploadUrl)
                 }
 
                 override fun onError(error: Exception?) {
                     Log.e("UploadError", error!!.message.toString())
+                    val isBaseUrl = SharedPreference.getBaseUrl(activity)
+                    RestClient.changeApiBaseUrl(isBaseUrl.toString())
                     uploadCallback.onUploadError(error.message)
                 }
             })

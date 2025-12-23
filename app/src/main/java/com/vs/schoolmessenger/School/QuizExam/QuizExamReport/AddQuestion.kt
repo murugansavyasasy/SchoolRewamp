@@ -29,7 +29,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -41,20 +40,19 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.AddQuestionAdapter
 import com.vs.schoolmessenger.School.QuizExam.Adapter.AddQuestion.PickQuestionAdapter
-import com.vs.schoolmessenger.School.QuizExam.Adapter.QuestionAttachmentAdapter
 import com.vs.schoolmessenger.School.QuizExam.AddQuestionListner
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizQuestionRequest
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
@@ -65,6 +63,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizAttachmentData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQuestionReportData
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.QuestionSource
 import com.vs.schoolmessenger.School.QuizExam.OnAttachmentListener
+import com.vs.schoolmessenger.School.QuizExam.QuizTempHolder
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileType
@@ -145,10 +144,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
-
+        isQuizCreateData = QuizDataTempHolder.quizDataBody
         //Note : we are getting this from Create quiz page if user click "Add Now"
-        isQuizCreateData = intent.getSerializableExtra(Constant.create_quiz_exam_data_add_now)
-                as? SaveCreateExamQuizDetails
+//        isQuizCreateData = intent.getSerializableExtra(Constant.create_quiz_exam_data_add_now)
+//                as? SaveCreateExamQuizDetails
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -1267,17 +1266,26 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         isUpdatedQBankQuestions = updateQBankList.size
         val totalMaxMark = apiUserQuestions.sumOf { it.mark }
 
+        //here actually if all the question are filled means we pass as open_to_student as true so the reciver side this particular quiz will be visible if false means this particular quiz will not be visible
+        var open_to_student = false
+        open_to_student = if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size) {
+            true
+        } else {
+            false
+        }
+
         val body = QuizRequestBody(
             quiz_id = isQuizID,
             questions = apiUserQuestions,
-            max_mark = totalMaxMark,
+            max_mark = totalMaxMark, open_to_student = open_to_student,
             ok_flag = isOkFlag,
             update_question_bank = updateQBankList
         )
 
-        val jsonObject = Gson().toJsonTree(body).asJsonObject
-        Log.d("FinalJSON", jsonObject.toString())
-
+//        val jsonObject = Gson().toJsonTree(body).asJsonObject
+        Log.d("FinalJSON", body.toString())
+        QuizTempHolder.quizBody = body
+        QuizDataTempHolder.quizDataBody = isQuizCreateData
         Log.d("isUpdatedQBankQuestion", isUpdatedQBankQuestions.toString())
         if (isUpdatedQBankQuestions > 0) {
 
@@ -1300,20 +1308,43 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
+
+                    if (Constant.isQuizReportPage) {
+                        submitQuiz(body)
+                    } else {
+                        val intent = Intent(this, RecipientActivity::class.java)
+                        startActivity(intent)
+                    }
+
+//                    if (isQuizCreateData!!.type == "ADD_NOW") {
+//                        val intent = Intent(this, RecipientActivity::class.java)
+//                        startActivity(intent)
+//                    } else {
+//                        submitQuiz(body)
+//                    }
+
+//                    Log.d("quizData++++", body!!.questions.get(0).file_path.size.toString())
 //                    val intent = Intent(this, RecipientActivity::class.java)
-//                    intent.putExtra("isQuizData", body)
+////                    intent.putExtra("isQuizData", body)
 //                    startActivity(intent)
 //                    Constant.showLoading(this)
-                    submitQuiz(body)
+//                    submitQuiz(body)
                 }
             }
-
         } else {
+            Log.d("quizData++++111", body.questions.get(0).file_path.size.toString())
+            if (Constant.isQuizReportPage) {
+                submitQuiz(body)
+            } else {
+                val intent = Intent(this, RecipientActivity::class.java)
+                startActivity(intent)
+            }
+
 //            val intent = Intent(this, RecipientActivity::class.java)
-//            intent.putExtra("isQuizData", body)
+////            intent.putExtra("isQuizData", body)
 //            startActivity(intent)
 //            Constant.showLoading(this)
-            submitQuiz(body)
+            // submitQuiz(body)
         }
     }
 
@@ -1470,10 +1501,94 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     private fun callApi(body: QuizRequestBody) {
-        val json = Gson().toJsonTree(body).asJsonObject
-        Log.d("FINAL_JSON", json.toString())
-        appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
+//        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
+
+        val quizRequest: QuizRequestBody = body
+        val mainJson = JsonObject()
+        mainJson.addProperty("ok_flag", false)
+        mainJson.addProperty("max_mark", quizRequest.max_mark)
+        mainJson.addProperty("open_to_student", quizRequest.open_to_student)
+
+//        mainJson.addProperty("target_type", isTargetType)
+//        mainJson.addProperty("level", selectedLevelValue)
+//        mainJson.addProperty("subject_id", isSubjectId!!.toString())
+//        mainJson.addProperty("class_id", isStandardId)
+
+//        val jsonArray = JsonArray()
+//        selectedIds.forEach { id ->
+//            jsonArray.add(id)
+//        }
+//        mainJson.add("target_code", jsonArray)
+
+        val updateQBankArray = JsonArray()
+        quizRequest.update_question_bank.forEach { item ->
+            val obj = JsonObject()
+            obj.addProperty("ques_no", item.ques_no)
+            obj.addProperty("subject_id", item.subject_id)
+            obj.addProperty("chapter", item.chapter)
+            obj.addProperty("question", item.question)
+            obj.addProperty("a_option", item.a_option)
+            obj.addProperty("b_option", item.b_option)
+            obj.addProperty("c_option", item.c_option)
+            obj.addProperty("d_option", item.d_option)
+            obj.addProperty("a_image", item.a_image)
+            obj.addProperty("b_image", item.b_image)
+            obj.addProperty("c_image", item.c_image)
+            obj.addProperty("d_image", item.d_image)
+            obj.addProperty("answer", item.answer)
+            obj.addProperty("mark", item.mark)
+
+            updateQBankArray.add(obj)
+        }
+        mainJson.add("update_question_bank", updateQBankArray)
+        val questionsArray = JsonArray()
+
+        quizRequest.questions.forEach { q ->
+            val qObj = JsonObject()
+            qObj.addProperty("ques_no", q.quesNo)
+            qObj.addProperty("chapter", q.chapter)
+            qObj.addProperty("question", q.question)
+            qObj.addProperty("a_option", q.a_option)
+            qObj.addProperty("b_option", q.b_option)
+            qObj.addProperty("c_option", q.c_option)
+            qObj.addProperty("d_option", q.d_option)
+            qObj.addProperty("answer", q.answer)
+            qObj.addProperty("mark", q.mark)
+            qObj.addProperty("iframe", q.iframe)
+            qObj.addProperty("file_size", q.file_size)
+            qObj.addProperty("thumbnail", q.thumbnail)
+            qObj.addProperty("a_image", q.a_image ?: "")
+            qObj.addProperty("b_image", q.b_image ?: "")
+            qObj.addProperty("c_image", q.c_image ?: "")
+            qObj.addProperty("d_image", q.d_image ?: "")
+
+            // file path array
+            val fileArray = JsonArray()
+            q.file_path.forEach { file ->
+                val fileObj = JsonObject()
+                fileObj.addProperty("url", file.url)
+                fileObj.addProperty("type", file.type)
+                fileArray.add(fileObj)
+            }
+            qObj.add("q_file_path", fileArray)
+
+            questionsArray.add(qObj)
+        }
+
+        mainJson.add("questions", questionsArray)
+        mainJson.addProperty("quiz_id", quizRequest.quiz_id)
+//
+//        mainJson.addProperty("no_of_question", 1)
+//        mainJson.addProperty("level_flag", false)
+        Log.d("FINAL_JSON", mainJson.toString())
+        appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson)
+
     }
+//    private fun callApi(body: QuizRequestBody) {
+//        val json = Gson().toJsonTree(body).asJsonObject
+//        Log.d("FINAL_JSON", json.toString())
+//        appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
+//    }
 
 
     override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {

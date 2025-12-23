@@ -11,6 +11,7 @@ data class QuizRequestBody(
     val questions: List<QuizQuestionRequest>,
     val max_mark: Int,
     val ok_flag: Boolean,
+    val open_to_student: Boolean,
     val update_question_bank: List<UpdateQBankItem>
 ) : Parcelable
 

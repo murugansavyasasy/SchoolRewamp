@@ -643,6 +643,8 @@ object Constant {
     var submittedCount = "submittedCount"
     var subjectID = "subjectID"
 
+    var isQuizReportPage=false
+
 
     var category_name = "category_name"
     var category = "category"
