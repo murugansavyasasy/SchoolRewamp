@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -597,7 +598,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             R.id.imgSearch -> {
-                if (binding.rytsearch.visibility == View.VISIBLE) {
+                if (binding.rytsearch.isVisible) {
                     binding.rytsearch.visibility = View.GONE
                 } else {
                     binding.rytsearch.visibility = View.VISIBLE
@@ -741,7 +742,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_SCHOOL_CLASS_EVENTS -> {
-
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     CreateEvent::class.java
                 } else {
@@ -907,7 +907,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
             else -> null
         }
         activityClass?.let {

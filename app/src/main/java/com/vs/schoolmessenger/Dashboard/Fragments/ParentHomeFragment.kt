@@ -84,6 +84,7 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.core.view.isVisible
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
@@ -108,7 +109,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private var originalMenuList = ArrayList<MenuDetail>()
     private var filteredMenuList = ArrayList<MenuDetail>()
-
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -599,8 +599,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
+
             R.id.imgSearch -> {
-                if (binding.rytsearch.visibility == View.VISIBLE) {
+                if (binding.rytsearch.isVisible) {
                     binding.rytsearch.visibility = View.GONE
                 } else {
                     binding.rytsearch.visibility = View.VISIBLE
@@ -618,7 +619,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-        // isDashBoardData()
+         isDashBoardData()
     }
 
     override fun onPause() {
