@@ -505,6 +505,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 } else {
                     isStandardListAdapter!!.deselectAll()
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
                     isStandardListAdapter!!.itemList?.forEach { item ->
                         onIdUnchecked(item)
                     }
@@ -520,6 +523,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isSectionAdapter!!.itemList?.forEach { item ->
                         onIdUnchecked(item)
                     }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+
                 }
             } else if (isSelectedType == 3) {
                 if (binding.chAllSelect.isChecked) {
@@ -532,6 +539,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isGroupStaffAdapter!!.itemList?.forEach { item ->
                         onIdUnchecked(item)
                     }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+
                 }
             } else if (isSelectedType == 4) {
                 if (binding.chAllSelect.isChecked) {
@@ -544,6 +555,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isGroupStaffAdapter!!.itemList?.forEach { item ->
                         onIdUnchecked(item)
                     }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
                 }
             }
         }
@@ -627,7 +641,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.GONE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isSchool)
+//                    changeTapBg(Constant.isSchool)
+                    changeTapBg(Constant.isStandard)
                     isGetAcademicYear()
                 }
 
@@ -640,7 +655,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.VISIBLE
-                    changeTapBg(Constant.isSchool)
+//                    changeTapBg(Constant.isSchool)
+                    changeTapBg(Constant.isStandard)
                     isGetAcademicYear()
 
                 }
@@ -837,6 +853,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isStandardId = isStandard[position].id.toString()
                     isSection = isStandard[position].sections
                     binding.recyclerView.visibility = View.VISIBLE
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
                     binding.chAllSelect.isChecked = false
                     isSectionId.clear()
                     isSectionSelectedIds.clear()
@@ -1217,6 +1236,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetSubjectList(isSectionId: String) {
+
         appViewModel!!.isGetSubjectList(
             isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
         )
@@ -1297,6 +1317,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
                 totalTasks,
                 { completedTasks++; updateProgress() })
+
             else -> {
                 Log.d("UploadDebug", "No files to upload.")
             }
@@ -1622,7 +1643,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
-
     fun eventsendapi() {
 
         val eventDetails = intent.getSerializableExtra(Constant.event_data) as? EventDetails
@@ -1714,10 +1734,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
-        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
-            isGetSubjectList(idString)
-        }
+//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+//        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+//            isGetSubjectList(idString)
+//        }
     }
 
     fun attachmentSendApi() {
@@ -1893,6 +1913,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             this
         )
     }
+
     private fun replaceUrlsInBody(body: QuizRequestBody) {
 
         body.questions.forEach { q ->
