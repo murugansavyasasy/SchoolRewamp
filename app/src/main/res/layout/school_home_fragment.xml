@@ -4,9 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bpWhite"
->
-
+    android:background="@color/bpWhite">
 
 
     <RelativeLayout
@@ -21,8 +19,7 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/burger_menu">
-        </ImageView>
+            android:src="@drawable/burger_menu"></ImageView>
 
 
         <RelativeLayout
@@ -97,6 +94,18 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_below="@+id/lnrNotifi"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:src="@drawable/search_icon_white">
+
+        </ImageView>
+
         <com.vs.schoolmessenger.Utils.DashBoardWaveDesign
             android:id="@+id/waveView"
             android:layout_width="match_parent"
@@ -123,11 +132,46 @@
         android:gravity="center"
         android:orientation="horizontal" />
 
+    <RelativeLayout
+        android:id="@+id/rytsearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_below="@+id/dotsIndicator"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSearch1"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search_grey" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch1"
+            android:background="@android:color/transparent"
+            android:hint="@string/search_dot"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gridRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/dotsIndicator"
+        android:layout_below="@id/rytsearch"
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
@@ -135,5 +179,37 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/ten"
         tools:listitem="@layout/dashboard_app_item" />
+
+
+    <LinearLayout
+        android:id="@+id/rytNORecordFound"
+        android:layout_width="match_parent"
+        android:layout_below="@id/rytsearch"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/no_menu_found"
+            android:layout_height="300dp">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="No menu found..."
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+
+
+    </LinearLayout>
 </RelativeLayout>
 
