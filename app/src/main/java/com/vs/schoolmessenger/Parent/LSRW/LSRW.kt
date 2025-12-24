@@ -62,10 +62,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
-            Log.d(
-                "NoticeBoard_EXTRAS",
-                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
-            )
+            Log.d("NoticeBoard_EXTRAS", "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name")
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
@@ -242,8 +239,6 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
 
 
         }
-
-
     }
 
     override fun onReadStatusClick(

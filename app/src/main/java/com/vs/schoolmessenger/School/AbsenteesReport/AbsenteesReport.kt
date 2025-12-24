@@ -2,6 +2,10 @@ package com.vs.schoolmessenger.School.AbsenteesReport
 
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -138,7 +142,19 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         val filtered = absenteeList.find { it.absent_date_only == date }
         if (filtered != null) {
             binding.selectedDateText.text = formatDateDisplay(date)
-            binding.totalabsentesscount.text = "${"Total Absent"} : ${filtered.total_absentees}"
+
+            val text = "Total Absent : ${filtered.total_absentees}"
+            val span = SpannableString(text)
+
+            span.setSpan(
+                ForegroundColorSpan(Color.RED),
+                text.indexOf(filtered.total_absentees),
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            binding.totalabsentesscount.text = span
+
             binding.absenteesbystandard.text = "${"Absentees by standard"} : ${filtered.class_wise[0].total_absentees}"
 
             loadClassWiseRecycler(filtered.class_wise, date)
