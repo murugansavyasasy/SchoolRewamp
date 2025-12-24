@@ -640,6 +640,7 @@ object Constant {
     var quiz_Title = "quiz_Title"
     var limitQuestion = "limitQuestion"
     var submittedCount = "submittedCount"
+    var openToStudent = "openToStudent"
     var subjectID = "subjectID"
 
     var isQuizReportPage=false

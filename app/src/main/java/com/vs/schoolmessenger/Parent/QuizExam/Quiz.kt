@@ -100,8 +100,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
 
 
-            binding.toolbarLayout.lblStudentName.text = finalName
-            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
+//            binding.toolbarLayout.lblStudentName.text = finalName
+//            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
 
         }
 
@@ -109,8 +109,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.lnrParent.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails!!.access_token
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblSubjectName.text =
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
 //        binding.toolbarLayout.lblStudentName.text = getString(R.string.quiz)

@@ -19,5 +19,6 @@ data class GetQuizExamReportData(
     val subject_id: String,
     val can_edit: Boolean,
     val can_delete: Boolean,
+    val open_to_student: Boolean,
 
     )

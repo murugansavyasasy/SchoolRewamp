@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
@@ -83,6 +84,7 @@ class ExamQuizReportAdapter(
         private val lblLevelStatus: TextView = itemView.findViewById(R.id.lblLevelStatus)
         private val lblAdd: TextView = itemView.findViewById(R.id.lblAdd)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
+        private val lnrPendingQuiz: LinearLayout = itemView.findViewById(R.id.lnrPendingQuiz)
         private val imgOptions: ImageView = itemView.findViewById(R.id.imgOptions)
 
         fun bind(data: GetQuizExamReportData, position: Int) {
@@ -93,6 +95,13 @@ class ExamQuizReportAdapter(
             lblPostedBy.text = context.getString(R.string.posted_by) + " : " + data.sent_by
             lblCreatedOn.text =
                 context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
+
+            if(!data.open_to_student){
+                lnrPendingQuiz.visibility=View.VISIBLE
+            }
+            else{
+                lnrPendingQuiz.visibility=View.GONE
+            }
 
             val images = listOf(
                 R.drawable.quiz1,
@@ -180,6 +189,7 @@ class ExamQuizReportAdapter(
                     intent.putExtra(Constant.quiz_Title, data.title)
                     intent.putExtra(Constant.limitQuestion, data.no_of_questions)
                     intent.putExtra(Constant.submittedCount, data.submitted_count)
+                    intent.putExtra(Constant.openToStudent, data.open_to_student)
                     intent.putExtra(Constant.subjectID, data.subject_id)
                     context.startActivity(intent)
                 } else {

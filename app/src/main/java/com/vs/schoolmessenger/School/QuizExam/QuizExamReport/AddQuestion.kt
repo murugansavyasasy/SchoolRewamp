@@ -294,6 +294,18 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             isQuizID = intent.getStringExtra(Constant.quiz_Id).toString()
             isSubjectID = intent.getStringExtra(Constant.subjectID).toString()
             isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
+            val openToStudentMsg = intent.getBooleanExtra(Constant.openToStudent, false)
+            if (!openToStudentMsg){
+                binding.marqueeText.visibility = View.VISIBLE
+                binding.marqueeText.isSelected = true
+                setMarqueeText(
+                    binding.marqueeText,
+                    "⏳ ${getString(R.string.the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled_and_submitted)}"
+                )
+            }
+            else{
+                binding.marqueeText.visibility = View.GONE
+            }
             isOkFlag = isSubmittedCount > 0
             binding.toolbarLayout.lblParentToolBar.text = isQuizTitle
             binding.lblImportQuestion.visibility = View.VISIBLE
@@ -1551,6 +1563,31 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    private fun setMarqueeText(textView: TextView, message: String) {
+        textView.apply {
+            text = message
+            visibility = View.VISIBLE
+            isSelected = true // start marquee
+
+            //  Force marquee even if text is short
+            post {
+                val textWidth = paint.measureText(message)
+                val viewWidth = width.toFloat()
+
+                if (textWidth <= viewWidth) {
+                    // Repeat text with spaces to make it scroll continuously
+                    val repeatCount = ((viewWidth / textWidth) + 8).toInt().coerceAtLeast(3)
+                    val repeatedText = (message + "     ").repeat(repeatCount)
+                    text = repeatedText
+                }
+
+                // Re-enable marquee indefinitely
+                isSelected = true
+                marqueeRepeatLimit = -1 // -1 = infinite loop
+            }
         }
     }
 }

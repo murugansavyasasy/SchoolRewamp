@@ -36,45 +36,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/marqueeText"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/lblImportQuestion">
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textColor="@color/dark_bg_orange"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/lblQuestionCount"
-                style="@style/CustomTextStylePoppinsMedium"
+        <RelativeLayout
+            android:layout_below="@+id/marqueeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="@string/question_limit"></TextView>
+                android:layout_toStartOf="@+id/lblImportQuestion">
+
+                <TextView
+                    android:id="@+id/lblQuestionCount"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/question_limit"></TextView>
+
+                <TextView
+                    android:id="@+id/tvQuestionCount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_toEndOf="@+id/lblQuestionCount"
+                    android:textColor="@color/PrimaryColor"></TextView>
+
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tvQuestionCount"
-                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/lblImportQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/two"
-                android:layout_toEndOf="@+id/lblQuestionCount"
-                android:textColor="@color/PrimaryColor"></TextView>
-
-
+                android:drawableStart="@drawable/import_icon"
+                android:drawablePadding="@dimen/three"
+                android:text="@string/import_from_question_bank"
+                android:textColor="@color/iconBlue"></TextView>
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/lblImportQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:drawableStart="@drawable/import_icon"
-            android:drawablePadding="@dimen/three"
-            android:text="@string/import_from_question_bank"
-            android:textColor="@color/iconBlue"></TextView>
 
     </RelativeLayout>
 
