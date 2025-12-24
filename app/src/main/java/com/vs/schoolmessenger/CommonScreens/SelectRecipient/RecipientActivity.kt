@@ -131,6 +131,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var currentIndex = 0
     private lateinit var pendingBody: QuizRequestBody
     private var currentVideoPath: String? = null
+    private var totalFilesToUpload = 0
 
 
     override fun setupViews() {
@@ -336,6 +337,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             ProgressDialogHelper.dismiss()
             if (response != null) {
                 Log.d("Response", response.status.toString())
+                val saveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
+                val isQuizRequestBody: QuizRequestBody? = null
+                QuizDataTempHolder.quizDataBody=saveCreateExamQuizDetails
+                QuizTempHolder.quizBody = isQuizRequestBody
+
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
@@ -1550,6 +1556,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
             if (!success || link == null) {
                 runOnUiThread {
+                    ProgressDialogHelper.dismiss()
                     Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
                 }
                 return
@@ -1562,8 +1569,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isFileUrl = link, isFileType = "VIDEO", originalFileName = fileName
                 )
             )
-
             currentIndex++
+            updateProgress()
             uploadNextFile()
         } else {
             runOnUiThread {
@@ -1931,25 +1938,41 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
     // QUIZ
-
-
     fun submitQuiz() {
-        //  Constant.showLoading(this)
+
+        ProgressDialogHelper.show(this)
+
         pendingBody = quizData!!
         uploadedFiles.clear()
+
         val filesToUpload = collectLocalFiles(quizData!!)
+
+        totalFilesToUpload = filesToUpload.size
+        currentIndex = 0
+        ProgressDialogHelper.updateProgress(0)
+
         if (filesToUpload.isEmpty()) {
+            ProgressDialogHelper.updateProgress(100)
             callApi(quizData!!)
         } else {
             pendingFiles = filesToUpload
-            currentIndex = 0
             uploadNextFile()
         }
+    }
+
+    private fun updateProgress() {
+        if (totalFilesToUpload == 0) return
+
+        val percent =
+            ((currentIndex.toFloat() / totalFilesToUpload) * 100).toInt()
+
+        ProgressDialogHelper.updateProgress(percent.coerceAtMost(100))
     }
 
     private fun uploadNextFile() {
         if (currentIndex >= pendingFiles.size) {
             replaceUrlsInBody(pendingBody)
+            ProgressDialogHelper.updateProgress(100)
             callApi(pendingBody)
             return
         }
@@ -1963,6 +1986,37 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
+
+//    fun submitQuiz() {
+//        //  Constant.showLoading(this)
+//        pendingBody = quizData!!
+//        uploadedFiles.clear()
+//        val filesToUpload = collectLocalFiles(quizData!!)
+//        if (filesToUpload.isEmpty()) {
+//            callApi(quizData!!)
+//        } else {
+//            pendingFiles = filesToUpload
+//            currentIndex = 0
+//            uploadNextFile()
+//        }
+//    }
+
+//    private fun uploadNextFile() {
+//        if (currentIndex >= pendingFiles.size) {
+//            replaceUrlsInBody(pendingBody)
+//            callApi(pendingBody)
+//            return
+//        }
+//
+//        val file = pendingFiles[currentIndex]
+//
+//        if (file.type == "VIDEO") {
+//            uploadVideo(file)
+//        } else {
+//            uploadToAws(file)
+//        }
+//    }
+
     private fun uploadVideo(file: FilePath) {
         currentVideoPath = file.url
 
@@ -1974,6 +2028,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             this
         )
     }
+
+
+//    private fun uploadVideo(file: FilePath) {
+//        currentVideoPath = file.url
+//
+//        VimeoVideoUpload.uploadVideo(
+//            this,
+//            Constant.quiz,
+//            Constant.quiz,
+//            file.url,
+//            this
+//        )
+//    }
 
     private fun replaceUrlsInBody(body: QuizRequestBody) {
 
@@ -2011,6 +2078,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun callApi(body: QuizRequestBody) {
+        ProgressDialogHelper.dismiss()
 //        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
         var isQuestionId = 0
         val quizRequest: QuizRequestBody = quizData!!
@@ -2056,7 +2124,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         quizRequest.questions.forEach { q ->
             val qObj = JsonObject()
 //            if (q.quesNo == "") {
-                isQuestionId++
+            isQuestionId++
 //            } else {
 //                isQuestionId=q.quesNo.toInt()
 //            }
@@ -2162,18 +2230,61 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
 
                     currentIndex++
+                    updateProgress()
                     uploadNextFile()
                 }
 
                 override fun onUploadError(error: String?) {
                     runOnUiThread {
+                        ProgressDialogHelper.dismiss()
                         Toast.makeText(
-                            this@RecipientActivity, "AWS upload failed", Toast.LENGTH_SHORT
-                        )
-                            .show()
+                            this@RecipientActivity,
+                            "AWS upload failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         )
     }
+
+
+//    private fun uploadToAws(file: FilePath) {
+//
+//        val fileName = File(file.url).name
+//
+//        isAwsUploadingPreSigned?.getPreSignedUrl(
+//            file.url,
+//            isStaffDetails!!.school_id,
+//            Constant.quiz,
+//            this,
+//            SharedPreference.getCountryId(this)!!,
+//            false,
+//            object : UploadCallback {
+//
+//                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
+//
+//                    uploadedFiles.add(
+//                        AwsUploadedFiles(
+//                            isFileUrl = isFileUploaded!!,
+//                            isFileType = file.type,
+//                            originalFileName = fileName
+//                        )
+//                    )
+//
+//                    currentIndex++
+//                    uploadNextFile()
+//                }
+//
+//                override fun onUploadError(error: String?) {
+//                    runOnUiThread {
+//                        Toast.makeText(
+//                            this@RecipientActivity, "AWS upload failed", Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//                    }
+//                }
+//            }
+//        )
+//    }
 }

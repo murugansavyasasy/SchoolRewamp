@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.School.QuizExam.QuizTempHolder
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AddQuestionBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -97,6 +98,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private var cameraPermissionDeniedCount = 0
     var isQuestionPick: Boolean? = null
     var isOptionsFieldId: TextView? = null
+
+    private var totalFilesToUpload = 0
+
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     companion object {
@@ -284,6 +288,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 //Load adapter with empty list
                 isLoadQuizQuestionReport()
 
+            }else{
+                Log.d("isComing","isComing")
+                Log.d("isComing",isQuizCreateData!!.toString())
+                Log.d("isComing",isQuizCreateData!!.type.toString())
             }
         } else {
             Log.d("ScreenName", "AddQuestionScreen")
@@ -1348,30 +1356,61 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
     }
 
-    private fun isAlreadyUploaded(path: String?): Boolean {
-        return path.isNullOrEmpty() || path.startsWith("http")
-    }
-
     fun submitQuiz(body: QuizRequestBody) {
-        Constant.showLoading(this)
+
+        ProgressDialogHelper.show(this)
 
         pendingBody = body
         uploadedFiles.clear()
 
         val filesToUpload = collectLocalFiles(body)
 
+        totalFilesToUpload = filesToUpload.size
+        currentIndex = 0
+        ProgressDialogHelper.updateProgress(0)
+
         if (filesToUpload.isEmpty()) {
+            ProgressDialogHelper.updateProgress(100)
             callApi(body)
         } else {
             pendingFiles = filesToUpload
-            currentIndex = 0
             uploadNextFile()
         }
+    }
+
+    private fun updateProgress() {
+        if (totalFilesToUpload == 0) return
+
+        val percent = ((currentIndex.toFloat() / totalFilesToUpload) * 100).toInt()
+        ProgressDialogHelper.updateProgress(percent.coerceAtMost(100))
+    }
+
+
+//    fun submitQuiz(body: QuizRequestBody) {
+//        Constant.showLoading(this)
+//
+//        pendingBody = body
+//        uploadedFiles.clear()
+//
+//        val filesToUpload = collectLocalFiles(body)
+//
+//        if (filesToUpload.isEmpty()) {
+//            callApi(body)
+//        } else {
+//            pendingFiles = filesToUpload
+//            currentIndex = 0
+//            uploadNextFile()
+//        }
+//    }
+
+    private fun isAlreadyUploaded(path: String?): Boolean {
+        return path.isNullOrEmpty() || path.startsWith("http")
     }
 
     private fun uploadNextFile() {
         if (currentIndex >= pendingFiles.size) {
             replaceUrlsInBody(pendingBody)
+            ProgressDialogHelper.updateProgress(100)
             callApi(pendingBody)
             return
         }
@@ -1384,6 +1423,23 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             uploadToAws(file)
         }
     }
+
+
+//    private fun uploadNextFile() {
+//        if (currentIndex >= pendingFiles.size) {
+//            replaceUrlsInBody(pendingBody)
+//            callApi(pendingBody)
+//            return
+//        }
+//
+//        val file = pendingFiles[currentIndex]
+//
+//        if (file.type == "VIDEO") {
+//            uploadVideo(file)
+//        } else {
+//            uploadToAws(file)
+//        }
+//    }
 
     private fun uploadToAws(file: FilePath) {
 
@@ -1409,18 +1465,61 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     )
 
                     currentIndex++
+                    updateProgress()
                     uploadNextFile()
                 }
 
                 override fun onUploadError(error: String?) {
                     runOnUiThread {
-                        Toast.makeText(this@AddQuestion, "AWS upload failed", Toast.LENGTH_SHORT)
-                            .show()
+                        ProgressDialogHelper.dismiss()
+                        Toast.makeText(
+                            this@AddQuestion,
+                            "AWS upload failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         )
     }
+
+
+//    private fun uploadToAws(file: FilePath) {
+//
+//        val fileName = File(file.url).name
+//
+//        isAwsUploadingPreSigned?.getPreSignedUrl(
+//            file.url,
+//            isStaffDetails!!.school_id,
+//            Constant.quiz,
+//            this,
+//            SharedPreference.getCountryId(this)!!,
+//            false,
+//            object : UploadCallback {
+//
+//                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
+//
+//                    uploadedFiles.add(
+//                        AwsUploadedFiles(
+//                            isFileUrl = isFileUploaded!!,
+//                            isFileType = file.type,
+//                            originalFileName = fileName
+//                        )
+//                    )
+//
+//                    currentIndex++
+//                    uploadNextFile()
+//                }
+//
+//                override fun onUploadError(error: String?) {
+//                    runOnUiThread {
+//                        Toast.makeText(this@AddQuestion, "AWS upload failed", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                }
+//            }
+//        )
+//    }
 
     private fun collectLocalFiles(body: QuizRequestBody): List<FilePath> {
         val list = mutableListOf<FilePath>()
@@ -1502,7 +1601,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
     private fun callApi(body: QuizRequestBody) {
 //        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
-
+        ProgressDialogHelper.dismiss()
         val quizRequest: QuizRequestBody = body
         val mainJson = JsonObject()
         mainJson.addProperty("ok_flag", false)
@@ -1590,10 +1689,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 //        appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
 //    }
 
-
     override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+
         if (!success || link == null) {
             runOnUiThread {
+                ProgressDialogHelper.dismiss()
                 Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
             }
             return
@@ -1610,8 +1710,32 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         )
 
         currentIndex++
+        updateProgress()
         uploadNextFile()
     }
+
+
+//    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+//        if (!success || link == null) {
+//            runOnUiThread {
+//                Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
+//            }
+//            return
+//        }
+//
+//        val fileName = File(currentVideoPath!!).name
+//
+//        uploadedFiles.add(
+//            AwsUploadedFiles(
+//                isFileUrl = link,
+//                isFileType = "VIDEO",
+//                originalFileName = fileName
+//            )
+//        )
+//
+//        currentIndex++
+//        uploadNextFile()
+//    }
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
