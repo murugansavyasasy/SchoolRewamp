@@ -121,11 +121,14 @@ class AddQuestionAdapter(
         recyclerView.post {
             recyclerView.smoothScrollToPosition(itemList!!.size - 1)
         }
+        listener?.onUICheck(itemList!!)
+
     }
 
 
     fun removeItem(position: Int) {
         if (position >= 0 && position < itemList!!.size) {
+
             val removed = itemList!![position]
 
             // If it's a QBANK question → notify PickQuestionAdapter
@@ -437,7 +440,22 @@ class AddQuestionAdapter(
             }
 
             lblremove.setOnClickListener {
-                removeItem(position)
+
+                //Local item (USER, QBANK)
+                if (data.id.isNullOrEmpty()) {
+                    removeItem(position)
+                    return@setOnClickListener
+                }
+
+                // Delete only for API Data
+//                We ask for the Confirmation to delete API question
+                listener.onDeleteQuizQuestion(data.id,) { isSuccess ->
+                    if (isSuccess) {
+                        removeItem(position)
+                    } else {
+                        return@onDeleteQuizQuestion
+                    }
+                }
             }
 
             lblQuestionPick.setOnClickListener {

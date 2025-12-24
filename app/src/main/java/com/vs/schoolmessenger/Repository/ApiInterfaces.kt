@@ -144,6 +144,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuiz.DeleteQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuizQuestion.DeleteQuizQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.EditQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
@@ -1069,6 +1070,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<EditQuizResponse?>?
+
+
+    @PUT(APIMethods.isDeleteQuizQuestion)
+    fun isDeleteQuizQuestion(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<DeleteQuizQuestionResponse?>?
 
     @GET(APIMethods.isGetExamQuizReport)
     fun isGetExamQuizReport(

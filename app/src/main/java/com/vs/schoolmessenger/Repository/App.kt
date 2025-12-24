@@ -132,6 +132,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotValidationResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.AddQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.CreateQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuiz.DeleteQuizResponse
+import com.vs.schoolmessenger.School.QuizExam.Model.DeleteQuizQuestion.DeleteQuizQuestionResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.EditQuiz.EditQuizResponse
 import com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank.GetPickFromQBank
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevel
@@ -422,6 +423,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
     var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
+    var isDeleteQuizQuestion: LiveData<DeleteQuizQuestionResponse?>? = null
 
 
     fun init() {
@@ -602,6 +604,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getSubjectWiseActivities = apiSchoolRepositories.getSubjectWiseActivitiesLiveData
         isDeleteQuiz = apiSchoolRepositories.isDeleteQuizLiveData
         isEditQuiz = apiSchoolRepositories.isEditQuizLiveData
+        isDeleteQuizQuestion = apiSchoolRepositories.isDeleteQuizQuestionLiveData
 
 
     }
@@ -1594,6 +1597,14 @@ class App(application: Application) : AndroidViewModel(application) {
         exam_id: String
     ) {
         apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
+    }
+
+    fun isDeleteQuizQuestion(
+        isToken: String, jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isDeleteQuizQuestion(
+            isToken, jsonObject,
+        )
     }
 
 
