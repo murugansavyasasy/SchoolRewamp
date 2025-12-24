@@ -13,6 +13,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -25,6 +27,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -110,6 +113,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var mobile_number = ""
     private val REQUEST_CONTACT_PERMISSION = 1001
 
+    private var originalMenuList = ArrayList<MenuDetail>()
+    private var filteredMenuList = ArrayList<MenuDetail>()
+
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -120,7 +127,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         Constant.checkBiometricSupport(requireActivity())
-
+        binding.imgSearch.setOnClickListener(this)
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
@@ -185,6 +192,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val status = response.status
                 response.message
                 if (status) {
+                    binding.gridRecyclerView.visibility = View.VISIBLE
+                    binding.rytNORecordFound.visibility = View.GONE
                     val isDashboardResponse = response.data
                     isSchoolDashBoardData = isDashboardResponse
 
@@ -198,12 +207,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     )
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
-                    allMenuItems = isSchoolMenuDetails!!
+//                    allMenuItems = isSchoolMenuDetails!!
+                    originalMenuList.clear()
+                    originalMenuList.addAll(isSchoolMenuDetails!!)
+
+                    filteredMenuList.clear()
+                    filteredMenuList.addAll(originalMenuList)
+
+                    allMenuItems = filteredMenuList
+
 
                     //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
                     isLoadData()
                     setupRecyclerView()
+                } else {
+                    binding.gridRecyclerView.visibility = View.GONE
+                    binding.rytNORecordFound.visibility = View.VISIBLE
                 }
             }
         }
@@ -255,7 +275,49 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterDashboardMenu(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+
         return binding.root
+    }
+
+    private fun filterDashboardMenu(query: String) {
+        filteredMenuList.clear()
+
+        if (query.isEmpty()) {
+            filteredMenuList.addAll(originalMenuList)
+        } else {
+            val searchText = query.lowercase()
+
+            originalMenuList.forEach { menu ->
+                if (
+                    menu.name.lowercase().contains(searchText) ||
+                    menu.description.lowercase().contains(searchText)
+                ) {
+                    filteredMenuList.add(menu)
+                }
+            }
+        }
+
+        if (filteredMenuList.isEmpty()) {
+            binding.gridRecyclerView.visibility = View.GONE
+            binding.rytNORecordFound.visibility = View.VISIBLE
+        } else {
+            binding.gridRecyclerView.visibility = View.VISIBLE
+            binding.rytNORecordFound.visibility = View.GONE
+        }
+
+        isMenuAdapter.updateList(filteredMenuList)
     }
 
 
@@ -512,23 +574,21 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.autoScrollRecyclerView.visibility = View.GONE
         }
     }
-
     private fun isLoadData() {
         val safeActivity = activity ?: return
+
         isMenuAdapter = SchoolMenuAdapter(
             safeActivity,
             this,
-            isSchoolMenuDetails,
+            filteredMenuList,
             isSchoolMenuCountDetails,
             Constant.isShimmerViewDisable
         )
-        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
 
+        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
-
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -536,9 +596,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
+
+            R.id.imgSearch -> {
+                if (binding.rytsearch.isVisible) {
+                    binding.rytsearch.visibility = View.GONE
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
+                }
+            }
         }
     }
-
 
     private fun handleBackPress() {
         AlertDialog.Builder(requireContext()).setTitle(getString(R.string.Go_Back))
@@ -675,7 +742,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_SCHOOL_CLASS_EVENTS -> {
-
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     CreateEvent::class.java
                 } else {
@@ -841,7 +907,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
             else -> null
         }
         activityClass?.let {

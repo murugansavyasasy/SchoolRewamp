@@ -12,6 +12,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -45,6 +47,7 @@ import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
+import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
@@ -66,17 +69,22 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
 import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
 import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuCountDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
+import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.core.view.isVisible
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
@@ -99,6 +107,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var mobile_number = ""
     private val REQUEST_CONTACT_PERMISSION = 1001
 
+    private var originalMenuList = ArrayList<MenuDetail>()
+    private var filteredMenuList = ArrayList<MenuDetail>()
+
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     override fun onCreateView(
@@ -107,6 +118,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
+        binding.imgSearch.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         mobile_number = SharedPreference.getMobileNumber(requireActivity()).toString()
@@ -165,6 +177,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isParentMenuDetails = isParentDashBoardData!![0].menus
                     FrequentParentlyUsedMenuItems = isParentDashBoardData!![0].frequently_used
                     allMenuItems = isParentMenuDetails!!
+
+                    originalMenuList.clear()
+                    originalMenuList.addAll(isParentMenuDetails!!)
+
+                    filteredMenuList.clear()
+                    filteredMenuList.addAll(originalMenuList)
+
+                    allMenuItems = filteredMenuList
+
 
                     //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
@@ -228,7 +249,47 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterDashboardMenu(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
         return binding.root
+    }
+
+    private fun filterDashboardMenu(query: String) {
+        filteredMenuList.clear()
+
+        if (query.isEmpty()) {
+            filteredMenuList.addAll(originalMenuList)
+        } else {
+            val searchText = query.lowercase()
+
+            originalMenuList.forEach { menu ->
+                if (
+                    menu.name.lowercase().contains(searchText) ||
+                    menu.description.lowercase().contains(searchText)
+                ) {
+                    filteredMenuList.add(menu)
+                }
+            }
+        }
+
+        if (filteredMenuList.isEmpty()) {
+            binding.gridRecyclerView.visibility = View.GONE
+            binding.rytNORecordFound.visibility = View.VISIBLE
+        } else {
+            binding.gridRecyclerView.visibility = View.VISIBLE
+            binding.rytNORecordFound.visibility = View.GONE
+        }
+
+        isMenuAdapter.updateList(filteredMenuList)
     }
 
 
@@ -484,17 +545,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }.setNegativeButton(getString(R.string.No), null).show()
     }
 
-
     private fun isLoadData() {
         val safeActivity = activity ?: return
-        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
+
         isMenuAdapter = ChildMenuAdapter(
             safeActivity,
             this,
-            isParentMenuDetails,
+            filteredMenuList,
             isParentMenuCountDetails,
             Constant.isShimmerViewDisable
         )
+
+        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
     }
@@ -537,6 +599,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
+
+            R.id.imgSearch -> {
+                if (binding.rytsearch.isVisible) {
+                    binding.rytsearch.visibility = View.GONE
+                } else {
+                    binding.rytsearch.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
@@ -549,7 +619,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-        // isDashBoardData()
+         isDashBoardData()
     }
 
     override fun onPause() {
