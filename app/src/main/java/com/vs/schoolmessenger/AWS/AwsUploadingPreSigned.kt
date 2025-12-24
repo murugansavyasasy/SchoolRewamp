@@ -274,18 +274,50 @@ class AwsUploadingPreSigned {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getImageData(context: Context, path: String): ByteArray? {
         return try {
-            if (path.startsWith("content://")) {
-                val uri = Uri.parse(path)
-                context.contentResolver.openInputStream(uri)?.readBytes()
-            } else {
-                val file = File(path)
-                java.nio.file.Files.readAllBytes(file.toPath())
+
+            when {
+                // ✅ Gallery / Document picker
+                path.startsWith("content://") -> {
+                    val uri = Uri.parse(path)
+                    context.contentResolver.openInputStream(uri)?.readBytes()
+                }
+
+                // ✅ Camera image (file:/storage/...)
+                path.startsWith("file:/") -> {
+                    val filePath = Uri.parse(path).path   // <-- IMPORTANT
+                    val file = File(filePath!!)
+                    java.nio.file.Files.readAllBytes(file.toPath())
+                }
+
+                // ✅ Normal file path (/storage/...)
+                else -> {
+                    val file = File(path)
+                    java.nio.file.Files.readAllBytes(file.toPath())
+                }
             }
+
         } catch (e: Exception) {
-            Log.e("FileReadError", "Error reading file data: ${e.message}")
+            Log.e("FileReadError", "Error reading file data: $path", e)
             null
         }
     }
+
+
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun getImageData(context: Context, path: String): ByteArray? {
+//        return try {
+//            if (path.startsWith("content://")) {
+//                val uri = Uri.parse(path)
+//                context.contentResolver.openInputStream(uri)?.readBytes()
+//            } else {
+//                val file = File(path)
+//                java.nio.file.Files.readAllBytes(file.toPath())
+//            }
+//        } catch (e: Exception) {
+//            Log.e("FileReadError", "Error reading file data: ${e.message}")
+//            null
+//        }
+//    }
 
 
     fun getFileExtensionFromUri(context: Context, uri: Uri): String {

@@ -189,7 +189,7 @@ class ExamQuizReportAdapter(
                     intent.putExtra(Constant.quiz_Title, data.title)
                     intent.putExtra(Constant.limitQuestion, data.no_of_questions)
                     intent.putExtra(Constant.submittedCount, data.submitted_count)
-                    intent.getBooleanExtra(Constant.openToStudent, false)
+                    intent.putExtra(Constant.openToStudent, data.open_to_student)
                     intent.putExtra(Constant.subjectID, data.subject_id)
                     context.startActivity(intent)
                 } else {

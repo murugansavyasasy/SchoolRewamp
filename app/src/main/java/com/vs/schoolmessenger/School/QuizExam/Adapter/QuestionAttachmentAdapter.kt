@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,23 +56,32 @@ class QuestionAttachmentAdapter(
 
             else -> File(filePath)
         }
-
+        Log.d("item.type", item.type)
         val placeholderRes = when (item.type) {
             FileType.PDF.toString() -> R.drawable.pdf_icon
             FileType.DOC.toString(), FileType.DOCX.toString() -> R.drawable.doc_icon
             FileType.PPT.toString() -> R.drawable.ppt_icon
             FileType.EXCEL.toString() -> R.drawable.excel_icon
             FileType.TXT.toString() -> R.drawable.txt_icon
-            FileType.IMAGE.toString() -> R.drawable.image_placeholder
+//            FileType.IMAGE.toString() -> R.drawable.image_placeholder
             FileType.VIDEO.toString() -> R.drawable.video_play
             else -> R.drawable.wrong_file
         }
+        if (item.type == FileType.IMAGE.toString()) {
+            val isImageUrl = fileUri
+            Glide.with(context)
+                .load(isImageUrl)
+                .placeholder(placeholderRes)
+                .error(placeholderRes)
+                .into(h.img)
+        } else {
+            Glide.with(context)
+                .load(placeholderRes)
+                .placeholder(placeholderRes)
+                .error(placeholderRes)
+                .into(h.img)
+        }
 
-        Glide.with(context)
-            .load(fileUri)
-            .placeholder(placeholderRes)
-            .error(placeholderRes)
-            .into(h.img)
 
         h.remove.setOnClickListener {
             onRemove(pos)

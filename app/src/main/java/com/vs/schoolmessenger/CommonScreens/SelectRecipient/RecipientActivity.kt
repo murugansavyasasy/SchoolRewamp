@@ -339,7 +339,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Log.d("Response", response.status.toString())
                 val saveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
                 val isQuizRequestBody: QuizRequestBody? = null
-                QuizDataTempHolder.quizDataBody=saveCreateExamQuizDetails
+                QuizDataTempHolder.quizDataBody = saveCreateExamQuizDetails
                 QuizTempHolder.quizBody = isQuizRequestBody
 
                 Constant.showTopAlertPopup(response.message, this)
