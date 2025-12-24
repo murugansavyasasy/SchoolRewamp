@@ -1346,6 +1346,8 @@
     <string name="an_option_d_or_an_image_must_be_added">An Option D or An Image must be Added</string>
     <string name="remove_image">Remove image</string>
     <string name="no_holidays_found">No Holidays found</string>
+    <string name="pending_please_complete_all_required_questions">Pending: All the questions must be completed.</string>
+    <string name="the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled_and_submitted">The quiz will be visible to students only after all questions are filled and Submitted</string>
 
 
 </resources>
