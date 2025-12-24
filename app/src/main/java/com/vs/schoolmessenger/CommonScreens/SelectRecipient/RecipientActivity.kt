@@ -84,8 +84,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     private var quizData: QuizRequestBody? = null
     private var isSaveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
-//    private var isQuizData: SaveCreateExamQuizDetails? = null
-
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
     val isSectionSelectedIds = mutableListOf<Section>()
@@ -806,12 +804,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isSubjectId = selectedItem.id
 
                     if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
-//                        if (position != 0) {
                         binding.rytLevelDropDown.visibility = View.VISIBLE
                         isCheckLevel()
-//                        } else {
-//                            binding.rytLevelDropDown.visibility = View.GONE
-//                        }
                     }
                 }
 
@@ -881,7 +875,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 intent.putExtra(Constant.lblAcademicYear, isSelectedAcademicYear)
                 intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
                 if (SELECTED_MENU_ID == M_ASSIGNMENT) {
-//                    val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
                     intent.putExtra(Constant.assignment_data, isAssignmentData)
                     intent.putExtra("subject_id", isSubjectId)
                 }
@@ -1224,7 +1217,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetSubjectList(isSectionId: String) {
-        // Constant.showLoading(this@RecipientActivity)
         appViewModel!!.isGetSubjectList(
             isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
         )
@@ -1251,13 +1243,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
     fun isUploadFilesInServer(isFileType: String?) {
-
-//        val needsProcessing = Constant.selectedFiles.isNotEmpty() || isVideoSelectedArrayList.any {
-//            !it.path.contains("player.vimeo.com")
-//        }
-//        if (needsProcessing) {
-//            ProgressDialogHelper.show(this)
-        // }
         ProgressDialogHelper.show(this)
         ProgressDialogHelper.updateProgress(0)
 
@@ -1301,10 +1286,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 ProgressDialogHelper.dismiss()
             }
         }
-
-
-        // After separating videos
-//        ProgressDialogHelper.updateProgress(10)
         Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(10) called")
 
         when {
@@ -1316,16 +1297,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
                 totalTasks,
                 { completedTasks++; updateProgress() })
-//            Constant.selectedFiles.isNotEmpty() -> {
-//                Log.d("UploadDebug", "Uploading non-video files to AWS...")
-//                isFileUploadInAws(isFileType)
-//            }
-//
-//            isVideoSelectedArrayList.isNotEmpty() -> {
-//                Log.d("UploadDebug", "Uploading video files...")
-//                videoUploading()
-//            }
-
             else -> {
                 Log.d("UploadDebug", "No files to upload.")
             }
@@ -1337,9 +1308,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         totalTasks: Int,
         onTaskComplete: () -> Unit
     ) {
-        // Do not clear here if already cleared in isUploadFilesInServer; assuming it's cleared once
-        // Constant.isAwsUploadedFiles.clear()  // Commented out to avoid double clear
-
         val iterator = Constant.selectedFiles.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1349,11 +1317,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
-                // Incremental progress for pre-signed files
-//                val progress =
-//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-//                        .coerceAtMost(100)
-//                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
@@ -1361,7 +1324,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
-//                ProgressDialogHelper.updateProgress(100)
                 ProgressDialogHelper.dismiss()
                 when (SELECTED_MENU_ID) {
                     M_HOMEWORK -> isHomeWorkSend()
@@ -1371,7 +1333,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 }
             } else {
-//                videoUploading()
                 videoUploading(totalTasks, onTaskComplete)
             }
         } else {
@@ -1410,11 +1371,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         )
 
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-                        // Incremental progress during compression (10% to 50%)
-//                        val compressedCount = newSelectedFiles.size
-//                        val progress =
-//                            10 + ((compressedCount.toFloat() / numToCompress) * 40).toInt()
-//                        ProgressDialogHelper.updateProgress(progress.coerceAtMost(50))
                     } else {
                         Log.e("Compressor", "Failed: ${original.path}")
                     }
@@ -1423,8 +1379,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
-                    // Progress after compression (50%)
-//                    ProgressDialogHelper.updateProgress(50)
                     val isAwsUploadingFile = ArrayList<String>()
 
                     val isSelectedFileCount = Constant.selectedFiles.size
@@ -1449,14 +1403,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                                 ?: "UNKNOWN"
                                         )
                                     )
-                                    // Incremental progress during upload
-//                                    val progress =
-//                                        (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-//                                            .coerceAtMost(100)
-//                                    ProgressDialogHelper.updateProgress(progress)
                                     onTaskComplete()
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
-//                                        ProgressDialogHelper.updateProgress(100)
                                         ProgressDialogHelper.dismiss()
                                         when (SELECTED_MENU_ID) {
                                             M_HOMEWORK -> isHomeWorkSend()
@@ -1499,17 +1447,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
-                // Incremental progress update for pre-processed videos
-//                val progress =
-//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-//                        .coerceAtMost(100)
-//                ProgressDialogHelper.updateProgress(progress)
                 iterator.remove()
             }
         }
 
         if (isVideoSelectedArrayList.isEmpty()) {
-//            ProgressDialogHelper.updateProgress(100)
             ProgressDialogHelper.dismiss()
             when (SELECTED_MENU_ID) {
                 M_HOMEWORK -> {
@@ -1581,14 +1523,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             isFileUrl = link.toString(), isFileType = Constant.VIDEO
                         )
                     )
-                    // Incremental progress update
-//                val progress =
-//                    (Constant.isAwsUploadedFiles.size * 100 / isTotalSelectedItem).toInt()
-//                        .coerceAtMost(100)
-//                ProgressDialogHelper.updateProgress(progress)
 
                     if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-//                    ProgressDialogHelper.updateProgress(100)
                         ProgressDialogHelper.dismiss()
                         when (SELECTED_MENU_ID) {
                             M_HOMEWORK -> {
@@ -1677,49 +1613,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 Constant.M_QUIZ_EXAM -> {
                     Constant.showLoading(this)
-
-//                     isQuizData =
-//                        intent.getSerializableExtra(Constant.create_quiz_exam_data) as? SaveCreateExamQuizDetails
-
-                    //   quizData = intent.getParcelableExtra("isQuizData")
                     quizData = QuizTempHolder.quizBody
                     isSaveCreateExamQuizDetails = QuizDataTempHolder.quizDataBody
-
-//                    if (isQuizData != null) {
-//                        Log.d("isQuizData", isQuizData.title)
-
                     submitQuiz()
-
-
-//                        val jsonObject = JsonObject().apply {
-//                            addProperty("title", isQuizData.title)
-//                            addProperty("description", isQuizData.description)
-//                            addProperty("no_of_question", isQuizData.no_of_question.toInt())
-//                            addProperty("target_type", isTargetType)
-//                            addProperty("level", selectedLevelValue)
-//                            addProperty("level_flag", isQuizData.level_flag)
-//                            addProperty("subject_id", isSubjectId!!.toString())
-//                            addProperty("class_id", isStandardId)
-//
-//
-//                            val jsonArray = JsonArray()
-//                            selectedIds.forEach { id ->
-//                                jsonArray.add(id)
-//                            }
-//                            add("target_code", jsonArray)
-//
-//                            //if the user click Later in Popup  means by default the below should be given
-//                            if (isQuizData.type=="LATER"){
-//                                add("questions", JsonArray())
-//                                add("update_question_bank", JsonArray())
-//                                addProperty("max_mark", 0)
-//                                addProperty("open_to_student", false)
-//                            }
-//                        }
-
-//                        Log.d("CreateQuizRequest", jsonObject.toString())
-//                        appViewModel!!.isCreateQuiz(isAccessToken!!, jsonObject)
-                    //  }
                 }
             }
         }
@@ -1986,37 +1882,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-
-//    fun submitQuiz() {
-//        //  Constant.showLoading(this)
-//        pendingBody = quizData!!
-//        uploadedFiles.clear()
-//        val filesToUpload = collectLocalFiles(quizData!!)
-//        if (filesToUpload.isEmpty()) {
-//            callApi(quizData!!)
-//        } else {
-//            pendingFiles = filesToUpload
-//            currentIndex = 0
-//            uploadNextFile()
-//        }
-//    }
-
-//    private fun uploadNextFile() {
-//        if (currentIndex >= pendingFiles.size) {
-//            replaceUrlsInBody(pendingBody)
-//            callApi(pendingBody)
-//            return
-//        }
-//
-//        val file = pendingFiles[currentIndex]
-//
-//        if (file.type == "VIDEO") {
-//            uploadVideo(file)
-//        } else {
-//            uploadToAws(file)
-//        }
-//    }
-
     private fun uploadVideo(file: FilePath) {
         currentVideoPath = file.url
 
@@ -2028,20 +1893,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             this
         )
     }
-
-
-//    private fun uploadVideo(file: FilePath) {
-//        currentVideoPath = file.url
-//
-//        VimeoVideoUpload.uploadVideo(
-//            this,
-//            Constant.quiz,
-//            Constant.quiz,
-//            file.url,
-//            this
-//        )
-//    }
-
     private fun replaceUrlsInBody(body: QuizRequestBody) {
 
         body.questions.forEach { q ->
@@ -2079,7 +1930,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     private fun callApi(body: QuizRequestBody) {
         ProgressDialogHelper.dismiss()
-//        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
         var isQuestionId = 0
         val quizRequest: QuizRequestBody = quizData!!
         val mainJson = JsonObject()
@@ -2123,13 +1973,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         quizRequest.questions.forEach { q ->
             val qObj = JsonObject()
-//            if (q.quesNo == "") {
             isQuestionId++
-//            } else {
-//                isQuestionId=q.quesNo.toInt()
-//            }
-
-//            qObj.addProperty("ques_no", q.quesNo)
             qObj.addProperty("ques_no", isQuestionId.toString())
             qObj.addProperty("chapter", q.chapter)
             qObj.addProperty("question", q.question)
@@ -2247,44 +2091,4 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         )
     }
-
-
-//    private fun uploadToAws(file: FilePath) {
-//
-//        val fileName = File(file.url).name
-//
-//        isAwsUploadingPreSigned?.getPreSignedUrl(
-//            file.url,
-//            isStaffDetails!!.school_id,
-//            Constant.quiz,
-//            this,
-//            SharedPreference.getCountryId(this)!!,
-//            false,
-//            object : UploadCallback {
-//
-//                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
-//
-//                    uploadedFiles.add(
-//                        AwsUploadedFiles(
-//                            isFileUrl = isFileUploaded!!,
-//                            isFileType = file.type,
-//                            originalFileName = fileName
-//                        )
-//                    )
-//
-//                    currentIndex++
-//                    uploadNextFile()
-//                }
-//
-//                override fun onUploadError(error: String?) {
-//                    runOnUiThread {
-//                        Toast.makeText(
-//                            this@RecipientActivity, "AWS upload failed", Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//                    }
-//                }
-//            }
-//        )
-//    }
 }
