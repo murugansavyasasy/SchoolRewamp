@@ -61,16 +61,25 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         setupPermissionLauncher()
         setupDocumentPicker()
 
-        binding.toolbarLayout.tvSelectionCount.text =
-            "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
-        binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-//here we are checking for default first image in recycler view
-        if (!isWithOutHotCodeImage) {
+        if (Constant.SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+            binding.toolbarLayout.tvSelectionCount.text =
+                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
+            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
             binding.toolbarLayout.tvSelectedFiles.text =
-                "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+                "Total Selected Files : ${Constant.isQuizQuestionPickCount.toString()}"
         } else {
-            binding.toolbarLayout.tvSelectedFiles.text =
-                "Total Selected Files : ${Constant.selectedFiles.size}"
+            binding.toolbarLayout.tvSelectionCount.text =
+                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
+            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
+//here we are checking for default first image in recycler view
+            if (!isWithOutHotCodeImage) {
+                binding.toolbarLayout.tvSelectedFiles.text =
+                    "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+            } else {
+                binding.toolbarLayout.tvSelectedFiles.text =
+                    "Total Selected Files : ${Constant.selectedFiles.size}"
+            }
+
         }
 
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->

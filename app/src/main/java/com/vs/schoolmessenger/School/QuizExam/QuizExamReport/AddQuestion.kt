@@ -288,10 +288,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 //Load adapter with empty list
                 isLoadQuizQuestionReport()
 
-            }else{
-                Log.d("isComing","isComing")
-                Log.d("isComing",isQuizCreateData!!.toString())
-                Log.d("isComing",isQuizCreateData!!.type.toString())
+            } else {
+                Log.d("isComing", "isComing")
+                Log.d("isComing", isQuizCreateData!!.toString())
+                Log.d("isComing", isQuizCreateData!!.type.toString())
             }
         } else {
             Log.d("ScreenName", "AddQuestionScreen")
@@ -822,6 +822,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         isQuestion: Boolean,
         isOptionsImageId: TextView
     ) {
+        Constant.isQuizQuestionPickCount= item!![position].file_path!!.size
         isAttachmentAdapterPosition = position
         itemList = item!!
         isQuestionPick = isQuestion
@@ -909,6 +910,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
+            intent.putExtra("isWithOutHotCodeImage", true)
             albumResultLauncher.launch(intent)
         }
     }
@@ -1016,28 +1018,41 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             val fileName = getFileName(uri)
             val mimeType = contentResolver.getType(uri)
             val type = when {
-                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                 fileName.endsWith(".pdf", true) -> FileType.PDF
-                fileName.endsWith(".doc", true) || fileName.endsWith(
-                    ".docx",
-                    true
-                ) -> FileType.DOC
-
+                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
                 fileName.endsWith(".xls", true) || fileName.endsWith(
                     ".xlsx",
                     true
                 ) -> FileType.EXCEL
 
-                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                    ".pptx",
-                    true
-                ) -> FileType.PPT
-
+                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
+//            val type = when {
+//                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+//                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+//                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+//                fileName.endsWith(".pdf", true) -> FileType.PDF
+//                fileName.endsWith(".doc", true) || fileName.endsWith(
+//                    ".docx",
+//                    true
+//                ) -> FileType.DOC
+//
+//                fileName.endsWith(".xls", true) || fileName.endsWith(
+//                    ".xlsx",
+//                    true
+//                ) -> FileType.EXCEL
+//
+//                fileName.endsWith(".ppt", true) || fileName.endsWith(
+//                    ".pptx",
+//                    true
+//                ) -> FileType.PPT
+//
+//                fileName.endsWith(".txt", true) -> FileType.TXT
+//                else -> FileType.OTHER
+//            }
 
             if (isQuestionPick!!) {
                 val filePath = FilePath(
@@ -1290,7 +1305,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             update_question_bank = updateQBankList
         )
 
-//        val jsonObject = Gson().toJsonTree(body).asJsonObject
         Log.d("FinalJSON", body.toString())
         QuizTempHolder.quizBody = body
         QuizDataTempHolder.quizDataBody = isQuizCreateData
@@ -1323,36 +1337,15 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                         val intent = Intent(this, RecipientActivity::class.java)
                         startActivity(intent)
                     }
-
-//                    if (isQuizCreateData!!.type == "ADD_NOW") {
-//                        val intent = Intent(this, RecipientActivity::class.java)
-//                        startActivity(intent)
-//                    } else {
-//                        submitQuiz(body)
-//                    }
-
-//                    Log.d("quizData++++", body!!.questions.get(0).file_path.size.toString())
-//                    val intent = Intent(this, RecipientActivity::class.java)
-////                    intent.putExtra("isQuizData", body)
-//                    startActivity(intent)
-//                    Constant.showLoading(this)
-//                    submitQuiz(body)
                 }
             }
         } else {
-            Log.d("quizData++++111", body.questions.get(0).file_path.size.toString())
             if (Constant.isQuizReportPage) {
                 submitQuiz(body)
             } else {
                 val intent = Intent(this, RecipientActivity::class.java)
                 startActivity(intent)
             }
-
-//            val intent = Intent(this, RecipientActivity::class.java)
-////            intent.putExtra("isQuizData", body)
-//            startActivity(intent)
-//            Constant.showLoading(this)
-            // submitQuiz(body)
         }
     }
 
@@ -1384,25 +1377,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         val percent = ((currentIndex.toFloat() / totalFilesToUpload) * 100).toInt()
         ProgressDialogHelper.updateProgress(percent.coerceAtMost(100))
     }
-
-
-//    fun submitQuiz(body: QuizRequestBody) {
-//        Constant.showLoading(this)
-//
-//        pendingBody = body
-//        uploadedFiles.clear()
-//
-//        val filesToUpload = collectLocalFiles(body)
-//
-//        if (filesToUpload.isEmpty()) {
-//            callApi(body)
-//        } else {
-//            pendingFiles = filesToUpload
-//            currentIndex = 0
-//            uploadNextFile()
-//        }
-//    }
-
     private fun isAlreadyUploaded(path: String?): Boolean {
         return path.isNullOrEmpty() || path.startsWith("http")
     }
@@ -1423,23 +1397,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             uploadToAws(file)
         }
     }
-
-
-//    private fun uploadNextFile() {
-//        if (currentIndex >= pendingFiles.size) {
-//            replaceUrlsInBody(pendingBody)
-//            callApi(pendingBody)
-//            return
-//        }
-//
-//        val file = pendingFiles[currentIndex]
-//
-//        if (file.type == "VIDEO") {
-//            uploadVideo(file)
-//        } else {
-//            uploadToAws(file)
-//        }
-//    }
 
     private fun uploadToAws(file: FilePath) {
 
@@ -1482,44 +1439,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         )
     }
-
-
-//    private fun uploadToAws(file: FilePath) {
-//
-//        val fileName = File(file.url).name
-//
-//        isAwsUploadingPreSigned?.getPreSignedUrl(
-//            file.url,
-//            isStaffDetails!!.school_id,
-//            Constant.quiz,
-//            this,
-//            SharedPreference.getCountryId(this)!!,
-//            false,
-//            object : UploadCallback {
-//
-//                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
-//
-//                    uploadedFiles.add(
-//                        AwsUploadedFiles(
-//                            isFileUrl = isFileUploaded!!,
-//                            isFileType = file.type,
-//                            originalFileName = fileName
-//                        )
-//                    )
-//
-//                    currentIndex++
-//                    uploadNextFile()
-//                }
-//
-//                override fun onUploadError(error: String?) {
-//                    runOnUiThread {
-//                        Toast.makeText(this@AddQuestion, "AWS upload failed", Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
-//                }
-//            }
-//        )
-//    }
 
     private fun collectLocalFiles(body: QuizRequestBody): List<FilePath> {
         val list = mutableListOf<FilePath>()
@@ -1600,25 +1519,12 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     private fun callApi(body: QuizRequestBody) {
-//        val quizDetails: SaveCreateExamQuizDetails = isQuizData!!
         ProgressDialogHelper.dismiss()
         val quizRequest: QuizRequestBody = body
         val mainJson = JsonObject()
         mainJson.addProperty("ok_flag", false)
         mainJson.addProperty("max_mark", quizRequest.max_mark)
         mainJson.addProperty("open_to_student", quizRequest.open_to_student)
-
-//        mainJson.addProperty("target_type", isTargetType)
-//        mainJson.addProperty("level", selectedLevelValue)
-//        mainJson.addProperty("subject_id", isSubjectId!!.toString())
-//        mainJson.addProperty("class_id", isStandardId)
-
-//        val jsonArray = JsonArray()
-//        selectedIds.forEach { id ->
-//            jsonArray.add(id)
-//        }
-//        mainJson.add("target_code", jsonArray)
-
         val updateQBankArray = JsonArray()
         quizRequest.update_question_bank.forEach { item ->
             val obj = JsonObject()
@@ -1676,18 +1582,10 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         mainJson.add("questions", questionsArray)
         mainJson.addProperty("quiz_id", quizRequest.quiz_id)
-//
-//        mainJson.addProperty("no_of_question", 1)
-//        mainJson.addProperty("level_flag", false)
         Log.d("FINAL_JSON", mainJson.toString())
         appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson)
 
     }
-//    private fun callApi(body: QuizRequestBody) {
-//        val json = Gson().toJsonTree(body).asJsonObject
-//        Log.d("FINAL_JSON", json.toString())
-//        appViewModel?.isQuizAddQuestion(isAccessToken!!, json)
-//    }
 
     override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
 
@@ -1713,29 +1611,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         updateProgress()
         uploadNextFile()
     }
-
-
-//    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-//        if (!success || link == null) {
-//            runOnUiThread {
-//                Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
-//            }
-//            return
-//        }
-//
-//        val fileName = File(currentVideoPath!!).name
-//
-//        uploadedFiles.add(
-//            AwsUploadedFiles(
-//                isFileUrl = link,
-//                isFileType = "VIDEO",
-//                originalFileName = fileName
-//            )
-//        )
-//
-//        currentIndex++
-//        uploadNextFile()
-//    }
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {

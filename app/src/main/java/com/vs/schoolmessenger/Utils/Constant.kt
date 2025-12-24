@@ -9,7 +9,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.ImageDecoder
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
@@ -645,7 +644,7 @@ object Constant {
 
     var isQuizReportPage=false
 
-
+    var isQuizQuestionPickCount = 0
     var category_name = "category_name"
     var category = "category"
     var name__ = "name"

@@ -636,7 +636,6 @@ class AddQuestionAdapter(
                 attachments.removeAt(removePos)
                 notifyItemChanged(questionPos)
             }
-
         }
     }
 
