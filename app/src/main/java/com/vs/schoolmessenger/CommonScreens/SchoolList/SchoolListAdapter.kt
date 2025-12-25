@@ -88,7 +88,7 @@ class SchoolListAdapter(
             } else {
                 lblSchoolRegionalName.visibility = View.GONE
             }
-            lblSchoolAddress.text = data.school_address
+            lblSchoolAddress.text = "📍 ${data.school_address}"
 
             if (data.school_logo != "") {
                 Glide.with(context)
