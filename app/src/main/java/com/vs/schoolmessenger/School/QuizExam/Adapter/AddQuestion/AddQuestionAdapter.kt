@@ -442,7 +442,7 @@ class AddQuestionAdapter(
             lblremove.setOnClickListener {
 
                 //Local item (USER, QBANK)
-                if (data.id.isNullOrEmpty()) {
+                if (data.id.isNullOrEmpty() && data.sourceType!= QuestionSource.API) {
                     removeItem(position)
                     return@setOnClickListener
                 }
