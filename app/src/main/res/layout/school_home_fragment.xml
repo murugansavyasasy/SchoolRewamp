@@ -77,7 +77,7 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/fourty_five"
-                android:layout_marginEnd="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:scaleType="centerCrop"
                 android:src="@drawable/notification_icon" />
 
@@ -101,7 +101,7 @@
             android:layout_below="@+id/lnrNotifi"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/search_icon_white">
 
         </ImageView>
@@ -136,8 +136,8 @@
         android:id="@+id/rytsearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_marginStart="@dimen/twenty"
         android:layout_below="@+id/dotsIndicator"
+        android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_grey"
@@ -183,30 +183,29 @@
     <LinearLayout
         android:id="@+id/rytNORecordFound"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/rytsearch"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
-            android:src="@drawable/no_menu_found"
-            android:layout_height="300dp">
+            android:layout_height="300dp"
+            android:src="@drawable/no_menu_found">
 
         </ImageView>
 
         <TextView
             android:layout_width="match_parent"
-            android:text="No menu found..."
-            android:textStyle="bold"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:textSize="@dimen/thirteen_sp"
+            android:gravity="center"
+            android:text="No menu found..."
             android:textColor="@color/black"
-            android:layout_height="wrap_content">
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
 
         </TextView>
-
 
 
     </LinearLayout>

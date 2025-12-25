@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ClassListBinding
+import androidx.core.view.isVisible
 
 class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
 
@@ -57,7 +58,7 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
         isLoadAcademicYear(isAcademicYear)
         if (!isAcademicYear.isNullOrEmpty()) {
             isValidAcademicYear =
-                isAcademicYear!!.any { it.current_academic_year == true }
+                isAcademicYear!!.any { it.current_academic_year }
             isAcademicYearId = isAcademicYear!![0].id
             isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         }
@@ -101,7 +102,7 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
         }
 
         binding.toolbarLayout.imgSearchToolBarforCreate.setOnClickListener {
-            if (binding.rytSearch1.visibility == View.VISIBLE) {
+            if (binding.rytSearch1.isVisible) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -121,14 +122,11 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
                 Log.d("Search", s.toString())
-
-
             }
         })
     }

@@ -807,45 +807,49 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     if (isQuizCreateData!!.type == "ADD_NOW") {
                         if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
                             if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
-
-                                val currentCount = quizAdapter!!.getUpdatedList().size
-                                val remaining =
-                                    isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
-                                val total_no_of_questions = isSavedQuestionLimit
-
-                                val textQuestion = if (total_no_of_questions == 1) {
-                                    getString(R.string.question_)  // e.g. "question"
-                                } else {
-                                    getString(R.string.questions) // e.g. "questions"
+                                if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size){
+                                    isAddQuestionSubmit()
                                 }
+                                else{
+                                    val currentCount = quizAdapter!!.getUpdatedList().size
+                                    val remaining =
+                                        isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
+                                    val total_no_of_questions = isSavedQuestionLimit
 
-                                val remainingText = if (remaining == 1) {
-                                    getString(R.string.question_)
-                                } else {
-                                    getString(R.string.questions)
-                                }
+                                    val textQuestion = if (total_no_of_questions == 1) {
+                                        getString(R.string.question_)  // e.g. "question"
+                                    } else {
+                                        getString(R.string.questions) // e.g. "questions"
+                                    }
 
-                                val isMessage =
-                                    "${getString(R.string.almost_there_you_ve_created)} $currentCount ${
-                                        getString(
-                                            R.string.out_of
-                                        )
-                                    } $total_no_of_questions $textQuestion.\n ${
-                                        getString(
-                                            R.string.you_still_need_to_add
-                                        )
-                                    } $remaining ${"more"} $remainingText ${"to complete the quiz — but don’t worry, you can add them later"} \n ${"Note: The quiz will be visible to students only after all questions are filled"}"
+                                    val remainingText = if (remaining == 1) {
+                                        getString(R.string.question_)
+                                    } else {
+                                        getString(R.string.questions)
+                                    }
 
-                                Constant.showSendConfirmationDialog(
-                                    this,
-                                    getString(R.string.confirmation),
-                                    getString(R.string.send),
-                                    getString(R.string.Cancel),
-                                    "",
-                                    isMessage
-                                ) { confirmed ->
-                                    if (confirmed) {
-                                        isAddQuestionSubmit()
+                                    val isMessage =
+                                        "${getString(R.string.almost_there_you_ve_created)} $currentCount ${
+                                            getString(
+                                                R.string.out_of
+                                            )
+                                        } $total_no_of_questions $textQuestion.\n ${
+                                            getString(
+                                                R.string.you_still_need_to_add
+                                            )
+                                        } $remaining ${"more"} $remainingText ${"to complete the quiz — but don’t worry, you can add them later"} \n ${"Note: The quiz will be visible to students only after all questions are filled"}"
+
+                                    Constant.showSendConfirmationDialog(
+                                        this,
+                                        getString(R.string.confirmation),
+                                        getString(R.string.send),
+                                        getString(R.string.Cancel),
+                                        "",
+                                        isMessage
+                                    ) { confirmed ->
+                                        if (confirmed) {
+                                            isAddQuestionSubmit()
+                                        }
                                     }
                                 }
                             } else {

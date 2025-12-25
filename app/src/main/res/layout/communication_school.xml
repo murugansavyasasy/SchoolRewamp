@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -34,8 +34,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbarLayout"
             android:background="@android:color/transparent"
-            android:fillViewport="true"
-           >
+            android:fillViewport="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -619,7 +618,7 @@
                         android:layout_marginTop="@dimen/eleven"
                         android:layout_marginEnd="@dimen/twele"
                         android:layout_marginBottom="@dimen/eight"
-                        android:background="@drawable/rect_green_light_radious"
+                        android:background="@drawable/rect_btn_orange"
                         android:padding="@dimen/seven"
                         android:visibility="gone">
 
@@ -888,7 +887,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/twenty"
-                            android:background="@drawable/rect_green_light_radious"
+                            android:background="@drawable/rect_btn_orange"
                             android:padding="@dimen/seven">
 
                             <TextView
