@@ -331,8 +331,9 @@
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
                     android:scrollbars="vertical"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:singleLine="false"
+                    android:text=""
                     android:overScrollMode="always"
                     android:ellipsize="none" />
 

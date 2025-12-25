@@ -92,6 +92,7 @@ import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -141,6 +142,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class App(application: Application) : AndroidViewModel(application) {
@@ -424,6 +426,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
     var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
     var isDeleteQuizQuestion: LiveData<DeleteQuizQuestionResponse?>? = null
+    var uploadmarks: LiveData<UploadMarkResponse?>? = null
 
 
     fun init() {
@@ -605,6 +608,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isDeleteQuiz = apiSchoolRepositories.isDeleteQuizLiveData
         isEditQuiz = apiSchoolRepositories.isEditQuizLiveData
         isDeleteQuizQuestion = apiSchoolRepositories.isDeleteQuizQuestionLiveData
+        uploadmarks = apiSchoolRepositories.uploadmarksLiveData
 
 
     }
@@ -1604,6 +1608,14 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiSchoolRepositories.isDeleteQuizQuestion(
             isToken, jsonObject,
+        )
+    }
+
+
+    fun uploadmarks(part: MultipartBody.Part
+    ) {
+        apiSchoolRepositories.uploadmarks(
+        part
         )
     }
 

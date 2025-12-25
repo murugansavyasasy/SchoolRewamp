@@ -216,7 +216,6 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/search_meetings"
                 android:imeOptions="actionDone"
-                android:inputType="text"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:singleLine="true"

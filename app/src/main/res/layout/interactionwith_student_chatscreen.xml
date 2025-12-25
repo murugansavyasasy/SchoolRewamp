@@ -188,7 +188,7 @@
                     android:background="@drawable/bg_message_input"
                     android:gravity="center_vertical"
                     android:hint="@string/type_your_message_here"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:paddingHorizontal="@dimen/twele"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fourteen_sp"

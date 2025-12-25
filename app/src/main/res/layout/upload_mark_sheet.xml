@@ -102,7 +102,8 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/rect_bg_gray"
                             android:padding="@dimen/ten"
-                            android:src="@drawable/upload_image"></ImageView>
+                            android:src="@drawable/upload_image">
+                        </ImageView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -119,7 +120,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/ten"
                                 android:text="@string/ai_powered_upload"
-                                android:textSize="@dimen/eighteen_sp"></TextView>
+                                android:textSize="@dimen/eighteen_sp">
+                            </TextView>
 
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
@@ -129,7 +131,8 @@
                                 android:alpha="0.6"
                                 android:text="@string/upload_image_for_automatic_detection"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/fifteen_sp"></TextView>
+                                android:textSize="@dimen/fifteen_sp">
+                            </TextView>
                         </LinearLayout>
 
                         <ImageView
@@ -151,7 +154,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/ten"
                         android:layout_marginBottom="@dimen/fifteen"
-
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -159,7 +161,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/one"
                             android:layout_marginVertical="@dimen/five"
-                            android:background="@color/AthensGray"></View>
+                            android:background="@color/AthensGray">
+
+                        </View>
 
                         <!-- TOP INFORMATION CARD -->
                         <LinearLayout

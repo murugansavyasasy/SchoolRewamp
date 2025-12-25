@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -105,6 +106,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSu
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -243,6 +245,7 @@ class SchoolServices {
     var isgetStaffWiseExam: MutableLiveData<getStaffWisExam?>
     var isgetSubjectWiseActivities: MutableLiveData<getSubjectWiseACtivities?>
     var isgetDeleteQuizQuestion: MutableLiveData<DeleteQuizQuestionResponse?>
+    var uploadmarks: MutableLiveData<UploadMarkResponse?>
 
 
     init {
@@ -368,6 +371,7 @@ class SchoolServices {
         isDeleteQuiz = MutableLiveData()
         isEditQuiz = MutableLiveData()
         isgetDeleteQuizQuestion = MutableLiveData()
+        uploadmarks = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4834,6 +4838,46 @@ class SchoolServices {
 
     val isDeleteQuizQuestionLiveData: LiveData<DeleteQuizQuestionResponse?>
         get() = isgetDeleteQuizQuestion
+
+
+
+
+    fun uploadmarks(part: MultipartBody.Part
+    ) {
+        RestClient.apiInterfaces.uploadmarks( part)
+            ?.enqueue(object : Callback<UploadMarkResponse?> {
+                override fun onResponse(
+                    call: Call<UploadMarkResponse?>, response: Response<UploadMarkResponse?>
+                ) {
+                    Log.d(
+                        "UploadMarkResponse ",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.message
+                            if (status == "Extraction successful") {
+                                Log.d("UploadMarkResponse", response.body().toString())
+                                uploadmarks.postValue(response.body())
+                            } else {
+                                Log.d("UploadMarkResponse", response.body().toString())
+                                uploadmarks.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<UploadMarkResponse?>, t: Throwable
+                ) {
+                    uploadmarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val uploadmarksLiveData: LiveData<UploadMarkResponse?>
+        get() = uploadmarks
 
 
 

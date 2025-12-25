@@ -143,6 +143,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
+
     fun saveDrawableToCache(drawableResId: Int): String? {
         val drawable = ContextCompat.getDrawable(this, drawableResId) ?: return null
         val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 100

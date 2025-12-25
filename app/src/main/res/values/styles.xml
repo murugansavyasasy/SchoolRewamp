@@ -208,6 +208,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="AppEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
 
 
 </resources>

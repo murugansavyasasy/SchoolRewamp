@@ -108,7 +108,6 @@
                     android:layout_marginTop="@dimen/thirty"
                     android:background="@drawable/bg_edittext_view_line"
                     android:hint="@string/Entervideotitle"
-                    android:inputType="text"
                     style="@style/CustomTextStylePoppinsRegular"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/ten"

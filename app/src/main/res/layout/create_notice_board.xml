@@ -125,7 +125,6 @@
                         android:layout_below="@+id/lblEventTitle"
                         android:layout_alignStart="@+id/lblEventTitle"
                         android:background="@android:color/transparent"
-                        android:inputType="text"
                         android:hint="@string/enter_title"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingBottom="@dimen/ten" />
@@ -187,6 +186,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
+                        android:text=""
                         android:hint="@string/Enterdescription" />
                 </RelativeLayout>
 

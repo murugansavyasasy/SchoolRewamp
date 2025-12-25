@@ -61,7 +61,6 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_edittext_view_line"
                 android:hint="@string/Title"
-                android:inputType="text"
                 android:paddingBottom="@dimen/ten"
                  />
 
