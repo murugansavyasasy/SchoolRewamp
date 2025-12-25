@@ -85,8 +85,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     override fun getViewBinding(): AddQuestionBinding {
         return AddQuestionBinding.inflate(layoutInflater)
     }
-    private  val MAX_FILES_PER_QUESTION = 10
-    private  val MAX_VIDEO_PER_QUESTION = 2
+
+    private val MAX_FILES_PER_QUESTION = 10
+    private val MAX_VIDEO_PER_QUESTION = 2
 
     private val uploadedFiles = mutableListOf<AwsUploadedFiles>()
     private var pendingFiles: List<FilePath> = emptyList()
@@ -262,6 +263,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         if (isQuizCreateData != null) {
             if (isQuizCreateData!!.type == "ADD_NOW") {
+                binding.lblSendQuiz.text=getString(R.string.NEXT)
                 Log.d("ScreenName", "AddNowScreen")
                 Constant.isQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
                 isSavedQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
@@ -288,6 +290,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         } else {
             Log.d("ScreenName", "AddQuestionScreen")
+            binding.lblSendQuiz.text=getString(R.string.send_quiz)
             Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
@@ -295,15 +298,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             isSubjectID = intent.getStringExtra(Constant.subjectID).toString()
             isQuizTitle = intent.getStringExtra(Constant.quiz_Title).toString()
             val openToStudentMsg = intent.getBooleanExtra(Constant.openToStudent, false)
-            if (!openToStudentMsg){
+            if (!openToStudentMsg) {
                 binding.marqueeText.visibility = View.VISIBLE
                 binding.marqueeText.isSelected = true
                 setMarqueeText(
                     binding.marqueeText,
                     "⏳ ${getString(R.string.the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled_and_submitted)}"
                 )
-            }
-            else{
+            } else {
                 binding.marqueeText.visibility = View.GONE
             }
             isOkFlag = isSubmittedCount > 0
@@ -339,9 +341,21 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                         mimeType?.startsWith("video/") == true -> FileType.VIDEO
                         mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                         fileName.endsWith(".pdf", true) -> FileType.PDF
-                        fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                        fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                        fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                        fileName.endsWith(".doc", true) || fileName.endsWith(
+                            ".docx",
+                            true
+                        ) -> FileType.DOC
+
+                        fileName.endsWith(".xls", true) || fileName.endsWith(
+                            ".xlsx",
+                            true
+                        ) -> FileType.EXCEL
+
+                        fileName.endsWith(".ppt", true) || fileName.endsWith(
+                            ".pptx",
+                            true
+                        ) -> FileType.PPT
+
                         fileName.endsWith(".txt", true) -> FileType.TXT
                         else -> FileType.OTHER
                     }
@@ -580,9 +594,13 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 if (quizAdapter!!.getUpdatedList().size > 0) {
                     binding.rcAddQuestion.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
+                    binding.lblSendQuiz.isEnabled=true
+                    binding.lblSendQuiz.alpha=1f
                 } else {
                     binding.rcAddQuestion.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
+                    binding.lblSendQuiz.isEnabled=false
+                    binding.lblSendQuiz.alpha=0.5f
                 }
 
             } else {
@@ -716,17 +734,30 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         } else {
             val currentCount = quizAdapter!!.getUpdatedList().size
-            val isBalance = isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
-            val textQuestion = if (isBalance == 1) {
+            val remaining = isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
+            val total_no_of_questions = isSavedQuestionLimit
+
+            val textQuestion = if (total_no_of_questions == 1) {
                 getString(R.string.question_)  // e.g. "question"
             } else {
                 getString(R.string.questions) // e.g. "questions"
             }
 
+            val remainingText = if (remaining == 1) {
+                getString(R.string.question_)
+            } else {
+                getString(R.string.questions)
+            }
+
             val isMessage =
-                "${getString(R.string.almost_there_You_ve_entered)} $currentCount $textQuestion. " + "${
-                    getString(R.string.just)
-                } $isBalance ${getString(R.string.more_to_complete_the_quiz_but_don_t_worry_you_can_add_them_later)}"
+                "${getString(R.string.almost_there_you_ve_created)} $currentCount ${getString(R.string.out_of)} $total_no_of_questions $textQuestion.\n ${
+                    getString(
+                        R.string.you_still_need_to_add
+                    )
+                } $remaining ${getString(R.string.more)} $remainingText ${getString(R.string.to_complete_the_quiz_but_don_t_worry_you_can_add_them_later)} \n ${
+                    getString(
+                        R.string.note_the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled
+                    )}"
 
             Constant.showSendConfirmationDialog(
                 this,
@@ -772,41 +803,99 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
 
             R.id.lblSendQuiz -> {
-                if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
-                    if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
-                        if (isSubmittedCount <= 0) {
-                            isCallAddQuestion()
-                        } else {
-                            val studentText = if (isSubmittedCount == 1) {
-                                getString(R.string.student_)
-                            } else {
-                                getString(R.string.students)
-                            }
+                if (isQuizCreateData != null) {
+                    if (isQuizCreateData!!.type == "ADD_NOW") {
+                        if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
+                            if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
 
-                            val isMessage =
-                                getString(R.string.this_question_has_already_been_submitted_by) + " ${isSubmittedCount} $studentText " + getString(
-                                    R.string.do_you_want_to_update_it
-                                )
+                                val currentCount = quizAdapter!!.getUpdatedList().size
+                                val remaining =
+                                    isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
+                                val total_no_of_questions = isSavedQuestionLimit
 
-                            Constant.showSendConfirmationDialog(
-                                this,
-                                getString(R.string.confirmation),
-                                getString(R.string.permission_ok),
-                                getString(R.string.Cancel),
-                                "",
-                                isMessage
-                            ) { confirmed ->
-                                if (confirmed) {
-                                    isCallAddQuestion()
+                                val textQuestion = if (total_no_of_questions == 1) {
+                                    getString(R.string.question_)  // e.g. "question"
+                                } else {
+                                    getString(R.string.questions) // e.g. "questions"
                                 }
+
+                                val remainingText = if (remaining == 1) {
+                                    getString(R.string.question_)
+                                } else {
+                                    getString(R.string.questions)
+                                }
+
+                                val isMessage =
+                                    "${getString(R.string.almost_there_you_ve_created)} $currentCount ${
+                                        getString(
+                                            R.string.out_of
+                                        )
+                                    } $total_no_of_questions $textQuestion.\n ${
+                                        getString(
+                                            R.string.you_still_need_to_add
+                                        )
+                                    } $remaining ${"more"} $remainingText ${"to complete the quiz — but don’t worry, you can add them later"} \n ${"Note: The quiz will be visible to students only after all questions are filled"}"
+
+                                Constant.showSendConfirmationDialog(
+                                    this,
+                                    getString(R.string.confirmation),
+                                    getString(R.string.send),
+                                    getString(R.string.Cancel),
+                                    "",
+                                    isMessage
+                                ) { confirmed ->
+                                    if (confirmed) {
+                                        isAddQuestionSubmit()
+                                    }
+                                }
+                            } else {
+                                Constant.showErrorAlert(
+                                    this,
+                                    getString(R.string.alert),
+                                    getString(R.string.question_limit_reached)
+                                )
                             }
                         }
-                    } else {
-                        Constant.showErrorAlert(
-                            this,
-                            getString(R.string.alert),
-                            getString(R.string.question_limit_reached)
-                        )
+                    }
+                }
+                else {
+                    Log.d("Iscoming","IsComingtoAddQuestionScreen")
+                    if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
+                        if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
+                            if (isSubmittedCount <= 0) {
+                                isCallAddQuestion()
+                            } else {
+                                val studentText = if (isSubmittedCount == 1) {
+                                    getString(R.string.student_)
+                                } else {
+                                    getString(R.string.students)
+                                }
+
+                                val isMessage =
+                                    getString(R.string.this_question_has_already_been_submitted_by) + " ${isSubmittedCount} $studentText " + getString(
+                                        R.string.do_you_want_to_update_it
+                                    )
+
+                                Constant.showSendConfirmationDialog(
+                                    this,
+                                    getString(R.string.confirmation),
+                                    getString(R.string.permission_ok),
+                                    getString(R.string.Cancel),
+                                    "",
+                                    isMessage
+                                ) { confirmed ->
+                                    if (confirmed) {
+                                        isCallAddQuestion()
+                                    }
+                                }
+                            }
+                        } else {
+                            Constant.showErrorAlert(
+                                this,
+                                getString(R.string.alert),
+                                getString(R.string.question_limit_reached)
+                            )
+                        }
                     }
                 }
             }
@@ -823,10 +912,64 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             Log.d("isLog", "isEmpty")
             binding.rcAddQuestion.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
+            binding.lblSendQuiz.isEnabled=false
+            binding.lblSendQuiz.alpha=0.5f
         } else {
             Log.d("isLog", "isNotEmpty")
             binding.rcAddQuestion.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
+            binding.lblSendQuiz.isEnabled=true
+            binding.lblSendQuiz.alpha=1f
+
+        }
+    }
+
+    override fun onDeleteQuizQuestion(
+        id: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        Constant.showSendConfirmationDialog(
+            this,
+            getString(R.string.confirmation),
+            getString(R.string.delete),
+            getString(R.string.Cancel),
+            "",
+            getString(R.string.are_you_sure_you_want_to_delete_this_question)
+        ) { confirmed ->
+            if (confirmed) {
+                Constant.showLoading(this)
+
+                appViewModel?.isDeleteQuizQuestion?.observe(this) { response ->
+                    Constant.hideLoading(this)
+                    if (response != null) {
+                        if (response.status) {
+                            onResult(true)
+//                            Constant.showDataValidationNoDashboardRedirect(
+//                                resources.getString(R.string.success), response.message, this
+//                            )
+                        } else {
+                            onResult(false)
+                            Constant.showDataValidationNoDashboardRedirect(
+                                resources.getString(R.string.Oops), response.message, this
+                            )
+                        }
+                    } else {
+                        onResult(false)
+                        Constant.showDataValidationNoDashboardRedirect(
+                            resources.getString(R.string.Oops),
+                            getString(R.string.something_went_wrong_please_try_again_later),
+                            this
+                        )
+                    }
+                }
+
+                val jsonObject = JsonObject().apply {
+                    addProperty("id", id)
+                }
+
+                appViewModel?.isDeleteQuizQuestion(isAccessToken!!, jsonObject)
+
+            }
         }
     }
 
@@ -1018,7 +1161,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         if (resultCode != RESULT_OK) return
 
-         fun addPath(uri: Uri) {
+        fun addPath(uri: Uri) {
 
             if (isAttachmentAdapterPosition == RecyclerView.NO_POSITION) return
             if (isAttachmentAdapterPosition >= itemList.size) return
@@ -1029,7 +1172,11 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
@@ -1287,7 +1434,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 isMessage
             ) { confirmed ->
                 if (confirmed) {
-
                     if (Constant.isQuizReportPage) {
                         submitQuiz(body)
                     } else {

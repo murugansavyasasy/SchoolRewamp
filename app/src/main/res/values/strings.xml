@@ -1348,6 +1348,13 @@
     <string name="no_holidays_found">No Holidays found</string>
     <string name="pending_please_complete_all_required_questions">Pending: All the questions must be completed.</string>
     <string name="the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled_and_submitted">The quiz will be visible to students only after all questions are filled and Submitted</string>
+    <string name="almost_there_you_ve_created">Almost there! You’ve created</string>
+    <string name="out_of">out of</string>
+    <string name="you_still_need_to_add">You still need to add</string>
+    <string name="are_you_sure_you_want_to_delete_this_question">Are you sure you want to delete this Question?</string>
+    <string name="more">more</string>
+    <string name="to_complete_the_quiz_but_don_t_worry_you_can_add_them_later">to complete the quiz — but don’t worry, you can add them later</string>
+    <string name="note_the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled">Note: The quiz will be visible to students only after all questions are filled</string>
 
 
 </resources>

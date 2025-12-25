@@ -6,4 +6,8 @@ interface AddQuestionListner {
     fun onCountUpdated()
     fun onUICheck(list: List<GetQuizQuestionReportData>)
 
+    fun onDeleteQuizQuestion(
+        id: String,
+        onResult: (Boolean) -> Unit
+    )
 }
