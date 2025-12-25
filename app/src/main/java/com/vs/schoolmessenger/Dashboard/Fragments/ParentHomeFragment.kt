@@ -619,7 +619,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-         isDashBoardData()
+        isDashBoardData()
     }
 
     override fun onPause() {
