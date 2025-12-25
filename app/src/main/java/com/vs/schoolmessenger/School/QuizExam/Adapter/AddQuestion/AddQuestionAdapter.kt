@@ -442,14 +442,17 @@ class AddQuestionAdapter(
             lblremove.setOnClickListener {
 
                 //Local item (USER, QBANK)
-                if (data.id.isNullOrEmpty() && data.sourceType!= QuestionSource.API) {
+                if (data.id.isNullOrEmpty() || data.sourceType!= QuestionSource.API) {
+                    Log.d("QuestionType","USER & QUESTION BANK Question")
                     removeItem(position)
                     return@setOnClickListener
                 }
 
                 // Delete only for API Data
 //                We ask for the Confirmation to delete API question
+                Log.d("QuestionType","API Question")
                 listener.onDeleteQuizQuestion(data.id,) { isSuccess ->
+                    Log.d("QuestionType","API Question")
                     if (isSuccess) {
                         removeItem(position)
                     } else {
