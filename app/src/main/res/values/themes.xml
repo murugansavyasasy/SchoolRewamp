@@ -14,7 +14,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
 
-<!--        <item name="android:statusBarColor">@color/PrimaryColor</item>-->
+        <item name="editTextStyle">@style/AppEditTextStyle</item>
+
+
+        <!--        <item name="android:statusBarColor">@color/PrimaryColor</item>-->
         <item name="android:navigationBarColor">@color/white</item>
         <!--        <item name="android:navigationBarColor">@color/colorPrimary</item>-->
 

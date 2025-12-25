@@ -589,7 +589,7 @@
                                 android:background="@drawable/bg_outline_black"
                                 android:gravity="start|top"
                                 android:hint="@string/Description"
-                                android:inputType="textMultiLine"
+                                android:inputType="textMultiLine|textCapSentences"
                                 android:minHeight="@dimen/two_hundred"
                                 android:padding="@dimen/ten"
                                 android:textSize="@dimen/thirteen_sp" />

@@ -202,6 +202,7 @@ object APIMethods {
     const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
 
 
+
     const val isblockstudent = "/comm/api/interaction/block-student"
     const val isblockstudentlist = "/comm/api/interaction/blocked-students"
     const val isfrequentlyasked = "/dashboard/api/dashboard/faqs"
@@ -211,6 +212,9 @@ object APIMethods {
     const val isdeletenotification = "dashboard/api/dashboard/delete-notification"
     const val reviewlist = "dashboard/api/reviews/list"
     const val reviewpost = "dashboard/api/reviews/add"
+
+
+    const val uploadmarks = "ocr/api/upload-marks"
 
 
 }
