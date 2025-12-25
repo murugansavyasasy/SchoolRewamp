@@ -145,8 +145,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     .error(R.drawable.school_sample)
                     .into(binding.profileImage)
             }
-
-
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
@@ -639,15 +637,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        if (isSchoolDashBoardData == null) {
+      //  if (isSchoolDashBoardData == null) {
             isDashBoardData()
-        } else {
-            isLoadData()
+     //   } else {
+       //     isLoadData()
             setupRecyclerView()
             appViewModel!!.isDashBoardCountData(
                 access_token, Constant.staff_, requireActivity()
             )
-        }
+       // }
         Log.d("Loading", "Dashboard Data is Refreshed")
     }
 
