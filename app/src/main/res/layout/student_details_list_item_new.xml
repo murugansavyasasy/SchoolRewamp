@@ -68,7 +68,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginStart="@dimen/fifteen"
                         android:orientation="vertical">
 
                         <TextView
@@ -89,9 +89,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_below="@+id/lblSchoolName"
-                            android:gravity="end"
                             android:visibility="gone"
-                            android:text="iascisacscanniascnioscnia"
+                            android:text="iascisacscanniascnioscnia sdhjshdsdjhsdhjsdhsdjhsdhj"
                             style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp">
@@ -116,7 +115,6 @@
                             style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/eight"
                             android:layout_marginEnd="@dimen/ten"
                             android:text="Chandru "
                             android:textColor="@color/white"
@@ -129,7 +127,6 @@
                             style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/five"
                             android:layout_marginEnd="@dimen/ten"
                             android:textColor="@color/white"
                             android:text="IX - A2/EM"
@@ -141,7 +138,6 @@
                             style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/five"
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_weight="0.9"
                             android:text="Roll No : SS-16"

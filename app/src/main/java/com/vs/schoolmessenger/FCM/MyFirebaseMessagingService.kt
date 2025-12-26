@@ -57,7 +57,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
         val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
-        val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
+        var msgInfo: String? = null
+        if (!type.equals(Constant.isCall)) {
+            msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
+        }
+
+        val receiver_id = remoteMessage.data[Constant.receiverid] ?: ""
+        val circular_id = remoteMessage.data[Constant.circular_id] ?: ""
+        val retrycount = remoteMessage.data[Constant.retrycount] ?: ""
+        val ei1 = remoteMessage.data[Constant.ei1] ?: ""
+        val ei2 = remoteMessage.data[Constant.ei2] ?: ""
+        val ei3 = remoteMessage.data[Constant.ei3] ?: ""
+        val ei4 = remoteMessage.data[Constant.ei4] ?: ""
+        val ei5 = remoteMessage.data[Constant.ei5] ?: ""
+        val role = remoteMessage.data[Constant.role] ?: ""
+        val member_name = remoteMessage.data[Constant.member_name] ?: ""
+        val school_name = remoteMessage.data[Constant.school_name] ?: ""
+        val call_title = remoteMessage.data[Constant.call_title] ?: ""
+
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
@@ -69,13 +86,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val header_id = json.optString(Constant.header_id)
             val institute_id = json.optString(Constant.institute_id)
 
+
+
             if (type.equals(Constant.isCall)) {
                 sendNotificationCall(
                     title,
                     body,
                     receiver_id.toString(),
                     header_id.toString(),
-                    receiver_type.toString(),isWelcomeUrl,isVoiceUrl
+                    receiver_type.toString(),isWelcomeUrl,isVoiceUrl,ei1,ei2,ei3,ei4,ei5,school_name,member_name,call_title,role,circular_id,retrycount
                 )
             } else {
                 sendNotification(
@@ -114,7 +133,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         headerId: String,
         receiverType: String,
         isWelcomeUrl: String,
-        isVoiceUrl: String
+        isVoiceUrl: String,
+        ei1: String,
+        ei2: String,
+        ei3: String,
+        ei4: String,
+        ei5: String,
+        school_name: String,
+        member_name: String,
+        call_title: String,
+        role: String,
+        circular_id: String,
+        retrycount: String
     ) {
         // Check for notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -132,21 +162,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
             putExtra(Constant.menu_name, title)
             putExtra(Constant.isNotificationId, "")
-            putExtra(Constant.isVoiceUrl, "")
-            putExtra(Constant.isReceiverId, "")
-            putExtra(Constant.retrycount, "")
-            putExtra(Constant.circularId, "")
-            putExtra(Constant.ei1, "")
-            putExtra(Constant.ei2, "")
-            putExtra(Constant.ei3, "")
-            putExtra(Constant.ei4, "")
-            putExtra(Constant.ei5, "")
-            putExtra(Constant.role, "")
+            putExtra(Constant.isReceiverId, receiver_id)
+            putExtra(Constant.retrycount, retrycount)
+            putExtra(Constant.circularId, circular_id)
+            putExtra(Constant.ei1, ei1)
+            putExtra(Constant.ei2, ei2)
+            putExtra(Constant.ei3, ei3)
+            putExtra(Constant.ei4, ei4)
+            putExtra(Constant.ei5, ei5)
+            putExtra(Constant.role, role)
             putExtra(Constant.menuId, "")
-            putExtra(Constant.welcome, "")
-            putExtra(Constant.school_name, "")
-            putExtra(Constant.member_name, "")
-            putExtra(Constant.call_title, "")
+            putExtra(Constant.school_name, school_name)
+            putExtra(Constant.member_name, member_name)
+            putExtra(Constant.call_title, call_title)
             putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -25,6 +25,9 @@ class Auth(application: Application) : AndroidViewModel(application) {
     var isVersionCheck: LiveData<VersionCheckResponse?>? = null
         private set
 
+    var isUpdateNotificationCallLog: LiveData<VersionCheckResponse?>? = null
+        private set
+
     var isUserValidation: LiveData<UserValidationResponse?>? = null
         private set
 
@@ -57,6 +60,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
         apiRepositories = AuthServices()
         isCountryList = apiRepositories!!.isCountryListLiveData
         isVersionCheck = apiRepositories!!.isVersionCheckLiveData
+        isUpdateNotificationCallLog = apiRepositories!!.isUpdateNotificationCallLogLiveData
         isUserValidation = apiRepositories!!.isUserValidationLiveData
         isOtpResponse = apiRepositories!!.isOtpResponseLiveData
 //        isUserDetails = apiRepositories!!.isUserDetailsLiveData
@@ -75,6 +79,11 @@ class Auth(application: Application) : AndroidViewModel(application) {
     fun isVersionCheck(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isVersionCheck(jsonObject, activity)
     }
+
+    fun isUpdateNotificationCalllog(jsonObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isUpdateNotificationCallLog(jsonObject, activity)
+    }
+
 
     fun isValidateUser(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isValidateUser(jsonObject, activity)
