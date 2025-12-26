@@ -42,7 +42,7 @@
         android:gravity="center"
         android:text="@string/school_chimes"
         android:textColor="@color/white"
-        android:textSize="@dimen/thirty_sp" />
+        android:textSize="@dimen/twenty_sp" />
 
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="00:00"
             android:textColor="@color/white"
-            android:textSize="@dimen/eighteen_sp"
+            android:textSize="@dimen/fifteen_sp"
             android:visibility="visible" />
 
     </LinearLayout>
@@ -97,7 +97,7 @@
         android:gravity="center"
         android:text=""
         android:textColor="@color/white"
-        android:textSize="@dimen/eighteen_sp"
+        android:textSize="@dimen/fifteen_sp"
         android:visibility="visible" />
 
 
@@ -106,8 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/thirty"
-        android:layout_marginEnd="@dimen/thirty"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginBottom="@dimen/fifty"
         android:padding="@dimen/sixteen">
 

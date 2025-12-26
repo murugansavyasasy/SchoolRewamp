@@ -59,6 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         var msgInfo: String? = null
         if (!type.equals(Constant.isCall)) {
+            Log.d("msg_info","msg_info")
             msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         }
 
@@ -78,25 +79,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
-            val json = JSONObject(msgInfo)
-            val menuId = json.optString(Constant.menu_id)
-            val menuName = json.optString(Constant.menu_name)
-            val receiver_type = json.optString(Constant.receiver_type)
-            val receiver_id = json.optString(Constant.receiverid)
-            val header_id = json.optString(Constant.header_id)
-            val institute_id = json.optString(Constant.institute_id)
-
-
 
             if (type.equals(Constant.isCall)) {
                 sendNotificationCall(
                     title,
                     body,
                     receiver_id.toString(),
-                    header_id.toString(),
-                    receiver_type.toString(),isWelcomeUrl,isVoiceUrl,ei1,ei2,ei3,ei4,ei5,school_name,member_name,call_title,role,circular_id,retrycount
+                    isWelcomeUrl,isVoiceUrl,ei1,ei2,ei3,ei4,ei5,school_name,member_name,call_title,role,circular_id,retrycount
                 )
             } else {
+
+                val json = JSONObject(msgInfo)
+                val menuId = json.optString(Constant.menu_id)
+                val menuName = json.optString(Constant.menu_name)
+                val receiver_type = json.optString(Constant.receiver_type)
+                val receiver_id = json.optString(Constant.receiverid)
+                val header_id = json.optString(Constant.header_id)
+                val institute_id = json.optString(Constant.institute_id)
                 sendNotification(
                     title,
                     body,
@@ -110,11 +109,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     receiver_id,
                     institute_id
                 )
+
+                Log.d(
+                    "FCM_MSG_INFO",
+                    "Parsed msg_info -> menu_id: $menuId, menu_name: $menuName, receiver_type: $receiver_type"
+                )
             }
-            Log.d(
-                "FCM_MSG_INFO",
-                "Parsed msg_info -> menu_id: $menuId, menu_name: $menuName, receiver_type: $receiver_type"
-            )
+
         } catch (e: Exception) {
             Log.e("FCM", "Error parsing msg_info: ${e.message}")
         }
@@ -130,8 +131,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         title: String,
         body: String,
         receiver_id: String,
-        headerId: String,
-        receiverType: String,
         isWelcomeUrl: String,
         isVoiceUrl: String,
         ei1: String,
@@ -157,6 +156,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 return
             }
         }
+        Log.d("Received_Call","notification_call")
 
         // Create Intent for notification tap
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
@@ -180,7 +180,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        val uniqueID = (receiver_id + headerId).hashCode()
+        val uniqueID = (receiver_id + circular_id).hashCode()
         val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
 
         val pendingIntent = PendingIntent.getActivity(
@@ -247,7 +247,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         try {
 //            manager.notify(System.currentTimeMillis().toInt(), builder.build())
-            val uniqueID = (receiver_id + headerId).hashCode()
+            val uniqueID = (receiver_id + circular_id).hashCode()
             val notificationId = uniqueID ?: (0..999999).random()
             manager.notify(notificationId, builder.build())
             Log.d(TAG, "Notification sent successfully")
