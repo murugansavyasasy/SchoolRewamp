@@ -55,7 +55,7 @@ class FaqAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val question = itemView.findViewById<TextView>(R.id.question1)
-        private val answer = itemView.findViewById<EditText>(R.id.answer1)
+        private val answer = itemView.findViewById<TextView>(R.id.answer1)
         private val arrow = itemView.findViewById<ImageView>(R.id.arrow_icon_1)
 
         @SuppressLint("SetTextI18n")
