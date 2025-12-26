@@ -28,7 +28,7 @@ class AuthServices {
     var client_auth: RestClient
     var isCountryList: MutableLiveData<CountryResponse?>
     var isVersionCheck: MutableLiveData<VersionCheckResponse?>
-    var isUpdateNotificationCallLog: MutableLiveData<VersionCheckResponse?>
+    var isUpdateNotificationCallLog: MutableLiveData<StatusMessageModel?>
     var isValidationUser: MutableLiveData<UserValidationResponse?>
     var isOtpResponse: MutableLiveData<OtpResponse?>
     var isUserDetails: MutableLiveData<UserDetailsResponse?>
@@ -134,10 +134,10 @@ class AuthServices {
 
     fun isUpdateNotificationCallLog(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.updateNotificationCallLog(jsonObject)
-            ?.enqueue(object : Callback<VersionCheckResponse?> {
+            ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<VersionCheckResponse?>,
-                    response: Response<VersionCheckResponse?>
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "isGetCountryList",
@@ -160,14 +160,14 @@ class AuthServices {
                     }
                 }
 
-                override fun onFailure(call: Call<VersionCheckResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
                     isUpdateNotificationCallLog.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
-    val isUpdateNotificationCallLogLiveData: LiveData<VersionCheckResponse?>
+    val isUpdateNotificationCallLogLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateNotificationCallLog
 
     fun isValidateUser(jsonObject: JsonObject, activity: Activity) {
