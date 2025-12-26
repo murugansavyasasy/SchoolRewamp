@@ -11,7 +11,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
 
-
 class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): ReviewAndEditMarksBinding {
@@ -57,6 +56,4 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
         }
     }
-
-
 }
