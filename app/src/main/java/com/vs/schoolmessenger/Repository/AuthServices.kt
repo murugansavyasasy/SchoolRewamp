@@ -28,6 +28,7 @@ class AuthServices {
     var client_auth: RestClient
     var isCountryList: MutableLiveData<CountryResponse?>
     var isVersionCheck: MutableLiveData<VersionCheckResponse?>
+    var isUpdateNotificationCallLog: MutableLiveData<VersionCheckResponse?>
     var isValidationUser: MutableLiveData<UserValidationResponse?>
     var isOtpResponse: MutableLiveData<OtpResponse?>
     var isUserDetails: MutableLiveData<UserDetailsResponse?>
@@ -44,6 +45,7 @@ class AuthServices {
         client_auth = RestClient()
         isCountryList = MutableLiveData()
         isVersionCheck = MutableLiveData()
+        isUpdateNotificationCallLog = MutableLiveData()
         isValidationUser = MutableLiveData()
         isOtpResponse = MutableLiveData()
         isUserDetails = MutableLiveData()
@@ -128,6 +130,45 @@ class AuthServices {
 
     val isVersionCheckLiveData: LiveData<VersionCheckResponse?>
         get() = isVersionCheck
+
+
+    fun isUpdateNotificationCallLog(jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.updateNotificationCallLog(jsonObject)
+            ?.enqueue(object : Callback<VersionCheckResponse?> {
+                override fun onResponse(
+                    call: Call<VersionCheckResponse?>,
+                    response: Response<VersionCheckResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateNotificationCallLog.postValue(response.body())
+                            } else {
+                                isUpdateNotificationCallLog.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<VersionCheckResponse?>, t: Throwable) {
+                    isUpdateNotificationCallLog.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isUpdateNotificationCallLogLiveData: LiveData<VersionCheckResponse?>
+        get() = isUpdateNotificationCallLog
 
     fun isValidateUser(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isValidateUser(jsonObject)

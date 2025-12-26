@@ -10,9 +10,13 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NotificationCallScreenBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -52,6 +56,19 @@ class NotificationCallScreen :
     private var isStartTime: String? = null
     private var isEndTime: String? = null
     private var isListeningDuration = "00:00"
+    private var authViewModel: Auth? = null
+
+    private var ei1: String? = ""
+    private var ei2: String? = ""
+    private var ei3: String? = ""
+    private var ei4: String? = ""
+    private var ei5: String? = ""
+    private var circular_id: String? = ""
+    private var retrycount: String? = ""
+    private var receiver_id: String? = ""
+    private var isUserResponse: String? = "NO"
+
+
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -66,12 +83,26 @@ class NotificationCallScreen :
         handleIntent(intent)
         setupSwipeActions()
 
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
+        authViewModel!!.init()
+
         binding.callEndButton.setOnClickListener { stopAndFinishCall() }
         binding.declineButton.setOnClickListener { endCallWithoutListening() }
 
         calculateTotalDuration {
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
+
+        authViewModel!!.isVersionCheck?.observe(this) { response ->
+            if (response != null) {
+                val status = response.status
+                response.message
+                if (status) {
+
+                }
+            }
+        }
+
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -81,10 +112,19 @@ class NotificationCallScreen :
         welcomeUrl = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
         notificationId = intent.getIntExtra(Constant.isNotificationId, -1)
 
-        welcome_file = intent.getStringExtra("welcome")
-        school_name = intent.getStringExtra("school_name")
-        member_name = intent.getStringExtra("member_name")
-        call_title = intent.getStringExtra("call_title")
+        welcome_file = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
+        school_name = intent.getStringExtra(Constant.school_name)
+        member_name = intent.getStringExtra(Constant.member_name)
+        call_title = intent.getStringExtra(Constant.call_title)
+
+        ei1 = intent.getStringExtra(Constant.ei1)
+        ei2 = intent.getStringExtra(Constant.ei2)
+        ei3 = intent.getStringExtra(Constant.ei3)
+        ei4 = intent.getStringExtra(Constant.ei4)
+        ei5 = intent.getStringExtra(Constant.ei5)
+        receiver_id = intent.getStringExtra(Constant.receiverid)
+        retrycount = intent.getStringExtra(Constant.retrycount)
+        circular_id = intent.getStringExtra(Constant.circular_id)
 
         binding.lblSchoolName.text = school_name
         binding.lblMemberName.text = "Calling - $member_name from"
@@ -113,6 +153,10 @@ class NotificationCallScreen :
                 MotionEvent.ACTION_DOWN -> {
                     dX = view.x - event.rawX
                     originalX = view.x
+
+                    //end call
+                    isUserResponse = "NO"
+
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val newX = event.rawX + dX
@@ -156,6 +200,9 @@ class NotificationCallScreen :
                 isStartTime = getNow()
                 playAudio(currentTrack)
             }.start()
+
+          isUserResponse = "OC"
+
     }
 
     private fun playAudio(index: Int) {
@@ -271,6 +318,25 @@ class NotificationCallScreen :
     }
 
     private fun updateNotificationCallLog(start: String, end: String) {
+
+        val MobileNumber: String? = SharedPreference.getMobileNumber(this)
+        val jsonObject = JsonObject()
+        jsonObject.addProperty("url", voiceUrl)
+        jsonObject.addProperty("duration", isListeningDuration)
+        jsonObject.addProperty("ei1", ei1)
+        jsonObject.addProperty("ei2", ei2)
+        jsonObject.addProperty("ei3", ei3)
+        jsonObject.addProperty("ei4", ei4)
+        jsonObject.addProperty("ei5", ei5)
+        jsonObject.addProperty("start_time", isStartTime)
+        jsonObject.addProperty("end_time", isEndTime)
+        jsonObject.addProperty("retry_count", retrycount)
+        jsonObject.addProperty("phone", MobileNumber)
+        jsonObject.addProperty("receiver_id", receiver_id)
+        jsonObject.addProperty("circular_id", circular_id)
+        jsonObject.addProperty("diallist_id", ei5)
+        jsonObject.addProperty("call_status", isUserResponse)
+        authViewModel!!.isUpdateNotificationCalllog(jsonObject, this)
         // TODO: call your API if needed
         finish()
     }
