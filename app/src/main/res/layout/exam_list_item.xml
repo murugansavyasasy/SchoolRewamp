@@ -50,11 +50,10 @@
 
                     <!-- Radio Indicator -->
                     <ImageView
-                        android:src="@drawable/circle_icon"
                         android:id="@+id/imgCheck"
-                        android:layout_width="@dimen/twenty_five"
-                        android:layout_height="@dimen/twenty_five"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/circle_icon" />
 
                     <LinearLayout
                         android:layout_width="0dp"

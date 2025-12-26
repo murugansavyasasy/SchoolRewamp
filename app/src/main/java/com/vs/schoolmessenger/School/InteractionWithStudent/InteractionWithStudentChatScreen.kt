@@ -264,10 +264,24 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.replytext -> {
+
+                // Hide keyboard if open
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
+
+                // Optionally clear focus (prevents reopening)
+                binding.edtMessage.clearFocus()
+
                 isMessageSend(Constant.two)
             }
 
             R.id.replyalltext -> {
+                // Hide keyboard if open
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
+
+                // Optionally clear focus (prevents reopening)
+                binding.edtMessage.clearFocus()
                 isMessageSend(Constant.one)
             }
 
@@ -278,6 +292,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             R.id.imgCloseReply -> {
                 binding.replyLinearlayout.visibility = View.GONE
                 binding.btnAdd.visibility = View.GONE
+                binding.edtMessage.text.clear()
                 binding.edtMessage.visibility = View.GONE
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)

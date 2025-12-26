@@ -878,7 +878,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             return
         }
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        val filePart = MultipartBody.Part.createFormData("file", fileName, requestFile)
+        val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
 
         appViewModel?.uploadmarks(filePart)
     }

@@ -483,7 +483,8 @@
                             android:id="@+id/imgEndArrow"
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
-                            android:src="@drawable/arrowright"></ImageView>
+                            android:src="@drawable/arrowright">
+                        </ImageView>
                     </LinearLayout>
 
                     <LinearLayout
