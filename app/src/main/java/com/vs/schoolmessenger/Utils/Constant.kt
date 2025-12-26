@@ -103,7 +103,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 93
+    var isVersionId = 123
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
@@ -204,6 +204,7 @@ object Constant {
     var institute_id = "institute_id"
     var receiver_type = "receiver_type"
     var receiverid = "receiver_id"
+    var circular_id = "circular_id"
     var fromNotification = "fromNotification"
 
     var school = "A"
@@ -344,8 +345,8 @@ object Constant {
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var type_ = "type"
-    var isVoiceUrlNotifi = "voice_url"
-    var isWelcomeUrlNotifi = "welcome_url"
+    var isVoiceUrlNotifi = "url"
+    var isWelcomeUrlNotifi = "welcome"
     var isTitle = "isTitle"
     var imageurl = "image_url"
     var isWebLink = "isWebLink"

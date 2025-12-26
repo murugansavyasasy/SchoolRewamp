@@ -177,6 +177,11 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject
     ): Call<VersionCheckResponse?>?
 
+    @POST(APIMethods.updatenotificationcalllog)
+    fun updateNotificationCallLog(
+        @Body jsonObject: JsonObject
+    ): Call<VersionCheckResponse?>?
+
     @POST(APIMethods.isValidateUser)
     fun isValidateUser(
         @Body jsonObject: JsonObject

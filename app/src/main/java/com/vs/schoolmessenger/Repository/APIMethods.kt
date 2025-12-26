@@ -5,6 +5,7 @@ object APIMethods {
     // AUTH
     const val isCountryList = "app/api/setup/countries"
     const val isVersionCheck = "app/api/setup/version-check"
+    const val updatenotificationcalllog = "app/api/setup/update-notification-call-log"
     const val isValidateUser = "app/api/auth/validate-user"
     const val isValidateOtp = "app/api/auth/validate-otp"
     const val isPasswordChange = "app/api/cred/change-password"
