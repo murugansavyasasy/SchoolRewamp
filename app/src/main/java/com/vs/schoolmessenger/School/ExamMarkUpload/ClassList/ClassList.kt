@@ -34,7 +34,6 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     var isValidAcademicYear = false
-
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ClassListAdapter
     private var isClassList: List<StandardSection>? = emptyList()
@@ -157,7 +156,6 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
             }
             adapter = this@ClassList.adapter
         }
-
     }
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {

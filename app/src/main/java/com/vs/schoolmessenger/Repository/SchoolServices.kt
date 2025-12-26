@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -244,6 +245,7 @@ class SchoolServices {
     var isgetfeature: MutableLiveData<GetFeature?>
     var isgetStaffWiseExam: MutableLiveData<getStaffWisExam?>
     var isgetSubjectWiseActivities: MutableLiveData<getSubjectWiseACtivities?>
+    var isGetMarkDetails: MutableLiveData<MarkResponse?>
     var isgetDeleteQuizQuestion: MutableLiveData<DeleteQuizQuestionResponse?>
     var uploadmarks: MutableLiveData<UploadMarkResponse?>
 
@@ -368,6 +370,7 @@ class SchoolServices {
         isgetfeature = MutableLiveData()
         isgetStaffWiseExam = MutableLiveData()
         isgetSubjectWiseActivities = MutableLiveData()
+        isGetMarkDetails = MutableLiveData()
         isDeleteQuiz = MutableLiveData()
         isEditQuiz = MutableLiveData()
         isgetDeleteQuizQuestion = MutableLiveData()
@@ -4716,6 +4719,46 @@ class SchoolServices {
     val getSubjectWiseActivitiesLiveData: LiveData<getSubjectWiseACtivities?>
         get() = isgetSubjectWiseActivities
 
+
+    fun isGetMarkDetails(
+        isToken: String,
+       jsonObject: JsonObject,
+    ) {
+        RestClient.apiInterfaces.getMarkDetails(isToken, jsonObject)
+            ?.enqueue(object : Callback<MarkResponse?> {
+                override fun onResponse(
+                    call: Call<MarkResponse?>,
+                    response: Response<MarkResponse?>
+                ) {
+                    Log.d(
+                        "isgetSubjectWiseActivities Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("isgetSubjectWiseActivities", response.body().toString())
+                                isGetMarkDetails.postValue(response.body())
+                            } else {
+                                Log.d("isgetSubjectWiseActivities", response.body().toString())
+                                isGetMarkDetails.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<MarkResponse?>, t: Throwable
+                ) {
+                    isGetMarkDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetMarkDetailsLiveData: LiveData<MarkResponse?>
+        get() = isGetMarkDetails
 
     fun isDeleteQuiz(
         isToken: String, jsonObject: JsonObject

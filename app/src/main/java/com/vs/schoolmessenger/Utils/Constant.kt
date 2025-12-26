@@ -109,6 +109,8 @@ object Constant {
     var isShimmerViewDisable = false
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
+    var scrollX = 0
+    var isSyncing = false
     var isParentChoose = false
     var country_details: Country? = null
     var user_details: UserDetails? = null

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Communication.Adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
@@ -8,6 +9,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -119,10 +121,12 @@ class VoiceHistoryAdapter(
             )
 
             rlaSendVoice.setOnClickListener {
+                stopAudioPlayback()
                 listener.onItemClick(data, this@DataViewHolder)
             }
 
             imgVoicePlay.setOnClickListener {
+                keepScreenOn()
                 // Stop any other currently playing holder
                 if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                     adapter.currentlyPlayingHolder?.pauseAudioOnly()
@@ -174,6 +178,12 @@ class VoiceHistoryAdapter(
                 waveformSeekBar.updateWithLevel(0f) // stop wave animation
             }
         }
+        private fun keepScreenOn() {
+            if (context is Activity) {
+                context.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            }
+        }
+
 
         // Used to pause when another holder starts playing
         fun pauseAudioOnly() {
@@ -199,14 +209,25 @@ class VoiceHistoryAdapter(
 
         fun stopAudioPlayback() {
             if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
+                try {
+                    if (mediaPlayer.isPlaying) {
+                        mediaPlayer.stop()
+                    }
+                } catch (e: IllegalStateException) {
+                    // MediaPlayer already released or invalid state
+                } finally {
+                    try {
+                        mediaPlayer.release()
+                    } catch (e: Exception) {
+                        // ignore
+                    }
                 }
-                mediaPlayer.release()
             }
+
             resetPlaybackState()
             waveformSeekBar.updateWithLevel(0f) // stop wave animation
         }
+
 
         private fun updatePlayPauseIcon(isPlaying: Boolean) {
             val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play

@@ -26,10 +26,10 @@
 
 
     <ScrollView
-        android:fillViewport="true"
         android:id="@+id/svOverallCreateQE"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/five"
-            >
+            android:layout_marginEnd="@dimen/five">
 
             <RelativeLayout
                 android:id="@+id/rytSearch1"
@@ -78,79 +77,89 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_below="@+id/rytSearch1"
                 android:id="@+id/lblReviewDetail"
-                android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:textColor="@color/dark_orange_2"
-                android:textStyle="bold"
-                android:textSize="@dimen/twenty_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytSearch1"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:text="@string/review_and_edit_marks"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:textColor="@color/dark_orange_2"
+                android:textSize="@dimen/twenty_sp"
+                android:textStyle="bold"></TextView>
 
             <TextView
-                android:layout_marginHorizontal="@dimen/ten"
                 android:id="@+id/lblSampleDesc"
-                android:layout_below="@+id/lblReviewDetail"
-                android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblReviewDetail"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/verify_the_data_and_make_any_necessary_corrections"
-                android:layout_height="wrap_content">
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
 
             </TextView>
 
 
             <LinearLayout
-                android:layout_below="@+id/lblSampleDesc"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginHorizontal="@dimen/ten"
                 android:id="@+id/lnrSaveAllMarks1"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:paddingVertical="@dimen/eight"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSampleDesc"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:background="@drawable/rect_orange_bg"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:paddingVertical="@dimen/eight">
+
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:drawablePadding="@dimen/eight"
+                    android:layout_height="wrap_content"
                     android:drawableStart="@drawable/save_icon"
+                    android:drawablePadding="@dimen/eight"
+                    android:gravity="center"
                     android:text="@string/save_all_marks"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"></TextView>
             </LinearLayout>
+
             <View
-                android:layout_below="@+id/lnrSaveAllMarks1"
                 android:id="@+id/View2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/lnrSaveAllMarks1"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginBottom="@dimen/five"
-                android:layout_width="match_parent"
-                android:background="@color/AthensGray"
-                android:layout_height="@dimen/three">
+                android:background="@color/AthensGray">
 
             </View>
+
             <LinearLayout
-                android:layout_marginBottom="@dimen/five"
-                android:layout_below="@+id/View2"
                 android:id="@+id/lnrContainer"
-                android:orientation="vertical"
-                android:layout_above="@+id/LnrContainer2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcExamList"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/LnrContainer2"
+                android:layout_below="@+id/View2"
+                android:layout_marginBottom="@dimen/five"
+                android:orientation="vertical">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/headerLayout"
+                        layout="@layout/item_mark_header" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcExamList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -167,8 +176,7 @@
                         android:layout_width="@dimen/two_hundred"
                         android:layout_height="@dimen/two_hundred"
                         android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/no_data_found">
-                    </ImageView>
+                        android:src="@drawable/no_data_found"></ImageView>
 
                     <TextView
                         android:id="@+id/txtNoData"
@@ -184,96 +192,92 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:layout_marginHorizontal="@dimen/ten"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ten"
                     android:background="@drawable/rect_radius_fill_stoke_15"
-                    android:padding="@dimen/fifteen"
-                    android:layout_height="wrap_content">
+                    android:padding="@dimen/fifteen">
 
                     <ImageView
-                        android:layout_alignParentStart="true"
                         android:id="@+id/imgLeftArrow"
-                        android:layout_centerVertical="true"
                         android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/arrow_narrow_left_icon"
-                        android:tint="@color/black"
-                        android:layout_height="@dimen/twenty">
-                    </ImageView>
+                        android:tint="@color/black"></ImageView>
 
                     <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/imgLeftArrow"
-                        android:layout_toStartOf="@+id/imgRightArrow"
-                        android:layout_marginHorizontal="@dimen/ten"
-                        android:layout_below="@+id/lblMonthName"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
                         style="@style/CustomTextStylePoppinsRegular"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/thirteen_sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblMonthName"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/ten"
+                        android:layout_toStartOf="@+id/imgRightArrow"
+                        android:layout_toEndOf="@+id/imgLeftArrow"
+                        android:gravity="center"
                         android:text="Swipe horizontally to see all activities"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"></TextView>
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:tint="@color/black"
-                        android:layout_alignParentEnd="true"
                         android:id="@+id/imgRightArrow"
                         android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/arrow_narrow_right_icon"
-                        android:layout_height="@dimen/twenty">
-                    </ImageView>
+                        android:tint="@color/black"></ImageView>
                 </RelativeLayout>
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginBottom="@dimen/five"
                 android:id="@+id/LnrContainer2"
-                android:layout_alignParentBottom="true"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/five"
+                android:orientation="vertical">
+
                 <View
-                    android:layout_marginHorizontal="@dimen/ten"
                     android:layout_width="match_parent"
-                    android:background="@color/AthensGray"
-                    android:layout_height="@dimen/two">
+                    android:layout_height="@dimen/two"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:background="@color/AthensGray">
 
                 </View>
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginHorizontal="@dimen/ten"
                     android:id="@+id/lnrSaveAllMarks2"
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/eight"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
                     android:background="@drawable/rect_orange_bg"
-                    android:layout_height="wrap_content">
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/eight">
+
                     <TextView
                         android:id="@+id/lblUpload"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/fifteen_sp"
                         android:layout_width="wrap_content"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:drawablePadding="@dimen/eight"
+                        android:layout_height="wrap_content"
                         android:drawableStart="@drawable/save_icon"
+                        android:drawablePadding="@dimen/eight"
+                        android:gravity="center"
                         android:text="@string/save_all_marks"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fifteen_sp"></TextView>
                 </LinearLayout>
 
             </LinearLayout>
         </RelativeLayout>
 
 
-
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

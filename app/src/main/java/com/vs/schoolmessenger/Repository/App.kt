@@ -92,6 +92,7 @@ import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -425,6 +426,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getStaffWiseExam: LiveData<getStaffWisExam?>? = null
     var getSubjectWiseActivities: LiveData<getSubjectWiseACtivities?>? = null
+    var isGetMarkDetails: LiveData<MarkResponse?>? = null
     var isDeleteQuizQuestion: LiveData<DeleteQuizQuestionResponse?>? = null
     var uploadmarks: LiveData<UploadMarkResponse?>? = null
 
@@ -605,6 +607,7 @@ class App(application: Application) : AndroidViewModel(application) {
         reviewpost = apiSchoolRepositories.reviewpostLiveData
         getStaffWiseExam = apiSchoolRepositories.getStaffWiseExamLiveData
         getSubjectWiseActivities = apiSchoolRepositories.getSubjectWiseActivitiesLiveData
+        isGetMarkDetails = apiSchoolRepositories.isGetMarkDetailsLiveData
         isDeleteQuiz = apiSchoolRepositories.isDeleteQuizLiveData
         isEditQuiz = apiSchoolRepositories.isEditQuizLiveData
         isDeleteQuizQuestion = apiSchoolRepositories.isDeleteQuizQuestionLiveData
@@ -1603,6 +1606,12 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
     }
 
+    fun isMarkDetails(
+        isToken: String,
+      jsonObject: JsonObject
+    ) {
+        apiSchoolRepositories.isGetMarkDetails(isToken, jsonObject)
+    }
     fun isDeleteQuizQuestion(
         isToken: String, jsonObject: JsonObject
     ) {
