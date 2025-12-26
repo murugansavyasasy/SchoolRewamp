@@ -57,7 +57,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
         val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
-        val msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
+        var msgInfo: String? = null
+        if (!type.equals(Constant.isCall)) {
+            msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
+        }
 
         val receiver_id = remoteMessage.data[Constant.receiverid] ?: ""
         val circular_id = remoteMessage.data[Constant.circular_id] ?: ""
