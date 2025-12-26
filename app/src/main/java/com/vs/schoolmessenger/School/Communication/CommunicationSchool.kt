@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.KeyguardManager
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -15,10 +16,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -366,6 +369,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun startRecording() {
+        keepScreenOn()
         Constant.selectedFiles.clear()
         if (checkAndRequestPermissions(this)) {
             val dir = externalCacheDir ?: cacheDir
@@ -1082,6 +1086,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
+                keepScreenOn()
                 KeyboardUtils.hideKeyboard(this)
                 if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
                     mediaPlayer?.pause()
@@ -1756,6 +1761,47 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             null
         }
     }
+
+    private fun keepScreenOn() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    private fun isScreenOff(): Boolean {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        return !powerManager.isInteractive   // true = screen OFF
+    }
+
+    private fun isScreenLocked(): Boolean {
+        val keyguardManager =
+            getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        return keyguardManager.isKeyguardLocked
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+
+        when {
+            isScreenOff() -> {
+                binding.waveformSeekBar.updateWithLevel(0f)
+                Log.d("ScreenState", "📴 Screen is OFF")
+//                Toast.makeText(this, "Screen is OFF", Toast.LENGTH_SHORT).show()
+            }
+
+            isScreenLocked() -> {
+                binding.waveformSeekBar.updateWithLevel(0f)
+                Log.d("ScreenState", "🔒 Screen is LOCKED")
+//                Toast.makeText(this, "Screen is LOCKED", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                Log.d("ScreenState", "🔓 Screen is ON & UNLOCKED")
+//                Toast.makeText(this, "Screen is ON & UNLOCKED", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 
     override fun onBackPressed() {
         if (mAdapter != null) {
