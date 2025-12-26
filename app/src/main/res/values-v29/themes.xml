@@ -9,6 +9,9 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/white</item>
 
+        <item name="editTextStyle">@style/AppEditTextStyle</item>
+
+
         <!-- Required to disable forced gray contrast in Android 10+ -->
         <item name="android:enforceStatusBarContrast">false</item>
         <item name="android:enforceNavigationBarContrast">false</item>

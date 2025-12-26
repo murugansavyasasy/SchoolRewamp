@@ -57,6 +57,10 @@ import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.UploadMarkSheetBinding
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -174,7 +178,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                             Log.d("MAX_FILES", MAX_FILES.toString())
 
                             if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                                Constant.selectedFiles.add(FileItem(path, type))
                             } else {
                                 Constant.Remaining = 0
                             }
@@ -188,7 +192,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                                 binding.lnrUpload.visibility = View.GONE
 
                             }
-                            Log.d("SelectedFile", "URI: $uri, Type: $type")
+                            Log.d("SelectedFile", "Path: $path, Type: $type")
                         }
 //                        mAdapter?.notifyDataSetChanged()
                         val addedCount = Constant.selectedFiles.size - previousCount
@@ -216,6 +220,20 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     }
                 }
             }
+
+
+
+        appViewModel!!.uploadmarks?.observe(this) { response ->
+            Constant.hideLoading(this@UploadMarkSheet)
+            if (response?.message == "Extraction successful") {
+                val intent = Intent(this, MapActivity::class.java)
+                this.startActivity(intent)
+            } else {
+                Log.e("UpdateError", "Null response received from server.")
+            }
+        }
+
+
 
 
     }
@@ -499,6 +517,17 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 return
             }
 
+            val path = when (uri.scheme) {
+                "file" -> uri.path
+                "content" -> getPathFromUri(uri)
+                else -> null
+            }
+
+            if (path == null) {
+                Log.w("addPath", "Could not resolve path from URI: $uri")
+                return
+            }
+
             val fileName = getFileName(uri)
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
@@ -514,7 +543,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                Constant.selectedFiles.add(FileItem(path, type))
             } else {
                 Constant.Remaining = 0
             }
@@ -528,9 +557,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 binding.lnrUpload.visibility = View.GONE
             }
 
-            for (item in Constant.selectedFiles) {
-                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
-            }
+            Log.d("SelectedFile", "Path: $path, Type: ${type}")
         }
 
         when (requestCode) {
@@ -556,9 +583,24 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                             outputStream.close()
                         }
 
-                        val uri = Uri.fromFile(file)
                         Constant.Remaining = Constant.Remaining - 1
-                        addPath(uri)
+                        val type = FileType.IMAGE
+                        val fileName = file.name
+                        if (Constant.selectedFiles.size < MAX_FILES + 1) {
+                            Constant.selectedFiles.add(FileItem(file.absolutePath, type))
+                        } else {
+                            Constant.Remaining = 0
+                        }
+
+                        if (Constant.selectedFiles.isNotEmpty()) {
+                            binding.lblFileName.text = fileName
+                            binding.lnrUpload.visibility = View.VISIBLE
+                        } else {
+                            binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
+                            binding.lnrUpload.visibility = View.GONE
+                        }
+
+                        Log.d("SelectedFile", "Path: ${file.absolutePath}, Type: $type")
 
 
                     } else {
@@ -716,8 +758,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             R.id.lnrUpload -> {
 //                isFileUploadInAws("Image")
-                val intent = Intent(this, MapActivity::class.java)
-                this.startActivity(intent)
+                UplaodMarks()
+
             }
 
             R.id.cardUploadImage -> {
@@ -814,7 +856,31 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
 
         }
+
+
     }
 
+
+
+    private fun UplaodMarks() {
+        if (Constant.selectedFiles.isEmpty()) {
+            Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        Constant.showLoading(this)
+        val selectedFile = Constant.selectedFiles[0]
+        val fileUri = Uri.parse(selectedFile.path)
+        val fileName = getFileName(fileUri)
+        val file = File(selectedFile.path)
+        if (!file.exists()) {
+            Constant.hideLoading(this)
+            Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        val filePart = MultipartBody.Part.createFormData("file", fileName, requestFile)
+
+        appViewModel?.uploadmarks(filePart)
+    }
 
 }

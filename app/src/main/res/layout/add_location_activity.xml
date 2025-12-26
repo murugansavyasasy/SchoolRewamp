@@ -225,7 +225,6 @@
                             android:layout_marginTop="@dimen/ten"
                             android:background="@drawable/outline_gray"
                             android:hint="@string/pin_your_location_name"
-                            android:inputType="text"
                             android:padding="@dimen/eight"
                             android:textColorHint="@color/jumbo"
                             android:textSize="@dimen/fifteen_sp" />

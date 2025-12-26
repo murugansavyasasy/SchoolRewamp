@@ -93,7 +93,6 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:inputType="text"
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
