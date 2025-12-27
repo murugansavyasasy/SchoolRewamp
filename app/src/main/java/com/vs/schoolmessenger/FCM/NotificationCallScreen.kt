@@ -56,6 +56,7 @@ class NotificationCallScreen :
     private var isStartTime: String? = null
     private var isEndTime: String? = null
     private var isListeningDuration = "00:00"
+    private var isTotalDurationListened = 0
     private var authViewModel: Auth? = null
 
     private var ei1: String? = ""
@@ -94,13 +95,11 @@ class NotificationCallScreen :
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
 
-        authViewModel!!.isVersionCheck?.observe(this) { response ->
+        authViewModel!!.isUpdateNotificationCallLog?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
-                if (status) {
-
-                }
+                finish()
             }
         }
 
@@ -130,9 +129,11 @@ class NotificationCallScreen :
         ei3 = intent.getStringExtra(Constant.ei3)
         ei4 = intent.getStringExtra(Constant.ei4)
         ei5 = intent.getStringExtra(Constant.ei5)
-        receiver_id = intent.getStringExtra(Constant.receiverid)
+        receiver_id = intent.getStringExtra(Constant.isReceiverId)
         retrycount = intent.getStringExtra(Constant.retrycount)
-        circular_id = intent.getStringExtra(Constant.circular_id)
+        circular_id = intent.getStringExtra(Constant.circularId)
+
+        Log.d("Circular_id",receiver_id+" "+circular_id)
 
         binding.lblSchoolName.text = school_name
         binding.lblMemberName.text = "Calling - $member_name from"
@@ -308,6 +309,9 @@ class NotificationCallScreen :
         releasePlayer()
         isEndTime = getNow()
         isListeningDuration = binding.lblCurrentDuration.text.toString()
+        isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
+        Log.d("isTotalDurationListened",isTotalDurationListened.toString())
+
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
 
@@ -324,6 +328,9 @@ class NotificationCallScreen :
         mediaPlayer = null
         isEndTime = getNow()
         isListeningDuration = binding.lblCurrentDuration.text.toString()
+        isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
+        Log.d("isTotalDurationListened",isTotalDurationListened.toString())
+
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
 
@@ -332,7 +339,7 @@ class NotificationCallScreen :
         val MobileNumber: String? = SharedPreference.getMobileNumber(this)
         val jsonObject = JsonObject()
         jsonObject.addProperty("url", voiceUrl)
-        jsonObject.addProperty("duration", isListeningDuration)
+        jsonObject.addProperty("duration", isTotalDurationListened)
         jsonObject.addProperty("ei1", ei1)
         jsonObject.addProperty("ei2", ei2)
         jsonObject.addProperty("ei3", ei3)
@@ -346,9 +353,10 @@ class NotificationCallScreen :
         jsonObject.addProperty("circular_id", circular_id)
         jsonObject.addProperty("diallist_id", ei5)
         jsonObject.addProperty("call_status", isUserResponse)
+        Log.d("jsonObjectReq",jsonObject.toString())
         authViewModel!!.isUpdateNotificationCalllog(jsonObject, this)
         // TODO: call your API if needed
-        finish()
+
     }
 
     override fun onPause() {
@@ -395,6 +403,13 @@ class NotificationCallScreen :
         val min = TimeUnit.MILLISECONDS.toMinutes(ms)
         val sec = TimeUnit.MILLISECONDS.toSeconds(ms) % 60
         return String.format("%02d:%02d", min, sec)
+    }
+
+    private fun durationToSeconds(time: String): Int {
+        val parts = time.split(":")
+        val minutes = parts[0].toInt()
+        val seconds = parts[1].toInt()
+        return (minutes * 60) + seconds
     }
 
     private fun releasePlayer() {
