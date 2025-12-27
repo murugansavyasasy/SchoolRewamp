@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Communication
 
 import android.Manifest
+import android.R.attr.width
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -19,6 +20,7 @@ import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -76,6 +78,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun getViewBinding(): CommunicationSchoolBinding {
         return CommunicationSchoolBinding.inflate(layoutInflater)
     }
+    private val audioHandler = Handler(Looper.getMainLooper())
+    private var audioProgressRunnable: Runnable? = null
+
 
     private var fromHour24: Int? = null
     private var fromMinute: Int? = null
@@ -296,6 +301,26 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.scrollRoot,
             binding.edtTitle
         )
+
+        binding.waveformSeekBar.setOnSeekChangeListener { progress ->
+
+            val player = mediaPlayer ?: return@setOnSeekChangeListener
+            if (!isPrepared || player.duration <= 0) return@setOnSeekChangeListener
+
+            val newPosition = (progress * player.duration).toInt()
+            player.seekTo(newPosition)
+            lastPosition = newPosition
+            updateCurrentTime(newPosition)
+
+            if (!player.isPlaying) {
+                player.start()
+                startAudioProgressUpdate()
+                binding.imgVoicePlay.setImageDrawable(
+                    ContextCompat.getDrawable(this, R.drawable.pause_icon)
+                )
+            }
+        }
+
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
@@ -303,6 +328,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
         binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -529,17 +555,19 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblEndDuration.text = "/ " + totalFormatted
                 }
 
-
                 setOnCompletionListener {
                     stopAudioProgressUpdate()
                     lastPosition = 0
                     isPlayingVoice = false
                     isPrepared = false
+
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
                     )
                     binding.lblStartDuration.text = "00:00"
+
                     binding.waveformSeekBar.updateWithLevel(0f)
+
                     Log.d("AudioDebug", "Playback completed.")
                 }
                 prepareAsync()
@@ -578,16 +606,35 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun startAudioProgressUpdate() {
-        handler.post(progressUpdater)
-        binding.waveformSeekBar.invalidate() // Force redraw
+        audioProgressRunnable = object : Runnable {
+            override fun run() {
+                mediaPlayer?.let { player ->
+                    if (player.isPlaying) {
+
+                        val progress =
+                            player.currentPosition.toFloat() / player.duration.toFloat()
+
+                        binding.waveformSeekBar.updateWithLevel(progress)
+                        updateCurrentTime(player.currentPosition)
+
+                        audioHandler.postDelayed(this, 50) // smooth like WhatsApp
+                    }
+                }
+            }
+        }
+        audioHandler.post(audioProgressRunnable!!)
     }
+
 
     private fun stopAudioProgressUpdate() {
         handler.removeCallbacks(progressUpdater)
-        binding.waveformSeekBar.updateWithLevel(0f)
+     //   binding.waveformSeekBar.updateWithLevel(0f)
         binding.imgVoicePlay.setImageDrawable(
             ContextCompat.getDrawable(this, R.drawable.video_play)
         )
+        audioProgressRunnable?.let {
+            audioHandler.removeCallbacks(it)
+        }
     }
 
     fun checkAndRequestAccessFilePermissions(activity: Activity): Boolean {
@@ -1086,39 +1133,76 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
+
                 keepScreenOn()
                 KeyboardUtils.hideKeyboard(this)
-                if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
+
+                if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+
                     mediaPlayer?.pause()
                     stopAudioProgressUpdate()
                     lastPosition = mediaPlayer!!.currentPosition
-                    isPlayingVoice = false
+
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this, R.drawable.video_play)
                     )
-                } else {
-                    Log.d("AudioDebug", "audioFilePath = $audioFilePath")
 
-                    val normalizedPower = max(1f, (1f + 160) / 160)
-                    binding.waveformSeekBar.updateWithLevel(normalizedPower)
+                } else {
 
                     if (!isPrepared) {
                         initializeMediaPlayer()
-                    } else {
-                        Log.d("AudioDebug", "Stared playing from last resume" + lastPosition)
-                        mediaPlayer?.let {
-                            it.seekTo(lastPosition)
-                            it.start()
-                            isPlayingVoice = true
-                            binding.imgVoicePlay.setImageDrawable(
-                                ContextCompat.getDrawable(this, R.drawable.pause_icon)
-                            )
-                            startAudioProgressUpdate()
-                            updateCurrentTime(lastPosition)
-                        } ?: Log.e("AudioDebug", "mediaPlayer is null on resume!")
+                        return
+                    }
+
+                    mediaPlayer?.let {
+                        it.seekTo(lastPosition)
+                        it.start()
+                        startAudioProgressUpdate()
+
+                        binding.imgVoicePlay.setImageDrawable(
+                            ContextCompat.getDrawable(this, R.drawable.pause_icon)
+                        )
                     }
                 }
             }
+
+//
+//            R.id.imgVoicePlay -> {
+//                keepScreenOn()
+//                KeyboardUtils.hideKeyboard(this)
+//                if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
+//                    mediaPlayer?.pause()
+//                    stopAudioProgressUpdate()
+//                    lastPosition = mediaPlayer!!.currentPosition
+//                    isPlayingVoice = false
+//                    binding.imgVoicePlay.setImageDrawable(
+//                        ContextCompat.getDrawable(this, R.drawable.video_play)
+//                    )
+//                } else {
+//                    Log.d("AudioDebug", "audioFilePath = $audioFilePath")
+//
+//                    val normalizedPower = max(1f, (1f + 160) / 160)
+////                    binding.waveformSeekBar.updateWithLevel(normalizedPower)
+//                    binding.waveformSeekBar.updateWithLevel(currentPosition / duration.toFloat())
+//
+//
+//                    if (!isPrepared) {
+//                        initializeMediaPlayer()
+//                    } else {
+//                        Log.d("AudioDebug", "Stared playing from last resume" + lastPosition)
+//                        mediaPlayer?.let {
+//                            it.seekTo(lastPosition)
+//                            it.start()
+//                            isPlayingVoice = true
+//                            binding.imgVoicePlay.setImageDrawable(
+//                                ContextCompat.getDrawable(this, R.drawable.pause_icon)
+//                            )
+//                            startAudioProgressUpdate()
+//                            updateCurrentTime(lastPosition)
+//                        } ?: Log.e("AudioDebug", "mediaPlayer is null on resume!")
+//                    }
+//                }
+//            }
 
             R.id.imgVoiceRecord -> {
                 KeyboardUtils.hideKeyboard(this)

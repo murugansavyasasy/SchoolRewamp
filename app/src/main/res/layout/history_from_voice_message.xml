@@ -377,6 +377,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
+        android:visibility="gone"
         android:text="@string/see_archived_messages"
         android:textColor="@color/navi_blue2"
         android:textSize="@dimen/fifteen_sp"></TextView>
