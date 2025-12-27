@@ -197,6 +197,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
 
         binding.lblClickComplete.setOnClickListener(this)
+        binding.thumbContainer.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         isChildDetails = SharedPreference.getChildDetails(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -979,7 +980,9 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             R.id.lblClickComplete -> {
                 isCompleteHomeWork()
             }
-
+            R.id.thumbContainer -> {
+                isCompleteHomeWork()
+            }
         }
     }
 
