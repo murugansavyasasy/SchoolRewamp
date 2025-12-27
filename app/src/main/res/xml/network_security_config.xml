@@ -14,14 +14,5 @@
 </network-security-config>
 
 
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<network-security-config>-->
-<!--    <domain-config cleartextTrafficPermitted="true">-->
-<!--        <domain includeSubdomains="true">apiv7.schoolchimes.net</domain>-->
-<!--        <domain includeSubdomains="true">api.pauket.com</domain>-->
-<!--        <domain includeSubdomains="true">api.schoolchimes.com</domain>-->
-<!--    </domain-config>-->
-<!--</network-security-config>-->
-
 
 

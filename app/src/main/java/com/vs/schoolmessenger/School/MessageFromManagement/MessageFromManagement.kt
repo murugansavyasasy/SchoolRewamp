@@ -413,8 +413,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         schoolNames.add("All Schools")
         schoolNames.addAll(staffList.map { it.school_name })
 
-        val adapter = SpinnerLoadingAdapter(this, schoolNames)
-        binding.schoollistfilter.adapter = adapter
+        val adapter1 = SpinnerLoadingAdapter(this, schoolNames)
+        binding.schoollistfilter.adapter = adapter1
         binding.schoollistfilter.setSelection(0)
 
         binding.schoollistfilter.onItemSelectedListener =
@@ -426,13 +426,18 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
                     // Update spinner UI
-                    adapter.selectedPosition = position
-                    adapter.notifyDataSetChanged()
+                    adapter1.selectedPosition = position
+                    adapter1.notifyDataSetChanged()
 
                     if (position == lastSelectedPosition) return
                     lastSelectedPosition = position
 
-                    Constant.showLoading(this@MessageFromManagement)
+//                    Constant.showLoading(this@MessageFromManagement)
+                    adapter = MessageFromStaffAdapter(mutableListOf(), this@MessageFromManagement, this@MessageFromManagement, Constant.isShimmerViewShow)
+                    binding.rcMessageStaff.layoutManager =
+                        LinearLayoutManager(this@MessageFromManagement, LinearLayoutManager.VERTICAL, false)
+                    binding.rcMessageStaff.adapter = adapter
+                    binding.rcMessageStaff.isNestedScrollingEnabled = false
 
 
                     binding.schoollistfilter.postDelayed({
@@ -471,7 +476,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             isLoadMsgStaff(filteredList)
                         }
 
-                        Constant.hideLoading(this@MessageFromManagement)
+//                        Constant.hideLoading(this@MessageFromManagement)
 
                     }, 200)
                 }
