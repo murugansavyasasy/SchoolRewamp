@@ -162,6 +162,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -180,7 +181,7 @@ interface ApiInterfaces {
     @POST(APIMethods.updatenotificationcalllog)
     fun updateNotificationCallLog(
         @Body jsonObject: JsonObject
-    ): Call<VersionCheckResponse?>?
+    ): Call<StatusMessageModel?>?
 
     @POST(APIMethods.isValidateUser)
     fun isValidateUser(
@@ -1304,6 +1305,7 @@ interface ApiInterfaces {
     ): Call<getSubjectWiseACtivities>
 
 
+
     @POST(APIMethods.getMarkDetails)
     fun getMarkDetails(
         @Header(APIKeyNames.Authorization) token: String,
@@ -1311,12 +1313,9 @@ interface ApiInterfaces {
     ): Call<MarkResponse>
 
 
-
-
-
+    @Multipart
     @POST(APIMethods.uploadmarks)
-    fun uploadmarks(@Part filePart: MultipartBody.Part
-    ): Call<UploadMarkResponse?>?
+    fun uploadmarks(@Part filePart: MultipartBody.Part): Call<UploadMarkResponse?>?
 
 
 }

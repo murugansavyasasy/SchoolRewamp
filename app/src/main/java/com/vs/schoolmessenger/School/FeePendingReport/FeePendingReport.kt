@@ -154,6 +154,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             binding.txtNoData.visibility = View.GONE
             binding.totalsummary1.visibility = View.VISIBLE
             binding.relativeLayout5.visibility = View.VISIBLE
+            binding.relativeLayout6.visibility = View.VISIBLE
 
             mAdapter = FeePendingReportAdapter(flatList, this)
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
@@ -170,6 +171,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.txtNoData.text = message
         binding.totalsummary1.visibility = View.GONE
         binding.relativeLayout5.visibility = View.GONE
+        binding.relativeLayout6.visibility = View.GONE
     }
 
     private fun isGetDailyCollection() {
@@ -195,6 +197,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.relativeLayout5.visibility = View.GONE
+        binding.relativeLayout6.visibility = View.GONE
 
         mAdapter?.clearData()
         mAdapter = FeePendingReportAdapter(emptyList(), this)

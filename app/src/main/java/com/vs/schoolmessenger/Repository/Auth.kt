@@ -25,7 +25,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
     var isVersionCheck: LiveData<VersionCheckResponse?>? = null
         private set
 
-    var isUpdateNotificationCallLog: LiveData<VersionCheckResponse?>? = null
+    var isUpdateNotificationCallLog: LiveData<StatusMessageModel?>? = null
         private set
 
     var isUserValidation: LiveData<UserValidationResponse?>? = null

@@ -322,7 +322,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:text="@string/manually_entry"
-                            android:textSize="@dimen/eighteen_sp"></TextView>
+                            android:textSize="@dimen/eighteen_sp">
+                        </TextView>
 
                         <TextView
                             style="@style/CustomTextStylePoppinsBold"
@@ -332,7 +333,8 @@
                             android:alpha="0.6"
                             android:text="@string/skip_upload_and_enter_marks_manually"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp"></TextView>
+                            android:textSize="@dimen/fifteen_sp">
+                        </TextView>
                     </LinearLayout>
 
                     <ImageView

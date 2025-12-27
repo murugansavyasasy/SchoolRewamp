@@ -343,7 +343,4 @@ dependencies {
 //    implementation("com.arthenica:ffmpeg-kit-full:4.5.LTS")
 //// With HTTPS and extended support
 //    implementation("com.arthenica:ffmpeg-kit-full-gpl:4.5.LTS")
-
-
-
 }

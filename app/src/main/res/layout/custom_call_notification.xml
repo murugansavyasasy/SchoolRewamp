@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/notification_title"
                 android:text="@string/incoming_call"
+                android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold"/>
 

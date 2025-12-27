@@ -39,7 +39,7 @@ class NotificationCallScreen :
     private var welcomeUrl: String? = null
 
     private var notificationId: Int = 0
-    private var audioUrls: Array<String?>? = null
+    private var audioUrls: Array<String?>? = emptyArray()
     private var audioList: MutableList<String?> = ArrayList()
 
     private var welcome_file: String? = ""
@@ -90,6 +90,7 @@ class NotificationCallScreen :
         binding.declineButton.setOnClickListener { endCallWithoutListening() }
 
         calculateTotalDuration {
+            Log.d("totalDurationMs",totalDurationMs.toString())
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
 
@@ -104,6 +105,9 @@ class NotificationCallScreen :
         }
 
     }
+    fun addAudio(url: String) {
+        audioUrls = audioUrls!! + url
+    }
 
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
@@ -116,6 +120,10 @@ class NotificationCallScreen :
         school_name = intent.getStringExtra(Constant.school_name)
         member_name = intent.getStringExtra(Constant.member_name)
         call_title = intent.getStringExtra(Constant.call_title)
+
+//        addAudio(welcomeUrl!!)
+//        addAudio(voiceUrl!!)
+
 
         ei1 = intent.getStringExtra(Constant.ei1)
         ei2 = intent.getStringExtra(Constant.ei2)
@@ -143,6 +151,7 @@ class NotificationCallScreen :
 
         audioUrls = audioList.toTypedArray()
         Log.d("AUDIO_ORDER", "Audio order: $audioList")
+        Log.d("audioUrlsFinal", audioUrls!!.size.toString())
     }
 
     private fun setupSwipeActions() {
@@ -206,6 +215,7 @@ class NotificationCallScreen :
     }
 
     private fun playAudio(index: Int) {
+        Log.d("audioUrls",audioUrls!!.size.toString())
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
             finishPlayback()
             return
