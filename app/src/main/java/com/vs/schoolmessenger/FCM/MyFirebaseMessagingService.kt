@@ -229,18 +229,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
+            .setAutoCancel(false)
+            .setOngoing(true)
             .setDeleteIntent(createDeleteIntent()) // Add delete intent for dismissal
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
-        // Handle custom notification with RemoteViews
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
                 setTextViewText(R.id.notification_title, title ?: "School Chimes")
-
+                setTextViewText(R.id.lblContent, body ?: Constant.incoming_call)  // NEW: Set body text too
+                // Optional: Set button visibilities if dynamic
+                // setViewVisibility(R.id.imgDecline, View.VISIBLE) // e.g., show/hide based on state
             }
             builder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(remoteView)
+            // NO setCustomBigContentView() -- keeps it non-expandable
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up custom notification: ${e.message}")
         }

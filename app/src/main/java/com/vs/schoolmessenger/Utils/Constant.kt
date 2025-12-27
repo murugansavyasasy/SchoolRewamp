@@ -361,6 +361,7 @@ object Constant {
     var ar = "ar"
     var Gallery = "Gallery"
     var Images = "Images"
+    var incoming_call = "Incoming Call"
     var images_ = "images"
     var image_ = "image"
     var ATTACHMENT = "ATTACHMENT"
