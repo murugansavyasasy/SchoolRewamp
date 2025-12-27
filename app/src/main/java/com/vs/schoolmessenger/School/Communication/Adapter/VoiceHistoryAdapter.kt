@@ -77,25 +77,25 @@ class VoiceHistoryAdapter(
 
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
-        private var isPlayingVoice = false   // ✅ FIXED NAME
+        private var isPlayingVoice = false
         private var lastPosition = 0
 
         private val handler = Handler(Looper.getMainLooper())
+        private var isUserSeeking = false
+
 
         private val progressRunnable = object : Runnable {
             override fun run() {
-                if (::mediaPlayer.isInitialized &&
-                    isPrepared &&
-                    mediaPlayer.isPlaying &&
-                    mediaPlayer.duration > 0
-                ) {
-                    val progress = (
-                            mediaPlayer.currentPosition.toFloat() /
-                                    mediaPlayer.duration.toFloat()
-                            ).coerceIn(0f, 1f)
+                if (::mediaPlayer.isInitialized && isPrepared && !isUserSeeking) {
 
-                    waveformSeekBar.updateWithLevel(progress)
-                    lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
+                    val duration = mediaPlayer.duration
+                    if (duration > 0) {
+                        val progress =
+                            mediaPlayer.currentPosition.toFloat() / duration.toFloat()
+
+                        waveformSeekBar.updateWithLevel(progress.coerceIn(0f, 1f))
+                        lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
+                    }
 
                     handler.postDelayed(this, 40)
                 }
@@ -112,13 +112,33 @@ class VoiceHistoryAdapter(
             lblStartDuration.text = "00:00"
             waveformSeekBar.updateWithLevel(0f)
             rlaSendVoice.visibility = View.VISIBLE
+
+
+            rlaSendVoice.setOnClickListener {
+                if (adapter.currentlyPlayingHolder != null &&
+                    adapter.currentlyPlayingHolder != this
+                ) {
+                    adapter.currentlyPlayingHolder?.stopPlayback()
+                    adapter.currentlyPlayingHolder = null
+                }
+
+                stopPlayback() // stop this holder if needed
+                listener.onItemClick(data, this)
+                listener.onItemClick(data, this)
+            }
+
             waveformSeekBar.setOnSeekChangeListener { progress ->
+
                 if (!::mediaPlayer.isInitialized || !isPrepared) return@setOnSeekChangeListener
+
+                isUserSeeking = true
 
                 val newPosition = (progress * mediaPlayer.duration).toInt()
                 mediaPlayer.seekTo(newPosition)
                 lastPosition = newPosition
                 lblStartDuration.text = formatTime(newPosition)
+
+                isUserSeeking = false
 
                 if (!mediaPlayer.isPlaying) {
                     mediaPlayer.start()
@@ -128,10 +148,6 @@ class VoiceHistoryAdapter(
                 }
             }
 
-            rlaSendVoice.setOnClickListener {
-                stopPlayback()
-                listener.onItemClick(data, this)
-            }
 
             imgVoicePlay.setOnClickListener {
 
@@ -173,9 +189,9 @@ class VoiceHistoryAdapter(
                 setOnCompletionListener {
                     stopProgress()
                     isPlayingVoice = false
-                    lastPosition = duration
-                    lblStartDuration.text = "00:00"
+                    lastPosition = 0
                     waveformSeekBar.updateWithLevel(0f)
+                    lblStartDuration.text = "00:00"
                     updateIcon(false)
                 }
             }
@@ -199,7 +215,11 @@ class VoiceHistoryAdapter(
 
         fun pauseOnly() {
             if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
-                pause()
+                lastPosition = mediaPlayer.currentPosition
+                mediaPlayer.pause()
+                isPlayingVoice = false
+                stopProgress()
+                updateIcon(false)
             }
         }
 
@@ -244,7 +264,6 @@ class VoiceHistoryAdapter(
             }
         }
 
-        // ✅ FIXED TIME FORMAT (NO EXTRA SECOND)
         private fun formatTime(ms: Int): String {
             val totalSeconds = ms / 1000
             val minutes = totalSeconds / 60
