@@ -5,6 +5,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -21,12 +23,14 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -597,12 +601,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             R.id.imgSearch -> {
                 if (binding.rytsearch.isVisible) {
+                    hideKeyboard(binding.edtSearch)
                     binding.rytsearch.visibility = View.GONE
+                    binding.edtSearch.text.clear()
                 } else {
                     binding.rytsearch.visibility = View.VISIBLE
+                    binding.edtSearch.requestFocus()
                 }
             }
+
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = requireContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        view.clearFocus()
     }
 
     private fun handleBackPress() {
