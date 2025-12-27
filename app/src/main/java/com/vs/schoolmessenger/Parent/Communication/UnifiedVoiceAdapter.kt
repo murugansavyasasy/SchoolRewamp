@@ -127,12 +127,19 @@ class UnifiedVoiceAdapter(
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer != null && mediaPlayer!!.isPlaying) {
-                    waveformSeekBar.updateWithLevel(1f)
+
+                    val progress =
+                        mediaPlayer!!.currentPosition.toFloat() /
+                                mediaPlayer!!.duration.toFloat()
+
+                    waveformSeekBar.updateWithLevel(progress.coerceIn(0f, 1f))
                     lblStartDuration.text = formatTime(mediaPlayer!!.currentPosition)
-                    handler.postDelayed(this, 100)
+
+                    handler.postDelayed(this, 40) // smoother
                 }
             }
         }
+
 
         @SuppressLint("DefaultLocale")
         fun bind(
@@ -170,6 +177,26 @@ class UnifiedVoiceAdapter(
                     data.duration!!.toInt() / 60,
                     data.duration!!.toInt() % 60
                 )
+
+                waveformSeekBar.setOnSeekChangeListener { progress ->
+
+                    if (!isPrepared || mediaPlayer == null) return@setOnSeekChangeListener
+
+                    val newPosition =
+                        (progress * mediaPlayer!!.duration).toInt()
+
+                    mediaPlayer!!.seekTo(newPosition)
+                    lastPosition = newPosition
+                    lblStartDuration.text = formatTime(newPosition)
+
+                    if (!mediaPlayer!!.isPlaying) {
+                        mediaPlayer!!.start()
+                        startAudioProgressUpdate()
+                        updatePlayPauseIcon(true)
+                        isPlayingVoice = true
+                    }
+                }
+
 
                 imgVoicePlay.setOnClickListener {
 

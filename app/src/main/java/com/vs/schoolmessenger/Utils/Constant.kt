@@ -2274,7 +2274,7 @@ object Constant {
     fun getTimeAfter20Minutes(): String {
         val dateFormat = SimpleDateFormat(hh_mm_a, Locale.getDefault())
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MINUTE, 20)
+        calendar.add(Calendar.MINUTE, 40)
         return dateFormat.format(calendar.time)
     }
 
