@@ -160,9 +160,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     if(isMultipleSchool){
                         userDetails?.let { setupSchoolSpinner(it.staff_details) }
                     }
+                    else{
+                        isLoadMsgStaff(response.data)
+                    }
                     binding.rcMessageStaff.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
-                    isLoadMsgStaff(response.data)
                     completeAttachmentList = response.data
                     if (fromNotification) {
                         scrollToMessageId(headerId)
