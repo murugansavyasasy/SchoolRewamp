@@ -76,7 +76,7 @@
                 android:id="@+id/imgNotification"
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/fourty_five"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:scaleType="centerCrop"
                 android:src="@drawable/notification_icon" />
@@ -85,7 +85,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/sixty"
                 android:layout_height="@dimen/sixty"
-                android:layout_marginTop="@dimen/thirty_two"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/sixteen"
                 android:background="@drawable/bg_profile"
                 android:padding="@dimen/ten"
