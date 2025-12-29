@@ -144,6 +144,10 @@ class ExamListAdapter(
                 //Actually we are calling the api for the inner recyclerview here false means i am not calling the api
 
                 listener.onExamSelected(item)
+
+
+                listener.onExamApiCall(item)
+
             }
 
             if (isExpanded) {

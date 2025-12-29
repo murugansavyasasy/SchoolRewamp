@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter.ExamListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
 import com.vs.schoolmessenger.Utils.Constant
@@ -30,7 +31,10 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ExamListAdapter
-    private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+        private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+
+    private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+
     private var selectedExam: getStaffWisExamData? = null
 
 
@@ -130,15 +134,21 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
 
         appViewModel!!.getSubjectWiseActivities?.observe(this) { response ->
             if (response != null) {
+
                 if (response.status && response.data.isNotEmpty()) {
+                    selectedExamActivities = response.data
+
                     adapter.updateSecondData(response.data)
                     adapter.notifyItemChanged(adapter.expandedPosition)
+
                 } else {
+                    selectedExamActivities = emptyList()
                     adapter.updateSecondData(emptyList())
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 }
             }
         }
+
 
         isGetStaffWiseData()
     }
@@ -207,11 +217,32 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             }
 
             R.id.lnrUpload -> {
+
+                Log.d("UploadDebug", "Upload button clicked")
+
+                Log.d("UploadDebug", "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}")
+
+                Log.d(
+                    "UploadDebug",
+                    "Activities Count -> ${selectedExamActivities?.size ?: 0}"
+                )
+
+                selectedExamActivities?.forEachIndexed { index, act ->
+                    Log.d(
+                        "UploadDebug",
+                        "Activity[$index] -> subject=${act.subject_name}, class=${act.class_name}, class=${act.splitup_details[0].name}"
+                    )
+                }
+
                 val intent = Intent(this, UploadMarkSheet::class.java)
-                val saveMarkUploadClassSectionDetails = selectedExam
-                Constant.isMarkUploadExamListDataDetails = saveMarkUploadClassSectionDetails
-                this.startActivity(intent)
+
+                Constant.isMarkUploadExamListDataDetails = selectedExam
+                Constant.isSelectedExamActivities = selectedExamActivities
+
+
+                startActivity(intent)
             }
+
         }
     }
 
@@ -224,9 +255,9 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             binding.lblClassContinue.visibility = View.VISIBLE
             return
         }
-
         // valid selection
         selectedExam = item
+        selectedExamActivities = null
         binding.lnrUpload.isEnabled = true
         binding.lnrUpload.alpha = 1f
         binding.lblClassContinue.visibility = View.GONE
@@ -234,6 +265,8 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     }
 
     override fun onExamApiCall(item: getStaffWisExamData?) {
+
+        selectedExam = item
         Log.d("Data", item.toString())
         Log.d("isSelected", selectedExam.toString())
 

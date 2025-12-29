@@ -77,6 +77,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -250,6 +251,8 @@ object Constant {
     //    var isMarkUploadClassSectionDetails: ClassSectionData? = null
     var isMarkUploadClassSectionDetails: StandardSection? = null
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
+    var isSelectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+
 
 
     var StaffDataSending: StaffDataSending? = null
