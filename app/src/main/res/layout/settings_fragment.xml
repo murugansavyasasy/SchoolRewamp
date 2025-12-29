@@ -227,6 +227,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
+                        android:textSize="@dimen/thirteen_sp"
                         android:text="@string/lblNotifications">
 
                     </TextView>
