@@ -101,6 +101,9 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
     private var selectedExam: getStaffWisExamData? = null
 
 
+    private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+
+
     override fun setupViews() {
         super.setupViews()
         Constant.Remaining = MAX_FILES
@@ -109,6 +112,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
+
+
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -131,6 +136,10 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         setBulletText(binding.lblIns2, getString(R.string.subject_columns_and_marks))
         setBulletText(binding.lblIns3, getString(R.string.table_structure_and_layout))
 
+
+        staffWisExamList = Constant.staffWisExamList
+        selectedExamActivities = Constant.isSelectedExamActivities
+        selectedExam = Constant.isMarkUploadExamListDataDetails
 
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -889,10 +898,9 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 //        appViewModel?.uploadmarks(filePart)
 
         val intent = Intent(this, MapActivity::class.java)
-
-        Constant.isMarkUploadExamListDataDetails = selectedExam
+        Constant.staffWisExamList = staffWisExamList
         Constant.isSelectedExamActivities = selectedExamActivities
-
+        Constant.isMarkUploadExamListDataDetails = selectedExam
         startActivity(intent)
 
     }

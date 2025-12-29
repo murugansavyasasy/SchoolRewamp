@@ -234,12 +234,10 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                     )
                 }
 
-                val intent = Intent(this, UploadMarkSheet::class.java)
-
-                Constant.isMarkUploadExamListDataDetails = selectedExam
+                Constant.staffWisExamList = staffWisExamList
                 Constant.isSelectedExamActivities = selectedExamActivities
-
-
+                Constant.isMarkUploadExamListDataDetails = selectedExam
+                val intent = Intent(this, UploadMarkSheet::class.java)
                 startActivity(intent)
             }
 

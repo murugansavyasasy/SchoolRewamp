@@ -157,7 +157,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
         Log.d("Received_Call","notification_call")
-
         // Create Intent for notification tap
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
             putExtra(Constant.menu_name, title)
@@ -179,15 +178,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-
         val uniqueID = (receiver_id + circular_id).hashCode()
         val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
-
         val pendingIntent = PendingIntent.getActivity(
             this, requestCode, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-
         // Create notification channel
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -218,10 +214,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             manager.createNotificationChannel(channel)
             handler.postDelayed(stopMediaPlayerRunnable, 30000)
-
             Log.d(TAG, "Notification channel created")
         }
-
         // Try simple notification first to isolate RemoteViews issues
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_splash_logo)
@@ -229,29 +223,29 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(false)
-            .setOngoing(true)
+            .setAutoCancel(true)
             .setDeleteIntent(createDeleteIntent()) // Add delete intent for dismissal
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-
+            .setCategory(NotificationCompat.CATEGORY_CALL) // Helps with call-specific presentation and non-expansion
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
                 setTextViewText(R.id.notification_title, title ?: "School Chimes")
-                setTextViewText(R.id.lblContent, body ?: Constant.incoming_call)  // NEW: Set body text too
+                setTextViewText(R.id.lblContent, body ?: Constant.incoming_call) // NEW: Set body text too
                 // Optional: Set button visibilities if dynamic
                 // setViewVisibility(R.id.imgDecline, View.VISIBLE) // e.g., show/hide based on state
             }
+            // Use DecoratedCustomViewStyle for custom layout support, but set both views to the SAME RemoteViews
+            // to prevent expansion (no down arrow will show, as expanded state is identical to collapsed)
             builder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(remoteView)
-            // NO setCustomBigContentView() -- keeps it non-expandable
+                .setCustomBigContentView(remoteView) // Key fix: Same view for big content prevents expansion chevron
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up custom notification: ${e.message}")
+            // Fallback to basic notification without custom views if RemoteViews fails
+            builder.setStyle(NotificationCompat.BigTextStyle().bigText(body ?: Constant.incoming_call))
         }
-
         try {
-//            manager.notify(System.currentTimeMillis().toInt(), builder.build())
-            val uniqueID = (receiver_id + circular_id).hashCode()
-            val notificationId = uniqueID ?: (0..999999).random()
+            val notificationId = uniqueID.takeIf { it != 0 } ?: (0..999999).random()
             manager.notify(notificationId, builder.build())
             Log.d(TAG, "Notification sent successfully")
         } catch (e: Exception) {

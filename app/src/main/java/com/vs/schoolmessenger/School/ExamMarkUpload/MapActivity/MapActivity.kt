@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
@@ -38,7 +40,12 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ActivityExamListAdapter
     private var isClassList: List<getActivitySubjectNameData>? = emptyList()
-    private var selectedExam: getActivitySubjectNameData? = null
+
+    private var selectedExam1: getActivitySubjectNameData? = null
+
+    private var staffWisExamList: List<getStaffWisExamData>? = null
+    private var selectedExam: getStaffWisExamData? = null
+    private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
 
     override fun setupViews() {
@@ -48,6 +55,14 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        staffWisExamList = Constant.staffWisExamList
+        selectedExam = Constant.isMarkUploadExamListDataDetails
+        selectedExamActivities = Constant.isSelectedExamActivities
+
+        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
+        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
+        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -303,7 +318,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
         }
 
         // valid selection
-        selectedExam = item
+        selectedExam1 = item
         binding.lnrUpload.isEnabled = true
 
     }

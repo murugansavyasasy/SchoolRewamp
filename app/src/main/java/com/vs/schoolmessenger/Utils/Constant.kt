@@ -253,7 +253,7 @@ object Constant {
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
     var isSelectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
-
+    var staffWisExamList: List<getStaffWisExamData>? = emptyList()
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
