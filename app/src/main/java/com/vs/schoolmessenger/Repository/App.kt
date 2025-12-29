@@ -1623,9 +1623,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun uploadmarks(part: MultipartBody.Part
     ) {
-        apiSchoolRepositories.uploadmarks(
-        part
-        )
+        apiSchoolRepositories.uploadmarks(part)
     }
 
 
