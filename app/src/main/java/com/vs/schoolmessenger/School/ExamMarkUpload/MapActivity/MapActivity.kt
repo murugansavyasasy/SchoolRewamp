@@ -11,9 +11,12 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -24,6 +27,8 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.Activity
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MapActivityBinding
@@ -42,10 +47,12 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
     private var isClassList: List<getActivitySubjectNameData>? = emptyList()
 
     private var selectedExam1: getActivitySubjectNameData? = null
-
     private var staffWisExamList: List<getStaffWisExamData>? = null
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+
+
+    private var extractedDetails: List<ParcelTableData>? = null
 
 
     override fun setupViews() {
@@ -56,9 +63,19 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             statusBarBgView = binding.statusBarBackground
         )
 
+
+
+
         staffWisExamList = Constant.staffWisExamList
         selectedExam = Constant.isMarkUploadExamListDataDetails
         selectedExamActivities = Constant.isSelectedExamActivities
+
+
+        extractedDetails = Constant.isExtractedDetails
+        Log.d(
+            "Extracted Maps Activity",
+            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
+        )
 
         Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
         Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
@@ -129,107 +146,46 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
     }
 
     private fun LoadExamList() {
-        val dummyList = listOf(
-            getActivitySubjectNameData(
-                "Science",
-                paper = listOf(
-                    getActivityPaperNameData(
-                        "Paper 1-Botany",
-                        listOf(
-                            "Student_Name and the college is waiting Student_Name and the college is waiting",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Paper 2-Zoology",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Internal Assessment",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    )
-                )
-            ),
+
+        val selectedColumns =
+            extractedDetails
+                ?.firstOrNull()
+                ?.tableStructure
+                ?.selectedColumns
+                ?: emptyList()
+
+        var index = 0
+
+        val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
 
             getActivitySubjectNameData(
-                "Tamil",
-                paper = listOf(
+                subject = subject.subject_name,
+                paper = subject.splitup_details.map { split ->
+
+                    val col =
+                        if (index < selectedColumns.size)
+                            selectedColumns[index]
+                        else null
+
+                    index++
+
                     getActivityPaperNameData(
-                        "Paper 1",
-                        listOf(
-                            "Student_Name and the college is waiting",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Paper 2",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Internal Assessment",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
+                        name = split.name,
+                        activities = selectedColumns,
+                        selectedValue = col
                     )
-                )
+                }
             )
-        )
+        }
 
-        isClassList = dummyList
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        isClassList = mappedList
 
-        adapter = ActivityExamListAdapter(dummyList, this, this, false)
-
+        adapter = ActivityExamListAdapter(mappedList, this, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
-
         binding.rcMapActivity.adapter = adapter
     }
+
+
 
 
     private fun filter(text: String) {

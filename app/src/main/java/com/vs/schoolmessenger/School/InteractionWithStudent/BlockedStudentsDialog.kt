@@ -154,6 +154,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
     }
 
     private fun fetchStudentData() {
+
         viewModel.isblockstudentlist(isAccessToken ?: "", requireActivity())
     }
 

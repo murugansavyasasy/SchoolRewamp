@@ -190,7 +190,7 @@ object APIMethods {
     const val islsrwmysubmission = "lms/api/lsrw/my-submissions"
     const val ispresubmission = "admin/api/student-profile/pre-submission"
     const val fee_student_invoice = "fee/api/fee-details/student-invoice"
-    const val fee_student_invoice_details = "fee/api/fee-details-invoice-details"
+    const val fee_student_invoice_details = "fee/api/fee-details/invoice-details"
     const val childhomework_standard = "admin/api/school-event/target-details"
     const val assignment_childhomework = "comm/api/assignment/target-details"
     const val attachment_childhomework = "comm/api/attachment/target-details"
