@@ -12,5 +12,12 @@
     "package_suffix": "com.sss.schoolB",
     "color": "#4085ef",
     "icon": "ic_school_b"
+  },
+  {
+    "id": "VAGGISVARI",
+    "name": "VAGGISVARI CONNECT",
+    "package_suffix": "com.vaggisvari.connect",
+    "color": "#f27968",
+    "icon": "ic_vaggiswari_logo"
   }
 ]
