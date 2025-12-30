@@ -421,7 +421,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = quizAdapter
-        appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID)
+        appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID,this)
     }
 
     private fun getPathFromUri(uri: Uri): String? {
@@ -444,7 +444,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     private fun isFetchFromQuestionBank() {
-        appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID)
+        appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID,this)
     }
 
     fun showResumeListDialog(
@@ -971,7 +971,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     addProperty("id", id)
                 }
 
-                appViewModel?.isDeleteQuizQuestion(isAccessToken!!, jsonObject)
+                appViewModel?.isDeleteQuizQuestion(isAccessToken!!, jsonObject,this)
 
             }
         }
@@ -1683,7 +1683,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         mainJson.add("questions", questionsArray)
         mainJson.addProperty("quiz_id", quizRequest.quiz_id)
         Log.d("FINAL_JSON", mainJson.toString())
-        appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson)
+        appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson,this)
 
     }
 

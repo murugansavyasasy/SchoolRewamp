@@ -154,7 +154,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
 
                     isHomeWorkData = response.data
                     val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }

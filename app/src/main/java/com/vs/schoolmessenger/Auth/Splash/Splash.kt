@@ -254,7 +254,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
 
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
@@ -342,7 +342,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     Constant.country_details = isVersionData!![0].country_details
                     SharedPreference.putCountryId(this, Constant.country_details!!.id)
                     SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
-                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
+                    SharedPreference.putReportingUrl(this, Constant.country_details!!.reporting_url)
 
                     val isRateUs = response.data[0].is_rate_as
                     val isMobileNumber = SharedPreference.getMobileNumber(this)

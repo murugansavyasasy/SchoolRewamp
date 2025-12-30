@@ -116,7 +116,7 @@ class ReviewAndEditMarks :
         json.add("selected_activities", arr)
 
         Log.d("REQ", json.toString())
-        appViewModel!!.isMarkDetails(isAccessToken!!, json)
+        appViewModel!!.isMarkDetails(isAccessToken!!, json,this)
     }
 
     override fun onClick(v: View?) {}

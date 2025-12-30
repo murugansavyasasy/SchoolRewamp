@@ -143,6 +143,8 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -615,71 +617,89 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     }
-
-    //Old Dashboard
-//    fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
-//        apiSchoolRepositories.isDashBoard(isToken, isMemberType, activity)
-//    }
-
     fun isDashBoardData(
         isToken: String,
         isMemberType: String,
         isMobileNumber: String,
         activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isDashBoard(isToken, isMemberType, isMobileNumber, activity)
     }
 
     fun isDashBoardCountData(isToken: String, isMemberType: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isDashBoardCount(isToken, isMemberType, activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetAds(isToken, isMenuId, activity)
     }
 
     fun isGetGlobalVariables(jsonObject: JsonObject, isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetGlobalVariables(jsonObject, isToken, activity)
     }
 
     fun isGetStaffList(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStaffList(isToken, activity)
     }
 
     fun isGetSubjectList(
         isToken: String, isAcademicYearId: Int, isSectionId: String, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetSubjectList(isToken, isAcademicYearId, isSectionId, activity)
     }
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
         Log.d("isAcademicYearIdData", isAcademicYearId.toString())
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStandardSection(isToken, isAcademicYearId, activity)
     }
 
     fun isGetStudentList(
         isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStudentList(isToken, isSection, isAcademicYearId, activity)
     }
 
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetGroupList(isToken, isAcademicYearId, activity)
     }
 
     fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetCommmunicationlistload(isToken, activity)
     }
 
 
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetCommmunicationlist(isToken, activity)
     }
 
     fun isGetHomeWorkReport(
         isToken: String, isSectionId: Int, isAcademicYearId: Int, isdate: String, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetHomeWorkReport(
             isToken, isSectionId, isAcademicYearId, isdate, activity
         )
@@ -689,6 +709,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetAssignmentReport(
         isToken: String, isAcademicYearId: Int, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetAssignmentReport(
             isToken, isAcademicYearId, activity
         )
@@ -697,6 +719,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetEventCategories(
         isToken: String, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isEventCategories(
             isToken, activity
         )
@@ -705,6 +729,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isAssignmentDelete(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isDeleteAssignment(
             isToken, jsonObject, activity
         )
@@ -713,129 +739,182 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetDailyCollectionReport(
         isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetDailyCollectionReport(
             isToken, istype, isfromdate, istodate, activity
         )
     }
 
     fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isDetailedPendingReport(isToken, isAcademicYearId, activity)
     }
 
     fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isDetailedWisePendingReport(isToken, isAcademicYearId, activity)
     }
 
     fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetSchoolStrengthReport(isToken, isAcademicYearId, activity)
     }
 
     fun isNoticeBoardReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isNoticeBoardReport(isToken, activity)
     }
 
     fun isNoticeBoardStaffReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isNoticeBoardStaffReport(isToken, activity)
     }
 
     fun IsGetEventReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.IsGetEventReport(isToken, activity)
     }
 
     fun IsGetEventSchoolReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.IsGetEventSchoolReport(isToken, activity)
     }
 
     fun IsGetHolidayReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.IsGetHolidayReport(isToken, activity)
     }
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetTextHistory(isToken, activity)
     }
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetVoiceHistory(isToken, isEmergency, activity)
     }
 
     fun isSendText(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSendText(isToken, josnObject, activity)
     }
 
     fun isSendHomeWork(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSendHomeWork(isToken, josnObject, activity)
     }
 
     fun isSendAssignment(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSendAssignment(isToken, josnObject, activity)
     }
 
     fun assignmentUpdate(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.assignmentUpdate(isToken, josnObject, activity)
     }
 
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSendVoice(isToken, josnObject, activity)
     }
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories?.isUpdateStatusArchive(isToken, jsonObject, activity)
     }
 
     fun isGetAcademicYear(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories?.isGetAcademicYear(isToken, activity)
     }
 
 
     fun isUpdateStatusCommunication(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories?.isUpdateStatusCommunication(isToken, jsonObject, activity)
     }
 
     //get homework details
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories?.isHomeWorkDetails(isToken, activity)
-    }
-
-    //get homework details
-    fun isHomeworkListArchive(isToken: String, activity: Activity) {
-        apiSchoolRepositories.homework_list_archive(isToken, activity)
     }
 
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.punchAttendance(isToken, jsonObject, activity)
     }
 
     fun addLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.addLocation(isToken, jsonObject, activity)
     }
 
     fun removeLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.removeLocation(isToken, jsonObject, activity)
     }
 
     fun updateLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.updateLocation(isToken, jsonObject, activity)
     }
 
     fun getStaffLocations(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getStaffLocations(isToken, activity)
     }
 
     fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getPunchHistory(isToken, isDate, staff_id, activity)
     }
 
     fun getLocationHistory(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getLocationHistory(isToken, activity)
     }
 
     fun getStaffAttendanceReport(isToken: String, attendance_dt: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getGiometricStaffAttendancereport(isToken, attendance_dt, activity)
     }
 
 
     fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
             isToken, isCurrentDate, activity
         )
@@ -844,6 +923,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getStaffWiseAttendanceReportList(
         isToken: String, isSelectedDate: String, isStaffId: Int, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getGiometricStaffWiseAttendancereportStaffList(
             isToken, isSelectedDate, isStaffId, activity
         )
@@ -857,21 +938,29 @@ class App(application: Application) : AndroidViewModel(application) {
         section_id: Int? = null,
         activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getStudentReportList(
             isToken, isAcademicYearId, class_id, section_id, activity
         )
     }
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isUpdateSendAbsenteeSMS(isToken, jsonObject, activity)
     }
 
     fun getChildAttendanceReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getChildAttendanceReport(isToken, activity)
     }
 
 
     fun getabsenteescountbydate(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
     }
 
@@ -882,6 +971,8 @@ class App(application: Application) : AndroidViewModel(application) {
         section_id: String,
         activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getabsenteesstudentbydate(
             isToken,
             absent_on,
@@ -899,6 +990,8 @@ class App(application: Application) : AndroidViewModel(application) {
         class_id: String,
         activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getStudentAttendanceReportForSchool(
             isToken, section_id, from_date, to_date, class_id, activity
         )
@@ -907,55 +1000,81 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getCertificateTypes(
         isToken: String, activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getCertificateTypes(isToken, activity)
     }
 
     fun getCertificateRequestList(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getCertificateRequestList(isToken, activity)
     }
 
     fun sendCertificateRequest(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.sendCertificateRequest(isToken, jsonObject, activity)
     }
 
     fun getTimeTable(isToken: String, day_id: Int, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getTimeTable(isToken, day_id, activity)
     }
 
     fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.sendnotice(isToken, josnObject, activity)
     }
 
     fun sendevent(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.sendevent(isToken, josnObject, activity)
     }
 
     fun sendAttachment(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.sendAttachment(isToken, josnObject, activity)
     }
 
     fun getAttachment(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getAttachmentList(isToken, activity)
     }
 
     fun getAttachmentArchive(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.attachmentListArchive(isToken, activity)
     }
 
     fun isSendLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isLeaveRequestApply(isToken, jsonObject, activity)
     }
 
     fun getleaverequest(isToken: String, member_type: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getleaverequest(isToken, member_type, activity)
     }
 
 
     fun getlpStaffReport(isToken: String, request_type: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getlpStaffReport(isToken, request_type, activity)
     }
 
     fun getAttachmentListReport(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getAttachmentReportList(isToken, activity)
     }
 
@@ -964,6 +1083,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String, section_subject_id: String, lesson_plan_status: Int, activity: Activity
     ) {
 
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getlpViewReport(
             isToken, section_subject_id, lesson_plan_status, activity
         )
@@ -972,31 +1093,41 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getlpeditReport(
         isToken: String, particular_id: String, request_type: String, activity: Activity
     ) {
-
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getlpeditReport(isToken, particular_id, request_type, activity)
     }
 
     fun getlpcreateReport(
         isToken: String, request_type: String, activity: Activity
     ) {
-
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getlpcreateReport(isToken, request_type, activity)
     }
 
     fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isleaverequestapprove(isToken, request, activity)
     }
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isupdatelessonplan(isToken, requestBody, activity)
     }
 
 
     fun iscreatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.iscreatelessonplan(isToken, requestBody, activity)
     }
 
     fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.islessonplandelete(isToken, requestBody, activity)
     }
 
@@ -1033,10 +1164,14 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getdetailsforchat(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getdetailsforchat(isToken, activity)
     }
 
     fun getstudentdetailsforchat(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getstudentdetailsforchat(isToken, activity)
     }
 
@@ -1048,6 +1183,8 @@ class App(application: Application) : AndroidViewModel(application) {
         is_class_teacher: Boolean,
         activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getstaffanswers(
             isToken, staff_id, subject_id, offset, is_class_teacher, activity
         )
@@ -1058,8 +1195,11 @@ class App(application: Application) : AndroidViewModel(application) {
         is_class_teacher: Boolean,
         section_id: String,
         subject_id: String,
-        offset: Int
+        offset: Int,
+        activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getstaffquestions(
             isToken, is_class_teacher, section_id, subject_id, offset
         )
@@ -1067,117 +1207,155 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun sendquestion(
-        isToken: String, request: QuestionModelRequest
+        isToken: String, request: QuestionModelRequest,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+
         apiParentRepositories.sendquestion(isToken, request)
     }
 
     fun sendanswer(
-        isToken: String, request: AnswerModelRequest
+        isToken: String, request: AnswerModelRequest,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+
         apiSchoolRepositories.sendanswer(isToken, request)
     }
 
     fun getexams(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getexams(isToken)
     }
 
     fun getexamslist(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getexamslist(isToken)
     }
 
 
     fun getviewmarks(
-        isToken: String, exam_id: String
+        isToken: String, exam_id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getviewmarks(isToken, exam_id)
     }
 
 
     fun isleaverequestupdate(isToken: String, request: LeaveRequestUpdate, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isleaverequestupdate(isToken, request, activity)
     }
 
     fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isleaverequestdelete(isToken, request, activity)
     }
 
 
     fun isnoticeboarddelete(isToken: String, request: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isnoticeboarddelete(isToken, request, activity)
     }
 
 
     fun isEventDelete(isToken: String, request: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
 
     fun isLsrwDelete(isToken: String, request: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isLsrwDelete(isToken, request, activity)
     }
 
-    fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
+    fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isHomeWorkComplete(isToken, jsonObject)
     }
 
     fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEditHomeWork(isToken, jsonObject, activity)
     }
 
     fun isEventUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEditEvent(isToken, jsonObject, activity)
     }
 
 
     fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEditNoticeBoard(isToken, jsonObject, activity)
     }
 
 
     fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isHomeWorkDelete(isToken, jsonObject, activity)
     }
 
     fun isAttachmentUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEditAttachment(isToken, jsonObject, activity)
     }
 
-//    fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
-//        apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
-//    }
-//    fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
-//        apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)
-//    }
 
     fun isAttachmentDelete(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isAttachmentDelete(isToken, jsonObject, activity)
     }
 
     fun getProgressMarks(
-        isToken: String, exam_id: String
+        isToken: String, exam_id: String,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.getProgressMarks(isToken, exam_id)
     }
 
     fun getassignmentlist(
-        isToken: String, id: String, type: String
+        isToken: String, id: String, type: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getassignmentlist(isToken, id, type)
     }
 
 
-    fun getLeaveCategories(isToken: String) {
+    fun getLeaveCategories(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getLeaveCategories(isToken)
     }
 
 
     fun isAssignmentlist(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isAssignmentlist(isToken)
     }
 
@@ -1185,62 +1363,84 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isSubmitAssignment(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isSubmitAssignment(isToken, jsonObject, activity)
     }
 
-    fun isStudentStats(isToken: String) {
+    fun isStudentStats(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isStudentStats(isToken)
     }
 
-    fun isNotificationList(token: String, deviceType: String) {
+    fun isNotificationList(token: String, deviceType: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isNotifications(token, deviceType)
     }
 
 
     fun isGetAssignmentSubList(
-        isToken: String, id: String
+        isToken: String, id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getassignmentmysubmissionlist(isToken, id)
 
     }
 
 
     fun islsrwskillsreport(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.islsrwskillsreport(isToken)
 
     }
 
     fun islsrwStudentlist(
         isToken: String,
-        id: String
+        id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.islsrwStudentlist(isToken, id)
 
     }
 
 
     fun islsrwSkillCreate(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.islsrwSkillCreate(isToken, josnObject, activity)
     }
 
 
     fun islsrwSkillSubmit(isToken: String, josnObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.islsrwSkillSubmit(isToken, josnObject, activity)
     }
 
-    fun islsrwSkilllist(isToken: String) {
+    fun islsrwSkilllist(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.islsrwSkilllist(isToken)
     }
 
 
-    fun islsrwstats(isToken: String, month_id: Int) {
+    fun islsrwstats(isToken: String, month_id: Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.islsrwstats(isToken, month_id)
     }
 
 
     fun islsrwremarkupdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.islsrwremarkupdate(isToken, jsonObject, activity)
     }
 
@@ -1248,33 +1448,43 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun isSlotCreating(
-        isToken: String, jsonObject: JsonArray
+        isToken: String, jsonObject: JsonArray,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isPtmSlotCreating(isToken, jsonObject)
     }
 
     fun isSlotForStaff(
-        isToken: String, isEventDate: String
+        isToken: String, isEventDate: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isPtmSlotForStaff(isToken, isEventDate)
     }
 
     fun isBookedSlotsData(
-        isToken: String, isEventDate: String
+        isToken: String, isEventDate: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isBookedSlot(isToken, isEventDate)
     }
 
 
     fun isSlotCancelReOpen(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSlotCancelReOpen(isToken, jsonObject)
     }
 
     fun isSlotCancelClose(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSlotCancelAndClose(isToken, jsonObject)
     }
 
@@ -1285,8 +1495,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isSlotBookingStudent(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isSlotBookingStudent(isToken, jsonObject)
     }
 
@@ -1296,40 +1508,53 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDate: String,
         isSubjectId: String,
         isClassTeacherId: String,
-        isManagement: Boolean
+        isManagement: Boolean,
+        activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isSlotAvailableForStudent(
             isToken, isEventDate, isSubjectId, isClassTeacherId, isManagement
         )
     }
 
     fun isSlotCountByDate(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isSlotCountFromDate(isToken)
     }
 
     fun isSlotCancelByStudent(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isASlotCancelByStudent(isToken, jsonObject)
     }
 
     fun isSlotValidationForStaff(
-        isToken: String, jsonObject: JsonArray
+        isToken: String, jsonObject: JsonArray,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isSlotValidationForStaff(isToken, jsonObject)
     }
 
     fun isSlotHistoryStudent(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isSlotHistoryForStudent(isToken)
     }
 
     fun isSubjectListWithClassTeacher(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isSubjectListWithClassTeacher(isToken)
     }
 
@@ -1337,22 +1562,29 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         type: String,
         status_type: String,
+        activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isQuizExamList(isToken, type, status_type)
     }
 
     fun isGetQuestions(
         isToken: String,
-        id: String,
+        id: String,activity: Activity
 
 
         ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isGetQuestions(isToken, id)
     }
 
     fun isSubmitQuiz(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isSubmitQuiz(
             isToken, jsonObject,
         )
@@ -1360,130 +1592,166 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetMySubmission(
         isToken: String,
-        id: String,
+        id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isGetMySubmission(isToken, id)
     }
 
 
     fun isCreateQuiz(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isSubmitQuiz(
             isToken, jsonObject,
         )
     }
 
     fun isEditQuiz(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isEditQuiz(
             isToken, jsonObject,
         )
     }
 
     fun isDeleteQuiz(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     )
     {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isDeleteQuiz(
             isToken, jsonObject,
         )
     }
 
     fun isGetQuizExamReport(
-        isToken: String, type: String
+        isToken: String, type: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetQuizExamReport(
             isToken, type,
         )
     }
 
     fun isGetCheckLevel(
-        isToken: String, class_id: String, subject_id: String, section_id: String
+        isToken: String, class_id: String, subject_id: String, section_id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetCheckLevel(
             isToken, class_id, subject_id, section_id
         )
     }
 
     fun isGetQuizQuestionReport(
-        isToken: String, id: String
+        isToken: String, id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetQuizQuestionReport(
             isToken, id
         )
     }
 
     fun isGetQuizSubmissionList(
-        isToken: String, id: String
+        isToken: String, id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetQuizSubmissionList(
             isToken, id
         )
     }
 
     fun isGetPickFromQBank(
-        isToken: String, subject_id: String
+        isToken: String, subject_id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetPickFromQBank(
             isToken, subject_id
         )
     }
 
     fun isQuizAddQuestion(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isQuizAddQuestion(
             isToken, jsonObject,
         )
     }
 
     fun isGetMessageStaff(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetMessageFromStaff(
             isToken
         )
     }
 
     fun isGetMessageStaffArchive(
-        isToken: String
+        isToken: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetMessageFromStaffArchive(
             isToken
         )
     }
 
 
-    fun isGetPauketPoints(isToken: String, mobile_number: Long, user_type: Int) {
+    fun isGetPauketPoints(isToken: String, mobile_number: Long, user_type: Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isGetPauketPoints(isToken, mobile_number, user_type)
     }
 
     fun isSpentPoints(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isSpentPoints(
             isToken, jsonObject,
         )
     }
 
-    fun isAddRewardPoints(isToken: String, jsonObject: JsonObject) {
+    fun isAddRewardPoints(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isAddRewardPoints(
             isToken, jsonObject,
         )
     }
 
-    fun isParentprofilelist(isToken: String) {
+    fun isParentprofilelist(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isParentprofilelist(isToken)
     }
 
 
-    fun isSchoolprofilelist(isToken: String) {
+    fun isSchoolprofilelist(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isSchoolprofilelist(isToken)
     }
 
-    fun islsrwmysubmission(isToken: String, id: String) {
+    fun islsrwmysubmission(isToken: String, id: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.islsrwmysubmission(isToken, id)
     }
 
@@ -1491,22 +1759,30 @@ class App(application: Application) : AndroidViewModel(application) {
     fun ispresubmission(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.ispresubmission(
             isToken, jsonObject, activity
         )
     }
 
     fun getStudentInvoices(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getStudentInvoices(isToken, activity)
     }
 
-    fun getInvoiceDetails(isToken: String, invoiceId: String) {
+    fun getInvoiceDetails(isToken: String, invoiceId: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getInvoiceDetails(isToken, invoiceId)
     }
 
     fun getmysubmissionedit(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.getmysubmissionedit(
             isToken, jsonObject, activity
         )
@@ -1514,26 +1790,36 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun ismysubmissiondelete(isToken: String, request: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.ismysubmissiondelete(isToken, request, activity)
     }
 
 
-    fun getchildhomeworkstandard(isToken: String, id: Int) {
+    fun getchildhomeworkstandard(isToken: String, id: Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getchildhomeworkstandard(isToken, id)
     }
 
 
-    fun getassignmentchildhomework(isToken: String, id: Int, target_type: Int) {
+    fun getassignmentchildhomework(isToken: String, id: Int, target_type: Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getassignmentchildhomework(isToken, id, target_type)
     }
 
 
-    fun getattachmentchildhomework(isToken: String, id: Int, target_type: Int) {
+    fun getattachmentchildhomework(isToken: String, id: Int, target_type: Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getattachmentchildhomework(isToken, id, target_type)
     }
 
 
-    fun getdashboardnewupdates(isToken: String, role_type: String) {
+    fun getdashboardnewupdates(isToken: String, role_type: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getdashboardnewupdates(isToken, role_type)
     }
 
@@ -1543,7 +1829,10 @@ class App(application: Application) : AndroidViewModel(application) {
         section_id: String,
         date: String,
         attendance_type: String,
+        activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetAttendanceStudentList(
             isToken,
             class_id,
@@ -1554,21 +1843,29 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun isblockstudent(isToken: String, jsonObject: JsonObject) {
+    fun isblockstudent(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isblockstudent(isToken, jsonObject)
     }
 
 
-    fun isblockstudentlist(isToken: String) {
+    fun isblockstudentlist(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isblockstudentlist(isToken)
     }
 
 
-    fun isfrequentlyasked(isToken: String) {
+    fun isfrequentlyasked(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isfrequentlyasked(isToken)
     }
 
-    fun isdeletenotification(isToken: String, jsonObject: JsonObject) {
+    fun isdeletenotification(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isdeletenotification(isToken, jsonObject)
     }
 
@@ -1579,50 +1876,64 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getreviewlist(
         isToken: String,
-        mobile_number: String
+        mobile_number: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getreviewlist(isToken, mobile_number)
     }
 
 
     fun reviewpost(
         isToken: String,
-        jsonObject: JsonObject
+        jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.reviewpost(isToken, jsonObject)
     }
 
     fun getStaffWiseExam(
         isToken: String,
-        section_id: String
+        section_id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id)
     }
 
     fun getSubjectWiseActivities(
         isToken: String,
-        exam_id: String
+        exam_id: String,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
     }
 
     fun isMarkDetails(
         isToken: String,
-      jsonObject: JsonObject
+      jsonObject: JsonObject,activity: Activity
     ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetMarkDetails(isToken, jsonObject)
     }
     fun isDeleteQuizQuestion(
-        isToken: String, jsonObject: JsonObject
+        isToken: String, jsonObject: JsonObject,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isDeleteQuizQuestion(
             isToken, jsonObject,
         )
     }
 
 
-    fun uploadmarks(part: MultipartBody.Part
+    fun uploadmarks(part: MultipartBody.Part,activity: Activity
     ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.uploadmarks(part)
     }
 

@@ -320,7 +320,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     fun viewInvoice(invoiceId: String) {
         Constant.showLoading(this)
-        appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId)
+        appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId,this)
 
         appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
             Constant.hideLoading(this)

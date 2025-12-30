@@ -145,7 +145,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
     private fun fetchMySubmissionList() {
         Constant.showLoading(this)
-        appViewModel?.islsrwmysubmission(isAccessToken!!, id)
+        appViewModel?.islsrwmysubmission(isAccessToken!!, id,this)
     }
 
     override fun onBackPressed() {

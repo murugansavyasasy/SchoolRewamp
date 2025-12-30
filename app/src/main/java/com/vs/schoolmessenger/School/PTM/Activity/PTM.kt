@@ -435,7 +435,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             json.addProperty("action", action)
 
             Constant.showLoading(this)
-            appViewModel.isSlotCancelClose(isAccessToken!!, json)
+            appViewModel.isSlotCancelClose(isAccessToken!!, json,this)
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, getString(R.string.invalid_request), Toast.LENGTH_SHORT).show()
@@ -465,7 +465,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.rcyComplete.adapter =
             UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
 
-        appViewModel.isSlotForStaff(isAccessToken!!, "ALL")
+        appViewModel.isSlotForStaff(isAccessToken!!, "ALL",this)
     }
 
     override fun onClick(p0: View?) {
@@ -596,7 +596,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.rcyComplete.adapter =
             BookedSlotAdapter(emptyList(), this, this, Constant.isShimmerViewShow)
 
-        appViewModel.isBookedSlotsData(isAccessToken!!, "ALL")
+        appViewModel.isBookedSlotsData(isAccessToken!!, "ALL",this)
     }
 
     override fun onBookedSlotCancelReOpenClickListener(
@@ -673,9 +673,9 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
-                appViewModel.isSlotCancelReOpen(isAccessToken!!, isReopen)
+                appViewModel.isSlotCancelReOpen(isAccessToken!!, isReopen,this)
             } else {
-                appViewModel.isSlotCancelClose(isAccessToken!!, mainObject)
+                appViewModel.isSlotCancelClose(isAccessToken!!, mainObject,this)
             }
             alertDialog.dismiss()
             Constant.showLoading(this)

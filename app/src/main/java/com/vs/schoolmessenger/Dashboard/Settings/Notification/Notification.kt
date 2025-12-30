@@ -181,7 +181,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
 
     private fun loadNotifications() {
         Constant.showLoading(this)
-        appViewModel!!.isNotificationList(isAccessToken ?: "", "Android")
+        appViewModel!!.isNotificationList(isAccessToken ?: "", "Android",this)
     }
 
     override fun onClick(p0: View?) {
@@ -232,7 +232,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
             add("id", jsonArray)
         }
 
-        appViewModel?.isdeletenotification(isAccessToken ?: "", jsonBody)
+        appViewModel?.isdeletenotification(isAccessToken ?: "", jsonBody,this)
     }
 
 

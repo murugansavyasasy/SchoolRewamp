@@ -204,7 +204,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                     allOngoingEvents = data.on_going

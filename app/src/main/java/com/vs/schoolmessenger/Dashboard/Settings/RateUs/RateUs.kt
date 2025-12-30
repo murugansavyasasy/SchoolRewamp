@@ -154,11 +154,11 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 
     private fun loadrateusdata() {
         if (Constant.isParentChoose) {
-            appViewModel!!.getreviewlist(isAccessToken!!, isChildDetails!!.whatsapp_number)
+            appViewModel!!.getreviewlist(isAccessToken!!, isChildDetails!!.whatsapp_number,this)
         } else {
             appViewModel!!.getreviewlist(
                 isAccessToken!!,
-                Constant.user_details!!.staff_details[0].mobile_no
+                Constant.user_details!!.staff_details[0].mobile_no,this
             )
         }
     }

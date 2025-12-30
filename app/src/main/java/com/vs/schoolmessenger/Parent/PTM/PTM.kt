@@ -394,20 +394,21 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             isSelectedDate,
             isSubjectId,
             isClassTeacherId,
-            isManagement
+            isManagement,
+            this
         )
     }
 
     fun isMeetingHistoryList() {
-        appViewModel!!.isSlotHistoryStudent(isAccessToken!!)
+        appViewModel!!.isSlotHistoryStudent(isAccessToken!!,this)
     }
 
     fun isGetSubjectList() {
-        appViewModel!!.isSubjectListWithClassTeacher(isAccessToken!!)
+        appViewModel!!.isSubjectListWithClassTeacher(isAccessToken!!,this)
     }
 
     fun isDateWiseSlotCount() {
-        appViewModel!!.isSlotCountByDate(isAccessToken!!)
+        appViewModel!!.isSlotCountByDate(isAccessToken!!,this)
     }
 
     override fun onClick(v: View?) {
@@ -453,7 +454,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             }
             jsonObject.add("slot_ids", jsonArray)
             Log.d("isSelectedId", jsonObject.toString())
-            appViewModel!!.isSlotBookingStudent(isAccessToken!!, jsonObject)
+            appViewModel!!.isSlotBookingStudent(isAccessToken!!, jsonObject,this)
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
@@ -506,7 +507,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             addProperty("cancelled_reason", reason)
         }
         Log.d("CancelSlotRequest", jsonObject.toString())
-        appViewModel!!.isSlotCancelByStudent(isAccessToken!!, jsonObject)
+        appViewModel!!.isSlotCancelByStudent(isAccessToken!!, jsonObject,this)
     }
 
     override fun onBackPressed() {

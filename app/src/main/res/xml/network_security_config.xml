@@ -4,6 +4,7 @@
     <!-- Allow HTTP for all required domains -->
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">apiv8.schoolchimes.net</domain>
+        <domain includeSubdomains="true">reportv8.schoolchimes.net</domain>
         <domain includeSubdomains="true">api.pauket.com</domain>
         <domain includeSubdomains="true">api.schoolchimes.com</domain>
 

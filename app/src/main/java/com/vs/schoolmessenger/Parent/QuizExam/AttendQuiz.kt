@@ -232,7 +232,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun isFetchQuizQuestionList() {
         Constant.showLoading(this)
-        appViewModel?.isGetQuestions(isAccessToken ?: "", isQuizID)
+        appViewModel?.isGetQuestions(isAccessToken ?: "", isQuizID,this)
     }
 
 
@@ -566,7 +566,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     Constant.showLoading(this)
                     val jsonObject = buildAnswerJson()
                     Log.d("FinalAnswer", jsonObject.toString())
-                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject,this)
                 }
             }
         } else {
@@ -582,7 +582,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     Constant.showLoading(this)
                     val jsonObject = buildAnswerJson()
                     Log.d("FinalAnswer", jsonObject.toString())
-                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject)
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject,this)
                 }
             }
         }

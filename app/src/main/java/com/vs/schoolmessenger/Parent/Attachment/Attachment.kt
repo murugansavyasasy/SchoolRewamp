@@ -234,7 +234,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
 
                 binding.txtNoData.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE

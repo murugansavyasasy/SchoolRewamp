@@ -181,7 +181,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener,
         Constant.showLoading(this)
         binding.rcylsrwreport.visibility = View.VISIBLE
         binding.rcylsrwreport.isNestedScrollingEnabled = false
-        appViewModel?.islsrwskillsreport(isAccessToken ?: "")
+        appViewModel?.islsrwskillsreport(isAccessToken ?: "",this)
     }
 
     private fun setupFilters(active: List<LsrwTask>, completed: List<LsrwTask>) {

@@ -189,7 +189,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         Constant.showLoading(this)
         binding.rcyrecyclerview.visibility = View.VISIBLE
         binding.rcyrecyclerview.isNestedScrollingEnabled = false
-        appViewModel.islsrwSkilllist(isAccessToken ?: "")
+        appViewModel.islsrwSkilllist(isAccessToken ?: "",this)
     }
 
     private fun filterList(query: String) {

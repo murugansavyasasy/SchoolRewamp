@@ -376,7 +376,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.rcUpcoming.layoutManager = LinearLayoutManager(this)
         binding.rcUpcoming.adapter = adapter
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType,this)
     }
 
     private fun isFetchCompletedEQList() {
@@ -384,7 +384,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.rcCompleted.layoutManager = LinearLayoutManager(this)
         binding.rcCompleted.adapter = adapter1
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType,this)
     }
 
     override fun onBackPressed() {

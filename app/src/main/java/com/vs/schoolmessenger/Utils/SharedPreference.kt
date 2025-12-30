@@ -25,6 +25,7 @@ object SharedPreference {
     private const val SH_LOGOUT = "isLogout"
     private const val SH_TOKEN = "isToken"
     private const val SH_BASEURL = "isBaseUrl"
+    private const val SH_REPORTING_URL = "isReportingUrl"
     private const val SH_BIOMETRIC_ENABLED = "isBiometricEnabled"
     private const val SH_BIOMETRIC_SKIP = "isBiometricSkip"
     private const val KEY_FINGERPRINT_ENABLED = "fingerprint_enabled"
@@ -348,6 +349,16 @@ object SharedPreference {
         )
         sharedPreferences.edit { putString(SH_BASEURL, isBaseUrl) }
     }
+    fun putReportingUrl(activity: Context, isReportUrl: String?) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit { putString(SH_REPORTING_URL, isReportUrl) }
+    }
 
     fun getBaseUrl(activity: Context): String? {
 
@@ -359,6 +370,18 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return sharedPreferences.getString(SH_BASEURL, "")
+    }
+
+    fun getReportingUrl(activity: Context): String? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getString(SH_REPORTING_URL, "")
     }
 
     fun putBiometricEnabled(activity: Activity, isEnable: Boolean) {

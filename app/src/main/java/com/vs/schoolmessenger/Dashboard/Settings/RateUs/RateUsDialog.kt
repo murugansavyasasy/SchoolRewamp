@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Settings.RateUs
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -96,7 +97,7 @@ class RateUsDialog(   private val fromScreen: String?,
     private fun loadRateUsData() {
         mobileNumber = SharedPreference.getMobileNumber(requireActivity()).orEmpty()
         if (mobileNumber.isBlank()) return
-        appViewModel.getreviewlist("", mobileNumber)
+        appViewModel.getreviewlist("", mobileNumber, requireContext() as Activity)
     }
 
     private fun observeReviewList() {
@@ -207,7 +208,7 @@ class RateUsDialog(   private val fromScreen: String?,
         Log.d("FINAL_JSON", json.toString())
 
 
-        appViewModel.reviewpost("", json)
+        appViewModel.reviewpost("", json, requireContext() as Activity)
 
         observeSubmitReviewResponse()
     }

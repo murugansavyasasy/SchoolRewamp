@@ -73,7 +73,7 @@ class LsrwStudentListFragment : Fragment() {
         Log.d("FragmentCheck", "ID: $id")
         if (!isAccessToken.isNullOrEmpty() && !id.isNullOrEmpty()) {
             Log.d("FragmentCheck", "Calling API now...")
-            appViewModel?.islsrwStudentlist(isAccessToken!!, id!!)
+            appViewModel?.islsrwStudentlist(isAccessToken!!, id!!,requireActivity())
         } else {
             Log.e("FragmentCheck", "API not called. AccessToken or ID missing")
         }

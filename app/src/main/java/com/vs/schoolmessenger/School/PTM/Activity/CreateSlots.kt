@@ -493,7 +493,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             Log.d("jsonArray", jsonArray.toString())
-            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray)
+            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray,this)
         }
     }
 
@@ -649,7 +649,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         Log.d("isCreateSlots", jsonArray.toString())
-        appViewModel!!.isSlotCreating(isAccessToken!!, jsonArray)
+        appViewModel!!.isSlotCreating(isAccessToken!!, jsonArray,this)
     }
 
 

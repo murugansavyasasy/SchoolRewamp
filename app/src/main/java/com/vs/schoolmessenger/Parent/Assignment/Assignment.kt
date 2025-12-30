@@ -138,7 +138,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
 
                     isAssignmentReportData = response.data
                     loadAssignmentReportData()
@@ -193,7 +193,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignment.adapter = isAssignmentAdapter
 
-        appViewModel?.isAssignmentlist(isAccessToken!!)
+        appViewModel?.isAssignmentlist(isAccessToken!!,this)
 
     }
 
@@ -298,7 +298,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     override fun onResume() {
         super.onResume()
-        appViewModel?.isAssignmentlist(isAccessToken!!)
+        appViewModel?.isAssignmentlist(isAccessToken!!,this)
     }
 
 }

@@ -205,7 +205,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.rcExamList.adapter = adapter
         appViewModel!!.getStaffWiseExam(
             isAccessToken!!,
-            Constant.isMarkUploadClassSectionDetails?.sectionId ?: ""
+            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "",this
         )
     }
 
@@ -275,6 +275,6 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             adapter.notifyItemChanged(adapter.expandedPosition)
         }
 
-        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id)
+        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id,this)
     }
 }

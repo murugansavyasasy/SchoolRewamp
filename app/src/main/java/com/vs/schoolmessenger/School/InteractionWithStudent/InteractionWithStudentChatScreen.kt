@@ -198,7 +198,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             QuestionDataSending?.is_class_teacher ?: false,
             QuestionDataSending?.section_id ?: "",
             QuestionDataSending?.subject_id ?: "",
-            0
+            0,this
         )
     }
 
@@ -253,7 +253,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             is_change_answer = type,
             file_path = fileList
         )
-        appViewModel?.sendanswer(isAccessToken!!, request)
+        appViewModel?.sendanswer(isAccessToken!!, request,this)
         binding.replyLinearlayout.visibility = View.GONE
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.GONE
@@ -339,6 +339,6 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             addProperty("is_block", !chat.is_blocked)
             addProperty("reason", reason)
         }
-        appViewModel?.isblockstudent(isAccessToken!!, jsonObject)
+        appViewModel?.isblockstudent(isAccessToken!!, jsonObject,this)
     }
 }

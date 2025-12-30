@@ -192,7 +192,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             binding.txtNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         }
 
-        appViewModel?.getassignmentlist(isAccessToken!!, assignmentId!!, type!!)
+        appViewModel?.getassignmentlist(isAccessToken!!, assignmentId!!, type!!,this)
     }
 
     override fun onClick(v: View?) {

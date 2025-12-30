@@ -575,12 +575,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcMessageStaff.adapter = adapter
         binding.rcMessageStaff.isNestedScrollingEnabled = false
-        appViewModel?.isGetMessageStaff(isAccessToken ?: "")
+        appViewModel?.isGetMessageStaff(isAccessToken ?: "",this)
     }
 
     fun isGetMessageFromStaffArchive() {
         Constant.showLoading(this)
-        appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "")
+        appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "",this)
     }
 
     fun ErrorMessage(errorMessage: String) {

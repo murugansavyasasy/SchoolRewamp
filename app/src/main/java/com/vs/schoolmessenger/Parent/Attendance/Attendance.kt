@@ -196,7 +196,7 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
 
     private fun loadStudentStats() {
-        appViewModel!!.isStudentStats(isAccessToken!!)
+        appViewModel!!.isStudentStats(isAccessToken!!,this)
     }
 
     private fun forcePopupMenuIcons(menu: PopupMenu) {
