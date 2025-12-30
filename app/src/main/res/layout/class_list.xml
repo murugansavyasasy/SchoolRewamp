@@ -25,128 +25,137 @@
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/svOverallCreateQE"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+
+    <LinearLayout
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
         <RelativeLayout
-
-            android:id="@+id/rlaQuizExamReport"
+            android:id="@+id/rytSearch1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/five"
-            >
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
 
-            <RelativeLayout
-                android:id="@+id/rytSearch1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:background="@drawable/rect_grey"
-                android:visibility="gone">
+                android:src="@drawable/ic_search" />
 
-                <ImageView
-                    android:id="@+id/imgSearch1"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/ic_search" />
-
-                <EditText
-                    android:id="@+id/txtSearch1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/imgSearch1"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/lblSearch"
-                    android:imeOptions="actionDone"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_below="@+id/rytSearch1"
-                android:id="@+id/lblSelectClass"
-                android:layout_width="match_parent"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/dark_orange_2"
-                android:textSize="@dimen/twenty_sp"
-                android:text="@string/select_your_class"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <TextView
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:id="@+id/lblClassDetail"
-                android:layout_below="@+id/lblSelectClass"
-                android:layout_width="match_parent"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:textStyle="bold"
-                android:textSize="@dimen/eighteen_sp"
-                android:text="@string/choose_a_class_to_start_processing_marks"
-                android:layout_height="wrap_content">
-
-            </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcClassList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:layout_below="@+id/lblClassDetail"
-                android:layout_marginTop="@dimen/twenty_five">
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-            <LinearLayout
-                android:id="@+id/lytList"
+            <EditText
+                android:id="@+id/txtSearch1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rcClassList"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/noDataImage"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/txtNoData"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text=""
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-            </LinearLayout>
+                android:layout_toEndOf="@id/imgSearch1"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/svOverallCreateQE"
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        >
+            <RelativeLayout
+
+                android:id="@+id/rlaQuizExamReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                >
+                <TextView
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:id="@+id/lblSelectClass"
+                    android:layout_width="match_parent"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="@color/dark_orange_2"
+                    android:textSize="@dimen/twenty_sp"
+                    android:text="@string/select_your_class"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:id="@+id/lblClassDetail"
+                    android:layout_below="@+id/lblSelectClass"
+                    android:layout_width="match_parent"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/eighteen_sp"
+                    android:text="@string/choose_a_class_to_start_processing_marks"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcClassList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_below="@+id/lblClassDetail"
+                    android:layout_marginTop="@dimen/twenty_five">
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <LinearLayout
+                    android:id="@+id/lytList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/rcClassList"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/noDataImage"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:src="@drawable/no_data_found">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/txtNoData"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:text=""
+                        android:textSize="@dimen/fifteen_sp">
+
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
 
 
 

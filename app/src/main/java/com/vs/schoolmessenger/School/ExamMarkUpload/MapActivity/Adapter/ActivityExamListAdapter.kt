@@ -70,7 +70,6 @@ class ActivityExamListAdapter(
         private val title: TextView = itemView.findViewById(R.id.examTitle)
         private val lblMap: TextView = itemView.findViewById(R.id.lblMap)
         private val arrow: ImageView = itemView.findViewById(R.id.arrow)
-        private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
         private val subjectsRv: RecyclerView = itemView.findViewById(R.id.rcSubject)
 
         //        private val header: RelativeLayout = itemView.findViewById(R.id.Header)
@@ -138,11 +137,6 @@ class ActivityExamListAdapter(
                     bg.setColor(ContextCompat.getColor(context, R.color.white))
                     cardUploadImage.cardElevation = context.dp(5).toFloat()
 
-                    holder.imgCheck.setImageResource(R.drawable.circle_icon)
-                    holder.imgCheck.setColorFilter(
-                        ContextCompat.getColor(context, R.color.gray4),
-                        PorterDuff.Mode.SRC_IN
-                    )
                     holder.lblMap.setTextColor(
                         ContextCompat.getColor(
                             context,
@@ -163,13 +157,7 @@ class ActivityExamListAdapter(
                     bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
 
                     cardUploadImage.cardElevation = 0f
-                    holder.imgCheck.setImageResource(R.drawable.circle_icon)
-                    holder.imgCheck.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.light_bg_orange_6
-                        ), PorterDuff.Mode.SRC_IN
-                    )
+
                     holder.lblMap.setTextColor(
                         ContextCompat.getColor(
                             context,
@@ -192,13 +180,7 @@ class ActivityExamListAdapter(
 
                     cardUploadImage.cardElevation = 0f
 
-                    holder.imgCheck.setImageResource(R.drawable.tick_circle_icon)
-                    holder.imgCheck.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.dark_green_3
-                        ), PorterDuff.Mode.SRC_IN
-                    )
+
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
                     holder.lblMap.setTextColor(
                         ContextCompat.getColor(
