@@ -53,6 +53,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.MapActivity
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.TableData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
@@ -102,6 +103,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
 
     private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+    private var uploadMarksExtractionValues: List<TableData>? = emptyList()
 
 
     override fun setupViews() {
@@ -236,20 +238,20 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 }
             }
 
-
-
         appViewModel!!.uploadmarks?.observe(this) { response ->
             Constant.hideLoading(this@UploadMarkSheet)
             if (response?.message == "Extraction successful") {
+                Constant.uploadMarksExtractionValues = response.data
+
+                Log.d("UploadMarksSuccess", "Extraction successful! Data saved to Constant.")
+                Log.d("UploadMarksSuccess", "Number of tables extracted: ${response.data.size}")
+
                 val intent = Intent(this, MapActivity::class.java)
                 this.startActivity(intent)
             } else {
                 Log.e("UpdateError", "Null response received from server.")
             }
         }
-
-
-
 
     }
 

@@ -78,7 +78,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
-import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ExtractionResult
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.TableData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -254,8 +254,9 @@ object Constant {
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
     var isSelectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
+    var uploadMarksExtractionValues: List<TableData>? = null
+
     var staffWisExamList: List<getStaffWisExamData>? = emptyList()
-    var UploadedMarkDetails: List<Record> = emptyList()
 
 
     var StaffDataSending: StaffDataSending? = null
