@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#EEEEEE"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:background="#EEEEEE">
+    android:padding="8dp">
 
     <!-- FIXED HEADER -->
     <LinearLayout
@@ -16,13 +16,13 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:text="Roll"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="Name"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <HorizontalScrollView
@@ -35,16 +35,55 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub1"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub2"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub3"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub4"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub5"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub6"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub7"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub8"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub9"/>
-            <TextView android:layout_width="80dp" android:layout_height="wrap_content" android:text="Sub10"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub1" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub2" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub3" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub4" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub5" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub6" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub7" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub8" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub9" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Sub10" />
 
         </LinearLayout>
     </HorizontalScrollView>
