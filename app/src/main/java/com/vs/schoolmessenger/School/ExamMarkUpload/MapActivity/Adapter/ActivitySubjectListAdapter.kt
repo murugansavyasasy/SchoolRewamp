@@ -56,11 +56,11 @@ class ActivitySubjectListAdapter(
 
         fun ChangeButtonColour()
         {
-            imgCheck.setImageResource(R.drawable.circle_icon)
+            imgCheck.setImageResource(R.drawable.selected_circle_icon)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
-                    R.color.light_bg_orange_6
+                    R.color.dark_bg_orange_2
                 ), PorterDuff.Mode.SRC_IN
             )
         }
@@ -70,8 +70,9 @@ class ActivitySubjectListAdapter(
             subjectName.text = item.name
 
 
+            val defaultItems = listOf("\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
+            val fullList = defaultItems + item.activities
 
-            val fullList =item.activities
 
             val adapter = SpinnerMarkUploadAdapter(context, fullList)
             isSpinnerColumn.adapter = adapter
@@ -148,8 +149,8 @@ class ActivitySubjectListAdapter(
                     }
 
 
-                    // disable 1st & 4th row – allow opening dropdown but revert
-                    if (pos == 0 || pos == 3) {
+                    // disable 1st – allow opening dropdown but revert
+                    if (pos == 0) {
                         isSpinnerColumn.setSelection(
                             if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
                             false
@@ -179,7 +180,7 @@ class ActivitySubjectListAdapter(
 
         fun setMappedHint(selected: String?) {
             val sel = selected ?: ""
-            val label = "\uD83D\uDCC4\u00A0\u00A0Mapped to: "
+            val label = "Mapped to: "
             val full = label + sel
 
             val span = SpannableString(full)
