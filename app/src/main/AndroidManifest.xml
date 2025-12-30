@@ -401,7 +401,8 @@
         <activity
             android:name=".School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            />
         <activity
             android:name=".School.LSRW.CompletedTaskList"
             android:theme="@style/AppTheme"

@@ -78,7 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:layout_marginHorizontal="@dimen/two"
-            android:background="@color/AthensGray"></View>
+            android:background="@color/AthensGray">
+        </View>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcSubject"

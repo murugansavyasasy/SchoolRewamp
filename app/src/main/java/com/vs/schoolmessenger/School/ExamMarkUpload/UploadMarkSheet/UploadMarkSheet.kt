@@ -53,6 +53,8 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.MapActivity
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
@@ -102,6 +104,9 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
 
     private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
+
+
+    private var extractedDetails: List<ParcelTableData>? = null
 
 
     override fun setupViews() {
@@ -209,48 +214,39 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                             }
                             Log.d("SelectedFile", "Path: $path, Type: $type")
                         }
-//                        mAdapter?.notifyDataSetChanged()
+
                         val addedCount = Constant.selectedFiles.size - previousCount
                         val totalCount = Constant.selectedFiles.size
 
-//                        Toast.makeText(
-//                            this,
-//                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
-//                                if (addedCount > 1) "${
-//                                    getString(
-//                                        R.string.s_
-//                                    )
-//                                }" else ""
-//                            }",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-//                        Toast.makeText(
-//                            this,
-//                            getString(R.string.you_have_reached_the_maximum_file_limit),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
+
                     }
                 }
             }
 
-
-
-        appViewModel!!.uploadmarks?.observe(this) { response ->
+        appViewModel!!.uploadmarks?.observe(this) { response: UploadMarkResponse? ->
             Constant.hideLoading(this@UploadMarkSheet)
-            if (response?.message == "Extraction successful") {
+            if (response?.status == true) {
+                Constant.isExtractedDetails = emptyList()
+                extractedDetails = listOf(response.data)
+                Constant.isExtractedDetails = extractedDetails
                 val intent = Intent(this, MapActivity::class.java)
-                this.startActivity(intent)
-            } else {
-                Log.e("UpdateError", "Null response received from server.")
+                startActivity(intent)
+            }
+            else {
+                Log.e(
+                    "UploadMarksError",
+                    "Extraction failed: ${response?.message ?: "Unknown error"}"
+                )
+                Toast.makeText(
+                    this@UploadMarkSheet,
+                    "Failed to process marksheet",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
-
-
-
     }
 
     fun setBulletText(textView: TextView, text: String) {
@@ -773,7 +769,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             R.id.lnrUpload -> {
 //                isFileUploadInAws("Image")
-                UplaodMarks()
+                UploadMarks()
 
             }
 
@@ -877,7 +873,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
 
 
-    private fun UplaodMarks() {
+    private fun UploadMarks() {
         if (Constant.selectedFiles.isEmpty()) {
             Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
             return
@@ -896,12 +892,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
 
         appViewModel?.uploadmarks(filePart,this)
-
-        val intent = Intent(this, MapActivity::class.java)
-        Constant.staffWisExamList = staffWisExamList
-        Constant.isSelectedExamActivities = selectedExamActivities
-        Constant.isMarkUploadExamListDataDetails = selectedExam
-        startActivity(intent)
 
     }
 

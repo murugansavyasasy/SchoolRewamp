@@ -205,15 +205,6 @@ class ActivitySubjectListAdapter(
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     isUserAction = false
-
-                    // Spinner dismissed by outside click
-                    spinnerContainer.visibility = View.GONE
-
-                    // Show / hide hint based on existing value
-                    if (item.selectedValue.isNullOrEmpty()) {
-                        lblHint.visibility = View.GONE
-                    }
-
                 }
             }
         }
@@ -240,11 +231,7 @@ class ActivitySubjectListAdapter(
                 full.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-
-
             lblHint.text = span
         }
-
-
     }
 }

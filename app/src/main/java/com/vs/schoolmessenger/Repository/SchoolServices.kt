@@ -4898,8 +4898,8 @@ class SchoolServices {
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                            val status = response.body()!!.message
-                            if (status == "Extraction successful") {
+                            val status = response.body()!!.status
+                            if (status) {
                                 Log.d("UploadMarkResponse", response.body().toString())
                                 uploadmarks.postValue(response.body())
                             } else {

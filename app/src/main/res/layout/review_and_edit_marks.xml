@@ -138,100 +138,23 @@
             </View>
 
             <LinearLayout
-                android:id="@+id/lnrContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_above="@+id/LnrContainer2"
                 android:layout_below="@+id/View2"
-                android:layout_marginBottom="@dimen/five"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <!-- HEADER -->
+                <include
+                    android:id="@+id/marksHeader"
+                    layout="@layout/layout_marks_header" />
+
+                <!-- STUDENT LIST -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMarks"
+                    android:scrollbars="none"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <include
-                        android:id="@+id/headerLayout"
-                        layout="@layout/item_mark_header" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcExamList"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/lytList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/noDataImage"
-                        android:layout_width="@dimen/two_hundred"
-                        android:layout_height="@dimen/two_hundred"
-                        android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/no_data_found"></ImageView>
-
-                    <TextView
-                        android:id="@+id/txtNoData"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:text="@string/no_data_found"
-                        android:textSize="@dimen/fifteen_sp">
-
-                    </TextView>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/ten"
-                    android:background="@drawable/rect_radius_fill_stoke_15"
-                    android:padding="@dimen/fifteen">
-
-                    <ImageView
-                        android:id="@+id/imgLeftArrow"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_narrow_left_icon"
-                        android:tint="@color/black"></ImageView>
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblMonthName"
-                        android:layout_centerVertical="true"
-                        android:layout_marginHorizontal="@dimen/ten"
-                        android:layout_toStartOf="@+id/imgRightArrow"
-                        android:layout_toEndOf="@+id/imgLeftArrow"
-                        android:gravity="center"
-                        android:text="Swipe horizontally to see all activities"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold"></TextView>
-
-                    <ImageView
-                        android:id="@+id/imgRightArrow"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_narrow_right_icon"
-                        android:tint="@color/black"></ImageView>
-                </RelativeLayout>
-
-
+                    android:layout_height="match_parent"/>
             </LinearLayout>
 
             <LinearLayout

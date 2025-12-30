@@ -31,10 +31,8 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ExamListAdapter
-        private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
-
+    private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
-
     private var selectedExam: getStaffWisExamData? = null
 
 
