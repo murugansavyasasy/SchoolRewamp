@@ -177,7 +177,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcSubmitReport.adapter = adapter
         binding.rcSubmitReport.isNestedScrollingEnabled = false
-        appViewModel?.isGetQuizSubmissionList(isAccessToken ?: "", isQuizID)
+        appViewModel?.isGetQuizSubmissionList(isAccessToken ?: "", isQuizID,this)
     }
 
 

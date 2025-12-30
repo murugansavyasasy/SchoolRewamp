@@ -74,7 +74,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
     }
 
     private fun loadfaqdata() {
-        appViewModel?.isfrequentlyasked(isAccessToken!!)
+        appViewModel?.isfrequentlyasked(isAccessToken!!,this)
 
     }
 

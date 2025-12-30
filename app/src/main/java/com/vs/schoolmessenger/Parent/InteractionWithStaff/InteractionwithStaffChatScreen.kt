@@ -192,7 +192,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             file_path = fileList
         )
 
-        appViewModel?.sendquestion(isAccessToken!!, request)
+        appViewModel?.sendquestion(isAccessToken!!, request,this)
 
     }
 

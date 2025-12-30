@@ -306,7 +306,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     private fun fetchLsrwstatsReportData(month: Int) {
         Constant.showLoading(this)
         binding.rclsrwheader.visibility = View.VISIBLE
-        appViewModel?.islsrwstats(isAccessToken ?: "", month)
+        appViewModel?.islsrwstats(isAccessToken ?: "", month,this)
     }
 
     override fun onClick(v: View?) {

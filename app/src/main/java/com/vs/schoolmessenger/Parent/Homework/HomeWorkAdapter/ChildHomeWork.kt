@@ -992,7 +992,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lottieView.playAnimation()
         val jsonObject = JsonObject()
         jsonObject.addProperty("id", isHomeworkId)
-        appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject)
+        appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject,this)
     }
 
     fun isSuccessFullCompleteHomework() {
@@ -1407,7 +1407,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.rcystandard.layoutManager = flexboxLayoutManager
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
-        appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt())
+        appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt(),this)
     }
 
 
@@ -1422,7 +1422,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getattachmentchildhomework(
-            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt()
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(),this
         )
     }
 
@@ -1438,7 +1438,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getassignmentchildhomework(
-            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt()
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(),this
         )
     }
 

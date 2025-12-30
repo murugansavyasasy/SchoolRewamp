@@ -145,7 +145,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
                     addProperty(Constant.coupon_id, coupon_code)
                     addProperty(Constant.coupon_link, source_link)
                 }
-                appViewModel?.isSpentPoints(isAccessToken ?: "", jsonObject)
+                appViewModel?.isSpentPoints(isAccessToken ?: "", jsonObject,this)
 
                 val intent = Intent(this, CouponOrderActivity::class.java).apply {
                     putExtra(Constant.coupon_code, data.coupon_code)

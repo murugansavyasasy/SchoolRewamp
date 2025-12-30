@@ -154,7 +154,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
     }
 
     private fun fetchStudentData() {
-        viewModel.isblockstudentlist(isAccessToken ?: "")
+        viewModel.isblockstudentlist(isAccessToken ?: "",requireActivity())
     }
 
     private fun showErrorUI(message: String) {
@@ -201,7 +201,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
             addProperty("is_block", false)
             addProperty("reason", "")
         }
-        viewModel.isblockstudent(isAccessToken!!, jsonObject)
+        viewModel.isblockstudent(isAccessToken!!, jsonObject,requireActivity())
         dismiss()
     }
 

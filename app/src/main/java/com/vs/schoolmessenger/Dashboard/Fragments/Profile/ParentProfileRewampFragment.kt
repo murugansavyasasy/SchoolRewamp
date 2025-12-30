@@ -264,7 +264,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
 
     private fun fetchProfileData() {
-        appViewModel.isParentprofilelist(isAccessToken!!)
+        appViewModel.isParentprofilelist(isAccessToken!!,requireActivity())
         Constant.showLoading(requireActivity())
     }
 

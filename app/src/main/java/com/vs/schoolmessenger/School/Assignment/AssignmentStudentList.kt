@@ -130,7 +130,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
         binding.rcystudentlist.isNestedScrollingEnabled = false
         binding.rcystudentlist.adapter = assignmentstudentlistadapter
 
-        appViewModel!!.getassignmentlist(isAccessToken!!, assignmentId!!, type!!)
+        appViewModel!!.getassignmentlist(isAccessToken!!, assignmentId!!, type!!,this)
     }
 
     override fun onClick(v: View?) {

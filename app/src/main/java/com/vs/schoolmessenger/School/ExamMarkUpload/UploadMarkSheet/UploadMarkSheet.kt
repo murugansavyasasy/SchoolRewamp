@@ -53,7 +53,6 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.MapActivity
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
-import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ExtractionResult
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
@@ -86,9 +85,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
     private var cameraImageFilePath: String? = null
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
-    private var UploadedMarkDetails: List<Record>? = emptyList()
-
 
 
     companion object {
@@ -244,28 +240,13 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
         appViewModel!!.uploadmarks?.observe(this) { response ->
             Constant.hideLoading(this@UploadMarkSheet)
-
             if (response?.message == "Extraction successful") {
-
-                val extractionResult = response.data?.firstOrNull()
-
-                if (extractionResult != null) {
-
-                    Constant.UploadedMarkDetails = extractionResult.records
-
-                    Log.d("UploadMark", "Stored ${Constant.UploadedMarkDetails.size} records")
-
-                    startActivity(Intent(this, MapActivity::class.java))
-
-                } else {
-                    Log.e("UploadMark", "ExtractionResult is null")
-                }
-
+                val intent = Intent(this, MapActivity::class.java)
+                this.startActivity(intent)
             } else {
-                Log.e("UpdateError", "Null or failed response from server")
+                Log.e("UpdateError", "Null response received from server.")
             }
         }
-
 
 
 
@@ -914,7 +895,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
 
-        appViewModel?.uploadmarks(filePart)
+        appViewModel?.uploadmarks(filePart,this)
 
         val intent = Intent(this, MapActivity::class.java)
         Constant.staffWisExamList = staffWisExamList

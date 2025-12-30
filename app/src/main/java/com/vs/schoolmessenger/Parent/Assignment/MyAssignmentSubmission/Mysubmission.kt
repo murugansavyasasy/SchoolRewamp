@@ -122,7 +122,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         binding.rcyAssignment.adapter = mAdapter
 
         if (!assignmentId.isNullOrEmpty() && !isAccessToken.isNullOrEmpty()) {
-            appViewModel?.isGetAssignmentSubList(isAccessToken!!, assignmentId!!)
+            appViewModel?.isGetAssignmentSubList(isAccessToken!!, assignmentId!!,this)
         } else {
             Log.d("Assignment Id", "Issue in API Call")
         }

@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
@@ -14,6 +15,8 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 
 class Auth(application: Application) : AndroidViewModel(application) {
 
@@ -56,6 +59,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
         private set
 
 
+
     fun init() {
         apiRepositories = AuthServices()
         isCountryList = apiRepositories!!.isCountryListLiveData
@@ -77,59 +81,64 @@ class Auth(application: Application) : AndroidViewModel(application) {
     }
 
     fun isVersionCheck(jsonObject: JsonObject, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiRepositories!!.isVersionCheck(jsonObject, activity)
     }
 
     fun isUpdateNotificationCalllog(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isUpdateNotificationCallLog(jsonObject, activity)
     }
 
 
     fun isValidateUser(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isValidateUser(jsonObject, activity)
     }
 
     fun isOtpResponse(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isValidateOtp(jsonObject, activity)
     }
 
-//    fun isUserDetails(
-//        isMobileNumber: String,
-//        isPassword: String,
-//        isDeviceType: String,
-//        isSecureId: String,
-//        activity: Activity
-//    ) {
-//        apiRepositories!!.isUserDetails(
-//            isMobileNumber,
-//            isPassword,
-//            isDeviceType,
-//            isSecureId,
-//            activity
-//        )
-//    }
 
     fun isPasswordChange(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isPasswordChange(jsonObject, activity)
     }
 
     fun isForgetPassword(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isForgetPassword(jsonObject, activity)
     }
 
     fun isPasswordReset(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isResetPassword(jsonObject, activity)
     }
 
     fun isCreatePassword(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isCreateNewPassword(jsonObject, activity)
     }
 
     fun isDeviceToken(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isDeviceToken(jsonObject, activity)
     }
 
     fun isLogout(jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiRepositories!!.isLogout(jsonObject, activity)
     }
 }

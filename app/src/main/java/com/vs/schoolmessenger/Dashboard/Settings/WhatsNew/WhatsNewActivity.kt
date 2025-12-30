@@ -88,11 +88,11 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         binding.rcywhatsnew.adapter = whatsnewAdapter
 
         if (Constant.isParentChoose) {
-            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.parent)
+            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.parent,this)
         } else {
             appViewModel!!.getdashboardnewupdates(
                 isAccessToken!!,
-                Constant.user_details!!.staff_role
+                Constant.user_details!!.staff_role,this
             )
         }
     }

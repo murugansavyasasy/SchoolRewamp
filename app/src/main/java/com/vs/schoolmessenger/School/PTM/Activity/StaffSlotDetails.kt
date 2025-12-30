@@ -298,9 +298,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
-                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen)
+                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen,this)
             } else {
-                appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject)
+                appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject,this)
             }
 
             alertDialog.dismiss()

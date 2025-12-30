@@ -143,7 +143,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
                     Constant.showParentDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
@@ -641,7 +641,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun loadLeaveCategories() {
         Constant.showLoading(this)
-        appViewModel!!.getLeaveCategories(isAccessToken!!)
+        appViewModel!!.getLeaveCategories(isAccessToken!!,this)
     }
 
 
