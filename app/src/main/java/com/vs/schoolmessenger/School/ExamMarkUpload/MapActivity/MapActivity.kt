@@ -129,107 +129,32 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
     }
 
     private fun LoadExamList() {
-        val dummyList = listOf(
-            getActivitySubjectNameData(
-                "Science",
-                paper = listOf(
-                    getActivityPaperNameData(
-                        "Paper 1-Botany",
-                        listOf(
-                            "Student_Name and the college is waiting Student_Name and the college is waiting",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Paper 2-Zoology",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Internal Assessment",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    )
-                )
-            ),
+
+        val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
 
             getActivitySubjectNameData(
-                "Tamil",
-                paper = listOf(
+                subject = subject.subject_name,
+                paper = subject.splitup_details.map { split ->
+
                     getActivityPaperNameData(
-                        "Paper 1",
-                        listOf(
-                            "Student_Name and the college is waiting",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Paper 2",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
-                    ),
-                    getActivityPaperNameData(
-                        "Internal Assessment",
-                        listOf(
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No",
-                            "Student_Name",
-                            "Roll_No"
-                        )
+                        name = split.name,
+                        activities = listOf(split.name),
+                        selectedValue = null
                     )
-                )
+                }
             )
-        )
+        }
 
-        isClassList = dummyList
+        isClassList = mappedList
         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
-        adapter = ActivityExamListAdapter(dummyList, this, this, false)
-
+        adapter = ActivityExamListAdapter(mappedList, this, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
-
         binding.rcMapActivity.adapter = adapter
     }
+
+
+
 
 
     private fun filter(text: String) {
