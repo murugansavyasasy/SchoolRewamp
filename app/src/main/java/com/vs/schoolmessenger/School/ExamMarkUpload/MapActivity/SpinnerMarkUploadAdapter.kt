@@ -43,8 +43,7 @@ class SpinnerMarkUploadAdapter(
 
         textView.text = items[position]
 
-        // Divider only for 3rd item
-        viewDiv.visibility = if (position == 2) View.VISIBLE else View.GONE
+        viewDiv.visibility =  View.GONE
 
         // Tick on selected item using drawableEnd
         if (position == selectedPosition) {
@@ -57,8 +56,7 @@ class SpinnerMarkUploadAdapter(
 
         // Text color customization
         when (position) {
-            0 -> textView.setTextColor(context.getColor(R.color.very_dark_gray2))
-            3 -> textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
+            0 -> textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
             else -> textView.setTextColor(context.getColor(R.color.black))
         }
 

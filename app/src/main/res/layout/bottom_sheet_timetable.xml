@@ -50,9 +50,11 @@
 
             <TextView
                 android:id="@+id/txtNoData"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/CustomTextStylePoppinsBold"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/no_timetable_available"
                 android:textSize="@dimen/sixteen_sp"

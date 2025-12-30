@@ -68,17 +68,10 @@ class ActivitySubjectListAdapter(
         fun bind(item: getActivityPaperNameData, position: Int) {
 
             subjectName.text = item.name
-            val defaultItems = listOf(
-                "ACTIONS",
-                "\uD83D\uDEAB\u00A0\u00A0Ignore(Skip this activity)",
-                "✏\uFE0F\u00A0\u00A0Enter marks manually",
-                "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE"
-            )
 
 
-            val fullList = defaultItems + item.activities  // api values appended
 
-
+            val fullList =item.activities
 
             val adapter = SpinnerMarkUploadAdapter(context, fullList)
             isSpinnerColumn.adapter = adapter
@@ -122,33 +115,9 @@ class ActivitySubjectListAdapter(
                 lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE
 
                 when (pos) {
-                    -1, 0, 3 -> {   // hide for 1st & 4th
+                    -1, 0 -> {   // hide for 1st & 4th
                         lblHint.visibility = View.GONE
                         spinnerContainer.visibility= View.GONE
-                    }
-
-                    1 -> {      // Ignore (Skip this activity)
-                        ChangeButtonColour()
-                        spinnerContainer.visibility= View.GONE
-                        lblHint.visibility = View.VISIBLE
-                        lblHint.text = "\uD83D\uDEAB\u00A0\u00A0This activity will be skipped"
-                        lblHint.setTextColor(
-                            ContextCompat.getColor(
-                                context,
-                                R.color.very_dark_gray2
-                            )
-                        )
-                    }
-
-                    2 -> {      // Enter manual entry
-                        ChangeButtonColour()
-                        spinnerContainer.visibility= View.GONE
-                        lblHint.visibility = View.VISIBLE
-                        lblHint.text =
-                            "✏\uFE0F\u00A0\u00A0Marks will be entered manually in the review step"
-
-                        lblHint.setTextColor(ContextCompat.getColor(context, R.color.dark_blue_10))
-
                     }
 
                     else -> {   // for api dropdown value
@@ -159,7 +128,6 @@ class ActivitySubjectListAdapter(
                     }
                 }
             }
-
 
             // Apply initial state after view recycling
             updateHintUi(item.selectedValue, adapter.selectedPosition)
