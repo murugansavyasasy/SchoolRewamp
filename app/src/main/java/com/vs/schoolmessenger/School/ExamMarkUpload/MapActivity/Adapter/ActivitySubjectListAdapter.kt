@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.text.Spannable
 import android.text.SpannableString
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -45,22 +47,31 @@ class ActivitySubjectListAdapter(
         private val isSpinnerColumn: Spinner = itemView.findViewById(R.id.isSpinnerColumn)
         private val spinnerContainer: RelativeLayout = itemView.findViewById(R.id.spinnerContainer)
 
-        private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
+        private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
 
+        private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
+        private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
+
+        private var isUserAction = false
+
+        fun ChangeButtonColour()
+        {
+            imgCheck.setImageResource(R.drawable.selected_circle_icon)
+            imgCheck.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.dark_bg_orange_2
+                ), PorterDuff.Mode.SRC_IN
+            )
+        }
 
         fun bind(item: getActivityPaperNameData, position: Int) {
 
             subjectName.text = item.name
-            val defaultItems = listOf(
-                "ACTIONS",
-                "\uD83D\uDEAB\u00A0\u00A0Ignore(Skip this activity)",
-                "✏\uFE0F\u00A0\u00A0Enter marks manually",
-                "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE"
-            )
-            val fullList = defaultItems + item.activities  // api values appended
-            spinnerContainer.setOnClickListener {
-                isSpinnerColumn.performClick()
-            }
+
+
+            val defaultItems = listOf("\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
+            val fullList = defaultItems + item.activities
 
 
             val adapter = SpinnerMarkUploadAdapter(context, fullList)
@@ -71,64 +82,58 @@ class ActivitySubjectListAdapter(
                 adapter.selectedPosition = fullList.indexOf(item.selectedValue)
             }
 
-            fun updateHintUi(selected: String?, pos: Int) {
+            lblClear.setOnClickListener {
 
-                val bg = lblHint.background as GradientDrawable
+                item.selectedValue = ""
+                lblClear.visibility = View.GONE
+
+                adapter.selectedPosition = -1
+                item.selectedValue = null
+                adapter.notifyDataSetChanged()
+
+                lblHint.visibility = View.GONE
+                spinnerContainer.visibility= View.GONE
+                lblHint.text=""
+
+                imgCheck.setImageResource(R.drawable.circle_icon)
+                imgCheck.setColorFilter(
+                    ContextCompat.getColor(context, R.color.gray4),
+                    PorterDuff.Mode.SRC_IN
+                )
+
+                onSelectionChanged()
+            }
+
+            imgCheck.setOnClickListener {
+                lblHint.visibility= View.GONE
+                spinnerContainer.visibility= View.VISIBLE
+                isSpinnerColumn.post {
+                    isSpinnerColumn.performClick()
+                }
+            }
+
+            fun updateHintUi(selected: String?, pos: Int) {
+                lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE
 
                 when (pos) {
-                    -1, 0, 3 -> {   // hide for 1st & 4th
+                    -1, 0 -> {   // hide for 1st & 4th
                         lblHint.visibility = View.GONE
-                    }
-
-                    1 -> {      // Ignore (Skip this activity)
-                        lblHint.visibility = View.VISIBLE
-                        lblHint.text = "\uD83D\uDEAB\u00A0\u00A0This activity will be skipped"
-                        bg.setColor(
-                            ContextCompat.getColor(
-                                context,
-                                R.color.light_dark_gray_4
-                            )
-                        )  // fill
-                        bg.setStroke(
-                            1.dpToPx(),
-                            ContextCompat.getColor(context, R.color.very_dark_gray_5)
-                        ) // stroke
-                        lblHint.setTextColor(
-                            ContextCompat.getColor(
-                                context,
-                                R.color.very_dark_gray2
-                            )
-                        )
-                    }
-
-                    2 -> {      // Enter manual entry
-                        lblHint.visibility = View.VISIBLE
-                        lblHint.text =
-                            "✏\uFE0F\u00A0\u00A0Marks will be entered manually in the review step"
-                        bg.setColor(ContextCompat.getColor(context, R.color.pale_light_blue))
-                        bg.setStroke(
-                            1.dpToPx(),
-                            ContextCompat.getColor(context, R.color.pale_light_blue_3)
-                        )
-                        lblHint.setTextColor(ContextCompat.getColor(context, R.color.dark_blue_10))
-
+                        spinnerContainer.visibility= View.GONE
                     }
 
                     else -> {   // for api dropdown value
+                        ChangeButtonColour()
+                        spinnerContainer.visibility= View.GONE
                         lblHint.visibility = View.VISIBLE
-                        bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_3))
-                        bg.setStroke(
-                            1.dpToPx(),
-                            ContextCompat.getColor(context, R.color.dark_bg_orange_2)
-                        )
                         setMappedHint(selected) // here we just change some part of text to different colour
                     }
                 }
             }
 
-
             // Apply initial state after view recycling
             updateHintUi(item.selectedValue, adapter.selectedPosition)
+
+
 
             isSpinnerColumn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -138,12 +143,20 @@ class ActivitySubjectListAdapter(
                     id: Long
                 ) {
 
-                    // disable 1st & 4th row – allow opening dropdown but revert
-                    if (pos == 0 || pos == 3) {
+                    if (!isUserAction) {
+                        isUserAction = true
+                        return
+                    }
+
+
+                    // disable 1st – allow opening dropdown but revert
+                    if (pos == 0) {
                         isSpinnerColumn.setSelection(
                             if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
                             false
                         )
+                        isUserAction = false
+
                         updateHintUi(item.selectedValue, adapter.selectedPosition)
                         return
                     }
@@ -154,26 +167,27 @@ class ActivitySubjectListAdapter(
                     adapter.notifyDataSetChanged()
                     onSelectionChanged()
 
+                    isUserAction = false
 
                     updateHintUi(item.selectedValue, pos)
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    isUserAction = false
+                }
             }
         }
 
-        fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
-
         fun setMappedHint(selected: String?) {
             val sel = selected ?: ""
-            val label = "\uD83D\uDCC4\u00A0\u00A0Mapped to: "
+            val label = "Mapped to: "
             val full = label + sel
 
             val span = SpannableString(full)
 
             //  Orange text for label section
             span.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_bg_orange_2)),
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
                 0,
                 label.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -181,7 +195,7 @@ class ActivitySubjectListAdapter(
 
             //  Black text for selected value section
             span.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_bg_orange_2)),
                 label.length,
                 full.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
