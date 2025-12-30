@@ -104,7 +104,7 @@
             style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/fifteen_sp"
             android:layout_marginHorizontal="@dimen/ten"
-            android:padding="@dimen/fifteen"
+            android:paddingHorizontal="@dimen/fifteen"
             android:layout_marginBottom="@dimen/five"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/five"

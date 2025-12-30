@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
 import android.view.Gravity
@@ -29,8 +30,8 @@ class ReviewAndEditMarks :
         ReviewAndEditMarksBinding.inflate(layoutInflater)
 
     private var appViewModel: App? = null
-     val SUBJECT_CELL_WIDTH = 200
-    private  val SUBJECT_CELL_GAP = 20
+    val SUBJECT_CELL_WIDTH = 200
+    private val SUBJECT_CELL_GAP = 20
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     override fun setupViews() {
@@ -39,171 +40,128 @@ class ReviewAndEditMarks :
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-                isStaffDetails = SharedPreference.getStaffDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
+        callApi()
 
 
-        val subjects = listOf(
-            "Tamil", "English", "Maths", "Science", "Social",
-            "Computer", "GK", "Physics", "Chemistry", "Biology"
-        ) // change size anytime
+        callApi()
 
-        setupHeader(subjects)
+        appViewModel!!.isGetMarkDetails?.observe(this) { response ->
 
-
-        val students: MutableList<StudentMarkList> = MutableList(30) { index ->
-
-            val markTexts: MutableList<String> =
-                MutableList(subjects.size) { "" }
-
-            val marks: MutableList<Int?> =
-                MutableList(subjects.size) { null }
-
-            when (index) {
-
-                0 -> {
-                    markTexts[0] = "101"
-                    markTexts[1] = "AB"
-                    markTexts[3] = "66"
-                }
-                1 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = ""
-                    markTexts[2] = "190"
-                    markTexts[3] = "AB"
-                }
-
-                2 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = "AB"
-                    markTexts[2] = "77"
-                    markTexts[3] = "77"
-                }
-
-                3 -> {
-                    markTexts[0] = "103"
-                    markTexts[1] = "70"
-                    markTexts[2] = ""
-                    markTexts[3] = "110"
-                }
-
-                4 -> {
-                    markTexts[0] = "200"
-                    markTexts[1] = "AB"
-                    markTexts[2] = "AB"
-                    markTexts[3] = "AB"
-                }
-
-                5 -> {
-                    markTexts[0] = "101"
-                    markTexts[1] = "AB"
-                    markTexts[3] = "66"
-                }
-                6 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = ""
-                    markTexts[2] = "190"
-                    markTexts[3] = "AB"
-                }
-
-                7 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = "AB"
-                    markTexts[2] = "77"
-                    markTexts[3] = "77"
-                }
-
-                8 -> {
-                    markTexts[0] = "103"
-                    markTexts[1] = "70"
-                    markTexts[2] = ""
-                    markTexts[3] = "110"
-                }
-
-                9 -> {
-                    markTexts[0] = "200"
-                    markTexts[1] = "AB"
-                    markTexts[2] = "AB"
-                    markTexts[3] = "AB"
-                }
-
-
-                10 -> {
-                    markTexts[0] = "101"
-                    markTexts[1] = "AB"
-                    markTexts[3] = "66"
-                }
-                11 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = ""
-                    markTexts[2] = "190"
-                    markTexts[3] = "AB"
-                }
-
-                22 -> {
-                    markTexts[0] = ""
-                    markTexts[1] = "AB"
-                    markTexts[2] = "77"
-                    markTexts[3] = "77"
-                }
-
-                13 -> {
-                    markTexts[0] = "103"
-                    markTexts[1] = "70"
-                    markTexts[2] = ""
-                    markTexts[3] = "110"
-                }
-
-                14 -> {
-                    markTexts[0] = "200"
-                    markTexts[1] = "AB"
-                    markTexts[2] = "AB"
-                    markTexts[3] = "AB"
-                }
+            val finalResponse = if (response == null || response.data.isEmpty()) {
+                getMockMarkResponse()
+            } else {
+                response
             }
 
-            for (i in markTexts.indices) {
-                marks[i] = markTexts[i].toIntOrNull()
-            }
-
-            StudentMarkList(
-                name = "Student ${index + 1}",
-                rollNo = "R%03d".format(index + 1),
-                marks = marks,
-                markTexts = markTexts
-            )
+            setupMarksUI(finalResponse)
         }
 
 
-
-
-        binding.rvMarks.layoutManager = LinearLayoutManager(this)
-        binding.rvMarks.adapter = MarksAdapter(students, subjects.size,this)
-
-//        binding.rcExamList.layoutManager = LinearLayoutManager(this)
-//
-//        // Divider
-//        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-//        divider.setDrawable(resources.getDrawable(R.drawable.divider_light, null))
-//        binding.rcExamList.addItemDecoration(divider)
-//
-//        binding.headerLayout.headerScroll.setOnScrollChangeListener { _, x, _, _, _ ->
-//            if (!Constant.isSyncing) {
-//                Constant.isSyncing = true
-//                Constant.scrollX = x
-//                binding.rcExamList.adapter?.notifyDataSetChanged()
-//                Constant.isSyncing = false
-//            }
-//        }
-
-//        callApi()
-//
 //        appViewModel!!.isGetMarkDetails?.observe(this) { response ->
-//            if (response != null && response.status) {
-//                val rows = mapApiToUi(response)
-//                binding.rcExamList.adapter = MarkEntryAdapter(rows)
+//
+//            if (response == null || !response.status) return@observe
+//            val columns = mutableListOf<MarkColumn>()
+//
+//            // Use first student to define column structure
+//            val firstStudent = response.data.firstOrNull()
+//
+//            firstStudent?.marks?.forEach { subject ->
+//                subject.activities.forEach { activity ->
+//                    columns.add(
+//                        MarkColumn(
+//                            subjectId = subject.subject_id,
+//                            subjectName = subject.subject_name,
+//                            activityId = activity.id,
+//                            activityName = activity.name,
+//                            maxMark = activity.max_mark.toIntOrNull() ?: 0
+//                        )
+//                    )
+//                }
 //            }
+//            binding.marksHeader.headerSubjectContainer.removeAllViews()
+//
+//            columns.forEach { col ->
+//
+//                val headerLayout = LinearLayout(this).apply {
+//                    orientation = LinearLayout.VERTICAL
+//                    layoutParams = LinearLayout.LayoutParams(
+//                        SUBJECT_CELL_WIDTH,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    gravity = Gravity.CENTER
+//                }
+//
+//                val txtSubject = TextView(this).apply {
+//                    text = col.subjectName
+//                    gravity = Gravity.CENTER
+//                    textSize = 14f
+//                    setTypeface(null, Typeface.BOLD)
+//                }
+//
+//                val txtActivity = TextView(this).apply {
+//                    text = col.activityName
+//                    gravity = Gravity.CENTER
+//                    textSize = 13f
+//                }
+//
+//                val txtMax = TextView(this).apply {
+//                    text = "(${col.maxMark})"
+//                    gravity = Gravity.CENTER
+//                    textSize = 12f
+//                    setTextColor(Color.GRAY)
+//                }
+//
+//                headerLayout.addView(txtSubject)
+//                headerLayout.addView(txtActivity)
+//                headerLayout.addView(txtMax)
+//
+//                binding.marksHeader.headerSubjectContainer.addView(headerLayout)
+//            }
+//
+//            val students = response.data.map { apiStudent ->
+//
+//                val markTexts: MutableList<String> =
+//                    MutableList(columns.size) { "" }
+//
+//                val marks: MutableList<Int?> =
+//                    MutableList(columns.size) { null }
+//
+//                apiStudent.marks.forEach { subject ->
+//                    subject.activities.forEach { activity ->
+//
+//                        val columnIndex = columns.indexOfFirst {
+//                            it.subjectId == subject.subject_id &&
+//                                    it.activityId == activity.id
+//                        }
+//
+//                        if (columnIndex != -1) {
+//                            val value = activity.mark.trim()
+//
+//                            markTexts[columnIndex] = value
+//                            marks[columnIndex] = value.toIntOrNull()
+//                        }
+//                    }
+//                }
+//
+//                StudentMarkList(
+//                    name = apiStudent.student_name,
+//                    rollNo = apiStudent.admission_no,
+//                    marks = marks,
+//                    markTexts = markTexts
+//                )
+//            }.toMutableList()
+//
+//            val adapter = MarksAdapter(
+//                students = students,
+//                subjectCount = columns.size,
+//                context = this
+//            )
+//
+//            binding.rvMarks.adapter = adapter
 //        }
+
     }
 
     private fun setupHeader(subjects: List<String>) {
@@ -228,8 +186,6 @@ class ReviewAndEditMarks :
             }
 
             binding.marksHeader.headerSubjectContainer.addView(tv)
-
-            // ✅ SAME GAP
             if (index != subjects.lastIndex) {
                 val gap = View(this)
                 gap.layoutParams = LinearLayout.LayoutParams(
@@ -240,40 +196,226 @@ class ReviewAndEditMarks :
             }
         }
 
-
         HorizontalScrollSync.bind(headerScroll)
     }
 
+    private fun getMockMarkResponse(): MarkResponse {
 
+        return MarkResponse(
+            status = true,
+            message = "Mock mark details loaded",
+            data = listOf(
 
-//    private fun mapApiToUi(response: MarkResponse): MutableList<StudentMarkRow> {
-//
-//        val rows = mutableListOf<StudentMarkRow>()
-//        var roll = 1
-//
-//        response.data.forEach { student ->
-//
-//            val map = hashMapOf<String, ActivityMark>()
-//            student.marks.forEach { sub ->
-//                sub.activities.forEach { map[it.id] = it }
-//            }
-//
-//            val activities = mutableListOf<ActivityMark>()
-//            MASTER_ACTIVITY_IDS.forEach { id ->
-//                activities.add(map[id] ?: ActivityMark(id, "", "100"))
-//            }
-//
-//            rows.add(
-//                StudentMarkRow(
-//                    rollNo = roll++,
-//                    studentId = student.student_id,
-//                    studentName = student.student_name,
-//                    activities = activities
-//                )
-//            )
-//        }
-//        return rows
-//    }
+                StudentMarkApi(
+                    student_id = "9674704",
+                    student_name = "CHANDHRU V",
+                    roll_no = "",
+                    admission_no = "SS-1",
+                    marks = listOf(
+                        SubjectMark(
+                            subject_id = "112616",
+                            subject_name = "TAMIL",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3061",
+                                    name = "Marks",
+                                    mark = "AB",
+                                    max_mark = "100"
+                                )
+                            )
+                        ),
+                        SubjectMark(
+                            subject_id = "112625",
+                            subject_name = "SCIENCE",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3062",
+                                    name = "Paper 1",
+                                    mark = "66",
+                                    max_mark = "100"
+                                ),
+                                ActivityMark(
+                                    id = "3063",
+                                    name = "Paper 2",
+                                    mark = "110",
+                                    max_mark = "100"
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                StudentMarkApi(
+                    student_id = "9674710",
+                    student_name = "Murugan",
+                    roll_no = "",
+                    admission_no = "SS-7",
+                    marks = listOf(
+                        SubjectMark(
+                            subject_id = "112616",
+                            subject_name = "TAMIL",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3061",
+                                    name = "Marks",
+                                    mark = "",
+                                    max_mark = "100"
+                                )
+                            )
+                        ),
+                        SubjectMark(
+                            subject_id = "112625",
+                            subject_name = "SCIENCE",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3062",
+                                    name = "Paper 1",
+                                    mark = "77",
+                                    max_mark = "100"
+                                ),
+                                ActivityMark(
+                                    id = "3063",
+                                    name = "Paper 2",
+                                    mark = "",
+                                    max_mark = "100"
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                StudentMarkApi(
+                    student_id = "9674711",
+                    student_name = "Bharath Student M",
+                    roll_no = "",
+                    admission_no = "SS-8",
+                    marks = listOf(
+                        SubjectMark(
+                            subject_id = "112616",
+                            subject_name = "TAMIL",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3061",
+                                    name = "Marks",
+                                    mark = "200",
+                                    max_mark = "100"
+                                )
+                            )
+                        ),
+                        SubjectMark(
+                            subject_id = "112625",
+                            subject_name = "SCIENCE",
+                            activities = listOf(
+                                ActivityMark(
+                                    id = "3062",
+                                    name = "Paper 1",
+                                    mark = "",
+                                    max_mark = "100"
+                                ),
+                                ActivityMark(
+                                    id = "3063",
+                                    name = "Paper 2",
+                                    mark = "AB",
+                                    max_mark = "100"
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+    private fun setupMarksUI(response: MarkResponse) {
+        val columns = mutableListOf<MarkColumn>()
+
+        val firstStudent = response.data.first()
+
+        firstStudent.marks.forEach { subject ->
+            subject.activities.forEach { activity ->
+                columns.add(
+                    MarkColumn(
+                        subjectId = subject.subject_id,
+                        subjectName = subject.subject_name,
+                        activityId = activity.id,
+                        activityName = activity.name,
+                        maxMark = activity.max_mark.toIntOrNull() ?: 0
+                    )
+                )
+            }
+        }
+
+        binding.marksHeader.headerSubjectContainer.removeAllViews()
+
+        columns.forEach { col ->
+            val headerLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    SUBJECT_CELL_WIDTH,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                gravity = Gravity.CENTER
+            }
+
+            headerLayout.addView(TextView(this).apply {
+                text = col.subjectName
+                gravity = Gravity.CENTER
+                textSize = 14f
+                setTypeface(null, Typeface.BOLD)
+            })
+
+            headerLayout.addView(TextView(this).apply {
+                text = col.activityName
+                gravity = Gravity.CENTER
+                textSize = 13f
+            })
+
+            headerLayout.addView(TextView(this).apply {
+                text = "(${col.maxMark})"
+                gravity = Gravity.CENTER
+                textSize = 12f
+                setTextColor(Color.GRAY)
+            })
+
+            binding.marksHeader.headerSubjectContainer.addView(headerLayout)
+        }
+        val students = response.data.map { apiStudent ->
+
+            val markTexts = MutableList(columns.size) { "" }
+            val marks = MutableList<Int?>(columns.size) { null }
+
+            apiStudent.marks.forEach { subject ->
+                subject.activities.forEach { activity ->
+                    val index = columns.indexOfFirst {
+                        it.subjectId == subject.subject_id &&
+                                it.activityId == activity.id
+                    }
+
+                    if (index != -1) {
+                        val value = activity.mark.trim()
+                        markTexts[index] = value
+                        marks[index] = value.toIntOrNull()
+                    }
+                }
+            }
+
+            StudentMarkList(
+                name = apiStudent.student_name,
+                rollNo = apiStudent.admission_no,
+                marks = marks,
+                markTexts = markTexts
+            )
+        }.toMutableList()
+        binding.rvMarks.adapter = MarksAdapter(
+            students = students,
+            subjectCount = columns.size,
+            context = this
+        )
+        binding.rvMarks.layoutManager = LinearLayoutManager(this)
+        binding.rvMarks.setHasFixedSize(true)
+
+    }
+
 
     private fun callApi() {
 
@@ -296,163 +438,8 @@ class ReviewAndEditMarks :
         json.add("selected_activities", arr)
 
         Log.d("REQ", json.toString())
-        appViewModel!!.isMarkDetails(isAccessToken!!, json,this)
+        appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
     }
 
     override fun onClick(v: View?) {}
 }
-
-
-
-
-
-
-
-//package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks
-//
-//import android.util.Log
-//import android.view.View
-//import androidx.lifecycle.ViewModelProvider
-//import androidx.recyclerview.widget.DividerItemDecoration
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import com.google.gson.JsonArray
-//import com.google.gson.JsonObject
-//import com.vs.schoolmessenger.Auth.Base.BaseActivity
-//import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-//import com.vs.schoolmessenger.R
-//import com.vs.schoolmessenger.Repository.App
-//import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarkEntryAdapter
-//import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.ActivityMark
-//import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
-//import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkRow
-//import com.vs.schoolmessenger.Utils.Constant
-//import com.vs.schoolmessenger.Utils.SharedPreference
-//import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
-//
-//class ReviewAndEditMarks :
-//    BaseActivity<ReviewAndEditMarksBinding>(), View.OnClickListener {
-//
-//    override fun getViewBinding() =
-//        ReviewAndEditMarksBinding.inflate(layoutInflater)
-//
-//    private var appViewModel: App? = null
-//    private var isAccessToken: String? = null
-//    private var isStaffDetails: StaffDetails? = null
-//
-//    /** ✅ FIXED 10 SUBJECT / ACTIVITY IDS */
-//    private val MASTER_ACTIVITY_IDS = listOf(
-//        "3061","3062","3063","3064","3065",
-//        "3066","3067","3068","3069","3070"
-//    )
-//
-//    override fun setupViews() {
-//        super.setupViews()
-//
-//        // Toolbar
-//        isToolBarPrimarySchool(
-//            mainViewId = R.id.main,
-//            statusBarBgView = binding.statusBarBackground
-//        )
-//        binding.toolbarLayout.imgBack.setOnClickListener(this)
-//
-//        isStaffDetails = SharedPreference.getStaffDetails(this)
-//        isAccessToken = isStaffDetails?.access_token
-//
-//        binding.toolbarLayout.lblParentToolBar.text =
-//            Constant.isSelectedMenuName
-//        binding.toolbarLayout.lblSchoolName.text =
-//            isStaffDetails?.school_name ?: ""
-//
-//        // ViewModel
-//        appViewModel = ViewModelProvider(this)[App::class.java]
-//        appViewModel!!.init()
-//
-//        // RecyclerView
-//        binding.rcExamList.layoutManager = LinearLayoutManager(this)
-//
-//        // Light divider
-//        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-//        divider.setDrawable(resources.getDrawable(R.drawable.divider_light, null))
-//        binding.rcExamList.addItemDecoration(divider)
-//
-//        binding.headerLayout.headerScroll.setOnScrollChangeListener { _, scrollX, _, _, _ ->
-//            Constant.scrollX = scrollX
-//        }
-//
-//        // API call
-//        isGetMarkDetails()
-//
-//        // Observe response
-//        appViewModel!!.isGetMarkDetails?.observe(this) { response ->
-//            if (response != null && response.status && response.data.isNotEmpty()) {
-//
-//                val studentRows = mapApiToUi(response)
-//                binding.rcExamList.adapter = MarkEntryAdapter(studentRows)
-//            }
-//        }
-//    }
-//
-//    /** ✅ API → UI mapping */
-//    private fun mapApiToUi(response: MarkResponse): MutableList<StudentMarkRow> {
-//
-//        val rows = mutableListOf<StudentMarkRow>()
-//        var rollNo = 1
-//
-//        response.data.forEach { studentApi ->
-//
-//            val activityMap = HashMap<String, ActivityMark>()
-//            studentApi.marks.forEach { subject ->
-//                subject.activities.forEach { activity ->
-//                    activityMap[activity.id] = activity
-//                }
-//            }
-//
-//            val finalActivities = mutableListOf<ActivityMark>()
-//            MASTER_ACTIVITY_IDS.forEach { activityId ->
-//                finalActivities.add(
-//                    activityMap[activityId]
-//                        ?: ActivityMark(activityId, "", "100")
-//                )
-//            }
-//
-//            rows.add(
-//                StudentMarkRow(
-//                    rollNo = rollNo++,
-//                    studentId = studentApi.student_id,
-//                    studentName = studentApi.student_name,
-//                    activities = finalActivities
-//                )
-//            )
-//        }
-//        return rows
-//    }
-//
-//    /** ✅ Request JSON */
-//    private fun isGetMarkDetails() {
-//
-//        val mainJson = JsonObject()
-//        mainJson.addProperty("class_id", "32588")
-//        mainJson.addProperty("section_id", "90831")
-//        mainJson.addProperty("exam_id", "11027")
-//
-//        val selectedActivities = JsonArray()
-//        val subjectObj = JsonObject()
-//        subjectObj.addProperty("subject_id", "112625")
-//
-//        val actArray = JsonArray()
-//        actArray.add("3062")
-//        actArray.add("3063")
-//
-//        subjectObj.add("activities", actArray)
-//        selectedActivities.add(subjectObj)
-//
-//        mainJson.add("selected_activities", selectedActivities)
-//
-//        Log.d("MARK_REQUEST", mainJson.toString())
-//        appViewModel!!.isMarkDetails(isAccessToken!!, mainJson)
-//    }
-//
-//    override fun onClick(v: View?) {
-//        if (v?.id == R.id.imgBack) onBackPressed()
-//    }
-//}
