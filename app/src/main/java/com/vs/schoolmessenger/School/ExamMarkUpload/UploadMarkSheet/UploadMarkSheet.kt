@@ -858,7 +858,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     getString(R.string.you_ll_enter_student_marks_manually_in_the_next_step_you_can_add_and_edit_all_mark_data_directly_without_ai_processing)
                 ) { confirmed ->
                     if (confirmed) {
-                        val intent = Intent(this, ReviewAndEditMarks::class.java)
+                        val intent = Intent(this, MapActivity::class.java)
                         this.startActivity(intent)
                     }
                 }
