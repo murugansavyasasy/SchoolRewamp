@@ -54,6 +54,9 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
     private var extractedDetails: List<ParcelTableData>? = null
 
+    private var isFromManualEntry = false
+    private var isFromAiEntry = false
+
 
     override fun setupViews() {
         super.setupViews()
@@ -62,8 +65,9 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+         isFromManualEntry = intent.getBooleanExtra("from_manual_entry", false)
 
-
+         isFromAiEntry = intent.getBooleanExtra("ai_entry", false)
 
 
         staffWisExamList = Constant.staffWisExamList

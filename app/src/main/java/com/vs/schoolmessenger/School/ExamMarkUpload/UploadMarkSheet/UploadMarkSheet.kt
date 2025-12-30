@@ -233,7 +233,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 extractedDetails = listOf(response.data)
                 Constant.isExtractedDetails = extractedDetails
                 val intent = Intent(this, MapActivity::class.java)
-                startActivity(intent)
+                intent.putExtra("ai_entry", true)
+                this.startActivity(intent)
             }
             else {
                 Log.e(
@@ -859,6 +860,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 ) { confirmed ->
                     if (confirmed) {
                         val intent = Intent(this, MapActivity::class.java)
+                        intent.putExtra("from_manual_entry", true)
                         this.startActivity(intent)
                     }
                 }
