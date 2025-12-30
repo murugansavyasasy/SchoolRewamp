@@ -18,7 +18,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkList
-import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
 
 class MarksAdapter(
@@ -29,8 +28,6 @@ class MarksAdapter(
 
     private val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 20
-    private val ENGLISH_SUBJECT_INDEX = 1
-
     private val MAX_MARK = 100
 
 
@@ -62,8 +59,6 @@ class MarksAdapter(
 
             val rawText = student.markTexts[i]
             val markValue = rawText.toIntOrNull()
-
-            // 🔲 CELL
             val cellLayout = LinearLayout(holder.itemView.context).apply {
                 orientation = LinearLayout.HORIZONTAL
                 layoutParams = LinearLayout.LayoutParams(
@@ -72,8 +67,6 @@ class MarksAdapter(
                 )
                 gravity = Gravity.CENTER_VERTICAL
             }
-
-            // ✏️ EDIT TEXT
             val et = EditText(holder.itemView.context).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     0,
@@ -94,18 +87,12 @@ class MarksAdapter(
                     }
                 }
             }
-
-
-
-            // ⚠️ ICON
             val warningIcon = ImageView(holder.itemView.context).apply {
                 layoutParams = LinearLayout.LayoutParams(22.dp, 22.dp).apply {
                     marginStart = 6.dp
                 }
                 setImageResource(R.drawable.info_circle)
             }
-
-            // 🔥 INITIAL STATE (THIS FIXES YOUR ISSUE)
             when {
                 rawText.equals("AB", true) -> {
                     showError(et, warningIcon, "Student is absent for this exam")
@@ -121,8 +108,6 @@ class MarksAdapter(
                     clearError(et, warningIcon)
                 }
             }
-
-            // 🔁 TEXT CHANGE
             et.addTextChangedListener { text ->
                 val input = text.toString().trim()
 
