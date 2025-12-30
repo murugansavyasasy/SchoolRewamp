@@ -66,7 +66,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
         val staffDetails = SharedPreference.getStaffDetails(requireContext())
         isAccessToken = staffDetails?.access_token
 
-        viewModel = ViewModelProvider(this).get(App::class.java)
+        viewModel = ViewModelProvider(this)[App::class.java]
         viewModel.init()
 
         binding.imgBack.setOnClickListener {
@@ -154,7 +154,8 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
     }
 
     private fun fetchStudentData() {
-        viewModel.isblockstudentlist(isAccessToken ?: "",requireActivity())
+
+        viewModel.isblockstudentlist(isAccessToken ?: "", requireActivity())
     }
 
     private fun showErrorUI(message: String) {
@@ -201,7 +202,7 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
             addProperty("is_block", false)
             addProperty("reason", "")
         }
-        viewModel.isblockstudent(isAccessToken!!, jsonObject,requireActivity())
+        viewModel.isblockstudent(isAccessToken!!, jsonObject, requireActivity())
         dismiss()
     }
 
