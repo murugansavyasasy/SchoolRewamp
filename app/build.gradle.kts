@@ -150,7 +150,7 @@ android {
                 // Copy logo to drawable folder
                 val logoFile = file("${rootDir}/logos/$iconName.png")
                 if (logoFile.exists()) {
-                    val destFile = File(drawableDir, "school_app_logo.png")
+                    val destFile = File(drawableDir, "school_splash_logo.png")
                     FileInputStream(logoFile).use { input ->
                         FileOutputStream(destFile).use { output ->
                             input.copyTo(output)
