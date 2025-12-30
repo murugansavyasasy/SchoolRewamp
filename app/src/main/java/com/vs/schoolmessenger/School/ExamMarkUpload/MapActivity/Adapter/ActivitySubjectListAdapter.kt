@@ -186,11 +186,7 @@ class ActivitySubjectListAdapter(
                 full.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-
-
             lblHint.text = span
         }
-
-
     }
 }

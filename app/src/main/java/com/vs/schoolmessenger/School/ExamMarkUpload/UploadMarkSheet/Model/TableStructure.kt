@@ -1,7 +1,11 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class TableStructure(
     @SerializedName("table_type")
     val tableType: String,
@@ -21,4 +25,4 @@ data class TableStructure(
     val selectedColumns: List<String>,
     @SerializedName("extraction_difficulty")
     val extractionDifficulty: String
-)
+) : Parcelable
