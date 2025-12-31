@@ -4,6 +4,11 @@
     "name": "school Chimes-Beta",
     "package_suffix": "com.sss.schoolchimesrewamp",
     "color": "#4085ef",
+    "start_color": "",
+    "center_color": "",
+    "end_color": "",
+    "light_sky_blue_color": "",
+    "dark_blue_color": "",
     "icon": "ic_school_a"
   },
   {
@@ -11,13 +16,23 @@
     "name": "School B",
     "package_suffix": "com.sss.schoolB",
     "color": "#4085ef",
+    "start_color": "",
+    "center_color": "",
+    "end_color": "",
+    "light_sky_blue_color": "",
+    "dark_blue_color": "",
     "icon": "ic_school_b"
   },
   {
     "id": "VAGGISVARI",
-    "name": "VAGGISVARI CONNECT",
+    "name": "VAGGISVARI VIDYALAYA",
     "package_suffix": "com.vaggisvari.connect",
     "color": "#f27968",
+    "start_color": "#FFFFFF",
+    "center_color": "#f27968",
+    "end_color": "#e8a59b",
+    "light_sky_blue_color": "#e8a59b",
+    "dark_blue_color": "#f27968",
     "icon": "ic_vaggiswari_logo"
   }
 ]

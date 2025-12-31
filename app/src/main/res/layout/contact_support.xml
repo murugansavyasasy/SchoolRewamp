@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
-        android:paddingVertical="@dimen/fifteen"
+        android:paddingVertical="@dimen/twenty_five"
         android:layout_marginTop="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
@@ -93,7 +93,7 @@
         android:layout_below="@+id/rytPhone"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:paddingVertical="@dimen/fifteen"
+        android:paddingVertical="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
         <ImageView
