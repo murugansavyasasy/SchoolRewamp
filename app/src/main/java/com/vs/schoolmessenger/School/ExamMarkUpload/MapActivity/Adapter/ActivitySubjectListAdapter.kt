@@ -43,6 +43,9 @@ class ActivitySubjectListAdapter(
         holder.bind(subjects[position], position)
     }
 
+
+
+
     inner class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)

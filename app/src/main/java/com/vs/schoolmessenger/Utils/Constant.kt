@@ -78,6 +78,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.SelectedActivityMapping
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
@@ -257,6 +258,8 @@ object Constant {
     var staffWisExamList: List<getStaffWisExamData>? = emptyList()
     var isExtractedDetails: List<ParcelTableData>? = emptyList()
 
+
+    var selectedActivityMappings: List<SelectedActivityMapping> = emptyList()
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
