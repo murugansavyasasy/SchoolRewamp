@@ -116,7 +116,7 @@ class ActivityExamListAdapter(
 
         }
 
-        fun Context.dp(value: Int): Int {
+        private fun Context.dp(value: Int): Int {
             return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 value.toFloat(),
@@ -205,5 +205,3 @@ class ActivityExamListAdapter(
         }
     }
 }
-
-
