@@ -94,17 +94,10 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
         Log.d("Constant.isSelectedMenuName", Constant.isSelectedMenuName)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
-
-
-
-
         binding.lblExamName.text = Constant.isMarkUploadExamListDataDetails?.name
         binding.lblMonthName.text =
             Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
-
-
-
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -292,6 +285,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             }
 
             val activityName = selectedSubjectWise.splitup_details[j].name
+            val activityId = selectedSubjectWise.splitup_details[j].id
 
             mappings.add(
                 SelectedActivityMapping(
@@ -300,7 +294,8 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
                     section_id = selectedSubjectWise.section_id,
                     subject_id = selectedSubjectWise.subject_id,
                     activity_name = activityName,
-                    selected_column = selectedColumn
+                    selected_column = selectedColumn,
+                    activityId = activityId,
                 )
             )
         }
