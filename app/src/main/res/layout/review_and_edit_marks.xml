@@ -115,11 +115,11 @@
             </View>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_above="@+id/LnrContainer2"
                 android:layout_below="@+id/View2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <!-- HEADER -->
                 <include
@@ -129,9 +129,9 @@
                 <!-- STUDENT LIST -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMarks"
-                    android:scrollbars="none"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" />
             </LinearLayout>
 
             <LinearLayout

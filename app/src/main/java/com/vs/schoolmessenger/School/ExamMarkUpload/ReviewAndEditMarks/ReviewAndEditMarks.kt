@@ -44,13 +44,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
 
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
-
             val finalResponse = if (response == null || response.data.isEmpty()) {
                 getMockMarkResponse()
             } else {
                 response
             }
-
             setupMarksUI(finalResponse)
         }
 
