@@ -7,6 +7,11 @@
     <color name="PrimaryColor_90">#904085ef</color>
     <color name="red_90">#FF7F7F</color>
     <color name="PrimaryColor_80">#804085ef</color>
+    <color name="splash_start">#FFFFFF</color>
+    <color name="splash_center">#B3E5FC</color>
+    <color name="splash_end">#B3E5FC</color>
+
+
 
     <color name="dark_blue_5">#3668C2</color>
     <color name="light_primary_colour">#4b99fd</color>

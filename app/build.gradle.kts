@@ -135,7 +135,13 @@ android {
                 val schoolId = school["id"].toString()
                 val schoolName = school["name"].toString()
                 val schoolColor = school["color"].toString()
+                val start_color = school["start_color"].toString()
+                val center_color = school["center_color"].toString()
+                val end_color = school["end_color"].toString()
+                val dark_blue_color = school["dark_blue_color"].toString()
+                val light_sky_blue_color = school["light_sky_blue_color"].toString()
                 val iconName = school["icon"].toString()
+
 
                 val flavorResDir = File(srcDir, "$schoolId/res")
                 val drawableDir = File(flavorResDir, "drawable")
@@ -177,7 +183,13 @@ android {
                     """
                 |<?xml version="1.0" encoding="utf-8"?>
                 |<resources>
+              
                 |    <color name="PrimaryColor">$schoolColor</color>
+                |    <color name="splash_start">$start_color</color>
+                |    <color name="splash_center">$center_color</color>
+                |    <color name="splash_end">$end_color</color>
+                |    <color name="light_sky_blue_color">$light_sky_blue_color</color>
+                |    <color name="dark_blue_color">$dark_blue_color</color>
                 |</resources>
                 """.trimMargin()
                 )

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -54,13 +55,13 @@ class ActivitySubjectListAdapter(
         private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
 
         private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
+        private val lnrEntireHeader: LinearLayout = itemView.findViewById(R.id.lnrEntireHeader)
+        private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
-
-        private var isUserAction = false
 
         fun ChangeButtonColour()
         {
-            imgCheck.setImageResource(R.drawable.selected_circle_icon)
+            imgCheck.setImageResource(R.drawable.circle_selected_icon)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
@@ -81,11 +82,75 @@ class ActivitySubjectListAdapter(
                 }
             }
             else{
-                imgCheck.setOnClickListener {
-                    lblHint.visibility= View.GONE
-                    spinnerContainer.visibility= View.GONE
+                val currentActivityId = subjects[position].activity_id
+
+                if (item.selectedActivityID == currentActivityId) {
                     ChangeButtonColour()
+
+                    lnrEntireHeader.background?.mutate()?.setTint(
+                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                    )
+                    lnrFlexContainer.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                    )
+                } else {
+                    imgCheck.setImageResource(R.drawable.circle_icon)
+                    imgCheck.setColorFilter(
+                        ContextCompat.getColor(context, R.color.gray4),
+                        PorterDuff.Mode.SRC_IN
+                    )
+
+                    lnrEntireHeader.background?.mutate()?.setTint(
+                        ContextCompat.getColor(context, R.color.very_light_gray_13)
+                    )
+                    lnrFlexContainer.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.white)
+                    )
                 }
+
+
+
+                imgCheck.setOnClickListener {
+
+                    val currentActivityId = subjects[adapterPosition].activity_id
+
+                    val isSelected = item.selectedActivityID == currentActivityId
+
+                    if (isSelected) {
+                        item.selectedActivityID = null
+
+                        imgCheck.setImageResource(R.drawable.circle_icon)
+                        imgCheck.setColorFilter(
+                            ContextCompat.getColor(context, R.color.gray4),
+                            PorterDuff.Mode.SRC_IN
+                        )
+
+                        lnrEntireHeader.background?.mutate()?.setTint(
+                            ContextCompat.getColor(context, R.color.very_light_gray_13)
+                        )
+                        lnrFlexContainer.setBackgroundColor(
+                            ContextCompat.getColor(context, R.color.white)
+                        )
+
+                    } else {
+                        item.selectedActivityID = currentActivityId
+
+                        ChangeButtonColour()
+
+                        lnrEntireHeader.background?.mutate()?.setTint(
+                            ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                        )
+                        lnrFlexContainer.setBackgroundColor(
+                            ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                        )
+                    }
+
+                    lblHint.visibility = View.GONE
+                    spinnerContainer.visibility = View.GONE
+
+                    onSelectionChanged()
+                }
+
 
             }
 
@@ -123,13 +188,50 @@ class ActivitySubjectListAdapter(
                     PorterDuff.Mode.SRC_IN
                 )
 
+                val bg = lnrEntireHeader.background?.mutate()
+                bg?.setTint(
+                    ContextCompat.getColor(
+                        context,R.color.very_light_gray_13
+                    )
+                )
+
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context, R.color.white
+                    )
+                )
+
                 onSelectionChanged()
             }
 
 
 
             fun updateHintUi(selected: String?, pos: Int) {
-                lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+
+                val hasSelection = !item.selectedValue.isNullOrEmpty()
+
+                lblClear.visibility = if (hasSelection) View.VISIBLE else View.GONE
+
+                val bg = lnrEntireHeader.background?.mutate()
+                bg?.setTint(
+                    ContextCompat.getColor(
+                        context,
+                        if (hasSelection)
+                            R.color.light_bg_orange_3
+                        else
+                            R.color.very_light_gray_13
+                    )
+                )
+
+
+
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (hasSelection) R.color.light_bg_orange_3 else R.color.white
+                    )
+                )
 
                 when (pos) {
                     -1, 0 -> {   // hide for 1st & 4th
@@ -159,19 +261,12 @@ class ActivitySubjectListAdapter(
                     id: Long
                 ) {
 
-                    if (!isUserAction) {
-                        isUserAction = true
-                        return
-                    }
-
-
                     // disable 1st – allow opening dropdown but revert
                     if (pos == 0) {
                         isSpinnerColumn.setSelection(
                             if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
                             false
                         )
-                        isUserAction = false
 
                         updateHintUi(item.selectedValue, adapter.selectedPosition)
                         return
@@ -183,13 +278,11 @@ class ActivitySubjectListAdapter(
                     adapter.notifyDataSetChanged()
                     onSelectionChanged()
 
-                    isUserAction = false
 
                     updateHintUi(item.selectedValue, pos)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    isUserAction = false
                 }
             }
         }

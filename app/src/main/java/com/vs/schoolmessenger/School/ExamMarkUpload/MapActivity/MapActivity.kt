@@ -33,9 +33,10 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.Upload
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MapActivityBinding
+import kotlin.String
 
-class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
-    OnActivityExamSelectListener {
+class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
+{
 
     override fun getViewBinding(): MapActivityBinding {
         return MapActivityBinding.inflate(layoutInflater)
@@ -47,7 +48,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
     private lateinit var adapter: ActivityExamListAdapter
     private var isClassList: List<getActivitySubjectNameData>? = emptyList()
 
-    private var selectedExam1: getActivitySubjectNameData? = null
+
     private var staffWisExamList: List<getStaffWisExamData>? = null
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
@@ -87,17 +88,23 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lnrUpload.setOnClickListener(this)
-        binding.lnrUpload.isEnabled = false
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         Log.d("Constant.isSelectedMenuName", Constant.isSelectedMenuName)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
+
+
+
+
         binding.lblExamName.text = Constant.isMarkUploadExamListDataDetails?.name
         binding.lblMonthName.text =
             Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
+
+
+
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -153,9 +160,13 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
         var index = 0
 
         val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
-
             getActivitySubjectNameData(
                 subject = subject.subject_name,
+                section_id = subject.section_id,
+                class_id = subject.class_id,
+                class_name = subject.class_name,
+                subject_id = subject.subject_id,
+                section_name = subject.section_name,
                 paper = subject.splitup_details.map { split ->
 
                     val col =
@@ -166,9 +177,11 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
                     index++
 
                     getActivityPaperNameData(
+                        activity_id=split.id,
                         name = split.name,
                         activities = selectedColumns,
-                        selectedValue = null
+                        selectedValue = null,
+                        selectedActivityID =null
                     )
                 }
             )
@@ -176,7 +189,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
         isClassList = mappedList
 
-        adapter = ActivityExamListAdapter(mappedList,isEntryType, this, this, false)
+        adapter = ActivityExamListAdapter(mappedList,isEntryType, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
         binding.rcMapActivity.adapter = adapter
     }
@@ -255,75 +268,54 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             }
 
             R.id.lnrUpload -> {
-                if (selectedExam1 == null) {
-                    Toast.makeText(this, "Please select a subject first", Toast.LENGTH_SHORT).show()
-                    return
+                val paperList = adapter.getFinalList()
+                Log.d("Final_List", paperList.toString())
+                saveSelectedMappings(paperList)
+
+            }
+        }
+    }
+
+    private fun saveSelectedMappings(
+        finalListFromAdapter: List<getActivitySubjectNameData>
+    ) {
+
+        val finalSubjectList = mutableListOf<getActivitySubjectNameData>()
+
+        finalListFromAdapter.forEach { subject ->
+
+            val validPapers = subject.paper.filter { paper ->
+                if (isEntryType) {
+                    !paper.selectedValue.isNullOrEmpty()
+                } else {
+                    !paper.selectedActivityID.isNullOrEmpty()
                 }
-                saveSelectedMappings()
-            }
-        }
-    }
-
-    private fun saveSelectedMappings() {
-        val selectedSubject = selectedExam1 ?: return
-        val examId = selectedExam?.id ?: return
-
-        val selectedSubjectWise = selectedExamActivities?.firstOrNull {
-            it.subject_name == selectedSubject.subject
-        } ?: return
-
-        val mappings = mutableListOf<SelectedActivityMapping>()
-        val minSize = minOf(selectedSubject.paper.size, selectedSubjectWise.splitup_details.size)
-
-        for (j in 0 until minSize) {
-            val paper = selectedSubject.paper[j]
-            val selectedColumn = paper.selectedValue?.trim()
-
-            if (selectedColumn.isNullOrEmpty() ||
-                selectedColumn == "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE") {
-                continue
             }
 
-            val activityName = selectedSubjectWise.splitup_details[j].name
-            val activityId = selectedSubjectWise.splitup_details[j].id
-
-            mappings.add(
-                SelectedActivityMapping(
-                    exam_id = examId,
-                    class_id = selectedSubjectWise.class_id,
-                    section_id = selectedSubjectWise.section_id,
-                    subject_id = selectedSubjectWise.subject_id,
-                    activity_name = activityName,
-                    selected_column = selectedColumn,
-                    activityId = activityId,
+            if (validPapers.isNotEmpty()) {
+                finalSubjectList.add(
+                    subject.copy(paper = validPapers)
                 )
-            )
+            }
         }
 
-        Constant.selectedActivityMappings = mappings
+        Log.d("FINAL_SUBJECT_LIST", finalSubjectList.toString())
 
-        Log.d("Saved Mappings", "Count: ${mappings.size} -> $mappings")
-
-        if (mappings.isEmpty()) {
-            Toast.makeText(this, "No activities mapped yet. Please map at least one column.", Toast.LENGTH_LONG).show()
-        } else {
-            val intent = Intent(this, ReviewAndEditMarks::class.java)
-            startActivity(intent)
-        }
-    }
-
-    override fun onActivityExamSelected(item: getActivitySubjectNameData?) {
-        Log.d("Data", item.toString())
-        if (item == null) {
-            selectedExam1 = null
-            binding.lnrUpload.isEnabled = false
+        if (finalSubjectList.isEmpty()) {
+            Toast.makeText(
+                this,
+                "Please select at least one mapping",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
-        // valid selection
-        selectedExam1 = item
-        binding.lnrUpload.isEnabled = true
-
+        val intent = Intent(this, ReviewAndEditMarks::class.java)
+        intent.putExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
+        startActivity(intent)
     }
+
+
+
 
 }

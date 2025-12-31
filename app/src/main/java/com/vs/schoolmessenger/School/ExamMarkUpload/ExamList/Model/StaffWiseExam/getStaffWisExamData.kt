@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class getStaffWisExamData(
-    val id: String,
+    val id: String,  //////exam_id
     val name: String,
     val date: String,
     val ref_flag: Int
