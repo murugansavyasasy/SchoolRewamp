@@ -61,7 +61,7 @@ class ActivitySubjectListAdapter(
 
         fun ChangeButtonColour()
         {
-            imgCheck.setImageResource(R.drawable.selected_circle_icon)
+            imgCheck.setImageResource(R.drawable.circle_selected_icon)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
