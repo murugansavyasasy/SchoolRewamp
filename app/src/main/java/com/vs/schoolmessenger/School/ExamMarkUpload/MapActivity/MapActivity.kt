@@ -74,7 +74,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         selectedExamActivities = Constant.isSelectedExamActivities
 
 
-        extractedDetails = Constant.isExtractedDetails
+//        extractedDetails = Constant.isExtractedDetails
 //        Log.d(
 //            "Extracted Maps Activity",
 //            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
@@ -311,7 +311,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         }
 
         val intent = Intent(this, ReviewAndEditMarks::class.java)
-        intent.putExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
+        intent.putParcelableArrayListExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
         startActivity(intent)
     }
 

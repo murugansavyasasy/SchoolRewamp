@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.*
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ColumnHeader
@@ -33,6 +34,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 20
     private var isAccessToken: String? = null
+    private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
+
     private var isStaffDetails: StaffDetails? = null
     override fun setupViews() {
         super.setupViews()
@@ -41,6 +44,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         appViewModel!!.init()
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
+
+        isFinalMapDetails =
+            intent.getParcelableArrayListExtra<getActivitySubjectNameData>(
+                "FINAL_MAP_ACTIVITY"
+            ) ?: emptyList()
+
+        Log.d("isFinalMapDetails",isFinalMapDetails.toString())
         isAccessToken = isStaffDetails?.access_token
              isGetMarkDetails()
 
