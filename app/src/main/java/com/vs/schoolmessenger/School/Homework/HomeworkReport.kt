@@ -43,8 +43,8 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
-class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
-    HomeWorkReportClickListener, OnDateSelectedListener, View.OnClickListener {
+class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClickListener,
+    OnDateSelectedListener, View.OnClickListener {
 
     override fun getViewBinding(): HomeworkReportBinding {
         return HomeworkReportBinding.inflate(layoutInflater)
@@ -76,8 +76,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -121,7 +120,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(),
 
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
-        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isAcademicYearId = Constant.isCurrentAcademicYearId

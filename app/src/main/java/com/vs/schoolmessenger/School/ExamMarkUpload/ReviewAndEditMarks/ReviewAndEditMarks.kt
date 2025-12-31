@@ -23,11 +23,9 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
 import kotlin.collections.MutableList
 
-class ReviewAndEditMarks :
-    BaseActivity<ReviewAndEditMarksBinding>(), View.OnClickListener {
+class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnClickListener {
 
-    override fun getViewBinding() =
-        ReviewAndEditMarksBinding.inflate(layoutInflater)
+    override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
 
     private var appViewModel: App? = null
     val SUBJECT_CELL_WIDTH = 200
@@ -42,19 +40,15 @@ class ReviewAndEditMarks :
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
-        callApi()
+        isGetMarkDetails()
 
-
-        callApi()
 
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
-
             val finalResponse = if (response == null || response.data.isEmpty()) {
                 getMockMarkResponse()
             } else {
                 response
             }
-
             setupMarksUI(finalResponse)
         }
 
@@ -175,8 +169,7 @@ class ReviewAndEditMarks :
 
             val tv = TextView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
-                    SUBJECT_CELL_WIDTH,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    SUBJECT_CELL_WIDTH, LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 text = subject
                 gravity = Gravity.CENTER
@@ -189,8 +182,7 @@ class ReviewAndEditMarks :
             if (index != subjects.lastIndex) {
                 val gap = View(this)
                 gap.layoutParams = LinearLayout.LayoutParams(
-                    SUBJECT_CELL_GAP,
-                    LinearLayout.LayoutParams.MATCH_PARENT
+                    SUBJECT_CELL_GAP, LinearLayout.LayoutParams.MATCH_PARENT
                 )
                 binding.marksHeader.headerSubjectContainer.addView(gap)
             }
@@ -202,9 +194,7 @@ class ReviewAndEditMarks :
     private fun getMockMarkResponse(): MarkResponse {
 
         return MarkResponse(
-            status = true,
-            message = "Mock mark details loaded",
-            data = listOf(
+            status = true, message = "Mock mark details loaded", data = listOf(
 
                 StudentMarkApi(
                     student_id = "9674704",
@@ -213,32 +203,17 @@ class ReviewAndEditMarks :
                     admission_no = "SS-1",
                     marks = listOf(
                         SubjectMark(
-                            subject_id = "112616",
-                            subject_name = "TAMIL",
-                            activities = listOf(
+                            subject_id = "112616", subject_name = "TAMIL", activities = listOf(
                                 ActivityMark(
-                                    id = "3061",
-                                    name = "Marks",
-                                    mark = "AB",
-                                    max_mark = "100"
+                                    id = "3061", name = "Marks", mark = "AB", max_mark = "100"
                                 )
                             )
-                        ),
-                        SubjectMark(
-                            subject_id = "112625",
-                            subject_name = "SCIENCE",
-                            activities = listOf(
+                        ), SubjectMark(
+                            subject_id = "112625", subject_name = "SCIENCE", activities = listOf(
                                 ActivityMark(
-                                    id = "3062",
-                                    name = "Paper 1",
-                                    mark = "66",
-                                    max_mark = "100"
-                                ),
-                                ActivityMark(
-                                    id = "3063",
-                                    name = "Paper 2",
-                                    mark = "110",
-                                    max_mark = "100"
+                                    id = "3062", name = "Paper 1", mark = "66", max_mark = "100"
+                                ), ActivityMark(
+                                    id = "3063", name = "Paper 2", mark = "110", max_mark = "100"
                                 )
                             )
                         )
@@ -252,32 +227,17 @@ class ReviewAndEditMarks :
                     admission_no = "SS-7",
                     marks = listOf(
                         SubjectMark(
-                            subject_id = "112616",
-                            subject_name = "TAMIL",
-                            activities = listOf(
+                            subject_id = "112616", subject_name = "TAMIL", activities = listOf(
                                 ActivityMark(
-                                    id = "3061",
-                                    name = "Marks",
-                                    mark = "",
-                                    max_mark = "100"
+                                    id = "3061", name = "Marks", mark = "", max_mark = "100"
                                 )
                             )
-                        ),
-                        SubjectMark(
-                            subject_id = "112625",
-                            subject_name = "SCIENCE",
-                            activities = listOf(
+                        ), SubjectMark(
+                            subject_id = "112625", subject_name = "SCIENCE", activities = listOf(
                                 ActivityMark(
-                                    id = "3062",
-                                    name = "Paper 1",
-                                    mark = "77",
-                                    max_mark = "100"
-                                ),
-                                ActivityMark(
-                                    id = "3063",
-                                    name = "Paper 2",
-                                    mark = "",
-                                    max_mark = "100"
+                                    id = "3062", name = "Paper 1", mark = "77", max_mark = "100"
+                                ), ActivityMark(
+                                    id = "3063", name = "Paper 2", mark = "", max_mark = "100"
                                 )
                             )
                         )
@@ -291,32 +251,17 @@ class ReviewAndEditMarks :
                     admission_no = "SS-8",
                     marks = listOf(
                         SubjectMark(
-                            subject_id = "112616",
-                            subject_name = "TAMIL",
-                            activities = listOf(
+                            subject_id = "112616", subject_name = "TAMIL", activities = listOf(
                                 ActivityMark(
-                                    id = "3061",
-                                    name = "Marks",
-                                    mark = "200",
-                                    max_mark = "100"
+                                    id = "3061", name = "Marks", mark = "200", max_mark = "100"
                                 )
                             )
-                        ),
-                        SubjectMark(
-                            subject_id = "112625",
-                            subject_name = "SCIENCE",
-                            activities = listOf(
+                        ), SubjectMark(
+                            subject_id = "112625", subject_name = "SCIENCE", activities = listOf(
                                 ActivityMark(
-                                    id = "3062",
-                                    name = "Paper 1",
-                                    mark = "",
-                                    max_mark = "100"
-                                ),
-                                ActivityMark(
-                                    id = "3063",
-                                    name = "Paper 2",
-                                    mark = "AB",
-                                    max_mark = "100"
+                                    id = "3062", name = "Paper 1", mark = "", max_mark = "100"
+                                ), ActivityMark(
+                                    id = "3063", name = "Paper 2", mark = "AB", max_mark = "100"
                                 )
                             )
                         )
@@ -351,8 +296,7 @@ class ReviewAndEditMarks :
             val headerLayout = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 layoutParams = LinearLayout.LayoutParams(
-                    SUBJECT_CELL_WIDTH,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    SUBJECT_CELL_WIDTH, LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 gravity = Gravity.CENTER
             }
@@ -387,8 +331,7 @@ class ReviewAndEditMarks :
             apiStudent.marks.forEach { subject ->
                 subject.activities.forEach { activity ->
                     val index = columns.indexOfFirst {
-                        it.subjectId == subject.subject_id &&
-                                it.activityId == activity.id
+                        it.subjectId == subject.subject_id && it.activityId == activity.id
                     }
 
                     if (index != -1) {
@@ -407,9 +350,7 @@ class ReviewAndEditMarks :
             )
         }.toMutableList()
         binding.rvMarks.adapter = MarksAdapter(
-            students = students,
-            subjectCount = columns.size,
-            context = this
+            students = students, subjectCount = columns.size, context = this
         )
         binding.rvMarks.layoutManager = LinearLayoutManager(this)
         binding.rvMarks.setHasFixedSize(true)
@@ -417,7 +358,7 @@ class ReviewAndEditMarks :
     }
 
 
-    private fun callApi() {
+    private fun isGetMarkDetails() {
 
         val json = JsonObject()
         json.addProperty("class_id", "32588")
