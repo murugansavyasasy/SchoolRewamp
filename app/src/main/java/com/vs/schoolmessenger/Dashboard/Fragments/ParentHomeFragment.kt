@@ -193,9 +193,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     Constant.setMenuNames(allMenuItems)
                     isLoadData()
                     setupRecyclerView()
+                    val safeActivity = activity ?: return@observe
 
                     appViewModel!!.isDashBoardCountData(
-                        access_token, Constant.parent, requireActivity()
+                        access_token, Constant.parent, safeActivity
                     )
 
                     Log.d("isMenuDetails", isParentMenuDetails!!.size.toString())

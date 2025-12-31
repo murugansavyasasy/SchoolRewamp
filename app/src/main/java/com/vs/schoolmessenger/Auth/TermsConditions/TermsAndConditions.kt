@@ -21,10 +21,10 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
         )
         // Enable JavaScript
         val screen_name = intent.getStringExtra("screen_name") ?: ""
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         var URL = ""
-        binding.toolbarLayout.lblParentToolBar.text = when (screen_name) {
+        binding.lblParentToolBar.text = when (screen_name) {
             "isTerms" -> {
                 URL = Constant.terms_condition
                 "Terms and Conditions"

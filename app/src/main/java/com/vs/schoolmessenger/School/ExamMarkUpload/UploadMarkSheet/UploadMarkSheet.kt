@@ -233,7 +233,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 extractedDetails = listOf(response.data)
                 Constant.isExtractedDetails = extractedDetails
                 val intent = Intent(this, MapActivity::class.java)
-                startActivity(intent)
+                intent.putExtra("entry_type", true)
+                this.startActivity(intent)
             }
             else {
                 Log.e(
@@ -858,7 +859,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     getString(R.string.you_ll_enter_student_marks_manually_in_the_next_step_you_can_add_and_edit_all_mark_data_directly_without_ai_processing)
                 ) { confirmed ->
                     if (confirmed) {
-                        val intent = Intent(this, ReviewAndEditMarks::class.java)
+                        val intent = Intent(this, MapActivity::class.java)
+                        intent.putExtra("entry_type", false)
                         this.startActivity(intent)
                     }
                 }

@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.SpinnerMarkUploa
 
 class ActivitySubjectListAdapter(
     private val subjects: List<getActivityPaperNameData>,
+    private var isEntryType: Boolean,
     private val context: Context,
     private val onSelectionChanged: () -> Unit
 
@@ -40,6 +41,9 @@ class ActivitySubjectListAdapter(
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         holder.bind(subjects[position], position)
     }
+
+
+
 
     inner class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -66,6 +70,24 @@ class ActivitySubjectListAdapter(
         }
 
         fun bind(item: getActivityPaperNameData, position: Int) {
+
+            if (isEntryType){
+                imgCheck.setOnClickListener {
+                    lblHint.visibility= View.GONE
+                    spinnerContainer.visibility= View.VISIBLE
+                    isSpinnerColumn.post {
+                        isSpinnerColumn.performClick()
+                    }
+                }
+            }
+            else{
+                imgCheck.setOnClickListener {
+                    lblHint.visibility= View.GONE
+                    spinnerContainer.visibility= View.GONE
+                    ChangeButtonColour()
+                }
+
+            }
 
             subjectName.text = item.name
 
@@ -104,13 +126,7 @@ class ActivitySubjectListAdapter(
                 onSelectionChanged()
             }
 
-            imgCheck.setOnClickListener {
-                lblHint.visibility= View.GONE
-                spinnerContainer.visibility= View.VISIBLE
-                isSpinnerColumn.post {
-                    isSpinnerColumn.performClick()
-                }
-            }
+
 
             fun updateHintUi(selected: String?, pos: Int) {
                 lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE

@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.SelectedActivityMapping
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
@@ -54,6 +55,8 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
     private var extractedDetails: List<ParcelTableData>? = null
 
+    private var isEntryType = false
+
 
     override fun setupViews() {
         super.setupViews()
@@ -62,9 +65,8 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-
-
+        isEntryType = intent.getBooleanExtra("entry_type", false)
+        Log.d("isEntryType",isEntryType.toString())
 
         staffWisExamList = Constant.staffWisExamList
         selectedExam = Constant.isMarkUploadExamListDataDetails
@@ -72,19 +74,20 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
 
         extractedDetails = Constant.isExtractedDetails
-        Log.d(
-            "Extracted Maps Activity",
-            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
-        )
-
-        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
-        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
-        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
+//        Log.d(
+//            "Extracted Maps Activity",
+//            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
+//        )
+//
+//        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
+//        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
+//        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lnrUpload.setOnClickListener(this)
+        binding.lnrUpload.isEnabled = false
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -172,7 +175,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
                     getActivityPaperNameData(
                         name = split.name,
                         activities = selectedColumns,
-                        selectedValue = col
+                        selectedValue = null
                     )
                 }
             )
@@ -180,7 +183,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
         isClassList = mappedList
 
-        adapter = ActivityExamListAdapter(mappedList, this, this, false)
+        adapter = ActivityExamListAdapter(mappedList,isEntryType, this, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
         binding.rcMapActivity.adapter = adapter
     }
@@ -259,16 +262,65 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
             }
 
             R.id.lnrUpload -> {
-                val intent = Intent(this, ReviewAndEditMarks::class.java)
-                this.startActivity(intent)
+                if (selectedExam1 == null) {
+                    Toast.makeText(this, "Please select a subject first", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                saveSelectedMappings()
             }
+        }
+    }
+
+    private fun saveSelectedMappings() {
+        val selectedSubject = selectedExam1 ?: return
+        val examId = selectedExam?.id ?: return
+
+        val selectedSubjectWise = selectedExamActivities?.firstOrNull {
+            it.subject_name == selectedSubject.subject
+        } ?: return
+
+        val mappings = mutableListOf<SelectedActivityMapping>()
+        val minSize = minOf(selectedSubject.paper.size, selectedSubjectWise.splitup_details.size)
+
+        for (j in 0 until minSize) {
+            val paper = selectedSubject.paper[j]
+            val selectedColumn = paper.selectedValue?.trim()
+
+            if (selectedColumn.isNullOrEmpty() ||
+                selectedColumn == "\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE") {
+                continue
+            }
+
+            val activityName = selectedSubjectWise.splitup_details[j].name
+
+            mappings.add(
+                SelectedActivityMapping(
+                    exam_id = examId,
+                    class_id = selectedSubjectWise.class_id,
+                    section_id = selectedSubjectWise.section_id,
+                    subject_id = selectedSubjectWise.subject_id,
+                    activity_name = activityName,
+                    selected_column = selectedColumn
+                )
+            )
+        }
+
+        Constant.selectedActivityMappings = mappings
+
+        Log.d("Saved Mappings", "Count: ${mappings.size} -> $mappings")
+
+        if (mappings.isEmpty()) {
+            Toast.makeText(this, "No activities mapped yet. Please map at least one column.", Toast.LENGTH_LONG).show()
+        } else {
+            val intent = Intent(this, ReviewAndEditMarks::class.java)
+            startActivity(intent)
         }
     }
 
     override fun onActivityExamSelected(item: getActivitySubjectNameData?) {
         Log.d("Data", item.toString())
         if (item == null) {
-            selectedExam = null
+            selectedExam1 = null
             binding.lnrUpload.isEnabled = false
             return
         }
