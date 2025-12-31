@@ -103,34 +103,11 @@
             </TextView>
 
 
-            <LinearLayout
-                android:id="@+id/lnrSaveAllMarks1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSampleDesc"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_marginTop="@dimen/five"
-                android:background="@drawable/rect_orange_bg"
-                android:gravity="center"
-                android:paddingVertical="@dimen/eight">
-
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/save_icon"
-                    android:drawablePadding="@dimen/eight"
-                    android:gravity="center"
-                    android:text="@string/save_all_marks"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp"></TextView>
-            </LinearLayout>
-
             <View
                 android:id="@+id/View2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
-                android:layout_below="@+id/lnrSaveAllMarks1"
+                android:layout_below="@+id/lblSampleDesc"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginBottom="@dimen/five"
                 android:background="@color/AthensGray">
