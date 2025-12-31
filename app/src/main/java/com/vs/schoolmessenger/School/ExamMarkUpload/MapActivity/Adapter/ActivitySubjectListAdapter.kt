@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.SpinnerMarkUploa
 
 class ActivitySubjectListAdapter(
     private val subjects: List<getActivityPaperNameData>,
+    private var isEntryType: Boolean,
     private val context: Context,
     private val onSelectionChanged: () -> Unit
 
@@ -66,6 +67,13 @@ class ActivitySubjectListAdapter(
         }
 
         fun bind(item: getActivityPaperNameData, position: Int) {
+
+            if (isEntryType){
+
+            }
+            else{
+
+            }
 
             subjectName.text = item.name
 

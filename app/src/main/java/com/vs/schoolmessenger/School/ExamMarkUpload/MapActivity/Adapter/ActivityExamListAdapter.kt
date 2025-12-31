@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ActivityExamListAdapter(
     private var examList: List<getActivitySubjectNameData>,
+    private var isEntryType: Boolean,
     private val context: Context,
     private val listener: OnActivityExamSelectListener,
     private var isLoading: Boolean
@@ -86,7 +87,7 @@ class ActivityExamListAdapter(
             applyParentColor(this, selectedCount, total)
 
             subjectsRv.layoutManager = LinearLayoutManager(context)
-            subjectsRv.adapter = ActivitySubjectListAdapter(item.paper, context) {
+            subjectsRv.adapter = ActivitySubjectListAdapter(item.paper,isEntryType, context) {
                 val total = item.paper.size
                 val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
                 applyParentColor(this, selectedCount, total) // update UI instantly without notify
