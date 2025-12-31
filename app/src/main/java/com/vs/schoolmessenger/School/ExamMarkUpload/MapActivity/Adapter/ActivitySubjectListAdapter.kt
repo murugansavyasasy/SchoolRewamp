@@ -81,8 +81,7 @@ class ActivitySubjectListAdapter(
                         isSpinnerColumn.performClick()
                     }
                 }
-            }
-            else{
+            } else{
                 imgCheck.setOnClickListener {
                     lblHint.visibility= View.GONE
                     spinnerContainer.visibility= View.GONE

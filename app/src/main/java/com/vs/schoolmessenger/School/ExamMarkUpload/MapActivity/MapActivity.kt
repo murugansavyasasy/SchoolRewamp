@@ -175,7 +175,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
                     getActivityPaperNameData(
                         name = split.name,
                         activities = selectedColumns,
-                        selectedValue = null
+                        selectedValue = col
                     )
                 }
             )
