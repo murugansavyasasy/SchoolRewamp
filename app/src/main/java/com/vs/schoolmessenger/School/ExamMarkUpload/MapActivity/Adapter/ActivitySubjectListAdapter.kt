@@ -59,7 +59,6 @@ class ActivitySubjectListAdapter(
         private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
-
         fun ChangeButtonColour()
         {
             imgCheck.setImageResource(R.drawable.selected_circle_icon)
@@ -83,11 +82,75 @@ class ActivitySubjectListAdapter(
                 }
             }
             else{
-                imgCheck.setOnClickListener {
-                    lblHint.visibility= View.GONE
-                    spinnerContainer.visibility= View.GONE
+                val currentActivityId = subjects[position].activity_id
+
+                if (item.selectedActivityID == currentActivityId) {
                     ChangeButtonColour()
+
+                    lnrEntireHeader.background?.mutate()?.setTint(
+                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                    )
+                    lnrFlexContainer.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                    )
+                } else {
+                    imgCheck.setImageResource(R.drawable.circle_icon)
+                    imgCheck.setColorFilter(
+                        ContextCompat.getColor(context, R.color.gray4),
+                        PorterDuff.Mode.SRC_IN
+                    )
+
+                    lnrEntireHeader.background?.mutate()?.setTint(
+                        ContextCompat.getColor(context, R.color.very_light_gray_13)
+                    )
+                    lnrFlexContainer.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.white)
+                    )
                 }
+
+
+
+                imgCheck.setOnClickListener {
+
+                    val currentActivityId = subjects[adapterPosition].activity_id
+
+                    val isSelected = item.selectedActivityID == currentActivityId
+
+                    if (isSelected) {
+                        item.selectedActivityID = null
+
+                        imgCheck.setImageResource(R.drawable.circle_icon)
+                        imgCheck.setColorFilter(
+                            ContextCompat.getColor(context, R.color.gray4),
+                            PorterDuff.Mode.SRC_IN
+                        )
+
+                        lnrEntireHeader.background?.mutate()?.setTint(
+                            ContextCompat.getColor(context, R.color.very_light_gray_13)
+                        )
+                        lnrFlexContainer.setBackgroundColor(
+                            ContextCompat.getColor(context, R.color.white)
+                        )
+
+                    } else {
+                        item.selectedActivityID = currentActivityId
+
+                        ChangeButtonColour()
+
+                        lnrEntireHeader.background?.mutate()?.setTint(
+                            ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                        )
+                        lnrFlexContainer.setBackgroundColor(
+                            ContextCompat.getColor(context, R.color.light_bg_orange_3)
+                        )
+                    }
+
+                    lblHint.visibility = View.GONE
+                    spinnerContainer.visibility = View.GONE
+
+                    onSelectionChanged()
+                }
+
 
             }
 
@@ -125,11 +188,13 @@ class ActivitySubjectListAdapter(
                     PorterDuff.Mode.SRC_IN
                 )
 
-                lnrEntireHeader.setBackgroundColor(
+                val bg = lnrEntireHeader.background?.mutate()
+                bg?.setTint(
                     ContextCompat.getColor(
-                        context, R.color.white
+                        context,R.color.very_light_gray_13
                     )
                 )
+
                 lnrFlexContainer.setBackgroundColor(
                     ContextCompat.getColor(
                         context, R.color.white
@@ -148,12 +213,18 @@ class ActivitySubjectListAdapter(
 
                 lblClear.visibility = if (hasSelection) View.VISIBLE else View.GONE
 
-                lnrEntireHeader.setBackgroundColor(
+                val bg = lnrEntireHeader.background?.mutate()
+                bg?.setTint(
                     ContextCompat.getColor(
                         context,
-                        if (hasSelection) R.color.light_bg_orange_3 else R.color.white
+                        if (hasSelection)
+                            R.color.light_bg_orange_3
+                        else
+                            R.color.very_light_gray_13
                     )
                 )
+
+
 
                 lnrFlexContainer.setBackgroundColor(
                     ContextCompat.getColor(
