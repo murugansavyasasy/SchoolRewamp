@@ -204,8 +204,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                     Log.d("DashboardDataMenus", "DashboardData")
                     isSchoolContactDetails = isSchoolDashBoardData!![0].contactDetails
+                    val safeActivity = activity ?: return@observe
+
                     appViewModel!!.isDashBoardCountData(
-                        access_token, Constant.staff_, requireActivity()
+                        access_token, Constant.staff_, safeActivity
                     )
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
