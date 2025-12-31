@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -51,9 +52,10 @@ class ActivitySubjectListAdapter(
         private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
 
         private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
+        private val lnrEntireHeader: LinearLayout = itemView.findViewById(R.id.lnrEntireHeader)
+        private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
-        private var isUserAction = false
 
         fun ChangeButtonColour()
         {
@@ -120,13 +122,42 @@ class ActivitySubjectListAdapter(
                     PorterDuff.Mode.SRC_IN
                 )
 
+                lnrEntireHeader.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context, R.color.white
+                    )
+                )
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context, R.color.white
+                    )
+                )
+
                 onSelectionChanged()
             }
 
 
 
             fun updateHintUi(selected: String?, pos: Int) {
-                lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+
+                val hasSelection = !item.selectedValue.isNullOrEmpty()
+
+                lblClear.visibility = if (hasSelection) View.VISIBLE else View.GONE
+
+                lnrEntireHeader.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (hasSelection) R.color.light_bg_orange_3 else R.color.white
+                    )
+                )
+
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (hasSelection) R.color.light_bg_orange_3 else R.color.white
+                    )
+                )
 
                 when (pos) {
                     -1, 0 -> {   // hide for 1st & 4th
@@ -156,19 +187,12 @@ class ActivitySubjectListAdapter(
                     id: Long
                 ) {
 
-                    if (!isUserAction) {
-                        isUserAction = true
-                        return
-                    }
-
-
                     // disable 1st – allow opening dropdown but revert
                     if (pos == 0) {
                         isSpinnerColumn.setSelection(
                             if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
                             false
                         )
-                        isUserAction = false
 
                         updateHintUi(item.selectedValue, adapter.selectedPosition)
                         return
@@ -180,13 +204,11 @@ class ActivitySubjectListAdapter(
                     adapter.notifyDataSetChanged()
                     onSelectionChanged()
 
-                    isUserAction = false
 
                     updateHintUi(item.selectedValue, pos)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    isUserAction = false
                 }
             }
         }
