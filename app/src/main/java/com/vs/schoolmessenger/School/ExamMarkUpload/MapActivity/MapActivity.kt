@@ -73,14 +73,15 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener,
 
 
         extractedDetails = Constant.isExtractedDetails
-        Log.d(
-            "Extracted Maps Activity",
-            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
-        )
 
-        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
-        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
-        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
+//        Log.d(
+//            "Extracted Maps Activity",
+//            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
+//        )
+//
+//        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
+//        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
+//        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

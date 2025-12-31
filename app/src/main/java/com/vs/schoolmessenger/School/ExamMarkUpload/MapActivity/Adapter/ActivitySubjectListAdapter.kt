@@ -69,9 +69,20 @@ class ActivitySubjectListAdapter(
         fun bind(item: getActivityPaperNameData, position: Int) {
 
             if (isEntryType){
-
+                imgCheck.setOnClickListener {
+                    lblHint.visibility= View.GONE
+                    spinnerContainer.visibility= View.VISIBLE
+                    isSpinnerColumn.post {
+                        isSpinnerColumn.performClick()
+                    }
+                }
             }
             else{
+                imgCheck.setOnClickListener {
+                    lblHint.visibility= View.GONE
+                    spinnerContainer.visibility= View.GONE
+                    ChangeButtonColour()
+                }
 
             }
 
@@ -112,13 +123,7 @@ class ActivitySubjectListAdapter(
                 onSelectionChanged()
             }
 
-            imgCheck.setOnClickListener {
-                lblHint.visibility= View.GONE
-                spinnerContainer.visibility= View.VISIBLE
-                isSpinnerColumn.post {
-                    isSpinnerColumn.performClick()
-                }
-            }
+
 
             fun updateHintUi(selected: String?, pos: Int) {
                 lblClear.visibility = if (item.selectedValue.isNullOrEmpty()) View.GONE else View.VISIBLE
