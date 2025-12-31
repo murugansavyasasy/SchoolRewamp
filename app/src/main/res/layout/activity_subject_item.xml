@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/rect_bottom_radius"
     android:id="@+id/lnrEntireHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
