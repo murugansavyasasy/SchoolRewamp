@@ -105,6 +105,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -1317,5 +1318,12 @@ interface ApiInterfaces {
     @POST(APIMethods.uploadmarks)
     fun uploadmarks(@Part filePart: MultipartBody.Part): Call<UploadMarkResponse?>?
 
+
+
+
+    @POST(APIMethods.savemarks)
+    fun savemarks(
+        @Body jsonObject: JsonObject
+    ): Call<SaveMarksModel?>
 
 }

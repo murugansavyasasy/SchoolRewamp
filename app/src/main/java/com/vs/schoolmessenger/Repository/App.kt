@@ -93,6 +93,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -431,6 +432,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetMarkDetails: LiveData<MarkResponse?>? = null
     var isDeleteQuizQuestion: LiveData<DeleteQuizQuestionResponse?>? = null
     var uploadmarks: LiveData<UploadMarkResponse?>? = null
+    var savemarks: LiveData<SaveMarksModel?>? = null
 
 
     fun init() {
@@ -614,6 +616,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isEditQuiz = apiSchoolRepositories.isEditQuizLiveData
         isDeleteQuizQuestion = apiSchoolRepositories.isDeleteQuizQuestionLiveData
         uploadmarks = apiSchoolRepositories.uploadmarksLiveData
+        savemarks = apiSchoolRepositories.savemarksLiveData
 
 
     }
@@ -1948,6 +1951,14 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.uploadmarks(part,activity)
     }
 
+
+
+    fun savemarks(jsonObject: JsonObject, activity: Activity) {
+
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositories.savemarks(jsonObject)
+    }
 
 }
 

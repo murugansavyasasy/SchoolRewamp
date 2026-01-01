@@ -59,6 +59,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -251,6 +252,7 @@ class SchoolServices {
     var isGetMarkDetails: MutableLiveData<MarkResponse?>
     var isgetDeleteQuizQuestion: MutableLiveData<DeleteQuizQuestionResponse?>
     var uploadmarks: MutableLiveData<UploadMarkResponse?>
+    var savemarks: MutableLiveData<SaveMarksModel?>
 
 
     init {
@@ -378,6 +380,7 @@ class SchoolServices {
         isEditQuiz = MutableLiveData()
         isgetDeleteQuizQuestion = MutableLiveData()
         uploadmarks = MutableLiveData()
+        savemarks = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4931,6 +4934,47 @@ class SchoolServices {
 
     val uploadmarksLiveData: LiveData<UploadMarkResponse?>
         get() = uploadmarks
+
+
+
+
+    fun savemarks(
+         jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.savemarks( jsonObject)
+            ?.enqueue(object : Callback<SaveMarksModel?> {
+                override fun onResponse(
+                    call: Call<SaveMarksModel?>, response: Response<SaveMarksModel?>
+                ) {
+                    Log.d(
+                        "DeleteQuizQuestionResponse ",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
+                                savemarks.postValue(response.body())
+                            } else {
+                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
+                                savemarks.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SaveMarksModel?>, t: Throwable
+                ) {
+                    savemarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val savemarksLiveData: LiveData<SaveMarksModel?>
+        get() = savemarks
 
 
 
