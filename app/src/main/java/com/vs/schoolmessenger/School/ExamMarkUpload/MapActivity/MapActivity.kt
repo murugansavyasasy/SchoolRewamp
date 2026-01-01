@@ -311,7 +311,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         }
 
         val intent = Intent(this, ReviewAndEditMarks::class.java)
-        intent.putExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
+        intent.putParcelableArrayListExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
         startActivity(intent)
     }
 

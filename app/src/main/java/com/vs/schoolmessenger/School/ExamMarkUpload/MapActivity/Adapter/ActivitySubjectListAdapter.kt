@@ -236,7 +236,7 @@ class ActivitySubjectListAdapter(
                 when (pos) {
                     -1, 0 -> {   // hide for 1st & 4th
                         lblHint.visibility = View.GONE
-//                        spinnerContainer.visibility= View.GONE
+                        spinnerContainer.visibility= View.GONE
                     }
 
                     else -> {   // for api dropdown value
@@ -261,16 +261,16 @@ class ActivitySubjectListAdapter(
                     id: Long
                 ) {
 
-//                    // disable 1st – allow opening dropdown but revert
-//                    if (pos == 0) {
-//                        isSpinnerColumn.setSelection(
-//                            if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
-//                            false
-//                        )
-//
-//                        updateHintUi(item.selectedValue, adapter.selectedPosition)
-//                        return
-//                    }
+                    // disable 1st – allow opening dropdown but revert
+                    if (pos == 0) {
+                        isSpinnerColumn.setSelection(
+                            if (adapter.selectedPosition == -1) 0 else adapter.selectedPosition,
+                            false
+                        )
+
+                        updateHintUi(item.selectedValue, adapter.selectedPosition)
+                        return
+                    }
 
                     // Accept selection
                     adapter.selectedPosition = pos

@@ -13,5 +13,5 @@ data class SelectedActivityMapping(
     val subject_id: String,
     val activity_name: String,
     val selected_column: String,
-    val selectedActivityID: String?=null
+    val activityId: String,
 ) : Parcelable
