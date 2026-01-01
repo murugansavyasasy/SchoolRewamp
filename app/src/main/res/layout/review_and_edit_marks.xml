@@ -102,12 +102,27 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/lblIssueFound"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSampleDesc"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone"
+                android:textColor="@color/light_gray_4"
+                android:text=""
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
 
             <View
                 android:id="@+id/View2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
-                android:layout_below="@+id/lblSampleDesc"
+                android:layout_below="@+id/lblIssueFound"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginBottom="@dimen/five"
                 android:background="@color/AthensGray">

@@ -235,8 +235,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 val intent = Intent(this, MapActivity::class.java)
                 intent.putExtra("entry_type", true)
                 this.startActivity(intent)
-            }
-            else {
+            } else {
                 Log.e(
                     "UploadMarksError",
                     "Extraction failed: ${response?.message ?: "Unknown error"}"
@@ -608,7 +607,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                             binding.lblFileName.text = fileName
                             binding.lnrUpload.visibility = View.VISIBLE
                         } else {
-                            binding.lblFileName.text = getString(R.string.click_to_upload_or_drag_and_drop)
+                            binding.lblFileName.text =
+                                getString(R.string.click_to_upload_or_drag_and_drop)
                             binding.lnrUpload.visibility = View.GONE
                         }
 
@@ -775,6 +775,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             R.id.cardUploadImage -> {
+                Constant.isMarkUploadFromAi = true
                 val bg = binding.lnrUploadImage.background as GradientDrawable
                 val imgBg = binding.imgUpload.background as GradientDrawable
                 bg.mutate()
@@ -818,7 +819,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 Log.d("LastSaved", Constant.selectedFiles.toString())
                 Log.d("LastSaved", Constant.isAwsUploadedFiles.toString())
                 Log.d("LastSaved", Constant.isAwsUploadedFiles.toString())
-
+                Constant.isMarkUploadFromAi = false
                 Constant.selectedFiles.clear()
                 Constant.isAwsUploadedFiles.clear()
                 Constant.Remaining = MAX_FILES
@@ -874,7 +875,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
     }
 
 
-
     private fun UploadMarks() {
         if (Constant.selectedFiles.isEmpty()) {
             Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
@@ -893,7 +893,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
 
-        appViewModel?.uploadmarks(filePart,this)
+        appViewModel?.uploadmarks(filePart, this)
 
     }
 
