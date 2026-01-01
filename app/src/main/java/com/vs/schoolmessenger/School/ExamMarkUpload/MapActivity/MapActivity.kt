@@ -179,6 +179,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
                     getActivityPaperNameData(
                         activity_id=split.id,
                         name = split.name,
+                        max_mark = split.max_mark,
                         activities = selectedColumns,
                         selectedValue = null,
                         selectedActivityID =null
