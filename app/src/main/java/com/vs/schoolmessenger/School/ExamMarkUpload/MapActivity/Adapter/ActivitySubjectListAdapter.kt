@@ -60,7 +60,7 @@ class ActivitySubjectListAdapter(
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
         fun ChangeButtonColour() {
-            imgCheck.setImageResource(R.drawable.circle_selected_icon)
+            imgCheck.setImageResource(R.drawable.arrow_down_whitesvg)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
@@ -90,27 +90,20 @@ class ActivitySubjectListAdapter(
 
                 if (item.selectedActivityID == currentActivityId) {
                     ChangeButtonColour()
-
-                    lnrEntireHeader.background?.mutate()?.setTint(
-                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
-                    )
-                    lnrFlexContainer.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
-                    )
                 } else {
-                    imgCheck.setImageResource(R.drawable.circle_icon)
+                    imgCheck.setImageResource(R.drawable.bg_outline_green)
                     imgCheck.setColorFilter(
                         ContextCompat.getColor(context, R.color.gray4),
                         PorterDuff.Mode.SRC_IN
                     )
-
-                    lnrEntireHeader.background?.mutate()?.setTint(
-                        ContextCompat.getColor(context, R.color.very_light_gray_13)
-                    )
-                    lnrFlexContainer.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.white)
-                    )
                 }
+
+                lnrEntireHeader.background?.mutate()?.setTint(
+                    ContextCompat.getColor(context, R.color.very_light_gray_13)
+                )
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(context, R.color.white)
+                )
 
                 imgCheck.setOnClickListener {
 
@@ -169,6 +162,10 @@ class ActivitySubjectListAdapter(
             // Restore selection when scrolling
             if (item.selectedValue != null) {
                 adapter.selectedPosition = fullList.indexOf(item.selectedValue)
+                isSpinnerColumn.setSelection(adapter.selectedPosition, false)
+            } else {
+                adapter.selectedPosition = -1
+                isSpinnerColumn.setSelection(0, false)
             }
 
             lblClear.setOnClickListener {
@@ -335,7 +332,7 @@ class ActivitySubjectListAdapter(
 
             // Marks → ORANGE
             spannable.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, R.color.gray4)),
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.gnt_gray)),
                 namePart.length,
                 fullText.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

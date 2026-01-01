@@ -12,18 +12,6 @@
     "icon": "ic_school_a"
   },
   {
-    "id": "schoolB",
-    "name": "School B",
-    "package_suffix": "com.sss.schoolB",
-    "color": "#4085ef",
-    "start_color": "",
-    "center_color": "",
-    "end_color": "",
-    "light_sky_blue_color": "",
-    "dark_blue_color": "",
-    "icon": "ic_school_b"
-  },
-  {
     "id": "VAGGISVARI",
     "name": "VAGGISVARI VIDYALAYA",
     "package_suffix": "com.vaggisvari.connect",

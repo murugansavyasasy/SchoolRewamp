@@ -44,7 +44,6 @@ class ReviewAndEditMarks :
     private val SUBJECT_CELL_GAP = 40
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
 
-
     override fun setupViews() {
         super.setupViews()
 
@@ -80,8 +79,6 @@ class ReviewAndEditMarks :
         }
 
         binding.lnrSaveAllMarks2.setOnClickListener {
-
-
             val saveMarksJsonArray = isSaveTheMark(
                 currentStudentsList,
                 markColumns

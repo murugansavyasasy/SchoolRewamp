@@ -2,8 +2,10 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
@@ -57,6 +59,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -106,6 +109,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -248,6 +252,7 @@ class SchoolServices {
     var isGetMarkDetails: MutableLiveData<MarkResponse?>
     var isgetDeleteQuizQuestion: MutableLiveData<DeleteQuizQuestionResponse?>
     var uploadmarks: MutableLiveData<UploadMarkResponse?>
+    var savemarks: MutableLiveData<SaveMarksModel?>
 
 
     init {
@@ -375,6 +380,7 @@ class SchoolServices {
         isEditQuiz = MutableLiveData()
         isgetDeleteQuizQuestion = MutableLiveData()
         uploadmarks = MutableLiveData()
+        savemarks = MutableLiveData()
     }
 
 //Old Dashboard Api
@@ -4885,8 +4891,7 @@ class SchoolServices {
 
 
 
-    fun uploadmarks(part: MultipartBody.Part
-    ) {
+    fun uploadmarks(part: MultipartBody.Part, activity: Activity) {
         RestClient.apiInterfaces.uploadmarks( part)
             ?.enqueue(object : Callback<UploadMarkResponse?> {
                 override fun onResponse(
@@ -4908,6 +4913,14 @@ class SchoolServices {
                             }
                         }
                     }
+                    else {
+                        Constant.hideLoading(activity)
+                        uploadmarks.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onFailure(
@@ -4921,6 +4934,47 @@ class SchoolServices {
 
     val uploadmarksLiveData: LiveData<UploadMarkResponse?>
         get() = uploadmarks
+
+
+
+
+    fun savemarks(
+         jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.savemarks( jsonObject)
+            ?.enqueue(object : Callback<SaveMarksModel?> {
+                override fun onResponse(
+                    call: Call<SaveMarksModel?>, response: Response<SaveMarksModel?>
+                ) {
+                    Log.d(
+                        "DeleteQuizQuestionResponse ",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
+                                savemarks.postValue(response.body())
+                            } else {
+                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
+                                savemarks.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<SaveMarksModel?>, t: Throwable
+                ) {
+                    savemarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val savemarksLiveData: LiveData<SaveMarksModel?>
+        get() = savemarks
 
 
 
