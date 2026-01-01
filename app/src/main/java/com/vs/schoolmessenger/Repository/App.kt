@@ -1945,7 +1945,7 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiSchoolRepositories.uploadmarks(part)
+        apiSchoolRepositories.uploadmarks(part,activity)
     }
 
 

@@ -91,22 +91,12 @@ class ActivityExamListAdapter(
                 val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
                 applyParentColor(this, selectedCount, total) // update UI instantly without notify
             }
-            else{
-                val total = item.paper.size
-                val selectedCount = item.paper.count { !it.selectedActivityID.isNullOrEmpty() }
-                applyParentColor(this, selectedCount, total) // update UI instantly without notify
-            }
 
             subjectsRv.layoutManager = LinearLayoutManager(context)
             subjectsRv.adapter = ActivitySubjectListAdapter(item.paper,isEntryType, context) {
                 if (isEntryType){
                     val total = item.paper.size
                     val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
-                    applyParentColor(this, selectedCount, total) // update UI instantly without notify
-                }
-                else{
-                    val total = item.paper.size
-                    val selectedCount = item.paper.count { !it.selectedActivityID.isNullOrEmpty() }
                     applyParentColor(this, selectedCount, total) // update UI instantly without notify
                 }
             }

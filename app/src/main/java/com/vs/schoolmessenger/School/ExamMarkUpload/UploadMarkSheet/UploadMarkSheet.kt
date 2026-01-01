@@ -241,11 +241,11 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     "UploadMarksError",
                     "Extraction failed: ${response?.message ?: "Unknown error"}"
                 )
-                Toast.makeText(
-                    this@UploadMarkSheet,
-                    "Failed to process marksheet",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@UploadMarkSheet,
+//                    "Failed to process marksheet",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
     }

@@ -2,8 +2,10 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Introduction.Model.GetFeature
@@ -106,6 +108,7 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -4885,8 +4888,7 @@ class SchoolServices {
 
 
 
-    fun uploadmarks(part: MultipartBody.Part
-    ) {
+    fun uploadmarks(part: MultipartBody.Part, activity: Activity) {
         RestClient.apiInterfaces.uploadmarks( part)
             ?.enqueue(object : Callback<UploadMarkResponse?> {
                 override fun onResponse(
@@ -4907,6 +4909,14 @@ class SchoolServices {
                                 uploadmarks.postValue(response.body())
                             }
                         }
+                    }
+                    else {
+                        Constant.hideLoading(activity)
+                        uploadmarks.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 

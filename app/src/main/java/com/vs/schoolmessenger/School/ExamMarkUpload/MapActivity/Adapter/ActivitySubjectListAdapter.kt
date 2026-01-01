@@ -169,6 +169,10 @@ class ActivitySubjectListAdapter(
             // Restore selection when scrolling
             if (item.selectedValue != null) {
                 adapter.selectedPosition = fullList.indexOf(item.selectedValue)
+                isSpinnerColumn.setSelection(adapter.selectedPosition, false)
+            } else {
+                adapter.selectedPosition = -1
+                isSpinnerColumn.setSelection(0, false)
             }
 
             lblClear.setOnClickListener {
@@ -335,7 +339,7 @@ class ActivitySubjectListAdapter(
 
             // Marks → ORANGE
             spannable.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, R.color.gray4)),
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.gnt_gray)),
                 namePart.length,
                 fullText.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
