@@ -74,7 +74,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         selectedExamActivities = Constant.isSelectedExamActivities
 
 
-//        extractedDetails = Constant.isExtractedDetails
+        extractedDetails = Constant.isExtractedDetails
 //        Log.d(
 //            "Extracted Maps Activity",
 //            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
@@ -179,6 +179,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
                     getActivityPaperNameData(
                         activity_id=split.id,
                         name = split.name,
+                        max_mark = split.max_mark,
                         activities = selectedColumns,
                         selectedValue = null,
                         selectedActivityID =null

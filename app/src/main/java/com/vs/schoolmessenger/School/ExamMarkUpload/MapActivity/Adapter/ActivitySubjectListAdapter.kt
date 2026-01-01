@@ -7,9 +7,11 @@ import android.graphics.drawable.GradientDrawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -44,8 +46,6 @@ class ActivitySubjectListAdapter(
     }
 
 
-
-
     inner class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)
@@ -59,8 +59,7 @@ class ActivitySubjectListAdapter(
         private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
-        fun ChangeButtonColour()
-        {
+        fun ChangeButtonColour() {
             imgCheck.setImageResource(R.drawable.circle_selected_icon)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
@@ -72,16 +71,21 @@ class ActivitySubjectListAdapter(
 
         fun bind(item: getActivityPaperNameData, position: Int) {
 
-            if (isEntryType){
+            Log.d("isEntryType",isEntryType.toString())
+            if (isEntryType) {
                 imgCheck.setOnClickListener {
-                    lblHint.visibility= View.GONE
-                    spinnerContainer.visibility= View.VISIBLE
-                    isSpinnerColumn.post {
-                        isSpinnerColumn.performClick()
-                    }
+                    lblHint.visibility = View.GONE
+                    spinnerContainer.visibility = View.VISIBLE
+                    isSpinnerColumn.viewTreeObserver.addOnGlobalLayoutListener(
+                        object : ViewTreeObserver.OnGlobalLayoutListener {
+                            override fun onGlobalLayout() {
+                                isSpinnerColumn.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                                isSpinnerColumn.performClick()
+                            }
+                        }
+                    )
                 }
-            }
-            else{
+            } else {
                 val currentActivityId = subjects[position].activity_id
 
                 if (item.selectedActivityID == currentActivityId) {
@@ -107,8 +111,6 @@ class ActivitySubjectListAdapter(
                         ContextCompat.getColor(context, R.color.white)
                     )
                 }
-
-
 
                 imgCheck.setOnClickListener {
 
@@ -154,7 +156,7 @@ class ActivitySubjectListAdapter(
 
             }
 
-            subjectName.text = item.name
+            subjectName.setNameWithMaxMarks(item.name, item.max_mark, context)
 
 
             val defaultItems = listOf("\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
@@ -179,8 +181,8 @@ class ActivitySubjectListAdapter(
                 adapter.notifyDataSetChanged()
 
                 lblHint.visibility = View.GONE
-                spinnerContainer.visibility= View.GONE
-                lblHint.text=""
+                spinnerContainer.visibility = View.GONE
+                lblHint.text = ""
 
                 imgCheck.setImageResource(R.drawable.circle_icon)
                 imgCheck.setColorFilter(
@@ -191,7 +193,7 @@ class ActivitySubjectListAdapter(
                 val bg = lnrEntireHeader.background?.mutate()
                 bg?.setTint(
                     ContextCompat.getColor(
-                        context,R.color.very_light_gray_13
+                        context, R.color.very_light_gray_13
                     )
                 )
 
@@ -236,12 +238,12 @@ class ActivitySubjectListAdapter(
                 when (pos) {
                     -1, 0 -> {   // hide for 1st & 4th
                         lblHint.visibility = View.GONE
-                        spinnerContainer.visibility= View.GONE
+                        spinnerContainer.visibility = View.GONE
                     }
 
                     else -> {   // for api dropdown value
                         ChangeButtonColour()
-                        spinnerContainer.visibility= View.GONE
+                        spinnerContainer.visibility = View.GONE
                         lblHint.visibility = View.VISIBLE
                         setMappedHint(selected) // here we just change some part of text to different colour
                     }
@@ -311,5 +313,36 @@ class ActivitySubjectListAdapter(
             )
             lblHint.text = span
         }
+
+        fun TextView.setNameWithMaxMarks(
+            name: String?,
+            maxMark: String?,
+            context: Context
+        ) {
+            val namePart = name ?: ""
+            val markPart = "(Max: ${maxMark ?: ""} marks)"
+            val fullText = namePart + markPart
+
+            val spannable = SpannableString(fullText)
+
+            // Name → BLACK
+            spannable.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                0,
+                namePart.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            // Marks → ORANGE
+            spannable.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.gray4)),
+                namePart.length,
+                fullText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            text = spannable
+        }
+
     }
 }
