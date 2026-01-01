@@ -228,6 +228,7 @@ object Constant {
     var isVoiceType = 1
     var isQuestionLimit = -1
     var isClickEdit = false
+    var isMarkUploadFromAi = true
 
     var mediaPlayer: MediaPlayer = MediaPlayer()
 
@@ -656,7 +657,7 @@ object Constant {
     var openToStudent = "openToStudent"
     var subjectID = "subjectID"
 
-    var isQuizReportPage=false
+    var isQuizReportPage = false
 
     var isQuizQuestionPickCount = 0
     var category_name = "category_name"
@@ -1788,7 +1789,6 @@ object Constant {
             onResult(false)
         }
     }
-
 
 
     fun showSendConfirmation(
