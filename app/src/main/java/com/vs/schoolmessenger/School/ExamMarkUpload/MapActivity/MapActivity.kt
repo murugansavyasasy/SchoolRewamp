@@ -53,7 +53,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
-
     private var extractedDetails: List<ParcelTableData>? = null
 
     private var isEntryType = false
@@ -68,6 +67,13 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         )
         isEntryType = intent.getBooleanExtra("entry_type", false)
         Log.d("isEntryType",isEntryType.toString())
+
+        if (isEntryType){
+            binding.lblSampleMsg.text=getString(R.string.map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually)
+        }
+        else{
+            binding.lblSampleMsg.text= getString(R.string.choose_the_activities_where_you_would_like_to_enter_marks_manually)
+        }
 
         staffWisExamList = Constant.staffWisExamList
         selectedExam = Constant.isMarkUploadExamListDataDetails

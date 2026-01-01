@@ -98,13 +98,6 @@ class ActivitySubjectListAdapter(
                     )
                 }
 
-                lnrEntireHeader.background?.mutate()?.setTint(
-                    ContextCompat.getColor(context, R.color.very_light_gray_13)
-                )
-                lnrFlexContainer.setBackgroundColor(
-                    ContextCompat.getColor(context, R.color.white)
-                )
-
                 imgCheck.setOnClickListener {
 
                     val currentActivityId = subjects[adapterPosition].activity_id
