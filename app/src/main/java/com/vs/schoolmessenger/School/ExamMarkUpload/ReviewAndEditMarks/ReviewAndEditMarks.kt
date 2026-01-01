@@ -16,8 +16,11 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.*
+import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ColumnHeader
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
@@ -31,6 +34,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 20
     private var isAccessToken: String? = null
+    private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
+
     private var isStaffDetails: StaffDetails? = null
     override fun setupViews() {
         super.setupViews()
@@ -39,9 +44,15 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         appViewModel!!.init()
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails?.access_token
-        isGetMarkDetails()
 
+        isFinalMapDetails =
+            intent.getParcelableArrayListExtra<getActivitySubjectNameData>(
+                "FINAL_MAP_ACTIVITY"
+            ) ?: emptyList()
+
+        Log.d("isFinalMapDetails",isFinalMapDetails.toString())
+        isAccessToken = isStaffDetails?.access_token
+             isGetMarkDetails()
 
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
             val finalResponse = if (response == null || response.data.isEmpty()) {
@@ -51,114 +62,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
             setupMarksUI(finalResponse)
         }
-
-
-//        appViewModel!!.isGetMarkDetails?.observe(this) { response ->
-//
-//            if (response == null || !response.status) return@observe
-//            val columns = mutableListOf<MarkColumn>()
-//
-//            // Use first student to define column structure
-//            val firstStudent = response.data.firstOrNull()
-//
-//            firstStudent?.marks?.forEach { subject ->
-//                subject.activities.forEach { activity ->
-//                    columns.add(
-//                        MarkColumn(
-//                            subjectId = subject.subject_id,
-//                            subjectName = subject.subject_name,
-//                            activityId = activity.id,
-//                            activityName = activity.name,
-//                            maxMark = activity.max_mark.toIntOrNull() ?: 0
-//                        )
-//                    )
-//                }
-//            }
-//            binding.marksHeader.headerSubjectContainer.removeAllViews()
-//
-//            columns.forEach { col ->
-//
-//                val headerLayout = LinearLayout(this).apply {
-//                    orientation = LinearLayout.VERTICAL
-//                    layoutParams = LinearLayout.LayoutParams(
-//                        SUBJECT_CELL_WIDTH,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    gravity = Gravity.CENTER
-//                }
-//
-//                val txtSubject = TextView(this).apply {
-//                    text = col.subjectName
-//                    gravity = Gravity.CENTER
-//                    textSize = 14f
-//                    setTypeface(null, Typeface.BOLD)
-//                }
-//
-//                val txtActivity = TextView(this).apply {
-//                    text = col.activityName
-//                    gravity = Gravity.CENTER
-//                    textSize = 13f
-//                }
-//
-//                val txtMax = TextView(this).apply {
-//                    text = "(${col.maxMark})"
-//                    gravity = Gravity.CENTER
-//                    textSize = 12f
-//                    setTextColor(Color.GRAY)
-//                }
-//
-//                headerLayout.addView(txtSubject)
-//                headerLayout.addView(txtActivity)
-//                headerLayout.addView(txtMax)
-//
-//                binding.marksHeader.headerSubjectContainer.addView(headerLayout)
-//            }
-//
-//            val students = response.data.map { apiStudent ->
-//
-//                val markTexts: MutableList<String> =
-//                    MutableList(columns.size) { "" }
-//
-//                val marks: MutableList<Int?> =
-//                    MutableList(columns.size) { null }
-//
-//                apiStudent.marks.forEach { subject ->
-//                    subject.activities.forEach { activity ->
-//
-//                        val columnIndex = columns.indexOfFirst {
-//                            it.subjectId == subject.subject_id &&
-//                                    it.activityId == activity.id
-//                        }
-//
-//                        if (columnIndex != -1) {
-//                            val value = activity.mark.trim()
-//
-//                            markTexts[columnIndex] = value
-//                            marks[columnIndex] = value.toIntOrNull()
-//                        }
-//                    }
-//                }
-//
-//                StudentMarkList(
-//                    name = apiStudent.student_name,
-//                    rollNo = apiStudent.admission_no,
-//                    marks = marks,
-//                    markTexts = markTexts
-//                )
-//            }.toMutableList()
-//
-//            val adapter = MarksAdapter(
-//                students = students,
-//                subjectCount = columns.size,
-//                context = this
-//            )
-//
-//            binding.rvMarks.adapter = adapter
-//        }
-
     }
 
-    private fun setupHeader(subjects: List<String>) {
+    private fun setupHeader(subjects: List<String?>) {
 
         val container = findViewById<LinearLayout>(R.id.headerSubjectContainer)
         val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
@@ -354,30 +260,23 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         )
         binding.rvMarks.layoutManager = LinearLayoutManager(this)
         binding.rvMarks.setHasFixedSize(true)
-
     }
 
 
     private fun isGetMarkDetails() {
-
         val json = JsonObject()
         json.addProperty("class_id", "32588")
         json.addProperty("section_id", "90831")
         json.addProperty("exam_id", "11027")
-
         val arr = JsonArray()
         val obj = JsonObject()
         obj.addProperty("subject_id", "112625")
-
         val act = JsonArray()
         act.add("3062")
         act.add("3063")
-
         obj.add("activities", act)
         arr.add(obj)
-
         json.add("selected_activities", arr)
-
         Log.d("REQ", json.toString())
         appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
     }

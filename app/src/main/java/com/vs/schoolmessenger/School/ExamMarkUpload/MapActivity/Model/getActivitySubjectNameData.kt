@@ -1,6 +1,9 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class getActivitySubjectNameData(
     val section_id: String,
     val section_name: String,
@@ -11,4 +14,4 @@ data class getActivitySubjectNameData(
     val paper: List<getActivityPaperNameData>,
     var isSelected: Boolean = false
 
-)
+): Parcelable
