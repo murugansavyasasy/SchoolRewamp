@@ -53,7 +53,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
-
     private var extractedDetails: List<ParcelTableData>? = null
 
     private var isEntryType = false
