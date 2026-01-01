@@ -1356,6 +1356,7 @@
     <string name="to_complete_the_quiz_but_don_t_worry_you_can_add_them_later">to complete the quiz — but don’t worry, you can add them later</string>
     <string name="note_the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled">Note: The quiz will be visible to students only after all questions are filled</string>
     <string name="clear">Clear</string>
+    <string name="choose_the_activities_where_you_would_like_to_enter_marks_manually">Choose the activities where you would like to enter marks manually.</string>
 
 
 </resources>
