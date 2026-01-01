@@ -24,7 +24,8 @@ class SpinnerMarkUploadAdapter(
     // view shown on toolbar (selected view)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item, parent, false)
-        val textView = view.findViewById<TextView>(R.id.lblTextItem)        // show hint if no selection
+        val textView = view.findViewById<TextView>(R.id.lblTextItem)
+        // show hint if no selection
         if (selectedPosition == -1) {
             textView.text = "Please select a value"
         } else {
