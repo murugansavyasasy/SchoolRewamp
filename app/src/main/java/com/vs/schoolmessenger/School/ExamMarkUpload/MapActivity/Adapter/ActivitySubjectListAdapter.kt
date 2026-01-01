@@ -90,27 +90,20 @@ class ActivitySubjectListAdapter(
 
                 if (item.selectedActivityID == currentActivityId) {
                     ChangeButtonColour()
-
-                    lnrEntireHeader.background?.mutate()?.setTint(
-                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
-                    )
-                    lnrFlexContainer.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.light_bg_orange_3)
-                    )
                 } else {
                     imgCheck.setImageResource(R.drawable.bg_outline_green)
                     imgCheck.setColorFilter(
                         ContextCompat.getColor(context, R.color.gray4),
                         PorterDuff.Mode.SRC_IN
                     )
-
-                    lnrEntireHeader.background?.mutate()?.setTint(
-                        ContextCompat.getColor(context, R.color.very_light_gray_13)
-                    )
-                    lnrFlexContainer.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.white)
-                    )
                 }
+
+                lnrEntireHeader.background?.mutate()?.setTint(
+                    ContextCompat.getColor(context, R.color.very_light_gray_13)
+                )
+                lnrFlexContainer.setBackgroundColor(
+                    ContextCompat.getColor(context, R.color.white)
+                )
 
                 imgCheck.setOnClickListener {
 
