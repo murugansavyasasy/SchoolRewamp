@@ -29,7 +29,6 @@ import kotlin.collections.MutableList
 class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnClickListener {
 
     override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
-
     private var appViewModel: App? = null
     val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 20
@@ -46,7 +45,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
         isFinalMapDetails =
-            intent.getParcelableArrayListExtra<getActivitySubjectNameData>(
+            intent.getParcelableArrayListExtra(
                 "FINAL_MAP_ACTIVITY"
             ) ?: emptyList()
 
