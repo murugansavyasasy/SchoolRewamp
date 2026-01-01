@@ -1953,11 +1953,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
 
-    fun savemarks(jsonObject: JsonObject, activity: Activity) {
+    fun savemarks(isToken:String,jsonObject: JsonArray, activity: Activity) {
 
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiSchoolRepositories.savemarks(jsonObject)
+        apiSchoolRepositories.savemarks(isToken,jsonObject)
     }
 
 }

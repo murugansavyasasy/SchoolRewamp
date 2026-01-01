@@ -1,9 +1,12 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
@@ -15,13 +18,23 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.Interface.OnMarksChangedListener
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.*
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.QuizDataTempHolder
+import com.vs.schoolmessenger.School.QuizExam.QuizTempHolder
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
@@ -60,6 +73,13 @@ class ReviewAndEditMarks :
 
         isGetMarkDetails()
 
+        appViewModel!!.savemarks?.observe(this) { response ->
+            Constant.hideLoading(this@ReviewAndEditMarks)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
 
             val baseResponse = response
@@ -73,16 +93,14 @@ class ReviewAndEditMarks :
                 } else {
                     baseResponse
                 }
+            markColumns = buildHeaderColumns(baseResponse!!)
             setupHeader(buildHeaderColumns(baseResponse!!))
             // UI
             setupMarksUI(finalResponse!!, baseResponse)
         }
 
         binding.lnrSaveAllMarks2.setOnClickListener {
-            val saveMarksJsonArray = isSaveTheMark(
-                currentStudentsList,
-                markColumns
-            )
+            showSendConfirmationDialog()
         }
     }
 
@@ -242,6 +260,7 @@ class ReviewAndEditMarks :
 
                 StudentMarkList(
                     name = apiStudent.student_name,
+                    student_id = apiStudent.student_id,
                     rollNo = apiStudent.admission_no,
                     marks = marks,
                     markTexts = markTexts,
@@ -344,23 +363,28 @@ class ReviewAndEditMarks :
         students.forEach { student ->
 
             val studentObj = JsonObject().apply {
-           //     addProperty("student_id", student.)
+                addProperty("student_id", student.student_id)
                 addProperty("student_name", student.name)
                 addProperty("roll_no", student.rollNo)
                 addProperty("admission_no", "")
             }
 
-            // Group columns by subject
-            val subjectMap = columns.withIndex().groupBy {
-                it.value.subjectName
-            }
-
             val marksArray = JsonArray()
+
+            val subjectMap =
+                LinkedHashMap<String, MutableList<Pair<Int, MarkColumn>>>()
+
+            columns.forEachIndexed { index, column ->
+                val list = subjectMap.getOrPut(column.subjectName) {
+                    mutableListOf()
+                }
+                list.add(index to column)
+            }
 
             subjectMap.forEach { (subjectName, columnList) ->
 
                 val subjectObj = JsonObject().apply {
-                    addProperty("subject_id", columnList.first().value.subjectId)
+                    addProperty("subject_id", columnList.first().second.subjectId)
                     addProperty("subject_name", subjectName)
                 }
 
@@ -368,35 +392,36 @@ class ReviewAndEditMarks :
 
                 columnList.forEach { (index, column) ->
 
-                    val rawText = student.markTexts[index].trim()
-                    val value = rawText.toIntOrNull()
+                    val rawText =
+                        student.markTexts.getOrNull(index)?.trim().orEmpty()
+//                    val value = rawText.toIntOrNull()
                     val maxMark = column.maxMark
 
-                    val (confidence, reason) = when {
-                        rawText.equals("AB", true) ->
-                            false to "Student is absent"
-
-                        rawText.equals("PLEASE MARK PROPERLY", true) ->
-                            false to "PLEASE MARK PROPERLY"
-
-                        rawText.isNotEmpty() && value == null ->
-                            false to "Invalid mark entry"
-
-                        value != null && value > maxMark ->
-                            false to "Mark exceeds maximum ($maxMark)"
-
-                        else ->
-                            true to ""
-                    }
+//                    val (confidence, reason) = when {
+//                        rawText.equals("AB", true) ->
+//                            false to "Student is absent"
+//
+//                        rawText.equals("PLEASE MARK PROPERLY", true) ->
+//                            false to "PLEASE MARK PROPERLY"
+//
+//                        rawText.isNotEmpty() && value == null ->
+//                            false to "Invalid mark entry"
+//
+//                        value != null && value > maxMark ->
+//                            false to "Mark exceeds maximum ($maxMark)"
+//
+//                        else ->
+//                            true to ""
+//                    }
 
                     val activityObj = JsonObject().apply {
                         addProperty("id", column.activityId)
                         addProperty("name", column.activityName)
                         addProperty("mark", rawText)
-                        addProperty("change_mark", "")
+//                        addProperty("change_mark", "")
                         addProperty("max_mark", maxMark.toString())
-                        addProperty("cnfidenceLvl", confidence)
-                        addProperty("reason", reason)
+//                        addProperty("cnfidenceLvl", confidence)
+//                        addProperty("reason", reason)
                     }
 
                     activitiesArray.add(activityObj)
@@ -413,4 +438,35 @@ class ReviewAndEditMarks :
         return studentsArray
     }
 
+    fun showSendConfirmationDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = ""
+        alertMessage.visibility= View.VISIBLE
+        lblSelectTarget.text = "Are you want to save the marks"
+
+        okButton.setOnClickListener {
+            Constant.showLoading(this@ReviewAndEditMarks)
+            val saveMarksJsonArray = isSaveTheMark(
+                currentStudentsList,
+                markColumns
+            )
+            Log.d("saveMarksJsonArray", saveMarksJsonArray.toString())
+            appViewModel?.savemarks(
+                isAccessToken!!,
+                saveMarksJsonArray,
+                this
+            )
+            alertDialog.dismiss()
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
 }

@@ -1323,7 +1323,8 @@ interface ApiInterfaces {
 
     @POST(APIMethods.savemarks)
     fun savemarks(
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonArray
     ): Call<SaveMarksModel?>
 
 }

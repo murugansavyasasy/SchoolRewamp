@@ -4938,10 +4938,10 @@ class SchoolServices {
 
 
 
-    fun savemarks(
-         jsonObject: JsonObject
+    fun savemarks(isToken:String,
+         jsonObject: JsonArray
     ) {
-        RestClient.apiInterfaces.savemarks( jsonObject)
+        RestClient.apiInterfaces.savemarks(isToken, jsonObject)
             ?.enqueue(object : Callback<SaveMarksModel?> {
                 override fun onResponse(
                     call: Call<SaveMarksModel?>, response: Response<SaveMarksModel?>
