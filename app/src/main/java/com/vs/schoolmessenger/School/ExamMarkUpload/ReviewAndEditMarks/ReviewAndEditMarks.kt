@@ -34,8 +34,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private val SUBJECT_CELL_GAP = 20
     private var isAccessToken: String? = null
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
-
     private var isStaffDetails: StaffDetails? = null
+
     override fun setupViews() {
         super.setupViews()
 

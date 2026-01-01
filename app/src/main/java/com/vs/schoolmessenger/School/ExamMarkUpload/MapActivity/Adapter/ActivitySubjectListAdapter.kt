@@ -60,7 +60,7 @@ class ActivitySubjectListAdapter(
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
         fun ChangeButtonColour() {
-            imgCheck.setImageResource(R.drawable.circle_selected_icon)
+            imgCheck.setImageResource(R.drawable.arrow_down_whitesvg)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
@@ -91,7 +91,7 @@ class ActivitySubjectListAdapter(
                 if (item.selectedActivityID == currentActivityId) {
                     ChangeButtonColour()
                 } else {
-                    imgCheck.setImageResource(R.drawable.circle_icon)
+                    imgCheck.setImageResource(R.drawable.bg_outline_green)
                     imgCheck.setColorFilter(
                         ContextCompat.getColor(context, R.color.gray4),
                         PorterDuff.Mode.SRC_IN
