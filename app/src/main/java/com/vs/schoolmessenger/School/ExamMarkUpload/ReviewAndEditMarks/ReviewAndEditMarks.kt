@@ -93,7 +93,7 @@ class ReviewAndEditMarks :
                 val message = maxIssues.joinToString("\n") {
                     "• ${it.studentName} → ${it.subjectName} (${it.enteredMark}/${it.maxMark})"
                 }
-                Constant.errorAlert(
+                Constant.errorAlert1(
                     this, "Alert", "⚠️ Max mark exceeded:\n$message\n\nPlease correct the marks.",
 
                     )
@@ -108,40 +108,41 @@ class ReviewAndEditMarks :
         tableData: ParcelTableData?
     ): MarkResponse {
 
-        if (tableData == null || tableData.records.isEmpty()) return apiResponse
+        if (tableData == null || tableData.records.isEmpty()) {
+            return apiResponse
+        }
 
         val updatedStudents = apiResponse.data.map { student ->
 
+            // 🔹 Match student only by Student ID
             val matchedRow = tableData.records.firstOrNull {
                 it["Student ID"]?.toString() == student.student_id
             } ?: return@map student
 
-            val newMarks = matchedRow
-                .filterKeys {
-                    it != "S.No" &&
-                            it != "Reg No" &&
-                            it != "Student ID" &&
-                            it != "Student Name"
-                }
-                .map { (subjectName, value) ->
-                    SubjectMark(
-                        subject_id = "",
-                        subject_name = subjectName,
-                        activities = listOf(
-                            ActivityMark(
-                                id = "TABLE",
-                                name = "Marks",
-                                mark = value.toString(),
-                                max_mark = "100"
-                            )
+            val updatedSubjects = student.marks.map { subject ->
+
+                val extractedValue =
+                    matchedRow[subject.subject_name]?.toString()?.trim()
+
+                val updatedActivities = subject.activities.map { activity ->
+
+                    if (!extractedValue.isNullOrEmpty()) {
+                        activity.copy(
+                            mark = extractedValue
                         )
-                    )
+                    } else {
+                        activity
+                    }
                 }
-            student.copy(marks = newMarks)
+
+                subject.copy(activities = updatedActivities)
+            }
+
+            student.copy(marks = updatedSubjects)
         }
+
         return apiResponse.copy(data = updatedStudents)
     }
-
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
         val firstStudent = response.data.firstOrNull() ?: return columns

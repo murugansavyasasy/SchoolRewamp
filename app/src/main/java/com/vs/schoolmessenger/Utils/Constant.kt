@@ -998,6 +998,26 @@ object Constant {
         }
     }
 
+    fun errorAlert1(activity: Activity, title: String, content: String) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        // Access views
+        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        messageText.text = content
+        titleText.text = if (!title.isNullOrBlank()) title else "Oops!"
+        Log.d("titleText", titleText.text.toString())
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
     fun showErrorAlert(activity: Activity, title: String, content: String) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.show_error_alert, null)
         val builder = AlertDialog.Builder(activity)
