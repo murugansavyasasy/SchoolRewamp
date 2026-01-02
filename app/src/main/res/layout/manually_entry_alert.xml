@@ -49,7 +49,7 @@
        >
 
         <TextView
-            android:paddingVertical="@dimen/ten"
+            android:paddingVertical="@dimen/eight"
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,12 +57,12 @@
             android:gravity="center"
             android:background="@drawable/rect_white_fill_orange_stroke"
             android:text="@string/Cancel"
-            android:textColor="@color/dark_bg_orange_2" />
+            android:textColor="@color/PrimaryColor" />
 
 
         <TextView
             android:layout_marginTop="@dimen/ten"
-            android:paddingVertical="@dimen/ten"
+            android:paddingVertical="@dimen/eight"
             android:id="@+id/btnOk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

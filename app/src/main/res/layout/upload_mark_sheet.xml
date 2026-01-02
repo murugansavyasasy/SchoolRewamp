@@ -52,7 +52,8 @@
                 android:layout_marginHorizontal="@dimen/ten"
                 android:text="@string/upload_mark_sheet"
                 android:textColor="@color/dark_orange_2"
-                android:textSize="@dimen/eighteen"></TextView>
+                android:textSize="@dimen/eighteen">
+            </TextView>
 
             <TextView
                 android:id="@+id/lblClassDetail"
@@ -74,7 +75,6 @@
                 android:layout_below="@+id/lblClassDetail"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginBottom="@dimen/fifteen"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="@dimen/five">
@@ -254,7 +254,7 @@
                             android:id="@+id/lnrUpload"
                             android:layout_width="match_parent"
                             android:gravity="center"
-                            android:paddingVertical="@dimen/twele"
+                            android:paddingVertical="@dimen/eight"
                             android:background="@drawable/rect_orange_bg"
                             android:layout_height="wrap_content">
                             <TextView

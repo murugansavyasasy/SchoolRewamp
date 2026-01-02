@@ -60,7 +60,7 @@ class ActivitySubjectListAdapter(
         private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
 
         fun ChangeButtonColour() {
-            imgCheck.setImageResource(R.drawable.arrow_down_whitesvg)
+            imgCheck.setImageResource(R.drawable.double_circle)
             imgCheck.setColorFilter(
                 ContextCompat.getColor(
                     context,
