@@ -66,7 +66,6 @@ android {
         viewBinding = true
         buildConfig = true
 
-
     }
 
 

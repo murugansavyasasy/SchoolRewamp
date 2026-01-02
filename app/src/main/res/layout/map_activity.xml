@@ -192,7 +192,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:id="@+id/lnrUpload"
                 android:layout_width="wrap_content"
-                android:paddingVertical="@dimen/twele"
+                android:paddingVertical="@dimen/eight"
                 android:background="@drawable/rect_orange_bg"
                 android:layout_height="wrap_content">
                 <TextView

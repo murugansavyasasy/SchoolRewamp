@@ -47,7 +47,10 @@ class ReviewAndEditMarks :
 
     override fun setupViews() {
         super.setupViews()
-
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 

@@ -128,6 +128,12 @@ class ExamListAdapter(
             }
 
             header.setOnClickListener {
+                val prevExpanded = expandedPosition
+                expandedPosition = if (expandedPosition == position) -1 else position
+
+                notifyItemChanged(position)
+                if (prevExpanded != -1 && prevExpanded != position) notifyItemChanged(prevExpanded)
+
                 val prevSelected = selectedPosition
 
                 if (prevSelected == position) {

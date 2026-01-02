@@ -86,7 +86,8 @@
                 android:text="@string/review_and_edit_marks"
                 android:textColor="@color/dark_orange_2"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
             <TextView
                 android:id="@+id/lblSampleDesc"
@@ -183,7 +184,8 @@
                         android:gravity="center"
                         android:text="@string/save_all_marks"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"></TextView>
+                        android:textSize="@dimen/fifteen_sp">
+                    </TextView>
                 </LinearLayout>
 
             </LinearLayout>
