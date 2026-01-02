@@ -230,21 +230,18 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             Constant.hideLoading(this@UploadMarkSheet)
             if (response?.status == true) {
                 Constant.isExtractedDetails = emptyList()
-                extractedDetails = listOf(response.data)
+                extractedDetails = listOf(response!!.data)
                 Constant.isExtractedDetails = extractedDetails
                 val intent = Intent(this, MapActivity::class.java)
                 intent.putExtra("entry_type", true)
                 this.startActivity(intent)
             } else {
                 Log.e(
-                    "UploadMarksError",
-                    "Extraction failed: ${response?.message ?: "Unknown error"}"
+                    "UploadMarksError", "Extraction failed: ${response?.message ?: "Unknown error"}"
                 )
-//                Toast.makeText(
-//                    this@UploadMarkSheet,
-//                    "Failed to process marksheet",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                Toast.makeText(
+                    this@UploadMarkSheet, "Failed to process marksheet", Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -274,95 +271,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, value.toFloat(), this.resources.displayMetrics
         ).toInt()
-    }
-
-
-    private fun isFileUploadInAws(
-        isFileType: String?
-    ) {
-        Constant.isAwsUploadedFiles.clear()
-        isTotalSelectedItem = Constant.selectedFiles.size
-        val isCountryId = SharedPreference.getCountryId(this)
-        val outputDir =
-            File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
-        outputDir.mkdirs()
-        val newSelectedFiles = mutableListOf<FileItem>()
-        Constant.compressImageFilesOnly(
-            context = this,
-            files = Constant.selectedFiles,
-            outputDir = outputDir.absolutePath,
-            format = Bitmap.CompressFormat.JPEG,
-            quality = 80,
-            maxWidth = 1280,
-            maxHeight = 1280,
-            onEachProcessed = { original, outputPath, success ->
-                if (success && outputPath != null) {
-                    val compressedFile = File(outputPath)
-                    val originalSizeKB = try {
-                        if (original.path.startsWith("content://")) {
-                            contentResolver.openFileDescriptor(
-                                Uri.parse(original.path), "r"
-                            )?.statSize ?: 0
-                        } else {
-                            File(original.path).length()
-                        }
-                    } catch (e: Exception) {
-                        0L
-                    }
-
-                    Log.d(
-                        "Compressor",
-                        "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
-                    )
-
-                    newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-                } else {
-                    Log.e("Compressor", "Failed: ${original.path}")
-                }
-            },
-            onComplete = {
-                Constant.selectedFiles.clear()
-                Constant.selectedFiles.addAll(newSelectedFiles)
-                val isAwsUploadingFile = ArrayList<String>()
-                for (i in Constant.selectedFiles.indices) {
-                    isAwsUploadingPreSigned?.getPreSignedUrl(
-                        Constant.selectedFiles[i].path,
-                        isStaffDetails!!.school_id,
-                        isFileType!!,
-                        this,
-                        isCountryId!!,
-                        false,
-                        object : UploadCallback {
-
-                            override fun onUploadSuccess(
-                                response: String?, isFileUploaded: String?
-                            ) {
-                                Log.d("UploadSuccess", isFileUploaded.toString())
-                                isAwsUploadingFile.add(isFileUploaded!!)
-                                Constant.isAwsUploadedFiles.add(
-                                    AwsUploadedFiles(
-                                        isFileUrl = isFileUploaded,
-                                        isFileType = Constant.selectedFiles[i].type.name
-                                    )
-                                )
-
-                                if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
-                                    Log.d(
-                                        "UploadSuccess",
-                                        Constant.isAwsUploadedFiles.get(0).isFileUrl
-                                    )
-                                    // need to do a api call
-                                }
-                            }
-
-                            override fun onUploadError(error: String?) {
-                                Log.d("isUploadIssue", error.toString())
-                            }
-                        })
-                }
-
-                Log.d("Compressor", "All files compressed and uploaded.")
-            })
     }
 
     private fun showBottomDialog() {
@@ -482,9 +390,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this,
-                    "${applicationContext.packageName}.fileprovider",
-                    photoFile
+                    this, "${applicationContext.packageName}.fileprovider", photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -739,16 +645,13 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             } else {
                 cameraPermissionDeniedCount++
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.CAMERA
+                        this, Manifest.permission.CAMERA
                     )
                 ) {
                     showCameraPermissionSettingsDialog()
                 } else {
                     Toast.makeText(
-                        this,
-                        getString(R.string.camera_permission_is_required),
-                        Toast.LENGTH_SHORT
+                        this, getString(R.string.camera_permission_is_required), Toast.LENGTH_SHORT
                     ).show()
                 }
             }

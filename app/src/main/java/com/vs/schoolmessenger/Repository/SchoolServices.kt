@@ -4902,16 +4902,16 @@ class SchoolServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d("UploadMarkResponse", response.body().toString())
+//                        if (response.body() != null) {
+//                            val status = response.body()!!.status
+//                            if (status) {
+//                                Log.d("UploadMarkResponse", response.body().toString())
                                 uploadmarks.postValue(response.body())
-                            } else {
-                                Log.d("UploadMarkResponse", response.body().toString())
-                                uploadmarks.postValue(response.body())
-                            }
-                        }
+//                            } else {
+//                                Log.d("UploadMarkResponse", response.body().toString())
+//                                uploadmarks.postValue(response.body())
+//                            }
+//                        }
                     }
                     else {
                         Constant.hideLoading(activity)
