@@ -18,23 +18,13 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.Interface.OnMarksChangedListener
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.*
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
-import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.QuizDataTempHolder
-import com.vs.schoolmessenger.School.QuizExam.QuizTempHolder
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
-import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.M_LSRW
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewAndEditMarksBinding
@@ -51,9 +41,7 @@ class ReviewAndEditMarks :
     private var isStaffDetails: StaffDetails? = null
     private var isAccessToken: String? = null
     private val SUBJECT_CELL_WIDTH = 200
-
     private var markColumns: List<MarkColumn> = emptyList()
-
     private val SUBJECT_CELL_GAP = 40
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
 
@@ -66,7 +54,7 @@ class ReviewAndEditMarks :
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
         isFinalMapDetails =
-            intent.getParcelableArrayListExtra<getActivitySubjectNameData>(
+            intent.getParcelableArrayListExtra(
                 "FINAL_MAP_ACTIVITY"
             ) ?: emptyList()
         Log.d("isFinalMapDetails", isFinalMapDetails.toString())
@@ -95,11 +83,22 @@ class ReviewAndEditMarks :
                 }
             markColumns = buildHeaderColumns(baseResponse!!)
             setupHeader(buildHeaderColumns(baseResponse!!))
-            // UI
             setupMarksUI(finalResponse!!, baseResponse)
         }
 
         binding.lnrSaveAllMarks2.setOnClickListener {
+
+            val maxIssues = getMaxMarkIssues(currentStudentsList, markColumns)
+            if (maxIssues.isNotEmpty()) {
+                val message = maxIssues.joinToString("\n") {
+                    "• ${it.studentName} → ${it.subjectName} (${it.enteredMark}/${it.maxMark})"
+                }
+                Constant.errorAlert(
+                    this, "Alert", "⚠️ Max mark exceeded:\n$message\n\nPlease correct the marks.",
+
+                    )
+                return@setOnClickListener
+            }
             showSendConfirmationDialog()
         }
     }
@@ -138,18 +137,14 @@ class ReviewAndEditMarks :
                         )
                     )
                 }
-
             student.copy(marks = newMarks)
         }
-
         return apiResponse.copy(data = updatedStudents)
     }
 
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
-
         val columns = mutableListOf<MarkColumn>()
         val firstStudent = response.data.firstOrNull() ?: return columns
-
         firstStudent.marks.forEach { subject ->
             subject.activities.forEach { activity ->
                 columns.add(
@@ -170,11 +165,8 @@ class ReviewAndEditMarks :
 
         val container = findViewById<LinearLayout>(R.id.headerSubjectContainer)
         val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
-
         container.removeAllViews()
-
         columns.forEachIndexed { index, col ->
-
             val layout = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER
@@ -183,7 +175,6 @@ class ReviewAndEditMarks :
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
             }
-
             layout.addView(TextView(this).apply {
                 text = col.subjectName
                 setTypeface(null, Typeface.BOLD)
@@ -225,11 +216,9 @@ class ReviewAndEditMarks :
 
         val students: MutableList<StudentMarkList> =
             finalResponse.data.map { apiStudent ->
-
                 val markTexts = MutableList(columns.size) { "" }
                 val mockTexts = MutableList(columns.size) { "" }
                 val marks = MutableList<Int?>(columns.size) { null }
-
                 apiStudent.marks.forEach { subject ->
                     subject.activities.forEach { activity ->
                         val index = columns.indexOfFirst {
@@ -257,7 +246,6 @@ class ReviewAndEditMarks :
                         }
                     }
                 }
-
                 StudentMarkList(
                     name = apiStudent.student_name,
                     student_id = apiStudent.student_id,
@@ -300,7 +288,7 @@ class ReviewAndEditMarks :
 
     private fun updateIssueLabel() {
 
-        val issueSummary = calculateIssueSummary(currentStudentsList)
+        val issueSummary = calculateIssueSummary(currentStudentsList, markColumns)
         if (issueSummary.total != 0) {
             binding.lblIssueFound.visibility = View.VISIBLE
         } else {
@@ -317,15 +305,17 @@ class ReviewAndEditMarks :
 
     private fun calculateIssueSummary(
         students: List<StudentMarkList>,
-        maxMark: Int = 100
+        columns: List<MarkColumn>
     ): IssueSummary {
 
         val summary = IssueSummary()
 
         students.forEach { student ->
-            student.markTexts.forEach { rawText ->
+
+            student.markTexts.forEachIndexed { index, rawText ->
 
                 val value = rawText.toIntOrNull()
+                val maxMark = columns.getOrNull(index)?.maxMark ?: return@forEachIndexed
 
                 when {
                     rawText.equals("AB", true) -> {
@@ -350,8 +340,10 @@ class ReviewAndEditMarks :
                 }
             }
         }
+
         return summary
     }
+
 
     private fun isSaveTheMark(
         students: List<StudentMarkList>,
@@ -394,34 +386,13 @@ class ReviewAndEditMarks :
 
                     val rawText =
                         student.markTexts.getOrNull(index)?.trim().orEmpty()
-//                    val value = rawText.toIntOrNull()
                     val maxMark = column.maxMark
-
-//                    val (confidence, reason) = when {
-//                        rawText.equals("AB", true) ->
-//                            false to "Student is absent"
-//
-//                        rawText.equals("PLEASE MARK PROPERLY", true) ->
-//                            false to "PLEASE MARK PROPERLY"
-//
-//                        rawText.isNotEmpty() && value == null ->
-//                            false to "Invalid mark entry"
-//
-//                        value != null && value > maxMark ->
-//                            false to "Mark exceeds maximum ($maxMark)"
-//
-//                        else ->
-//                            true to ""
-//                    }
 
                     val activityObj = JsonObject().apply {
                         addProperty("id", column.activityId)
                         addProperty("name", column.activityName)
                         addProperty("mark", rawText)
-//                        addProperty("change_mark", "")
                         addProperty("max_mark", maxMark.toString())
-//                        addProperty("cnfidenceLvl", confidence)
-//                        addProperty("reason", reason)
                     }
 
                     activitiesArray.add(activityObj)
@@ -450,7 +421,7 @@ class ReviewAndEditMarks :
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
 
         alertMessage.text = ""
-        alertMessage.visibility= View.VISIBLE
+        alertMessage.visibility = View.VISIBLE
         lblSelectTarget.text = "Are you want to save the marks"
 
         okButton.setOnClickListener {
@@ -468,5 +439,33 @@ class ReviewAndEditMarks :
             alertDialog.dismiss()
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    private fun getMaxMarkIssues(
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
+    ): List<MaxMarkIssue> {
+
+        val issues = mutableListOf<MaxMarkIssue>()
+
+        students.forEach { student ->
+            student.markTexts.forEachIndexed { index, rawText ->
+
+                val value = rawText.toIntOrNull() ?: return@forEachIndexed
+                val column = columns.getOrNull(index) ?: return@forEachIndexed
+
+                if (value > column.maxMark) {
+                    issues.add(
+                        MaxMarkIssue(
+                            studentName = student.name,
+                            subjectName = column.subjectName,
+                            enteredMark = rawText,
+                            maxMark = column.maxMark
+                        )
+                    )
+                }
+            }
+        }
+        return issues
     }
 }

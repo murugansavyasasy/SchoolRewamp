@@ -136,12 +136,10 @@
                 android:layout_below="@+id/View2"
                 android:orientation="vertical">
 
-                <!-- HEADER -->
                 <include
                     android:id="@+id/marksHeader"
                     layout="@layout/layout_marks_header" />
 
-                <!-- STUDENT LIST -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMarks"
                     android:layout_width="match_parent"
@@ -190,9 +188,5 @@
 
             </LinearLayout>
         </RelativeLayout>
-
-
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
