@@ -104,7 +104,6 @@ class ReviewAndEditMarks :
                 ?.firstOrNull()
                 ?.reviewFlags
                 ?.forEach { flag ->
-
                     val key =
                         flag.studentId.toString().trim() + "_" +
                                 flag.field.trim().lowercase()
@@ -210,6 +209,7 @@ class ReviewAndEditMarks :
     private fun normalize(text: String): String {
         return text.trim().lowercase()
     }
+
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
         val firstStudent = response.data.firstOrNull() ?: return columns
@@ -317,7 +317,7 @@ class ReviewAndEditMarks :
                 StudentMarkList(
                     name = apiStudent.student_name,
                     student_id = apiStudent.student_id,
-                    rollNo = apiStudent.admission_no,
+                    rollNo = apiStudent.roll_no,
                     marks = marks,
                     markTexts = markTexts,
                     mockMarkTexts = mockTexts
@@ -326,6 +326,7 @@ class ReviewAndEditMarks :
 
         updateIssueLabel()
     }
+
     private fun isGetMarkDetails() {
         val json = JsonObject()
         json.addProperty("class_id", isFinalMapDetails!!.get(0).class_id)
@@ -335,8 +336,12 @@ class ReviewAndEditMarks :
         val obj = JsonObject()
         obj.addProperty("subject_id", isFinalMapDetails!!.get(0).subject_id)
         val act = JsonArray()
+
         for (i in isFinalMapDetails!!.indices) {
-            act.add(isFinalMapDetails!![0].paper[i].activity_id)
+            val isActivityId = isFinalMapDetails!!.get(i).paper
+            for (s in isActivityId.indices) {
+                act.add(isActivityId.get(s).activity_id)
+            }
         }
         obj.add("activities", act)
         arr.add(obj)

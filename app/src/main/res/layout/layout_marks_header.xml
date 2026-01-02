@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student Name"
+            android:text="Student Name &amp;"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold1"
