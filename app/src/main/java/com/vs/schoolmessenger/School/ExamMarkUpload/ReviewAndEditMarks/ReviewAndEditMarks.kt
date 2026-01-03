@@ -44,7 +44,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private var markColumns: List<MarkColumn> = emptyList()
     private val SUBJECT_CELL_GAP = 40
     private val reviewFlagMap = mutableMapOf<String, String>()
-
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
     private var lastIssueUpdateTime = 0L
 
