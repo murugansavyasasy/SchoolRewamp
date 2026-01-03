@@ -623,7 +623,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     override fun onItemEditClick(data: LeaveData) {
         val intent = Intent(this, NewLeaveRequest::class.java)
         intent.putExtra(Constant.isReason, data.reason)
-        intent.putExtra(Constant.isId, data.id)
+        intent.putExtra(Constant.isIdValue, data.id)
         intent.putExtra(Constant.isLeaveTo, data.leave_to)
         intent.putExtra(Constant.isLeaveFrom, data.leave_from)
         intent.putExtra(Constant.isFromSession, data.from_session)

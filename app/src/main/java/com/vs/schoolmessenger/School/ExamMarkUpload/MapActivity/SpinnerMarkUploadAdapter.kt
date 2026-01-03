@@ -27,7 +27,7 @@ class SpinnerMarkUploadAdapter(
         val textView = view.findViewById<TextView>(R.id.lblTextItem)
         // show hint if no selection
         if (selectedPosition == -1) {
-            textView.text = "Please select a value"
+            textView.text = context.getString(R.string.please_select_a_value)
         } else {
             textView.text = items[selectedPosition]
         }

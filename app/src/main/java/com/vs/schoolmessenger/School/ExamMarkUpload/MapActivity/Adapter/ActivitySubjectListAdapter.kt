@@ -57,7 +57,7 @@ class ActivitySubjectListAdapter(
         private val lblHint: TextView = itemView.findViewById(R.id.lblHint)
         private val lnrEntireHeader: LinearLayout = itemView.findViewById(R.id.lnrEntireHeader)
         private val lnrFlexContainer: LinearLayout = itemView.findViewById(R.id.lnrFlexContainer)
-        private val lblClear: TextView = itemView.findViewById(R.id.lblClear)
+        private val lblClear: ImageView = itemView.findViewById(R.id.lblClear)
 
         fun ChangeButtonColour() {
             imgCheck.setImageResource(R.drawable.double_circle)
@@ -138,8 +138,6 @@ class ActivitySubjectListAdapter(
 
                     onSelectionChanged()
                 }
-
-
             }
 
             subjectName.setNameWithMaxMarks(item.name, item.max_mark, context)

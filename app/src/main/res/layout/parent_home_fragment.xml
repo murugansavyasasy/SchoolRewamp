@@ -18,7 +18,8 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/burger_menu"></ImageView>
+            android:src="@drawable/burger_menu">
+        </ImageView>
 
 
         <RelativeLayout
@@ -37,6 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />
 
@@ -47,6 +50,8 @@
                 android:layout_below="@+id/username"
                 android:layout_marginTop="@dimen/five"
                 android:text=""
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -71,6 +76,18 @@
                 android:src="@drawable/notification_icon" />
 
             <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/twenty_eight"
+                android:layout_height="@dimen/twenty_eight"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:scaleType="centerCrop"
+                android:src="@drawable/search_icon_white">
+
+            </ImageView>
+
+
+            <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/sixty"
                 android:layout_height="@dimen/sixty"
@@ -83,17 +100,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_below="@+id/lnrNotifi"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/search_icon_white">
-
-        </ImageView>
 
 
         <com.vs.schoolmessenger.Utils.DashBoardWaveDesign

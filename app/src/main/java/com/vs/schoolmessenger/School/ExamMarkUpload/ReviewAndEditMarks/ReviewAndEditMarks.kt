@@ -67,7 +67,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         isFinalMapDetails = intent.getParcelableArrayListExtra(
-            "FINAL_MAP_ACTIVITY"
+            Constant.FINAL_MAP_ACTIVITY
         ) ?: emptyList()
         Log.d("isFinalMapDetails", isFinalMapDetails.toString())
 
@@ -136,8 +136,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 Constant.errorAlert1(
                     this,
-                    "Alert",
-                    "⚠️ Max mark exceeded:\n$message\n\nPlease correct the marks."
+                    getString(R.string.alert),
+                    getString(R.string.max_mark_exceeded_please_correct_the_marks, message)
                 )
                 return@setOnClickListener
             }
@@ -151,8 +151,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 Constant.errorAlert1(
                     this,
-                    "Alert",
-                    "⚠️ Invalid mark values found:\n$message\n\nPlease correct them."
+                    getString(R.string.alert),
+                    getString(R.string.invalid_mark_values_found_please_correct_them, message)
                 )
                 return@setOnClickListener
             }
@@ -174,7 +174,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val updatedStudents = apiResponse.data.map { student ->
 
             val row = tableData.records.firstOrNull {
-                it["Student ID"]?.toString() == student.student_id
+                it[Constant.Student_ID]?.toString() == student.student_id
             } ?: return@map student
 
             val updatedMarks = student.marks.map { subject ->
@@ -264,7 +264,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             })
 
             layout.addView(TextView(this).apply {
-                text = "Max mark : " + col.maxMark
+                text = context.getString(R.string.max_mark) + col.maxMark
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
                 setTextColor(Color.GRAY)
@@ -347,9 +347,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private fun isGetMarkDetails() {
 
         val json = JsonObject().apply {
-            addProperty("class_id", isFinalMapDetails!![0].class_id)
-            addProperty("section_id", isFinalMapDetails!![0].section_id)
-            addProperty("exam_id", Constant.isMarkUploadExamListDataDetails!!.id)
+            addProperty(Constant.class_id, isFinalMapDetails!![0].class_id)
+            addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
+            addProperty(Constant.exam_id, Constant.isMarkUploadExamListDataDetails!!.id)
         }
 
         val selectedActivitiesArray = JsonArray()
@@ -357,7 +357,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         for (subject in isFinalMapDetails!!) {
 
             val subjectObj = JsonObject().apply {
-                addProperty("subject_id", subject.subject_id)
+                addProperty(Constant.subject_id, subject.subject_id)
             }
 
             val activitiesArray = JsonArray()
@@ -370,12 +370,12 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
 
             if (activitiesArray.size() > 0) {
-                subjectObj.add("activities", activitiesArray)
+                subjectObj.add(Constant.activities, activitiesArray)
                 selectedActivitiesArray.add(subjectObj)
             }
         }
 
-        json.add("selected_activities", selectedActivitiesArray)
+        json.add(Constant.selected_activities, selectedActivitiesArray)
 
         Log.d("FINAL_JSON", json.toString())
         appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
@@ -414,17 +414,17 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         if (issueSummary.maxMarkCount > 0) {
-            parts.add("Max mark exceeded → ${issueSummary.maxMarkCount}")
+            parts.add(getString(R.string.max_mark_exceeded, issueSummary.maxMarkCount))
         }
 
         if (issueSummary.systemMsgCount > 0) {
-            parts.add("PLEASE MARK PROPERLY → ${issueSummary.systemMsgCount}")
+            parts.add(getString(R.string.please_mark_properly, issueSummary.systemMsgCount))
         }
 
         if (parts.isNotEmpty()) {
             binding.lblIssueFound.visibility = View.VISIBLE
             binding.lblIssueFound.text =
-                "⚠️ Found ${issueSummary.total} issue(s): " + parts.joinToString(", ")
+                getString(R.string.found_issue_s, issueSummary.total) + parts.joinToString(", ")
         } else {
             binding.lblIssueFound.visibility = View.GONE
         }
@@ -447,7 +447,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         summary.total++
                     }
 
-                    rawText.equals("PLEASE MARK PROPERLY", true) -> {
+                    rawText.equals(getString(R.string.please_mark_properly), true) -> {
                         summary.systemMsgCount++
                         summary.total++
                     }
@@ -475,10 +475,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val studentsArray = JsonArray()
         students.forEach { student ->
             val studentObj = JsonObject().apply {
-                addProperty("student_id", student.student_id)
-                addProperty("student_name", student.name)
-                addProperty("roll_no", student.rollNo)
-                addProperty("admission_no", "")
+                addProperty(Constant.student_id, student.student_id)
+                addProperty(Constant.student_name, student.name)
+                addProperty(Constant.roll_no, student.rollNo)
+                addProperty(Constant.admission_no, "")
             }
             val marksArray = JsonArray()
             val subjectMap = LinkedHashMap<String, MutableList<Pair<Int, MarkColumn>>>()
@@ -493,8 +493,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             subjectMap.forEach { (subjectName, columnList) ->
 
                 val subjectObj = JsonObject().apply {
-                    addProperty("subject_id", columnList.first().second.subjectId)
-                    addProperty("subject_name", subjectName)
+                    addProperty(Constant.subject_id, columnList.first().second.subjectId)
+                    addProperty(Constant.subject_name, subjectName)
                 }
 
                 val activitiesArray = JsonArray()
@@ -504,18 +504,18 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
                     val maxMark = column.maxMark
                     val activityObj = JsonObject().apply {
-                        addProperty("id", column.activityId)
-                        addProperty("name", column.activityName)
-                        addProperty("mark", rawText)
-                        addProperty("max_mark", maxMark.toString())
+                        addProperty(Constant.id, column.activityId)
+                        addProperty(Constant.name__, column.activityName)
+                        addProperty(Constant.mark, rawText)
+                        addProperty(Constant.max_mark, maxMark.toString())
                     }
 
                     activitiesArray.add(activityObj)
                 }
-                subjectObj.add("activities", activitiesArray)
+                subjectObj.add(Constant.activities, activitiesArray)
                 marksArray.add(subjectObj)
             }
-            studentObj.add("marks", marksArray)
+            studentObj.add(Constant.marks, marksArray)
             studentsArray.add(studentObj)
         }
         return studentsArray
@@ -532,7 +532,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         alertMessage.text = ""
         alertMessage.visibility = View.VISIBLE
-        lblSelectTarget.text = "Are you want to save the marks"
+        lblSelectTarget.text = getString(R.string.are_you_want_to_save_the_marks)
         okButton.setOnClickListener {
             Constant.showLoading(this@ReviewAndEditMarks)
             val saveMarksJsonArray = isSaveTheMark(
