@@ -74,7 +74,7 @@
             android:id="@+id/explore_linearlayout"
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/fourty"
-            android:background="@drawable/background_orange_radius_button"
+            android:background="@drawable/primary_colour_bg_radius_bg"
             android:gravity="center"
             android:orientation="vertical">
 
