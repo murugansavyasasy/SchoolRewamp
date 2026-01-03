@@ -94,10 +94,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             reviewFlagMap.clear()
 
             Constant.isExtractedDetails?.firstOrNull()?.reviewFlags?.forEach { flag ->
-                    val key = flag.studentId.toString().trim() + "_" + flag.field.trim().lowercase()
+                val key = flag.studentId.toString().trim() + "_" + flag.field.trim().lowercase()
 
-                    reviewFlagMap[key] = flag.reason
-                }
+                reviewFlagMap[key] = flag.reason
+            }
             Log.e(
                 "REVIEW_MAP_DEBUG", "MAP SIZE = ${reviewFlagMap.size} | MAP = $reviewFlagMap"
             )
@@ -161,46 +161,66 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
-
     private fun mergeMarksWithExtractedTable(
-        apiResponse: MarkResponse, tableData: ParcelTableData?
+        apiResponse: MarkResponse,
+        tableData: ParcelTableData?
     ): MarkResponse {
 
-        if (tableData == null || tableData.records.isEmpty()) {
-            return apiResponse
-        }
+        if (tableData == null || tableData.records.isEmpty()) return apiResponse
+
+        fun normalize(t: String) =
+            t.lowercase().replace("[^a-z0-9]".toRegex(), "")
 
         val updatedStudents = apiResponse.data.map { student ->
-            val matchedRow = tableData.records.firstOrNull {
+
+            val row = tableData.records.firstOrNull {
                 it["Student ID"]?.toString() == student.student_id
             } ?: return@map student
 
-            val updatedSubjects = student.marks.map { subject ->
-                val extractedValue = matchedRow.entries.firstOrNull { entry ->
-                    normalize(entry.key) == normalize(subject.subject_name)
-                }?.value?.toString()?.trim()
+            val updatedMarks = student.marks.map { subject ->
+
+                val normSubject = normalize(subject.subject_name)
 
                 val updatedActivities = subject.activities.map { activity ->
-                    if (!extractedValue.isNullOrEmpty()) {
-                        activity.copy(mark = extractedValue)
-                    } else {
-                        activity
+
+                    val normActivity = normalize(activity.name)
+
+                    val exactMatch = row.entries.firstNotNullOfOrNull { entry ->
+                        val header = normalize(entry.key)
+
+                        val subjectMatch = header.contains(normSubject)
+                        val activityMatch = header.contains(normActivity)
+
+                        if (subjectMatch && activityMatch) {
+                            entry.value?.toString()?.trim()
+                        } else null
                     }
+
+                    val subjectOnlyMatch =
+                        if (exactMatch == null && subject.activities.size == 1) {
+                            row.entries.firstNotNullOfOrNull { entry ->
+                                val header = normalize(entry.key)
+                                if (header == normSubject) {
+                                    entry.value?.toString()?.trim()
+                                } else null
+                            }
+                        } else null
+
+                    val finalValue = exactMatch ?: subjectOnlyMatch
+
+                    if (!finalValue.isNullOrEmpty()) {
+                        activity.copy(mark = finalValue)
+                    } else activity
                 }
 
                 subject.copy(activities = updatedActivities)
             }
 
-            student.copy(marks = updatedSubjects)
+            student.copy(marks = updatedMarks)
         }
 
         return apiResponse.copy(data = updatedStudents)
     }
-
-    private fun normalize(text: String): String {
-        return text.trim().lowercase()
-    }
-
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
         val firstStudent = response.data.firstOrNull() ?: return columns
@@ -262,7 +282,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
         HorizontalScrollSync.bind(headerScroll)
     }
-
 
     private fun setupMarksUI(
         finalResponse: MarkResponse,
