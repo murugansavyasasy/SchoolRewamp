@@ -72,8 +72,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.cbSelect.buttonTintList = null
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -172,7 +171,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -237,38 +236,27 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     private fun isStudentData() {
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
-        mAdapter =
-            SpecificStudentAdapter(
-                isStudentData,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+        mAdapter = SpecificStudentAdapter(
+            isStudentData, this, this, Constant.isShimmerViewDisable
+        )
         binding.rcySpecificStudent.adapter = mAdapter
     }
 
     private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
-        mAdapter =
-            SpecificStudentAdapter(
-                null,
-                this,
-                this,
-                Constant.isShimmerViewShow
-            )
+        mAdapter = SpecificStudentAdapter(
+            null, this, this, Constant.isShimmerViewShow
+        )
         binding.rcySpecificStudent.adapter = mAdapter
 
 
         appViewModel!!.isGetStudentList(
-            isAccessToken!!,
-            isSelectedId[0].toString(), isAcademicYearId, this
+            isAccessToken!!, isSelectedId[0].toString(), isAcademicYearId, this
         )
     }
 
-
     fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
-
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
             isCommunicationType = isVoiceData!!.isCommunicationType,
@@ -309,9 +297,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         ProgressDialogHelper.show(this)
 //        ProgressDialogHelper.updateProgress(10)
 
-        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK ||
-            SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT
-        ) {
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
 //        ProgressDialogHelper.updateProgress(50)
@@ -352,22 +338,17 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 //            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
 //            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
-                isFileType,
-                totalTasks,
-                { completedTasks++; updateProgress() })
+                isFileType, totalTasks, { completedTasks++; updateProgress() })
 
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
-                totalTasks,
-                { completedTasks++; updateProgress() })
+                totalTasks, { completedTasks++; updateProgress() })
         }
 //        ProgressDialogHelper.updateProgress(80)
     }
 
 
     private fun isFileUploadInAws(
-        isFileType: String?,
-        totalTasks: Int,
-        onTaskComplete: () -> Unit
+        isFileType: String?, totalTasks: Int, onTaskComplete: () -> Unit
     ) {
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
@@ -376,8 +357,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             if (fileItem.path.contains("amazonaws.")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path,
-                        isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
                 iterator.remove()
@@ -417,10 +397,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         val originalSizeKB = try {
                             if (original.path.startsWith("content://")) {
                                 contentResolver.openFileDescriptor(
-                                    Uri.parse(original.path),
-                                    "r"
-                                )?.statSize
-                                    ?: 0
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
                             } else {
                                 File(original.path).length()
                             }
@@ -456,8 +434,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             object : UploadCallback {
 
                                 override fun onUploadSuccess(
-                                    response: String?,
-                                    isFileUploaded: String?
+                                    response: String?, isFileUploaded: String?
                                 ) {
                                     isAwsUploadingFile.add(isFileUploaded!!)
                                     Constant.isAwsUploadedFiles.add(
@@ -492,14 +469,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
 
                     Log.d("Compressor", "All files compressed and uploaded.")
-                }
-            )
+                })
         }
     }
 
     private fun videoUploading(
-        totalTasks: Int,
-        onTaskComplete: () -> Unit
+        totalTasks: Int, onTaskComplete: () -> Unit
     ) {
 
         val iterator = isVideoSelectedArrayList.iterator()
@@ -508,8 +483,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             if (fileItem.path.contains("player.vimeo.com")) {
                 Constant.isAwsUploadedFiles.add(
                     AwsUploadedFiles(
-                        isFileUrl = fileItem.path,
-                        isFileType = fileItem.type.name
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
                     )
                 )
                 iterator.remove()
@@ -577,9 +551,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
     override fun onUploadComplete(
-        success: Boolean,
-        iframe: String?,
-        link: String?
+        success: Boolean, iframe: String?, link: String?
     ) {
         runOnUiThread {
             Log.d("link", link.toString())
@@ -711,16 +683,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     showSendConfirmationDialog(
                         resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + resources.getString(
                             R.string.Student_s
-                        ),
-                        isAcademicYearNote.toString()
+                        ), isAcademicYearNote.toString()
                     )
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(
                             R.string.alert
-                        ),
-                        resources.getString(R.string.Please_select_least_student),
-                        this
+                        ), resources.getString(R.string.Please_select_least_student), this
                     )
                 }
             }
@@ -751,9 +720,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         } ?: run {
             Constant.showValidationAlertPopup(
-                getString(R.string.alert),
-                "Assignment details is missing.",
-                this
+                getString(R.string.alert), "Assignment details is missing.", this
             )
         }
     }

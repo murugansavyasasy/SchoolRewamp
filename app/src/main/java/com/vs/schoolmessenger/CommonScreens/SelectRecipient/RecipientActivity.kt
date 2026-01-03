@@ -356,7 +356,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -436,7 +436,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -454,7 +454,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -472,7 +472,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -490,7 +490,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
                 }
             }
         }
@@ -1231,7 +1231,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun isCheckLevel() {
         appViewModel!!.isGetCheckLevel(
             isAccessToken!!, isStandardId, isSubjectId!!.toString(),
-            "",this
+            "", this
         )
     }
 
@@ -1833,7 +1833,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     fun voiceSendApi() {
-
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
@@ -2032,7 +2031,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         mainJson.addProperty("no_of_question", isSaveCreateExamQuizDetails!!.no_of_question.toInt())
         mainJson.addProperty("level_flag", isSaveCreateExamQuizDetails!!.level_flag)
         Log.d("FINAL_JSON", mainJson.toString())
-        appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson,this)
+        appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson, this)
 
     }
 

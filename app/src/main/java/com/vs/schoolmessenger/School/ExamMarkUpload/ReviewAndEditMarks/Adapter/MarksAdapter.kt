@@ -121,11 +121,18 @@ class MarksAdapter(
                     visibility = View.GONE
                 }
 
+//                if (
+//                    mockText.isNotEmpty() &&
+//                    isAllowedValue(mockText) &&
+//                    mockText != rawText
+//                ) {
                 if (
                     mockText.isNotEmpty() &&
                     isAllowedValue(mockText) &&
+                    isAllowedValue(rawText) &&
                     mockText != rawText
                 ) {
+
                     prevText.text = "was: $mockText"
                     prevText.visibility = View.VISIBLE
                 }
