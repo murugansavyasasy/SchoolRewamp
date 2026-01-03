@@ -543,7 +543,7 @@
     <string name="lblChangePassword">Change Password</string>
     <string name="lblOldPassword">Enter the old Password</string>
     <string name="lblNewPassword">Enter the new Password</string>
-    <string name="lblChange">Change</string>
+    <string name="lblChange">Change Password</string>
     <string name="lblCreate">Create</string>
     <string name="lblReset">Reset</string>
     <string name="Students_List">Students List</string>
@@ -1357,6 +1357,20 @@
     <string name="note_the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled">Note: The quiz will be visible to students only after all questions are filled</string>
     <string name="clear">Clear</string>
     <string name="choose_the_activities_where_you_would_like_to_enter_marks_manually">Choose the activities where you would like to enter marks manually.</string>
+    <string name="please_select_at_least_one_mapping">Please select at least one mapping</string>
+    <string name="please_select_a_value">Please select a value</string>
+    <string name="max_mark_exceeded_please_correct_the_marks">⚠️ Max mark exceeded:\n%1$s\n\nPlease correct the marks.</string>
+    <string name="invalid_mark_values_found_please_correct_them">⚠️ Invalid mark values found:\n%1$s\n\nPlease correct them.</string>
+    <string name="max_mark">"Max mark : "</string>
+    <string name="please_mark_properly">PLEASE MARK PROPERLY → %1$d</string>
+    <string name="max_mark_exceeded">"Max mark exceeded → %1$d, "</string>
+    <string name="ab">"AB → %1$d, "</string>
+    <string name="found_issue_s">"⚠️ Found %1$d issue(s): "</string>
+    <string name="please_mark_properly_">PLEASE MARK PROPERLY</string>
+    <string name="are_you_want_to_save_the_marks">Are you want to save the marks</string>
+    <string name="invalid_mark">Invalid mark</string>
+    <string name="failed_to_process_marksheet">Failed to process marksheet</string>
+    <string name="max_mark_is">Max mark is %1$d</string>
 
 
 </resources>

@@ -431,7 +431,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     private fun isUpdateLeaveReq() {
         val updatedRequest = LeaveRequestUpdate(
-            id = intent.getStringExtra(Constant.isId) ?: "",
+            id = intent.getStringExtra(Constant.isIdValue) ?: "",
             leave_from = fromDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
             leave_to = toDate?.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) ?: "",
             reason = binding.etLeaveReason.text.toString().trim(),

@@ -89,7 +89,11 @@ class ActivityExamListAdapter(
             if (isEntryType){
                 val total = item.paper.size
                 val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
-                applyParentColor(this, selectedCount, total) // update UI instantly without notify
+                applyParentColor(this, selectedCount, total,isEntryType) // update UI instantly without notify
+            }else{
+                val total = item.paper.size
+                val selectedCount = item.paper.count { !it.selectedActivityID.isNullOrEmpty() }
+                applyParentColor(this, selectedCount, total,isEntryType) // update UI instantly without notify
             }
 
             subjectsRv.layoutManager = LinearLayoutManager(context)
@@ -97,7 +101,12 @@ class ActivityExamListAdapter(
                 if (isEntryType){
                     val total = item.paper.size
                     val selectedCount = item.paper.count { !it.selectedValue.isNullOrEmpty() }
-                    applyParentColor(this, selectedCount, total) // update UI instantly without notify
+                    applyParentColor(this, selectedCount, total,isEntryType) // update UI instantly without notify
+                }
+                else{
+                    val total = item.paper.size
+                    val selectedCount = item.paper.count { !it.selectedActivityID.isNullOrEmpty() }
+                    applyParentColor(this, selectedCount, total,isEntryType) // update UI instantly without notify
                 }
             }
 
@@ -132,25 +141,27 @@ class ActivityExamListAdapter(
         }
 
 
-        private fun applyParentColor(holder: ExamViewHolder, selectedCount: Int, total: Int) {
+        private fun applyParentColor(holder: ExamViewHolder, selectedCount: Int, total: Int,isEntryType: Boolean) {
             val bg = lnrUploadImage.background as GradientDrawable
             bg.mutate()
             when {
                 selectedCount == 0 -> { // ORIGINAL
 
-                    bg.setStroke(
-                        context.dp(2),
-                        ContextCompat.getColor(context, android.R.color.white)
-                    )
-                    bg.setColor(ContextCompat.getColor(context, R.color.white))
-                    cardUploadImage.cardElevation = context.dp(5).toFloat()
-
-                    holder.lblMap.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.very_dark_gray2
+                    if (isEntryType){
+                        bg.setStroke(
+                            context.dp(2),
+                            ContextCompat.getColor(context, android.R.color.white)
                         )
-                    )
+                        bg.setColor(ContextCompat.getColor(context, R.color.white))
+                        cardUploadImage.cardElevation = context.dp(5).toFloat()
+
+                        holder.lblMap.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.very_dark_gray2
+                            )
+                        )
+                    }
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                     lblMap.text = context.getString(R.string.not_started)
 
@@ -158,20 +169,22 @@ class ActivityExamListAdapter(
                 }
 
                 selectedCount < total -> {           // YELLOW
-                    bg.setStroke(
-                        context.dp(2),
-                        ContextCompat.getColor(context, R.color.light_bg_orange_6)
-                    )
-                    bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
+                   if (isEntryType){
+                       bg.setStroke(
+                           context.dp(2),
+                           ContextCompat.getColor(context, R.color.light_bg_orange_6)
+                       )
+                       bg.setColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
 
-                    cardUploadImage.cardElevation = 0f
+                       cardUploadImage.cardElevation = 0f
 
-                    holder.lblMap.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.light_bg_orange_6
-                        )
-                    )
+                       holder.lblMap.setTextColor(
+                           ContextCompat.getColor(
+                               context,
+                               R.color.light_bg_orange_6
+                           )
+                       )
+                   }
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
                     lblMap.text = "${selectedCount} ${context.getString(R.string.of)} ${total} ${
                         context.getString(R.string.activities_mapped)
@@ -180,22 +193,24 @@ class ActivityExamListAdapter(
                 }
 
                 selectedCount == total -> {          // GREEN
-                    bg.setStroke(
-                        context.dp(2),
-                        ContextCompat.getColor(context, R.color.dark_green_3)
-                    )
-                    bg.setColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
+                   if (isEntryType){
+                       bg.setStroke(
+                           context.dp(2),
+                           ContextCompat.getColor(context, R.color.dark_green_3)
+                       )
+                       bg.setColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
 
-                    cardUploadImage.cardElevation = 0f
+                       cardUploadImage.cardElevation = 0f
 
 
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_pale_green_1))
-                    holder.lblMap.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.dark_green_3
-                        )
-                    )
+                       holder.lblMap.setTextColor(
+                           ContextCompat.getColor(
+                               context,
+                               R.color.dark_green_3
+                           )
+                       )
+                   }
                     lblMap.text =
                         "${context.getString(R.string.all)} ${total} ${context.getString(R.string.activities_mapped)}"
 

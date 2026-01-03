@@ -240,7 +240,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     "UploadMarksError", "Extraction failed: ${response?.message ?: "Unknown error"}"
                 )
                 Toast.makeText(
-                    this@UploadMarkSheet, "Failed to process marksheet", Toast.LENGTH_SHORT
+                    this@UploadMarkSheet,
+                    getString(R.string.failed_to_process_marksheet), Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -318,7 +319,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra("isWithOutHotCodeImage", true)
+            intent.putExtra(Constant.isWithOutHotCodeImage, true)
             albumResultLauncher.launch(intent)
         }
     }
@@ -370,12 +371,12 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("cameraImageFilePath", cameraImageFilePath)
+        outState.putString(Constant.cameraImageFilePath, cameraImageFilePath)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        cameraImageFilePath = savedInstanceState.getString("cameraImageFilePath")
+        cameraImageFilePath = savedInstanceState.getString(Constant.cameraImageFilePath)
     }
 
     private fun openCameraIntent() {
@@ -435,8 +436,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             val path = when (uri.scheme) {
-                "file" -> uri.path
-                "content" -> getPathFromUri(uri)
+                Constant.file_ -> uri.path
+                Constant.content_ -> getPathFromUri(uri)
                 else -> null
             }
 
@@ -764,7 +765,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 ) { confirmed ->
                     if (confirmed) {
                         val intent = Intent(this, MapActivity::class.java)
-                        intent.putExtra("entry_type", false)
+                        intent.putExtra(Constant.entry_type, false)
                         this.startActivity(intent)
                     }
                 }

@@ -65,7 +65,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        isEntryType = intent.getBooleanExtra("entry_type", false)
+        isEntryType = intent.getBooleanExtra(Constant.entry_type, false)
         Log.d("isEntryType",isEntryType.toString())
 
         if (isEntryType){
@@ -311,14 +311,14 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         if (finalSubjectList.isEmpty()) {
             Toast.makeText(
                 this,
-                "Please select at least one mapping",
+                getString(R.string.please_select_at_least_one_mapping),
                 Toast.LENGTH_SHORT
             ).show()
             return
         }
 
         val intent = Intent(this, ReviewAndEditMarks::class.java)
-        intent.putParcelableArrayListExtra("FINAL_MAP_ACTIVITY", ArrayList(finalSubjectList))
+        intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
         startActivity(intent)
     }
 

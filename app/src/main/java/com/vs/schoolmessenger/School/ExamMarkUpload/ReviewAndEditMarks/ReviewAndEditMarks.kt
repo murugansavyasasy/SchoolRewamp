@@ -72,7 +72,7 @@ class ReviewAndEditMarks :
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         isFinalMapDetails =
             intent.getParcelableArrayListExtra(
-                "FINAL_MAP_ACTIVITY"
+                Constant.FINAL_MAP_ACTIVITY
             ) ?: emptyList()
         Log.d("isFinalMapDetails", isFinalMapDetails.toString())
 
@@ -147,8 +147,8 @@ class ReviewAndEditMarks :
 
                 Constant.errorAlert1(
                     this,
-                    "Alert",
-                    "⚠️ Max mark exceeded:\n$message\n\nPlease correct the marks."
+                    getString(R.string.alert),
+                    getString(R.string.max_mark_exceeded_please_correct_the_marks, message)
                 )
                 return@setOnClickListener
             }
@@ -160,8 +160,8 @@ class ReviewAndEditMarks :
 
                 Constant.errorAlert1(
                     this,
-                    "Alert",
-                    "⚠️ Invalid mark values found:\n$message\n\nPlease correct them."
+                    getString(R.string.alert),
+                    getString(R.string.invalid_mark_values_found_please_correct_them, message)
                 )
                 return@setOnClickListener
             }
@@ -181,7 +181,7 @@ class ReviewAndEditMarks :
 
         val updatedStudents = apiResponse.data.map { student ->
             val matchedRow = tableData.records.firstOrNull {
-                it["Student ID"]?.toString() == student.student_id
+                it[Constant.Student_ID]?.toString() == student.student_id
             } ?: return@map student
 
             val updatedSubjects = student.marks.map { subject ->
@@ -254,7 +254,7 @@ class ReviewAndEditMarks :
             })
 
             layout.addView(TextView(this).apply {
-                text = "Max mark : " + col.maxMark
+                text = context.getString(R.string.max_mark) + col.maxMark
                 gravity = Gravity.CENTER
                 setTextColor(Color.GRAY)
             })
@@ -329,12 +329,12 @@ class ReviewAndEditMarks :
 
     private fun isGetMarkDetails() {
         val json = JsonObject()
-        json.addProperty("class_id", isFinalMapDetails!!.get(0).class_id)
-        json.addProperty("section_id", isFinalMapDetails!!.get(0).section_id)
-        json.addProperty("exam_id", Constant.isMarkUploadExamListDataDetails!!.id)
+        json.addProperty(Constant.class_id, isFinalMapDetails!!.get(0).class_id)
+        json.addProperty(Constant.section_id, isFinalMapDetails!!.get(0).section_id)
+        json.addProperty(Constant.exam_id, Constant.isMarkUploadExamListDataDetails!!.id)
         val arr = JsonArray()
         val obj = JsonObject()
-        obj.addProperty("subject_id", isFinalMapDetails!!.get(0).subject_id)
+        obj.addProperty(Constant.subject_id, isFinalMapDetails!!.get(0).subject_id)
         val act = JsonArray()
 
         for (i in isFinalMapDetails!!.indices) {
@@ -343,9 +343,9 @@ class ReviewAndEditMarks :
                 act.add(isActivityId.get(s).activity_id)
             }
         }
-        obj.add("activities", act)
+        obj.add(Constant.activities, act)
         arr.add(obj)
-        json.add("selected_activities", arr)
+        json.add(Constant.selected_activities, arr)
         appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
     }
 
@@ -375,10 +375,10 @@ class ReviewAndEditMarks :
         }
 
         binding.lblIssueFound.text =
-            "⚠️ Found ${issueSummary.total} issue(s): " +
+            getString(R.string.found_issue_s, issueSummary.total) +
                     "AB → ${issueSummary.absentCount}, " +
-                    "Max mark exceeded → ${issueSummary.maxMarkCount}, " +
-                    "PLEASE MARK PROPERLY → ${issueSummary.systemMsgCount}"
+                    getString(R.string.max_mark_exceeded, issueSummary.maxMarkCount) +
+                    getString(R.string.please_mark_properly, issueSummary.systemMsgCount)
 
     }
 
@@ -394,12 +394,12 @@ class ReviewAndEditMarks :
                 val maxMark = columns.getOrNull(index)?.maxMark ?: return@forEachIndexed
 
                 when {
-                    rawText.equals("AB", true) -> {
+                    rawText.equals( "AB", true) -> {
                         summary.absentCount++
                         summary.total++
                     }
 
-                    rawText.equals("PLEASE MARK PROPERLY", true) -> {
+                    rawText.equals(getString(R.string.please_mark_properly_), true) -> {
                         summary.systemMsgCount++
                         summary.total++
                     }
@@ -428,10 +428,10 @@ class ReviewAndEditMarks :
         val studentsArray = JsonArray()
         students.forEach { student ->
             val studentObj = JsonObject().apply {
-                addProperty("student_id", student.student_id)
-                addProperty("student_name", student.name)
-                addProperty("roll_no", student.rollNo)
-                addProperty("admission_no", "")
+                addProperty(Constant.student_id, student.student_id)
+                addProperty(Constant.student_name, student.name)
+                addProperty(Constant.roll_no, student.rollNo)
+                addProperty(Constant.admission_no, "")
             }
             val marksArray = JsonArray()
             val subjectMap =
@@ -447,8 +447,8 @@ class ReviewAndEditMarks :
             subjectMap.forEach { (subjectName, columnList) ->
 
                 val subjectObj = JsonObject().apply {
-                    addProperty("subject_id", columnList.first().second.subjectId)
-                    addProperty("subject_name", subjectName)
+                    addProperty(Constant.subject_id, columnList.first().second.subjectId)
+                    addProperty(Constant.subject_name, subjectName)
                 }
 
                 val activitiesArray = JsonArray()
@@ -459,18 +459,18 @@ class ReviewAndEditMarks :
                         student.markTexts.getOrNull(index)?.trim().orEmpty()
                     val maxMark = column.maxMark
                     val activityObj = JsonObject().apply {
-                        addProperty("id", column.activityId)
-                        addProperty("name", column.activityName)
-                        addProperty("mark", rawText)
-                        addProperty("max_mark", maxMark.toString())
+                        addProperty(Constant.id, column.activityId)
+                        addProperty(Constant.name__, column.activityName)
+                        addProperty(Constant.mark, rawText)
+                        addProperty(Constant.max_mark, maxMark.toString())
                     }
 
                     activitiesArray.add(activityObj)
                 }
-                subjectObj.add("activities", activitiesArray)
+                subjectObj.add(Constant.activities, activitiesArray)
                 marksArray.add(subjectObj)
             }
-            studentObj.add("marks", marksArray)
+            studentObj.add(Constant.marks, marksArray)
             studentsArray.add(studentObj)
         }
         return studentsArray
@@ -487,7 +487,7 @@ class ReviewAndEditMarks :
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         alertMessage.text = ""
         alertMessage.visibility = View.VISIBLE
-        lblSelectTarget.text = "Are you want to save the marks"
+        lblSelectTarget.text = getString(R.string.are_you_want_to_save_the_marks)
         okButton.setOnClickListener {
             Constant.showLoading(this@ReviewAndEditMarks)
             val saveMarksJsonArray = isSaveTheMark(

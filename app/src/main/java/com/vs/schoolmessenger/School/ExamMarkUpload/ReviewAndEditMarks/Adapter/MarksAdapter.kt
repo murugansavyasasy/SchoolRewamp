@@ -174,11 +174,11 @@ class MarksAdapter(
             }
 
             intValue != null && intValue > column.maxMark -> {
-                showError(et, icon, "Max mark is ${column.maxMark}")
+                showError(et, icon, context.getString(R.string.max_mark_is, column.maxMark))
             }
 
             value.isNotEmpty() && intValue == null && !value.equals("AB", true) -> {
-                showError(et, icon, "Invalid mark")
+                showError(et, icon, context.getString(R.string.invalid_mark))
             }
 
             else -> {

@@ -39,19 +39,17 @@
                 android:layout_toStartOf="@+id/lblClear"
                 android:textColor="@color/black"/>
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblClear"
-                android:visibility="gone"
-                android:text="@string/clear"
+                android:visibility="visible"
                 android:layout_centerVertical="true"
                 android:paddingVertical="@dimen/three"
                 android:paddingHorizontal="@dimen/five"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/gray_bg_radius"
-                android:textSize="@dimen/fourteen_sp"
-                android:textColor="@color/black"/>
+                android:src="@drawable/close_icon_red_custom"
+           />
 
         </RelativeLayout>
     </RelativeLayout>
