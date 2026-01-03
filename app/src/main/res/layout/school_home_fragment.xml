@@ -50,8 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
                 android:layout_marginTop="@dimen/five"
-                android:text="Madhuri Shaarma"
-                android:maxLines="3"
+                android:text="Madhuri Sharma"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />

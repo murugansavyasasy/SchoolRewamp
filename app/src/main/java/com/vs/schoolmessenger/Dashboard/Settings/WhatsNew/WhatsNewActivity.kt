@@ -166,7 +166,6 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
             R.id.imgBack -> {
                 onBackPressed()
             }
-
         }
     }
 }
