@@ -46,7 +46,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private val reviewFlagMap = mutableMapOf<String, String>()
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
     private var lastIssueUpdateTime = 0L
-
+    var isExamSectionId = ""
 
     override fun setupViews() {
         super.setupViews()
@@ -83,46 +83,47 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
 
             val baseResponse = response ?: return@observe
+            isExamSectionId = baseResponse.data[0].exam_section_id
+            val finalResponse =
+                if (Constant.isMarkUploadFromAi) {
+                    mergeMarksWithExtractedTable(
+                        baseResponse,
+                        Constant.isExtractedDetails?.firstOrNull()
+                    )
+                } else baseResponse
 
-            val finalResponse = if (Constant.isMarkUploadFromAi) {
-                mergeMarksWithExtractedTable(
-                    baseResponse, Constant.isExtractedDetails?.firstOrNull()
-                )
-            } else {
-                baseResponse
-            }
             reviewFlagMap.clear()
 
-            Constant.isExtractedDetails?.firstOrNull()?.reviewFlags?.forEach { flag ->
-                val key = flag.studentId.toString().trim() + "_" + flag.field.trim().lowercase()
-
-                reviewFlagMap[key] = flag.reason
-            }
-            Log.e(
-                "REVIEW_MAP_DEBUG", "MAP SIZE = ${reviewFlagMap.size} | MAP = $reviewFlagMap"
-            )
+            Constant.isExtractedDetails
+                ?.firstOrNull()
+                ?.reviewFlags
+                ?.forEach { flag ->
+                    val key =
+                        flag.studentId.toString().trim() + "_" +
+                                flag.field.trim().lowercase()
+                    reviewFlagMap[key] = flag.reason
+                }
 
             markColumns = buildHeaderColumns(baseResponse)
             setupHeader(markColumns)
             setupMarksUI(finalResponse, baseResponse)
 
             if (binding.rvMarks.adapter == null) {
-                binding.rvMarks.layoutManager = LinearLayoutManager(this@ReviewAndEditMarks)
+                binding.rvMarks.layoutManager = LinearLayoutManager(this)
 
                 binding.rvMarks.adapter = MarksAdapter(
                     currentStudentsList,
                     markColumns,
                     reviewFlagMap,
-                    this@ReviewAndEditMarks,
-                    this@ReviewAndEditMarks
+                    this,
+                    this
                 )
 
-                (binding.rvMarks.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-                    false
+                (binding.rvMarks.itemAnimator as? SimpleItemAnimator)
+                    ?.supportsChangeAnimations = false
             } else {
                 binding.rvMarks.adapter?.notifyDataSetChanged()
             }
-
         }
 
         binding.lnrSaveAllMarks2.setOnClickListener {
@@ -161,6 +162,14 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
+    private fun normalize(value: String?): String {
+        return value
+            ?.trim()
+            ?.lowercase()
+            ?.replace("[^a-z0-9]".toRegex(), "")
+            ?: ""
+    }
+
     private fun mergeMarksWithExtractedTable(
         apiResponse: MarkResponse,
         tableData: ParcelTableData?
@@ -171,73 +180,151 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         fun normalize(t: String) =
             t.lowercase().replace("[^a-z0-9]".toRegex(), "")
 
-        val updatedStudents = apiResponse.data.map { student ->
+        val updatedSections = apiResponse.data.map { section ->
 
-            val row = tableData.records.firstOrNull {
-                it[Constant.Student_ID]?.toString() == student.student_id
-            } ?: return@map student
+            val updatedStudents = section.upload_details.map { student ->
 
-            val updatedMarks = student.marks.map { subject ->
+                val row = tableData.records.firstOrNull {
+                    it[Constant.Student_ID]?.toString() == student.student_id
+                } ?: return@map student
 
-                val normSubject = normalize(subject.subject_name)
+                val updatedMarks = student.marks.orEmpty().map { subject ->
 
-                val updatedActivities = subject.activities.map { activity ->
+                    val normSubject = normalize(subject.subject_name)
 
-                    val normActivity = normalize(activity.name)
+                    val updatedActivities = subject.activities.orEmpty().map { activity ->
 
-                    val exactMatch = row.entries.firstNotNullOfOrNull { entry ->
-                        val header = normalize(entry.key)
+                        val normActivity = normalize(activity.selected_name)
 
-                        val subjectMatch = header.contains(normSubject)
-                        val activityMatch = header.contains(normActivity)
-
-                        if (subjectMatch && activityMatch) {
-                            entry.value?.toString()?.trim()
-                        } else null
-                    }
-
-                    val subjectOnlyMatch =
-                        if (exactMatch == null && subject.activities.size == 1) {
+                        val exactMatch =
                             row.entries.firstNotNullOfOrNull { entry ->
                                 val header = normalize(entry.key)
-                                if (header == normSubject) {
+
+                                val subjectMatch = header.contains(normSubject)
+                                val activityMatch = header.contains(normActivity)
+
+                                if (subjectMatch && activityMatch) {
                                     entry.value?.toString()?.trim()
                                 } else null
                             }
-                        } else null
 
-                    val finalValue = exactMatch ?: subjectOnlyMatch
+                        val subjectOnlyMatch =
+                            if (exactMatch == null && subject.activities.size == 1) {
+                                row.entries.firstNotNullOfOrNull { entry ->
+                                    val header = normalize(entry.key)
+                                    if (header == normSubject) {
+                                        entry.value?.toString()?.trim()
+                                    } else null
+                                }
+                            } else null
 
-                    if (!finalValue.isNullOrEmpty()) {
-                        activity.copy(mark = finalValue)
-                    } else activity
+                        val finalValue = exactMatch ?: subjectOnlyMatch
+
+                        if (!finalValue.isNullOrEmpty()) {
+                            activity.copy(mark = finalValue)
+                        } else activity
+                    }
+
+                    subject.copy(activities = updatedActivities)
                 }
 
-                subject.copy(activities = updatedActivities)
+                student.copy(marks = updatedMarks)
             }
 
-            student.copy(marks = updatedMarks)
+            section.copy(upload_details = updatedStudents)
         }
 
-        return apiResponse.copy(data = updatedStudents)
+        return apiResponse.copy(data = updatedSections)
     }
+
+    private fun MarkResponse.getAllStudents(): List<StudentMarkApi> {
+        return data.flatMap { it.upload_details }
+    }
+
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
-        val firstStudent = response.data.firstOrNull() ?: return columns
-        firstStudent.marks.forEach { subject ->
-            subject.activities.forEach { activity ->
+
+        val students = response.getAllStudents()
+        val firstStudent = students.firstOrNull() ?: return columns
+
+        firstStudent.marks.orEmpty().forEach { subject ->
+            subject.activities.orEmpty().forEach { activity ->
                 columns.add(
                     MarkColumn(
                         subjectId = subject.subject_id,
                         subjectName = subject.subject_name,
                         activityId = activity.id,
                         activityName = activity.name,
+                        selected_name = activity.selected_name,
                         maxMark = activity.max_mark.toIntOrNull() ?: 100
                     )
                 )
             }
         }
         return columns
+    }
+
+    private fun setupMarksUI(
+        finalResponse: MarkResponse,
+        baseResponse: MarkResponse
+    ) {
+
+        val columns = buildHeaderColumns(baseResponse)
+
+        val finalStudents = finalResponse.getAllStudents()
+        val baseStudents = baseResponse.getAllStudents()
+
+        currentStudentsList =
+            finalStudents.map { apiStudent ->
+
+                val markTexts = MutableList(columns.size) { "" }
+                val mockTexts = MutableList(columns.size) { "" }
+                val marks = MutableList<Int?>(columns.size) { null }
+
+                apiStudent.marks.orEmpty().forEach { subject ->
+                    subject.activities.orEmpty().forEach { activity ->
+                        val index =
+                            columns.indexOfFirst {
+                                it.subjectId == subject.subject_id &&
+                                        normalize(it.selected_name) == normalize(activity.selected_name)
+                            }
+
+
+                        if (index != -1) {
+                            markTexts[index] = activity.mark
+                            marks[index] = activity.mark.toIntOrNull()
+                        }
+                    }
+                }
+
+                val baseStudent =
+                    baseStudents.firstOrNull {
+                        it.student_id == apiStudent.student_id
+                    }
+
+                baseStudent?.marks.orEmpty().forEach { subject ->
+                    subject.activities.orEmpty().forEach { activity ->
+                        val index =
+                            columns.indexOfFirst {
+                                it.subjectId == subject.subject_id &&
+                                        normalize(it.selected_name) == normalize(activity.selected_name)
+                            }
+
+                        if (index != -1) {
+                            mockTexts[index] = activity.mark
+                        }
+                    }
+                }
+
+                StudentMarkList(
+                    name = apiStudent.student_name,
+                    student_id = apiStudent.student_id,
+                    rollNo = apiStudent.roll_no,
+                    marks = marks,
+                    markTexts = markTexts,
+                    mockMarkTexts = mockTexts
+                )
+            }.toMutableList()
     }
 
     private fun setupHeader(columns: List<MarkColumn>) {
@@ -283,67 +370,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         HorizontalScrollSync.bind(headerScroll)
     }
 
-    private fun setupMarksUI(
-        finalResponse: MarkResponse,
-        baseResponse: MarkResponse
-    ) {
-
-        val columns = buildHeaderColumns(baseResponse)
-
-        currentStudentsList =
-            finalResponse.data.map { apiStudent ->
-
-                val markTexts = MutableList(columns.size) { "" }
-                val mockTexts = MutableList(columns.size) { "" }
-                val marks = MutableList<Int?>(columns.size) { null }
-
-                apiStudent.marks.forEach { subject ->
-                    subject.activities.forEach { activity ->
-
-                        val index =
-                            columns.indexOfFirst {
-                                it.subjectId == subject.subject_id &&
-                                        it.activityId == activity.id
-                            }
-
-                        if (index != -1) {
-                            markTexts[index] = activity.mark
-                            marks[index] = activity.mark.toIntOrNull()
-                        }
-                    }
-                }
-
-                val baseStudent =
-                    baseResponse.data.firstOrNull {
-                        it.student_id == apiStudent.student_id
-                    }
-
-                baseStudent?.marks?.forEach { subject ->
-                    subject.activities.forEach { activity ->
-
-                        val index =
-                            columns.indexOfFirst {
-                                it.subjectId == subject.subject_id &&
-                                        it.activityId == activity.id
-                            }
-
-                        if (index != -1) {
-                            mockTexts[index] = activity.mark
-                        }
-                    }
-                }
-
-                StudentMarkList(
-                    name = apiStudent.student_name,
-                    student_id = apiStudent.student_id,
-                    rollNo = apiStudent.roll_no,
-                    marks = marks,
-                    markTexts = markTexts,
-                    mockMarkTexts = mockTexts
-                )
-            }.toMutableList()
-    }
-
     private fun isGetMarkDetails() {
 
         val json = JsonObject().apply {
@@ -363,9 +389,18 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val activitiesArray = JsonArray()
 
             for (paper in subject.paper) {
+
                 val activityId = paper.activity_id ?: paper.selectedActivityID
-                if (!activityId.isNullOrEmpty()) {
-                    activitiesArray.add(activityId)
+                val selectedName =if (Constant.isMarkUploadFromAi)paper.selectedValue else paper.name
+
+                if (!activityId.isNullOrEmpty() && !selectedName.isNullOrEmpty()) {
+
+                    val activityObj = JsonObject().apply {
+                        addProperty("id", activityId.toInt())
+                        addProperty("selected_name", selectedName)
+                    }
+
+                    activitiesArray.add(activityObj)
                 }
             }
 
@@ -374,12 +409,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 selectedActivitiesArray.add(subjectObj)
             }
         }
-
         json.add(Constant.selected_activities, selectedActivitiesArray)
 
         Log.d("FINAL_JSON", json.toString())
-        appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
 
+        appViewModel!!.isMarkDetails(isAccessToken!!, json, this)
     }
 
     override fun onClick(p0: View?) {
@@ -428,7 +462,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         } else {
             binding.lblIssueFound.visibility = View.GONE
         }
-
     }
 
     private fun calculateIssueSummary(
@@ -469,25 +502,28 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
 
     private fun isSaveTheMark(
-        students: List<StudentMarkList>, columns: List<MarkColumn>
-    ): JsonArray {
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
+    ): JsonObject {
 
-        val studentsArray = JsonArray()
+        val uploadDetailsArray = JsonArray()
+
         students.forEach { student ->
+
             val studentObj = JsonObject().apply {
                 addProperty(Constant.student_id, student.student_id)
                 addProperty(Constant.student_name, student.name)
                 addProperty(Constant.roll_no, student.rollNo)
                 addProperty(Constant.admission_no, "")
             }
+
             val marksArray = JsonArray()
             val subjectMap = LinkedHashMap<String, MutableList<Pair<Int, MarkColumn>>>()
 
             columns.forEachIndexed { index, column ->
-                val list = subjectMap.getOrPut(column.subjectName) {
+                subjectMap.getOrPut(column.subjectName) {
                     mutableListOf()
-                }
-                list.add(index to column)
+                }.add(index to column)
             }
 
             subjectMap.forEach { (subjectName, columnList) ->
@@ -502,24 +538,33 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 columnList.forEach { (index, column) ->
 
                     val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
-                    val maxMark = column.maxMark
+
                     val activityObj = JsonObject().apply {
                         addProperty(Constant.id, column.activityId)
                         addProperty(Constant.name__, column.activityName)
                         addProperty(Constant.mark, rawText)
-                        addProperty(Constant.max_mark, maxMark.toString())
+                        addProperty(Constant.max_mark, column.maxMark.toString())
                     }
 
                     activitiesArray.add(activityObj)
                 }
+
                 subjectObj.add(Constant.activities, activitiesArray)
                 marksArray.add(subjectObj)
             }
+
             studentObj.add(Constant.marks, marksArray)
-            studentsArray.add(studentObj)
+            uploadDetailsArray.add(studentObj)
         }
-        return studentsArray
+        return JsonObject().apply {
+            addProperty(
+                "exam_section_id",
+                isExamSectionId
+            )
+            add("upload_details", uploadDetailsArray)
+        }
     }
+
 
     fun showSendConfirmationDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
@@ -535,12 +580,12 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         lblSelectTarget.text = getString(R.string.are_you_want_to_save_the_marks)
         okButton.setOnClickListener {
             Constant.showLoading(this@ReviewAndEditMarks)
-            val saveMarksJsonArray = isSaveTheMark(
+            val saveMarksJsonObject = isSaveTheMark(
                 currentStudentsList, markColumns
             )
-            Log.d("saveMarksJsonArray", saveMarksJsonArray.toString())
+            Log.d("saveMarksJsonArray", saveMarksJsonObject.toString())
             appViewModel?.savemarks(
-                isAccessToken!!, saveMarksJsonArray, this
+                isAccessToken!!, saveMarksJsonObject, this
             )
             alertDialog.dismiss()
         }

@@ -34,29 +34,23 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MapActivityBinding
 import kotlin.String
+import androidx.core.view.isVisible
 
-class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
-{
+class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): MapActivityBinding {
         return MapActivityBinding.inflate(layoutInflater)
     }
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ActivityExamListAdapter
     private var isClassList: List<getActivitySubjectNameData>? = emptyList()
-
-
     private var staffWisExamList: List<getStaffWisExamData>? = null
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
-
     private var extractedDetails: List<ParcelTableData>? = null
-
     private var isEntryType = false
-
 
     override fun setupViews() {
         super.setupViews()
@@ -66,30 +60,20 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
             statusBarBgView = binding.statusBarBackground
         )
         isEntryType = intent.getBooleanExtra(Constant.entry_type, false)
-        Log.d("isEntryType",isEntryType.toString())
+        Log.d("isEntryType", isEntryType.toString())
 
-        if (isEntryType){
-            binding.lblSampleMsg.text=getString(R.string.map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually)
-        }
-        else{
-            binding.lblSampleMsg.text= getString(R.string.choose_the_activities_where_you_would_like_to_enter_marks_manually)
+        if (isEntryType) {
+            binding.lblSampleMsg.text =
+                getString(R.string.map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually)
+        } else {
+            binding.lblSampleMsg.text =
+                getString(R.string.choose_the_activities_where_you_would_like_to_enter_marks_manually)
         }
 
         staffWisExamList = Constant.staffWisExamList
         selectedExam = Constant.isMarkUploadExamListDataDetails
         selectedExamActivities = Constant.isSelectedExamActivities
-
-
         extractedDetails = Constant.isExtractedDetails
-//        Log.d(
-//            "Extracted Maps Activity",
-//            extractedDetails?.get(0)?.tableStructure?.selectedColumns.toString()
-//        )
-//
-//        Log.d("MapActivity", "Received Exam List size: ${staffWisExamList?.size ?: 0}")
-//        Log.d("MapActivity", "Selected Exam: ${selectedExam?.name}")
-//        Log.d("MapActivity", "Activities Count: ${selectedExamActivities?.size ?: 0}")
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -100,26 +84,16 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         Log.d("Constant.isSelectedMenuName", Constant.isSelectedMenuName)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
-
-
-
-
         binding.lblExamName.text = Constant.isMarkUploadExamListDataDetails?.name
         binding.lblMonthName.text =
             Constant.convertDateFormatType3(Constant.isMarkUploadExamListDataDetails?.date.toString())
         setTipText(binding.lblTips)
 
-
-
-
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-
-
-
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch1.visibility == View.VISIBLE) {
+            if (binding.rytSearch1.isVisible) {
                 binding.rytSearch1.visibility = View.GONE
                 binding.txtSearch1.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -145,12 +119,8 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
                 Log.d("Search", s.toString())
-
-
             }
         })
-
-
         LoadExamList()
     }
 
@@ -183,12 +153,12 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
                     index++
 
                     getActivityPaperNameData(
-                        activity_id=split.id,
+                        activity_id = split.id,
                         name = split.name,
                         max_mark = split.max_mark,
                         activities = selectedColumns,
                         selectedValue = null,
-                        selectedActivityID =null
+                        selectedActivityID = null
                     )
                 }
             )
@@ -196,12 +166,10 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
 
         isClassList = mappedList
 
-        adapter = ActivityExamListAdapter(mappedList,isEntryType, this, false)
+        adapter = ActivityExamListAdapter(mappedList, isEntryType, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
         binding.rcMapActivity.adapter = adapter
     }
-
-
 
 
     private fun filter(text: String) {
@@ -286,7 +254,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
     private fun saveSelectedMappings(
         finalListFromAdapter: List<getActivitySubjectNameData>
     ) {
-
         val finalSubjectList = mutableListOf<getActivitySubjectNameData>()
 
         finalListFromAdapter.forEach { subject ->
@@ -321,8 +288,4 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener
         intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
         startActivity(intent)
     }
-
-
-
-
 }
