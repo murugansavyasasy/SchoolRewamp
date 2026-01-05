@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_black_stoke_bg"
                 android:padding="@dimen/ten"
-                android:text="@string/note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance"
+                android:text="@string/note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance2"
                 android:textColor="@color/mild_red">
 
             </TextView>

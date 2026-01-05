@@ -1372,6 +1372,8 @@
     <string name="failed_to_process_marksheet">Failed to process marksheet</string>
     <string name="max_mark_is">Max mark is %1$d</string>
     <string name="are_you_sure_you_want_to_delete_this_assignment">Are you sure you want to delete this assignment?</string>
+    <string name="note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance2">📢 Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendance</string>
+
 
 
 </resources>
