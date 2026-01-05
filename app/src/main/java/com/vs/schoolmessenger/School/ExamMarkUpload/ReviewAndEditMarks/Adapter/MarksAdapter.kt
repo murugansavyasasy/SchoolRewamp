@@ -120,12 +120,6 @@ class MarksAdapter(
                     setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
                     visibility = View.GONE
                 }
-
-//                if (
-//                    mockText.isNotEmpty() &&
-//                    isAllowedValue(mockText) &&
-//                    mockText != rawText
-//                ) {
                 if (
                     mockText.isNotEmpty() &&
                     isAllowedValue(mockText) &&

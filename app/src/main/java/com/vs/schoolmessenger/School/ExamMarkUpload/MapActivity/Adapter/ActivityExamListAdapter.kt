@@ -217,8 +217,6 @@ class ActivityExamListAdapter(
                 }
             }
         }
-
-
     }
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
