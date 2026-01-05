@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
 import android.graphics.Paint
+import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -69,6 +70,8 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
+        binding.txtMobileNumber.filters = arrayOf(InputFilter.LengthFilter(Constant.country_details!!.mobile_number_length))
+
 
         binding.txtPassword.setOnFocusChangeListener { _, hasFocus ->
             binding.rytPassword.isSelected = hasFocus
