@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
 import android.os.Build
+import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -56,6 +57,8 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
         }
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
+        binding.txtMobileNumber.filters = arrayOf(InputFilter.LengthFilter(Constant.country_details!!.mobile_number_length))
+
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
             Constant.hideLoading(this@MobileNumber)
