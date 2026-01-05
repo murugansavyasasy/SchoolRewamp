@@ -5,14 +5,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginVertical="@dimen/eight"
-    android:background="@drawable/bg_fee_card"
+    android:background="@drawable/bg_fee_card_white"
     android:padding="@dimen/eight"
     android:gravity="center"
     android:elevation="@dimen/two">
 
     <RelativeLayout
         android:padding="@dimen/ten"
-        android:background="@drawable/bg_rect_white_solid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -20,7 +19,7 @@
             android:id="@+id/fee_icon"
             android:layout_width="@dimen/twenty_four"
             android:layout_height="@dimen/twenty_four"
-            android:src="@drawable/collect" />
+            android:src="@drawable/collectcustom" />
 
     </RelativeLayout>
 

@@ -226,7 +226,7 @@ class Mysubmission : BaseActivity<MysubmissionAssignmentBinding>(), AssignmentCl
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
-        alertMessage.text = getString(R.string.are_you_sure_want_to_update_this_noticeboard)
+        alertMessage.text = getString(R.string.are_you_sure_you_want_to_delete_this_assignment)
 
         lblSelectTarget.visibility = View.GONE
 

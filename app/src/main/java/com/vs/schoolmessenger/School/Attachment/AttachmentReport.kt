@@ -433,7 +433,9 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
             jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
             appViewModel?.isAttachmentDelete(isAccessToken!!, jsonObject, this)
         }
-        btnCancel.setOnClickListener { alertDialog.dismiss() }
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
     override fun onReadStatusClick(
