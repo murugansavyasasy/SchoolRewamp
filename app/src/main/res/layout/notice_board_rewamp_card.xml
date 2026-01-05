@@ -215,6 +215,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:layout_marginTop="@dimen/ten"
+           android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="@dimen/ten"
             android:background="@color/grey" />
 

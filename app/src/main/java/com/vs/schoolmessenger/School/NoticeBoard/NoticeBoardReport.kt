@@ -114,7 +114,8 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         noticeboardadapter = SchoolNoticeBoardAdapter(
             emptyList(), this, this, false,
             binding.nomessage,
-            binding.txtNoData
+            binding.txtNoData,
+            false
         )
         binding.rcyNoticeBoard.adapter = noticeboardadapter
         binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)

@@ -101,14 +101,16 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         access_token = childDetails!!.access_token
         val headerBinding = NavHeaderBinding.bind(binding.navigationView.getHeaderView(0))
         headerBinding.username.text = childDetails!!.name
-
-        Glide.with(headerBinding.imgProfile.context)
-            .load(childDetails!!.profile)
-            .placeholder(R.drawable.default_profile)
-            .error(R.drawable.default_profile)
-            .circleCrop()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(headerBinding.imgProfile)
+        headerBinding.lblSchoolName.text = childDetails!!.school_name
+        if (childDetails!!.school_logo_url != "") {
+            Glide.with(headerBinding.imgProfile.context)
+                .load(childDetails!!.profile)
+                .placeholder(R.drawable.default_profile)
+                .error(R.drawable.default_profile)
+                .circleCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(headerBinding.imgProfile)
+        }
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView

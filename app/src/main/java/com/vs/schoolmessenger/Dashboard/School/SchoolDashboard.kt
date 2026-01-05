@@ -109,7 +109,47 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         authViewModel!!.init()
 
         val headerBinding = NavHeaderBinding.bind(binding.navigationView.getHeaderView(0))
-        headerBinding.username.text = userDetails!!.staff_details[0].name
+        if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+            access_token = userDetails!!.staff_details[0].access_token
+            headerBinding.lblSchoolName.text = userDetails!!.staff_details[0]!!.school_name
+            headerBinding.username.text = userDetails!!.staff_details[0].name
+            headerBinding.lblRole.text = userDetails!!.staff_details[0].role
+
+            if (userDetails!!.staff_details[0].staff_profile != "") {
+                Glide.with(this)
+                    .load(userDetails!!.staff_details[0].staff_profile)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
+                    .circleCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(headerBinding.imgProfile)
+            }
+
+
+        } else {
+            access_token = userDetails!!.staff_details[0].access_token
+            if (userDetails!!.staff_details.size > 1) {
+                headerBinding.username.text = userDetails!!.staff_details[0].name
+                headerBinding.lblRole.text = userDetails!!.staff_details[0].role
+                headerBinding.lblSchoolName.visibility = View.GONE
+            } else {
+                headerBinding.lblSchoolName.visibility = View.VISIBLE
+                headerBinding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
+                headerBinding.username.text = userDetails!!.staff_details[0].name
+                headerBinding.lblRole.text = userDetails!!.staff_details[0].role
+
+
+                if (userDetails!!.staff_details[0].staff_profile != "") {
+                    Glide.with(this)
+                        .load(userDetails!!.staff_details[0].staff_profile)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile)
+                        .circleCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(headerBinding.imgProfile)
+                }
+            }
+        }
 
         Glide.with(headerBinding.imgProfile.context)
             .load(userDetails!!.staff_details[0].staff_profile)
@@ -187,7 +227,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             true
         }
 
-        // ✅ Use correct lifecycle-aware callback
+        // ✅ Use correct lifecycle-aware callback=
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val currentFragment =

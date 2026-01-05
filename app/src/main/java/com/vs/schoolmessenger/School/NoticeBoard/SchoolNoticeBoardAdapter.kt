@@ -42,7 +42,8 @@ class SchoolNoticeBoardAdapter(
     private val context: Context,
     var isLoading: Boolean,
     private val noDataImage: ImageView?,
-    private val noDataText: TextView?
+    private val noDataText: TextView?,
+    private val isParentNoticeBoard: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -69,7 +70,7 @@ class SchoolNoticeBoardAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.notice_board_rewamp_card, parent, false)
-            DataViewHolder(view, context, listener)
+            DataViewHolder(view, context, listener, isParentNoticeBoard)
         }
     }
 
@@ -173,7 +174,8 @@ class SchoolNoticeBoardAdapter(
     class DataViewHolder(
         itemView: View,
         private val context: Context,
-        private val listener: NoticeBoardClickListener
+        private val listener: NoticeBoardClickListener,
+        private val isParentNoticeBoard: Boolean
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
@@ -278,6 +280,7 @@ class SchoolNoticeBoardAdapter(
                 intended_for = noticeData.intended_for,
                 school_name = noticeData.school_name,
                 created_date = noticeData.created_on,
+                isParentAssignment = isParentNoticeBoard,
                 isCompleted = true,
                 isMenuType = Constant.M_NOTICEBOARD,
                 fileList = convertedList
