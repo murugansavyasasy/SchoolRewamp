@@ -5,5 +5,6 @@ data class MarkColumn(
     val subjectName: String,
     val activityId: String,
     val activityName: String,
+    val selected_name: String,
     val maxMark: Int
 )

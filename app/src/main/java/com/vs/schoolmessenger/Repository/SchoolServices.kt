@@ -4939,7 +4939,7 @@ class SchoolServices {
 
 
     fun savemarks(isToken:String,
-         jsonObject: JsonArray
+         jsonObject: JsonObject
     ) {
         RestClient.apiInterfaces.savemarks(isToken, jsonObject)
             ?.enqueue(object : Callback<SaveMarksModel?> {
