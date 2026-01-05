@@ -228,21 +228,22 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
         appViewModel!!.uploadmarks?.observe(this) { response: UploadMarkResponse? ->
             Constant.hideLoading(this@UploadMarkSheet)
-            if (response?.status == true) {
-                Constant.isExtractedDetails = emptyList()
-                extractedDetails = listOf(response!!.data)
-                Constant.isExtractedDetails = extractedDetails
-                val intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("entry_type", true)
-                this.startActivity(intent)
+            if (response != null) {
+                if (response.status == true || response.data != null) {
+                    Constant.isExtractedDetails = emptyList()
+                    extractedDetails = listOf(response.data!!)
+                    Constant.isExtractedDetails = extractedDetails
+                    val intent = Intent(this, MapActivity::class.java)
+                    intent.putExtra("entry_type", true)
+                    this.startActivity(intent)
+                } else {
+                    val errorMessage = response.message ?: getString(R.string.failed_to_process_marksheet)
+                    Log.e("UploadMarksError", "Extraction failed: $errorMessage")
+                    Toast.makeText(this@UploadMarkSheet, errorMessage, Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Log.e(
-                    "UploadMarksError", "Extraction failed: ${response?.message ?: "Unknown error"}"
-                )
-                Toast.makeText(
-                    this@UploadMarkSheet,
-                    getString(R.string.failed_to_process_marksheet), Toast.LENGTH_SHORT
-                ).show()
+                Log.e("UploadMarksError", "No response received")
+                Toast.makeText(this@UploadMarkSheet, getString(R.string.failed_to_process_marksheet), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -251,16 +252,13 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         val fullText = "• $text"
         val spannable = SpannableString(fullText)
 
-        // Get colors from resources
         val bulletColor = ContextCompat.getColor(textView.context, R.color.dark_bg_orange_2)
         val textColor = ContextCompat.getColor(textView.context, R.color.black)
 
-        // Make bullet (•) red
         spannable.setSpan(
             ForegroundColorSpan(bulletColor), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        // Remaining text custom color
         spannable.setSpan(
             ForegroundColorSpan(textColor), 2, fullText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )

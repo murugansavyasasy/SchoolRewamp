@@ -188,7 +188,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             mAdapter = SchoolNoticeBoardAdapter(
                 emptyList(), this, this, false,
                 binding.nomessage,
-                binding.txtNoData
+                binding.txtNoData,
+                true
             )
             binding.rcyNoticeBoard.adapter = mAdapter
         }
@@ -252,7 +253,8 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         mAdapter = SchoolNoticeBoardAdapter(
             emptyList(), this, this, false,
             binding.nomessage,
-            binding.txtNoData
+            binding.txtNoData,
+            true
         )
         binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
