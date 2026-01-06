@@ -32,7 +32,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private lateinit var mAdapter: InteractionWithStudentAdapter
-
     private var msg_id: Int = -1
     private var headerId: String? = null
     private var receiverId: String? = null
