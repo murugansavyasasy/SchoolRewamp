@@ -1546,7 +1546,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
 
                     if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                        ProgressDialogHelper.dismiss()
+//                        ProgressDialogHelper.dismiss()
                         when (SELECTED_MENU_ID) {
                             M_HOMEWORK -> {
                                 isHomeWorkSend()

@@ -35,7 +35,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     OnMarksChangedListener {
 
     override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
-
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
@@ -109,6 +108,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             setupMarksUI(finalResponse, baseResponse)
 
             if (binding.rvMarks.adapter == null) {
+                Constant.hideLoading(this)
                 binding.rvMarks.layoutManager = LinearLayoutManager(this)
 
                 binding.rvMarks.adapter = MarksAdapter(
@@ -132,8 +132,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             if (maxIssues.isNotEmpty()) {
 
                 val message = maxIssues.joinToString("\n") {
-                    "• ${it.studentName} → ${it.subjectName} → ${it.activityName} (${it.enteredMark}/${it.maxMark})"
+                    "• ${it.studentName} → ${it.subjectName} → ${it.activityName} → ${it.selected_name} (${it.enteredMark}/${it.maxMark})"
                 }
+
 
                 Constant.errorAlert1(
                     this,
@@ -147,7 +148,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             if (invalidIssues.isNotEmpty()) {
 
                 val message = invalidIssues.joinToString("\n") {
-                    "• ${it.studentName} → ${it.subjectName} (${it.enteredValue})"
+                    "• ${it.studentName} → ${it.subjectName} → ${it.selectedname} (${it.enteredValue})"
                 }
 
                 Constant.errorAlert1(
@@ -169,60 +170,86 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             ?.replace("[^a-z0-9]".toRegex(), "")
             ?: ""
     }
-
     private fun mergeMarksWithExtractedTable(
         apiResponse: MarkResponse,
         tableData: ParcelTableData?
     ): MarkResponse {
 
-        if (tableData == null || tableData.records.isEmpty()) return apiResponse
+        // If no Excel / extracted data → return API data
+        if (tableData == null || tableData.records.isEmpty()) {
+            return apiResponse
+        }
 
-        fun normalize(t: String) =
-            t.lowercase().replace("[^a-z0-9]".toRegex(), "")
+        fun normalize(value: String?): String {
+            return value
+                ?.trim()
+                ?.lowercase()
+                ?.replace("[^a-z0-9]".toRegex(), "")
+                ?: ""
+        }
+
+        fun isSystemMessage(value: String?): Boolean {
+            return value
+                ?.trim()
+                ?.equals("PLEASE MARK PROPERLY", true) == true
+        }
+
+        fun isValidNumber(value: String?): Boolean {
+            if (value.isNullOrBlank()) return false
+            if (value.equals("AB", true)) return true
+            return value.toIntOrNull() != null
+        }
 
         val updatedSections = apiResponse.data.map { section ->
 
             val updatedStudents = section.upload_details.map { student ->
 
+                // Find Excel row by Student ID
                 val row = tableData.records.firstOrNull {
-                    it[Constant.Student_ID]?.toString() == student.student_id
+                    it[Constant.Student_ID]?.toString()?.trim() == student.student_id
                 } ?: return@map student
 
-                val updatedMarks = student.marks.orEmpty().map { subject ->
+                val updatedMarks = student.marks.map { subject ->
 
-                    val normSubject = normalize(subject.subject_name)
+                    val updatedActivities = subject.activities.map { activity ->
 
-                    val updatedActivities = subject.activities.orEmpty().map { activity ->
+                        val baseMark = activity.mark?.trim().orEmpty()
+                        val selectedKey = normalize(activity.selected_name)
 
-                        val normActivity = normalize(activity.selected_name)
-
-                        val exactMatch =
-                            row.entries.firstNotNullOfOrNull { entry ->
-                                val header = normalize(entry.key)
-
-                                val subjectMatch = header.contains(normSubject)
-                                val activityMatch = header.contains(normActivity)
-
-                                if (subjectMatch && activityMatch) {
-                                    entry.value?.toString()?.trim()
-                                } else null
-                            }
-
-                        val subjectOnlyMatch =
-                            if (exactMatch == null && subject.activities.size == 1) {
-                                row.entries.firstNotNullOfOrNull { entry ->
-                                    val header = normalize(entry.key)
-                                    if (header == normSubject) {
-                                        entry.value?.toString()?.trim()
-                                    } else null
-                                }
+                        // Find matching Excel column ONLY by selected_name
+                        val extractedValue = row.entries.firstNotNullOfOrNull { entry ->
+                            val header = normalize(entry.key)
+                            if (header == selectedKey) {
+                                entry.value?.toString()?.trim()
                             } else null
+                        }
 
-                        val finalValue = exactMatch ?: subjectOnlyMatch
+                        // =========================
+                        // FINAL DECISION RULE
+                        // =========================
+                        val finalMark = when {
 
-                        if (!finalValue.isNullOrEmpty()) {
-                            activity.copy(mark = finalValue)
-                        } else activity
+                            // Excel says: PLEASE MARK PROPERLY
+                            isSystemMessage(extractedValue) ->
+                                extractedValue!!
+
+                            // Both API & Excel have valid numbers
+                            isValidNumber(baseMark) && isValidNumber(extractedValue) ->
+                                if (baseMark != extractedValue) extractedValue!! else baseMark
+
+                            // Only Excel has value
+                            !isValidNumber(baseMark) && isValidNumber(extractedValue) ->
+                                extractedValue!!
+
+                            // Only API has value
+                            isValidNumber(baseMark) && !isValidNumber(extractedValue) ->
+                                baseMark
+
+                            // Nothing valid
+                            else -> baseMark
+                        }
+
+                        activity.copy(mark = finalMark)
                     }
 
                     subject.copy(activities = updatedActivities)
@@ -371,7 +398,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
     private fun isGetMarkDetails() {
-
+        Constant.showLoading(this)
         val json = JsonObject().apply {
             addProperty(Constant.class_id, isFinalMapDetails!![0].class_id)
             addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
@@ -432,74 +459,116 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
-    private fun updateIssueLabel() {
-
-        val issueSummary = calculateIssueSummary(currentStudentsList, markColumns)
-        if (issueSummary.total != 0) {
-            binding.lblIssueFound.visibility = View.VISIBLE
-        } else {
-            binding.lblIssueFound.visibility = View.GONE
-        }
-
-        val parts = mutableListOf<String>()
-
-        if (issueSummary.absentCount > 0) {
-            parts.add("AB → ${issueSummary.absentCount}")
-        }
-
-        if (issueSummary.maxMarkCount > 0) {
-            parts.add(getString(R.string.max_mark_exceeded, issueSummary.maxMarkCount))
-        }
-
-        if (issueSummary.systemMsgCount > 0) {
-            parts.add(getString(R.string.please_mark_properly, issueSummary.systemMsgCount))
-        }
-
-        if (parts.isNotEmpty()) {
-            binding.lblIssueFound.visibility = View.VISIBLE
-            binding.lblIssueFound.text =
-                getString(R.string.found_issue_s, issueSummary.total) + parts.joinToString(", ")
-        } else {
-            binding.lblIssueFound.visibility = View.GONE
-        }
-    }
 
     private fun calculateIssueSummary(
-        students: List<StudentMarkList>, columns: List<MarkColumn>
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
     ): IssueSummary {
 
         val summary = IssueSummary()
+
         students.forEach { student ->
             student.markTexts.forEachIndexed { index, rawText ->
-                val value = rawText.toIntOrNull()
-                val maxMark = columns.getOrNull(index)?.maxMark ?: return@forEachIndexed
 
-                when {
-                    rawText.equals("AB", true) -> {
-                        summary.absentCount++
-                        summary.total++
-                    }
+                val column = columns.getOrNull(index) ?: return@forEachIndexed
+                val trimmed = rawText.trim()
+                val value = trimmed.toIntOrNull()
 
-                    rawText.equals(getString(R.string.please_mark_properly), true) -> {
-                        summary.systemMsgCount++
-                        summary.total++
-                    }
+                val subject = column.subjectName
+                val selected = column.selected_name ?: column.activityName
 
-                    rawText.isNotEmpty() && value == null -> {
-                        summary.invalidCount++
-                        summary.total++
-                    }
+                val oldValue =
+                    student.mockMarkTexts.getOrNull(index)?.trim().orEmpty()
 
-                    value != null && value > maxMark -> {
-                        summary.maxMarkCount++
-                        summary.total++
-                    }
+                val reviewKey =
+                    "${student.student_id}_${column.selected_name
+                        ?.lowercase()
+                        ?.replace("[^a-z0-9]".toRegex(), "")}"
+
+                /* 🔴 1. REVIEW FLAG (ONLY IF NOT EDITED) */
+                if (
+                    trimmed.isNotEmpty() &&
+                    trimmed == oldValue &&          // ⭐ KEY FIX
+                    reviewFlagMap.containsKey(reviewKey)
+                ) {
+                    summary.total++
+                    summary.systemMsgCount++
+                    summary.details.add(
+                        IssueDetail(
+                            subject,
+                            selected,
+                            reviewFlagMap[reviewKey]!!
+                        )
+                    )
+                    return@forEachIndexed
+                }
+
+                /* 🔴 2. EXCEL / SYSTEM MESSAGE */
+                if (
+                    trimmed.isNotEmpty() &&
+                    value == null &&
+                    !trimmed.equals("AB", true)
+                ) {
+                    summary.total++
+                    summary.invalidCount++
+                    summary.details.add(
+                        IssueDetail(subject, selected, trimmed)
+                    )
+                    return@forEachIndexed
+                }
+
+                /* 🔴 3. MAX MARK */
+                if (value != null && value > column.maxMark) {
+                    summary.total++
+                    summary.maxMarkCount++
+                    summary.details.add(
+                        IssueDetail(
+                            subject,
+                            selected,
+                            "Max mark exceeded (${value}/${column.maxMark})"
+                        )
+                    )
                 }
             }
         }
         return summary
     }
+    private fun updateIssueLabel() {
 
+        val issueSummary = calculateIssueSummary(currentStudentsList, markColumns)
+
+        // 🔹 No issues → hide label
+        if (issueSummary.total == 0) {
+            binding.lblIssueFound.visibility = View.GONE
+            return
+        }
+
+        // 🔹 Group adapter error messages
+        val reasonCountMap = linkedMapOf<String, Int>()
+
+        issueSummary.details.forEach { issue ->
+            val reason = issue.reason.trim().lowercase()
+            reasonCountMap[reason] = (reasonCountMap[reason] ?: 0) + 1
+        }
+
+        // 🔹 Build label text with ⚠️ emoji
+        val message = buildString {
+            append("⚠️ ")
+            append(issueSummary.total)
+            append(" issue")
+            if (issueSummary.total > 1) append("s")
+            append(" found : ")
+
+            append(
+                reasonCountMap.entries.joinToString(", ") { (reason, count) ->
+                    "$count $reason"
+                }
+            )
+        }
+
+        binding.lblIssueFound.visibility = View.VISIBLE
+        binding.lblIssueFound.text = message
+    }
 
     private fun isSaveTheMark(
         students: List<StudentMarkList>,
@@ -606,6 +675,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             studentName = student.name,
                             subjectName = column.subjectName,
                             activityName = column.activityName,
+                            selected_name = column.selected_name,
                             enteredMark = rawText,
                             maxMark = column.maxMark
                         )
@@ -634,6 +704,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         InvalidMarkIssue(
                             studentName = student.name,
                             subjectName = column.subjectName,
+                            selectedname = column.selected_name,
                             enteredValue = text
                         )
                     )
