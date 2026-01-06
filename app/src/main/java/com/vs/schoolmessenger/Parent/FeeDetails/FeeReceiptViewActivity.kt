@@ -42,7 +42,11 @@ class FeeReceiptViewActivity : BaseActivity<FeeReceiptViewActivityBinding>(), Vi
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.imgDownload.setImageDrawable(
