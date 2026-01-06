@@ -45,11 +45,42 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:padding="@dimen/ten">
 
+                <RelativeLayout
+                    android:id="@+id/rytHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:id="@+id/imgHistory"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:backgroundTint="@color/PrimaryColor"
+                        android:src="@drawable/ic_history">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/btnNoticeBoardReport"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imgHistory"
+                        android:text="@string/history"
+                        android:textColor="@color/PrimaryColor" />
+
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/rytTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rytHistory">
 
                     <TextView
                         android:id="@+id/lblLocation"
@@ -75,45 +106,11 @@
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_toEndOf="@+id/lblStar"
+                        android:layout_alignParentEnd="true"
                         android:src="@drawable/ic_location" />
 
 
-                    <RelativeLayout
-                        android:id="@+id/rytHistory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:paddingHorizontal="@dimen/ten">
 
-                        <ImageView
-                            android:id="@+id/imgHistory"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="@dimen/ten"
-                            android:layout_marginEnd="@dimen/five"
-                            android:backgroundTint="@color/PrimaryColor"
-                            android:src="@drawable/ic_history">
-
-                        </ImageView>
-
-                        <TextView
-                            android:id="@+id/btnNoticeBoardReport"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/imgHistory"
-                            android:text="@string/history"
-                            android:textColor="@color/PrimaryColor" />
-
-                    </RelativeLayout>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -122,6 +119,7 @@
                     android:layout_height="@dimen/fourty_five"
                     android:layout_below="@+id/rytTitle"
                     android:layout_alignStart="@+id/rytTitle"
+                    android:layout_marginTop="@dimen/ten"
                     android:background="@drawable/field_background"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
