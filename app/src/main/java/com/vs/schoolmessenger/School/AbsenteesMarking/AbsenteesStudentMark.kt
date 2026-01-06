@@ -134,9 +134,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = isStandardName + "-" + isSectionName
-        binding.toolbarLayout.lblSchoolName.text =
-            isStaffDetails!!.school_name
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblSchoolName.text = isStandardName + "-" + isSectionName
+
+//        binding.toolbarLayout.lblSchoolName.text =
+//            isStaffDetails!!.school_name
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
             if (response != null) {

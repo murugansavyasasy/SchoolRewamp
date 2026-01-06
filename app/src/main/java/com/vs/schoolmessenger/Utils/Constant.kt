@@ -1246,6 +1246,32 @@ object Constant {
     }
 
 
+    fun getInitials(fullName: String): String {
+        val prefixes = setOf("dr", "mr", "ms", "mrs", "miss")
+
+        val parts = fullName
+            .trim()
+            .split("[\\s.]+".toRegex())
+            .filter { it.isNotEmpty() && it.lowercase() !in prefixes }
+
+        if (parts.isEmpty()) return ""
+
+        return if (parts.size > 1) {
+            // First word first letter + last word last letter
+            val firstChar = parts.first().first()
+            val lastChar = parts.last().last()
+            "${firstChar}${lastChar}".uppercase()
+        } else {
+            // Single word → first letter + last letter
+            val word = parts[0]
+            "${word.first()}${word.last()}".uppercase()
+        }
+    }
+
+
+
+
+
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
         val cal = Calendar.getInstance()
         cal.time = date

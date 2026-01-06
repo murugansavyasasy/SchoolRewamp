@@ -100,7 +100,7 @@ class MessageFromStaffAdapter(
         fun bind(data: GetMessagesStaffData, position: Int) {
             lblTitle.text = data.title
             val name = data.sent_by ?: ""
-            lblLogo.text = Constant.getNameInitials(name)
+            lblLogo.text = Constant.getInitials(name)
             lblName.text = name
 
             if (data.role!!.isNotEmpty()) {

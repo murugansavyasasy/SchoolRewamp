@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Assignment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -176,6 +177,16 @@ class AssignmentAdapter(
             val totalCount = data.total_count ?: 1
 
             progressBarAssignment.max = totalCount
+            progressBarAssignment.progress = submittedCount
+
+            // Dynamically set the progress drawable based on completion status
+            val progressDrawableRes = if (submittedCount == totalCount) {
+                R.drawable.progress_bar_assignment_green
+            } else {
+                R.drawable.progress_bar_assignment
+            }
+            progressBarAssignment.progressDrawable = ContextCompat.getDrawable(context, progressDrawableRes)
+            // Re-set progress after updating drawable to ensure it applies correctly
             progressBarAssignment.progress = submittedCount
 
             val hasFiles = !data.file_path.isNullOrEmpty()
@@ -357,11 +368,9 @@ class AssignmentAdapter(
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
 
-            if (data.can_edit && data.can_delete) {
-
+            if (data.can_edit || data.can_delete) {
                 options.visibility = View.VISIBLE
             } else {
-
                 options.visibility = View.GONE
             }
 
