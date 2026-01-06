@@ -149,6 +149,8 @@ class ExamListAdapter(
                 }
 
                 listener.onExamSelected(item)
+                listener.onExamApiCall(item)
+
 
 //                val prevExpanded = expandedPosition
 //                expandedPosition = if (expandedPosition == position) -1 else position
