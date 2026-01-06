@@ -595,7 +595,7 @@ class SchoolServices {
     fun isGetSubjectList(
         isToken: String, isAcademicYearId: Int, isSection: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getSubjectList(isToken, isAcademicYearId, isSection)
+        RestClient.apiInterfaces.getSubjectList(isToken, isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -800,7 +800,7 @@ class SchoolServices {
 
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetVoiceHistory(isToken, isEmergency)
+        RestClient.apiInterfaces.isGetVoiceHistory(isToken)
             ?.enqueue(object : Callback<VoiceDetails?> {
                 override fun onResponse(
                     call: Call<VoiceDetails?>, response: Response<VoiceDetails?>

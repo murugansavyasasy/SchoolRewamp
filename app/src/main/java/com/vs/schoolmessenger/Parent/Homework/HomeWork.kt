@@ -191,7 +191,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
     fun isLoadHomeWorkData(data: List<GetHomeworkDetails>, isHomeWorkDate: String) {
-        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable, isHomeWorkDate)
+        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable, isHomeWorkDate,this)
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
@@ -269,7 +269,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     fun isHomeWorkList() {
         mAdapter = HomeworkParentAdapter(
-            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate
+            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate,this
         )
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)

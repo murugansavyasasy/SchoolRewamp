@@ -66,14 +66,19 @@ class VoiceHistoryAdapter(
 
         private val waveformSeekBar: WaveformSeekBar =
             itemView.findViewById(R.id.waveformSeekBar)
+        private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val imgVoicePlay: ImageView =
             itemView.findViewById(R.id.imgVoicePlay)
         private val lblStartDuration: TextView =
             itemView.findViewById(R.id.lblStartDuration)
-        private val lblEndDuration: TextView =
-            itemView.findViewById(R.id.lblEndDuration)
+        private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
+
         private val rlaSendVoice: RelativeLayout =
             itemView.findViewById(R.id.rlaSendVoice)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
+
 
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
@@ -107,6 +112,27 @@ class VoiceHistoryAdapter(
             listener: VoiceHistoryClickListener,
             adapter: VoiceHistoryAdapter
         ) {
+
+            lblTitle.text = data.title
+            lblSeeMoreClick.visibility = View.GONE
+
+            val parts = data.sentOn.split(" ")
+            if (parts.size >= 3) {
+                val date = parts[0]
+                val time = "${parts[1]} ${parts[2]}"
+                lblTime.text = time
+                lblDate.text = Constant.convertDateTimeFormat(date)
+            }
+
+            lblEndDuration.text = formatTime(data.duration.toInt() * 1000)
+            lblStartDuration.text = "00:00"
+            waveformSeekBar.updateWithLevel(0f)
+            rlaSendVoice.visibility = View.VISIBLE
+            lblEndDuration.text = String.format(
+                Constant.dateForMate,
+                data.duration.toInt() / 60,
+                data.duration.toInt() % 60
+            )
 
             lblEndDuration.text = formatTime(data.duration.toInt() * 1000)
             lblStartDuration.text = "00:00"

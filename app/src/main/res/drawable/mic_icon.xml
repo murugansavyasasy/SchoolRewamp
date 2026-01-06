@@ -6,7 +6,7 @@
 
   <!-- Outer Circle -->
   <path
-      android:fillColor="#a6dadf"
+      android:fillColor="@color/PrimaryColor"
   android:pathData="M13,0C5.82,0 0,5.82 0,13s5.82,13 13,13 13,-5.82 13,-13S20.18,0 13,0z" />
 
   <!-- Inner Path -->

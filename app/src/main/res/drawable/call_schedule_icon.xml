@@ -6,7 +6,7 @@
 
   <!-- Outer Circle (Blue Background) -->
   <path
-      android:fillColor="#a6dadf"
+      android:fillColor="@color/PrimaryColor"
   android:pathData="M32,0C14.327,0 0,14.327 0,32s14.327,32 32,32 32,-14.327 32,-32S49.673,0 32,0z" />
 
   <!-- Inner Icon (White, Scaled Down) -->

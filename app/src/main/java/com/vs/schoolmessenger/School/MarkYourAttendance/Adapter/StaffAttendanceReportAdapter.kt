@@ -114,7 +114,7 @@ class StaffAttendanceReportAdapter(
             lblRole.text = data.role
 
             val result = Constant.getDateDetails(data.date)
-            lblDate.text = result.second.toString()
+            lblDate.text = String.format("%02d", result.second)
             lblDay.text = result.third
 
             lnrParentCard.setOnClickListener {
