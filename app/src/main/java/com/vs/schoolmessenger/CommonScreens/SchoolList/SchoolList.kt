@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -203,13 +205,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
-
-//        if (binding.radioGroupSendTo.checkedRadioButtonId == R.id.radioAll && isUserDetails?.staff_details != null) {
-//            selectedSchoolIds.clear()
-//            isUserDetails!!.staff_details.forEach { staff ->
-//                selectedSchoolIds.add(staff.school_id.toString())
-//            }
-//        }
     }
 
     override fun onResume() {
@@ -679,40 +674,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 VimeoVideoUpload.uploadVideo(
                     this, "quiz", "quiz", video.path, this
                 )
-
-//                VimeoVideoUpload.uploadVideo(
-//                    this,
-//                    "quiz",
-//                    "quiz",
-//                    video.path,
-//                    object : VimeoVideoUpload.UploadCompletionListener {
-//
-//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-//
-//                            Log.e("VIDEO_DEBUG", "Callback fired")
-//
-//                            Constant.isAwsUploadedFiles.add(
-//                                AwsUploadedFiles(
-//                                    isFileUrl = link.toString(),
-//                                    isFileType = Constant.VIDEO
-//                                )
-//                            )
-//
-//                            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-//                                ProgressDialogHelper.dismiss()
-//
-//                                when (SELECTED_MENU_ID) {
-//                                    M_ATTACHMENTS -> attachmentSendApi()
-//                                    M_NOTICEBOARD -> noticeboardsendapi()
-//                                }
-//                            }
-//                        }
-//
-//                        override fun onFailure(errorMessage: String?) {
-//                            Log.e("VIDEO_DEBUG", "Upload failed: $errorMessage")
-//                        }
-//                    }
-//                )
             }
 
         } else {
@@ -723,60 +684,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
     }
-
-
-//    private fun videoUploading(
-//        totalTasks: Int,
-//        onTaskComplete: () -> Unit
-//    ) {
-//        val iterator = isVideoSelectedArrayList.iterator()
-//        while (iterator.hasNext()) {
-//            val fileItem = iterator.next()
-//            if (fileItem.path.contains("player.vimeo.com")) {
-//                Constant.isAwsUploadedFiles.add(
-//                    AwsUploadedFiles(
-//                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-//                    )
-//                )
-//                iterator.remove()
-//            }
-//        }
-//
-//        if (isVideoSelectedArrayList.isNotEmpty()) {
-//            for (i in isVideoSelectedArrayList.indices) {
-//
-//                Thread {
-//                    for (x in 1..10) {
-//                        Thread.sleep(300)
-//                        runOnUiThread { onTaskComplete() }
-//                    }
-//                }.start()
-//
-//
-//                VimeoVideoUpload.uploadVideo(
-//                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, object : VimeoVideoUpload.UploadCompletionListener {
-//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-//                            // Delegate to the activity's onUploadComplete for main logic
-//                            this@SchoolList.onUploadComplete(success, iframe, link)
-//                            onTaskComplete()  // Increment for each video upload task
-//                        }
-//
-//                        override fun onFailure(errorMessage: String?) {
-//                            // Delegate to the activity's onFailure
-//                            this@SchoolList.onFailure(errorMessage)
-//                            onTaskComplete()  // Increment on error to avoid hanging
-//                        }
-//                    }
-//                )
-//            }
-//        } else {
-//            ProgressDialogHelper.dismiss()
-//            when (SELECTED_MENU_ID) {
-//                M_ATTACHMENTS -> attachmentSendApi()
-//                M_NOTICEBOARD -> noticeboardsendapi()
-//            }
-//        }
-//    }
 
     override fun onUploadComplete(
         success: Boolean, iframe: String?, link: String?
@@ -806,25 +713,40 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     fun voiceSendApi() {
-        val isVoiceData = Constant.isVoiceSendingData
-        val jsonObject = ApiCallRequest.isVoiceSend(
-            isAcademicYearId = isAcademicYearId,
-            isCommunicationType = isVoiceData!!.isCommunicationType,
-            selectedDates = isVoiceData.selectedDates,
-            isStartTimeText = isVoiceData.isStartTimeText,
-            isEndTimeText = isVoiceData.isEndTimeText,
-            title = isVoiceData.title,
-            isEmergency = isVoiceData.isEmergency,
-            isScheduleCall = isVoiceData.isScheduleCall,
-            schoolId = selectedSchoolIds,
-            targetType = Constant.isSchool,
-            circularType = Constant.school,
-            fileName = isVoiceData.isFileName
-        )
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val isVoiceData = Constant.isVoiceSendingData ?: return@postDelayed
+
+            val jsonObject = ApiCallRequest.isVoiceSend(
+                isAcademicYearId = isAcademicYearId,
+                isCommunicationType = isVoiceData.isCommunicationType,
+                selectedDates = isVoiceData.selectedDates,
+                isStartTimeText = isVoiceData.isStartTimeText,
+                isEndTimeText = isVoiceData.isEndTimeText,
+                title = isVoiceData.title,
+                isEmergency = isVoiceData.isEmergency,
+                isScheduleCall = isVoiceData.isScheduleCall,
+                schoolId = selectedSchoolIds,
+                targetType = Constant.isSchool,
+                circularType = Constant.school,
+                fileName = isVoiceData.isFileName
+            )
+
+            appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+        }, 100)
     }
 
     fun attachmentSendApi() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
         val jsonObject = ApiCallRequest.isSendAttachment(
             isAcademicYearId = isAcademicYearId,
             selectedIds = selectedSchoolIds,
@@ -835,10 +757,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             fileSize = isFileSize,
         )
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
-    }
+
+        }, 100)
+        }
 
 
     fun noticeboardsendapi() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
         val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
         var intendedFor = ""
 
@@ -869,6 +798,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             appViewModel!!.sendnotice(isAccessToken!!, jsonObject, this)
 
         }
+    }, 100)
+
     }
 
     fun showConfirmationAlert(isSelectTarget: String, isMessage: String) {

@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -255,52 +257,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         )
     }
 
-    fun voiceSendApi() {
-        val isVoiceData = Constant.isVoiceSendingData
-        val jsonObject = ApiCallRequest.isVoiceSend(
-            isAcademicYearId = isAcademicYearId,
-            isCommunicationType = isVoiceData!!.isCommunicationType,
-            selectedDates = isVoiceData.selectedDates,
-            isStartTimeText = isVoiceData.isStartTimeText,
-            isEndTimeText = isVoiceData.isEndTimeText,
-            title = isVoiceData.title,
-            isEmergency = isVoiceData.isEmergency,
-            isScheduleCall = isVoiceData.isScheduleCall,
-            schoolId = selectedIds,
-            targetType = isTargetType!!,
-            circularType = isCircularType!!,
-            fileName = isVoiceData.isFileName
-        )
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
-
-    }
-
-    fun attachmentSendApi() {
-
-        isTargetType = Constant.isStudent
-        isCircularType = Constant.student
-        val jsonObject = ApiCallRequest.isSendAttachment(
-            isAcademicYearId = isAcademicYearId,
-            selectedIds = selectedIds,
-            title = Constant.isCommonTitle,
-            description = Constant.isCommonDescription,
-            targetType = isTargetType!!,
-            iframe = isIframe,
-            fileSize = isFileSize,
-        )
-        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
-    }
-
-
     fun isUploadFilesInServer(isFileType: String?) {
 
         ProgressDialogHelper.show(this)
-//        ProgressDialogHelper.updateProgress(10)
 
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -335,15 +298,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
 
         when {
-//            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
-//            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
                 isFileType, totalTasks, { completedTasks++; updateProgress() })
 
             isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
                 totalTasks, { completedTasks++; updateProgress() })
         }
-//        ProgressDialogHelper.updateProgress(80)
     }
 
 
@@ -501,41 +461,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
                 }.start()
 
-
-//                VimeoVideoUpload.uploadVideo(
-//                    this,
-//                    "quiz",
-//                    "quiz",
-//                    video.path,
-//                    object : VimeoVideoUpload.UploadCompletionListener {
-//
-//                        override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
-//
-//                            Log.e("VIDEO_DEBUG", "Callback fired")
-//
-//                            Constant.isAwsUploadedFiles.add(
-//                                AwsUploadedFiles(
-//                                    isFileUrl = link.toString(),
-//                                    isFileType = Constant.VIDEO
-//                                )
-//                            )
-//
-//                            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-//                                ProgressDialogHelper.dismiss()
-//
-//                                when (SELECTED_MENU_ID) {
-//                                    M_ATTACHMENTS -> attachmentSendApi()
-//                                    M_ASSIGNMENT -> isAssignmentSend()
-//                                }
-//                            }
-//                        }
-//
-//                        override fun onFailure(errorMessage: String?) {
-//                            Log.e("VIDEO_DEBUG", "Upload failed: $errorMessage")
-//                        }
-//                    }
-//                )
-
                 VimeoVideoUpload.uploadVideo(
                     this, "quiz", "quiz", video.path, this
                 )
@@ -562,7 +487,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             )
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-//                ProgressDialogHelper.dismiss()
+                ProgressDialogHelper.dismiss()
                 if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
                 } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {
@@ -623,17 +548,27 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                 M_COMMUNICATION -> {
                     if (Constant.isCommunicationType == 3) {
-                        Constant.isTextSendingData?.let { textData ->
-                            val json = ApiCallRequest.isSendText(
-                                isAcademicYearId,
-                                selectedIds,
-                                textData.isTitle,
-                                textData.isContent,
-                                isTargetType
-                            )
-                            appViewModel?.isSendText(isAccessToken!!, json, this)
+                        runOnUiThread {
+                            Constant.showLoading(this)
                         }
-                    } else {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            Constant.isTextSendingData?.let { textData ->
+                                val json = ApiCallRequest.isSendText(
+                                    isAcademicYearId,
+                                    selectedIds,
+                                    textData.isTitle,
+                                    textData.isContent,
+                                    isTargetType
+                                )
+
+                                appViewModel?.isSendText(isAccessToken!!, json, this)
+
+                            } ?: run {
+                                Constant.hideLoading(this)
+                            }
+                        }, 100)
+                    }
+                    else {
                         isUploadFilesInServer("audio")
                     }
                 }
@@ -698,31 +633,101 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     fun isAssignmentSend() {
 
-        val subjectId = intent.getIntExtra("subject_id", 0)
-        val isAssignmentData =
-            intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
-        isAssignmentData?.let {
-            val jsonObject = ApiCallRequest.isSendAssignment(
-                targetType = isTargetType!!,
-                iframe = isIframe,
-                file_size = isFileSize,
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val subjectId = intent.getIntExtra("subject_id", 0)
+            val isAssignmentData =
+                intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+
+            isAssignmentData?.let {
+
+                val jsonObject = ApiCallRequest.isSendAssignment(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    file_size = isFileSize,
+                    isAcademicYearId = isAcademicYearId,
+                    selectedIds = selectedIds,
+                    title = it.isTitle,
+                    description = it.isDescription,
+                    assignmentType = it.isAssignmentType,
+                    date = it.isDate,
+                    time = it.isTime,
+                    subjectId = subjectId
+                )
+
+                Log.d("jsonObject", jsonObject.toString())
+                appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    "Assignment details is missing.",
+                    this
+                )
+            }
+
+        }, 100)
+    }
+
+    fun attachmentSendApi() {
+
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            isTargetType = Constant.isStudent
+            isCircularType = Constant.student
+
+            val jsonObject = ApiCallRequest.isSendAttachment(
                 isAcademicYearId = isAcademicYearId,
                 selectedIds = selectedIds,
-                title = it.isTitle,
-                description = it.isDescription,
-                assignmentType = it.isAssignmentType,
-                date = it.isDate,
-                time = it.isTime,
-                subjectId = subjectId
+                title = Constant.isCommonTitle,
+                description = Constant.isCommonDescription,
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                fileSize = isFileSize,
             )
-            Log.d("jsonObject", jsonObject.toString())
-            appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
 
-        } ?: run {
-            Constant.showValidationAlertPopup(
-                getString(R.string.alert), "Assignment details is missing.", this
-            )
+            appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+        }, 100)
+    }
+
+    fun voiceSendApi() {
+
+        runOnUiThread {
+            Constant.showLoading(this)
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val isVoiceData = Constant.isVoiceSendingData
+
+            val jsonObject = ApiCallRequest.isVoiceSend(
+                isAcademicYearId = isAcademicYearId,
+                isCommunicationType = isVoiceData!!.isCommunicationType,
+                selectedDates = isVoiceData.selectedDates,
+                isStartTimeText = isVoiceData.isStartTimeText,
+                isEndTimeText = isVoiceData.isEndTimeText,
+                title = isVoiceData.title,
+                isEmergency = isVoiceData.isEmergency,
+                isScheduleCall = isVoiceData.isScheduleCall,
+                schoolId = selectedIds,
+                targetType = isTargetType!!,
+                circularType = isCircularType!!,
+                fileName = isVoiceData.isFileName
+            )
+
+            appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+        }, 100)
     }
 
     override fun onIdCheck(data: NameAndIds) {

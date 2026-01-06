@@ -1546,7 +1546,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
 
                     if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-//                        ProgressDialogHelper.dismiss()
+                        ProgressDialogHelper.dismiss()
                         when (SELECTED_MENU_ID) {
                             M_HOMEWORK -> {
                                 isHomeWorkSend()
@@ -1645,27 +1645,48 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     fun eventsendapi() {
 
-        val eventDetails = intent.getSerializableExtra(Constant.event_data) as? EventDetails
-        if (eventDetails != null) {
-            val jsonObject = ApiCallRequest.isSendEvent(
-                title = eventDetails.txtTitle,
-                content = eventDetails.txtDesc,
-                venue = eventDetails.txtLocation,
-                event_date = eventDetails.txtStartDate,
-                event_time = eventDetails.txtStartTime,
-                target_type = isTargetType,
-                target_code = selectedIds,
-                iframe = isIframe,
-                fileSize = isFileSize,
-                isSelectedCategory = eventDetails.isCategory
-            )
-            Log.d("Object", jsonObject.toString())
-            appViewModel!!.sendevent(isAccessToken!!, jsonObject, this)
-
-        } else {
-            Log.e("RecepientEventList", "EventDetails not found in intent")
+        // 1️⃣ Show loader first
+        runOnUiThread {
+            Constant.showLoading(this)
         }
+
+        // 2️⃣ Give UI one frame to render loader
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val eventDetails =
+                intent.getSerializableExtra(Constant.event_data) as? EventDetails
+
+            if (eventDetails != null) {
+
+                val jsonObject = ApiCallRequest.isSendEvent(
+                    title = eventDetails.txtTitle,
+                    content = eventDetails.txtDesc,
+                    venue = eventDetails.txtLocation,
+                    event_date = eventDetails.txtStartDate,
+                    event_time = eventDetails.txtStartTime,
+                    target_type = isTargetType,
+                    target_code = selectedIds,
+                    iframe = isIframe,
+                    fileSize = isFileSize,
+                    isSelectedCategory = eventDetails.isCategory
+                )
+
+                Log.d("EventSend", jsonObject.toString())
+
+                appViewModel!!.sendevent(
+                    isAccessToken!!,
+                    jsonObject,
+                    this
+                )
+
+            } else {
+                Constant.hideLoading(this)
+                Log.e("RecepientEventList", "EventDetails not found in intent")
+            }
+
+        }, 100)
     }
+
 
 
     override fun onIdCheck(group: NameAndIds) {
@@ -1733,106 +1754,157 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     ContextCompat.getDrawable(this, R.drawable.bg_gray)
             }
         }
-
-//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-//        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
-//            isGetSubjectList(idString)
-//        }
     }
 
     fun attachmentSendApi() {
-        val jsonObject = ApiCallRequest.isSendAttachment(
-            isAcademicYearId = isAcademicYearId,
-            selectedIds = selectedIds,
-            title = Constant.isCommonTitle,
-            description = Constant.isCommonDescription,
-            targetType = isTargetType!!,
-            iframe = isIframe,
-            fileSize = isFileSize,
-        )
-        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val jsonObject = ApiCallRequest.isSendAttachment(
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedIds,
+                title = Constant.isCommonTitle,
+                description = Constant.isCommonDescription,
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                fileSize = isFileSize,
+            )
+
+            appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+        }, 100)
     }
 
     fun isAssignmentSend() {
-//        val isAssignmentData = intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
-        isAssignmentData?.let {
-            val jsonObject = ApiCallRequest.isSendAssignment(
-                targetType = isTargetType!!,
-                iframe = isIframe,
-                file_size = isFileSize,
-                isAcademicYearId = isAcademicYearId,
-                selectedIds = selectedIds,
-                title = it.isTitle,
-                description = it.isDescription,
-                assignmentType = it.isAssignmentType,
-                date = it.isDate,
-                time = it.isTime,
-                subjectId = isSubjectId!!,
-            )
-            appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
-        } ?: run {
-            Constant.showValidationAlertPopup(
-                getString(
-                    R.string.alert
-                ), "Assignment details is missing.", this
-            )
+
+        runOnUiThread {
+            Constant.showLoading(this)
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            isAssignmentData?.let {
+
+                val jsonObject = ApiCallRequest.isSendAssignment(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    file_size = isFileSize,
+                    isAcademicYearId = isAcademicYearId,
+                    selectedIds = selectedIds,
+                    title = it.isTitle,
+                    description = it.isDescription,
+                    assignmentType = it.isAssignmentType,
+                    date = it.isDate,
+                    time = it.isTime,
+                    subjectId = isSubjectId!!,
+                )
+
+                appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    "Assignment details is missing.",
+                    this
+                )
+            }
+
+        }, 100)
     }
+
 
 
     fun isLsrwSkillSend() {
-        val isLsrwnewTaskSendingData =
-            intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
-        isLsrwnewTaskSendingData?.let {
-            val jsonObject = ApiCallRequest.isSendLsrwSkill(
-                targetType = isTargetType!!,
-                iframe = isIframe,
-                thumbnail = "",
-                file_size = isFileSize,
-                selectedIds = selectedIds,
-                title = it.isTitle,
-                description = it.isDescription,
-                isLsrwType = it.isLsrwType,
-                submission_date = it.submission_date,
-                subjectId = isSubjectId!!
-            )
-            appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
 
-        } ?: run {
-            Constant.showValidationAlertPopup(
-                getString(
-                    R.string.alert
-                ), "Task details is missing.", this
-            )
+        runOnUiThread {
+            Constant.showLoading(this)
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val isLsrwnewTaskSendingData =
+                intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
+
+            isLsrwnewTaskSendingData?.let {
+
+                val jsonObject = ApiCallRequest.isSendLsrwSkill(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    thumbnail = "",
+                    file_size = isFileSize,
+                    selectedIds = selectedIds,
+                    title = it.isTitle,
+                    description = it.isDescription,
+                    isLsrwType = it.isLsrwType,
+                    submission_date = it.submission_date,
+                    subjectId = isSubjectId!!
+                )
+
+                appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    "Task details is missing.",
+                    this
+                )
+            }
+
+        }, 100)
     }
 
     fun isHomeWorkSend() {
-//        ProgressDialogHelper.updateProgress(100)
-        ProgressDialogHelper.dismiss()
-        val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
-        sectionDetails?.let {
-            val jsonObject = ApiCallRequest.isSendHomeWork(
-                targetType = isTargetType!!,
-                iframe = isIframe,
-                file_size = isFileSize,
-                isAcademicYearId = isAcademicYearId,
-                selectedIds = selectedIds,
-                title = it.title,
-                description = it.description,
-                subjectId = isSubjectId!!,
-            )
-            appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
-        } ?: run {
-            Constant.showValidationAlertPopup(
-                getString(
-                    R.string.alert
-                ), resources.getString(R.string.Section_details_missing), this
-            )
+
+        runOnUiThread {
+            Constant.showLoading(this)
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            ProgressDialogHelper.dismiss()
+
+            val sectionDetails =
+                intent.getParcelableExtra<SectionDetails>(Constant.section_data)
+
+            sectionDetails?.let {
+
+                val jsonObject = ApiCallRequest.isSendHomeWork(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    file_size = isFileSize,
+                    isAcademicYearId = isAcademicYearId,
+                    selectedIds = selectedIds,
+                    title = it.title,
+                    description = it.description,
+                    subjectId = isSubjectId!!,
+                )
+
+                appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    resources.getString(R.string.Section_details_missing),
+                    this
+                )
+            }
+
+        }, 100)
     }
 
     fun voiceSendApi() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
@@ -1849,13 +1921,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             fileName = isVoiceData.isFileName
         )
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+        }, 100)
     }
 
 
     // QUIZ
     fun submitQuiz() {
 
-        ProgressDialogHelper.show(this)
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
 
         pendingBody = quizData!!
         uploadedFiles.clear()
@@ -1873,6 +1951,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             pendingFiles = filesToUpload
             uploadNextFile()
         }
+        }, 100)
     }
 
     private fun updateProgress() {
@@ -1949,91 +2028,105 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun callApi(body: QuizRequestBody) {
-        ProgressDialogHelper.dismiss()
-        var isQuestionId = 0
-        val quizRequest: QuizRequestBody = quizData!!
-        val mainJson = JsonObject()
-        mainJson.addProperty("ok_flag", false)
-        mainJson.addProperty("max_mark", quizRequest.max_mark)
-        mainJson.addProperty("open_to_student", quizRequest.open_to_student)
 
-        mainJson.addProperty("target_type", isTargetType)
-        mainJson.addProperty("level", selectedLevelValue)
-        mainJson.addProperty("subject_id", isSubjectId!!.toString())
-        mainJson.addProperty("class_id", isStandardId)
-
-        val jsonArray = JsonArray()
-        selectedIds.forEach { id ->
-            jsonArray.add(id)
+        runOnUiThread {
+            Constant.showLoading(this)
         }
-        mainJson.add("target_code", jsonArray)
 
-        val updateQBankArray = JsonArray()
-        quizRequest.update_question_bank.forEach { item ->
-            val obj = JsonObject()
-            obj.addProperty("ques_no", item.ques_no)
-            obj.addProperty("subject_id", item.subject_id)
-            obj.addProperty("chapter", item.chapter)
-            obj.addProperty("question", item.question)
-            obj.addProperty("a_option", item.a_option)
-            obj.addProperty("b_option", item.b_option)
-            obj.addProperty("c_option", item.c_option)
-            obj.addProperty("d_option", item.d_option)
-            obj.addProperty("a_image", item.a_image)
-            obj.addProperty("b_image", item.b_image)
-            obj.addProperty("c_image", item.c_image)
-            obj.addProperty("d_image", item.d_image)
-            obj.addProperty("answer", item.answer)
-            obj.addProperty("mark", item.mark)
+        Handler(Looper.getMainLooper()).postDelayed({
 
-            updateQBankArray.add(obj)
-        }
-        mainJson.add("update_question_bank", updateQBankArray)
-        val questionsArray = JsonArray()
+            ProgressDialogHelper.dismiss()
 
-        quizRequest.questions.forEach { q ->
-            val qObj = JsonObject()
-            isQuestionId++
-            qObj.addProperty("ques_no", isQuestionId.toString())
-            qObj.addProperty("chapter", q.chapter)
-            qObj.addProperty("question", q.question)
-            qObj.addProperty("a_option", q.a_option)
-            qObj.addProperty("b_option", q.b_option)
-            qObj.addProperty("c_option", q.c_option)
-            qObj.addProperty("d_option", q.d_option)
-            qObj.addProperty("answer", q.answer)
-            qObj.addProperty("mark", q.mark)
-            qObj.addProperty("iframe", q.iframe)
-            qObj.addProperty("file_size", q.file_size)
-            qObj.addProperty("thumbnail", q.thumbnail)
-            qObj.addProperty("a_image", q.a_image ?: "")
-            qObj.addProperty("b_image", q.b_image ?: "")
-            qObj.addProperty("c_image", q.c_image ?: "")
-            qObj.addProperty("d_image", q.d_image ?: "")
+            var isQuestionId = 0
+            val quizRequest: QuizRequestBody = quizData!!
+            val mainJson = JsonObject()
 
-            // file path array
-            val fileArray = JsonArray()
-            q.file_path.forEach { file ->
-                val fileObj = JsonObject()
-                fileObj.addProperty("url", file.url)
-                fileObj.addProperty("type", file.type)
-                fileArray.add(fileObj)
+            mainJson.addProperty("ok_flag", false)
+            mainJson.addProperty("max_mark", quizRequest.max_mark)
+            mainJson.addProperty("open_to_student", quizRequest.open_to_student)
+            mainJson.addProperty("target_type", isTargetType)
+            mainJson.addProperty("level", selectedLevelValue)
+            mainJson.addProperty("subject_id", isSubjectId!!.toString())
+            mainJson.addProperty("class_id", isStandardId)
+
+            val jsonArray = JsonArray()
+            selectedIds.forEach { id ->
+                jsonArray.add(id)
             }
-            qObj.add("q_file_path", fileArray)
+            mainJson.add("target_code", jsonArray)
 
-            questionsArray.add(qObj)
-        }
+            val updateQBankArray = JsonArray()
+            quizRequest.update_question_bank.forEach { item ->
+                val obj = JsonObject()
+                obj.addProperty("ques_no", item.ques_no)
+                obj.addProperty("subject_id", item.subject_id)
+                obj.addProperty("chapter", item.chapter)
+                obj.addProperty("question", item.question)
+                obj.addProperty("a_option", item.a_option)
+                obj.addProperty("b_option", item.b_option)
+                obj.addProperty("c_option", item.c_option)
+                obj.addProperty("d_option", item.d_option)
+                obj.addProperty("a_image", item.a_image)
+                obj.addProperty("b_image", item.b_image)
+                obj.addProperty("c_image", item.c_image)
+                obj.addProperty("d_image", item.d_image)
+                obj.addProperty("answer", item.answer)
+                obj.addProperty("mark", item.mark)
+                updateQBankArray.add(obj)
+            }
+            mainJson.add("update_question_bank", updateQBankArray)
 
-        mainJson.add("questions", questionsArray)
+            val questionsArray = JsonArray()
+            quizRequest.questions.forEach { q ->
+                val qObj = JsonObject()
+                isQuestionId++
 
-        mainJson.addProperty("title", isSaveCreateExamQuizDetails!!.title)
-        mainJson.addProperty("description", isSaveCreateExamQuizDetails!!.description)
-        mainJson.addProperty("no_of_question", isSaveCreateExamQuizDetails!!.no_of_question.toInt())
-        mainJson.addProperty("level_flag", isSaveCreateExamQuizDetails!!.level_flag)
-        Log.d("FINAL_JSON", mainJson.toString())
-        appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson, this)
+                qObj.addProperty("ques_no", isQuestionId.toString())
+                qObj.addProperty("chapter", q.chapter)
+                qObj.addProperty("question", q.question)
+                qObj.addProperty("a_option", q.a_option)
+                qObj.addProperty("b_option", q.b_option)
+                qObj.addProperty("c_option", q.c_option)
+                qObj.addProperty("d_option", q.d_option)
+                qObj.addProperty("answer", q.answer)
+                qObj.addProperty("mark", q.mark)
+                qObj.addProperty("iframe", q.iframe)
+                qObj.addProperty("file_size", q.file_size)
+                qObj.addProperty("thumbnail", q.thumbnail)
+                qObj.addProperty("a_image", q.a_image ?: "")
+                qObj.addProperty("b_image", q.b_image ?: "")
+                qObj.addProperty("c_image", q.c_image ?: "")
+                qObj.addProperty("d_image", q.d_image ?: "")
 
+                val fileArray = JsonArray()
+                q.file_path.forEach { file ->
+                    val fileObj = JsonObject()
+                    fileObj.addProperty("url", file.url)
+                    fileObj.addProperty("type", file.type)
+                    fileArray.add(fileObj)
+                }
+                qObj.add("q_file_path", fileArray)
+
+                questionsArray.add(qObj)
+            }
+
+            mainJson.add("questions", questionsArray)
+
+            mainJson.addProperty("title", isSaveCreateExamQuizDetails!!.title)
+            mainJson.addProperty("description", isSaveCreateExamQuizDetails!!.description)
+            mainJson.addProperty(
+                "no_of_question",
+                isSaveCreateExamQuizDetails!!.no_of_question.toInt()
+            )
+            mainJson.addProperty("level_flag", isSaveCreateExamQuizDetails!!.level_flag)
+
+            Log.d("FINAL_JSON", mainJson.toString())
+
+            appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson, this)
+
+        }, 100)
     }
+
 
     private fun collectLocalFiles(body: QuizRequestBody): List<FilePath> {
         val list = mutableListOf<FilePath>()
@@ -2111,6 +2204,4 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         )
     }
-
-
 }
