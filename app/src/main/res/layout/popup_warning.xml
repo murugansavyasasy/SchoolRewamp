@@ -4,10 +4,12 @@
     android:layout_height="wrap_content"
     android:background="@drawable/rect_bg_stroke_red"
     android:elevation="8dp"
+    android:id="@+id/header"
     android:orientation="horizontal"
     android:padding="10dp">
 
     <ImageView
+        android:id="@+id/imgWarning"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:src="@drawable/info_circle" />

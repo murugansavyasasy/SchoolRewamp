@@ -1371,6 +1371,7 @@
     <string name="invalid_mark">Invalid mark</string>
     <string name="failed_to_process_marksheet">Failed to process marksheet</string>
     <string name="max_mark_is">Max mark is %1$d</string>
+    <string name="existing_marks_differ_from_the_newly_uploaded_data">Existing marks differ from the newly uploaded data.</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.text.InputType
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,12 +23,13 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.Mark
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkList
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
+
 class MarksAdapter(
     private val students: MutableList<StudentMarkList>,
     private val columns: List<MarkColumn>,
     private val reviewFlagMap: Map<String, String>,
     private val context: Context,
-    private val listener: OnMarksChangedListener
+    private val listener: OnMarksChangedListener,
 ) : RecyclerView.Adapter<MarksAdapter.MarksViewHolder>() {
 
     private val SUBJECT_CELL_WIDTH = 200
@@ -49,6 +51,7 @@ class MarksAdapter(
         return MarksViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
         val student = students[position]
@@ -59,8 +62,13 @@ class MarksAdapter(
         for (i in columns.indices) {
 
             val column = columns[i]
-            val rawText = student.markTexts[i].trim()
-            val mockText = student.mockMarkTexts[i].trim()
+            val excelValue = student.markTexts[i].trim()
+            val oldValue = student.mockMarkTexts[i].trim()
+
+            val reviewKey =
+                "${student.student_id}_${normalize(column.selected_name)}"
+
+            val reviewReason = reviewFlagMap[reviewKey]
 
             val columnLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
@@ -78,60 +86,68 @@ class MarksAdapter(
 
             val et = EditText(context).apply {
                 layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    1f
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
                 )
                 gravity = Gravity.CENTER
                 textSize = 14f
                 inputType = InputType.TYPE_CLASS_TEXT
                 setPadding(10, 10, 10, 4)
 
-                if (isAllowedValue(rawText)) {
-                    setText(rawText)
+                if (isAllowedValue(excelValue)) {
+                    setText(excelValue)
                 } else {
                     setText("")
                 }
             }
 
-            val warningIcon = ImageView(context).apply {
+            val icon = ImageView(context).apply {
                 layoutParams = LinearLayout.LayoutParams(22.dp, 22.dp)
-                setImageResource(R.drawable.info_circle)
+                visibility = View.GONE
             }
 
-            validateMark(et, warningIcon, student, column, rawText)
+            validateMark(
+                et,
+                icon,
+                student,
+                column,
+                excelValue,
+                oldValue,
+                reviewReason
+            )
 
-            et.addTextChangedListener { text ->
-                val input = text.toString().trim()
+            et.addTextChangedListener {
+                val input = it.toString().trim()
                 student.markTexts[i] = input
                 student.marks[i] = input.toIntOrNull()
 
-                validateMark(et, warningIcon, student, column, input)
-                listener.onMarksChanged()
+                validateMark(
+                    et,
+                    icon,
+                    student,
+                    column,
+                    input,
+                    oldValue,
+                    reviewReason
+                )
             }
 
             topRow.addView(et)
-            topRow.addView(warningIcon)
+            topRow.addView(icon)
             columnLayout.addView(topRow)
-            if (Constant.isMarkUploadFromAi) {
-                val prevText = TextView(context).apply {
+
+            // was text
+            if (
+                isAllowedValue(oldValue) &&
+                isAllowedValue(excelValue) &&
+                oldValue != excelValue
+            ) {
+                val prev = TextView(context).apply {
+                    text = "was: $oldValue"
                     textSize = 11f
                     gravity = Gravity.CENTER
                     setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
-                    visibility = View.GONE
                 }
-                if (
-                    mockText.isNotEmpty() &&
-                    isAllowedValue(mockText) &&
-                    isAllowedValue(rawText) &&
-                    mockText != rawText
-                ) {
-
-                    prevText.text = "was: $mockText"
-                    prevText.visibility = View.VISIBLE
-                }
-
-                columnLayout.addView(prevText)
+                columnLayout.addView(prev)
             }
 
             holder.subjectContainer.addView(columnLayout)
@@ -148,52 +164,67 @@ class MarksAdapter(
 
         HorizontalScrollSync.bind(holder.subjectScroll)
         holder.setIsRecyclable(false)
+        listener.onMarksChanged()
     }
 
     override fun getItemCount(): Int = students.size
-
-    private fun isAllowedValue(value: String): Boolean {
-        val v = value.trim()
-        return v.equals("AB", true) || v.toIntOrNull() != null
-    }
-
 
     private fun validateMark(
         et: EditText,
         icon: ImageView,
         student: StudentMarkList,
         column: MarkColumn,
-        value: String
+        value: String,
+        oldValue: String,
+        reviewReason: String?
     ) {
-        val keysToCheck = listOf(
-            "${student.student_id}_${column.activityName.lowercase()}",
-            "${student.student_id}_${column.subjectName.lowercase()}"
-        )
+        val trimmed = value.trim()
+        val intValue = trimmed.toIntOrNull()
 
-        val backendError = keysToCheck
-            .firstNotNullOfOrNull { reviewFlagMap[it] }
-
-        val intValue = value.toIntOrNull()
-
-        val isValidValue =
-            value.equals("AB", true) ||
-                    (intValue != null && intValue <= column.maxMark)
-
-        when {
-            !backendError.isNullOrEmpty() && !isValidValue -> {
-                showError(et, icon, backendError)
-            }
-            intValue != null && intValue > column.maxMark -> {
-                showError(et, icon, context.getString(R.string.max_mark_is, column.maxMark))
-            }
-            value.isNotEmpty() && intValue == null && !value.equals("AB", true) -> {
-                showError(et, icon, context.getString(R.string.invalid_mark))
-            }
-
-            else -> {
-                clearError(et, icon)
-            }
+        // 🔴 1. EXCEL SENTENCE ERROR (TOP PRIORITY)
+        if (trimmed.isNotEmpty() && !isAllowedValue(trimmed)) {
+            showError(et, icon, trimmed)
+            return
         }
+
+        // 🔴 2. MAX MARK (AFTER EDIT ALSO CHECK)
+        if (intValue != null && intValue > column.maxMark) {
+            showError(
+                et,
+                icon,
+                context.getString(R.string.max_mark_is, column.maxMark)
+            )
+            return
+        }
+
+        // 🔴 3. REVIEW FLAG (ONLY IF VALUE NOT EDITED)
+        if (
+            !reviewReason.isNullOrEmpty() &&
+            trimmed == oldValue &&           // 👈 KEY FIX
+            isAllowedValue(trimmed)
+        ) {
+            showError(et, icon, reviewReason)
+            return
+        }
+
+        // 🟢 4. DIFFERENCE (GREEN INFO)
+        if (
+            isAllowedValue(oldValue) &&
+            isAllowedValue(trimmed) &&
+            oldValue != trimmed
+        ) {
+            showGreenInfo(
+                et,
+                icon,
+                context.getString(
+                    R.string.existing_marks_differ_from_the_newly_uploaded_data
+                )
+            )
+            return
+        }
+
+        // ✅ 5. CLEAR EVERYTHING
+        clearError(et, icon)
     }
     private fun clearError(et: EditText, icon: ImageView) {
         icon.visibility = View.GONE
@@ -205,19 +236,48 @@ class MarksAdapter(
     private fun showError(et: EditText, icon: ImageView, message: String) {
         icon.visibility = View.VISIBLE
         icon.layoutParams.width = 22.dp
+        icon.setImageResource(R.drawable.info_circle)
+
         et.background =
             ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_red)
 
         icon.setOnClickListener {
-            showWarningPopup(icon, message)
+            showWarningPopup(icon, message, false)
         }
     }
 
-    private fun showWarningPopup(anchorView: View, message: String) {
+    private fun showWarningPopup(
+        anchorView: View,
+        message: String,
+        isGreen: Boolean
+    ) {
         val popupView = LayoutInflater.from(anchorView.context)
             .inflate(R.layout.popup_warning, null)
 
-        popupView.findViewById<TextView>(R.id.txtWarning).text = message
+        val popupRoot = popupView.findViewById<LinearLayout>(R.id.header)
+        val txtWarning = popupView.findViewById<TextView>(R.id.txtWarning)
+        val imgWarning = popupView.findViewById<ImageView>(R.id.imgWarning)
+
+        txtWarning.text = message
+
+        if (isGreen) {
+            popupRoot.background =
+                ContextCompat.getDrawable(anchorView.context, R.drawable.rect_bg_stroke_green)
+
+            imgWarning.setImageResource(R.drawable.info_circle_green)
+            txtWarning.setTextColor(
+                ContextCompat.getColor(anchorView.context, R.color.green)
+            )
+
+        } else {
+            popupRoot.background =
+                ContextCompat.getDrawable(anchorView.context, R.drawable.rect_bg_stroke_red)
+
+            imgWarning.setImageResource(R.drawable.info_circle)
+            txtWarning.setTextColor(
+                ContextCompat.getColor(anchorView.context, R.color.black)
+            )
+        }
 
         PopupWindow(
             popupView,
@@ -230,4 +290,27 @@ class MarksAdapter(
             showAsDropDown(anchorView, 0, -anchorView.height - 20)
         }
     }
+
+    private fun showGreenInfo(
+        et: EditText,
+        icon: ImageView,
+        message: String
+    ) {
+        icon.visibility = View.VISIBLE
+        icon.layoutParams.width = 22.dp
+        icon.setImageResource(R.drawable.info_circle_green)
+        et.background =
+            ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_green)
+
+        icon.setOnClickListener {
+            showWarningPopup(icon, message, true)
+        }
+    }
+
+    private fun isAllowedValue(value: String): Boolean {
+        return value.equals("AB", true) || value.toIntOrNull() != null
+    }
+
+    private fun normalize(value: String?): String =
+        value?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
 }
