@@ -37,8 +37,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     var isFirstLoad = false
     private var isClassWiseSelected = false
 
-    private val country_id: String? =
-        SharedPreference.getCountryId(this)?.toString()
+    private var country_id: String? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -46,6 +45,9 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        country_id = SharedPreference.getCountryId(this)?.toString()
+
 
         val params =
             binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)

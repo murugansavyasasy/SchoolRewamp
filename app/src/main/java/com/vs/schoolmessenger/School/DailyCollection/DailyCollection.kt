@@ -33,8 +33,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
 
-    private val country_id: String? =
-        SharedPreference.getCountryId(this)?.toString()
+    private var country_id: String? = null
+
 
     val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
 
@@ -50,6 +50,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        country_id = SharedPreference.getCountryId(this)?.toString()
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.className.setOnClickListener(this)
