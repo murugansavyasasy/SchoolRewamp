@@ -667,22 +667,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
             binding.toolbarLayout.lblStudentSection.visibility = View.GONE
 
-            if (data!!.isMenuType == Constant.M_NOTICEBOARD) {
 
-                val schoolName = data?.school_name
+            if (data!!.isMenuType == Constant.M_NOTICEBOARD && data!!.isParentAssignment == false) {
+                binding.sendtostandardLabel.visibility = View.VISIBLE
+                binding.standardValue.text = "\uD83C\uDF93" + " " + "Message sent to SCHOOL"
+                binding.noticeboardcardview.visibility = View.VISIBLE
+                binding.lblschoolvalue.text = data!!.school_name
+            } else {
+                binding.sendtostandardLabel.visibility = View.GONE
+                binding.noticeboardcardview.visibility = View.GONE
+            }
 
-                if (data!!.isMenuType == Constant.M_NOTICEBOARD && data!!.isParentAssignment == false ) {
-                    binding.sendtostandardLabel.visibility = View.VISIBLE
-                    binding.standardValue.text = "\uD83C\uDF93" + " " + "Message sent to SCHOOL"
-                    binding.noticeboardcardview.visibility = View.VISIBLE
-                    binding.lblschoolvalue.text = data!!.school_name
-                } else {
-                    binding.sendtostandardLabel.visibility = View.GONE
-                    binding.noticeboardcardview.visibility = View.GONE
-
-                }
-
-
+            if (data!!.isMenuType == Constant.M_NOTICEBOARD && data!!.isParentAssignment == false) {
                 if(userDetails?.staff_role.equals(Constant.isStaffRole)) {
                     binding.sendtostandardLabel.visibility = View.GONE
                     binding.noticeboardcardview.visibility = View.GONE
@@ -692,16 +688,17 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.noticeboardcardview.visibility = View.VISIBLE
                     binding.lblschoolvalue.text = data!!.school_name
                 }
-
-
             }
 
-            binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
-            Log.d("data!!.sentBy",data!!.sentBy.toString())
-            if (data!!.sentBy != "") {
-                binding.lblPostedBy.visibility = View.VISIBLE
-                binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
-            }
+
+
+        }
+
+        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+        Log.d("data!!.sentBy", data!!.sentBy.toString())
+        if (data!!.sentBy != "") {
+            binding.lblPostedBy.visibility = View.VISIBLE
+            binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
         }
 
         for (i in data!!.fileList.indices) {
@@ -994,6 +991,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             R.id.lblClickComplete -> {
                 isCompleteHomeWork()
             }
+
             R.id.thumbContainer -> {
                 isCompleteHomeWork()
             }
@@ -1006,7 +1004,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.lottieView.playAnimation()
         val jsonObject = JsonObject()
         jsonObject.addProperty("id", isHomeworkId)
-        appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject,this)
+        appViewModel?.isHomeWorkComplete(isAccessToken!!, jsonObject, this)
     }
 
     fun isSuccessFullCompleteHomework() {
@@ -1421,7 +1419,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.rcystandard.layoutManager = flexboxLayoutManager
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
-        appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt(),this)
+        appViewModel!!.getchildhomeworkstandard(isAccessToken!!, data!!.id.toInt(), this)
     }
 
 
@@ -1436,7 +1434,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getattachmentchildhomework(
-            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(),this
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(), this
         )
     }
 
@@ -1452,7 +1450,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         childstandardadapter = ChildStandardAdapter(emptyList(), this, true)
         binding.rcystandard.adapter = childstandardadapter
         appViewModel!!.getassignmentchildhomework(
-            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(),this
+            isAccessToken!!, data!!.id.toInt(), data!!.target_type!!.toInt(), this
         )
     }
 
@@ -1831,6 +1829,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     ".xlsx",
                     true
                 ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
@@ -1899,6 +1898,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
+
             PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
