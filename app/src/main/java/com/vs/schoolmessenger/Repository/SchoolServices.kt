@@ -1407,9 +1407,9 @@ class SchoolServices {
 
 
     fun isGetDailyCollectionReport(
-        isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity
+        isToken: String, istype: String, isfromdate: String, istodate: String, country_id: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate)
+        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate, country_id)
             ?.enqueue(object : Callback<DailyCollectionReportResponse?> {
                 override fun onResponse(
                     call: Call<DailyCollectionReportResponse?>,
@@ -1477,8 +1477,8 @@ class SchoolServices {
         get() = isGetSchoolStrengthReport
 
 
-    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId)
+    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+        RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
                     call: Call<FeePendingReportResponse?>,
@@ -1512,8 +1512,8 @@ class SchoolServices {
         get() = isDetailedPendingReport
 
 
-    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId)
+    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+        RestClient.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
                     call: Call<FeePendingReportResponse?>,

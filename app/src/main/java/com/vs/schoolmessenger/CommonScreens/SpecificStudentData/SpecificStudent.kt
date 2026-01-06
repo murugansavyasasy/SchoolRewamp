@@ -562,7 +562,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             )
 
             if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
-                ProgressDialogHelper.dismiss()
+//                ProgressDialogHelper.dismiss()
                 if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                     attachmentSendApi()
                 } else if (SELECTED_MENU_ID == M_ASSIGNMENT) {

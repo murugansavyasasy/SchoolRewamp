@@ -647,6 +647,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             Constant.VOICE -> {
                 rytDescription.visibility = View.GONE
                 tvDescription.visibility = View.GONE
+                tvAudioTittle.visibility = View.GONE
                 tvAudioTittle.apply {
                     text = data.title
                     isSingleLine = true

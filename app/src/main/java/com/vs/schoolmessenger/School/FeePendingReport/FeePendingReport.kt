@@ -37,12 +37,17 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     var isFirstLoad = false
     private var isClassWiseSelected = false
 
+    private var country_id: String? = null
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        country_id = SharedPreference.getCountryId(this)?.toString()
+
 
         val params =
             binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
@@ -179,6 +184,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedPendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
+            country_id?: "",
             this
         )
     }
@@ -188,6 +194,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedWisePendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
+            country_id?: "",
             this
         )
     }
