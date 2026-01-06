@@ -27,7 +27,6 @@
             android:id="@+id/toolbarLayout"
             layout="@layout/school_side_tool_bar" />
 
-
         <ScrollView
             android:id="@+id/eventCreate"
             android:layout_width="match_parent"
