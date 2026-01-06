@@ -102,7 +102,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         val headerBinding = NavHeaderBinding.bind(binding.navigationView.getHeaderView(0))
         headerBinding.username.text = childDetails!!.name
         headerBinding.lblSchoolName.text = childDetails!!.school_name
-        if (childDetails!!.school_logo_url != "") {
+        if (childDetails!!.profile != "") {
             Glide.with(headerBinding.imgProfile.context)
                 .load(childDetails!!.profile)
                 .placeholder(R.drawable.default_profile)
