@@ -892,6 +892,17 @@ object Constant {
         context.startActivity(intent)
     }
 
+    fun redirectToMessageOnly(context: Context, phoneNumber: String) {
+        val smsUri = Uri.parse("smsto:$phoneNumber")
+
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = smsUri
+        }
+
+        context.startActivity(intent)
+    }
+
+
     fun editTextCounter(
         context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
     ) {
