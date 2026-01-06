@@ -32,10 +32,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var isStaffDetails: StaffDetails? = null
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
-
     private var country_id: String? = null
-
-
     val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
 
 
@@ -238,7 +235,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 binding.modeName.setBackgroundResource(R.drawable.gray_bg_radius)
                 binding.modeName.setTextColor(Color.BLACK)
                 binding.className.setTextColor(Color.BLACK)
-
                 isGetDailyCollection()
             }
 

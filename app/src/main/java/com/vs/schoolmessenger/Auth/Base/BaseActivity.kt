@@ -208,9 +208,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
                 v.updatePadding(
-                    left = systemBars.left,
-                    right = systemBars.right,
-                    bottom = systemBars.bottom
+                    left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
                 )
                 // Adjust status bar background height
                 statusBarBgView.updateLayoutParams {
@@ -322,8 +320,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 // Only apply side padding to root
                 root.updatePadding(
-                    left = systemBars.left,
-                    right = systemBars.right
+                    left = systemBars.left, right = systemBars.right
                     // Do NOT apply bottom padding here → that was causing white flash!
                 )
 
@@ -339,9 +336,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 // Push actual content (RecyclerView + buttons) away from navigation bar
                 frameContainer.updatePadding(
-                    left = systemBars.left,
-                    right = systemBars.right,
-                    bottom = systemBars.bottom
+                    left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
                 )
 
                 insets
@@ -393,9 +388,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
                 v.updatePadding(
-                    left = systemBars.left,
-                    right = systemBars.right,
-                    bottom = systemBars.bottom
+                    left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
                 )
                 statusBarBgView.updateLayoutParams {
                     height = systemBars.top
@@ -440,9 +433,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
             )
 
             statusBarBgView.updateLayoutParams {
@@ -529,9 +520,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
             )
 
             statusBarBgView.updateLayoutParams {
@@ -573,9 +562,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
             )
 
             statusBarBgView.updateLayoutParams {
@@ -616,9 +603,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
             )
 
             statusBarBgView.updateLayoutParams {
@@ -659,9 +644,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right,
-                bottom = systemBars.bottom
+                left = systemBars.left, right = systemBars.right, bottom = systemBars.bottom
             )
 
             statusBarBgView.updateLayoutParams {
@@ -869,51 +852,43 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Reset all icons
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<TextView>(R.id.lblHome).setTextColor(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             )
         )
 
         findViewById<ImageView>(R.id.icon_help).setColorFilter(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<TextView>(R.id.lblHelp).setTextColor(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             )
         )
         findViewById<ImageView>(R.id.icon_profile).setColorFilter(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<TextView>(R.id.lblProfile).setTextColor(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             )
         )
         findViewById<ImageView>(R.id.icon_settings).setColorFilter(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<TextView>(R.id.lblSettings).setTextColor(
             ContextCompat.getColor(
-                this,
-                R.color.grey
+                this, R.color.grey
             )
         )
 
@@ -929,14 +904,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_home))
                 findViewById<ImageView>(R.id.icon_home).setColorFilter(
                     ContextCompat.getColor(
-                        this,
-                        R.color.PrimaryColor
+                        this, R.color.PrimaryColor
                     ), PorterDuff.Mode.SRC_IN
                 )
                 findViewById<TextView>(R.id.lblHome).setTextColor(
                     ContextCompat.getColor(
-                        this,
-                        R.color.PrimaryColor
+                        this, R.color.PrimaryColor
                     )
                 )
 
@@ -945,14 +918,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             R.id.icon_help -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_help))
                 findViewById<ImageView>(R.id.icon_help).setColorFilter(
-                    ContextCompat.getColor(this, R.color.PrimaryColor),
-                    PorterDuff.Mode.SRC_IN
+                    ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN
                 )
 
                 findViewById<TextView>(R.id.lblHelp).setTextColor(
                     ContextCompat.getColor(
-                        this,
-                        R.color.PrimaryColor
+                        this, R.color.PrimaryColor
                     )
                 )
             }
@@ -960,14 +931,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             R.id.icon_profile -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_profile))
                 findViewById<ImageView>(R.id.icon_profile).setColorFilter(
-                    ContextCompat.getColor(this, R.color.PrimaryColor),
-                    PorterDuff.Mode.SRC_IN
+                    ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN
                 )
 
                 findViewById<TextView>(R.id.lblProfile).setTextColor(
                     ContextCompat.getColor(
-                        this,
-                        R.color.PrimaryColor
+                        this, R.color.PrimaryColor
                     )
                 )
             }
@@ -975,14 +944,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             R.id.icon_settings -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_settings))
                 findViewById<ImageView>(R.id.icon_settings).setColorFilter(
-                    ContextCompat.getColor(this, R.color.PrimaryColor),
-                    PorterDuff.Mode.SRC_IN
+                    ContextCompat.getColor(this, R.color.PrimaryColor), PorterDuff.Mode.SRC_IN
                 )
 
                 findViewById<TextView>(R.id.lblSettings).setTextColor(
                     ContextCompat.getColor(
-                        this,
-                        R.color.PrimaryColor
+                        this, R.color.PrimaryColor
                     )
                 )
             }
@@ -1041,24 +1008,19 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         // Create and show TimePickerDialog
         val timePickerDialog = TimePickerDialog(
-            context,
-            { _, selectedHour, selectedMinute ->
+            context, { _, selectedHour, selectedMinute ->
                 val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
                 val hourIn12Format =
                     if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
                 listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
-            },
-            hour,
-            minute,
-            false // Use 12-hour format
+            }, hour, minute, false // Use 12-hour format
         )
         timePickerDialog.show()
     }
 
 
     fun showDatePickerDialog(
-        context: Context,
-        listener: OnDateSelectedListener
+        context: Context, listener: OnDateSelectedListener
     ) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -1066,15 +1028,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            context, { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
-            },
-            year, month, day
+            }, year, month, day
         )
         datePickerDialog.show()
     }
@@ -1103,13 +1063,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val dialog = DatePickerDialog(
-            context,
-            { _, y, m, d ->
+            context, { _, y, m, d ->
                 val cal = Calendar.getInstance()
                 cal.set(y, m, d)
                 listener.onDateSelected(sdf.format(cal.time))
-            },
-            year, month, day
+            }, year, month, day
         )
 
         // 🚫 Block FUTURE DATES
@@ -1125,8 +1083,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun CustomshowDatePickerDialog(
-        context: Context,
-        listener: OnDateSelectedListener
+        context: Context, listener: OnDateSelectedListener
     ) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -1134,15 +1091,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            context, { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
-            },
-            year, month, day
+            }, year, month, day
         )
 
         // Restrict past dates
@@ -1153,9 +1108,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun AssignmentCustomshowDatePickerDialog(
-        context: Context,
-        listener: OnDateSelectedListener,
-        preSelectedDate: String? = null
+        context: Context, listener: OnDateSelectedListener, preSelectedDate: String? = null
     ) {
         val calendar = Calendar.getInstance()
         if (!preSelectedDate.isNullOrEmpty()) {
@@ -1175,15 +1128,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            context, { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
-            },
-            year, month, day
+            }, year, month, day
         )
 
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
@@ -1227,8 +1178,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             // Fixed: No top padding needed—rytHeader is already positioned below statusBarBackground.
             // Adding it caused double-offset (status bar height x2). Handle other insets if needed in future.
             v.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right
+                left = systemBars.left, right = systemBars.right
             )
             // Optionally add bottom padding if RecyclerView needs it, but mainView already handles global bottom.
             WindowInsetsCompat.CONSUMED  // Consume to prevent propagation to children
@@ -1246,9 +1196,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun lsrwshowDatePickerDialog(
-        context: Context,
-        listener: OnDateSelectedListener,
-        preselectedDate: String? = null
+        context: Context, listener: OnDateSelectedListener, preselectedDate: String? = null
     ) {
         val calendar = Calendar.getInstance()
 
@@ -1267,15 +1215,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            context, { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
-            },
-            year, month, day
+            }, year, month, day
         )
 
 
@@ -1287,8 +1233,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     //Homework report sender
     fun showDatePickerDialogSelectedDate(
-        context: Context,
-        isSelectedDate: String?, // "dd-MM-yyyy" or null
+        context: Context, isSelectedDate: String?, // "dd-MM-yyyy" or null
         listener: OnDateSelectedListener
     ) {
         val calendar = Calendar.getInstance()
@@ -1309,15 +1254,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+            context, { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedCalendar = Calendar.getInstance()
                 selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(selectedCalendar.time)
                 listener.onDateSelected(formattedDate)
-            },
-            year, month, day
+            }, year, month, day
         )
         datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
 
