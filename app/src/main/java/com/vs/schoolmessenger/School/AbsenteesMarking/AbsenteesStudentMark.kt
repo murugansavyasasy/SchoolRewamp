@@ -342,7 +342,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             Constant.isMarkAttendanceDataSending?.class_id.toString(),
             isSectionId!!.toString(),
             Constant.isMarkAttendanceDataSending?.attendance_date!!,
-            isFullDay.toString(),this
+            isFullDay.toString(), this
         )
 
     }
