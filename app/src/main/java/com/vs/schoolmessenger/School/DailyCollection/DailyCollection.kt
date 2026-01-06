@@ -32,6 +32,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var isStaffDetails: StaffDetails? = null
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
+
+    private val country_id: String? =
+        SharedPreference.getCountryId(this)?.toString()
+
     val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
 
 
@@ -181,11 +185,14 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         Constant.showLoading(this@DailyCollection)
 
+
+
         appViewModel?.isGetDailyCollectionReport(
             isAccessToken ?: "",
             selectedType,
             from_Date ?: "",
             to_Date ?: "",
+            country_id?: "",
             this
         )
     }

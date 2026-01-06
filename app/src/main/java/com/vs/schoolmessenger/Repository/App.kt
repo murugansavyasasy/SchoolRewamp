@@ -741,25 +741,25 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetDailyCollectionReport(
-        isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity
+        isToken: String, istype: String, isfromdate: String, istodate: String, country_id: String, activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetDailyCollectionReport(
-            isToken, istype, isfromdate, istodate, activity
+            isToken, istype, isfromdate, istodate, country_id, activity
         )
     }
 
-    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isDetailedPendingReport(isToken, isAcademicYearId, activity)
+        apiSchoolRepositories.isDetailedPendingReport(isToken, isAcademicYearId, country_id, activity)
     }
 
-    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isDetailedWisePendingReport(isToken, isAcademicYearId, activity)
+        apiSchoolRepositories.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id, activity)
     }
 
     fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity) {

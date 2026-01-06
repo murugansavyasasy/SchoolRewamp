@@ -37,6 +37,9 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     var isFirstLoad = false
     private var isClassWiseSelected = false
 
+    private val country_id: String? =
+        SharedPreference.getCountryId(this)?.toString()
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -179,6 +182,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedPendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
+            country_id?: "",
             this
         )
     }
@@ -188,6 +192,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedWisePendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
+            country_id?: "",
             this
         )
     }

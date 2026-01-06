@@ -512,7 +512,8 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.type) istype: String,
         @Query(APIKeyNames.from_date) isfromdate: String,
-        @Query(APIKeyNames.to_date) istodate: String
+        @Query(APIKeyNames.to_date) istodate: String,
+        @Query(APIKeyNames.country_id) country_id: String
     ): Call<DailyCollectionReportResponse?>
 
 
@@ -526,14 +527,16 @@ interface ApiInterfaces {
     @GET(APIMethods.isDetailedPendingReport)
     fun isDetailedPendingReport(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?,
+        @Query(APIKeyNames.country_id) country_id: String
     ): Call<FeePendingReportResponse?>?
 
 
     @GET(APIMethods.isDetailedWisePendingReport)
     fun isDetailedWisePendingReport(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?,
+        @Query(APIKeyNames.country_id) country_id: String
     ): Call<FeePendingReportResponse?>?
 
 
