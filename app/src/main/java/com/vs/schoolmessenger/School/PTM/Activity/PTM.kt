@@ -379,7 +379,8 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.lblSlotCount.text = if (todaySlots.isNotEmpty()) {
             "${getString(R.string.You_have)} ${todaySlots.size} ${getString(R.string.meeting_s_today)}"
         } else {
-            getString(R.string.you_have_0_meeting_s_today)
+//            getString(R.string.you_have_0_meeting_s_today)
+            getString(R.string.there_are_no_meetings_planned_for_you_today)
         }
     }
 
@@ -539,14 +540,14 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
 
     private fun isTabClick(isClickedTab: LinearLayout) {
         if (isClickedTab == binding.lnrTabMeeting) {
-            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.viewTabMeeting.setBackgroundColor(
                 ContextCompat.getColor(
                     this, R.color.PrimaryColor
                 )
             )
 
-            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.mild_grey6))
+            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.viewTabBookedSlots.setBackgroundColor(
                 ContextCompat.getColor(
                     this, R.color.mild_grey6
@@ -555,13 +556,13 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             isBookedSlot = false
             loadData()
         } else if (isClickedTab == binding.lnrTabBookedSlots) {
-            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.viewTabBookedSlots.setBackgroundColor(
                 ContextCompat.getColor(
                     this, R.color.PrimaryColor
                 )
             )
-            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.mild_grey6))
+            binding.txtTabMeeting.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.viewTabMeeting.setBackgroundColor(
                 ContextCompat.getColor(
                     this,

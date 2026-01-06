@@ -126,7 +126,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:text="You have a 0 meeting's today"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sixteen"></TextView>
+                android:textSize="@dimen/thirteen_sp"></TextView>
 
             <RelativeLayout
                 android:id="@+id/layoutCreateSlot"
@@ -205,12 +205,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Meetings"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/PrimaryColor" />
 
                         <View
                             android:id="@+id/viewTabMeeting"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
+                            android:layout_marginHorizontal="@dimen/five"
                             android:layout_marginTop="6dp"
                             android:background="@color/PrimaryColor"
                             android:visibility="visible" />
@@ -238,6 +239,7 @@
                             android:id="@+id/viewTabBookedSlots"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
+                            android:layout_marginHorizontal="@dimen/five"
                             android:layout_marginTop="6dp"
                             android:background="@color/mild_grey6" />
                     </LinearLayout>
