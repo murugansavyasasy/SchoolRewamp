@@ -128,31 +128,53 @@ class ExamListAdapter(
             }
 
             header.setOnClickListener {
-                val prevExpanded = expandedPosition
-                expandedPosition = if (expandedPosition == position) -1 else position
 
-                notifyItemChanged(position)
-                if (prevExpanded != -1 && prevExpanded != position) notifyItemChanged(prevExpanded)
 
-                val prevSelected = selectedPosition
+                val previousSelected = selectedPosition
 
-                if (prevSelected == position) {
+                if (previousSelected == position) {
+                    // user clicked same selected item → unselect
                     selectedPosition = -1
-                    notifyItemChanged(prevSelected)
-                    listener.onExamSelected(null)
+                    notifyItemChanged(previousSelected)
+                    listener.onExamSelected(null)   // send null to main activity
                     return@setOnClickListener
                 }
 
+                // new item selected
                 selectedPosition = position
                 notifyItemChanged(position)
-                if (prevSelected != -1) notifyItemChanged(prevSelected)
 
-                //Actually we are calling the api for the inner recyclerview here false means i am not calling the api
+                if (previousSelected != -1) {
+                    notifyItemChanged(previousSelected)
+                }
 
                 listener.onExamSelected(item)
 
-
-                listener.onExamApiCall(item)
+//                val prevExpanded = expandedPosition
+//                expandedPosition = if (expandedPosition == position) -1 else position
+//
+//                notifyItemChanged(position)
+//                if (prevExpanded != -1 && prevExpanded != position) notifyItemChanged(prevExpanded)
+//
+//                val prevSelected = selectedPosition
+//
+//                if (prevSelected == position) {
+//                    selectedPosition = -1
+//                    notifyItemChanged(prevSelected)
+//                    listener.onExamSelected(null)
+//                    return@setOnClickListener
+//                }
+//
+//                selectedPosition = position
+//                notifyItemChanged(position)
+//                if (prevSelected != -1) notifyItemChanged(prevSelected)
+//
+//                //Actually we are calling the api for the inner recyclerview here false means i am not calling the api
+//
+//                listener.onExamSelected(item)
+//
+//
+//                listener.onExamApiCall(item)
 
             }
 

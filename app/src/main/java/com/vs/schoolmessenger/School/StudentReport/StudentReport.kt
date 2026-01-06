@@ -677,6 +677,7 @@ private var currentSortType: SortType? = null
     }
 
     override fun onMessageClick(data: StudentReportData) {
-        Constant.redirectToMessage(this, data.primary_mobile)
+//        Constant.redirectToMessage(this, data.primary_mobile)
+        Constant.redirectToMessageOnly(this, data.primary_mobile)
     }
 }

@@ -273,6 +273,7 @@
 
                 <TextView
                     android:id="@+id/tapNameAsc"
+                    android:background="@drawable/light_gray_radius"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -288,6 +289,7 @@
 
                 <TextView
                     android:id="@+id/tapNameDsc"
+                    android:background="@drawable/light_gray_radius"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -302,6 +304,7 @@
 
 
                 <TextView
+                    android:background="@drawable/light_gray_radius"
                     android:id="@+id/tapRollAsc"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
@@ -318,6 +321,7 @@
 
 
                 <TextView
+                    android:background="@drawable/light_gray_radius"
                     android:id="@+id/tapRollDsc"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
@@ -334,23 +338,6 @@
                 </TextView>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <TextView
                     android:id="@+id/tapNoAsc"
                     style="@style/CustomTextStylePoppinsBold"
@@ -361,6 +348,7 @@
                     android:layout_marginEnd="@dimen/five"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
+                    android:background="@drawable/light_gray_radius"
                     android:padding="@dimen/ten"
                     android:text="@string/no_asc"
                     android:drawableEnd="@drawable/arrow_down2"
@@ -377,6 +365,7 @@
                     android:layout_marginEnd="@dimen/five"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
+                    android:background="@drawable/light_gray_radius"
                     android:padding="@dimen/ten"
                     android:drawableEnd="@drawable/arrow_up"
                     android:text="@string/no_dsc"
