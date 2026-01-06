@@ -235,24 +235,6 @@ class NoticeBoardAdapter(
             intent.putExtra(Constant.isPreViewData, preview)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(intent)
-
-//            val preview = FilePreview(
-//                id = "",
-//                title = noticeData.title,
-//                description = noticeData.description,
-//                subjectName = "",
-//                sentBy = "",
-//                thumbnail = "",
-//                isUnread = true,
-//                isCompleted = true,
-//                isMenuType = Constant.M_NOTICEBOARD,
-//                fileList = convertedList
-//            )
-//            val intent = Intent(context, ChildHomeWork::class.java)
-//            intent.putExtra(Constant.isHomeWorkDate, noticeData.created_on)
-//            intent.putExtra(Constant.isPreViewData, preview)
-//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//            context.startActivity(intent)
         }
 
         private fun setupPreviewListeners(noticeData: Notice) {

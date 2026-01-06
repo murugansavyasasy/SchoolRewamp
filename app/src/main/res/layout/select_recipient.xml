@@ -132,7 +132,8 @@
                 android:gravity="center"
                 android:text="@string/entire_school"
                 android:textColor="@color/black"
-                android:textSize="@dimen/ten_sp"></TextView>
+                android:textSize="@dimen/ten_sp">
+            </TextView>
 
             <TextView
                 android:id="@+id/tapStandards"
@@ -178,7 +179,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/staff"
-                android:textSize="@dimen/ten_sp"></TextView>
+                android:textSize="@dimen/ten_sp">
+            </TextView>
 
 
         </LinearLayout>
@@ -191,7 +193,8 @@
             android:layout_below="@+id/tabLayout"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/fifteen"
-            android:text="@string/Group"></TextView>
+            android:text="@string/Group">
+        </TextView>
 
         <RelativeLayout
             android:id="@+id/rytStandardDropDown"
@@ -279,7 +282,8 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/rect_white"
                 android:paddingVertical="@dimen/five"
-                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                android:visibility="gone">
+            </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
 
@@ -290,7 +294,8 @@
                 android:layout_below="@+id/recyclerView"
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="@string/subject"
-                android:visibility="gone"></TextView>
+                android:visibility="gone">
+            </TextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
