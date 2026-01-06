@@ -217,12 +217,15 @@ class AttachmentReportAdapter(
             }
 
             imgEditAndDelete.visibility =
-                if (data.can_delete && data.can_edit) View.VISIBLE else View.GONE
-            imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                if (data.can_delete || data.can_edit) View.VISIBLE else View.GONE
 
             imgEditAndDelete.setOnClickListener {
                 listener.onItemClick(item, it, adapterPosition)
             }
+
+
+            imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+
 
             val markAsRead = {
                 if (data.is_unread) {
@@ -247,7 +250,7 @@ class AttachmentReportAdapter(
                     title = data.title,
                     description = data.description,
                     subjectName = "",
-                    sentBy = "",
+                    sentBy = data.sent_by,
                     thumbnail = data.thumbnail,
                     isUnread = true,
                     created_date = data.date,

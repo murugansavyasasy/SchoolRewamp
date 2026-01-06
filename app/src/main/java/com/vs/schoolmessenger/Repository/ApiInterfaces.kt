@@ -266,9 +266,7 @@ interface ApiInterfaces {
 
     @GET(APIMethods.getSubjectList)
     fun getSubjectList(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
-        @Query(APIKeyNames.section_ids) isSectionId: String
+        @Header(APIKeyNames.Authorization) token: String, @Query(APIKeyNames.section_ids) isSectionId: String
 
     ): Call<NameAndIdsResponse?>
 
@@ -307,9 +305,7 @@ interface ApiInterfaces {
 
     @GET(APIMethods.isGetVoiceHistory)
     fun isGetVoiceHistory(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.is_emergency) is_emergency: String
-    ): Call<VoiceDetails?>
+        @Header(APIKeyNames.Authorization) token: String, ): Call<VoiceDetails?>
 
     @GET(APIMethods.isGetTextHistory)
     fun isGetTextHistory(

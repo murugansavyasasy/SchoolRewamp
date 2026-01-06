@@ -78,6 +78,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun getViewBinding(): CommunicationSchoolBinding {
         return CommunicationSchoolBinding.inflate(layoutInflater)
     }
+
     private val audioHandler = Handler(Looper.getMainLooper())
     private var audioProgressRunnable: Runnable? = null
 
@@ -628,7 +629,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun stopAudioProgressUpdate() {
         handler.removeCallbacks(progressUpdater)
-     //   binding.waveformSeekBar.updateWithLevel(0f)
+        //   binding.waveformSeekBar.updateWithLevel(0f)
         binding.imgVoicePlay.setImageDrawable(
             ContextCompat.getDrawable(this, R.drawable.video_play)
         )
@@ -1165,44 +1166,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 }
             }
-
-//
-//            R.id.imgVoicePlay -> {
-//                keepScreenOn()
-//                KeyboardUtils.hideKeyboard(this)
-//                if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
-//                    mediaPlayer?.pause()
-//                    stopAudioProgressUpdate()
-//                    lastPosition = mediaPlayer!!.currentPosition
-//                    isPlayingVoice = false
-//                    binding.imgVoicePlay.setImageDrawable(
-//                        ContextCompat.getDrawable(this, R.drawable.video_play)
-//                    )
-//                } else {
-//                    Log.d("AudioDebug", "audioFilePath = $audioFilePath")
-//
-//                    val normalizedPower = max(1f, (1f + 160) / 160)
-////                    binding.waveformSeekBar.updateWithLevel(normalizedPower)
-//                    binding.waveformSeekBar.updateWithLevel(currentPosition / duration.toFloat())
-//
-//
-//                    if (!isPrepared) {
-//                        initializeMediaPlayer()
-//                    } else {
-//                        Log.d("AudioDebug", "Stared playing from last resume" + lastPosition)
-//                        mediaPlayer?.let {
-//                            it.seekTo(lastPosition)
-//                            it.start()
-//                            isPlayingVoice = true
-//                            binding.imgVoicePlay.setImageDrawable(
-//                                ContextCompat.getDrawable(this, R.drawable.pause_icon)
-//                            )
-//                            startAudioProgressUpdate()
-//                            updateCurrentTime(lastPosition)
-//                        } ?: Log.e("AudioDebug", "mediaPlayer is null on resume!")
-//                    }
-//                }
-//            }
 
             R.id.imgVoiceRecord -> {
                 KeyboardUtils.hideKeyboard(this)
@@ -1884,7 +1847,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
-
 
 
     override fun onBackPressed() {

@@ -7,6 +7,8 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.vs.schoolmessenger.R
 
 class WaveformSeekBar @JvmOverloads constructor(
     context: Context,
@@ -25,10 +27,11 @@ class WaveformSeekBar @JvmOverloads constructor(
     /* ===================== PAINTS ===================== */
 
     private val playedPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#4A4A4A")
+        color = ContextCompat.getColor(context, R.color.PrimaryColor)
         strokeCap = Paint.Cap.ROUND
         strokeWidth = 6f
     }
+
 
     private val unPlayedPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#D6D6D6")

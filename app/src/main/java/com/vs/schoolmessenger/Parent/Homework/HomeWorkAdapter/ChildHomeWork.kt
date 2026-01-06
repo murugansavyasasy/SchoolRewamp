@@ -697,6 +697,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
             binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+            Log.d("data!!.sentBy",data!!.sentBy.toString())
             if (data!!.sentBy != "") {
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy

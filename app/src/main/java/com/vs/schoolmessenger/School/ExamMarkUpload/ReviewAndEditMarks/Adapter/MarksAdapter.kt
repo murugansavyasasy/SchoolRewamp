@@ -213,19 +213,22 @@ class MarksAdapter(
             isAllowedValue(trimmed) &&
             oldValue != trimmed
         ) {
-            showGreenInfo(
-                et,
-                icon,
-                context.getString(
-                    R.string.existing_marks_differ_from_the_newly_uploaded_data
+            if (Constant.isMarkUploadFromAi) {
+                showGreenInfo(
+                    et,
+                    icon,
+                    context.getString(
+                        R.string.existing_marks_differ_from_the_newly_uploaded_data
+                    )
                 )
-            )
+            }
             return
         }
 
         // ✅ 5. CLEAR EVERYTHING
         clearError(et, icon)
     }
+
     private fun clearError(et: EditText, icon: ImageView) {
         icon.visibility = View.GONE
         icon.layoutParams.width = 0

@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -230,8 +231,14 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         binding.btnCreate.background = null
         binding.btnHistory.background = null
         binding.lytNoRecordFound.visibility = View.GONE
-        binding.lnrParent.setBackgroundResource(R.drawable.bg_light_blue)
-        btnClick.setBackgroundResource(R.drawable.white_bg_radius)
+        binding.lnrParent.setBackgroundResource(R.drawable.white_bg_radius)
+        btnClick.setBackgroundResource(R.drawable.rect_blue_and_green_small_radious)
+
+        binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        btnClick.setTextColor(ContextCompat.getColor(this, R.color.white))
+
 
         if (btnClick == binding.btnCreate) {
             binding.lblSelectStaff.visibility = View.GONE

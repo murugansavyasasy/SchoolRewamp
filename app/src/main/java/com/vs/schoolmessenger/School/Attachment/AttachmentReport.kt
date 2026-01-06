@@ -284,10 +284,10 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         }
 
         okButton.setOnClickListener {
-            val intent = Intent(activity, AttachmentReport::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            activity.startActivity(intent)
-            activity.finish()
+//            val intent = Intent(activity, AttachmentReport::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//            activity.startActivity(intent)
+//            activity.finish()
             closePopup()
         }
     }
@@ -395,6 +395,17 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        if (data.get(isAttachmentPosition).can_edit){
+            layoutEdit.visibility=View.VISIBLE
+        }else{
+            layoutEdit.visibility=View.GONE
+        }
+        if (data.get(isAttachmentPosition).can_delete){
+            layoutDelete.visibility= View.VISIBLE
+        }else{
+            layoutDelete.visibility= View.GONE
+        }
 
         layoutEdit.setOnClickListener {
             Constant.isClickEdit = true

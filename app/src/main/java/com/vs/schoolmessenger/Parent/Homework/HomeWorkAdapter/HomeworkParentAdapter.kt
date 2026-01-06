@@ -1,10 +1,14 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
+import android.content.Context
+import android.graphics.PorterDuff
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.animation.content.Content
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkDateClickListener
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
@@ -16,7 +20,8 @@ class HomeworkParentAdapter(
     var isHomeWorkData: List<GetHomeworkDetails>,
     private val listener: HomeWorkDateClickListener,
     private var isLoading: Boolean,
-    isHomeWorkDate: String
+    isHomeWorkDate: String,
+    private var context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -94,18 +99,36 @@ class HomeworkParentAdapter(
             binding.lblSubject.text = item.subject_name
             binding.lblTitle.text = item.title
 
-            if (item.is_completed) {
-                binding.progressContainer.visibility = View.GONE
-                binding.imgSuccess.visibility = View.VISIBLE
-            } else {
-                binding.progressContainer.visibility = View.VISIBLE
-                binding.imgSuccess.visibility = View.GONE
-            }
+            binding.imgTimimg.setColorFilter(
+                ContextCompat.getColor(binding.root.context, R.color.dark_orange),
+                PorterDuff.Mode.SRC_IN
+            )
             if (item.is_unread) {
                 binding.redDot.visibility = View.VISIBLE
+                binding.imgTimimg.visibility = View.GONE
             } else {
                 binding.redDot.visibility = View.INVISIBLE
+                if (item.is_completed) {
+                    binding.imgSuccess.visibility = View.VISIBLE
+                    binding.imgTimimg.visibility = View.GONE
+                }else {
+                    binding.imgTimimg.visibility = View.VISIBLE
+                    binding.imgSuccess.visibility = View.GONE
+                }
             }
+            if (item.is_completed) {
+                binding.imgTimimg.visibility = View.GONE
+                binding.imgSuccess.visibility = View.VISIBLE
+            } else {
+                if (item.is_unread) {
+                    binding.imgTimimg.visibility = View.GONE
+                    binding.imgSuccess.visibility = View.GONE
+                }else{
+                    binding.imgTimimg.visibility = View.VISIBLE
+                    binding.imgSuccess.visibility = View.GONE
+                }
+            }
+
             binding.cardRoot.setOnClickListener {
                 Log.d("data", item.id)
 

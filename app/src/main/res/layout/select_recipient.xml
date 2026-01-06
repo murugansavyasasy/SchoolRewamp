@@ -257,7 +257,7 @@
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/twenty"
             android:gravity="end"
-            android:text="@string/group_created"
+            android:text="@string/group_created_on"
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp"
             android:visibility="gone">

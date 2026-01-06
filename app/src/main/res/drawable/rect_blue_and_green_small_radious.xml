@@ -7,7 +7,7 @@
                 android:start="0.5dp"
                 android:end="0.5dp"
                 android:top="0.5dp" />
-            <solid android:color="#10CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -18,7 +18,7 @@
                 android:start="0.5dp"
                 android:end="0dp"
                 android:top="0.5dp" />
-            <solid android:color="#10CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -29,7 +29,7 @@
                 android:start="1dp"
                 android:end="1dp"
                 android:top="1dp" />
-            <solid android:color="#20CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -40,7 +40,7 @@
                 android:start="0dp"
                 android:end="0dp"
                 android:top="0dp" />
-            <solid android:color="#30CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -51,7 +51,7 @@
                 android:start="0dp"
                 android:end="0dp"
                 android:top="0dp" />
-            <solid android:color="#40CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -62,7 +62,7 @@
                 android:start="0dp"
                 android:end="0dp"
                 android:top="0dp" />
-            <solid android:color="#50CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -74,7 +74,7 @@
                 android:start="0.1dp"
                 android:end="0.1dp"
                 android:top="0dp" />
-            <solid android:color="#60CCCCCC" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
@@ -82,7 +82,7 @@
     <!-- Background -->
     <item>
         <shape>
-            <solid android:color="@color/dark_blue_and_green_" />
+            <solid android:color="@color/PrimaryColor" />
             <corners android:radius="5dp" />
         </shape>
     </item>
