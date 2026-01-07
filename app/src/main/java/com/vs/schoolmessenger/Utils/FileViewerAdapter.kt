@@ -99,7 +99,7 @@ class FileViewerAdapter(
 
     override fun getItemCount(): Int = fileList.size
 
-    inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val documentWebView: WebView = itemView.findViewById(R.id.documentWebView)
         val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         val imageView: PhotoView = itemView.findViewById(R.id.imageView)

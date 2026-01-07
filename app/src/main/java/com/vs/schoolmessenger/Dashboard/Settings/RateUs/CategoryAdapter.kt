@@ -13,7 +13,7 @@ class CategoryAdapter(
     private val onSelect: () -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
-    inner class CategoryHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class CategoryHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val txt = view.findViewById<TextView>(R.id.txtCategory)
     }
 

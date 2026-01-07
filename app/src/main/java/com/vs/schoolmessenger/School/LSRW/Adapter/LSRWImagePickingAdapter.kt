@@ -45,7 +45,7 @@ class LSRWImagePickingAdapter(
     private val defaultStartEndMargin: Int = context.resources.getDimensionPixelSize(R.dimen.twenty)
     private val defaultTopMargin: Int = context.resources.getDimensionPixelSize(R.dimen.ten)
 
-    inner class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val img: ImageView = v.findViewById(R.id.imgPicking)
         val del: ImageView = v.findViewById(R.id.imgDelete)
         val delete: ImageView = v.findViewById(R.id.imgaudiodelete)

@@ -23,7 +23,7 @@ class LessonPlanDetailAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<LessonPlanDetailAdapter.DetailViewHolder>() {
 
-    inner class DetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val flowLayout: FlowLayout = itemView.findViewById(R.id.flowLayout)
     }
 

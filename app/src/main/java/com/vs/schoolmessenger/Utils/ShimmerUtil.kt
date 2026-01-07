@@ -41,8 +41,7 @@ object ShimmerUtil {
     private fun hideViewsDuringShimmer(view: View) {
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val child = view.getChildAt(i)
-                when (child) {
+                when (val child = view.getChildAt(i)) {
                     is TextView -> {
                         if (!originalText.containsKey(child)) {
                             originalText[child] = child.text
@@ -62,8 +61,7 @@ object ShimmerUtil {
     private fun restoreViewsAfterShimmer(view: View) {
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
-                val child = view.getChildAt(i)
-                when (child) {
+                when (val child = view.getChildAt(i)) {
                     is TextView -> {
                         if (originalText.containsKey(child)) {
                             child.text = originalText[child]

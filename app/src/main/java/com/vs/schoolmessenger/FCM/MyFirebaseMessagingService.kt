@@ -45,7 +45,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "onMessageReceived called")
         if (remoteMessage.data.isNotEmpty()) {
             Log.d("FCM_PAYLOAD", "FCM Payload: ${remoteMessage.data}")
-            Log.d("FCM_PAYLOAD", "FCM remoteMessage: ${remoteMessage.toString()}")
+            Log.d("FCM_PAYLOAD", "FCM remoteMessage: $remoteMessage")
         }
         // Example: Extract fields safely
         val title = remoteMessage.data[Constant.title_] ?: Constant.School_Chimes

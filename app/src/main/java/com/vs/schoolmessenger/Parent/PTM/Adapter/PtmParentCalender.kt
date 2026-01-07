@@ -20,7 +20,7 @@ class PtmParentCalender(
 ) : RecyclerView.Adapter<PtmParentCalender.DateViewHolder>() {
     private var selectedPos = -1
 
-    inner class DateViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class DateViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvMonth: TextView = view.findViewById(R.id.tvMonth)
         val tvDay: TextView = view.findViewById(R.id.tvDay)
         val itemRoot: LinearLayout = view.findViewById(R.id.itemRoot)

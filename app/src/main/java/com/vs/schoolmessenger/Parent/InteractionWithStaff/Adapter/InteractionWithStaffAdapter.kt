@@ -10,6 +10,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
@@ -111,7 +113,14 @@ class InteractionWithStaffAdapter(
 
             unreadcount.text = staff.unread_count
             lblLogo.text = Constant.getNameInitials(staff.name)
-            yesterdayheader.text = getRelativeTime(staff.last_msg_time)
+            if(staff.last_msg_time .isNullOrEmpty()) {
+                yesterdayheader.visibility = View.GONE
+            } else {
+                yesterdayheader.visibility = View.VISIBLE
+                yesterdayheader.text = getRelativeTime(staff.last_msg_time)
+                yesterdayheader.setTextColor(ContextCompat.getColor(context, R.color.light_gray))
+            }
+
 
             if (staff.last_msg.isNullOrBlank()) {
                 lblDesc.text = context.getString(R.string.no_messages_yet)
@@ -120,15 +129,11 @@ class InteractionWithStaffAdapter(
 
             }
 
-
-
-
             if (staff.unread_count > Constant.zero) {
                 unreadcount.visibility = View.VISIBLE
-                yesterdayheader.visibility = View.VISIBLE
+                yesterdayheader.setTextColor(ContextCompat.getColor(context, R.color.Emerald1))
             } else {
                 unreadcount.visibility = View.GONE
-                yesterdayheader.visibility = View.GONE
             }
 
             relative_layout.setOnClickListener {
@@ -178,7 +183,7 @@ class InteractionWithStaffAdapter(
         }
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

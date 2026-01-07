@@ -50,7 +50,7 @@ class AutoScrollAdapterWithDots(
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemImage: ImageView = itemView.findViewById(R.id.itemImage)
         private val itemText: TextView = itemView.findViewById(R.id.itemText)
         private val imgReadCountMenu: ImageView = itemView.findViewById(R.id.imgReadCountMenu)

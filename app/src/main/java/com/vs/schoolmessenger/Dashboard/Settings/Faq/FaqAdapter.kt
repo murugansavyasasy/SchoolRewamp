@@ -63,7 +63,7 @@ class FaqAdapter(
 
             question.text = data.question
             val ans = if (data.answer.isNotEmpty()) data.answer[0] else ""
-            answer.setText(ans)
+            answer.text = ans
             val isExpanded = position == expandedPosition
             answer.visibility = if (isExpanded) View.VISIBLE else View.GONE
             arrow.rotation = if (isExpanded) 180f else 0f

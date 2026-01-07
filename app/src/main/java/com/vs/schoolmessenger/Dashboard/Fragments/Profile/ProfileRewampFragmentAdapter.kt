@@ -68,7 +68,7 @@ class ProfileRewampFragmentAdapter(
 
     override fun getItemCount(): Int = itemList.size
 
-    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val header: TextView = itemView.findViewById(R.id.header)
 
         fun bind(item: ProfileItem.Header) {
@@ -339,8 +339,7 @@ class ProfileRewampFragmentAdapter(
         fun mapUrlsToCommonFileData(urls: List<String>): List<CommonFileData> {
             return urls.map { url ->
                 val fileName = url.substringAfterLast("/")
-                val extension = fileName.substringAfterLast(".", "").uppercase()
-                val type = when (extension) {
+                val type = when (val extension = fileName.substringAfterLast(".", "").uppercase()) {
                     "JPG", "JPEG", "PNG", "GIF" -> "IMAGE"
                     "PDF" -> "PDF"
                     "DOC", "DOCX" -> "DOC"

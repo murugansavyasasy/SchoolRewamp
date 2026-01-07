@@ -49,7 +49,7 @@ class AbsenteesFinalListAdapter(
         return if (isLoading) 20 else itemList.size
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

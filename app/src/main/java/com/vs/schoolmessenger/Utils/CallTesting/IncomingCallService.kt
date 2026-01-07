@@ -48,8 +48,7 @@ class IncomingCallService : Service() {
         callerName: String, voiceUrl:
         String
     ) {
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 // PendingIntent to open CallActivity when user taps Accept
         val acceptIntent = Intent(this, CallActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or

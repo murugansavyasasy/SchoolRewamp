@@ -155,7 +155,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun updateRemainingCount() {
         val usedSlots = selectedFiles.size - 1
-        Constant.Remaining = (CreateNewTask.Companion.MAX_FILES - usedSlots).coerceAtLeast(0)
+        Constant.Remaining = (CreateNewTask.MAX_FILES - usedSlots).coerceAtLeast(0)
     }
 
 
@@ -475,7 +475,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
                         var addedCount = 0
                         selectedUris.forEach { uri ->
-                            if (selectedFiles.size >= CreateNewTask.Companion.MAX_FILES + 1) {
+                            if (selectedFiles.size >= CreateNewTask.MAX_FILES + 1) {
                                 Toast.makeText(
                                     this,
                                     getString(R.string.max_10_files_allowed),
@@ -642,7 +642,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
-        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == Constant.M_ASSIGNMENT) {
+        } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == M_ASSIGNMENT) {
 
 
             if (data!!.created_date.isNullOrBlank()) {
@@ -1555,7 +1555,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             val file = File(path)
             Constant.hideLoading(this@ChildHomeWork)
             if (file.exists() && file.length() > 0) {
-                if (selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                if (selectedFiles.size < CreateNewTask.MAX_FILES + 1) {
                     selectedFiles.add(FileItem(path, FileType.AUDIO))
                     mAdapter?.notifyDataSetChanged()
                     updateRemainingCount()
@@ -1780,7 +1780,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CreateEvent.CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(
                     this,
@@ -1800,7 +1800,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (Constant.Remaining!! == 0) {
             Toast.makeText(
                 this,
-                "${getString(R.string.Max)} ${CreateNewTask.Companion.MAX_FILES} ${getString(R.string.files_allowed)}",
+                "${getString(R.string.Max)} ${CreateNewTask.MAX_FILES} ${getString(R.string.files_allowed)}",
                 Toast.LENGTH_SHORT
             ).show()
             return
@@ -1848,20 +1848,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             // DO NOT convert to Uri FOR STORAGE!
             // Store raw path ONLY.
-            if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
-                Constant.selectedFiles.add(FileItem(cleanPath, type))
+            if (selectedFiles.size < CreateNewTask.MAX_FILES + 1) {
+                selectedFiles.add(FileItem(cleanPath, type))
             } else {
                 Constant.Remaining = 0
             }
 
             // Debug output
-            for (item in Constant.selectedFiles) {
+            for (item in selectedFiles) {
                 Log.d("SelectedFileValue", "Path: ${item.path}, Type: ${item.type}")
             }
         }
 
         when (requestCode) {
-            CreateNewTask.Companion.CAMERA_IMAGE_REQUEST -> {
+            CreateNewTask.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {

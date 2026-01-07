@@ -61,7 +61,7 @@ class TicketSummary : Parcelable {
         offer_text = `in`.readString()
         location_list =
             `in`.createTypedArrayList<Location?>(
-                Location.Companion.CREATOR
+                Location.CREATOR
             )
         redeemed_on = `in`.readString()
         qr_code = `in`.readString()

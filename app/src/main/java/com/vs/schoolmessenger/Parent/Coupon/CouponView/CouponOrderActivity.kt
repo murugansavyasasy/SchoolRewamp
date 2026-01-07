@@ -253,11 +253,11 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
                 // Random size
                 val size = getRandom(12, 30)
                 val params = FrameLayout.LayoutParams(size, size)
-                particle.setLayoutParams(params)
+                particle.layoutParams = params
 
                 // Set round shape with color
                 val shape = GradientDrawable()
-                shape.setShape(GradientDrawable.OVAL)
+                shape.shape = GradientDrawable.OVAL
                 shape.setSize(size, size)
                 val color = colors[Random().nextInt(colors.size)]
                 shape.setColor(color)

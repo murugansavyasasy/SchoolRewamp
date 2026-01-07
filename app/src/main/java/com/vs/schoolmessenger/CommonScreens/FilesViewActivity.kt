@@ -435,7 +435,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                         ?: contentType
                 withContext(Dispatchers.Main) {
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                        setType(mimeType)
+                        type = mimeType
                         putExtra(Intent.EXTRA_STREAM, uri)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }

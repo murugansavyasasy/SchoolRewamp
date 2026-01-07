@@ -17,7 +17,7 @@ class OnboardingAdapter(
     private var context: Context
 ) : RecyclerView.Adapter<OnboardingAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val img: ImageView = itemView.findViewById(R.id.imgOnboard)
         val title: TextView = itemView.findViewById(R.id.txtTitle)
         val desc: TextView = itemView.findViewById(R.id.txtDesc)

@@ -30,7 +30,7 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = HelpFragmentBinding.inflate(layoutInflater)
 
         appViewModel = ViewModelProvider(requireActivity())[App::class.java]

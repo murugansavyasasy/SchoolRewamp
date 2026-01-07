@@ -46,7 +46,7 @@ class LSRWAdapter(
         notifyDataSetChanged()
     }
 
-    inner class HeaderViewHolder(
+    class HeaderViewHolder(
         itemView: View, private val context: Context, private val listener: lsrwitemclicklistener
     ) : RecyclerView.ViewHolder(itemView) {
 

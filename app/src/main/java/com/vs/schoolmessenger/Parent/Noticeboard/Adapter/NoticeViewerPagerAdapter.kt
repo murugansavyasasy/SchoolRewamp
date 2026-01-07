@@ -36,7 +36,7 @@ class NoticeViewerPagerAdapter(
 
     override fun getItemCount(): Int = fileList.size
 
-    inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
     }
 }

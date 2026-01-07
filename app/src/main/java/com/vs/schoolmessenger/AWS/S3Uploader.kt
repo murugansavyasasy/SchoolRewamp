@@ -24,7 +24,7 @@ class S3Uploader {
                 // Open a connection
                 val connection = url.openConnection() as HttpURLConnection
                 connection.setDoOutput(true)
-                connection.setRequestMethod("PUT")
+                connection.requestMethod = "PUT"
                 connection.setRequestProperty("Content-Type", contentType)
 
                 // Write the image data to the output stream

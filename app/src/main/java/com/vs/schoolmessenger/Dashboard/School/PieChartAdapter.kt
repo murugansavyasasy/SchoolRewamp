@@ -36,7 +36,7 @@ class PieChartAdapter(private val context: Context, private val item: List<Int>)
 
     override fun getItemCount(): Int = item.size
 
-    inner class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)

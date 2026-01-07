@@ -68,7 +68,7 @@ class MeetingHistoryAdapter(
         }
     }
 
-    inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvHeader: TextView = view.findViewById(R.id.lblStatus)
         fun bind(header: MeetingListItem.Header) {
             tvHeader.text = header.title

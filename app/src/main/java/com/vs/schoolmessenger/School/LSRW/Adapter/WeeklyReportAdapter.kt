@@ -13,7 +13,7 @@ class WeeklyReportAdapter(
     private val items: List<WeeklyReportItem>
 ) : RecyclerView.Adapter<WeeklyReportAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemWeeklyReportBinding) :
+    class ViewHolder(val binding: ItemWeeklyReportBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

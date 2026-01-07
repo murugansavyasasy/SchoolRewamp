@@ -31,7 +31,7 @@ class ProfileImagePickingAdapter(
     private val listener: OnImageClickListener
 ) : RecyclerView.Adapter<ProfileImagePickingAdapter.FileViewHolder>() {
 
-    inner class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val txtFileName: TextView = v.findViewById(R.id.txtFileName)
         val txtFileSize: TextView = v.findViewById(R.id.txtFileSize)
         val imgFileType: TextView = v.findViewById(R.id.imgFileType)

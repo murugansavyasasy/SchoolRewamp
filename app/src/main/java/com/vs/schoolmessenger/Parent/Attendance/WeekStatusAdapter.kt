@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.R
 class WeekStatusAdapter(private val items: List<GetWeekStatusData>) :
     RecyclerView.Adapter<WeekStatusAdapter.WeekStatusViewHolder>() {
 
-    inner class WeekStatusViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class WeekStatusViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val lblDay: TextView = itemView.findViewById(R.id.lblDay)
         val lnrBackground: View = itemView.findViewById(R.id.lnrBackground)
     }

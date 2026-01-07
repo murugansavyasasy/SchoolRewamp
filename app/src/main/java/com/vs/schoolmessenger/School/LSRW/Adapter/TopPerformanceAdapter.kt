@@ -10,7 +10,7 @@ class TopPerformanceAdapter(
     private val items: List<TopPerformanceItem>
 ) : RecyclerView.Adapter<TopPerformanceAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemTopPerformanceBinding) :
+    class ViewHolder(val binding: ItemTopPerformanceBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
