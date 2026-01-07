@@ -57,7 +57,6 @@
                         android:text="@string/Title" />
 
                     <TextView
-                        android:id="@+id/lblStar"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -92,7 +91,6 @@
                         </ImageView>
 
                         <TextView
-                            android:id="@+id/btnNoticeBoardReport"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -155,7 +153,6 @@
                     android:text="@string/Description" />
 
                 <TextView
-                    android:id="@+id/lblStar2"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -211,7 +208,6 @@
                     android:layout_marginTop="@dimen/ten">
 
                     <RelativeLayout
-                        android:id="@+id/rytEventDateTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -224,7 +220,6 @@
                             android:text="@string/notice_active_period" />
 
                         <TextView
-                            android:id="@+id/lblStar3"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -280,7 +275,6 @@
                                     </ImageView>
 
                                     <LinearLayout
-                                        android:id="@+id/lnrDateDetails"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
@@ -329,7 +323,6 @@
                                 </TextView>
 
                                 <ImageView
-                                    android:id="@+id/imagearrow_view"
                                     android:layout_width="@dimen/eighteen"
                                     android:layout_height="@dimen/eighteen"
                                     android:layout_marginTop="@dimen/five"
@@ -372,7 +365,6 @@
                                     </ImageView>
 
                                     <LinearLayout
-                                        android:id="@+id/bottomdaylinear1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
@@ -406,7 +398,6 @@
                         </LinearLayout>
 
                         <RelativeLayout
-                            android:id="@+id/rlaFilePicking"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/rytStart"
@@ -422,7 +413,6 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/lblOptional"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

@@ -104,7 +104,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <RelativeLayout
-            android:id="@+id/rytCreateAssignment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbarLayout1"
@@ -164,7 +163,6 @@
                     <TextView
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/imgHistory"
-                        android:id="@+id/btnNoticeBoardReport"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -214,7 +212,6 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/lblStar1"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -296,7 +293,6 @@
             </TextView>
 
             <TextView
-                android:id="@+id/lblStar4"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -358,7 +354,6 @@
 
 
             <TextView
-                android:id="@+id/lblStar423"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -419,7 +414,6 @@
                         </ImageView>
                         <LinearLayout
                             android:layout_toEndOf="@+id/imgCalendar"
-                            android:id="@+id/lnrDateDetails"
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:orientation="vertical"
@@ -455,7 +449,6 @@
                     <RelativeLayout
                         android:paddingVertical="@dimen/five"
                         android:paddingHorizontal="@dimen/five"
-                        android:id="@+id/rytStartTime"
                         android:background="@drawable/rect_black_stoke_bg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -485,7 +478,6 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/rlaFilePicking"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/rytStart"
@@ -504,7 +496,6 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/lblOptional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eight"

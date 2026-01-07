@@ -130,7 +130,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/llBottomText" />
 
             <LinearLayout
-                android:id="@+id/llDots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

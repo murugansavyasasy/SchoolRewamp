@@ -136,7 +136,6 @@
                     android:scrollbars="none">
 
                     <RadioGroup
-                        android:id="@+id/rdgFiles"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -153,7 +152,6 @@
                             android:text="@string/all" />
 
                         <RadioButton
-                            android:id="@+id/RdbImage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
@@ -163,7 +161,6 @@
                             android:text="@string/image" />
 
                         <RadioButton
-                            android:id="@+id/RdbVideo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
@@ -173,7 +170,6 @@
                             android:text="@string/Video" />
 
                         <RadioButton
-                            android:id="@+id/RdbDocuments"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"

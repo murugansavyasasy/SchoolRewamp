@@ -26,7 +26,6 @@
 
     <!-- Main container below toolbar -->
     <RelativeLayout
-        android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/AthensGray"

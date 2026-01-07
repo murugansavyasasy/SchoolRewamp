@@ -184,7 +184,6 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     app:cardCornerRadius="@dimen/ten"
-                    android:id="@+id/cardDayDetails"
                     android:elevation="@dimen/six"
                     android:layout_height="wrap_content">
                     <LinearLayout
@@ -206,7 +205,6 @@
                                 android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content">
                                 <FrameLayout
-                                    android:id="@+id/attendanceContainer"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/ninety"
                                     >
@@ -274,7 +272,6 @@
                                 <FrameLayout
                                     android:layout_weight="1"
                                     android:layout_width="match_parent"
-                                    android:id="@+id/leaveTakenContainer"
                                     android:layout_height="@dimen/ninety">
 
                                     <ProgressBar
@@ -322,7 +319,6 @@
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
                                 <FrameLayout
-                                    android:id="@+id/ongoingDaysContainer"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/ninety"
                                     >
@@ -397,7 +393,6 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     app:cardCornerRadius="@dimen/ten"
-                    android:id="@+id/cardMenuDetails"
                     android:elevation="@dimen/six"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
@@ -423,7 +418,6 @@
                                 android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content">
                                 <ImageView
-                                    android:id="@+id/imgAskLeave"
                                     android:src="@drawable/leave_request_icon_school"
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty"
@@ -458,7 +452,6 @@
                                 android:layout_height="wrap_content">
 
                                 <ImageView
-                                    android:id="@+id/imgLeaveRequest"
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty"
                                     android:tint="@color/PrimaryColor"
@@ -491,7 +484,6 @@
                                 android:layout_width="@dimen/zero"
                                 android:layout_height="wrap_content">
                                 <ImageView
-                                    android:id="@+id/imgAttendanceReport"
                                     android:src="@drawable/absentees_report_icon"
                                     android:tint="@color/PrimaryColor"
                                     tools:ignore="UseAppTint"

@@ -158,7 +158,6 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_below="@id/lnrDescription"
-                android:id="@+id/lnrOverallSubList"
                 android:background="@drawable/white_bg_card"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_height="wrap_content">

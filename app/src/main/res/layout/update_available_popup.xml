@@ -20,7 +20,6 @@
 
 
             <ImageView
-                android:id="@+id/imgCenter"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
@@ -48,7 +47,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/lblNewApp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -58,7 +56,6 @@
                         android:textSize="@dimen/fifteen_sp" />
 
                     <TextView
-                        android:id="@+id/lblNewExperience"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -71,7 +68,6 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/lblExciting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
@@ -99,7 +95,6 @@
 
                 <TextView
                     android:visibility="gone"
-                    android:id="@+id/lblNewVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

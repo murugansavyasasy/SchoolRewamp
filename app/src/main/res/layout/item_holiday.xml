@@ -9,7 +9,6 @@
     android:padding="@dimen/twele">
 
     <ImageView
-        android:id="@+id/imgHolidayDot"
         android:layout_width="@dimen/sixteen"
         android:layout_height="@dimen/sixteen"
         android:layout_marginEnd="@dimen/eight"

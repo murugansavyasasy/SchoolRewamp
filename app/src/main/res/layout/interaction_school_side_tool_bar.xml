@@ -128,7 +128,6 @@
                     android:entries="@array/months" />
 
                 <ImageView
-                    android:id="@+id/imgMonthIcon"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_marginEnd="10dp"
@@ -302,7 +301,6 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/lblEndSideBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

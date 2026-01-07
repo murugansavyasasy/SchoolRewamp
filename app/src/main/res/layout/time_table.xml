@@ -31,7 +31,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="0dp">
         <LinearLayout
-            android:id="@+id/lnrTimeTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -39,7 +38,6 @@
             android:paddingHorizontal="@dimen/twenty">
 
             <TextView
-                android:id="@+id/tvTimetableTitle"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"

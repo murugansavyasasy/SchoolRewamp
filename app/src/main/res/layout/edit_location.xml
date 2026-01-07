@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/constParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/fourty_five"
@@ -24,7 +23,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtContant"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
@@ -65,7 +63,6 @@
         app:layout_constraintTop_toBottomOf="@id/edtLocationName" />
 
     <LinearLayout
-        android:id="@+id/buttonContainer"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twenty"

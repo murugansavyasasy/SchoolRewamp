@@ -127,7 +127,6 @@
 
                         <LinearLayout
                             android:layout_below="@+id/rlaAudioImgBar"
-                            android:id="@+id/lnrRecentSeconds"
                             android:layout_marginStart="@dimen/five"
                             android:layout_marginTop="@dimen/five"
                             android:layout_width="wrap_content"
@@ -190,7 +189,6 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:id="@+id/rlaTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
@@ -301,7 +299,6 @@
                 </TextView>
 
                 <RelativeLayout
-                    android:id="@+id/SentBy"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

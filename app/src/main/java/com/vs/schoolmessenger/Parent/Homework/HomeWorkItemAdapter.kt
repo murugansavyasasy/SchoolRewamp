@@ -103,8 +103,6 @@ class HomeWorkItemAdapter(
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-        private val viewpager: ViewPager = itemView.findViewById(R.id.viewpager)
-        private val indicator: CircleIndicator = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
 
 

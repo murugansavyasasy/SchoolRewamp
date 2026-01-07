@@ -10,7 +10,6 @@
         android:layout_centerInParent="true">
 
         <RelativeLayout
-            android:id="@+id/rlaLogoutPopup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/three_hundred"
             android:layout_marginStart="@dimen/twenty"

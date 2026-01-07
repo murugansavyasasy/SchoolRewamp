@@ -91,7 +91,6 @@
             </TextView>
 
             <ImageView
-                android:id="@+id/image_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_fifty"
                 android:layout_marginTop="@dimen/twenty"
@@ -104,7 +103,6 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/rytMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

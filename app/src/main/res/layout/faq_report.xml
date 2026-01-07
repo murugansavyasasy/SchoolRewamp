@@ -17,7 +17,6 @@
         android:padding="@dimen/fifteen">
 
         <RelativeLayout
-            android:id="@+id/faq_question_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

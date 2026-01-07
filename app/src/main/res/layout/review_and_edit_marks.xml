@@ -136,9 +136,7 @@
                 android:layout_below="@+id/View2"
                 android:orientation="vertical">
 
-                <include
-                    android:id="@+id/marksHeader"
-                    layout="@layout/layout_marks_header" />
+                <include layout="@layout/layout_marks_header" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMarks"
@@ -174,7 +172,6 @@
                     android:paddingVertical="@dimen/eight">
 
                     <TextView
-                        android:id="@+id/lblUpload"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

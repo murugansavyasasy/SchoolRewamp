@@ -12,20 +12,13 @@
     <color name="splash_end">#B3E5FC</color>
 
 
-
-    <color name="dark_blue_5">#3668C2</color>
-    <color name="light_primary_colour">#4b99fd</color>
     <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
     <color name="teal_900">#4fd0ff</color>
     <color name="sky_blue">#4fc3f4</color>
     <color name="teal_700">#FF018786</color>
-    <color name="lightyellow_color">#f6e7ad</color>
     <color name="black">#FF000000</color>
     <color name="lightgray">#D3D3D3</color>
-    <color name="black_2">#000000</color>
     <color name="light_gray_4">#444</color>
     <color name="light_gray_5">#666666</color>
     <color name="light_red_2">#FF4444</color>
@@ -43,11 +36,8 @@
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="black1">#646060</color>
     <color name="jumbo">#87878a</color>
-    <color name="teal">#53c0bd</color>
     <color name="very_dark_gray2">#777777</color>
     <color name="very_dark_gray3">#E0E0E0</color>
-    <color name="light_dark_gray_4">#f3f4f6</color>
-    <color name="very_dark_gray_5">#e7e9ed</color>
 
     <color name="darkGreen">#1B5E20</color>
     <color name="iconBlue">#0066FF</color>
@@ -63,13 +53,9 @@
     <color name="very_light_gray_14">#e5e7eb</color>
     <color name="athens_gray">#efeff0</color>
     <color name="dark_gray_9">#f9fafb</color>
-    <color name="emerald">#57cd76</color>
     <color name="jaffa">#ec874c</color>
     <color name="Emerald1">#34c759</color>
-    <color name="RobinssEggBlue">#00c5bc</color>
     <color name="iron">#e4e4e5</color>
-
-    <color name="purple_2">#713EE4</color>
 
     <!--    <color name="colorPrimary">#22c9cc</color>-->
     <color name="colorPrimary">#0e4275</color>
@@ -77,21 +63,14 @@
     <color name="pinkcolorcustom">#ff93c1</color>
     <color name="color_blue_primary">#679df1</color>
     <color name="custom_orange_color">#e26b26</color>
-    <color name="colorgreencustom">#dfe3e4</color>
     <color name="colorPrimaryDark">#0e4275</color>
-    <color name="colorAccent">#FF6200EE</color>
-    <color name="colorPrimary_light">#0F536A</color>
     <color name="primary">#8ec5d6</color>
     <color name="primary_light">#A6DADF</color>
-    <color name="primary_light1">#a6d1df</color>
-    <color name="light_grey">#F3F2F8</color>
-    <color name="very_light_gray_2">#73CAC4</color>
     <color name="skydark_blue">#4ca2ff</color>
 
 
     <color name="light_orangecolor">#f56363</color>
 
-    <color name="light_sky_blue">#c7eaff</color>
     <color name="light_sky_blue2">#b4d8ee</color>
     <color name="light_custom_green">#d0e4d8</color>
 
@@ -102,7 +81,6 @@
     <color name="bpWhite">#ffffff</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
-    <color name="grey_screen_clr">#F4F4F3</color>
     <color name="light_gray_2">#888888</color>
     <color name="gray_white">#f2f2f7</color>
     <color name="mild_grey6">#656565</color>
@@ -120,8 +98,6 @@
     <color name="mild_grey3">#ededf7</color>
     <color name="mild_grey4">#E5E4E2</color>
     <color name="mild_grey5">#ebecee</color>
-    <color name="violet1">#5856D6</color>
-    <color name="violet">#7156b4</color>
     <color name="violet_color">#5856d6</color>
     <color name="very_light_grey">#E5E5EA</color>
     <color name="light_red">#ffd8d6</color>
@@ -130,91 +106,51 @@
     <color name="grey">#ACACBA</color>
     <color name="grey_color">#2A2A2A</color>
     <color name="grey_mild_color">#ededed</color>
-    <color name="grey_mild_color1">#E5E5EA</color>
     <color name="grey_mild">#E3E3E9</color>
     <color name="light_grey4">#E3E3E9</color>
     <color name="neon_green">#0FFF50</color>
-    <color name="onahau">#c2e7ff</color>
     <color name="custom_color90">#6467d2</color>
     <color name="pink_color">#e14380</color>
-    <color name="custom_white2">#fdfdfd</color>
-    <color name="custom_white3">#f6f2f3</color>
 
 
     <color name="light_blue_color">#f0f4f9</color>
     <color name="purple_color_lite">#bf80ff</color>
-    <color name="purple_color_lite_1">#9560e4</color>
     <color name="purple_color_lite_2">#9565e3</color>
 
     <color name="navi_blue0">#0e4275</color>
-    <color name="light_navi_blue0">#B9D7F3</color>
     <color name="navi_blue1">#005cc6</color>
     <color name="navi_blue2">#1582ff</color>
 
 
-    <color name="lightgreen1">#02C5BF</color>
-    <color name="sky_blue_light">#d4e7eb</color>
     <color name="sky_blue0">#4eb7f1</color>
-    <color name="system_blue1">#42CFFC</color>
-    <color name="shadow_grey">#EDEDF7</color>
 
 
-    <color name="sky_blue4">#7ECCF6</color>
-    <color name="light_sky_blue5">#D1F3FD</color>
-    <color name="custom_blue">#84DFF2</color>
-    <color name="light_green_color">#a5d5d5</color>
     <color name="sky_blue1">#98d2de</color>
-    <color name="sky_blue2">#C8E2F4</color>
     <color name="light_blue">#F4F8FE</color>
-    <color name="light_blue1">#e0ebff</color>
 
     <color name="dark_blue">#162053</color>
     <color name="yellow">#fcd246</color>
     <color name="light_yellow">#f4d382</color>
-    <color name="light_orange0">#d3603b</color>
-    <color name="light_orange1">#ffd8b9</color>
     <color name="system_orange">#FF9500</color>
 
     <color name="orange">#e9a243</color>
     <color name="dark_orange_2">#ff6700</color>
-    <color name="system_pink">#FF2D55</color>
-    <color name="light_pink1">#ffb6c1</color>
 
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
-    <color name="dark_blue1">#1886ff</color>
-    <color name="dark_green1">#12451F</color>
-    <color name="light_green">#92b879</color>
     <color name="light_pale_green_1">#e2fceb</color>
-    <color name="dark_pale_green_2">#4eda86</color>
     <color name="dark_green_3">#2f9143</color>
-    <color name="light_green1">#cdffab</color>
-    <color name="light_green2">#ccf4e6</color>
     <color name="light_green_4">#c8ead1</color>
     <color name="light_gray_3_">#e5e4e9</color>
-    <color name="light_green3">#204e5e</color>
-    <color name="light_pink">#ffd6f2</color>
-    <color name="light_pink2">#C5ADBD</color>
     <color name="pink">#ed5b96</color>
-    <color name="custom_pink">#FBEBED</color>
-    <color name="custom_pink1">#F2D8E0</color>
     <color name="purble">#c489d7</color>
-    <color name="light_purble">#ece4f4</color>
     <color name="red">#E43C2F</color>
     <color name="mild_red">#F56363</color>
     <color name="clr_red">#FF7575</color>
-    <color name="light_red1">#f89696</color>
-    <color name="dashboar_bg">#f2f4fb</color>
 
 
-    <color name="mild0">#f6f3ff</color>
-    <color name="mild1">#f1f8ff</color>
-    <color name="mild2">#fff1fd</color>
-    <color name="mild3">#fff5ee</color>
     <color name="mild4">#f4f5f9</color>
     <color name="navi_blue3">#0153e1</color>
-    <color name="navi_blue4">#c7eaff</color>
-    <color name="navi_blue5">#2972b6</color>
     <color name="navi_blue6">#3f87f2</color>
     <color name="gray">#e6e5eb</color>
     <color name="stoke_gray">#DDDDDD</color>
@@ -223,80 +159,44 @@
     <color name="clr_light_blue_color">#69a1f1</color>
     <color name="clr_light_blue_color1">#D0DBF2</color>
 
-    <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>
-    <color name="card_blue">#EEE9F3</color>
-    <color name="light_blue_1">#5DCBF5</color>
     <color name="dark_blue_1">#007aff</color>
     <color name="dark_blue_color">#0B337F</color>
 
-    <color name="light_orange">#F8ECE5</color>
-    <color name="light_orange_1">#FB975C</color>
     <color name="light_green_bg">#D9FBF7</color>
-    <color name="light_green_bg1">#3FCCBB</color>
-    <color name="light_violet_bg1">#B58EF3</color>
-    <color name="light_dark_blue">#7ac6dc</color>
 
 
-    <color name="dark_bg_blue">#A1E3F9</color>
-    <color name="dark_bg_green">#8EFBCC</color>
-    <color name="dark_bg_purple">#D4ABFD</color>
     <color name="dark_bg_orange">#F89F75</color>
-    <color name="dark_bg_orange_4">#f54a00</color>
-    <color name="pale_light_orange">#ffedd4</color>
-    <color name="dark_bg_voilet">#a22d00</color>
     <color name="dark_bg_orange_2">#e17100</color>
     <color name="light_bg_orange_3">#fff7ed</color>
-    <color name="light_bg_orange_4">#ffe5c8</color>
     <color name="light_bg_orange_5">#fefce8</color>
     <color name="light_bg_orange_6">#dfaa4b</color>
-    <color name="pale_light_yellow">#fef3c6</color>
-    <color name="pale_light_brown">#c37652</color>
-    <color name="pale_light_blue">#eff6ff</color>
     <color name="dark_blue_9">#254aba</color>
-    <color name="pale_light_blue_3">#d1e5ff</color>
 
 
     <color name="light_bg_blue">#CFE8F6</color>
-    <color name="light_bg_orange">#FAECE0</color>
-    <color name="light_bg_green">#BAE4DC</color>
-    <color name="light_bg_purple">#ECE0F8</color>
     <color name="light_gray_">#747e85</color>
     <color name="light_gray2">#f2f2f2</color>
 
     <color name="light_gray1">#F5F5F5</color>
-    <color name="light_green_">#a6dadf</color>
     <color name="dark_blue_and_green_">#00c7be</color>
     <color name="dark_green">#58B814</color>
-    <color name="custom_light_green_color">#b6e3cb</color>
-    <color name="custom_yellow_light_color">#fcd48e</color>
     <color name="dark_green_2">#0f4d0f</color>
     <color name="light_green4">#50C878</color>
 
     <color name="light_orange4">#f5a961</color>
-    <color name="light_orange5">#FFA726</color>
     <color name="light_yellow_5">#FFCC00</color>
-
-    <color name="light_green9">#ebf9ee</color>
-    <color name="light_blue9">#e6f2ff</color>
 
 
     <color name="light_red4">#ffc4c1</color>
-    <color name="light_sky_blue1">#DFF4F7</color>
-    <color name="light_orang1">#FCEDDB</color>
     <color name="dash_board_icon_color">#0097B2</color>
     <!--    <color name="dash_board_icon_color_school">#FF16C7DF</color>-->
-    <color name="dash_board_icon_color_school">#0097B2</color>
 
-    <color name="clr_month_blue">#32ADE6</color>
-    <color name="clr_day_blue">#D7EAE8</color>
-    <color name="light_shadow_yellow">#EFE7CE</color>
     <color name="bpBlue">#33b5e5</color>
     <color name="bpTransparent_black">#7f000000</color>
 
 
     <!--    Coupon Colors code   -->
-    <color name="custom_pink2">#fff0f1</color>
     <color name="custom_white">#fffcfc</color>
     <color name="gnt_gray">#808080</color>
     <color name="gnt_blue">#4285f4</color>
@@ -306,15 +206,8 @@
     <color name="pale_white_3">#F2F8FD</color>
 
 
-    <color name="annual_leave">#1877F2</color>
-    <color name="hospitalization_leave">#A5E5FB</color>
-    <color name="medical_leave">#FFB8E1</color>
-    <color name="children_leave">#FFB556</color>
-    <color name="dark_blue_10">#477cee</color>
     <color name="light_blue2">#E9F2FF</color>
     <color name="light_lavender">#EAE6FF</color>
-    <color name="lightpink">#f4e5e7</color>
-    <color name="lightyellow">#fcf1ce</color>
     <color name="light_gray4">#f4f5fa</color>
     <color name="pale_light_gray_7">#444444</color>
 

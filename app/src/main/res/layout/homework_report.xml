@@ -23,7 +23,6 @@
         layout="@layout/school_side_tool_bar" />
 
     <RelativeLayout
-        android:id="@+id/rlaHomeWorkReport"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +67,6 @@
                     </ImageView>
                     <LinearLayout
                         android:layout_toEndOf="@+id/imgCalendar"
-                        android:id="@+id/lnrDateDetails"
                         android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:orientation="vertical"
@@ -102,7 +100,6 @@
                 android:visibility="gone"
                 android:layout_height="match_parent">
                 <RelativeLayout
-                    android:id="@+id/rytAcademicYearDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/black_stroke_bg_radius"

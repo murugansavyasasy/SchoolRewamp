@@ -74,7 +74,6 @@
                     android:src="@drawable/eye_icon_blue" />
 
                 <TextView
-                    android:id="@+id/lblViewReceipt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/five"
@@ -88,7 +87,6 @@
         <LinearLayout
             android:layout_below="@+id/lnrInvoiceDetails"
             android:layout_alignParentEnd="true"
-            android:id="@+id/lnrDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

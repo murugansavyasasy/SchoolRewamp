@@ -52,7 +52,6 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:id="@+id/imgAcademicYear"
                         android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/fifteen"
                         android:layout_alignParentEnd="true"
@@ -218,7 +217,6 @@
                                 </TextView>
 
                                 <TextView
-                                    android:id="@+id/lblStar"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -269,7 +267,6 @@
                                     android:text="@string/from_time"></TextView>
 
                                 <TextView
-                                    android:id="@+id/lblStar2"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -316,7 +313,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/lnrToTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lnrFromTime"
@@ -341,7 +337,6 @@
                                     android:textSize="@dimen/thirteen_sp"></TextView>
 
                                 <TextView
-                                    android:id="@+id/lblStar3"
                                     style="@style/CustomTextStylePoppinsBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -480,7 +475,6 @@
                         </TextView>
 
                         <ImageView
-                            android:id="@+id/imgEndArrow"
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
                             android:src="@drawable/arrowright">
@@ -512,7 +506,6 @@
                                 android:textSize="@dimen/thirteen_sp"></TextView>
 
                             <TextView
-                                android:id="@+id/lblStar4"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -528,7 +521,6 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/lblCountOfTitle"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -570,7 +562,6 @@
                                 android:textSize="@dimen/thirteen_sp" />
 
                             <TextView
-                                android:id="@+id/lblStar5"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -634,7 +625,6 @@
                             android:textSize="@dimen/thirteen_sp" />
 
                         <ImageView
-                            android:id="@+id/imgSend1"
                             android:layout_width="@dimen/fifteen"
                             android:layout_height="@dimen/fifteen"
                             android:layout_centerVertical="true"
@@ -665,7 +655,6 @@
                                 android:layout_marginEnd="@dimen/eight" />
 
                             <TextView
-                                android:id="@+id/lblEmergencyVoice"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -845,7 +834,6 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/lblStar6"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -903,7 +891,6 @@
                                 android:textSize="@dimen/fourteen_sp"></TextView>
 
                             <ImageView
-                                android:id="@+id/imgSend"
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"
                                 android:layout_centerInParent="true"

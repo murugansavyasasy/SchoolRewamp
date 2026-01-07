@@ -28,7 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/rytCreateAssignment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_below="@+id/toolbarLayout"
@@ -103,7 +102,6 @@
 
 
         <TextView
-            android:id="@+id/lblStar2"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,7 +159,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/rlaFilePicking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/lblTextCount"
@@ -180,7 +177,6 @@
             </TextView>
 
             <TextView
-                android:id="@+id/lblOptional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"

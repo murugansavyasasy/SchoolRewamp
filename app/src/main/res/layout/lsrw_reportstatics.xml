@@ -102,13 +102,13 @@
                                 android:layout_marginTop="@dimen/eight"
                                 android:clipToOutline="true">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rvWeekly"
-                                android:layout_width="@dimen/three_fifty"
-                                android:layout_height="250dp"
-                                android:nestedScrollingEnabled="false"
-                                android:overScrollMode="never"
-                                android:visibility="visible" />
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvWeekly"
+                                    android:layout_width="@dimen/three_fifty"
+                                    android:layout_height="250dp"
+                                    android:nestedScrollingEnabled="false"
+                                    android:overScrollMode="never"
+                                    android:visibility="visible" />
 
                             </FrameLayout>
 

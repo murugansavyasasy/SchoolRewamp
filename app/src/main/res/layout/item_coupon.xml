@@ -19,7 +19,6 @@
 
 
         <ProgressBar
-            android:id="@+id/isProgressBarImage"
             android:layout_width="@dimen/fifty"
             android:layout_height="@dimen/fifty"
             android:layout_marginTop="@dimen/fourty"
@@ -114,7 +113,6 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -124,7 +122,6 @@
         android:weightSum="2">
 
         <LinearLayout
-            android:id="@+id/linearLayout0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -133,7 +130,6 @@
             android:layout_marginStart="@dimen/five">
 
             <ImageView
-                android:id="@+id/location_imag2"
                 android:layout_width="@dimen/thirteen"
                 android:layout_height="@dimen/thirteen"
                 android:src="@drawable/clockloader" />

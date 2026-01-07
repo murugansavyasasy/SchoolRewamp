@@ -125,7 +125,6 @@
         app:layout_constraintTop_toBottomOf="@id/rytHeader" />
 
     <ImageView
-        android:id="@+id/imgIllustration"
         android:layout_width="0dp"
         android:layout_height="@dimen/one_fifty"
         android:layout_marginTop="@dimen/ten"

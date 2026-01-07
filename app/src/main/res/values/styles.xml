@@ -6,33 +6,8 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="HeaderCell">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-
-    <style name="Teacher_spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
 
     <style name="Circular">
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="RoundedRectangle">
-        <!-- Corner radius -->
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">12dp</item>
-
-    </style>
-
-    <style name="CircularImageView">
-        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 
@@ -61,26 +36,11 @@
     </style>
 
     <!-- styles.xml -->
-    <style name="CustomTextStyle" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/american_typewriter_bold</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#000000</item>
-    </style>
 
 
     <!-- styles.xml -->
-    <style name="CustomTextStyleAttendanceReportDashBoard" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/futura_bold</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#000000</item>
-    </style>
 
     <!-- styles.xml -->
-    <style name="CustomTextStyleAttendanceReportDashBoardRegular" parent="TextAppearance.AppCompat">
-        <item name="fontFamily">@font/futura_regular</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#000000</item>
-    </style>
 
 
     <!-- styles.xml -->
@@ -133,23 +93,11 @@
     </style>
 
 
-    <style name="TabTextStyle">
-        <item name="fontFamily">@font/inter_medium</item>
-        <item name="android:textSize">@dimen/thirteen_sp</item>
-        <item name="android:textColor">#000000</item>
-    </style>
-
-
-<!--    &lt;!&ndash; res/values/styles.xml &ndash;&gt;-->
+    <!--    &lt;!&ndash; res/values/styles.xml &ndash;&gt;-->
 <!--    <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">-->
 <!--        <item name="android:buttonTint">@color/primary</item>-->
 <!--        <item name="android:textColor">@color/PrimaryColor</item>-->
 <!--    </style>-->
-
-    <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:buttonTint">@color/checkbox_tint</item>
-        <item name="android:textColor">@color/PrimaryColor</item>
-    </style>
 
 
     <style name="RoundedSquare" parent="">
@@ -164,18 +112,6 @@
     </style>
 
 
-    <style name="WeekDayStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">#000000</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:padding">4dp</item>
-    </style>
-
-
     <style name="CircleImageShape" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
@@ -184,11 +120,6 @@
     <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="CustomAudioSeekBar" parent="Widget.AppCompat.SeekBar">
-        <item name="android:progressDrawable">@drawable/custom_seekbar_progress</item>
-        <item name="android:thumb">@drawable/custom_seekbar_thumb</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -204,15 +135,6 @@
         <item name="cornerSize">50%</item>
     </style>
 
-
-    <style name="FeedbackChip">
-        <item name="android:layout_margin">6dp</item>
-        <item name="android:background">@drawable/bg_outline_light_blue</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:textColor">@color/navi_blue1</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <style name="AppEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:inputType">textCapSentences</item>

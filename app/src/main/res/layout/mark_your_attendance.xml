@@ -86,7 +86,6 @@
             android:max="100" />
 
         <TextView
-            android:id="@+id/idTVHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/custom_progress_bar"
@@ -137,7 +136,6 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
-                android:id="@+id/rytContetnt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
@@ -151,7 +149,6 @@
                     android:src="@drawable/ic_location" />
 
                 <TextView
-                    android:id="@+id/lbl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -254,7 +251,6 @@
                 android:visibility="visible" />
 
             <RelativeLayout
-                android:id="@+id/rytEnableFingerPrint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnPresent"
@@ -263,7 +259,6 @@
 
 
                 <Switch
-                    android:id="@+id/enableSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -322,7 +317,6 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/rytYears"
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/thirty"
@@ -355,7 +349,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rytMonths"
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
@@ -403,7 +396,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fdtextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fd_full_day"
@@ -417,7 +409,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginTop="@dimen/five"
-                android:id="@+id/fhtextview"
                 style="@style/CustomTextStylePoppinsBold" />
             <TextView
                 android:layout_width="wrap_content"
@@ -484,7 +475,6 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/imgAddLocation"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_gravity="center"
@@ -493,7 +483,6 @@
         </ImageView>
 
         <TextView
-            android:id="@+id/lblAddLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/five"

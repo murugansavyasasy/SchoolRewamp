@@ -93,12 +93,10 @@
                 android:layout_gravity="center">
 
                 <com.vs.schoolmessenger.Parent.ExamMarks.DotRingView
-                    android:id="@+id/scoreCircle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <View
-                    android:id="@+id/centerCircle"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_gravity="center"

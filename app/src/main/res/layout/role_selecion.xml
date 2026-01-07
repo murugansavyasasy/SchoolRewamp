@@ -239,7 +239,6 @@
                     android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
-                    android:id="@+id/btnLoginAsChild"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"

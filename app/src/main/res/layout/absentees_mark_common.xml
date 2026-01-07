@@ -74,7 +74,6 @@
 
     <LinearLayout
         android:weightSum="1"
-        android:id="@+id/statsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
