@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.School.AbsenteesReport
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.GridView
 import android.widget.ImageView

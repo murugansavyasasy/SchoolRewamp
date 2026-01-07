@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -15,9 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
-import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.OnActivityExamSelectListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ActivityExamListAdapter(

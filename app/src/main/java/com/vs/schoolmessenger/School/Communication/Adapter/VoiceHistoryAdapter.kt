@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.Communication.Adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.media.MediaPlayer

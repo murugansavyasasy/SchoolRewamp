@@ -2,16 +2,11 @@ package com.vs.schoolmessenger.Parent.Coupon.CouponView
 
 import android.graphics.Color
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowInsetsController
 import androidx.activity.enableEdgeToEdge
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.HomeFragment

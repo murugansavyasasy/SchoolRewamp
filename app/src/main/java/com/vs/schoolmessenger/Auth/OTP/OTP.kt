@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint

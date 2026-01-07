@@ -5,14 +5,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Dashboard.Settings.Faq.Model.FaqItem
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter.ShimmerViewHolder
-
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FaqAdapter(

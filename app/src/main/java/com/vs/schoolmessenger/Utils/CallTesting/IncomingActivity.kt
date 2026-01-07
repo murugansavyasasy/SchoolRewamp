@@ -1,14 +1,14 @@
 package com.vs.schoolmessenger.Utils.CallTesting
 
+import android.content.Intent
 import android.media.Ringtone
 import android.media.RingtoneManager
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import android.content.Intent
-import android.os.Build
 import com.vs.schoolmessenger.R
 
 class IncomingActivity : AppCompatActivity() {

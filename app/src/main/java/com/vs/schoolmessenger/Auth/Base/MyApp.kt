@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Auth.Base
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -9,7 +8,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
 import com.vs.schoolmessenger.Utils.SharedPreference
-import kotlin.system.exitProcess
 
 class MyApp : Application(), LifecycleObserver {
 

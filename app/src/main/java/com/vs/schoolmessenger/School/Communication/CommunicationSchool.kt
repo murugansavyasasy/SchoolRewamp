@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Communication
 
 import android.Manifest
-import android.R.attr.width
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -20,7 +19,6 @@ import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -70,7 +68,6 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.ceil
-import kotlin.math.max
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
     VoiceHistoryClickListener, TextHistoryClickListener, TimeSelectedListener {

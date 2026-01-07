@@ -1,11 +1,11 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
+import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.Toast

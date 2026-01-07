@@ -28,6 +28,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,7 +50,6 @@ import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
-import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
@@ -71,22 +71,17 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
-import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
 import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
 import com.vs.schoolmessenger.Utils.Constant.isParentContactDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuCountDetails
 import com.vs.schoolmessenger.Utils.Constant.isParentMenuDetails
-import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
-import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuCountDetails
-import com.vs.schoolmessenger.Utils.Constant.isSchoolMenuDetails
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import androidx.core.view.isVisible
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 

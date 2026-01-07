@@ -1,9 +1,7 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.PorterDuff
-import android.graphics.drawable.GradientDrawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan

@@ -1,9 +1,9 @@
 package com.vs.schoolmessenger.FCM
 
-import com.vs.schoolmessenger.Utils.Constant
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.vs.schoolmessenger.Utils.Constant
 
 class NotificationDismissService : Service() {
 

@@ -15,7 +15,6 @@ import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizQuestion
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ActivityQuizBinding
-import kotlin.collections.emptyList
 
 class QuizActivity : BaseActivity<ActivityQuizBinding>(), View.OnClickListener {
 

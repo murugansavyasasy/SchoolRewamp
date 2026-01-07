@@ -39,7 +39,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Parent.QuizExam.QuizActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType

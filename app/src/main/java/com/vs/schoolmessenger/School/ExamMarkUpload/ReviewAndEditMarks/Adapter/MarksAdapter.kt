@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Color
 import android.text.InputType
 import android.view.Gravity
 import android.view.LayoutInflater

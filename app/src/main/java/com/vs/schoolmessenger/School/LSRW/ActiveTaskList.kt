@@ -6,15 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
-import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
-import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,6 +13,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
@@ -29,16 +21,21 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.LSRW.Adapter.LsrwAdapter
 import com.vs.schoolmessenger.School.LSRW.Listener.lsrwskillreportlistener
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwTask
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 
 
 class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener,lsrwskillreportlistener {
