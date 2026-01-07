@@ -175,7 +175,7 @@ object SharedPreference {
         sharedPreferences.edit { putInt(SH_COUNTRY_ID, isCountryId!!) }
     }
 
-    fun getCountryId(activity: Context): Int? {
+    fun getCountryId(activity: Context): Int {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -198,7 +198,7 @@ object SharedPreference {
         sharedPreferences.edit { putBoolean(SH_INTRODUCTION_SKIP, isCountryId!!) }
     }
 
-    fun getIntroductionSkip(activity: Context): Boolean? {
+    fun getIntroductionSkip(activity: Context): Boolean {
 
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
@@ -222,7 +222,7 @@ object SharedPreference {
         sharedPreferences.edit { putBoolean(SH_LOGOUT, isLogout!!) }
     }
 
-    fun getLogout(activity: Context): Boolean? {
+    fun getLogout(activity: Context): Boolean {
 
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
@@ -395,7 +395,7 @@ object SharedPreference {
         sharedPreferences.edit { putBoolean(SH_BIOMETRIC_ENABLED, isEnable) }
     }
 
-    fun getBiometricEnabled(activity: Context): Boolean? {
+    fun getBiometricEnabled(activity: Context): Boolean {
 
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
@@ -418,7 +418,7 @@ object SharedPreference {
         sharedPreferences.edit { putBoolean(SH_BIOMETRIC_SKIP, isEnable) }
     }
 
-    fun getBiometricSkip(activity: Context): Boolean? {
+    fun getBiometricSkip(activity: Context): Boolean {
 
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,

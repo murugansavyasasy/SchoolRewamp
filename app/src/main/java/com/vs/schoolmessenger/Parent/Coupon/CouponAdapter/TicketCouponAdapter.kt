@@ -153,7 +153,7 @@ class TicketCouponAdapter(
                 val intent = Intent(context, MycouponViewActivity::class.java)
                 val locationList: MutableList<TicketSummary.Location?> =
                     data.location_list ?: mutableListOf()
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 intent.putExtra(Constant.merchant_name, data.merchant_name)
                 intent.putExtra(Constant.offer_to_show, data.offer_to_show)
                 intent.putExtra(Constant.how_to_use, data.how_to_use)

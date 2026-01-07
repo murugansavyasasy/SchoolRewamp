@@ -30,7 +30,7 @@ class ParentMeetingAdapter(
         }
     }
 
-    inner class ParentMeetingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ParentMeetingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvMeetingTitle: TextView = itemView.findViewById(R.id.tvMeetingTitle)
         val tvParentName: TextView = itemView.findViewById(R.id.tvParentName)
         val tvSubject: TextView = itemView.findViewById(R.id.tvSubject)

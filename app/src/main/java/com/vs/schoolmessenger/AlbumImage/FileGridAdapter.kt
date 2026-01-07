@@ -32,7 +32,7 @@ class FileGridAdapter(
         notifyDataSetChanged()
     }
 
-    inner class FileViewHolder(val binding: ItemFileBinding) : RecyclerView.ViewHolder(binding.root)
+    class FileViewHolder(val binding: ItemFileBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
         val binding = ItemFileBinding.inflate(LayoutInflater.from(parent.context), parent, false)

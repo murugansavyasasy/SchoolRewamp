@@ -54,7 +54,7 @@ class BookedSlotAdapter(
         else if (holder is BookedViewHolder) holder.bind(bookedSlotList[position])
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmer: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
         fun startShimmer() = shimmer.startShimmer()
     }

@@ -10,6 +10,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
@@ -117,11 +118,26 @@ class InteractionWithStudentAdapter(
                 lblDesc.text = student.last_msg
             }
 
-            yesterdayheader.text = getRelativeTime(student.last_msg_time)
+            if(student.last_msg_time .isNullOrEmpty()) {
+                yesterdayheader.visibility = View.GONE
+            } else {
+                yesterdayheader.visibility = View.VISIBLE
+                yesterdayheader.text = getRelativeTime(student.last_msg_time)
+                yesterdayheader.setTextColor(ContextCompat.getColor(context, R.color.light_gray))
+            }
 
             val isVisible = student.unread_count > Constant.zero__
-            unreadcount.visibility = if (isVisible) View.VISIBLE else View.GONE
-            yesterdayheader.visibility = if (isVisible) View.VISIBLE else View.GONE
+
+            unreadcount.visibility =
+                if (isVisible) View.VISIBLE else View.GONE
+
+            yesterdayheader.setTextColor(
+                if (isVisible)
+                    ContextCompat.getColor(context, R.color.Emerald1)
+                else
+                    ContextCompat.getColor(context, R.color.light_gray)
+            )
+
 
 
             relative_layout.setOnClickListener {
@@ -168,7 +184,7 @@ class InteractionWithStudentAdapter(
 
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

@@ -21,7 +21,7 @@ class AudioAdapter(
     private var currentlyPlayingPos = -1
     private var previousHolder: AudioViewHolder? = null
 
-    inner class AudioViewHolder(val binding: AudioItemBinding) :
+    class AudioViewHolder(val binding: AudioItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {

@@ -21,7 +21,7 @@ class StudentListAdapter(
     private val items: List<AvgStudentSubmission>, private val context: Context
 ) : RecyclerView.Adapter<StudentListAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemStudentlistReccleBinding) :
+    class ViewHolder(val binding: ItemStudentlistReccleBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

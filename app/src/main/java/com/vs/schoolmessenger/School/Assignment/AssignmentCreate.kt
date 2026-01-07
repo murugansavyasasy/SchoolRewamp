@@ -541,7 +541,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.Companion.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CreateEvent.CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(
                     this,
@@ -601,7 +601,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         }
 
         when (requestCode) {
-            CreateEvent.Companion.CAMERA_IMAGE_REQUEST -> {
+            CreateEvent.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {

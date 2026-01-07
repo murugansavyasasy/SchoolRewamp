@@ -2995,7 +2995,7 @@ object Constant {
                     InputType.TYPE_TEXT_FLAG_MULTI_LINE
 
             imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
-            setSingleLine(false)
+            isSingleLine = false
             isVerticalScrollBarEnabled = true
             overScrollMode = View.OVER_SCROLL_ALWAYS
         }

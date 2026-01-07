@@ -266,7 +266,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             R.id.replytext -> {
 
                 // Hide keyboard if open
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
 
                 // Optionally clear focus (prevents reopening)
@@ -277,7 +277,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
 
             R.id.replyalltext -> {
                 // Hide keyboard if open
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.edtMessage.windowToken, 0)
 
                 // Optionally clear focus (prevents reopening)

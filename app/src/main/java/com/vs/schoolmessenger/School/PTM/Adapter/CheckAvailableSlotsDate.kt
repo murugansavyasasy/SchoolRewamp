@@ -24,7 +24,7 @@ class CheckAvailableSlotsDate(
 
     private val allDaySlots = mutableMapOf<Int, Pair<String, List<SlotAvailability>>>()
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvDate = itemView.findViewById<android.widget.TextView>(R.id.tvDate)
         val rcySlotTiming = itemView.findViewById<RecyclerView>(R.id.rcySlotTiming)
     }

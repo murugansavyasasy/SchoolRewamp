@@ -46,7 +46,7 @@ class SplitExamMarkResultsAdapter(
         return if (isLoading) 20 else splitList?.size ?: 0
     }
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblSplitSubjectName: TextView = itemView.findViewById(R.id.lblSplitSubjectName)
         private val lblSplitmarkoutof100: TextView =
             itemView.findViewById(R.id.lblSplitmarkoutof100)
@@ -60,7 +60,7 @@ class SplitExamMarkResultsAdapter(
         }
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

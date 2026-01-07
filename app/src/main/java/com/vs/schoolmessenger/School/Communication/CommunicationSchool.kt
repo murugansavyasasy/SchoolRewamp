@@ -1693,7 +1693,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Constant.isVoiceType = 3
         val voiceUrlOrPath = data.url
         audioFilePath = voiceUrlOrPath
-        val currentDate: String? = Constant.getCurrentDate()
+        val currentDate: String = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = Constant.sss_ + currentDate + "." + isFileExtension
     }
@@ -1814,13 +1814,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun isScreenOff(): Boolean {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val powerManager = getSystemService(POWER_SERVICE) as PowerManager
         return !powerManager.isInteractive   // true = screen OFF
     }
 
     private fun isScreenLocked(): Boolean {
         val keyguardManager =
-            getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            getSystemService(KEYGUARD_SERVICE) as KeyguardManager
         return keyguardManager.isKeyguardLocked
     }
 

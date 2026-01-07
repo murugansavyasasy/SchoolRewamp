@@ -14,7 +14,7 @@ class HolidayAdapter(
     private val holidays: List<Holiday>
 ) : RecyclerView.Adapter<HolidayAdapter.HolidayViewHolder>() {
 
-    inner class HolidayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class HolidayViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtHolidayName)
         val txtDate: TextView = itemView.findViewById(R.id.txtHolidayDate)
     }

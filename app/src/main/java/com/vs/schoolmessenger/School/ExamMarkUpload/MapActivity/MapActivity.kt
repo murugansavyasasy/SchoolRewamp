@@ -145,10 +145,9 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
                 section_name = subject.section_name,
                 paper = subject.splitup_details.map { split ->
 
-                    val col =
-                        if (index < selectedColumns.size)
-                            selectedColumns[index]
-                        else null
+                    if (index < selectedColumns.size)
+                        selectedColumns[index]
+                    else null
 
                     index++
 

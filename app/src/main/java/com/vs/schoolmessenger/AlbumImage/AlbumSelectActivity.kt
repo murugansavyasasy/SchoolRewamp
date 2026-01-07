@@ -66,7 +66,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
                 "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
             binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
             binding.toolbarLayout.tvSelectedFiles.text =
-                "Total Selected Files : ${Constant.isQuizQuestionPickCount.toString()}"
+                "Total Selected Files : ${Constant.isQuizQuestionPickCount}"
         } else {
             binding.toolbarLayout.tvSelectionCount.text =
                 "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"

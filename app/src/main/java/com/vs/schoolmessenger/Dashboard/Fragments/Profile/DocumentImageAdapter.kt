@@ -19,7 +19,7 @@ class DocumentImageAdapter(
     private val isSubjectName: String
 ) : RecyclerView.Adapter<DocumentImageAdapter.FileViewHolder>() {
 
-    inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgFileType: TextView = itemView.findViewById(R.id.imgFileType)
         val txtFileName: TextView = itemView.findViewById(R.id.txtFileName)
         val txtFileSize: TextView = itemView.findViewById(R.id.txtFileSize)

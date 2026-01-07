@@ -467,8 +467,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     fun isPTMToolBarPrimarySchool(mainViewId: Int, statusBarBgView: View) {
         enableEdgeToEdge()
 
-        val mainView = findViewById<View>(mainViewId)
-        val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
+        findViewById<View>(mainViewId)
+        findViewById<View>(R.id.toolbarLayout)
         val headerView = findViewById<View>(R.id.cltDateSelection)
 
 

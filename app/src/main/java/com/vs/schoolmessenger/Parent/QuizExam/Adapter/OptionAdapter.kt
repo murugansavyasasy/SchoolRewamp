@@ -14,7 +14,7 @@ class OptionAdapter(
     private val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<OptionAdapter.OptionVH>() {
 
-    inner class OptionVH(val binding: ItemOptionBinding) :
+    class OptionVH(val binding: ItemOptionBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionVH {

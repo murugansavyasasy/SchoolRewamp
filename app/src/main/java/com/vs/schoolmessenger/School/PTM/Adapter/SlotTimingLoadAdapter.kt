@@ -18,7 +18,7 @@ class SlotTimingLoadAdapter(
     private val onAllSlotsRemoved: () -> Unit
 ) : RecyclerView.Adapter<SlotTimingLoadAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val lblTiming: TextView = itemView.findViewById(R.id.lblTiming)
         val imgRemove: ImageView = itemView.findViewById(R.id.imgRemove)
         val lblSlotStatus: TextView = itemView.findViewById(R.id.lblSlotStatus)

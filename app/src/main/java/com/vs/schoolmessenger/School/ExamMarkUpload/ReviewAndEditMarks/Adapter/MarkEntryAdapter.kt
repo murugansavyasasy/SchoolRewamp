@@ -23,7 +23,7 @@ class MarkEntryAdapter(
     private val students: MutableList<StudentMarkRow>
 ) : RecyclerView.Adapter<MarkEntryAdapter.VH>() {
 
-    inner class VH(v: View) : RecyclerView.ViewHolder(v) {
+    class VH(v: View) : RecyclerView.ViewHolder(v) {
         val roll: TextView = v.findViewById(R.id.txtRoll)
         val name: TextView = v.findViewById(R.id.txtName)
         val container: LinearLayout = v.findViewById(R.id.markContainer)
@@ -53,7 +53,7 @@ class MarkEntryAdapter(
                 setBackgroundResource(R.drawable.bg_mark_cell)
                 layoutParams = LinearLayout.LayoutParams(
                     dpToPx(80, context),
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    WRAP_CONTENT
                 )
                 gravity = Gravity.CENTER
             }

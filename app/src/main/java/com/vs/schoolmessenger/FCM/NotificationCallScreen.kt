@@ -97,7 +97,7 @@ class NotificationCallScreen :
 
         authViewModel!!.isUpdateNotificationCallLog?.observe(this) { response ->
             if (response != null) {
-                val status = response.status
+                response.status
                 response.message
                 finish()
             }

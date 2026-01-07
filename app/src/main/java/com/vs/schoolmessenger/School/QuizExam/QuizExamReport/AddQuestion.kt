@@ -1398,11 +1398,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         //here actually if all the question are filled means we pass as open_to_student as true so the reciver side this particular quiz will be visible if false means this particular quiz will not be visible
         var open_to_student = false
-        open_to_student = if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size) {
-            true
-        } else {
-            false
-        }
+        open_to_student = isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size
 
         val body = QuizRequestBody(
             quiz_id = isQuizID,

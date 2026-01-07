@@ -108,7 +108,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         binding.lblHeaderTitle.visibility = View.VISIBLE
-        binding.lblHeaderTitle.text = getString(R.string.interaction_with_staff)
+        binding.lblHeaderTitle.text = Constant.isSelectedMenuName
 
         fetchstaffdata()
 

@@ -26,7 +26,7 @@ class ParentSlotTimingAdapter(
     private var globalMyBookings: List<SlotData> = emptyList()
     private var disableAllSlots: Boolean = false
 
-    inner class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SlotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvSlotTime: TextView = itemView.findViewById(R.id.tvSlotTime)
         val tvSlotStatus: TextView = itemView.findViewById(R.id.tvSlotStatus)
         val card: LinearLayout = itemView.findViewById(R.id.lnrHeader)

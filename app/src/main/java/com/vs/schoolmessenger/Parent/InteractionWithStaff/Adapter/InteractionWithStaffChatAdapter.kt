@@ -52,7 +52,7 @@ class InteractionWithStaffChatAdapter(
         return if (isLoading) 20 else itemList.size
     }
 
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
         private val user_name: TextView = itemView.findViewById(R.id.user_name)
@@ -95,7 +95,7 @@ class InteractionWithStaffChatAdapter(
 
     }
 
-    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }

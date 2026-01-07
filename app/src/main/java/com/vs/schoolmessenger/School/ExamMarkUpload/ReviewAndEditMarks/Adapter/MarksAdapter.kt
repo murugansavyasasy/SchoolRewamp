@@ -38,7 +38,7 @@ class MarksAdapter(
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-    inner class MarksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MarksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtName)
         val txtRoll: TextView = itemView.findViewById(R.id.txtRoll)
         val subjectContainer: LinearLayout = itemView.findViewById(R.id.subjectContainer)

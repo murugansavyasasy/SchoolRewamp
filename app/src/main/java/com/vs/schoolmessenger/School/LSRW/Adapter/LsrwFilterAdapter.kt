@@ -36,7 +36,7 @@ class LsrwFilterAdapter(
 
     override fun getItemCount(): Int = filters.size
 
-    inner class FilterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FilterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtFilter: TextView = itemView.findViewById(R.id.txtFilter)
 
         fun bind(filter: String, isSelected: Boolean) {

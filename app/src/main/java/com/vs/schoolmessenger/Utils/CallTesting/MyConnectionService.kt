@@ -33,7 +33,7 @@ class MyConnectionService : ConnectionService() {
             override fun onAnswer() {
                 super.onAnswer()
 
-                setAudioModeIsVoip(true)
+                audioModeIsVoip = true
                 setActive()
 
                 playVoiceMessage(voiceUrl)
@@ -57,7 +57,7 @@ class MyConnectionService : ConnectionService() {
         activeConnection = connection
 
         // System ringtone + incoming call UI
-        connection.setAudioModeIsVoip(false)
+        connection.audioModeIsVoip = false
         connection.setAddress(Uri.parse("tel:school"), PRESENTATION_ALLOWED)
         connection.setCallerDisplayName(callerName, PRESENTATION_ALLOWED)
         connection.setRinging()

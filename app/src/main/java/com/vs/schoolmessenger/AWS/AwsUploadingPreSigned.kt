@@ -43,7 +43,7 @@ class AwsUploadingPreSigned {
         uploadCallback: UploadCallback
     ) {
         var bucketPath: String? = ""
-        val currentDate: String? = CurrentDatePicking.currentDate
+        val currentDate: String = CurrentDatePicking.currentDate
         var fileExtension: String?
 
         if (isProfilePage) {

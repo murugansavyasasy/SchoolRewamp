@@ -22,7 +22,7 @@ class AudioPlayAdapter(
     private var lastPlayingPos = -1
     private var updateSeekBarHandler = Handler(Looper.getMainLooper())
 
-    inner class AudioViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class AudioViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val imgPlayPause: ImageView = v.findViewById(R.id.imgPlayPause)
         val seekBar: SeekBar = v.findViewById(R.id.seekBar)
         val txtDuration: TextView = v.findViewById(R.id.txtDuration)

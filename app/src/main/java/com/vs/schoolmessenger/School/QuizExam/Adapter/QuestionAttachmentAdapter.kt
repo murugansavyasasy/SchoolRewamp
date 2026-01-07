@@ -27,7 +27,7 @@ class QuestionAttachmentAdapter(
     private val onRemove: (Int) -> Unit
 ) : RecyclerView.Adapter<QuestionAttachmentAdapter.VH>() {
 
-    inner class VH(v: View) : RecyclerView.ViewHolder(v) {
+    class VH(v: View) : RecyclerView.ViewHolder(v) {
         val img = v.findViewById<ImageView>(R.id.imgAttachment)
         val remove = v.findViewById<ImageView>(R.id.imgRemove)
     }

@@ -229,7 +229,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             val absent = sectionWise.total_absentees.toIntOrNull() ?: 0
             val total = sectionWise.student_counts.toIntOrNull() ?: 1
             val sectiontotal = sectionWise.student_counts.toIntOrNull() ?: 1
-            val totalabsenteessection = classWise.total_absentees.toIntOrNull() ?: 1
+            classWise.total_absentees.toIntOrNull() ?: 1
             // Set initial UI values for the first item
             binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
             binding.totalstudentscount.text =

@@ -16,7 +16,7 @@ class SelectedDatesAdapter(
     private val onRemove: (String) -> Unit
 ) : RecyclerView.Adapter<SelectedDatesAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
         val btnRemove: ImageView = itemView.findViewById(R.id.btnRemove)
     }
