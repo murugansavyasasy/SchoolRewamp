@@ -1376,6 +1376,7 @@
     <string name="note_the_following_students_are_marked_as_absent_their_parents_will_receive_an_automatic_call_please_double_check_before_confirming_attendance2">📢 Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendance</string>
     <string name="group_created_on">Group Created on</string>
     <string name="there_are_no_meetings_planned_for_you_today">There are no meetings planned for you today</string>
+    <string name="assignment_details_is_missing">Assignment details is missing.</string>
 
 
 </resources>

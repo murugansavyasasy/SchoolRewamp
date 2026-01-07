@@ -666,7 +666,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 Constant.hideLoading(this)
                 Constant.showValidationAlertPopup(
                     getString(R.string.alert),
-                    "Assignment details is missing.",
+                    getString(R.string.assignment_details_is_missing),
                     this
                 )
             }
