@@ -96,7 +96,6 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_below="@+id/lnrParent"
-        android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -115,7 +114,6 @@
 
             <RelativeLayout
                 android:layout_marginTop="@dimen/ten"
-                android:id="@+id/rlaMarkAttendance"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
@@ -423,7 +421,6 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/btnOr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnSelectPresent"
@@ -757,7 +754,6 @@
                     <TextView
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/eighteen_sp"
-                        android:id="@+id/lblStudentAttRep"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/imgSearchicon"
                         android:layout_marginEnd="@dimen/five"

@@ -19,7 +19,6 @@
     </ImageView>
 
     <ImageView
-        android:id="@+id/imgNoticeBoardPin"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
         android:layout_centerHorizontal="true"
@@ -29,7 +28,6 @@
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/imgBgPin"
         android:layout_width="@dimen/thirteen"
         android:layout_height="@dimen/thirteen"
         android:layout_centerHorizontal="true"

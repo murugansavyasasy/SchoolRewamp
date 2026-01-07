@@ -101,7 +101,6 @@
         </RelativeLayout>
 
         <View
-            android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaEnglish"
@@ -170,7 +169,6 @@
 
 
         <View
-            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaTamil"
@@ -237,7 +235,6 @@
         </RelativeLayout>
 
         <View
-            android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaThai"
@@ -369,7 +366,6 @@
 
 
         <View
-            android:id="@+id/view5"
             android:layout_width="match_parent"
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaArabic"

@@ -14,14 +14,12 @@
     app:cardElevation="@dimen/four">
 
     <LinearLayout
-        android:id="@+id/linear_layout90"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <RelativeLayout
-            android:id="@+id/linear_layout91"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
@@ -34,7 +32,6 @@
                android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/image_view109"
                 android:layout_width="wrap_content"
                 android:visibility="gone"
                 android:layout_height="wrap_content"
@@ -43,7 +40,6 @@
 
             <ImageView
                 android:layout_gravity="center_vertical"
-                android:id="@+id/image_view99"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"
@@ -224,7 +220,6 @@
 
 
         <LinearLayout
-            android:id="@+id/lnrDataTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"

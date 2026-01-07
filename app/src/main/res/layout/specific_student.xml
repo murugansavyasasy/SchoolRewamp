@@ -26,7 +26,6 @@
 
     <!-- MAIN CONTENT AREA -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rlaAssignmentReport"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/ten"
@@ -115,7 +114,6 @@
             android:textSize="@dimen/fifteen_sp" />
 
         <ImageView
-            android:id="@+id/imgSend1"
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
             android:layout_toRightOf="@id/lblSend"

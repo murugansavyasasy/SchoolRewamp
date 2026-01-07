@@ -237,8 +237,7 @@
             android:paddingHorizontal="@dimen/five"
             android:gravity="center_vertical"
             android:layout_toEndOf="@+id/lbldeadline_linear"
-            android:background="@drawable/bg_icon_round_lightyellow"
-            android:id="@+id/deadline_linear">
+            android:background="@drawable/bg_icon_round_lightyellow">
 
             <ImageView
                 android:layout_width="wrap_content"

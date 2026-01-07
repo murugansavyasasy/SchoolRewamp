@@ -34,7 +34,6 @@
 
 
         <LinearLayout
-            android:id="@+id/linearlayout_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -57,7 +56,6 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/going91001"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/twenty"
@@ -81,7 +79,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
         <LinearLayout
-            android:id="@+id/datelinear_layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -89,7 +86,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/calender_imageview1"
                 android:layout_width="@dimen/eighteen"
                 android:layout_height="@dimen/eighteen"
                 android:layout_marginTop="@dimen/two"
@@ -107,7 +103,6 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/location_linearlayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -116,7 +111,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/location_imageview1"
                 android:layout_width="@dimen/eighteen"
                 android:layout_height="@dimen/eighteen"
                 android:layout_marginTop="@dimen/two"

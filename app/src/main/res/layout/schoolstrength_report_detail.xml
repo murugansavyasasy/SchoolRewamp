@@ -37,7 +37,6 @@
 
 
     <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/gender_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"

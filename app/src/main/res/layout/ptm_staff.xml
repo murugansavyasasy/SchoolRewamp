@@ -95,7 +95,6 @@
                     android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
-                    android:id="@+id/imgArrowDown"
                     android:layout_width="@dimen/fourteen"
                     android:layout_height="@dimen/fourteen"
                     android:layout_centerVertical="true"

@@ -8,7 +8,6 @@
 
 
     <LinearLayout
-        android:id="@+id/containerFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/five"
@@ -108,7 +107,6 @@
                     android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
-                    android:id="@+id/imagecalender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_calendar" />
@@ -199,7 +197,6 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dropdownlayout2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

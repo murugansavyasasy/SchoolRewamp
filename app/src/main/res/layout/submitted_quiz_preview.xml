@@ -70,7 +70,6 @@
 
                 <FrameLayout
                     android:layout_gravity="center"
-                    android:id="@+id/attendanceContainer"
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
                     >

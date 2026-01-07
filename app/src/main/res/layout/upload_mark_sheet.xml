@@ -175,7 +175,6 @@
                             android:padding="16dp">
 
                             <TextView
-                                android:id="@+id/titleInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/alert_icon"
@@ -258,7 +257,6 @@
                             android:background="@drawable/rect_orange_bg"
                             android:layout_height="wrap_content">
                             <TextView
-                                android:id="@+id/lblUpload"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:textSize="@dimen/fifteen_sp"
                                 android:layout_width="wrap_content"

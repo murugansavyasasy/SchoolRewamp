@@ -116,7 +116,6 @@
                 android:textSize="@dimen/thirteen_sp" />
 
             <RelativeLayout
-                android:id="@+id/rytAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

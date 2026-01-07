@@ -9,7 +9,6 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvListening"
         android:text="Hi, I'm listening. Click Stop to finish the recording."
         android:textSize="@dimen/eighteen_sp"
         style="@style/CustomTextStylePoppinsBold"
@@ -20,7 +19,6 @@
         android:layout_height="wrap_content"/>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieListening"
         android:layout_width="@dimen/one_fifty"
         android:layout_height="@dimen/one_fifty"
         android:layout_marginBottom="@dimen/twele"

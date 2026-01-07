@@ -18,7 +18,6 @@
             android:src="@drawable/arrow_back_black" />
 
         <TextView
-            android:id="@+id/lblCreateNoticeBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -68,7 +67,6 @@
     </EditText>
 
     <RelativeLayout
-        android:id="@+id/rlaFilePicking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtDescription"

@@ -134,7 +134,6 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/tvSendOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select target :"
@@ -229,7 +228,6 @@
                 android:textStyle="normal"/>
 
             <ImageView
-                android:id="@+id/imgSend1"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_toEndOf="@+id/lblSend"

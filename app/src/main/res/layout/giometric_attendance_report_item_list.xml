@@ -55,7 +55,6 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="@dimen/five"
             android:layout_toEndOf="@+id/lnrDate"
-            android:id="@+id/lnrNames"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -184,7 +183,6 @@
             <LinearLayout
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/ten"
-                android:id="@+id/lnrCheckIn"
                 android:orientation="vertical"
                 android:padding="@dimen/ten"
                 android:layout_width="wrap_content"
@@ -214,7 +212,6 @@
             <LinearLayout
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/ten"
-                android:id="@+id/lnrCheckOut"
                 android:orientation="vertical"
                 android:padding="@dimen/ten"
                 android:layout_width="wrap_content"
@@ -244,7 +241,6 @@
             <LinearLayout
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/ten"
-                android:id="@+id/lbnHours"
                 android:orientation="vertical"
                 android:padding="@dimen/ten"
                 android:layout_width="wrap_content"

@@ -56,7 +56,6 @@
             android:gravity="center_vertical">
 
             <View
-                android:id="@+id/yellow_line"
                 android:layout_width="@dimen/four"
                 android:layout_height="@dimen/two_hundred"
                 android:background="@color/yellow" />

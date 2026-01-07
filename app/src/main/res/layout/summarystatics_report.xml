@@ -87,28 +87,28 @@
                 android:id="@+id/linear_layodasndkut">
 
 
-            <TextView
-                android:id="@+id/total_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Staffs 3"
-                android:layout_weight="1"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/light_gray"
-                android:textSize="11sp" />
+                <TextView
+                    android:id="@+id/total_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Staffs 3"
+                    android:layout_weight="1"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/light_gray"
+                    android:textSize="11sp" />
 
 
 
-            <TextView
-                android:id="@+id/total_female"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Students 3"
-                android:textColor="@color/light_gray"
-                android:textSize="11sp"
-                android:layout_weight="1"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:gravity="end" />
+                <TextView
+                    android:id="@+id/total_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Students 3"
+                    android:textColor="@color/light_gray"
+                    android:textSize="11sp"
+                    android:layout_weight="1"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:gravity="end" />
 
             </LinearLayout>
             <LinearLayout
@@ -165,7 +165,7 @@
                     android:text="11"
                     android:textColor="@color/black"
                     android:textSize="17sp"
-                   style="@style/CustomTextStylePoppinsBold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_marginStart="6dp" />
 
                 <TextView
@@ -345,26 +345,26 @@
                 android:weightSum="3"
                 android:layout_marginTop="13dp"
                 android:id="@+id/linear_layout45">
-            <TextView
-                android:id="@+id/malestaff_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="male 3"
-                android:layout_weight="1"
-                android:gravity="start"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/light_gray"
-                android:textSize="11sp" />
+                <TextView
+                    android:id="@+id/malestaff_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="male 3"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/light_gray"
+                    android:textSize="11sp" />
 
-            <TextView
-                android:id="@+id/female_staffcount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="female 3"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/light_gray"
-                android:textSize="11sp"
-                android:gravity="center" />
+                <TextView
+                    android:id="@+id/female_staffcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="female 3"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/light_gray"
+                    android:textSize="11sp"
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/othersstaffcount"

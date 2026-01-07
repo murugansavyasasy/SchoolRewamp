@@ -35,7 +35,6 @@
        >
 
         <LinearLayout
-            android:id="@+id/rlaRedirect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -56,7 +55,6 @@
                 android:visibility="gone" />
 
             <RelativeLayout
-                android:id="@+id/rlaFileItem"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -131,7 +129,6 @@
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/imgRequeston"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblRequestedOn"
                         android:text="@string/requested_on"
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_width="match_parent"
@@ -168,7 +165,6 @@
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/imgCertificate"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblCerticate"
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -203,7 +199,6 @@
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/imgCertificateType"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblCerticateType"
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -239,7 +234,6 @@
                         android:layout_marginEnd="@dimen/five"
                         android:layout_toEndOf="@+id/imgReason"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblCerticateReason"
                         android:textSize="@dimen/fifteen_sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -285,7 +279,6 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/lblDownloading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/downloading"

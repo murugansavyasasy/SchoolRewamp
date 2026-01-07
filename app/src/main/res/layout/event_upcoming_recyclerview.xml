@@ -31,7 +31,6 @@
         android:padding="@dimen/ten">
 
         <LinearLayout
-            android:id="@+id/linearlayout_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -79,7 +78,6 @@
 
 
         <LinearLayout
-            android:id="@+id/datelinear_layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -87,7 +85,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/calender_imageview1"
                 android:layout_width="@dimen/eighteen_sp"
                 android:layout_height="@dimen/eighteen_sp"
                 android:layout_marginTop="@dimen/two"
@@ -106,7 +103,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/location_linearlayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -115,7 +111,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/location_imageview1"
                 android:layout_width="@dimen/eighteen"
                 android:layout_height="@dimen/eighteen"
                 android:layout_marginTop="@dimen/two"

@@ -16,7 +16,6 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/fee_icon"
             android:layout_width="@dimen/twenty_four"
             android:layout_height="@dimen/twenty_four"
             android:src="@drawable/collectcustom" />

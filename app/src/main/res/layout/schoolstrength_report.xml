@@ -60,7 +60,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linear_layout90"
             android:gravity="end"
             android:orientation="horizontal">
 
@@ -124,7 +123,6 @@
 
 
         <LinearLayout
-            android:id="@+id/linear_layoutprogress"
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_marginTop="6dp"

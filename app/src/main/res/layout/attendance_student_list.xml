@@ -100,7 +100,6 @@
             <!-- Right: Present / Absent / OD -->
             <LinearLayout
                 android:layout_centerVertical="true"
-                android:id="@+id/lnrRightColumn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/divider"

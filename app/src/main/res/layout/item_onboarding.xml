@@ -34,7 +34,6 @@
 
     <!-- 📝 Scrollable text content -->
     <ScrollView
-        android:id="@+id/scrollTextContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -44,7 +43,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/layoutTextContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

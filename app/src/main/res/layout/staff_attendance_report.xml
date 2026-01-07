@@ -83,7 +83,6 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/rytYears"
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/sixty"
                 android:layout_marginStart="@dimen/thirty"
@@ -116,7 +115,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rytMonths"
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/sixty"
                 android:layout_marginStart="@dimen/five"

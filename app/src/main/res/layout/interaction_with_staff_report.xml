@@ -31,7 +31,6 @@
 
         <!-- Left Side: Details -->
         <LinearLayout
-            android:id="@+id/lytDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,7 +70,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lytUnread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"

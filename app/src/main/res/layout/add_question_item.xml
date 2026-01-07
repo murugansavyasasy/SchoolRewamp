@@ -33,7 +33,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/lnrEntireCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
@@ -581,7 +580,6 @@
                 android:paddingTop="@dimen/ten">
 
                 <LinearLayout
-                    android:id="@+id/lnrAttachmentPick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/black_rect_bg"
@@ -596,7 +594,6 @@
                         android:textColor="@color/white"></TextView>
 
                     <TextView
-                        android:id="@+id/lblAttachmentCount"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -610,7 +607,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/lblRemoveAttachment"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_gravity="end"

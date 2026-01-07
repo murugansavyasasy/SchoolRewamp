@@ -127,7 +127,7 @@
                     android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/bg_message_input"
                     android:orientation="vertical"
-                   >
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"

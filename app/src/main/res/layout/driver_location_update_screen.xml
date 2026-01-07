@@ -24,7 +24,6 @@
 
         <TextView
             android:layout_toEndOf="@+id/imgBack"
-            android:id="@+id/lblHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
@@ -59,7 +58,6 @@
         android:layout_marginTop="@dimen/eight">
 
         <ImageView
-            android:id="@+id/driverImage"
             android:layout_width="@dimen/fifty_six"
             android:layout_height="@dimen/fifty_six"
             android:src="@drawable/profile"
@@ -75,7 +73,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/driverName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="John Doe"
@@ -84,7 +81,6 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/driverStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/online_location_updating"
@@ -93,7 +89,6 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnToggleStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/go_offline"
@@ -103,7 +98,6 @@
 
     <!-- Last updated time -->
     <TextView
-        android:id="@+id/lastUpdatedText"
         android:layout_below="@id/driverInfoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

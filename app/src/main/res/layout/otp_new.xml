@@ -77,14 +77,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/image_banner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/two_hundred"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_otp_svg" />
 
                 <TextView
-                    android:id="@+id/lbl"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,7 +115,6 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/rytMobileNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/ten"

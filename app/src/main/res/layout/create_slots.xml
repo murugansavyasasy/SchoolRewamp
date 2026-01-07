@@ -215,7 +215,6 @@
                         android:text="@string/lblchoose_academic_year" />
 
                     <RelativeLayout
-                        android:id="@+id/rytAcademicYearDropDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -296,7 +295,6 @@
                         android:src="@drawable/calendar_black"></ImageView>
 
                     <TextView
-                        android:id="@+id/lblSelectDate"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -307,7 +305,6 @@
                         android:textColor="@color/black"></TextView>
 
                     <ImageView
-                        android:id="@+id/imgDownArrow"
                         android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/fifteen"
                         android:layout_alignParentEnd="true"
@@ -325,7 +322,6 @@
                     android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
                 <LinearLayout
-                    android:id="@+id/lytPickTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rcySelectedDate"
@@ -598,7 +594,6 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/lblSlots"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

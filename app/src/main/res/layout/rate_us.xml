@@ -149,7 +149,6 @@
                         android:textColor="@color/orange" />
 
                     <TextView
-                        android:id="@+id/lblEdtTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/CustomTextStylePoppinsRegular"

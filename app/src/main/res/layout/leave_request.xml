@@ -204,7 +204,6 @@
                             android:gravity="center">
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardStart"
                                 android:layout_width="@dimen/hundred"
                                 android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
@@ -217,7 +216,6 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:id="@+id/bottomdaylinear"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@color/light_orangecolor"
@@ -225,7 +223,6 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/lblDaylabel"
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -239,7 +236,6 @@
                                     </LinearLayout>
 
                                     <LinearLayout
-                                        android:id="@+id/bottomlineardate"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
@@ -274,7 +270,6 @@
 
 
                         <ImageView
-                            android:id="@+id/imagearrow_view"
                             android:layout_width="@dimen/sixteen"
                             android:layout_height="@dimen/sixteen"
                             android:layout_weight="1"
@@ -289,7 +284,6 @@
                             android:gravity="center">
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardEnd"
                                 android:layout_width="@dimen/hundred"
                                 android:layout_height="@dimen/eighty"
                                 app:cardCornerRadius="@dimen/ten">
@@ -302,7 +296,6 @@
                                     android:orientation="vertical">
 
                                     <LinearLayout
-                                        android:id="@+id/bottomdaylinear1"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@color/primary_light"
@@ -310,7 +303,6 @@
                                         android:orientation="vertical">
 
                                         <TextView
-                                            android:id="@+id/lblDay1"
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -324,7 +316,6 @@
                                     </LinearLayout>
 
                                     <LinearLayout
-                                        android:id="@+id/bottomlineardate1"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
@@ -421,7 +412,6 @@
 
 
                         <RelativeLayout
-                            android:id="@+id/rytADD"
                             android:layout_width="@dimen/seventy"
                             android:layout_height="@dimen/seventy"
                             android:layout_below="@+id/txtDesc"
@@ -459,7 +449,6 @@
 
 
                         <LinearLayout
-                            android:id="@+id/linear_layout9"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lbTextCount"

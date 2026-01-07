@@ -118,7 +118,6 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imgSend"
                         android:layout_width="@dimen/fifteen"
                         android:layout_height="@dimen/fifteen"
                         android:layout_marginStart="@dimen/ten"

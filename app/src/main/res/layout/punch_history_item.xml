@@ -72,7 +72,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/imgVerified"
-                        android:id="@+id/lblVerified"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
