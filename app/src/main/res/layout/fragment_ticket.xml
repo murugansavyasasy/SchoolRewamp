@@ -129,7 +129,7 @@
         android:layout_height="@dimen/two_fifty"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:src="@drawable/nomessages"
+        android:src="@drawable/no_search_message"
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
         android:visibility="gone" />
