@@ -104,6 +104,8 @@ class BlockListStudentAdapter(
             reason.text = "${context.getString(R.string.reason_2)} " + student.reason
             lblLogo.text = Constant.getNameInitials(student.name)
 
+            standardSectiondetails.text = student.class_name + " - " + student.section_name
+
             lytunblock.setOnClickListener {
                 AlertDialog.Builder(itemView.context)
                     .setTitle(context.getString(R.string.unblock_student))
