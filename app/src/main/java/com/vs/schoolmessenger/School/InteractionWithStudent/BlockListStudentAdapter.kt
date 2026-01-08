@@ -90,15 +90,12 @@ class BlockListStudentAdapter(
 
     inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
-
         private val blocked_on: TextView = itemView.findViewById(R.id.blocked_on)
         private val reason: TextView = itemView.findViewById(R.id.reason)
-
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
+        private val standardSectiondetails: TextView = itemView.findViewById(R.id.standardSectiondetails)
         private val lytunblock: LinearLayout = itemView.findViewById(R.id.lytunblock)
-
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(student: BlockedStudent, position: Int, adapter: BlockListStudentAdapter) {
@@ -106,6 +103,8 @@ class BlockListStudentAdapter(
             blocked_on.text = "${context.getString(R.string.Blocked_on)} : " + student.blocked_on
             reason.text = "${context.getString(R.string.reason_2)} " + student.reason
             lblLogo.text = Constant.getNameInitials(student.name)
+
+            standardSectiondetails.text = student.class_name + " - " + student.section_name
 
             lytunblock.setOnClickListener {
                 AlertDialog.Builder(itemView.context)
