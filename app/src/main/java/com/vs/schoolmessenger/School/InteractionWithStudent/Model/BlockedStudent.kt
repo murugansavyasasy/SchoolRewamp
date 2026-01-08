@@ -5,5 +5,7 @@ data class BlockedStudent(
     val name: String,
     val gender: String,
     val reason: String,
+    val class_name: String,
+    val section_name: String,
     val blocked_on: String
 )

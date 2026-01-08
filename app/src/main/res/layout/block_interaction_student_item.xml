@@ -58,6 +58,20 @@
                 android:text="Saraajkjkn Raj"
                 android:textColor="@color/grey" />
 
+
+            <TextView
+                android:id="@+id/standardSectiondetails"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_marginTop="@dimen/eight"
+                android:maxLines="3"
+                android:text="Saraajkjkn Raj"
+                android:textColor="@color/grey" />
+
+
+
             <TextView
                 android:id="@+id/subjectheader"
                 style="@style/CustomTextStylePoppinsMedium"
