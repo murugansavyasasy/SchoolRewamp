@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         style="@style/CustomTextStylePoppinsBold"
         android:textSize="@dimen/twenty_sp"
+        android:textColor="@color/PrimaryColor"
         android:layout_height="wrap_content">
     </TextView>
         <androidx.recyclerview.widget.RecyclerView

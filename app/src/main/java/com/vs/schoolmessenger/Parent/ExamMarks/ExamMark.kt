@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -90,11 +91,11 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch.visibility == View.VISIBLE) {
-                binding.rytSearch.visibility = View.GONE
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
             } else {
-                binding.rytSearch.visibility = View.VISIBLE
-                binding.txtVideoMenu.text.clear()
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtVideoMenu1.text.clear()
             }
         }
 
@@ -117,7 +118,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         binding.tabOneName.text = getString(R.string.exam_timetable)
         binding.tabTwoName.text = getString(R.string.exam_marks)
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s?.toString() ?: ""
@@ -224,7 +225,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         binding.lnrTabOneName.setOnClickListener {
             if (currentTab == TabType.EXAM_TIMETABLE) return@setOnClickListener
             currentTab = TabType.EXAM_TIMETABLE
-            binding.txtVideoMenu.text.clear()
+            binding.txtVideoMenu1.text.clear()
             binding.line1.setBackgroundResource(R.color.iconBlue)
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -232,8 +233,10 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.exammarkrecyclerview.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
-            binding.rytSearch.visibility = View.GONE
+            binding.rytSearch1.visibility = View.GONE
             binding.rcExamTimeTable.visibility = View.VISIBLE
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
             fetchexamtimetable()
         }
 
@@ -241,16 +244,18 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         binding.lnrTabTwoName.setOnClickListener {
             if (currentTab == TabType.EXAM_MARKS) return@setOnClickListener
             currentTab = TabType.EXAM_MARKS
-            binding.txtVideoMenu.text.clear()
+            binding.txtVideoMenu1.text.clear()
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
             binding.line2.setBackgroundResource(R.color.iconBlue)
             binding.line1.setBackgroundResource(R.color.white)
             binding.rcExamTimeTable.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
-            binding.rytSearch.visibility = View.GONE
+            binding.rytSearch1.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.exammarkrecyclerview.visibility = View.VISIBLE
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
             fetchexammark()
         }
     }

@@ -123,7 +123,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/rytSearch"
+        android:id="@+id/rytSearch1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@+id/toolbarLayout1"
@@ -142,7 +142,7 @@
             android:src="@drawable/ic_search" />
 
         <EditText
-            android:id="@+id/txtVideoMenu"
+            android:id="@+id/txtVideoMenu1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -163,10 +163,10 @@
         android:id="@+id/exammarkrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
+        android:layout_below="@+id/rytSearch1"
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="5dp"
-        android:padding="@dimen/eight" />
+    />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -179,7 +179,7 @@
 
 
     <LinearLayout
-        android:layout_below="@+id/rytSearch"
+        android:layout_below="@+id/rytSearch1"
         android:id="@+id/lytList"
         android:gravity="center"
         android:layout_width="match_parent"
