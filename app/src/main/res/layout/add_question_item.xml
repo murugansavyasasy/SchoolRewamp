@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
+            android:imeOptions="actionNext"
             android:background="@drawable/rect_gray_radius"
             android:hint="Enter Chapter here"
             android:padding="@dimen/eight"
@@ -107,6 +108,7 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:clickable="true"
+            android:imeOptions="actionNext"
             android:drawablePadding="10dp"
             android:focusable="true"
             android:hint="@string/enter_question_here"
@@ -169,6 +171,7 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
+            android:imeOptions="actionNext"
             android:hint="@string/enter_option_a"
             android:padding="@dimen/eight" />
 
@@ -243,6 +246,7 @@
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
             android:hint="@string/enter_option_b"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight" />
 
         <TextView
@@ -316,6 +320,7 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
+            android:imeOptions="actionNext"
             android:hint="@string/enter_option_c"
             android:padding="@dimen/eight" />
 
@@ -390,6 +395,7 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
+            android:imeOptions="actionNext"
             android:hint="@string/enter_option_d"
             android:padding="@dimen/eight" />
 
@@ -477,6 +483,7 @@
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/rect_gray_radius"
                     android:ellipsize="none"
+                    android:imeOptions="actionNext"
                     android:hint="@string/enter_correct_answer_here"
                     android:padding="@dimen/eight"
                     android:scrollHorizontally="true"
@@ -559,6 +566,7 @@
                     android:hint="@string/enter_mark_here"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:imeOptions="actionNext"
                     android:padding="@dimen/eight"
                     android:scrollHorizontally="true"
                     android:singleLine="true" />
