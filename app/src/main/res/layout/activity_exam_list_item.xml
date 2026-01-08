@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/cardUploadImage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +12,8 @@
     app:cardPreventCornerOverlap="false"
     app:cardBackgroundColor="@android:color/transparent"
     card_view:cardCornerRadius="@dimen/twele"
-    card_view:cardElevation="@dimen/four">
+    card_view:cardElevation="@dimen/four"
+    app:ignore="NamespaceTypo">
 
     <LinearLayout
         android:id="@+id/lnrUploadImage"

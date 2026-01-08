@@ -7,7 +7,8 @@
     android:layout_marginHorizontal="@dimen/ten"
     card_view:cardCornerRadius="@dimen/sixteen"
     card_view:cardElevation="@dimen/four"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    app:ignore="NamespaceTypo">
 
     <LinearLayout
         android:orientation="vertical"
