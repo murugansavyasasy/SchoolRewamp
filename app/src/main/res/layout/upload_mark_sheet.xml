@@ -141,7 +141,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/five"
                             android:src="@drawable/right_arrow_ic"
-                            android:tint="#99a1af">
+                            app:tint="#99a1af">
 
                         </ImageView>
                     </RelativeLayout>
@@ -341,7 +341,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/five"
                         android:src="@drawable/right_arrow_ic"
-                        android:tint="#99a1af">
+                        app:tint="#99a1af">
 
                     </ImageView>
                 </RelativeLayout>

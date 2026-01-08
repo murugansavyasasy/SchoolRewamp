@@ -48,7 +48,7 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:src="@drawable/ic_document"
-                    android:tint="@color/PrimaryColor"
+                    app:tint="@color/PrimaryColor"
                     />
                 <TextView
                     android:layout_toEndOf="@+id/ivQuestionIcon"

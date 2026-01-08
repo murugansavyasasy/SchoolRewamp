@@ -85,7 +85,7 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         params.height = screenHeight / 2
         binding.imageBanner.layoutParams = params
 
-        bottomSheetBehavior?.setFitToContents(true)
+        bottomSheetBehavior?.isFitToContents = true
         bottomSheetBehavior?.peekHeight = (screenHeight * 0.6).toInt()
 
         binding.bottomLayout.remember.setOnClickListener(this)

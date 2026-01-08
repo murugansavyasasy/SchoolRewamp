@@ -57,7 +57,7 @@
                 android:layout_marginTop="@dimen/two"
                 android:background="@drawable/circle_bg"
                 android:backgroundTint="@color/PrimaryColor"
-                android:tint="@color/white"
+                app:tint="@color/white"
                 android:src="@drawable/threedot"
                 android:layout_height="@dimen/thirty">
             </ImageView>
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="@dimen/twenty_five"
-                    android:tint="@color/dark_bg_orange"
+                    app:tint="@color/dark_bg_orange"
                     android:src="@drawable/sandclockicon"
                     android:layout_height="@dimen/twenty_five">
                 </ImageView>

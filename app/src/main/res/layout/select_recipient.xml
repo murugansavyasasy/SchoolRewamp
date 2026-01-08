@@ -100,7 +100,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/three"
                     android:src="@drawable/ic_drop_down"
-                    android:tint="@color/black">
+                    app:tint="@color/black">
 
                 </ImageView>
 
@@ -225,7 +225,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/three"
                 android:src="@drawable/ic_drop_down"
-                android:tint="@color/black">
+                app:tint="@color/black">
 
             </ImageView>
 
@@ -332,7 +332,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/three"
                         android:src="@drawable/ic_drop_down"
-                        android:tint="@color/black">
+                        app:tint="@color/black">
 
                     </ImageView>
 
@@ -368,7 +368,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/three"
                         android:src="@drawable/ic_drop_down"
-                        android:tint="@color/black">
+                        app:tint="@color/black">
 
                     </ImageView>
 

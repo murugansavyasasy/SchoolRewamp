@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:paddingStart="@dimen/ten"
     android:paddingBottom="@dimen/fifteen"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingEnd="@dimen/ten"
     android:background="@drawable/rect_shadow_bg"
     android:layout_height="wrap_content">
@@ -286,7 +287,7 @@
                 android:visibility="gone"
                 android:layout_alignParentEnd="true"
                 android:layout_width="@dimen/twenty"
-                android:tint="@color/PrimaryColor"
+                app:tint="@color/PrimaryColor"
                 android:src="@drawable/arrow_right_circle"
                 android:layout_height="@dimen/twenty">
 

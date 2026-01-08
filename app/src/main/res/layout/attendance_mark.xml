@@ -164,7 +164,7 @@
                             android:layout_alignParentEnd="true"
                             android:src="@drawable/ic_drop_down"
                             android:layout_marginEnd="@dimen/three"
-                            android:tint="@color/black"
+                            app:tint="@color/black"
                             android:layout_height="wrap_content">
 
                         </ImageView>
@@ -196,7 +196,7 @@
                             android:id="@+id/imgClassIcon"
                             android:layout_width="@dimen/twenty"
                             android:src="@drawable/graduation_cap_icon"
-                            android:tint="@color/black"
+                            app:tint="@color/black"
                             android:layout_height="@dimen/twenty">
 
                         </ImageView>
@@ -225,7 +225,7 @@
                             android:layout_marginStart="@dimen/five"
                             android:id="@+id/imgSessionIcon"
                             android:layout_width="@dimen/twenty"
-                            android:tint="@color/black"
+                            app:tint="@color/black"
                             android:src="@drawable/rectangle_stack"
                             android:layout_height="@dimen/twenty">
                         </ImageView>

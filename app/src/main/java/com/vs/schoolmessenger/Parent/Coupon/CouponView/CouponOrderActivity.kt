@@ -82,7 +82,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
         binding.bottomLayout.bottomSheet.layoutParams.height = screenHeight - topGap
         binding.bottomLayout.bottomSheet.requestLayout()
 
-        bottomSheetBehavior?.setFitToContents(true)
+        bottomSheetBehavior?.isFitToContents = true
         bottomSheetBehavior?.peekHeight = (screenHeight * 0.6).toInt()
 
         // Set click listeners

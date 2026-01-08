@@ -4,6 +4,7 @@
     android:layout_marginVertical="@dimen/three"
     android:orientation="horizontal"
     android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_fee_card_red"
     android:padding="@dimen/eight"
     android:elevation="@dimen/two">
@@ -18,7 +19,7 @@
             android:layout_width="@dimen/twenty_four"
             android:layout_height="@dimen/twenty_four"
             android:src="@drawable/collect"
-            android:tint="@color/PrimaryColor"
+            app:tint="@color/PrimaryColor"
             />
     </RelativeLayout>
 

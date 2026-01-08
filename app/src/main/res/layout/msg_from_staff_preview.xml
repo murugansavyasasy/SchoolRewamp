@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:padding="@dimen/twenty"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -229,7 +230,7 @@
                     <ImageView
                         android:id="@+id/imgLblTitle"
                         android:src="@drawable/pin_icon_2"
-                        android:tint="@color/PrimaryColor"
+                        app:tint="@color/PrimaryColor"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_centerVertical="true"
@@ -268,7 +269,7 @@
                     <ImageView
                         android:layout_centerVertical="true"
                         android:id="@+id/imgDescription"
-                        android:tint="@color/PrimaryColor"
+                        app:tint="@color/PrimaryColor"
                         android:src="@drawable/edit_icon_2"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty">

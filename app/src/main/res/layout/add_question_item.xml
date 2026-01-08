@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lnrEntireQuestion"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -510,7 +511,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/three"
                         android:src="@drawable/ic_drop_down"
-                        android:tint="@color/black">
+                        app:tint="@color/black">
 
                     </ImageView>
 
