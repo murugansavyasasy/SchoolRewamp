@@ -55,7 +55,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:tint="@color/PrimaryColor"
+            app:tint="@color/PrimaryColor"
             android:padding="@dimen/eight"
             android:src="@drawable/threedot">
 

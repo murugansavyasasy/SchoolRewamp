@@ -62,7 +62,7 @@
                     <ImageView
                         android:id="@+id/bbokimg"
                         android:layout_centerVertical="true"
-                        android:tint="@color/PrimaryColor"
+                        app:tint="@color/PrimaryColor"
                         android:layout_width="@dimen/twenty"
                         android:src="@drawable/book__2_"
                         android:layout_height="@dimen/twenty">
@@ -92,7 +92,7 @@
                         android:layout_centerVertical="true"
                         android:layout_width="@dimen/twenty"
                         android:src="@drawable/pin_icon_2"
-                        android:tint="@color/PrimaryColor"
+                        app:tint="@color/PrimaryColor"
                         android:layout_height="@dimen/twenty">
 
                     </ImageView>

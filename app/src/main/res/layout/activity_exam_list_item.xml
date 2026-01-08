@@ -69,7 +69,7 @@
                     android:layout_width="@dimen/fifteen"
                     android:layout_height="@dimen/fifteen"
                     android:src="@drawable/down_arrow_3"
-                    android:tint="@color/gnt_gray" />
+                    app:tint="@color/gnt_gray" />
             </LinearLayout>
         </LinearLayout>
 

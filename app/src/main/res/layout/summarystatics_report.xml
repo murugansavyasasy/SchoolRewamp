@@ -2,6 +2,7 @@
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/summarystatics_report"
     android:scrollbars="none"
     android:padding="8dp">
@@ -31,7 +32,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/school_needs"
-                    android:tint="@color/custom_orange_color"/>
+                    app:tint="@color/custom_orange_color"/>
 
                 <TextView
                     android:id="@+id/others_count"
@@ -292,7 +293,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/teachersvgformat"
-                    android:tint="@color/green_56"/>
+                    app:tint="@color/green_56"/>
 
                 <TextView
                     android:id="@+id/staff_count"

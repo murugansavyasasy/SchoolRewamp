@@ -88,7 +88,7 @@
                     android:layout_width="@dimen/thirty_five"
                     android:layout_height="@dimen/thirty_five"
                     android:padding="@dimen/eight"
-                    android:tint="@color/PrimaryColor"
+                    app:tint="@color/PrimaryColor"
                     android:src="@drawable/threedot"
                     android:layout_alignParentEnd="true" />
 

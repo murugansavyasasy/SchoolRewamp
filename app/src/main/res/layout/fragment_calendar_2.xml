@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/zero">
 
     <LinearLayout
@@ -27,7 +28,7 @@
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginStart="@dimen/eight"
                 android:src="@drawable/left_arrow"
-                android:tint="@color/PrimaryColor"
+                app:tint="@color/PrimaryColor"
                 android:contentDescription="Previous Month" />
 
 
@@ -53,7 +54,7 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/eight"
-                android:tint="@color/PrimaryColor"
+                app:tint="@color/PrimaryColor"
                 android:src="@drawable/right_arrow"
                 android:contentDescription="Next Month" />
         </RelativeLayout>

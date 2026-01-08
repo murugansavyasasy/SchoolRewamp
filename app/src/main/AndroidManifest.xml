@@ -299,10 +299,7 @@
             android:name=".Dashboard.Settings.Notification.Notification"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".Auth.Introduction.Introduction"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".Testing.MainActivity"
             android:theme="@style/AppTheme"

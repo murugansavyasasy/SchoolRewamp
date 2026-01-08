@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_card_white"
     android:elevation="4dp"
     android:padding="12dp">
@@ -70,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:tint="@color/color_blue_primary"
+                app:tint="@color/color_blue_primary"
                 android:src="@drawable/schoolstrengthmale"
                 android:gravity="end" />
 
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:tint="@color/color_blue_primary"
+                app:tint="@color/color_blue_primary"
                 android:src="@drawable/schoolstrengthmale"
                 android:gravity="end" />
 
@@ -89,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:src="@drawable/schoolstrengthfemale"
-                android:tint="@color/pinkcolorcustom"
+                app:tint="@color/pinkcolorcustom"
                 android:gravity="end" />
 
             <ImageView
@@ -98,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:src="@drawable/schoolstrengthfemale"
-                android:tint="@color/pinkcolorcustom"
+                app:tint="@color/pinkcolorcustom"
                 android:gravity="end" />
 
             <ImageView
