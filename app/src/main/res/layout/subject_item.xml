@@ -18,7 +18,7 @@
             android:id="@+id/subArrow"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:tint="@color/dark_orange_2"
+            app:tint="@color/dark_orange_2"
             android:src="@drawable/right_arrow"/>
 
         <TextView

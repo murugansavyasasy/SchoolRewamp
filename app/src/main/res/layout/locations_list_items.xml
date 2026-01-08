@@ -92,7 +92,7 @@
                         android:layout_height="@dimen/fifteen"
                         android:layout_centerInParent="true"
                         android:src="@drawable/delete_icon_blue"
-                        android:tint="@color/PrimaryColor"
+                        app:tint="@color/PrimaryColor"
                         />
                 </RelativeLayout>
 
@@ -192,7 +192,7 @@
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:src="@drawable/time_icon"
-                        android:tint="@color/mild_grey_dark"
+                        app:tint="@color/mild_grey_dark"
                         />
 
                     <TextView

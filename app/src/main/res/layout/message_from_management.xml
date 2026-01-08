@@ -90,7 +90,7 @@
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_drop_down"
                 android:layout_marginEnd="@dimen/three"
-                android:tint="@color/black"
+                app:tint="@color/black"
                 android:layout_height="wrap_content">
 
             </ImageView>

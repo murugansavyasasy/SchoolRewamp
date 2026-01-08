@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:id="@+id/gender_progress_layout"
     android:orientation="vertical"
@@ -27,7 +28,7 @@
                 android:layout_height="14dp"
                 android:layout_marginEnd="4dp"
                 android:src="@drawable/teachersvgformat"
-                android:tint="@color/green_56"/>
+                app:tint="@color/green_56"/>
 
             <TextView
                 android:id="@+id/staff_percentage"
@@ -78,7 +79,7 @@
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:src="@drawable/doubleprofile"
-            android:tint="@color/PrimaryColor"/>
+            app:tint="@color/PrimaryColor"/>
     </LinearLayout>
 
     <TextView

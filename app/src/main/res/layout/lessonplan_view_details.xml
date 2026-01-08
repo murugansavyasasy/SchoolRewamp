@@ -56,7 +56,7 @@
                 <ImageView
                     android:visibility="gone"
                     android:id="@+id/imgAll"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     android:src="@drawable/all_icon_2"
                     android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/imgYet"
-                    android:tint="@color/dark_orange"
+                    app:tint="@color/dark_orange"
                     android:src="@drawable/waiting_for_approval"
                     android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
