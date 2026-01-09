@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -52,7 +51,6 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         return InteractionwithStudentChatscreenBinding.inflate(layoutInflater)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryInteractionwithStaff(

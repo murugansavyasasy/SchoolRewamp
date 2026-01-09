@@ -12,7 +12,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +45,6 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
 

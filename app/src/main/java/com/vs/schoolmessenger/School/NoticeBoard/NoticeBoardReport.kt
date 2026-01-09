@@ -18,7 +18,6 @@ import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,8 +60,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     private var completeNoticeList: List<NoticeStaffData> = emptyList()
     private var isUpdatingSearchText = false
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         super.setupViews()

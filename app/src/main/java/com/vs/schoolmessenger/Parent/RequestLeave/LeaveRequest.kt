@@ -11,7 +11,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +65,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private val txtDesc: String = ""
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
 //        isToolBarPrimaryTheme()

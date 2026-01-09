@@ -10,7 +10,6 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -64,7 +63,6 @@ class LogoChangeActivity : BaseActivity<LogoChangeBinding>(), View.OnClickListen
             })
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createAppShortcut(iconBitmap: Bitmap) {
         val shortcutManager = getSystemService(ShortcutManager::class.java)
 

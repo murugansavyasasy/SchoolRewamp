@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
@@ -61,7 +60,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         return ActivityNewLeaveRequestBinding.inflate(layoutInflater)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setupToolbarBlueWhite()
@@ -200,7 +198,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadFromCalendar() {
         val today = LocalDate.now()
         val minFromDate = today.minusMonths(1)
@@ -226,7 +223,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.lblSelect.text = getString(R.string.select_from_date)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadToCalendar(fromDate: LocalDate) {
         val maxToDate = fromDate.plusYears(1)
 
@@ -249,7 +245,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.lblSelect.text = getString(R.string.select_to_date)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String, tag: String) {
         val selected = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)
 
@@ -268,7 +263,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun formatDate(date: LocalDate): String {
         val formatter = DateTimeFormatter.ofPattern(Constant.EEE_comma_dd_MMM_yyyy)
         return formatter.format(date)
@@ -443,7 +437,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getIntentValuesIfEditing() {
         RequestEdit = intent.getBooleanExtra(Constant.isRequestEdit, false)
 

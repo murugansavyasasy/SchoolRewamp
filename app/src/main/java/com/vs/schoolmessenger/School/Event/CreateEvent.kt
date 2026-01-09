@@ -31,7 +31,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -115,7 +114,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(

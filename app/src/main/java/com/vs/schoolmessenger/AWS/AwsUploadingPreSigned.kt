@@ -8,7 +8,6 @@ import android.os.Build
 import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.vs.schoolmessenger.AWS.S3Uploader.UploadCallbackResponse
 import com.vs.schoolmessenger.Repository.RestClient
@@ -141,7 +140,6 @@ class AwsUploadingPreSigned {
         val call =
             apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, mediaType.toString())
         call!!.enqueue(object : retrofit2.Callback<PreSignedUrl?> {
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<PreSignedUrl?>, response: Response<PreSignedUrl?>) {
                 Log.d("UploadFile:code-res", response.code().toString() + " - " + response)
 
@@ -209,7 +207,6 @@ class AwsUploadingPreSigned {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun isAwsUpload(
         activity: Activity,
         presignedUrl: String?,
@@ -271,7 +268,6 @@ class AwsUploadingPreSigned {
         return result ?: "unknown_file"
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getImageData(context: Context, path: String): ByteArray? {
         return try {
 
@@ -303,7 +299,6 @@ class AwsUploadingPreSigned {
     }
 
 
-//    @RequiresApi(Build.VERSION_CODES.O)
 //    fun getImageData(context: Context, path: String): ByteArray? {
 //        return try {
 //            if (path.startsWith("content://")) {

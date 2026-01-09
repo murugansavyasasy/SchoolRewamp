@@ -8,7 +8,6 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,7 +61,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     var isAcademicYearId = -1
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -226,7 +224,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun isBackgroundChange(btnClick: TextView) {
         binding.btnCreate.background = null
         binding.btnHistory.background = null
@@ -290,7 +287,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnHistory -> {

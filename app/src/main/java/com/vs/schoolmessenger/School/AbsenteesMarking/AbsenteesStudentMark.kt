@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,7 +62,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         return AbsenteesStudentMarkingBinding.inflate(layoutInflater)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(

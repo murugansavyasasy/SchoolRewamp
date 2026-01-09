@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +44,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     private var isStaffDetails: StaffDetails? = null
     private var selectedMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
 
@@ -217,7 +215,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         fetchLsrwstatsReportData(selectedMonth)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun filterByHeader(selected: LsrwHeaderItem, data: AvgSkillData) {
         val details = when (selected.title) {
             Constant.Listening -> data.listening?.details ?: emptyList()
@@ -242,7 +239,6 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun calculateWeeklyReport(details: List<AvgStudentSubmission>): List<WeeklyReportItem> {
 
         val formatter = DateTimeFormatter.ofPattern(Constant.ddMMyyyy)

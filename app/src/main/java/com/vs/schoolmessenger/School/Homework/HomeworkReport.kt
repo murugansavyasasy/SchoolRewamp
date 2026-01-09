@@ -15,7 +15,6 @@ import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,7 +71,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
     var isHomeWorkPosition = 0
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -354,7 +352,6 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
         isSelectedDate = date
         binding.txtStartDate.text = Constant.convertToReadableDate1(date)
@@ -363,16 +360,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
         fetchHomeWorkReportData()
     }
 
-//        @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onDateSelected(date: String) {
-//        isSelectedDate = date
-//        binding.txtStartDate.text = Constant.convertToReadableDate(date)
-//            val (day, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
-//            binding.lblDay.text = formattedDate
-//        fetchHomeWorkReportData()
-//    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getDayLabel(dateStr: String): String {
         // Match the input format: "03-11-2025"
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")

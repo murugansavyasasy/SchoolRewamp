@@ -19,7 +19,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -53,9 +53,11 @@ class CompletedTaskList : BaseActivity<CompletedTasklistBinding>(), View.OnClick
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
+
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel!!.init()
 
 
         binding = CompletedTasklistBinding.inflate(layoutInflater)

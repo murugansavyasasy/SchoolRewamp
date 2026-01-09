@@ -19,7 +19,6 @@ import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -83,7 +82,6 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(

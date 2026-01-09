@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
@@ -40,7 +39,6 @@ class LsrwAdapter(
         return HeaderViewHolder(view)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         val item = itemList[position]
         holder.bind(item)
@@ -83,7 +81,6 @@ class LsrwAdapter(
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
 
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(item: LsrwTask) {
             txtTitle.text = item.subject
             txtSubTitle.text = item.activity_type
@@ -260,7 +257,6 @@ class LsrwAdapter(
 
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         private fun getFormattedDateText(dateString: String): String {
             if (dateString.isBlank()) return ""
 

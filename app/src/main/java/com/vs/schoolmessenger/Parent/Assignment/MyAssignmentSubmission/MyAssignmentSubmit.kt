@@ -29,7 +29,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -96,7 +95,6 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     var subjectName: String? = null
     var submissionData: SubmittedAssignment? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(

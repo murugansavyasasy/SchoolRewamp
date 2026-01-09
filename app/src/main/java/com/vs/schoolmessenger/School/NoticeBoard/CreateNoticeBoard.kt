@@ -30,7 +30,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -90,12 +89,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private var noticeboardData: NoticeStaffData? = null
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
     }
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -112,7 +109,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     var isTotalSelectedItem = 0
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(

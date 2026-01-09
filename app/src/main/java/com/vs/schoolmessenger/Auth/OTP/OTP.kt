@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,7 +44,6 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
     private lateinit var smsBroadcastReceiver: MySMSBroadcastReceiver
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
 
@@ -265,7 +263,6 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
     ).joinToString("") { it.text.toString() }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()

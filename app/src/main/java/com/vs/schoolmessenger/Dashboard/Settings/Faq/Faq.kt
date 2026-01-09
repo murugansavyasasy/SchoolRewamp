@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Dashboard.Settings.Faq
 
 import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -93,7 +92,6 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {

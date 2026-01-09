@@ -18,7 +18,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -47,7 +46,6 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
 
 
     @SuppressLint("ClickableViewAccessibility")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(

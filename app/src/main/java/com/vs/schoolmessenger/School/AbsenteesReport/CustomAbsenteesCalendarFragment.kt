@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +25,8 @@ class CustomAbsenteesCalendarFragment : Fragment() {
     private var maxDate: LocalDate? = null
     private var calendarTag: String? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private var today: LocalDate = LocalDate.now()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private var calendar: YearMonth = YearMonth.now()
 
     private var calendarDateListener: AbsenteesCalendarDateListener? = null
@@ -57,7 +54,6 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -82,7 +78,6 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_calendar_2, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         currentMonthText = view.findViewById(R.id.currentMonthText)
         val prevButton = view.findViewById<ImageView>(R.id.prevMonthButton)
@@ -121,7 +116,6 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         calendarAdapter.setAbsentDates(dates.toSet())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendar() {
         currentMonthText.text =
             "${calendar.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${calendar.year}"
@@ -129,7 +123,6 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         calendarAdapter.submitList(dates, selectedDate, today)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun generateDates(yearMonth: YearMonth): List<LocalDate?> {
         val days = mutableListOf<LocalDate?>()
         val firstOfMonth = yearMonth.atDay(1)

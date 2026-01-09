@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -63,7 +62,6 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
 
     private var fullLessonPlanList: List<LessonPlanViewSummaryItem> = listOf()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -417,7 +415,6 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         startActivity(intent)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopDeleteAlertPopup(data: LessonPlanViewSummaryItem) {
         val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
         val inflater = LayoutInflater.from(this)
@@ -478,7 +475,6 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopAlertLessonPlanViewPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)

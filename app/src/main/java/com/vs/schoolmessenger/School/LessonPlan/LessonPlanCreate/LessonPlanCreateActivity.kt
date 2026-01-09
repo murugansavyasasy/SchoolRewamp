@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -49,7 +48,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
     private lateinit var lessonplancreateAdapter: LessonPlanCreateAdapter
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -137,7 +135,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
         appViewModel?.getlpcreateReport(isAccessToken ?: "", requestType, this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
@@ -152,7 +149,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopEditAlertPopup() {
         val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
         val inflater = LayoutInflater.from(this)
@@ -197,7 +193,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun lessonplaneditupdate() {
         val keyValueData = lessonplancreateAdapter.getUpdatedFieldsForApi()
 
@@ -224,7 +219,6 @@ class LessonPlanCreateActivity : BaseActivity<LessonPlanCreateBinding>(), View.O
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopLessonPlanAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)

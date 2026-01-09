@@ -13,7 +13,6 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -49,7 +48,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
     private var appViewModel: App? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
 //        setupToolbarBlueWhite()
@@ -132,8 +130,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun formatApiDateToDisplay(apiDate: String?): String {
         if (apiDate.isNullOrBlank()) return ""
 
