@@ -52,9 +52,21 @@ class StaffSlotStatusAdapter(
             val data = itemList!![position]
             holder.bind(data, position, listener, expandedPosition)
 
+//            holder.imgExpand.setOnClickListener {
+//                expandedPosition = if (expandedPosition == position) -1 else position
+//                notifyDataSetChanged()
+//            }
             holder.imgExpand.setOnClickListener {
-                expandedPosition = if (expandedPosition == position) -1 else position
-                notifyDataSetChanged()
+                val pos = holder.bindingAdapterPosition
+                if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
+
+                expandedPosition = if (expandedPosition == pos) -1 else pos
+                notifyItemChanged(pos)
+
+                // collapse previous expanded item
+                if (expandedPosition != -1 && expandedPosition != pos) {
+                    notifyItemChanged(expandedPosition)
+                }
             }
         }
     }
