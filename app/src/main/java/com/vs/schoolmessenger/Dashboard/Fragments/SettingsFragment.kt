@@ -101,10 +101,26 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrHowToUseApp.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
-        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
+//        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
+//        val versionName = pInfo.versionName
+//        pInfo.longVersionCode
+//        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
+
+        val pInfo = requireContext().packageManager
+            .getPackageInfo(requireActivity().packageName, 0)
+
         val versionName = pInfo.versionName
-        pInfo.longVersionCode
-        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
+
+        val versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            pInfo.longVersionCode
+        } else {
+            @Suppress("DEPRECATION")
+            pInfo.versionCode.toLong()
+        }
+
+        binding.lblAppVersion.text =
+            "${getString(R.string.App_Version)} - $versionName"
+
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
