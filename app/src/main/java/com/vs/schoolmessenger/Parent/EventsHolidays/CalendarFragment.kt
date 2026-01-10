@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -53,7 +52,6 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -92,7 +90,6 @@ class CalendarFragment : Fragment() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupCalendar() {
         binding.dateRecyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         val dateAdapter = CustomDateAdapter(
@@ -123,7 +120,6 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun isSunday(dateString: String, pattern: String = Constant.yyyy_MM_dd): Boolean {
         val formatter = DateTimeFormatter.ofPattern(pattern)
         val date = LocalDate.parse(dateString, formatter)
@@ -131,7 +127,6 @@ class CalendarFragment : Fragment() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendar() {
         val monthFormat = SimpleDateFormat(Constant.MMMM_yyyy, Locale.getDefault())
         val fullDateFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())

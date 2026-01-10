@@ -21,7 +21,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -69,7 +68,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private lateinit var view: View
     private var isFirstTime = false
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         enableEdgeToEdge()
@@ -86,7 +84,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             params.height = statusBarHeight
             binding.statusBarBackground.layoutParams = params
 
-            val scrollParams = binding.rootLayout.getChildAt(1).layoutParams as ConstraintLayout.LayoutParams
+            val scrollParams =
+                binding.rootLayout.getChildAt(1).layoutParams as ConstraintLayout.LayoutParams
             scrollParams.topMargin = statusBarHeight
             binding.rootLayout.getChildAt(1).layoutParams = scrollParams
 
@@ -403,7 +402,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         dimView.setOnClickListener { closePopup() }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(data: LocationHistoryData, isType: String) {
         val dialogRootView = view as ViewGroup
         if (isType == Constant.isDelete) {
@@ -419,7 +417,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun showTopAlertPopup(
         message: String, rootView: ViewGroup, id: Int, isStatus: Boolean, isDeleteLocation: String
     ) {

@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 import android.graphics.PorterDuff
 import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -26,7 +25,6 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
     private var appViewModel: App? = null
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()

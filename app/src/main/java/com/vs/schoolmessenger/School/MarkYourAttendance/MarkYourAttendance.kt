@@ -17,7 +17,6 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
@@ -77,7 +76,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -265,7 +263,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
@@ -381,7 +378,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -475,7 +471,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     private fun showBiometricPrompt(authenticators: Int) {
         val executor = ContextCompat.getMainExecutor(this)
 

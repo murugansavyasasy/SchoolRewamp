@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.AbsenteesReport
 
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -46,7 +45,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -116,7 +114,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             isAccessToken ?: "", this
         )
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCalendarWithAbsentDates() {
         val fragment =
             supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomAbsenteesCalendarFragment
@@ -299,7 +296,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             Toast.makeText(this, getString(R.string.no_student_found), Toast.LENGTH_SHORT).show()
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String, tag: String) {
         try {
             val input = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

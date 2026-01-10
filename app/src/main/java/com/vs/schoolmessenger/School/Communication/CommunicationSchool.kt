@@ -27,7 +27,6 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -134,7 +133,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var recordingStartTime: Long = 0
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
         super.setupViews()
@@ -192,8 +190,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
-        binding.lblStartTime.text = Constant.getCurrentTime()
-        binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
+//        binding.lblStartTime.text = Constant.getCurrentTime()
+//        binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null) {
@@ -319,8 +317,136 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
 
+        initializeDefaultTimes()
     }
 
+    private fun initializeDefaultTimes() {
+        val now = Calendar.getInstance()
+
+        // From time = current time
+        fromHour24 = now.get(Calendar.HOUR_OF_DAY)
+        fromMinute = now.get(Calendar.MINUTE)
+
+        // To time = current time + 40 minutes
+        val toCal = now.clone() as Calendar
+        toCal.add(Calendar.MINUTE, 40)
+
+        toHour24 = toCal.get(Calendar.HOUR_OF_DAY)
+        toMinute = toCal.get(Calendar.MINUTE)
+
+        // Update UI
+        binding.lblStartTime.text = formatTime12h(fromHour24!!, fromMinute!!)
+        binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
+    }
+
+    private fun formatTime12h(hour24: Int, minute: Int): String {
+        val cal = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, hour24)
+            set(Calendar.MINUTE, minute)
+        }
+        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(cal.time)
+    }
+
+    // =============================================
+// Show time picker (modified)
+    private fun showTimePickerDialog(
+        context: Context,
+        listener: TimeSelectedListener,
+        preSelectedHour: Int?,
+        preSelectedMinute: Int?
+    ) {
+        val calendar = Calendar.getInstance()
+        val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
+
+        val timePicker = TimePickerDialog(
+            context,
+            { _, selectedHour, selectedMinute ->
+                // Convert to 12h format for display
+                val displayTime = formatTime12h(selectedHour, selectedMinute)
+
+                val amPm = if (selectedHour < 12) "AM" else "PM"
+                val hour12 = when {
+                    selectedHour == 0 -> 12
+                    selectedHour > 12 -> selectedHour - 12
+                    else -> selectedHour
+                }
+
+                listener.onTimeSelected(hour12, selectedMinute, amPm)
+
+                // Save in 24h format
+                if (isFromTime) {
+                    fromHour24 = selectedHour
+                    fromMinute = selectedMinute
+
+                    // Auto-update To time if it's before +40min
+                    updateToTimeIfNeeded()
+                } else {
+                    toHour24 = selectedHour
+                    toMinute = selectedMinute
+
+                    // Validate minimum 40 minutes duration
+                    if (!isValidDuration()) {
+                        Toast.makeText(
+                            this,
+                            "End time must be at least 40 minutes after start time",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        // Reset to default (or keep previous valid)
+                        toHour24 = null
+                        toMinute = null
+                        binding.lblEndTime.text = "Select time"
+                    }
+                }
+            },
+            hour, minute, false // false = 12-hour mode
+        )
+
+        timePicker.show()
+    }
+
+    // When From time changes → auto suggest +40 min for To (if To is not manually set)
+    private fun updateToTimeIfNeeded() {
+        if (toHour24 == null || toMinute == null) {
+            val cal = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, fromHour24!!)
+                set(Calendar.MINUTE, fromMinute!!)
+                add(Calendar.MINUTE, 40)
+            }
+            toHour24 = cal.get(Calendar.HOUR_OF_DAY)
+            toMinute = cal.get(Calendar.MINUTE)
+
+            binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
+        }
+    }
+
+    // Core validation: check if To ≥ From + 40 minutes
+    private fun isValidDuration(): Boolean {
+        if (fromHour24 == null || fromMinute == null || toHour24 == null || toMinute == null) {
+            return true // let it pass if any is not set yet
+        }
+
+        val fromCal = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, fromHour24!!)
+            set(Calendar.MINUTE, fromMinute!!)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val toCal = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, toHour24!!)
+            set(Calendar.MINUTE, toMinute!!)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        // Add 40 minutes to from
+        val minToCal = fromCal.clone() as Calendar
+        minToCal.add(Calendar.MINUTE, 40)
+
+        return !toCal.before(minToCal)
+    }
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
         mTextAdapter =
             TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
@@ -419,7 +545,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     recordingStartTime = System.currentTimeMillis()
                     recordingRunnable = object : Runnable {
                         @SuppressLint("DefaultLocale")
-                        @RequiresApi(Build.VERSION_CODES.O)
                         override fun run() {
                             if (isRecording) {
                                 recordingTime++
@@ -686,7 +811,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         startActivity(intent)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         if (returnedFromSettings) {
@@ -698,7 +822,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun proceedToMainScreen() {
         if (isInitialized) return
         isInitialized = true
@@ -791,7 +914,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         stopAudioProgressUpdate()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
@@ -903,25 +1025,55 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
 
+            // Click handlers
             R.id.rlaFromTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = true
-                isShowTimePickerDialog(
-                    this, this,
-                    preSelectedHour = fromHour24,
-                    preSelectedMinute = fromMinute
+                showTimePickerDialog(
+                    this,
+                    this, // assuming activity implements TimeSelectedListener
+                    fromHour24,
+                    fromMinute
                 )
             }
 
             R.id.rlaToTime -> {
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = false
-                isShowTimePickerDialog(
-                    this, this,
-                    preSelectedHour = toHour24,
-                    preSelectedMinute = toMinute
+
+                val preHour = toHour24 ?: fromHour24
+                val preMin = toMinute ?: fromMinute?.plus(40)?.let {
+                    if (it >= 60) it - 60 else it
+                }
+                val carryHour = if (fromMinute != null && fromMinute!! + 40 >= 60) 1 else 0
+
+                showTimePickerDialog(
+                    this,
+                    this,
+                    preHour?.plus(carryHour),
+                    preMin
                 )
             }
+
+//            R.id.rlaFromTime -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                isFromTime = true
+//                isShowTimePickerDialog(
+//                    this, this,
+//                    preSelectedHour = fromHour24,
+//                    preSelectedMinute = fromMinute
+//                )
+//            }
+//
+//            R.id.rlaToTime -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                isFromTime = false
+//                isShowTimePickerDialog(
+//                    this, this,
+//                    preSelectedHour = toHour24,
+//                    preSelectedMinute = toMinute
+//                )
+//            }
 
             R.id.lnrScheduleCall -> {
                 KeyboardUtils.hideKeyboard(this)
@@ -1555,7 +1707,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
@@ -1653,7 +1804,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun setHistoryData(data: VoiceHistoryDetails) {
         Constant.selectedFiles.clear()
         binding.rlaRecordVoice.visibility = View.VISIBLE
@@ -1705,7 +1855,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         startActivityForResult(intent, PICK_AUDIO_REQUEST)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

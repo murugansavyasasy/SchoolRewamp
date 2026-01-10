@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import java.time.LocalDate
@@ -23,10 +22,7 @@ class CalendarAdapter(
     private var selectedDate: LocalDate? = null
     private var absentDates: Set<LocalDate> = emptySet()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private var today: LocalDate = LocalDate.now()
-
-    @RequiresApi(Build.VERSION_CODES.O)
     fun submitList(newDays: List<LocalDate?>, selected: LocalDate?, current: LocalDate) {
         days = newDays
         selectedDate = selected
@@ -54,7 +50,6 @@ class CalendarAdapter(
         return DateViewHolder(view)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
         val date = days[position]
         holder.bind(date)
@@ -66,7 +61,6 @@ class CalendarAdapter(
         private val dateBox: TextView = itemView.findViewById(R.id.dateBox)
         private val dotIndicator: View? = itemView.findViewById(R.id.dot_indicator)
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(date: LocalDate?) {
             dotIndicator?.visibility = View.GONE
 

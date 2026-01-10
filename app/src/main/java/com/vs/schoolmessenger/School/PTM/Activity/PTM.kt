@@ -97,6 +97,8 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             Constant.isSelectedMenuName = menu_name!!
         }
 
+        binding.lnrTabBookedSlots.isEnabled=false
+        binding.lnrTabMeeting.isEnabled=false
         binding.layoutDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
@@ -117,6 +119,9 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         loadData()
 
         appViewModel.isPtmSlotResponse?.observe(this) { response ->
+            //Only when response comes the tab will be enabled
+            binding.lnrTabBookedSlots.isEnabled=true
+            binding.lnrTabMeeting.isEnabled=false
             if (response != null && response.status) {
                 isSlotCategory = response.data
                 isLoadData(isSlotCategory)
@@ -135,6 +140,9 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         }
 
         appViewModel.isBookedSlotsData?.observe(this) { response ->
+            //Only when response comes the tab will be enabled
+            binding.lnrTabBookedSlots.isEnabled=false
+            binding.lnrTabMeeting.isEnabled=true
             if (response != null && response.status) {
                 isBookedSlotData = response.data
                 isLoadBookedData(isBookedSlotData)

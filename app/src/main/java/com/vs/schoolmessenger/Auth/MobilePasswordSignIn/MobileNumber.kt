@@ -5,7 +5,6 @@ import android.os.Build
 import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -25,7 +24,6 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
 
     var authViewModel: Auth? = null
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun setupViews() {
         super.setupViews()
 

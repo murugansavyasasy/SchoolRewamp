@@ -30,7 +30,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -633,7 +632,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
@@ -654,8 +652,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun isGoToRecipient() {
 
         val title = binding.edtTitle.text.toString().trim()

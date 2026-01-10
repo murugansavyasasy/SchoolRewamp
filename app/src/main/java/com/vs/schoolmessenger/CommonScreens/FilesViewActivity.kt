@@ -13,7 +13,6 @@ import android.webkit.MimeTypeMap
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -217,7 +216,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             if (currentPosition < isFilesList.size - 1) View.VISIBLE else View.GONE
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgMoreOptions -> showFileOptions(isFilesList[currentPosition].path)

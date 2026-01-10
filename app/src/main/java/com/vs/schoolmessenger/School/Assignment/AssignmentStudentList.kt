@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.Assignment
 
 import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -37,7 +36,6 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
 
     private var allStudentsList: List<StudentSubmission> = emptyList()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()

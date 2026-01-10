@@ -1989,7 +1989,7 @@ object Constant {
 
             val date = inputFormat.parse(inputDateStr)!!
             val dayName = dayNameFormat.format(date)     // "Fri"
-            val dayNumber = dayNumberFormat.format(date) // "13"
+            val dayNumber = dayNumberFormat.format(date)    // "13"
 
             Pair(dayNumber, dayName)
         } catch (e: Exception) {
@@ -2022,7 +2022,6 @@ object Constant {
 //            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 //            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
 //            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
-//
 //            val date = inputFormat.parse(inputDateStr)!!
 //            val dayName = dayNameFormat.format(date)     // "Fri"
 //            val dayNumber = dayNumberFormat.format(date) // "13"

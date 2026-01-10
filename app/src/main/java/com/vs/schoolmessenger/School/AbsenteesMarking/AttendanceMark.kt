@@ -22,7 +22,6 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,7 +89,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         return AttendanceMarkBinding.inflate(layoutInflater)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -399,15 +397,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
                 }
             }
-
         }
 
         if (filteredList.isNotEmpty()) {
-            Log.d("Filter COming", filteredList.toString())
+            Log.d("Filter Coming", filteredList.toString())
             mAdapter.updateData(filteredList)
-            Log.d("Filter Came", filteredList.toString())
+            Log.d("Filter Caming", filteredList.toString())
             ShowData()
-
         } else {
             binding.rcyAttendanceReport.visibility = View.GONE
             ErrorMessage(resources.getString(R.string.no_data_found), R.drawable.no_search_message)
@@ -487,7 +483,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun loadFromCalendar() {
         val today = LocalDate.now()
         val minFromDate =
@@ -509,7 +504,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.calendarFromFragmentContainer.visibility = View.VISIBLE
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String, tag: String) {
         val selected = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)
 
@@ -529,7 +523,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {

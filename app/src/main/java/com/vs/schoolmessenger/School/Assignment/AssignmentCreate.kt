@@ -30,7 +30,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -137,7 +136,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(

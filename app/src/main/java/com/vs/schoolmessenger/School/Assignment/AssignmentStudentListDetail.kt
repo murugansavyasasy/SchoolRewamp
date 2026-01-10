@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.School.Assignment
 import android.os.Build
 import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -25,7 +24,6 @@ class AssignmentStudentListDetail : BaseActivity<AssignmentStudentDetailreportBi
     private var title: String = ""
     private var assignmentSubject: String = ""
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbarBlueWhite()

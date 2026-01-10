@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -49,7 +48,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
 
     private lateinit var lessonplaneditAdapter: LessonPlanEditAdapter
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -132,7 +130,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
         appViewModel?.getlpeditReport(isAccessToken ?: "", particularId, requestType, this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
@@ -148,7 +145,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun lessonplaneditupdate() {
         val keyValueData = lessonplaneditAdapter.getUpdatedFieldsForApi()
         if (keyValueData.length() == 0) {
@@ -172,7 +168,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopEditAlertPopup() {
         val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
         val inflater = LayoutInflater.from(this)
@@ -217,7 +212,6 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnCli
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun showTopLessonPlanAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)

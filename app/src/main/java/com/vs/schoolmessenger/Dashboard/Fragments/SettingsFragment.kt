@@ -17,7 +17,6 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -83,7 +82,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private var popupWindow: PopupWindow? = null
 
 
-    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -103,10 +101,26 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrHowToUseApp.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
 
-        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
+//        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
+//        val versionName = pInfo.versionName
+//        pInfo.longVersionCode
+//        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
+
+        val pInfo = requireContext().packageManager
+            .getPackageInfo(requireActivity().packageName, 0)
+
         val versionName = pInfo.versionName
-        pInfo.longVersionCode
-        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
+
+        val versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            pInfo.longVersionCode
+        } else {
+            @Suppress("DEPRECATION")
+            pInfo.versionCode.toLong()
+        }
+
+        binding.lblAppVersion.text =
+            "${getString(R.string.App_Version)} - $versionName"
+
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
