@@ -91,6 +91,7 @@ class MarksAdapter(
                 textSize = 14f
                 inputType = InputType.TYPE_CLASS_TEXT
                 setPadding(10, 10, 10, 4)
+                hint = "--"
 
                 if (isAllowedValue(excelValue)) {
                     setText(excelValue)
