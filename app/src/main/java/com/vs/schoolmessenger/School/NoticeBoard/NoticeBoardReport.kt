@@ -80,6 +80,14 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 //        isAccessToken = isStaffDetails!!.access_token
+
+        if(Constant.isSelectedMenuName.isNullOrEmpty()){
+            binding.toolbarLayout.lblParentToolBar.text = Constant.NoticeBoard
+        } else {
+            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        }
+
+
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
