@@ -228,8 +228,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         binding.btnCreate.background = null
         binding.btnHistory.background = null
         binding.lytNoRecordFound.visibility = View.GONE
-        binding.lnrParent.setBackgroundResource(R.drawable.white_bg_radius)
-        btnClick.setBackgroundResource(R.drawable.rect_blue_and_green_small_radious)
+        binding.lnrParent.setBackgroundResource(R.drawable.gray_bg_radius)
+        btnClick.setBackgroundResource(R.drawable.bg_primary)
 
         binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.black))

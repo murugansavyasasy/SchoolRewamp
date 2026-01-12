@@ -28,43 +28,44 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-    <LinearLayout
-        android:id="@+id/lnrParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:background="@drawable/white_bg_radius"
-        android:padding="@dimen/one">
-
-        <TextView
-            android:id="@+id/btnCreate"
-            style="@style/CustomTextStylePoppinsBold"
+        <LinearLayout
+            android:id="@+id/lnrParent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/rect_blue_and_green_small_radious"
-            android:gravity="center"
-            android:text="@string/today_s_report"
-            />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/gray_bg_radius"
+            android:padding="@dimen/one">
 
-        <TextView
-            android:id="@+id/btnHistory"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/eight"
-            android:text="@string/historical_data"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/thirteen_sp" />
+            <TextView
+                android:id="@+id/btnCreate"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_primary"
+                android:gravity="center"
+                android:text="@string/today_s_report"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/btnHistory"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/eight"
+                android:text="@string/historical_data"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rytAttendanceHistorySceen"
