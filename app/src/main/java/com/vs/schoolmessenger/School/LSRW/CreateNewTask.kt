@@ -107,7 +107,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     private var isRecording = false
     private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 201
     private var audioPermissionDeniedCount = 0
-
     private fun updateRemainingCount() {
         val usedSlots = Constant.selectedFiles.size - 1
         Constant.Remaining = (MAX_FILES - usedSlots).coerceAtLeast(0)

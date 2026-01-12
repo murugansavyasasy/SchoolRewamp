@@ -28,6 +28,8 @@ import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
+import androidx.core.view.isVisible
+import androidx.core.view.isGone
 
 class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,
     OnAttachmentReportClickListener {
@@ -120,11 +122,11 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 mAttachmentReportAdapter?.filter?.filter(s)
                 if (s!!.isNotEmpty()) {
-                    if (binding.isArchiveErrorMsg.visibility == View.VISIBLE) {
+                    if (binding.isArchiveErrorMsg.isVisible) {
                         binding.isArchiveErrorMsg.visibility = View.GONE
                     }
                 } else {
-                    if (binding.isArchiveErrorMsg.visibility == View.GONE) {
+                    if (binding.isArchiveErrorMsg.isGone) {
                         binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     }
                 }
