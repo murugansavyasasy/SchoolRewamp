@@ -538,7 +538,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val headerView = findViewById<View>(R.id.lytLogout)
 
         WindowCompat.getInsetsController(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // white icons
+            isAppearanceLightStatusBars = true // white icons
         }
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
