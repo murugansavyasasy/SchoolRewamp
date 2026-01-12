@@ -258,11 +258,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         if (it > 0) {
                             binding.lnrClasses.visibility = View.VISIBLE
                             isStandardId = isGetStandard!!.get(0).id
-                            SectionID = isGetStandard!!.get(0).sections.get(0).id
-                            isLoadStandard(isGetStandard)
                             if (isGetStandard!!.get(0).sections.size > 0) {
                                 isSection = isGetStandard!!.get(0).sections
+                                SectionID = isGetStandard!!.get(0).sections.get(0).id
                             }
+                            isLoadStandard(isGetStandard)
                             val firstStandard = isGetStandard!![0]
                             binding.calendarFromFragmentContainer.visibility = View.VISIBLE
                             binding.lnrClasses.visibility = View.VISIBLE
