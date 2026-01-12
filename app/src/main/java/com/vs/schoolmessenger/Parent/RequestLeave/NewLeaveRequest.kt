@@ -178,8 +178,15 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         binding.lnrFromDate.setOnClickListener {
             loadFromCalendar()
         }
+        binding.lnrFromDateImg.setOnClickListener {
+            loadFromCalendar()
+        }
 
         binding.lnrToDate.setOnClickListener {
+            loadToCalendar(fromDate ?: LocalDate.now())
+        }
+
+        binding.lnrToDateImg.setOnClickListener {
             loadToCalendar(fromDate ?: LocalDate.now())
         }
 

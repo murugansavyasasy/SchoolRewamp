@@ -95,6 +95,9 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
         }
 
         binding.rytStartDate.setOnClickListener(this)
+        binding.rytStart.setOnClickListener(this)
+        binding.rytStartDate.setOnClickListener(this)
+        binding.imgCalendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
@@ -439,7 +442,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.rytStartDate -> {
+            R.id.rytStart,R.id.rlaStartDate,R.id.rytStartDate,R.id.imgCalendar -> {
                 showDatePickerDialogSelectedDate(this, isSelectedDate, this)
             }
         }

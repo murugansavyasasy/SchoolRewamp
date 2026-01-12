@@ -148,6 +148,9 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
+        binding.imgCalendar.setOnClickListener(this)
+        binding.rytStart1.setOnClickListener(this)
+        binding.rlaStartDate.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
         binding.rytHistory.setOnClickListener(this)
@@ -330,7 +333,16 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                 showTimePickerDialog(this, this)
             }
 
+            R.id.rytStart1 -> {
+                AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
+            }
+            R.id.rlaStartDate -> {
+                AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
+            }
             R.id.rytStartDate -> {
+                AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
+            }
+            R.id.imgCalendar -> {
                 AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }
 
