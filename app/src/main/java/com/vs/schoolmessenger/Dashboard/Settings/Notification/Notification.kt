@@ -494,38 +494,16 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
             }
         } else if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
             if (data.menu_id == Constant.M_NOTICEBOARD) {
-                val detailIntent = Intent(this, NoticeBoard::class.java)
-                // Build proper back stack
-                val pendingIntent = TaskStackBuilder.create(this).apply {
-                    addParentStack(NoticeBoard::class.java)
-                    addNextIntent(detailIntent)
-                }.getPendingIntent(
-                    0,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                pendingIntent?.send()
+                val intent = Intent(this, NoticeBoard::class.java)
+                startActivity(intent)
             } else {
-                val detailIntent = Intent(this, MessageFromManagement::class.java)
-                val pendingIntent = TaskStackBuilder.create(this).apply {
-                    addParentStack(MessageFromManagement::class.java)
-                    addNextIntent(detailIntent)
-                }.getPendingIntent(
-                    0,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                pendingIntent?.send()
+                val intent = Intent(this, MessageFromManagement::class.java)
+                startActivity(intent)
             }
         }
         else {
-            val detailIntent = Intent(this, MessageFromManagement::class.java)
-            val pendingIntent = TaskStackBuilder.create(this).apply {
-                addParentStack(MessageFromManagement::class.java)
-                addNextIntent(detailIntent)
-            }.getPendingIntent(
-                0,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-            pendingIntent?.send()
+            val intent = Intent(this, MessageFromManagement::class.java)
+            startActivity(intent)
         }
     }
 }
