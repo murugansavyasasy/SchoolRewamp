@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.vs.schoolmessenger.R
 import kotlin.math.sin
 
@@ -36,6 +37,7 @@ class DashBoardWaveDesign @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
 
         val totalHeight = height.toFloat()
         val waveLength = width.toFloat() * 2.35f

@@ -152,7 +152,7 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
                             android:textColor="@color/white"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:text="Academic year : 2025 - 2026"
                             android:textSize="@dimen/thirteen_sp">
 

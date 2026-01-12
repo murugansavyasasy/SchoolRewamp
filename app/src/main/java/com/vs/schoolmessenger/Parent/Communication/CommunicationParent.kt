@@ -74,12 +74,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             headerId = intent.getStringExtra(Constant.header_id)
             receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
-
             Log.d(
                 "NoticeBoard_EXTRAS",
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
-
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
             Constant.isSelectedMenuName = menu_name!!

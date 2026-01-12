@@ -119,11 +119,11 @@ class StaffAttendanceReportAdapter(
 
             lnrParentCard.setOnClickListener {
                 attendanceMap.forEach { (_, value) ->
-                    if (value == Constant.Present) {
+//                    if (value == Constant.Present) {
                         listener.onItemClick(data)
-                    } else if (value == Constant.Absent) {
-                        Log.d("The user has no attendance history", "")
-                    }
+//                    } else if (value == Constant.Absent) {
+//                        Log.d("The user has no attendance history", "")
+//                    }
                 }
             }
         }

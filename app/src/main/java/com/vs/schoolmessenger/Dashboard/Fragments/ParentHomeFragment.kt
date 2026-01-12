@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -28,6 +29,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -114,6 +116,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     ): View {
 
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
+        requireActivity().window?.let { window ->
+            WindowCompat.getInsetsController(window, window.decorView).apply {
+                isAppearanceLightStatusBars = false
+            }
+        }
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())

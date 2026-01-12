@@ -35,6 +35,7 @@ import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.EventReport
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NotificationBinding
@@ -181,7 +182,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
 
     private fun loadNotifications() {
         Constant.showLoading(this)
-        appViewModel!!.isNotificationList(isAccessToken ?: "", "Android",this)
+        appViewModel!!.isNotificationList(isAccessToken ?: "", "Android", this)
     }
 
     override fun onClick(p0: View?) {
@@ -232,7 +233,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
             add("id", jsonArray)
         }
 
-        appViewModel?.isdeletenotification(isAccessToken ?: "", jsonBody,this)
+        appViewModel?.isdeletenotification(isAccessToken ?: "", jsonBody, this)
     }
 
 
@@ -491,9 +492,18 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                     // default behavior
                 }
             }
-        } else {
-            Log.d("No redirection available", "No redirection available")
+        } else if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
+            if (data.menu_id == Constant.M_NOTICEBOARD) {
+                val intent = Intent(this, NoticeBoard::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, MessageFromManagement::class.java)
+                startActivity(intent)
+            }
         }
-
+        else {
+            val intent = Intent(this, MessageFromManagement::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -159,6 +159,8 @@ object Constant {
     val M_MARK_YOUR_ATTENDANCE = 21
     val M_MESSAGES_FROM_MANAGEMENT = 22
     val M_NOTICEBOARD = 23
+    val Messages = "Messages"
+    val NoticeBoard = "Notice Board"
     val M_UPLOAD_MARKS = 41
     val M_ONLINE_MEETING = 24
     val M_ONLINE_TEXT_BOOK = 25

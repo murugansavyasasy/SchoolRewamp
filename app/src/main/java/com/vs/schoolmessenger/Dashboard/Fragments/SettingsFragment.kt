@@ -454,7 +454,24 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         chThai.buttonTintList = null
 
 
+        fun isCheckEnabledButton(){
+            if (SharedPreference.getLanguage(requireActivity())==isSelectedLanguage){
+                btnConfirm.apply {
+                    alpha=0.4f
+                    isEnabled=false
+                }
+            }else{
+                btnConfirm.apply {
+                    alpha=1f
+                    isEnabled=true
+                }
+            }
+        }
+
         isRemoveCheckBox()
+        isCheckEnabledButton()
+
+
 
         rlaEnglish.setOnClickListener {
             chEnglish.performClick()
@@ -488,6 +505,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = false
                 isResetBackgroud()
             }
+            isCheckEnabledButton()
         }
 
         chTamil.setOnCheckedChangeListener { _, isChecked ->
@@ -501,6 +519,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = false
                 isResetBackgroud()
             }
+            isCheckEnabledButton()
         }
 
         chThai.setOnCheckedChangeListener { _, isChecked ->
@@ -514,6 +533,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = false
                 isResetBackgroud()
             }
+            isCheckEnabledButton()
         }
 
         chHindi.setOnCheckedChangeListener { _, isChecked ->
@@ -527,6 +547,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = false
                 isResetBackgroud()
             }
+            isCheckEnabledButton()
         }
 
         chArabic.setOnCheckedChangeListener { _, isChecked ->
@@ -540,6 +561,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = false
                 isResetBackgroud()
             }
+            isCheckEnabledButton()
         }
 
         var isAppLanguage = SharedPreference.getLanguage(requireActivity()) ?: "en"
@@ -565,7 +587,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
         }
 
+
         btnConfirm.setOnClickListener {
+
             if (isChecking) {
                 isChecking = false
                 (requireActivity() as? BaseActivity<*>)?.changeLanguage(isSelectedLanguage)

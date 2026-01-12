@@ -17,6 +17,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -64,6 +65,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
 
         enableEdgeToEdge()
+
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             // Android 10 and below → use legacy fullscreen flags
