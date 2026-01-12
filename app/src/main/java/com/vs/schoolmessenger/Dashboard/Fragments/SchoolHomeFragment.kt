@@ -106,8 +106,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
     private lateinit var allMenuItems: List<MenuDetail>
-
-
     private lateinit var adapter: AutoScrollAdapterWithDots
     private lateinit var layoutManager: LinearLayoutManager
     private val snapHelper = PagerSnapHelper()
@@ -657,9 +655,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
      //   } else {
        //     isLoadData()
             setupRecyclerView()
-            appViewModel!!.isDashBoardCountData(
-                access_token, Constant.staff_, requireActivity()
-            )
+//            appViewModel!!.isDashBoardCountData(
+//                access_token, Constant.staff_, requireActivity()
+//            )
        // }
         Log.d("Loading", "Dashboard Data is Refreshed")
     }

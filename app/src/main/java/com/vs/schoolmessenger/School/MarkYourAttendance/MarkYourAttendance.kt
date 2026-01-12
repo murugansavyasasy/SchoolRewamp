@@ -175,35 +175,61 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     }
 
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
-        val uniqueYears =
-            isAcademicYear!!.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
-        val currentYear =
-            isAcademicYear.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
+
+        if (isAcademicYear.isNullOrEmpty()) return
+
+        val calendarYear = Calendar.getInstance().get(Calendar.YEAR).toString()
+        val yearSet = LinkedHashSet<String>()
+        var currentYear: String? = null
+
+        isAcademicYear.forEach { academicYear ->
+            val years = academicYear.year.split("-")
+
+            if (years.size == 2) {
+                val startYear = years[0]
+                val endYear = years[1]
+
+                // add both years
+                yearSet.add(startYear)
+                yearSet.add(endYear)
+
+                // decide current year
+                if (academicYear.current_academic_year) {
+                    currentYear =
+                        if (calendarYear == endYear) endYear else startYear
+                }
+            }
+        }
+
         val sortedYears = if (currentYear != null) {
-            listOf(currentYear) + uniqueYears.filter { it != currentYear }
+            listOf(currentYear!!) + yearSet.filter { it != currentYear }
         } else {
-            uniqueYears
+            yearSet.toList()
         }
 
         val adapter = YearLoadingAdapter(this, sortedYears)
         binding.spinnerYears.adapter = adapter
 
-        binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                adapter.notifyDataSetChanged()
+        binding.spinnerYears.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
 
-                binding.lblNoRecords.visibility = View.GONE
-                binding.imgNorecord.visibility = View.GONE
-                val selectedYear = parent.getItemAtPosition(position).toString()
-                isLoadMonth(selectedYear)
+                    binding.lblNoRecords.visibility = View.GONE
+                    binding.imgNorecord.visibility = View.GONE
+
+                    val selectedYear = parent.getItemAtPosition(position).toString()
+                    isLoadMonth(selectedYear)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
+
+
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
         if (isStaffReport.isNotEmpty()) {

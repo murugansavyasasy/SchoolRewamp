@@ -158,33 +158,56 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
-        val uniqueYears =
-            isAcademicYear!!.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
-        val currentYear =
-            isAcademicYear.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
+
+        if (isAcademicYear.isNullOrEmpty()) return
+
+        val calendarYear = Calendar.getInstance().get(Calendar.YEAR).toString()
+        val yearSet = LinkedHashSet<String>()
+        var currentYear: String? = null
+
+        isAcademicYear.forEach { academicYear ->
+            val parts = academicYear.year.split("-")
+
+            if (parts.size == 2) {
+                val startYear = parts[0]
+                val endYear = parts[1]
+
+                // add both years (balance year included)
+                yearSet.add(startYear)
+                yearSet.add(endYear)
+
+                // identify current year
+                if (academicYear.current_academic_year) {
+                    currentYear =
+                        if (calendarYear == endYear) endYear else startYear
+                }
+            }
+        }
+
         val sortedYears = if (currentYear != null) {
-            listOf(currentYear) + uniqueYears.filter { it != currentYear }
+            listOf(currentYear!!) + yearSet.filter { it != currentYear }
         } else {
-            uniqueYears
+            yearSet.toList()
         }
 
         val adapter = YearLoadingAdapter(this, sortedYears)
         binding.spinnerYears.adapter = adapter
 
-        binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                adapter.selectedPosition = position
-                adapter.notifyDataSetChanged()
+        binding.spinnerYears.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
 
-                binding.lytNoRecordFound.visibility = View.GONE
-                isSelectedYear = parent.getItemAtPosition(position).toString()
-                isLoadMonth()
+                    binding.lytNoRecordFound.visibility = View.GONE
+                    isSelectedYear = parent.getItemAtPosition(position).toString()
+                    isLoadMonth()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
 
     private fun isLoadMonth() {

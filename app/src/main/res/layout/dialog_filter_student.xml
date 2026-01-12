@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_white_curve_radius"
+        android:padding="20dp">
+
+
+        <!-- TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/PrimaryColor"
+            android:text="Filter &amp; Sort Students"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+        <!-- MAIN SORT GROUP -->
+        <RadioGroup
+            android:id="@+id/rgSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- GLOBAL SORT -->
+            <RadioButton
+                android:id="@+id/rbNameAZ"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Name (A → Z)" />
+
+            <RadioButton
+                android:id="@+id/rbNameZA"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Name (Z → A)" />
+
+            <RadioButton
+                android:id="@+id/rbNumberAsc"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admission Number (1 → 9)" />
+
+            <RadioButton
+                android:id="@+id/rbNumberDesc"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admission Number (9 → 1)" />
+
+            <RadioButton
+                android:id="@+id/rbRoleNumberAsc"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Roll Number (1 → 9)" />
+
+            <RadioButton
+                android:id="@+id/rbRoleNumberDesc"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_height="wrap_content"
+                android:text="Roll Number (9 → 1)" />
+
+            <!-- ================= MALE ================= -->
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male" />
+
+            <RadioGroup
+                android:id="@+id/rgMaleSubSort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rbMaleAZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Student Name (A → Z)" />
+
+                <RadioButton
+                    android:id="@+id/rbMaleZA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Student Name (Z → A)" />
+
+                <RadioButton
+                    android:id="@+id/rbMaleAdmAsc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Admission Number (1 → 9)" />
+
+                <RadioButton
+                    android:id="@+id/rbMaleAdmDesc"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_height="wrap_content"
+                    android:text="Admission Number (9 → 1)" />
+
+                <RadioButton
+                    android:id="@+id/rbMaleRollAsc"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_height="wrap_content"
+                    android:text="Roll Number (1 → 9)" />
+
+                <RadioButton
+                    android:id="@+id/rbMaleRollDesc"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_height="wrap_content"
+                    android:text="Roll Number (9 → 1)" />
+            </RadioGroup>
+
+            <!-- ================= FEMALE ================= -->
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+            <RadioGroup
+                android:id="@+id/rgFemaleSubSort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rbFemaleAZ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Student Name (A → Z)" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleZA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Student Name (Z → A)" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleAdmAsc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Admission Number (1 → 9)" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleAdmDesc"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_height="wrap_content"
+                    android:text="Admission Number (9 → 1)" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleRollAsc"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_height="wrap_content"
+                    android:text="Roll Number (1 → 9)" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleRollDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:text="Roll Number (9 → 1)" />
+            </RadioGroup>
+        </RadioGroup>
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Search" />
+
+        <!-- ACTION BUTTONS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear Filter" />
+
+            <Button
+                android:id="@+id/btnApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Apply" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

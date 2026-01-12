@@ -1,16 +1,26 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +56,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
+    private var selectedSortId: Int = -1
+    private var selectedMaleSubSortId: Int = -1
+    private var selectedFemaleSubSortId: Int = -1
+    private var searchText: String = ""
+
     private var isAccessToken: String? = null
     private val SUBJECT_CELL_WIDTH = 200
     private var markColumns: List<MarkColumn> = emptyList()
@@ -54,12 +69,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
     private var lastIssueUpdateTime = 0L
     var isExamSectionId = ""
+    private var originalStudentsList: MutableList<StudentMarkList> = mutableListOf()
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryParent(
-            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
-        )
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isToolBarPrimarySchool(
@@ -67,6 +80,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
+        binding.lytSearch.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        binding.imgFilterStudentList.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -91,25 +108,18 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             val baseResponse = response ?: return@observe
             isExamSectionId = baseResponse.data[0].exam_section_id
-            val finalResponse =
-                if (Constant.isMarkUploadFromAi) {
-                    mergeMarksWithExtractedTable(
-                        baseResponse,
-                        Constant.isExtractedDetails?.firstOrNull()
-                    )
-                } else baseResponse
+            val finalResponse = if (Constant.isMarkUploadFromAi) {
+                mergeMarksWithExtractedTable(
+                    baseResponse, Constant.isExtractedDetails?.firstOrNull()
+                )
+            } else baseResponse
 
             reviewFlagMap.clear()
 
-            Constant.isExtractedDetails
-                ?.firstOrNull()
-                ?.reviewFlags
-                ?.forEach { flag ->
-                    val key =
-                        flag.studentId.toString().trim() + "_" +
-                                flag.field.trim().lowercase()
-                    reviewFlagMap[key] = flag.reason
-                }
+            Constant.isExtractedDetails?.firstOrNull()?.reviewFlags?.forEach { flag ->
+                val key = flag.studentId.toString().trim() + "_" + flag.field.trim().lowercase()
+                reviewFlagMap[key] = flag.reason
+            }
 
             markColumns = buildHeaderColumns(baseResponse)
             setupHeader(markColumns)
@@ -118,19 +128,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             if (binding.rvMarks.adapter == null) {
                 Constant.hideLoading(this)
                 binding.rvMarks.layoutManager = LinearLayoutManager(this)
-
+                originalStudentsList = currentStudentsList.toMutableList()
                 binding.rvMarks.adapter = MarksAdapter(
-                    currentStudentsList,
-                    markColumns,
-                    reviewFlagMap,
-                    this,
-                    this
+                    currentStudentsList, markColumns, reviewFlagMap, this, this
                 )
 
-                (binding.rvMarks.itemAnimator as? SimpleItemAnimator)
-                    ?.supportsChangeAnimations = false
+                (binding.rvMarks.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
+                    false
             } else {
                 binding.rvMarks.adapter?.notifyDataSetChanged()
+                updateEmptyState()
             }
         }
 
@@ -169,18 +176,82 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             showSendConfirmationDialog()
         }
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            binding.lytSearch.visibility = View.VISIBLE
+        }
+        setupSearch()
     }
 
-    private fun normalize(value: String?): String {
-        return value
-            ?.trim()
-            ?.lowercase()
-            ?.replace("[^a-z0-9]".toRegex(), "")
-            ?: ""
+    private fun toggleSearch(show: Boolean) {
+        binding.lytSearch.visibility = if (show) View.VISIBLE else View.GONE
+        if (show) {
+            binding.edtSearch.requestFocus()
+        } else {
+            binding.edtSearch.setText("")
+        }
     }
+
+    private fun updateEmptyState() {
+        if (currentStudentsList.isEmpty()) {
+            binding.lytEmptyState.visibility = View.VISIBLE
+            binding.rvMarks.visibility = View.GONE
+        } else {
+            binding.lytEmptyState.visibility = View.GONE
+            binding.rvMarks.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupSearch() {
+
+        binding.run {
+            edtSearch.addTextChangedListener(object : TextWatcher {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?, start: Int, count: Int, after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                    val query = s.toString().trim()
+
+                    if (query.isEmpty()) {
+                        // Reset list
+                        currentStudentsList.clear()
+                        currentStudentsList.addAll(originalStudentsList)
+                    } else {
+                        val filteredList = originalStudentsList.filter { student ->
+                            student.name.contains(query, true) || student.rollNo.contains(
+                                query,
+                                true
+                            ) || student.admission_no.contains(query, true)
+                        }
+
+                        currentStudentsList.clear()
+                        currentStudentsList.addAll(filteredList)
+                    }
+
+                    rvMarks.adapter?.notifyDataSetChanged()
+                    updateEmptyState()
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+        }
+
+        binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
+            actionId == EditorInfo.IME_ACTION_DONE
+        }
+    }
+
+
+    private fun normalize(value: String?): String {
+        return value?.trim()?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
+    }
+
     private fun mergeMarksWithExtractedTable(
-        apiResponse: MarkResponse,
-        tableData: ParcelTableData?
+        apiResponse: MarkResponse, tableData: ParcelTableData?
     ): MarkResponse {
 
         // If no Excel / extracted data → return API data
@@ -189,17 +260,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         fun normalize(value: String?): String {
-            return value
-                ?.trim()
-                ?.lowercase()
-                ?.replace("[^a-z0-9]".toRegex(), "")
-                ?: ""
+            return value?.trim()?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
         }
 
         fun isSystemMessage(value: String?): Boolean {
-            return value
-                ?.trim()
-                ?.equals("PLEASE MARK PROPERLY", true) == true
+            return value?.trim()?.equals("PLEASE MARK PROPERLY", true) == true
         }
 
         fun isValidNumber(value: String?): Boolean {
@@ -238,20 +303,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         val finalMark = when {
 
                             // Excel says: PLEASE MARK PROPERLY
-                            isSystemMessage(extractedValue) ->
-                                extractedValue!!
+                            isSystemMessage(extractedValue) -> extractedValue!!
 
                             // Both API & Excel have valid numbers
-                            isValidNumber(baseMark) && isValidNumber(extractedValue) ->
-                                if (baseMark != extractedValue) extractedValue!! else baseMark
+                            isValidNumber(baseMark) && isValidNumber(extractedValue) -> if (baseMark != extractedValue) extractedValue!! else baseMark
 
                             // Only Excel has value
-                            !isValidNumber(baseMark) && isValidNumber(extractedValue) ->
-                                extractedValue!!
+                            !isValidNumber(baseMark) && isValidNumber(extractedValue) -> extractedValue!!
 
                             // Only API has value
-                            isValidNumber(baseMark) && !isValidNumber(extractedValue) ->
-                                baseMark
+                            isValidNumber(baseMark) && !isValidNumber(extractedValue) -> baseMark
 
                             // Nothing valid
                             else -> baseMark
@@ -300,8 +361,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
     private fun setupMarksUI(
-        finalResponse: MarkResponse,
-        baseResponse: MarkResponse
+        finalResponse: MarkResponse, baseResponse: MarkResponse
     ) {
 
         val columns = buildHeaderColumns(baseResponse)
@@ -309,57 +369,57 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val finalStudents = finalResponse.getAllStudents()
         val baseStudents = baseResponse.getAllStudents()
 
-        currentStudentsList =
-            finalStudents.map { apiStudent ->
+        currentStudentsList = finalStudents.map { apiStudent ->
 
-                val markTexts = MutableList(columns.size) { "" }
-                val mockTexts = MutableList(columns.size) { "" }
-                val marks = MutableList<Int?>(columns.size) { null }
+            val markTexts = MutableList(columns.size) { "" }
+            val mockTexts = MutableList(columns.size) { "" }
+            val marks = MutableList<Int?>(columns.size) { null }
 
-                apiStudent.marks.orEmpty().forEach { subject ->
-                    subject.activities.orEmpty().forEach { activity ->
-                        val index =
-                            columns.indexOfFirst {
-                                it.subjectId == subject.subject_id &&
-                                        normalize(it.selected_name) == normalize(activity.selected_name)
-                            }
+            apiStudent.marks.orEmpty().forEach { subject ->
+                subject.activities.orEmpty().forEach { activity ->
+                    val index = columns.indexOfFirst {
+                        it.subjectId == subject.subject_id && normalize(it.selected_name) == normalize(
+                            activity.selected_name
+                        )
+                    }
 
 
-                        if (index != -1) {
-                            markTexts[index] = activity.mark
-                            marks[index] = activity.mark.toIntOrNull()
-                        }
+                    if (index != -1) {
+                        markTexts[index] = activity.mark
+                        marks[index] = activity.mark.toIntOrNull()
                     }
                 }
+            }
 
-                val baseStudent =
-                    baseStudents.firstOrNull {
-                        it.student_id == apiStudent.student_id
+            val baseStudent = baseStudents.firstOrNull {
+                it.student_id == apiStudent.student_id
+            }
+
+            baseStudent?.marks.orEmpty().forEach { subject ->
+                subject.activities.orEmpty().forEach { activity ->
+                    val index = columns.indexOfFirst {
+                        it.subjectId == subject.subject_id && normalize(it.selected_name) == normalize(
+                            activity.selected_name
+                        )
                     }
 
-                baseStudent?.marks.orEmpty().forEach { subject ->
-                    subject.activities.orEmpty().forEach { activity ->
-                        val index =
-                            columns.indexOfFirst {
-                                it.subjectId == subject.subject_id &&
-                                        normalize(it.selected_name) == normalize(activity.selected_name)
-                            }
-
-                        if (index != -1) {
-                            mockTexts[index] = activity.mark
-                        }
+                    if (index != -1) {
+                        mockTexts[index] = activity.mark
                     }
                 }
+            }
 
-                StudentMarkList(
-                    name = apiStudent.student_name,
-                    student_id = apiStudent.student_id,
-                    rollNo = apiStudent.roll_no,
-                    marks = marks,
-                    markTexts = markTexts,
-                    mockMarkTexts = mockTexts
-                )
-            }.toMutableList()
+            StudentMarkList(
+                name = apiStudent.student_name,
+                student_id = apiStudent.student_id,
+                gender = "Male",
+                rollNo = apiStudent.roll_no,
+                admission_no = apiStudent.admission_no,
+                marks = marks,
+                markTexts = markTexts,
+                mockMarkTexts = mockTexts
+            )
+        }.toMutableList()
     }
 
     private fun setupHeader(columns: List<MarkColumn>) {
@@ -426,7 +486,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             for (paper in subject.paper) {
 
                 val activityId = paper.activity_id ?: paper.selectedActivityID
-                val selectedName =if (Constant.isMarkUploadFromAi)paper.selectedValue else paper.name
+                val selectedName =
+                    if (Constant.isMarkUploadFromAi) paper.selectedValue else paper.name
 
                 if (!activityId.isNullOrEmpty() && !selectedName.isNullOrEmpty()) {
 
@@ -456,8 +517,210 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             R.id.imgBack -> {
                 onBackPressed()
             }
+
+            R.id.imgFilterStudentList -> {
+                showFilterDialog()
+            }
+
+            R.id.lytSearch -> {
+                toggleSearch(true)
+            }
         }
     }
+
+    private fun showFilterDialog() {
+
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_filter_student)
+        dialog.setCancelable(true)
+
+        // 🔹 Transparent window (important)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // 🔹 Dim background
+        dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window?.setDimAmount(0.5f)
+
+        val displayMetrics = resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+
+        val sideMarginDp = 24
+        val sideMarginPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, sideMarginDp.toFloat(), displayMetrics
+        ).toInt()
+
+        dialog.window?.setLayout(
+            screenWidth - (sideMarginPx * 2), ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        // ================= VIEW REFERENCES =================
+
+        val rgSort = dialog.findViewById<RadioGroup>(R.id.rgSort)
+
+        val rbMale = dialog.findViewById<RadioButton>(R.id.rbMale)
+        val rbFemale = dialog.findViewById<RadioButton>(R.id.rbFemale)
+
+        val rgMaleSubSort = dialog.findViewById<RadioGroup>(R.id.rgMaleSubSort)
+        val rgFemaleSubSort = dialog.findViewById<RadioGroup>(R.id.rgFemaleSubSort)
+
+        val etSearch = dialog.findViewById<EditText>(R.id.etSearch)
+
+        val btnApply = dialog.findViewById<Button>(R.id.btnApply)
+        val btnClear = dialog.findViewById<Button>(R.id.btnClear)
+
+        // ================= RESTORE STATE =================
+
+        if (selectedSortId != -1) rgSort.check(selectedSortId)
+        if (selectedMaleSubSortId != -1) rgMaleSubSort.check(selectedMaleSubSortId)
+        if (selectedFemaleSubSortId != -1) rgFemaleSubSort.check(selectedFemaleSubSortId)
+
+        etSearch.setText(searchText)
+
+        rgMaleSubSort.visibility = if (rbMale.isChecked) View.VISIBLE else View.GONE
+        rgFemaleSubSort.visibility = if (rbFemale.isChecked) View.VISIBLE else View.GONE
+
+        // ================= SHOW / HIDE SUB SORT =================
+
+        rbMale.setOnCheckedChangeListener { _, checked ->
+            rgMaleSubSort.visibility = if (checked) View.VISIBLE else View.GONE
+            if (checked) rgFemaleSubSort.visibility = View.GONE
+        }
+
+        rbFemale.setOnCheckedChangeListener { _, checked ->
+            rgFemaleSubSort.visibility = if (checked) View.VISIBLE else View.GONE
+            if (checked) rgMaleSubSort.visibility = View.GONE
+        }
+
+        // ================= APPLY =================
+
+        btnApply.setOnClickListener {
+
+            selectedSortId = rgSort.checkedRadioButtonId
+            selectedMaleSubSortId = rgMaleSubSort.checkedRadioButtonId
+            selectedFemaleSubSortId = rgFemaleSubSort.checkedRadioButtonId
+            searchText = etSearch.text.toString().trim()
+
+            var list = originalStudentsList.toList()
+
+            // 🔍 Search
+            if (searchText.isNotEmpty()) {
+                list = list.filter {
+                    it.name.contains(searchText, true) || it.rollNo.contains(
+                        searchText,
+                        true
+                    ) || it.admission_no.contains(searchText, true)
+                }
+            }
+
+            // 👤 Gender
+            if (rbMale.isChecked) {
+                list = list.filter { it.gender.equals("Male", true) }
+            } else if (rbFemale.isChecked) {
+                list = list.filter { it.gender.equals("Female", true) }
+            }
+
+            // 🔃 Sort
+            list = when {
+
+                selectedSortId == R.id.rbNameAZ -> list.sortedBy { it.name.lowercase() }
+
+                selectedSortId == R.id.rbNameZA -> list.sortedByDescending { it.name.lowercase() }
+
+                selectedSortId == R.id.rbNumberAsc -> list.sortedBy {
+                    it.admission_no.toIntOrNull() ?: Int.MAX_VALUE
+                }
+
+                selectedSortId == R.id.rbNumberDesc -> list.sortedByDescending {
+                    it.admission_no.toIntOrNull() ?: Int.MIN_VALUE
+                }
+
+                selectedSortId == R.id.rbRoleNumberAsc -> list.sortedBy {
+                    it.rollNo.toIntOrNull() ?: Int.MAX_VALUE
+                }
+
+                selectedSortId == R.id.rbRoleNumberDesc -> list.sortedByDescending {
+                    it.rollNo.toIntOrNull() ?: Int.MIN_VALUE
+                }
+
+                rbMale.isChecked && selectedMaleSubSortId != -1 -> applySubSort(
+                    list,
+                    selectedMaleSubSortId
+                )
+
+                rbFemale.isChecked && selectedFemaleSubSortId != -1 -> applySubSort(
+                    list,
+                    selectedFemaleSubSortId
+                )
+
+                else -> list
+            }
+
+            currentStudentsList.clear()
+            currentStudentsList.addAll(list)
+            binding.rvMarks.adapter?.notifyDataSetChanged()
+            updateEmptyState()
+            dialog.dismiss()
+        }
+
+        // ================= CLEAR =================
+
+        btnClear.setOnClickListener {
+
+            selectedSortId = -1
+            selectedMaleSubSortId = -1
+            selectedFemaleSubSortId = -1
+            searchText = ""
+
+            rgSort.clearCheck()
+            rgMaleSubSort.clearCheck()
+            rgFemaleSubSort.clearCheck()
+
+            rgMaleSubSort.visibility = View.GONE
+            rgFemaleSubSort.visibility = View.GONE
+
+            etSearch.setText("")
+
+            currentStudentsList.clear()
+            currentStudentsList.addAll(originalStudentsList)
+            binding.rvMarks.adapter?.notifyDataSetChanged()
+            updateEmptyState()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
+    private fun applySubSort(
+        list: List<StudentMarkList>, checkedId: Int
+    ): List<StudentMarkList> {
+
+        return when (checkedId) {
+
+            R.id.rbMaleAZ, R.id.rbFemaleAZ -> list.sortedBy { it.name.lowercase() }
+
+            R.id.rbMaleZA, R.id.rbFemaleZA -> list.sortedByDescending { it.name.lowercase() }
+
+            R.id.rbMaleAdmAsc, R.id.rbFemaleAdmAsc -> list.sortedBy {
+                it.admission_no.toIntOrNull() ?: Int.MAX_VALUE
+            }
+
+            R.id.rbMaleAdmDesc, R.id.rbFemaleAdmDesc -> list.sortedByDescending {
+                it.admission_no.toIntOrNull() ?: Int.MIN_VALUE
+            }
+
+            R.id.rbMaleRollAsc, R.id.rbFemaleRollAsc -> list.sortedBy {
+                it.rollNo.toIntOrNull() ?: Int.MAX_VALUE
+            }
+
+            R.id.rbMaleRollDesc, R.id.rbFemaleRollDesc -> list.sortedByDescending {
+                it.rollNo.toIntOrNull() ?: Int.MIN_VALUE
+            }
+
+            else -> list
+        }
+    }
+
 
     override fun onMarksChanged() {
         val now = System.currentTimeMillis()
@@ -469,8 +732,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
 
     private fun calculateIssueSummary(
-        students: List<StudentMarkList>,
-        columns: List<MarkColumn>
+        students: List<StudentMarkList>, columns: List<MarkColumn>
     ): IssueSummary {
 
         val summary = IssueSummary()
@@ -485,38 +747,28 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 val subject = column.subjectName
                 val selected = column.selected_name ?: column.activityName
 
-                val oldValue =
-                    student.mockMarkTexts.getOrNull(index)?.trim().orEmpty()
+                val oldValue = student.mockMarkTexts.getOrNull(index)?.trim().orEmpty()
 
-                val reviewKey =
-                    "${student.student_id}_${column.selected_name
-                        ?.lowercase()
-                        ?.replace("[^a-z0-9]".toRegex(), "")}"
+                val reviewKey = "${student.student_id}_${
+                    column.selected_name?.lowercase()?.replace("[^a-z0-9]".toRegex(), "")
+                }"
 
                 /* 🔴 1. REVIEW FLAG (ONLY IF NOT EDITED) */
-                if (
-                    trimmed.isNotEmpty() &&
-                    trimmed == oldValue &&          // ⭐ KEY FIX
+                if (trimmed.isNotEmpty() && trimmed == oldValue &&          // ⭐ KEY FIX
                     reviewFlagMap.containsKey(reviewKey)
                 ) {
                     summary.total++
                     summary.systemMsgCount++
                     summary.details.add(
                         IssueDetail(
-                            subject,
-                            selected,
-                            reviewFlagMap[reviewKey]!!
+                            subject, selected, reviewFlagMap[reviewKey]!!
                         )
                     )
                     return@forEachIndexed
                 }
 
                 /* 🔴 2. EXCEL / SYSTEM MESSAGE */
-                if (
-                    trimmed.isNotEmpty() &&
-                    value == null &&
-                    !trimmed.equals("AB", true)
-                ) {
+                if (trimmed.isNotEmpty() && value == null && !trimmed.equals("AB", true)) {
                     summary.total++
                     summary.invalidCount++
                     summary.details.add(
@@ -531,9 +783,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     summary.maxMarkCount++
                     summary.details.add(
                         IssueDetail(
-                            subject,
-                            selected,
-                            "Max mark exceeded (${value}/${column.maxMark})"
+                            subject, selected, "Max mark exceeded (${value}/${column.maxMark})"
                         )
                     )
                 }
@@ -541,6 +791,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
         return summary
     }
+
     private fun updateIssueLabel() {
 
         val issueSummary = calculateIssueSummary(currentStudentsList, markColumns)
@@ -558,8 +809,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val reason = issue.reason.trim().lowercase()
             reasonCountMap[reason] = (reasonCountMap[reason] ?: 0) + 1
         }
-
-        // 🔹 Build label text with ⚠️ emoji
         val message = buildString {
             append("⚠️ ")
             append(issueSummary.total)
@@ -570,8 +819,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             append(
                 reasonCountMap.entries.joinToString(", ") { (reason, count) ->
                     "$count $reason"
-                }
-            )
+                })
         }
 
         binding.lblIssueFound.visibility = View.VISIBLE
@@ -579,8 +827,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
     private fun isSaveTheMark(
-        students: List<StudentMarkList>,
-        columns: List<MarkColumn>
+        students: List<StudentMarkList>, columns: List<MarkColumn>
     ): JsonObject {
 
         val uploadDetailsArray = JsonArray()
@@ -635,8 +882,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
         return JsonObject().apply {
             addProperty(
-                APIKeyNames.exam_section_id,
-                isExamSectionId
+                APIKeyNames.exam_section_id, isExamSectionId
             )
             add(APIKeyNames.upload_details, uploadDetailsArray)
         }

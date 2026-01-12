@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student Name &amp;"
+            android:text="Student Name &amp; Gender"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold1"
@@ -26,6 +26,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Roll No"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsBold1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admission No"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold1"/>
