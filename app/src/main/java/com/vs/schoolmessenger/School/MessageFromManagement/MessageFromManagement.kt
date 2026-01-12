@@ -92,10 +92,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         binding.lblArchiveMsg.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-
-
         userDetails = SharedPreference.getUserDetails(this)
-
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
         if (fromNotification) {
@@ -144,7 +141,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        if(Constant.isSelectedMenuName.isNullOrEmpty()){
+            binding.toolbarLayout.lblParentToolBar.text = Constant.Messages
+        } else {
+            binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        }
+
         isMenuCount = Constant.isSchoolMenuCount
 
         binding.rytSpinner.setOnClickListener {
