@@ -313,6 +313,7 @@
             android:id="@+id/rlaArabic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@+id/view4"
             android:layout_marginStart="@dimen/five"
             android:padding="@dimen/five">
@@ -370,6 +371,7 @@
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaArabic"
             android:layout_marginStart="@dimen/fifteen"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:background="@color/grey"></View>

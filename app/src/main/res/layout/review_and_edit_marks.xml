@@ -82,11 +82,22 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSearch1"
                 android:layout_marginHorizontal="@dimen/ten"
+                android:layout_toStartOf="@+id/imgFilter"
                 android:text="@string/review_and_edit_marks"
                 android:textColor="@color/dark_orange_2"
                 android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
+
+            <ImageView
+                android:id="@+id/imgFilterStudentList"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:contentDescription="Filter"
+                android:padding="4dp"
+                android:src="@drawable/filter_icon" />
+
 
             <TextView
                 android:id="@+id/lblSampleDesc"
@@ -129,11 +140,55 @@
 
             </View>
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lytSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/View2"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iconSearch"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lblSearch"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iconSearch"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/LnrContainer2"
-                android:layout_below="@+id/View2"
+                android:layout_below="@+id/lytSearch"
                 android:orientation="vertical">
 
                 <include layout="@layout/layout_marks_header" />
@@ -181,10 +236,38 @@
                         android:gravity="center"
                         android:text="@string/save_all_marks"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp">
-                    </TextView>
+                        android:textSize="@dimen/fifteen_sp"></TextView>
                 </LinearLayout>
 
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lytEmptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/twenty"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgEmpty"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:contentDescription="No students"
+                    android:src="@drawable/no_student_report_message" />
+
+                <TextView
+                    android:id="@+id/txtEmptyTitle"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No students found"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sixteen_sp" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

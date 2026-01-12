@@ -23,7 +23,7 @@ class StudentDetailAdapter(
     val context: Context
 ) :
     RecyclerView.Adapter<StudentDetailAdapter.GridViewHolder>() {
-    var isLoadImage = true
+    private val bgMap = HashMap<String, Int>()
 
     class GridViewHolder(val binding: StudentDetailsListItemNewBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -37,57 +37,31 @@ class StudentDetailAdapter(
 
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = itemList!![position]
-
-
-        when (position) {
-
-            0 -> {
-
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.bg_gradient_student_one
-                    )
-                )
-
-                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
-            }
-
-            1 -> {
-
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.bg_gradient_student_two
-                    )
-                )
-
-                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
-            }
-
-            2 -> {
-
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.bg_gradient_student_three
-                    )
-                )
-
-                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
-            }
-
-            3 -> {
-
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.bg_gradient_student_one
-                    )
-                )
-                holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
-            }
+        var bgType = bgMap[item.child_id]
+        if (bgType == null) {
+            bgType = bgMap.size % 4
+            bgMap[item.child_id] = bgType
         }
+
+        when (bgType) {
+            0 -> holder.binding.rlaStudent.setBackgroundResource(
+                R.drawable.bg_gradient_student_one
+            )
+
+            1 -> holder.binding.rlaStudent.setBackgroundResource(
+                R.drawable.bg_gradient_student_two
+            )
+
+            2 -> holder.binding.rlaStudent.setBackgroundResource(
+                R.drawable.bg_gradient_student_three
+            )
+
+            3 -> holder.binding.rlaStudent.setBackgroundResource(
+                R.drawable.bg_gradient_student_four
+            )
+        }
+
+        holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
 
         holder.binding.rlaStudent.setOnClickListener {
             isParentDashBoardData = null

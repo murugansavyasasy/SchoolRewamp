@@ -2,7 +2,11 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.text.InputType
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +44,7 @@ class MarksAdapter(
     class MarksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtName)
         val txtRoll: TextView = itemView.findViewById(R.id.txtRoll)
+        val txtAdmissionNo: TextView = itemView.findViewById(R.id.txtAdmissionNo)
         val subjectContainer: LinearLayout = itemView.findViewById(R.id.subjectContainer)
         val subjectScroll: HorizontalScrollView = itemView.findViewById(R.id.subjectScroll)
     }
@@ -54,8 +59,36 @@ class MarksAdapter(
     override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
         val student = students[position]
-        holder.txtName.text = student.name
-        holder.txtRoll.text = student.rollNo
+        val genderShort = when (student.gender.lowercase()) {
+            "male" -> "M"
+            "female" -> "F"
+            else -> ""
+        }
+
+        val lblText = "${student.name} ($genderShort)"
+        val span = SpannableString(lblText)
+
+        span.setSpan(
+            ForegroundColorSpan(Color.RED),
+            lblText.indexOf("("),
+            lblText.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        holder.txtName.text = span
+        if (student.rollNo.isNullOrBlank()) {
+            holder.txtRoll.visibility = View.GONE
+        } else {
+            holder.txtRoll.visibility = View.VISIBLE
+            holder.txtRoll.text = student.rollNo
+        }
+        if (student.admission_no.isNullOrBlank()) {
+            holder.txtAdmissionNo.visibility = View.GONE
+        } else {
+            holder.txtAdmissionNo.visibility = View.VISIBLE
+            holder.txtAdmissionNo.text = student.admission_no
+        }
+
         holder.subjectContainer.removeAllViews()
 
         for (i in columns.indices) {
