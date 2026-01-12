@@ -21,6 +21,7 @@ import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -261,6 +262,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             if (isGetStandard!!.get(0).sections.size > 0) {
                                 isSection = isGetStandard!!.get(0).sections
                                 SectionID = isGetStandard!!.get(0).sections.get(0).id
+                            }
+                            else{
+                                Toast.makeText(this, getString(R.string.no_section_found), Toast.LENGTH_SHORT).show()
                             }
                             isLoadStandard(isGetStandard)
                             val firstStandard = isGetStandard!![0]

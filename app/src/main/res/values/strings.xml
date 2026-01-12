@@ -1063,6 +1063,7 @@
     <string name="group_created_on">Group Created on</string>
     <string name="there_are_no_meetings_planned_for_you_today">There are no meetings planned for you today</string>
     <string name="assignment_details_is_missing">Assignment details is missing.</string>
+    <string name="no_section_found">No Section Found</string>
 
 
 </resources>
