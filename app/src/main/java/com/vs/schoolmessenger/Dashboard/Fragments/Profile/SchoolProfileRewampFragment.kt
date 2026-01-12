@@ -49,6 +49,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         binding.btnupdateprofile.visibility = View.GONE
         binding.btnupdateprofile.setOnClickListener(this)
+        binding.imgEdit.visibility = View.GONE
 
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 

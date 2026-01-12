@@ -50,12 +50,14 @@
                         android:layout_width="@dimen/hundred"
                         android:layout_height="@dimen/hundred"
                         android:layout_marginEnd="@dimen/ten"
+                        android:layout_gravity="center_vertical"
                         android:padding="10dp" />
 
                     <ImageView
                         android:id="@+id/imgPunchHistory"
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
+
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/rightarrrow" />
                 </LinearLayout>

@@ -33,6 +33,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -161,6 +162,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun isToolBarWhiteTheme() {
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
+
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -202,6 +207,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val mainView = findViewById<View>(mainViewId)
         val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
         val headerView = findViewById<View?>(R.id.rytHeader)
+
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
 
         // Apply window insets to the main view (safe call)
         mainView?.let { view ->
@@ -313,6 +322,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val navigationBarBgView = findViewById<View>(R.id.navigationBarBackground)
         val frameContainer = findViewById<View>(R.id.frameContainer)
 
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
+
         // Apply insets to root (only left/right, NO bottom padding here anymore)
         mainView?.let { root ->
             ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
@@ -383,7 +396,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val mainView = findViewById<View>(mainViewId)
         val toolbarLayout = findViewById<View?>(R.id.toolbarLayout)
         val headerView = findViewById<View?>(R.id.rytHeader)
-
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
         mainView?.let { view ->
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -430,6 +445,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val headerView = findViewById<View>(R.id.rytHeader)
 
 
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
@@ -470,7 +489,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         findViewById<View>(mainViewId)
         findViewById<View>(R.id.toolbarLayout)
         val headerView = findViewById<View>(R.id.cltDateSelection)
-
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
 
 //        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -516,7 +537,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
         val headerView = findViewById<View>(R.id.lytLogout)
 
-
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
@@ -558,7 +581,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
         val headerView = findViewById<View>(R.id.rytHeader)
 
-
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(
@@ -598,7 +623,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val mainView = findViewById<View>(mainViewId)
         val toolbarLayout = findViewById<View>(R.id.toolbarLayout)
         val headerView = findViewById<View>(R.id.rytHeader)
-
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // white icons
+        }
         ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val combinedType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             val combinedInsets = insets.getInsets(combinedType)
