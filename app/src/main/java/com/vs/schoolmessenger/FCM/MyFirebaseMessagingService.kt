@@ -35,6 +35,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val TAG = "MyFirebaseMessaging"
         private const val CHANNEL_ID = "fcm_default_channel"
         private const val CHANNEL_NAME = "Custom Notifications"
+
+        private const val CALL_CHANNEL_ID = "fcm_call_channel"
+        private const val CALL_CHANNEL_NAME = "Incoming Calls"
     }
 
 
@@ -189,8 +192,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val soundUri = Uri.parse("android.resource://${packageName}/raw/call_notification")
             val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
+                CALL_CHANNEL_ID,
+                CALL_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 description = Constant.Channel_for_custom_notifications
@@ -217,16 +220,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Notification channel created")
         }
         // Try simple notification first to isolate RemoteViews issues
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, CALL_CHANNEL_ID)
             .setSmallIcon(R.drawable.school_splash_logo)
             .setContentTitle(title ?: Constant.School_Chimes)
             .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_CALL)
+            .setFullScreenIntent(pendingIntent, true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setDeleteIntent(createDeleteIntent()) // Add delete intent for dismissal
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setCategory(NotificationCompat.CATEGORY_CALL) // Helps with call-specific presentation and non-expansion
+
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
                 setTextViewText(R.id.notification_title, title ?: "School Chimes")

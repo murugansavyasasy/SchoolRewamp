@@ -333,6 +333,10 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         }
         val jsonObject = JsonObject().apply {
             addProperty("student_id", chat.student_id)
+            addProperty("class_id", chat.id)
+            addProperty("class_name", QuestionDataSending!!.name)
+            addProperty("section_id", QuestionDataSending!!.section_id)
+            addProperty("section_name", QuestionDataSending!!.section_name)
             addProperty("is_block", !chat.is_blocked)
             addProperty("reason", reason)
         }
