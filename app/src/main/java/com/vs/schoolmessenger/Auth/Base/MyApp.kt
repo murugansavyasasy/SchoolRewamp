@@ -6,6 +6,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.vs.schoolmessenger.Utils.Constant.clearAllLocalStorage
+import com.vs.schoolmessenger.Utils.Constant.restartApp
+import com.vs.schoolmessenger.Utils.Constant.shouldResetApp
 import com.vs.schoolmessenger.Utils.LocalHelperForLanguage
 import com.vs.schoolmessenger.Utils.SharedPreference
 
@@ -29,5 +32,10 @@ class MyApp : Application(), LifecycleObserver {
 
         val isAppLanguage = SharedPreference.getLanguage(this) ?: "en"
         LocalHelperForLanguage.wrapContext(this, isAppLanguage)
+
+        if (shouldResetApp(this)) {
+            clearAllLocalStorage(this)
+            restartApp(this)
+        }
     }
 }

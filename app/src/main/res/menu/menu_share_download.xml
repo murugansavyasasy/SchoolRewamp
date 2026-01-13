@@ -2,6 +2,7 @@
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/share_icon"
+        android:visible="false"
         android:title="@string/share" />
     <item
         android:id="@+id/action_download"

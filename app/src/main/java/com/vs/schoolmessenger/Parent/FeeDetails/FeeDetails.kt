@@ -70,6 +70,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         binding.btnReceipt.setOnClickListener(this)
+        binding.rytRefresh.setOnClickListener(this)
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
@@ -164,6 +165,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     Constant.hideLoading(this)
                     binding.payWebview.visibility = View.VISIBLE
                     binding.rvReceipts.visibility = View.GONE
+                    binding.rytRefresh.visibility = View.VISIBLE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
                     binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
@@ -182,6 +184,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     Constant.hideLoading(this)
                     binding.payWebview.visibility = View.GONE
                     binding.rvReceipts.visibility = View.VISIBLE
+                    binding.rytRefresh.visibility = View.GONE
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                     binding.linePayment.setBackgroundResource(R.color.athens_gray)
@@ -195,6 +198,21 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     appViewModel?.getStudentInvoices(isAccessToken!!, this)
                     Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
                 }
+            }
+            R.id.rytRefresh ->{
+                isClickedTap = 2
+                Constant.hideLoading(this)
+                binding.payWebview.visibility = View.VISIBLE
+                binding.rvReceipts.visibility = View.GONE
+                binding.rytRefresh.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.rytSearch1.visibility = View.GONE
+                binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
+                binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
+                binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
+                binding.btnReceipt.setTextColor(Color.BLACK)
+                loadPaymentPage(binding.payWebview)
+                reloadPaymentPage()
             }
 
         }

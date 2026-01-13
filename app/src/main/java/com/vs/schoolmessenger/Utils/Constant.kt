@@ -3135,4 +3135,61 @@ object Constant {
         h[offset] = (value.toInt() and 0xff).toByte()
         h[offset + 1] = ((value.toInt() shr 8) and 0xff).toByte()
     }
+    fun clearAllSharedPreferences(context: Context) {
+        val sharedPrefsDir = File(context.applicationInfo.dataDir, "shared_prefs")
+        if (sharedPrefsDir.exists()) {
+            sharedPrefsDir.listFiles()?.forEach { file ->
+                file.delete()
+                Log.d("Deleting_shared","")
+            }
+        }
+    }
+    fun clearAllLocalStorage(context: Context) {
+
+        // SharedPreferences
+        clearAllSharedPreferences(context)
+
+        // Internal files
+        context.filesDir?.deleteRecursively()
+
+        // Cache
+        context.cacheDir?.deleteRecursively()
+        context.externalCacheDir?.deleteRecursively()
+
+        // External app-specific files (Downloads, Videos, Images)
+        context.getExternalFilesDir(null)?.deleteRecursively()
+
+        // Databases (Room / SQLite)
+        context.databaseList().forEach {
+            context.deleteDatabase(it)
+        }
+
+        // Cache
+        context.cacheDir.deleteRecursively()
+        context.externalCacheDir?.deleteRecursively()
+    }
+    fun shouldResetApp(context: Context): Boolean {
+        val prefs = context.getSharedPreferences("app_version", Context.MODE_PRIVATE)
+
+        val oldVersion = prefs.getInt("version", -1)
+        Log.d("oldVersionCheck",oldVersion.toString())
+        val newVersion = 500
+
+        if (oldVersion != newVersion) {
+            prefs.edit().putInt("version", newVersion).apply()
+            return true
+        }
+        return false
+    }
+    fun restartApp(context: Context) {
+        val intent = context.packageManager
+            .getLaunchIntentForPackage(context.packageName)
+
+        intent?.addFlags(
+            Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+        )
+        context.startActivity(intent)
+        Runtime.getRuntime().exit(0)
+    }
 }

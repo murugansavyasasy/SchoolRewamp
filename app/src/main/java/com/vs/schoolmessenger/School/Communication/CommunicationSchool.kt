@@ -347,8 +347,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(cal.time)
     }
 
-    // =============================================
-// Show time picker (modified)
     private fun showTimePickerDialog(
         context: Context,
         listener: TimeSelectedListener,
@@ -356,36 +354,40 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         preSelectedMinute: Int?
     ) {
         val calendar = Calendar.getInstance()
+
         val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
         val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
 
         val timePicker = TimePickerDialog(
             context,
             { _, selectedHour, selectedMinute ->
-                // Convert to 12h format for display
-                val displayTime = formatTime12h(selectedHour, selectedMinute)
 
-                val amPm = if (selectedHour < 12) "AM" else "PM"
-                val hour12 = when {
-                    selectedHour == 0 -> 12
-                    selectedHour > 12 -> selectedHour - 12
-                    else -> selectedHour
-                }
-
-                listener.onTimeSelected(hour12, selectedMinute, amPm)
-
-                // Save in 24h format
+                // Save selected time
                 if (isFromTime) {
                     fromHour24 = selectedHour
                     fromMinute = selectedMinute
 
-                    // Auto-update To time if it's before +40min
-                    updateToTimeIfNeeded()
+                    // Auto set TO time = FROM + 40 minutes
+                    val cal = Calendar.getInstance().apply {
+                        set(Calendar.HOUR_OF_DAY, selectedHour)
+                        set(Calendar.MINUTE, selectedMinute)
+                        add(Calendar.MINUTE, 40)
+                    }
+
+                    toHour24 = cal.get(Calendar.HOUR_OF_DAY)
+                    toMinute = cal.get(Calendar.MINUTE)
+
+                    // Update UI
+                    binding.lblStartTime.text =
+                        formatTime12h(fromHour24!!, fromMinute!!)
+                    binding.lblEndTime.text =
+                        formatTime12h(toHour24!!, toMinute!!)
+
                 } else {
                     toHour24 = selectedHour
                     toMinute = selectedMinute
 
-                    // Validate minimum 40 minutes duration
+                    // Validate duration
                     if (!isValidDuration()) {
                         Toast.makeText(
                             this,
@@ -393,18 +395,82 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             Toast.LENGTH_LONG
                         ).show()
 
-                        // Reset to default (or keep previous valid)
                         toHour24 = null
                         toMinute = null
                         binding.lblEndTime.text = "Select time"
+                        return@TimePickerDialog
                     }
+
+                    binding.lblEndTime.text =
+                        formatTime12h(toHour24!!, toMinute!!)
                 }
             },
-            hour, minute, false // false = 12-hour mode
+            hour,
+            minute,
+            false // 12-hour mode
         )
 
         timePicker.show()
     }
+
+
+    // Show time picker (modified)
+//    private fun showTimePickerDialog(
+//        context: Context,
+//        listener: TimeSelectedListener,
+//        preSelectedHour: Int?,
+//        preSelectedMinute: Int?
+//    ) {
+//        val calendar = Calendar.getInstance()
+//        val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
+//        val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
+//
+//        val timePicker = TimePickerDialog(
+//            context,
+//            { _, selectedHour, selectedMinute ->
+//                // Convert to 12h format for display
+//                val displayTime = formatTime12h(selectedHour, selectedMinute)
+//
+//                val amPm = if (selectedHour < 12) "AM" else "PM"
+//                val hour12 = when {
+//                    selectedHour == 0 -> 12
+//                    selectedHour > 12 -> selectedHour - 12
+//                    else -> selectedHour
+//                }
+//
+//                listener.onTimeSelected(hour12, selectedMinute, amPm)
+//
+//                // Save in 24h format
+//                if (isFromTime) {
+//                    fromHour24 = selectedHour
+//                    fromMinute = selectedMinute
+//
+//                    // Auto-update To time if it's before +40min
+//                    updateToTimeIfNeeded()
+//                } else {
+//                    toHour24 = selectedHour
+//                    toMinute = selectedMinute
+//
+//                    // Validate minimum 40 minutes duration
+//                    if (!isValidDuration()) {
+//                        Toast.makeText(
+//                            this,
+//                            "End time must be at least 40 minutes after start time",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//
+//                        // Reset to default (or keep previous valid)
+//                        toHour24 = null
+//                        toMinute = null
+//                        binding.lblEndTime.text = "Select time"
+//                    }
+//                }
+//            },
+//            hour, minute, false // false = 12-hour mode
+//        )
+//
+//        timePicker.show()
+//    }
 
     // When From time changes → auto suggest +40 min for To (if To is not manually set)
     private fun updateToTimeIfNeeded() {
@@ -447,6 +513,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         return !toCal.before(minToCal)
     }
+
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
         mTextAdapter =
             TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
@@ -1055,26 +1122,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
 
-//            R.id.rlaFromTime -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                isFromTime = true
-//                isShowTimePickerDialog(
-//                    this, this,
-//                    preSelectedHour = fromHour24,
-//                    preSelectedMinute = fromMinute
-//                )
-//            }
-//
-//            R.id.rlaToTime -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                isFromTime = false
-//                isShowTimePickerDialog(
-//                    this, this,
-//                    preSelectedHour = toHour24,
-//                    preSelectedMinute = toMinute
-//                )
-//            }
-
             R.id.lnrScheduleCall -> {
                 KeyboardUtils.hideKeyboard(this)
                 val dateAdapter = DateAdapter(this) { updatedList -> }
@@ -1130,29 +1177,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
 
                 datePickerPopup.show(window.decorView.rootView)
-
-
-//                val dateAdapter = DateAdapter(this) { updatedList -> }
-//                selectedDatesAdapter = SelectedDatesAdapter(
-//                    context = this,
-//                    selectedDates = selectedDates.toMutableList(),
-//                    dateAdapter = dateAdapter
-//                ) { removedDate ->
-//                    selectedDates.remove(removedDate)
-//                    dateAdapter.removeSelectedDate(removedDate)
-//                }
-//                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
-//
-//                val datePickerPopup = CustomDatePicker(
-//                    context = this,
-//                    preSelectedDates = selectedDates.toList(),
-//                    dateAdapter = dateAdapter
-//                ) { newSelectedDates ->
-//                    selectedDates.clear()
-//                    selectedDates.addAll(newSelectedDates)
-//                    selectedDatesAdapter!!.submitSelectedDates(selectedDates.toList())
-//                }
-//                datePickerPopup.show(window.decorView.rootView)
             }
 
 
@@ -1436,48 +1460,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }, 500)
             }
         }
-    }
-
-    fun isShowTimePickerDialog(
-        context: Context,
-        listener: TimeSelectedListener,
-        preSelectedHour: Int? = null,
-        preSelectedMinute: Int? = null
-    ) {
-        val calendar = Calendar.getInstance()
-
-        // Use previously picked time if available, else current time
-        val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
-
-        val timePickerDialog = TimePickerDialog(
-            context,
-            { _, selectedHour, selectedMinute ->
-                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
-                val hourIn12Format = when {
-                    selectedHour == 0 -> 12
-                    selectedHour > 12 -> selectedHour - 12
-                    else -> selectedHour
-                }
-
-                // Callback
-                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
-
-                // Save last picked time (in 24-hour format)
-                if (isFromTime) {
-                    fromHour24 = selectedHour
-                    fromMinute = selectedMinute
-                } else {
-                    toHour24 = selectedHour
-                    toMinute = selectedMinute
-                }
-            },
-            hour,
-            minute,
-            false // 12-hour format
-        )
-
-        timePickerDialog.show()
     }
 
 
