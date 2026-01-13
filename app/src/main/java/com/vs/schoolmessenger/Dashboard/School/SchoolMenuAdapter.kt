@@ -95,7 +95,7 @@ class SchoolMenuAdapter(
                 Constant.M_ASSIGNMENT -> imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 Constant.M_HOMEWORK -> imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 Constant.M_ATTENDANCE_MARKING -> imgMenu.setImageResource(R.drawable.attendance_marking)
-                Constant.M_INTERACTION_WITH_STUDENT -> imgMenu.setImageResource(R.drawable.very_important_icon)
+                Constant.M_INTERACTION_WITH_STUDENT -> imgMenu.setImageResource(R.drawable.interaction_with_student_dashboard_icon)
                 Constant.M_ABSENTEES_REPORT -> imgMenu.setImageResource(R.drawable.absentees_report)
                 Constant.M_SCHOOL_STRENGTH -> imgMenu.setImageResource(R.drawable.school_strength)
                 Constant.M_QUIZ_EXAM -> imgMenu.setImageResource(R.drawable.quiz_icon)
