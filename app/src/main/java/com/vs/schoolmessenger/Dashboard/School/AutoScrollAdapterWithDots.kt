@@ -88,7 +88,7 @@ class AutoScrollAdapterWithDots(
                 Constant.M_ABSENTEES_REPORT -> itemImage.setImageResource(R.drawable.absentees_report)
                 Constant.M_SCHOOL_STRENGTH -> itemImage.setImageResource(R.drawable.school_strength)
                 Constant.M_NOTICEBOARD -> itemImage.setImageResource(R.drawable.noticeboard_icon)
-                Constant.M_SCHOOL_CLASS_EVENTS -> itemImage.setImageResource(R.drawable.graduationevent)
+                Constant.M_SCHOOL_CLASS_EVENTS -> itemImage.setImageResource(R.drawable.dashboard_events_calendar_icon)
                 Constant.M_SCHEDULE_EXAM_TEST -> itemImage.setImageResource(R.drawable.schedule_exam_icon)
                 Constant.M_MESSAGES_FROM_MANAGEMENT -> itemImage.setImageResource(R.drawable.message_f_management)
                 Constant.M_FINANCE -> itemImage.setImageResource(R.drawable.finance_icon)
@@ -109,7 +109,7 @@ class AutoScrollAdapterWithDots(
                 //Parent Side
                 Constant.M_CERTIFICATE_REQUEST -> itemImage.setImageResource(R.drawable.certificate_request)
                 Constant.M_CLASS_TIME_TABLE -> itemImage.setImageResource(R.drawable.timetable_icon)
-                Constant.M_PARENT_CLASS_EVENTS -> itemImage.setImageResource(R.drawable.graduationevent)
+                Constant.M_PARENT_CLASS_EVENTS -> itemImage.setImageResource(R.drawable.dashboard_events_calendar_icon)
                 Constant.M_EXAM -> itemImage.setImageResource(R.drawable.schedule_exam_icon)
                 Constant.M_FEE_DETAILS -> itemImage.setImageResource(R.drawable.fee_details)
                 Constant.M_INTERACTION_WITH_STAFF -> itemImage.setImageResource(R.drawable.interact_with_student)

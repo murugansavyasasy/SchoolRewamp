@@ -214,18 +214,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         if (fromNotification) {
             handleNotificationIntent(intent)
         } else {
-            //Run cleanup
-//            val cleaned = AppDataCleaner.clearOldDataIfNeeded(this)
-//            if (cleaned) {
-//                Log.d("Cleanup", "cleaned")
-//                // Optional: show a loading indicator since cleanup might take time
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    askNotificationPermission()
-//                }, 1500) // small delay after cleanup
-//            } else {
             askNotificationPermission()
-            // }
-
         }
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -236,8 +225,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             Log.d("AppHash", signature)
         }
 
-
-//        askNotificationPermission()
         authViewModel!!.isUserValidation?.observe(this) { response ->
             Constant.hideLoading(this@Splash)
             if (response != null) {
