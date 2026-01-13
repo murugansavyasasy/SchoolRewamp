@@ -33,11 +33,15 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
     var authViewModel: Auth? = null
     var Mobile_Number: String? = ""
     var Password: String? = ""
+
+    private var isToastShown = false
+
     private var appViewModel: App? = null
 
 
     override fun setupViews() {
         super.setupViews()
+        setupPasswordLimit()
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
@@ -242,6 +246,30 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
         jsonObject.addProperty(APIKeyNames.Req_password, password)
 
         authViewModel!!.isValidateUser(jsonObject, this)
+    }
+
+    private fun setupPasswordLimit() {
+        binding.txtPassword.filters = arrayOf(
+            InputFilter { source, start, end, dest, dstart, dend ->
+
+                val newLength = dest.length - (dend - dstart) + (end - start)
+
+                if (newLength > 20) {
+                    if (!isToastShown) {
+                        Toast.makeText(
+                            binding.txtPassword.context,
+                            "Password can be maximum 20 characters",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        isToastShown = true
+                    }
+                    "" // block input
+                } else {
+                    isToastShown = false // reset when valid
+                    null
+                }
+            }
+        )
     }
 
 
