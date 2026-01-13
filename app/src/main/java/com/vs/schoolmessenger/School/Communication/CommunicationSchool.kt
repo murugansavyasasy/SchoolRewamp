@@ -193,6 +193,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //        binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
@@ -211,6 +212,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         appViewModel!!.isGetTextHistory?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
                     binding.rytNORecordFound.visibility = View.GONE
@@ -1549,6 +1551,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.lnrHistoryList -> {
 
+                Constant.showLoading(this)
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     KeyboardUtils.hideKeyboard(this)
                     stopAudioProgressUpdate()
@@ -1800,7 +1804,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onItemClick(data: TextDetail, holder: TextHistoryAdapter.DataViewHolder) {
-
         binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
         binding.lnrHistoryList.visibility = View.VISIBLE
         binding.rlaBackRecord.visibility = View.GONE
