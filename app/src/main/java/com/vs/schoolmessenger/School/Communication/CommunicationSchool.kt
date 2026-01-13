@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
@@ -1837,6 +1838,18 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
         removeSelectedVoice()
+        //Latesly edited Code 13-01-2026
+        //onBackPressed()  try to check in the backpressed because i have cleared  Constant.isAwsUploadedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+
+        Constant.isAwsUploadedFiles.add(
+            AwsUploadedFiles(
+                isFileUrl = data.url, isFileType = Constant.AUDIO
+            )
+        )
+
+        //Latesly edited Code 13-01-2026
+        Log.d("isLog",data.url)
         // UI setup
         if (Constant.isCommunicationType == 2) {
             binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
@@ -2124,6 +2137,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mAdapter!!.releaseMediaPlayer()
         }
         Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()// Lastely added code 13 -01-2026
 
         if (binding.lnrHistoryList.isVisible == false) {
             binding.rytNORecordFound.visibility = View.GONE
