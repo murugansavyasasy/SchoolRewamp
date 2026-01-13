@@ -23,6 +23,7 @@
         android:layout_alignTop="@id/notification_icon"
         android:layout_toStartOf="@id/notification_icon"
         android:text="School Chimes"
+        android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp" />
 
     <TextView
@@ -35,6 +36,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:layout_toStartOf="@id/notification_icon"
+        android:textColor="@color/black"
         android:text="This is a new message from your school"
         android:textSize="@dimen/thirteen_sp" />
 

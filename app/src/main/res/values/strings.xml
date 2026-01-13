@@ -1064,6 +1064,8 @@
     <string name="there_are_no_meetings_planned_for_you_today">There are no meetings planned for you today</string>
     <string name="assignment_details_is_missing">Assignment details is missing.</string>
     <string name="no_section_found">No Section Found</string>
+    <string name="password_can_be_maximum_20_characters">Password can be maximum 20 characters</string>
+    <string name="enter_password_to_proceed">Enter password to proceed</string>
 
 
 </resources>

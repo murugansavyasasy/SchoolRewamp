@@ -46,6 +46,7 @@
                 android:layout_below="@+id/notification_title"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:textColor="@color/black"
                 android:text="@string/incoming_call"
                 android:textSize="11sp"
                 android:textStyle="bold" />
