@@ -70,7 +70,6 @@ class NotificationCallScreen :
     private var isUserResponse: String? = "NO"
 
 
-
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
     }
@@ -91,7 +90,7 @@ class NotificationCallScreen :
         binding.declineButton.setOnClickListener { endCallWithoutListening() }
 
         calculateTotalDuration {
-            Log.d("totalDurationMs",totalDurationMs.toString())
+            Log.d("totalDurationMs", totalDurationMs.toString())
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
 
@@ -104,6 +103,7 @@ class NotificationCallScreen :
         }
 
     }
+
     fun addAudio(url: String) {
         audioUrls = audioUrls!! + url
     }
@@ -120,10 +120,6 @@ class NotificationCallScreen :
         member_name = intent.getStringExtra(Constant.member_name)
         call_title = intent.getStringExtra(Constant.call_title)
 
-//        addAudio(welcomeUrl!!)
-//        addAudio(voiceUrl!!)
-
-
         ei1 = intent.getStringExtra(Constant.ei1)
         ei2 = intent.getStringExtra(Constant.ei2)
         ei3 = intent.getStringExtra(Constant.ei3)
@@ -133,7 +129,7 @@ class NotificationCallScreen :
         retrycount = intent.getStringExtra(Constant.retrycount)
         circular_id = intent.getStringExtra(Constant.circularId)
 
-        Log.d("Circular_id",receiver_id+" "+circular_id)
+        Log.d("Circular_id", receiver_id + " " + circular_id)
 
         binding.lblSchoolName.text = school_name
         binding.lblMemberName.text = "Calling - $member_name from"
@@ -141,18 +137,20 @@ class NotificationCallScreen :
 
         audioList.clear()
 
-        // Add welcome first if valid
-        if (!welcomeUrl.isNullOrEmpty() && welcomeUrl != "null" && welcomeUrl!!.isNotBlank()) {
+        if (!welcomeUrl.isNullOrEmpty() && welcomeUrl != "null") {
             audioList.add(welcomeUrl)
         }
-        // Add voice second if valid
-        if (!voiceUrl.isNullOrEmpty() && voiceUrl != "null" && voiceUrl!!.isNotBlank()) {
+        if (!voiceUrl.isNullOrEmpty() && voiceUrl != "null") {
             audioList.add(voiceUrl)
         }
 
         audioUrls = audioList.toTypedArray()
-        Log.d("AUDIO_ORDER", "Audio order: $audioList")
-        Log.d("audioUrlsFinal", audioUrls!!.size.toString())
+
+        Log.d("AUDIO_ORDER", audioUrls!!.joinToString())
+
+        calculateTotalDuration {
+            binding.lblTotalDuration.text = formatDuration(totalDurationMs)
+        }
     }
 
     private fun setupSwipeActions() {
@@ -168,12 +166,14 @@ class NotificationCallScreen :
                     isUserResponse = "NO"
 
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     val newX = event.rawX + dX
                     if (newX in binding.declineButton.x..binding.messageButton.x) {
                         view.x = newX
                     }
                 }
+
                 MotionEvent.ACTION_UP -> {
                     val moved = view.x - originalX
                     when {
@@ -211,12 +211,12 @@ class NotificationCallScreen :
                 playAudio(currentTrack)
             }.start()
 
-          isUserResponse = "OC"
+        isUserResponse = "OC"
 
     }
 
     private fun playAudio(index: Int) {
-        Log.d("audioUrls",audioUrls!!.size.toString())
+        Log.d("audioUrls", audioUrls!!.size.toString())
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
             finishPlayback()
             return
@@ -274,12 +274,21 @@ class NotificationCallScreen :
     }
 
     private fun calculateTotalDuration(onComplete: () -> Unit) {
-        if (audioUrls.isNullOrEmpty()) return
+
+        if (audioUrls.isNullOrEmpty()) {
+            Log.e("Duration", "Audio URLs empty, skipping duration")
+            return
+        }
 
         totalDurationMs = 0
         preparedCount = 0
 
         for (url in audioUrls!!) {
+            if (url.isNullOrEmpty()) {
+                preparedCount++
+                continue
+            }
+
             val tempPlayer = MediaPlayer()
             try {
                 tempPlayer.setAudioAttributes(
@@ -293,16 +302,53 @@ class NotificationCallScreen :
                     totalDurationMs += mp.duration
                     preparedCount++
                     mp.release()
-                    if (preparedCount == audioUrls!!.size) onComplete()
+
+                    if (preparedCount == audioUrls!!.size) {
+                        onComplete()
+                    }
                 }
                 tempPlayer.prepareAsync()
-            } catch (_: Exception) {
+            } catch (e: Exception) {
                 preparedCount++
                 tempPlayer.release()
-                if (preparedCount == audioUrls!!.size) onComplete()
+                if (preparedCount == audioUrls!!.size) {
+                    onComplete()
+                }
             }
         }
     }
+
+//    private fun calculateTotalDuration(onComplete: () -> Unit) {
+//
+//        if (audioUrls.isNullOrEmpty()) return
+//
+//        totalDurationMs = 0
+//        preparedCount = 0
+//
+//        for (url in audioUrls!!) {
+//            val tempPlayer = MediaPlayer()
+//            try {
+//                tempPlayer.setAudioAttributes(
+//                    AudioAttributes.Builder()
+//                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                        .setUsage(AudioAttributes.USAGE_MEDIA)
+//                        .build()
+//                )
+//                tempPlayer.setDataSource(url)
+//                tempPlayer.setOnPreparedListener { mp ->
+//                    totalDurationMs += mp.duration
+//                    preparedCount++
+//                    mp.release()
+//                    if (preparedCount == audioUrls!!.size) onComplete()
+//                }
+//                tempPlayer.prepareAsync()
+//            } catch (_: Exception) {
+//                preparedCount++
+//                tempPlayer.release()
+//                if (preparedCount == audioUrls!!.size) onComplete()
+//            }
+//        }
+//    }
 
     private fun finishPlayback() {
         stopUpdatingProgress()
@@ -310,7 +356,7 @@ class NotificationCallScreen :
         isEndTime = getNow()
         isListeningDuration = binding.lblCurrentDuration.text.toString()
         isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
-        Log.d("isTotalDurationListened",isTotalDurationListened.toString())
+        Log.d("isTotalDurationListened", isTotalDurationListened.toString())
 
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
@@ -329,7 +375,7 @@ class NotificationCallScreen :
         isEndTime = getNow()
         isListeningDuration = binding.lblCurrentDuration.text.toString()
         isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
-        Log.d("isTotalDurationListened",isTotalDurationListened.toString())
+        Log.d("isTotalDurationListened", isTotalDurationListened.toString())
 
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
@@ -353,7 +399,7 @@ class NotificationCallScreen :
         jsonObject.addProperty("circular_id", circular_id)
         jsonObject.addProperty("diallist_id", ei5)
         jsonObject.addProperty("call_status", isUserResponse)
-        Log.d("jsonObjectReq",jsonObject.toString())
+        Log.d("jsonObjectReq", jsonObject.toString())
         authViewModel!!.isUpdateNotificationCalllog(jsonObject, this)
         // TODO: call your API if needed
 
@@ -380,7 +426,8 @@ class NotificationCallScreen :
                 mediaPlayer?.stop()
                 mediaPlayer?.release()
                 mediaPlayer = null
-            } catch (ignored: Exception) {}
+            } catch (ignored: Exception) {
+            }
         }
     }
 
@@ -390,7 +437,8 @@ class NotificationCallScreen :
         try {
             mediaPlayer?.stop()
             mediaPlayer?.release()
-        } catch (ignored: Exception) {}
+        } catch (ignored: Exception) {
+        }
         mediaPlayer = null
     }
 
@@ -415,7 +463,8 @@ class NotificationCallScreen :
     private fun releasePlayer() {
         try {
             mediaPlayer?.release()
-        } catch (ignored: Exception) {}
+        } catch (ignored: Exception) {
+        }
         mediaPlayer = null
     }
 

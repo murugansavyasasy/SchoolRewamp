@@ -15,13 +15,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.HorizontalScrollView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.RelativeLayout
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -35,14 +41,18 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.Interface.OnMarksChangedListener
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.FilterState
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.InvalidMarkIssue
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.IssueDetail
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.IssueSummary
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkColumn
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MaxMarkIssue
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.SortConfig
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkApi
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkList
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Enum.SortField
+import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Enum.SortOrder
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
@@ -55,11 +65,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
     private var appViewModel: App? = null
+    private val savedFilters = mutableListOf<FilterState>()
+
     private var isStaffDetails: StaffDetails? = null
-    private var selectedSortId: Int = -1
-    private var selectedMaleSubSortId: Int = -1
-    private var selectedFemaleSubSortId: Int = -1
-    private var searchText: String = ""
+    private val ALL_TYPES = listOf(
+        "Student Name",
+        "Admission Number",
+        "Roll Number",
+        "Gender"
+    )
+    private val MAX_FILTER_COUNT = 4
 
     private var isAccessToken: String? = null
     private val SUBJECT_CELL_WIDTH = 200
@@ -465,6 +480,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         HorizontalScrollSync.bind(headerScroll)
     }
 
+
     private fun isGetMarkDetails() {
         Constant.showLoading(this)
         val json = JsonObject().apply {
@@ -528,196 +544,255 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
+    fun sortStudentMarkList(
+        list: MutableList<StudentMarkList>,
+        configs: List<SortConfig>
+    ) {
+        if (configs.isEmpty()) return
+
+        list.sortWith { a, b ->
+
+            for (config in configs) {
+
+                val result = when (config.field) {
+
+                    SortField.NAME ->
+                        a.name.compareTo(b.name, ignoreCase = true)
+
+                    SortField.ROLL_NO -> {
+                        val r1 = a.rollNo.toIntOrNull() ?: Int.MAX_VALUE
+                        val r2 = b.rollNo.toIntOrNull() ?: Int.MAX_VALUE
+                        r1.compareTo(r2)
+                    }
+
+                    SortField.ADMISSION_NO -> {
+                        val a1 = a.admission_no.toIntOrNull() ?: Int.MAX_VALUE
+                        val a2 = b.admission_no.toIntOrNull() ?: Int.MAX_VALUE
+                        a1.compareTo(a2)
+                    }
+
+                    SortField.GENDER ->
+                        a.gender.compareTo(b.gender, ignoreCase = true)
+                }
+
+                // if difference found → return immediately
+                if (result != 0) {
+                    return@sortWith if (config.order == SortOrder.ASC) {
+                        result
+                    } else {
+                        -result
+                    }
+                }
+            }
+            0 // all equal
+        }
+    }
+
     private fun showFilterDialog() {
 
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_filter_student)
-        dialog.setCancelable(true)
-
-        // 🔹 Transparent window (important)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // 🔹 Dim background
-        dialog.window?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        dialog.window?.setDimAmount(0.5f)
-
-        val displayMetrics = resources.displayMetrics
-        val screenWidth = displayMetrics.widthPixels
-
-        val sideMarginDp = 24
-        val sideMarginPx = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, sideMarginDp.toFloat(), displayMetrics
-        ).toInt()
 
         dialog.window?.setLayout(
-            screenWidth - (sideMarginPx * 2), ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        // ================= VIEW REFERENCES =================
-
-        val rgSort = dialog.findViewById<RadioGroup>(R.id.rgSort)
-
-        val rbMale = dialog.findViewById<RadioButton>(R.id.rbMale)
-        val rbFemale = dialog.findViewById<RadioButton>(R.id.rbFemale)
-
-        val rgMaleSubSort = dialog.findViewById<RadioGroup>(R.id.rgMaleSubSort)
-        val rgFemaleSubSort = dialog.findViewById<RadioGroup>(R.id.rgFemaleSubSort)
-
-        val etSearch = dialog.findViewById<EditText>(R.id.etSearch)
-
+        val container = dialog.findViewById<LinearLayout>(R.id.lytFilterContainer)
         val btnApply = dialog.findViewById<Button>(R.id.btnApply)
         val btnClear = dialog.findViewById<Button>(R.id.btnClear)
 
-        // ================= RESTORE STATE =================
+        container.removeAllViews()
 
-        if (selectedSortId != -1) rgSort.check(selectedSortId)
-        if (selectedMaleSubSortId != -1) rgMaleSubSort.check(selectedMaleSubSortId)
-        if (selectedFemaleSubSortId != -1) rgFemaleSubSort.check(selectedFemaleSubSortId)
-
-        etSearch.setText(searchText)
-
-        rgMaleSubSort.visibility = if (rbMale.isChecked) View.VISIBLE else View.GONE
-        rgFemaleSubSort.visibility = if (rbFemale.isChecked) View.VISIBLE else View.GONE
-
-        // ================= SHOW / HIDE SUB SORT =================
-
-        rbMale.setOnCheckedChangeListener { _, checked ->
-            rgMaleSubSort.visibility = if (checked) View.VISIBLE else View.GONE
-            if (checked) rgFemaleSubSort.visibility = View.GONE
+        if (savedFilters.isEmpty()) {
+            addFilterRow(container)
+        } else {
+            savedFilters.forEach {
+                addFilterRow(container, it)
+            }
         }
-
-        rbFemale.setOnCheckedChangeListener { _, checked ->
-            rgFemaleSubSort.visibility = if (checked) View.VISIBLE else View.GONE
-            if (checked) rgMaleSubSort.visibility = View.GONE
-        }
-
-        // ================= APPLY =================
 
         btnApply.setOnClickListener {
 
-            selectedSortId = rgSort.checkedRadioButtonId
-            selectedMaleSubSortId = rgMaleSubSort.checkedRadioButtonId
-            selectedFemaleSubSortId = rgFemaleSubSort.checkedRadioButtonId
-            searchText = etSearch.text.toString().trim()
+            savedFilters.clear()
 
-            var list = originalStudentsList.toList()
+            for (i in 0 until container.childCount) {
+                val row = container.getChildAt(i)
+                val type = row.findViewById<Spinner>(R.id.spnType).selectedItem.toString()
+                val value = row.findViewById<Spinner>(R.id.spnValue).selectedItem.toString()
 
-            // 🔍 Search
-            if (searchText.isNotEmpty()) {
-                list = list.filter {
-                    it.name.contains(searchText, true) || it.rollNo.contains(
-                        searchText,
-                        true
-                    ) || it.admission_no.contains(searchText, true)
+                if (type != "Select Type") {
+                    savedFilters.add(FilterState(type, value))
                 }
             }
 
-            // 👤 Gender
-            if (rbMale.isChecked) {
-                list = list.filter { it.gender.equals("Male", true) }
-            } else if (rbFemale.isChecked) {
-                list = list.filter { it.gender.equals("Female", true) }
-            }
+            // 🔹 APPLY SORT HERE (your existing sort function)
+            applySortUsingSavedFilters()
 
-            // 🔃 Sort
-            list = when {
-
-                selectedSortId == R.id.rbNameAZ -> list.sortedBy { it.name.lowercase() }
-
-                selectedSortId == R.id.rbNameZA -> list.sortedByDescending { it.name.lowercase() }
-
-                selectedSortId == R.id.rbNumberAsc -> list.sortedBy {
-                    it.admission_no.toIntOrNull() ?: Int.MAX_VALUE
-                }
-
-                selectedSortId == R.id.rbNumberDesc -> list.sortedByDescending {
-                    it.admission_no.toIntOrNull() ?: Int.MIN_VALUE
-                }
-
-                selectedSortId == R.id.rbRoleNumberAsc -> list.sortedBy {
-                    it.rollNo.toIntOrNull() ?: Int.MAX_VALUE
-                }
-
-                selectedSortId == R.id.rbRoleNumberDesc -> list.sortedByDescending {
-                    it.rollNo.toIntOrNull() ?: Int.MIN_VALUE
-                }
-
-                rbMale.isChecked && selectedMaleSubSortId != -1 -> applySubSort(
-                    list,
-                    selectedMaleSubSortId
-                )
-
-                rbFemale.isChecked && selectedFemaleSubSortId != -1 -> applySubSort(
-                    list,
-                    selectedFemaleSubSortId
-                )
-
-                else -> list
-            }
-
-            currentStudentsList.clear()
-            currentStudentsList.addAll(list)
-            binding.rvMarks.adapter?.notifyDataSetChanged()
-            updateEmptyState()
             dialog.dismiss()
         }
 
-        // ================= CLEAR =================
-
         btnClear.setOnClickListener {
 
-            selectedSortId = -1
-            selectedMaleSubSortId = -1
-            selectedFemaleSubSortId = -1
-            searchText = ""
+            // 1️⃣ Clear saved state
+            savedFilters.clear()
 
-            rgSort.clearCheck()
-            rgMaleSubSort.clearCheck()
-            rgFemaleSubSort.clearCheck()
+            // 2️⃣ Reset UI rows
+            container.removeAllViews()
+            addFilterRow(container)
 
-            rgMaleSubSort.visibility = View.GONE
-            rgFemaleSubSort.visibility = View.GONE
-
-            etSearch.setText("")
-
+            // 3️⃣ Reset list to original
             currentStudentsList.clear()
             currentStudentsList.addAll(originalStudentsList)
             binding.rvMarks.adapter?.notifyDataSetChanged()
-            updateEmptyState()
+
             dialog.dismiss()
         }
 
         dialog.show()
     }
 
+    private fun applySortUsingSavedFilters() {
+        val list = originalStudentsList.toMutableList()
 
-    private fun applySubSort(
-        list: List<StudentMarkList>, checkedId: Int
-    ): List<StudentMarkList> {
-
-        return when (checkedId) {
-
-            R.id.rbMaleAZ, R.id.rbFemaleAZ -> list.sortedBy { it.name.lowercase() }
-
-            R.id.rbMaleZA, R.id.rbFemaleZA -> list.sortedByDescending { it.name.lowercase() }
-
-            R.id.rbMaleAdmAsc, R.id.rbFemaleAdmAsc -> list.sortedBy {
-                it.admission_no.toIntOrNull() ?: Int.MAX_VALUE
+        val configs = savedFilters
+            .filter { it.type != "Gender" }
+            .map {
+                SortConfig(
+                    field = when (it.type) {
+                        "Student Name" -> SortField.NAME
+                        "Roll Number" -> SortField.ROLL_NO
+                        "Admission Number" -> SortField.ADMISSION_NO
+                        else -> SortField.NAME
+                    },
+                    order = if (it.value == "Ascending") SortOrder.ASC else SortOrder.DESC
+                )
             }
 
-            R.id.rbMaleAdmDesc, R.id.rbFemaleAdmDesc -> list.sortedByDescending {
-                it.admission_no.toIntOrNull() ?: Int.MIN_VALUE
+        sortStudentMarkList(list, configs)
+
+        currentStudentsList.clear()
+        currentStudentsList.addAll(list)
+        binding.rvMarks.adapter?.notifyDataSetChanged()
+    }
+
+    private fun addFilterRow(
+        container: LinearLayout,
+        state: FilterState? = null
+    ) {
+        val row = layoutInflater.inflate(R.layout.item_filter_row, container, false)
+
+        val spnType = row.findViewById<Spinner>(R.id.spnType)
+        val spnValue = row.findViewById<Spinner>(R.id.spnValue)
+        val imgAdd = row.findViewById<ImageView>(R.id.imgAddFilter)
+        val lytValueSpinner = row.findViewById<RelativeLayout>(R.id.lytValueSpinner)
+
+        // 🔹 REMOVE ALREADY SELECTED TYPES
+        val usedTypes = getSelectedTypes(container)
+
+        val typeList = mutableListOf("Select Type")
+        typeList.addAll(ALL_TYPES.filter { it !in usedTypes })
+
+        spnType.adapter = spinnerAdapter(typeList)
+
+        // 🔹 VALUE SPINNER (ALWAYS ASC/DESC)
+        fun loadValueSpinner(restore: String? = null) {
+            val values = listOf("Ascending", "Descending")
+            spnValue.adapter = spinnerAdapter(values)
+
+            restore?.let {
+                val idx = values.indexOf(it)
+                if (idx >= 0) spnValue.setSelection(idx)
+            }
+        }
+
+        // 🔹 RESTORE STATE
+        state?.let {
+            val index = typeList.indexOf(it.type)
+            if (index >= 0) {
+                spnType.setSelection(index)
+                loadValueSpinner(it.value)
+            }
+        }
+
+        spnType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                val selectedType = parent.getItemAtPosition(position).toString()
+
+                if (selectedType != "Select Type") {
+                    lytValueSpinner.visibility = View.VISIBLE
+                    loadValueSpinner()
+                } else {
+                    lytValueSpinner.visibility = View.GONE
+                }
             }
 
-            R.id.rbMaleRollAsc, R.id.rbFemaleRollAsc -> list.sortedBy {
-                it.rollNo.toIntOrNull() ?: Int.MAX_VALUE
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+        imgAdd.setOnClickListener {
+
+            val type = spnType.selectedItem?.toString() ?: "Select Type"
+            val value = spnValue.selectedItem?.toString() ?: ""
+
+            if (type == "Select Type" || value.isBlank()) {
+                Toast.makeText(
+                    this,
+                    "Please select type and order",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
 
-            R.id.rbMaleRollDesc, R.id.rbFemaleRollDesc -> list.sortedByDescending {
-                it.rollNo.toIntOrNull() ?: Int.MIN_VALUE
+            if (container.childCount >= MAX_FILTER_COUNT) {
+                Toast.makeText(
+                    this,
+                    "Maximum $MAX_FILTER_COUNT filters allowed",
+                    Toast.LENGTH_SHORT
+                ).show()
+                imgAdd.visibility = View.GONE
+                return@setOnClickListener
             }
 
-            else -> list
+            imgAdd.visibility = View.GONE
+            addFilterRow(container)
+        }
+
+
+
+        if (container.childCount > 0) {
+            container.getChildAt(container.childCount - 1)
+                .findViewById<ImageView>(R.id.imgAddFilter)
+                .visibility = View.GONE
+        }
+
+        container.addView(row)
+    }
+
+
+    private fun getSelectedTypes(container: LinearLayout): Set<String> {
+        val selected = mutableSetOf<String>()
+
+        for (i in 0 until container.childCount) {
+            val row = container.getChildAt(i)
+            val spnType = row.findViewById<Spinner>(R.id.spnType)
+            val type = spnType.selectedItem?.toString()
+            if (!type.isNullOrBlank() && type != "Select Type") {
+                selected.add(type)
+            }
+        }
+        return selected
+    }
+
+
+    private fun spinnerAdapter(list: List<String>): ArrayAdapter<String> {
+        return ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            list
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
     }
 
