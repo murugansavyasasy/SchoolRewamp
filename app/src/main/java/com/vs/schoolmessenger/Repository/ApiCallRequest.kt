@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Repository
 
+import android.util.Log
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
@@ -22,6 +23,7 @@ object ApiCallRequest {
         circularType: String,
         fileName: String
     ): JsonObject {
+        Log.d("isFilepath",Constant.isAwsUploadedFiles[0].isFileUrl)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
         jsonObject.addProperty(APIKeyNames.voice_link, Constant.isAwsUploadedFiles[0].isFileUrl)
