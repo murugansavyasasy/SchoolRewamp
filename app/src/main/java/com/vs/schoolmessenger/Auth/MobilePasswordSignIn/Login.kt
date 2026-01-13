@@ -33,6 +33,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
     var authViewModel: Auth? = null
     var Mobile_Number: String? = ""
     var Password: String? = ""
+
     private var appViewModel: App? = null
 
 

@@ -385,7 +385,7 @@
                 android:weightSum="1"
                 android:paddingHorizontal="@dimen/ten"
                 android:background="@drawable/field_background"
-                android:id="@+id/rytStart"
+                android:id="@+id/rytStart1"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -394,6 +394,7 @@
                 >
 
                 <RelativeLayout
+                    android:id="@+id/rlaStartDate"
                     android:layout_weight="0.65"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
@@ -480,7 +481,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rytStart"
+                android:layout_below="@+id/rytStart1"
                 android:layout_marginTop="@dimen/five">
 
                 <TextView

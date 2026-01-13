@@ -47,12 +47,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
 
     private var leaveRequestMonthWiseList: List<MonthWiseLeaveData>? = null
-
     var isSearching = false
-
-
     private var userDetails: UserDetails? = null
-
     private var msg_id: Int = -1
     private var headerId: String? = null
     private var instituteId: String? = null

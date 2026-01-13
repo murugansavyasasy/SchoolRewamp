@@ -174,12 +174,14 @@
     <TextView
         android:id="@+id/txtNoData"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
         android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/nomessage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

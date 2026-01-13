@@ -180,6 +180,7 @@
 
                         <!-- Icon -->
                         <LinearLayout
+                            android:id="@+id/lnrFromDateImg"
                             android:layout_width="@dimen/fourty"
                             android:layout_height="@dimen/fourty"
                             android:layout_marginEnd="@dimen/twele"
@@ -358,6 +359,7 @@
 
                         <!-- Icon -->
                         <LinearLayout
+                            android:id="@+id/lnrToDateImg"
                             android:layout_width="@dimen/fourty"
                             android:layout_height="@dimen/fourty"
                             android:layout_marginEnd="@dimen/twele"

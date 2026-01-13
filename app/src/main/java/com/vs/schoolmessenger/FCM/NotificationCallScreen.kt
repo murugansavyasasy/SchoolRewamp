@@ -69,6 +69,9 @@ class NotificationCallScreen :
     private var receiver_id: String? = ""
     private var isUserResponse: String? = "NO"
 
+    private var totalDurationCalculated = 0L
+
+
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -201,23 +204,62 @@ class NotificationCallScreen :
             .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
             .setDuration(300)
             .withEndAction {
+
                 binding.ringContainer.visibility = View.GONE
                 binding.acceptButton.visibility = View.GONE
                 binding.callEndButton.visibility = View.VISIBLE
 
-                if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
+                if (Constant.mediaPlayer.isPlaying) {
+                    Constant.mediaPlayer.stop()
+                }
+                totalElapsed = 0
+                totalDurationCalculated = 0L
+                currentTrack = 0
+                binding.lblCurrentDuration.text = "00:00"
+                binding.lblTotalDuration.text = "00:00"
 
                 isStartTime = getNow()
+
+                // ▶ Start playback from first audio
                 playAudio(currentTrack)
+
             }.start()
 
         isUserResponse = "OC"
-
     }
 
+//    private fun showConnectedState() {
+//        if (isCallConnected || isActivityClosing) return
+//
+//        isCallConnected = true
+//        isCallAccepted = true
+//
+//        stopCallAnimation()
+//        binding.declineButton.visibility = View.GONE
+//        binding.messageButton.visibility = View.GONE
+//
+//        binding.acceptButton.animate()
+//            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
+//            .setDuration(300)
+//            .withEndAction {
+//                binding.ringContainer.visibility = View.GONE
+//                binding.acceptButton.visibility = View.GONE
+//                binding.callEndButton.visibility = View.VISIBLE
+//
+//                if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
+//
+//                isStartTime = getNow()
+//                playAudio(currentTrack)
+//            }.start()
+//
+//        isUserResponse = "OC"
+//
+//    }
+
     private fun playAudio(index: Int) {
-        Log.d("audioUrls", audioUrls!!.size.toString())
+
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
+            binding.lblTotalDuration.text = formatDuration(totalDurationCalculated)
             finishPlayback()
             return
         }
@@ -232,10 +274,19 @@ class NotificationCallScreen :
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .build()
             )
+
             mediaPlayer!!.setDataSource(audioUrls!![index])
             mediaPlayer!!.prepareAsync()
 
             mediaPlayer!!.setOnPreparedListener { mp ->
+
+                // ✅ ADD duration when it is guaranteed
+                if (mp.duration > 0) {
+                    totalDurationCalculated += mp.duration
+                    binding.lblTotalDuration.text =
+                        formatDuration(totalDurationCalculated)
+                }
+
                 mp.start()
                 startUpdatingProgress()
             }
@@ -245,12 +296,51 @@ class NotificationCallScreen :
                 currentTrack++
                 playAudio(currentTrack)
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
             currentTrack++
             playAudio(currentTrack)
         }
     }
+
+
+//    private fun playAudio(index: Int) {
+//        Log.d("audioUrls", audioUrls!!.size.toString())
+//        if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
+//            finishPlayback()
+//            return
+//        }
+//
+//        releasePlayer()
+//        mediaPlayer = MediaPlayer()
+//
+//        try {
+//            mediaPlayer!!.setAudioAttributes(
+//                AudioAttributes.Builder()
+//                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                    .setUsage(AudioAttributes.USAGE_MEDIA)
+//                    .build()
+//            )
+//            mediaPlayer!!.setDataSource(audioUrls!![index])
+//            mediaPlayer!!.prepareAsync()
+//
+//            mediaPlayer!!.setOnPreparedListener { mp ->
+//                mp.start()
+//                startUpdatingProgress()
+//            }
+//
+//            mediaPlayer!!.setOnCompletionListener { mp ->
+//                totalElapsed += mp.duration
+//                currentTrack++
+//                playAudio(currentTrack)
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            currentTrack++
+//            playAudio(currentTrack)
+//        }
+//    }
 
     private fun startUpdatingProgress() {
         stopUpdatingProgress()

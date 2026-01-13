@@ -78,19 +78,22 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         super.setupViews()
         enableEdgeToEdge()
 
-        WindowCompat.getInsetsController(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // WHITE icons
-            isAppearanceLightNavigationBars = false
-        }
-
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            WindowCompat.getInsetsController(window, window.decorView).apply {
+                isAppearanceLightStatusBars = false // WHITE icons
+                isAppearanceLightNavigationBars = false
+            }
             // Android 10 and below → use legacy fullscreen flags
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         } else {
+            WindowCompat.getInsetsController(window, window.decorView).apply {
+                isAppearanceLightStatusBars = false // WHITE icons
+                isAppearanceLightNavigationBars = false
+            }
             // Android 11 and above → handle insets with customBottomNav
             ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -475,6 +478,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     override fun onResume() {
         super.onResume()
         enableEdgeToEdge()
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // WHITE icons
+            isAppearanceLightNavigationBars = false
+        }
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             // Android 10 and below → use legacy fullscreen flags
@@ -483,6 +490,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         } else {
+            WindowCompat.getInsetsController(window, window.decorView).apply {
+                isAppearanceLightStatusBars = false // WHITE icons
+                isAppearanceLightNavigationBars = false
+            }
             // Android 11 and above → handle insets with customBottomNav
             ViewCompat.setOnApplyWindowInsetsListener(binding.statusBarBackground) { view, insets ->
                 val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

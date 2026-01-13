@@ -37,7 +37,6 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
-
     private var instituteId: String? = null
     private var userDetails: UserDetails? = null
 

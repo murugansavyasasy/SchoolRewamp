@@ -244,6 +244,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
     ) {
 
         if (Constant.isParentChoose) {
+            Constant.isSelectedMenuName = ""
             when (data.menu_id) {
                 Constant.M_COMMUNICATION -> {
                     val detailIntent = Intent(this, CommunicationParent::class.java)
@@ -492,18 +493,14 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                     // default behavior
                 }
             }
-        } else if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
-            if (data.menu_id == Constant.M_NOTICEBOARD) {
-                val intent = Intent(this, NoticeBoard::class.java)
-                startActivity(intent)
-            } else {
+        }
+        else  {
+            if (data.menu_id == Constant.M_ATTACHMENTS || data.menu_id == Constant.M_COMMUNICATION) {
+                Constant.isSelectedMenuName = "Mgmt Msgs"
                 val intent = Intent(this, MessageFromManagement::class.java)
                 startActivity(intent)
             }
         }
-        else {
-            val intent = Intent(this, MessageFromManagement::class.java)
-            startActivity(intent)
-        }
+
     }
 }
