@@ -145,27 +145,38 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            } else {
+                Constant.errorAlert(
+                    this, this.getString(R.string.Oops), response!!.message
+                )
             }
         }
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            } else {
+                Constant.errorAlert(
+                    this, this.getString(R.string.Oops), response!!.message
+                )
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
-
+            } else {
+                Constant.errorAlert(
+                    this, this.getString(R.string.Oops), response!!.message
+                )
             }
         }
 
         appViewModel!!.isAssignmentSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null) {
-                Constant.showTopAlertPopup(response.message, this)
                 if (response.status) {
+                    Constant.showTopAlertPopup(response.message, this)
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
@@ -174,6 +185,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this, this.getString(R.string.Oops), response.message
+                    )
                 }
             }
         }
@@ -567,8 +582,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                 Constant.hideLoading(this)
                             }
                         }, 100)
-                    }
-                    else {
+                    } else {
                         isUploadFilesInServer("audio")
                     }
                 }

@@ -6,31 +6,29 @@
 
     <ImageView
         android:id="@+id/imgRemoveDate"
-        android:layout_width="@dimen/twenty"
-        android:layout_height="@dimen/twenty"
-        android:elevation="@dimen/ten"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
         android:layout_marginStart="@dimen/five"
+        android:elevation="@dimen/ten"
         android:src="@drawable/close_red_color">
 
     </ImageView>
 
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/bg_white_primary_shadow"
-        android:layout_height="wrap_content">
+        android:background="@drawable/bg_white_primary_shadow">
 
         <TextView
             android:id="@+id/lblScheduleDate"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:padding="@dimen/ten"
-            style="@style/CustomTextStylePoppinsBold"
-            android:text="01 Apr 2004"
-            >
-        </TextView>
+            android:text="01 Apr 2004"></TextView>
 
     </RelativeLayout>
 

@@ -357,6 +357,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
                 }
             }
         }
@@ -437,6 +443,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
                 }
             }
         }
@@ -455,6 +467,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
                 }
             }
         }
@@ -473,16 +491,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
                 }
             }
         }
 
         appViewModel!!.isAttachmentSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-            if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, this)
+            if (response != null) {
 
                 if (response.status) {
+                    Constant.showTopAlertPopup(response.message, this)
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
@@ -491,6 +515,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
                 }
             }
         }
@@ -1688,7 +1718,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     override fun onIdCheck(group: NameAndIds) {
         if (!isGroupSelectedIds.any { it.id == group.id }) {
             isGroupSelectedIds.add(group)
@@ -1818,7 +1847,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     fun isLsrwSkillSend() {
 
         runOnUiThread {
@@ -1905,22 +1933,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-        val isVoiceData = Constant.isVoiceSendingData
-        val jsonObject = ApiCallRequest.isVoiceSend(
-            isAcademicYearId = isAcademicYearId,
-            isCommunicationType = isVoiceData!!.isCommunicationType,
-            selectedDates = isVoiceData.selectedDates,
-            isStartTimeText = isVoiceData.isStartTimeText,
-            isEndTimeText = isVoiceData.isEndTimeText,
-            title = isVoiceData.title,
-            isEmergency = isVoiceData.isEmergency,
-            isScheduleCall = isVoiceData.isScheduleCall,
-            schoolId = selectedIds,
-            targetType = isTargetType!!,
-            circularType = isCircularType!!,
-            fileName = isVoiceData.isFileName
-        )
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+            val isVoiceData = Constant.isVoiceSendingData
+            val jsonObject = ApiCallRequest.isVoiceSend(
+                isAcademicYearId = isAcademicYearId,
+                isCommunicationType = isVoiceData!!.isCommunicationType,
+                selectedDates = isVoiceData.selectedDates,
+                isStartTimeText = isVoiceData.isStartTimeText,
+                isEndTimeText = isVoiceData.isEndTimeText,
+                title = isVoiceData.title,
+                isEmergency = isVoiceData.isEmergency,
+                isScheduleCall = isVoiceData.isScheduleCall,
+                schoolId = selectedIds,
+                targetType = isTargetType!!,
+                circularType = isCircularType!!,
+                fileName = isVoiceData.isFileName
+            )
+            appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
 
         }, 100)
     }
@@ -1935,22 +1963,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-        pendingBody = quizData!!
-        uploadedFiles.clear()
+            pendingBody = quizData!!
+            uploadedFiles.clear()
 
-        val filesToUpload = collectLocalFiles(quizData!!)
+            val filesToUpload = collectLocalFiles(quizData!!)
 
-        totalFilesToUpload = filesToUpload.size
-        currentIndex = 0
-        ProgressDialogHelper.updateProgress(0)
+            totalFilesToUpload = filesToUpload.size
+            currentIndex = 0
+            ProgressDialogHelper.updateProgress(0)
 
-        if (filesToUpload.isEmpty()) {
-            ProgressDialogHelper.updateProgress(100)
-            callApi(quizData!!)
-        } else {
-            pendingFiles = filesToUpload
-            uploadNextFile()
-        }
+            if (filesToUpload.isEmpty()) {
+                ProgressDialogHelper.updateProgress(100)
+                callApi(quizData!!)
+            } else {
+                pendingFiles = filesToUpload
+                uploadNextFile()
+            }
         }, 100)
     }
 

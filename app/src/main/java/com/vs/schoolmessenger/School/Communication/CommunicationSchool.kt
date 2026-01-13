@@ -137,8 +137,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
         binding.lblHistoryList.paintFlags =
@@ -288,14 +287,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
         Constant.setupEditTextWithScroll(
-            this,
-            binding.scrollRoot,
-            binding.edtContentTextMessage
+            this, binding.scrollRoot, binding.edtContentTextMessage
         )
         Constant.setupEditTextWithScroll(
-            this,
-            binding.scrollRoot,
-            binding.edtTitle
+            this, binding.scrollRoot, binding.edtTitle
         )
 
         binding.waveformSeekBar.setOnSeekChangeListener { progress ->
@@ -321,23 +316,58 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun initializeDefaultTimes() {
-        val now = Calendar.getInstance()
 
-        // From time = current time
-        fromHour24 = now.get(Calendar.HOUR_OF_DAY)
-        fromMinute = now.get(Calendar.MINUTE)
+        // From time = current time + 10 minutes
+        val fromCal = Calendar.getInstance()
+        fromCal.add(Calendar.MINUTE, 10)
 
-        // To time = current time + 40 minutes
-        val toCal = now.clone() as Calendar
+        fromHour24 = fromCal.get(Calendar.HOUR_OF_DAY)
+        fromMinute = fromCal.get(Calendar.MINUTE)
+        val toCal = fromCal.clone() as Calendar
         toCal.add(Calendar.MINUTE, 40)
 
         toHour24 = toCal.get(Calendar.HOUR_OF_DAY)
         toMinute = toCal.get(Calendar.MINUTE)
 
-        // Update UI
         binding.lblStartTime.text = formatTime12h(fromHour24!!, fromMinute!!)
+
         binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
     }
+
+
+//    private fun initializeDefaultTimes() {
+//        val now = Calendar.getInstance()
+//
+//        // From time = current time
+//        fromHour24 = now.get(Calendar.HOUR_OF_DAY)
+//        fromMinute = now.get(Calendar.MINUTE)
+//
+//        // To time = current time + 40 minutes
+//        val toCal = now.clone() as Calendar
+//        toCal.add(Calendar.MINUTE, 40)
+//
+//        toHour24 = toCal.get(Calendar.HOUR_OF_DAY)
+//        toMinute = toCal.get(Calendar.MINUTE)
+//
+//        // Update UI
+////        binding.lblStartTime.text = formatTime12h(fromHour24!!, fromMinute!!)
+//        val (hour24, minute) = getDefaultTimePlus10Minutes()
+//        fromHour24 = hour24
+//        fromMinute = minute
+//        binding.lblStartTime.text = formatTime12h(hour24, minute)
+//        binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
+//    }
+
+    private fun getDefaultTimePlus10Minutes(): Pair<Int, Int> {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MINUTE, 10)
+
+        val hour24 = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        return Pair(hour24, minute)
+    }
+
 
     private fun formatTime12h(hour24: Int, minute: Int): String {
         val cal = Calendar.getInstance().apply {
@@ -358,16 +388,50 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
         val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
 
-        val timePicker = TimePickerDialog(
-            context,
-            { _, selectedHour, selectedMinute ->
+        var isTimeSelected = false
 
-                // Save selected time
+        val timePicker = TimePickerDialog(
+            context, { _, selectedHour, selectedMinute ->
+
+                isTimeSelected = true
+
+                val selectedCal = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, selectedHour)
+                    set(Calendar.MINUTE, selectedMinute)
+                    set(Calendar.SECOND, 0)
+                }
+
+                val today = SimpleDateFormat(
+                    "dd-MM-yyyy",
+                    Locale.getDefault()
+                ).format(Date())
+
+                val isTodaySelected = selectedDates.contains(today)
+
+                // ===============================
+                // FROM TIME
+                // ===============================
                 if (isFromTime) {
+
+                    // 🔒 Only NOW-based restriction depends on today
+                    if (isTodaySelected) {
+                        val minAllowedCal = Calendar.getInstance()
+                        minAllowedCal.add(Calendar.MINUTE, 10)
+
+                        if (selectedCal.before(minAllowedCal)) {
+                            Toast.makeText(
+                                this,
+                                "From time must be at least 10 minutes from now",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            return@TimePickerDialog
+                        }
+                    }
+
                     fromHour24 = selectedHour
                     fromMinute = selectedMinute
 
-                    // Auto set TO time = FROM + 40 minutes
+                    // Auto TO = FROM + 40
                     val cal = Calendar.getInstance().apply {
                         set(Calendar.HOUR_OF_DAY, selectedHour)
                         set(Calendar.MINUTE, selectedMinute)
@@ -377,117 +441,69 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     toHour24 = cal.get(Calendar.HOUR_OF_DAY)
                     toMinute = cal.get(Calendar.MINUTE)
 
-                    // Update UI
                     binding.lblStartTime.text =
                         formatTime12h(fromHour24!!, fromMinute!!)
-                    binding.lblEndTime.text =
-                        formatTime12h(toHour24!!, toMinute!!)
-
-                } else {
-                    toHour24 = selectedHour
-                    toMinute = selectedMinute
-
-                    // Validate duration
-                    if (!isValidDuration()) {
-                        Toast.makeText(
-                            this,
-                            "End time must be at least 40 minutes after start time",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        toHour24 = null
-                        toMinute = null
-                        binding.lblEndTime.text = "Select time"
-                        return@TimePickerDialog
-                    }
 
                     binding.lblEndTime.text =
                         formatTime12h(toHour24!!, toMinute!!)
                 }
-            },
-            hour,
-            minute,
-            false // 12-hour mode
+                // ===============================
+                // TO TIME
+                // ===============================
+                else {
+
+                    if (fromHour24 != null && fromMinute != null) {
+
+                        val minToCal = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, fromHour24!!)
+                            set(Calendar.MINUTE, fromMinute!!)
+                            set(Calendar.SECOND, 0)
+                            add(Calendar.MINUTE, 40)
+                        }
+
+                        // 🔥 ALWAYS enforce 40-minute gap
+                        if (selectedCal.before(minToCal)) {
+                            Toast.makeText(
+                                this,
+                                "End time must be at least 40 minutes after start time",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            return@TimePickerDialog
+                        }
+                    }
+
+                    toHour24 = selectedHour
+                    toMinute = selectedMinute
+
+                    binding.lblEndTime.text =
+                        formatTime12h(toHour24!!, toMinute!!)
+                }
+
+            }, hour, minute, false
         )
+
+        // 🔒 Handle close without selection
+        timePicker.setOnCancelListener {
+            if (!isFromTime && !isTimeSelected &&
+                fromHour24 != null && fromMinute != null
+            ) {
+                val cal = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, fromHour24!!)
+                    set(Calendar.MINUTE, fromMinute!!)
+                    add(Calendar.MINUTE, 40)
+                }
+
+                toHour24 = cal.get(Calendar.HOUR_OF_DAY)
+                toMinute = cal.get(Calendar.MINUTE)
+
+                binding.lblEndTime.text =
+                    formatTime12h(toHour24!!, toMinute!!)
+            }
+        }
 
         timePicker.show()
     }
 
-
-    // Show time picker (modified)
-//    private fun showTimePickerDialog(
-//        context: Context,
-//        listener: TimeSelectedListener,
-//        preSelectedHour: Int?,
-//        preSelectedMinute: Int?
-//    ) {
-//        val calendar = Calendar.getInstance()
-//        val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
-//        val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
-//
-//        val timePicker = TimePickerDialog(
-//            context,
-//            { _, selectedHour, selectedMinute ->
-//                // Convert to 12h format for display
-//                val displayTime = formatTime12h(selectedHour, selectedMinute)
-//
-//                val amPm = if (selectedHour < 12) "AM" else "PM"
-//                val hour12 = when {
-//                    selectedHour == 0 -> 12
-//                    selectedHour > 12 -> selectedHour - 12
-//                    else -> selectedHour
-//                }
-//
-//                listener.onTimeSelected(hour12, selectedMinute, amPm)
-//
-//                // Save in 24h format
-//                if (isFromTime) {
-//                    fromHour24 = selectedHour
-//                    fromMinute = selectedMinute
-//
-//                    // Auto-update To time if it's before +40min
-//                    updateToTimeIfNeeded()
-//                } else {
-//                    toHour24 = selectedHour
-//                    toMinute = selectedMinute
-//
-//                    // Validate minimum 40 minutes duration
-//                    if (!isValidDuration()) {
-//                        Toast.makeText(
-//                            this,
-//                            "End time must be at least 40 minutes after start time",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//
-//                        // Reset to default (or keep previous valid)
-//                        toHour24 = null
-//                        toMinute = null
-//                        binding.lblEndTime.text = "Select time"
-//                    }
-//                }
-//            },
-//            hour, minute, false // false = 12-hour mode
-//        )
-//
-//        timePicker.show()
-//    }
-
-    // When From time changes → auto suggest +40 min for To (if To is not manually set)
-    private fun updateToTimeIfNeeded() {
-        if (toHour24 == null || toMinute == null) {
-            val cal = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, fromHour24!!)
-                set(Calendar.MINUTE, fromMinute!!)
-                add(Calendar.MINUTE, 40)
-            }
-            toHour24 = cal.get(Calendar.HOUR_OF_DAY)
-            toMinute = cal.get(Calendar.MINUTE)
-
-            binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
-        }
-    }
-
-    // Core validation: check if To ≥ From + 40 minutes
     private fun isValidDuration(): Boolean {
         if (fromHour24 == null || fromMinute == null || toHour24 == null || toMinute == null) {
             return true // let it pass if any is not set yet
@@ -801,8 +817,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 mediaPlayer?.let { player ->
                     if (player.isPlaying) {
 
-                        val progress =
-                            player.currentPosition.toFloat() / player.duration.toFloat()
+                        val progress = player.currentPosition.toFloat() / player.duration.toFloat()
 
                         binding.waveformSeekBar.updateWithLevel(progress)
                         updateCurrentTime(player.currentPosition)
@@ -984,6 +999,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
+                selectedDates.clear()
+                selectedDatesAdapter?.submitSelectedDates(emptyList())
                 KeyboardUtils.hideKeyboard(this)
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
@@ -1020,6 +1037,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
+                selectedDates.clear()
+                selectedDatesAdapter?.submitSelectedDates(emptyList())
                 KeyboardUtils.hideKeyboard(this)
                 binding.lblDurationOfVoice.text = Constant._00_00_03_00
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
@@ -1097,10 +1116,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 KeyboardUtils.hideKeyboard(this)
                 isFromTime = true
                 showTimePickerDialog(
-                    this,
-                    this, // assuming activity implements TimeSelectedListener
-                    fromHour24,
-                    fromMinute
+                    this, this, // assuming activity implements TimeSelectedListener
+                    fromHour24, fromMinute
                 )
             }
 
@@ -1121,6 +1138,22 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     preMin
                 )
             }
+
+
+//            R.id.rlaToTime -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                isFromTime = false
+//
+//                val preHour = toHour24 ?: fromHour24
+//                val preMin = toMinute ?: fromMinute?.plus(40)?.let {
+//                    if (it >= 60) it - 60 else it
+//                }
+//                val carryHour = if (fromMinute != null && fromMinute!! + 40 >= 60) 1 else 0
+//
+//                showTimePickerDialog(
+//                    this, this, preHour?.plus(carryHour), preMin
+//                )
+//            }
 
             R.id.lnrScheduleCall -> {
                 KeyboardUtils.hideKeyboard(this)
@@ -1148,8 +1181,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         val selectedCal = Calendar.getInstance()
                         selectedCal.time = sdf.parse(dateStr)!!
                         val isToday =
-                            now.get(Calendar.YEAR) == selectedCal.get(Calendar.YEAR) &&
-                                    now.get(Calendar.DAY_OF_YEAR) == selectedCal.get(Calendar.DAY_OF_YEAR)
+                            now.get(Calendar.YEAR) == selectedCal.get(Calendar.YEAR) && now.get(
+                                Calendar.DAY_OF_YEAR
+                            ) == selectedCal.get(Calendar.DAY_OF_YEAR)
                         if (isToday && pickedTimeText.isNotEmpty()) {
                             val pickedTimeOnly = tf.parse(pickedTimeText)!!
                             val pickedCal = Calendar.getInstance().apply {
@@ -1235,11 +1269,22 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.rlaSendVoice -> {
                 KeyboardUtils.hideKeyboard(this)
+
                 if (Constant.isVoiceType == 3) {
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
                                 if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
+
+                                    if (isPastTimeForToday()) {
+                                        Constant.showValidationAlertPopup(
+                                            getString(R.string.alert),
+                                            getString(R.string.do_not_allow_past_time),
+                                            this
+                                        )
+                                        return
+                                    }
+
                                     if (selectedDates.isNotEmpty()) {
                                         isGoToRecipient()
                                     } else {
@@ -1274,6 +1319,16 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
                                 if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
+
+                                    if (isPastTimeForToday()) {
+                                        Constant.showValidationAlertPopup(
+                                            getString(R.string.alert),
+                                            getString(R.string.do_not_allow_past_time),
+                                            this
+                                        )
+                                        return
+                                    }
+
                                     if (selectedDates.isNotEmpty()) {
                                         isGoToRecipient()
                                     } else {
@@ -1305,6 +1360,80 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 }
             }
+
+
+//            R.id.rlaSendVoice -> {
+//                KeyboardUtils.hideKeyboard(this)
+//                if (Constant.isVoiceType == 3) {
+//                    if (Constant.selectedFiles.isNotEmpty()) {
+//                        if (binding.edtTitle.text.toString().isNotBlank()) {
+//                            if (isScheduleCall) {
+//                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
+//                                    if (selectedDates.isNotEmpty()) {
+//                                        isGoToRecipient()
+//                                    } else {
+//                                        Constant.showValidationAlertPopup(
+//                                            getString(R.string.alert),
+//                                            getString(R.string.Select_schedule_date),
+//                                            this
+//                                        )
+//                                    }
+//                                } else {
+//                                    Constant.showValidationAlertPopup(
+//                                        getString(R.string.alert),
+//                                        getString(R.string.select_the_time),
+//                                        this
+//                                    )
+//                                }
+//                            } else {
+//                                isGoToRecipient()
+//                            }
+//                        } else {
+//                            binding.edtTitle.error = getString(R.string.This_field_required)
+//                        }
+//                    } else {
+//                        Constant.showValidationAlertPopup(
+//                            getString(R.string.alert),
+//                            getString(R.string.Voice_title_required),
+//                            this
+//                        )
+//                    }
+//                } else {
+//                    if (Constant.selectedFiles.isNotEmpty()) {
+//                        if (binding.edtTitle.text.toString().isNotBlank()) {
+//                            if (isScheduleCall) {
+//                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
+//                                    if (selectedDates.isNotEmpty()) {
+//                                        isGoToRecipient()
+//                                    } else {
+//                                        Constant.showValidationAlertPopup(
+//                                            getString(R.string.alert),
+//                                            getString(R.string.Select_schedule_date),
+//                                            this
+//                                        )
+//                                    }
+//                                } else {
+//                                    Constant.showValidationAlertPopup(
+//                                        getString(R.string.alert),
+//                                        getString(R.string.select_the_time),
+//                                        this
+//                                    )
+//                                }
+//                            } else {
+//                                isGoToRecipient()
+//                            }
+//                        } else {
+//                            binding.edtTitle.error = getString(R.string.This_field_required)
+//                        }
+//                    } else {
+//                        Constant.showValidationAlertPopup(
+//                            getString(R.string.alert),
+//                            getString(R.string.Voice_title_required),
+//                            this
+//                        )
+//                    }
+//                }
+//            }
 
             R.id.imgVoicePlay -> {
 
@@ -1462,6 +1591,21 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
+    private fun isPastTimeForToday(): Boolean {
+        if (selectedDates.isEmpty()) return false
+        val today = SimpleDateFormat(
+            "dd-MM-yyyy", Locale.getDefault()
+        ).format(Date())
+
+        if (!selectedDates.contains(today)) return false
+        val selectedCal = Calendar.getInstance()
+        selectedCal.set(Calendar.HOUR_OF_DAY, fromHour24 ?: return false)
+        selectedCal.set(Calendar.MINUTE, fromMinute ?: return false)
+        selectedCal.set(Calendar.SECOND, 0)
+        val now = Calendar.getInstance()
+        return selectedCal.before(now)
+    }
+
 
     private fun validateAndSetTime(hour: Int, minute: Int, amPm: String): Boolean {
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
@@ -1487,7 +1631,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (selectedCal.before(calNow)) {
                 Toast.makeText(
                     this,
-                    getString(R.string.you_cannot_select_a_past_time_for_today), Toast.LENGTH_SHORT
+                    getString(R.string.you_cannot_select_a_past_time_for_today),
+                    Toast.LENGTH_SHORT
                 ).show()
 
                 // Clear the respective label
@@ -1507,8 +1652,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun isGoToRecipient() {
         val isStaffRole = isUserDetails!!.staff_role
         if (isMultipleSchool) {
-            if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
-            ) {
+            if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole) {
                 val intent = Intent(this, SchoolList::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 isSaveTheVoiceData()
@@ -1581,20 +1725,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         lblTypeCommunication.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.imgVoiceMessage.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.mic_icon_black
+                this, R.drawable.mic_icon_black
             )
         )
         binding.imgScheduleCall.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.call_schedule_icon_black
+                this, R.drawable.call_schedule_icon_black
             )
         )
         binding.imgTextMessage.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.text_icon_black
+                this, R.drawable.text_icon_black
             )
         )
 
@@ -1802,8 +1943,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaAddLocalFile.visibility = View.GONE
         binding.imgVoiceRecord.setImageDrawable(
             ContextCompat.getDrawable(
-                this@CommunicationSchool,
-                R.drawable.record_icon
+                this@CommunicationSchool, R.drawable.record_icon
             )
         )
         mediaRecorder = null
@@ -1947,8 +2087,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun isScreenLocked(): Boolean {
-        val keyguardManager =
-            getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+        val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
         return keyguardManager.isKeyguardLocked
     }
 

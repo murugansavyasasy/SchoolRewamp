@@ -159,12 +159,24 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            }else {
+                Constant.errorAlert(
+                    this,
+                    this.getString(R.string.Oops),
+                    response!!.message
+                )
             }
         }
         appViewModel!!.isAttachmentSend?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            }else {
+                Constant.errorAlert(
+                    this,
+                    this.getString(R.string.Oops),
+                    response!!.message
+                )
             }
         }
 
@@ -172,6 +184,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            }else {
+                Constant.errorAlert(
+                    this,
+                    this.getString(R.string.Oops),
+                    response!!.message
+                )
             }
         }
 
@@ -179,6 +197,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
+            }else {
+                Constant.errorAlert(
+                    this,
+                    this.getString(R.string.Oops),
+                    response!!.message
+                )
             }
         }
 
