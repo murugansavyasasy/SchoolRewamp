@@ -159,7 +159,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
-            }else {
+            } else {
                 Constant.errorAlert(
                     this,
                     this.getString(R.string.Oops),
@@ -171,7 +171,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
-            }else {
+            } else {
                 Constant.errorAlert(
                     this,
                     this.getString(R.string.Oops),
@@ -184,7 +184,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
-            }else {
+            } else {
                 Constant.errorAlert(
                     this,
                     this.getString(R.string.Oops),
@@ -197,7 +197,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
-            }else {
+            } else {
                 Constant.errorAlert(
                     this,
                     this.getString(R.string.Oops),
@@ -771,19 +771,19 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-        val jsonObject = ApiCallRequest.isSendAttachment(
-            isAcademicYearId = isAcademicYearId,
-            selectedIds = selectedSchoolIds,
-            title = Constant.isCommonTitle,
-            description = Constant.isCommonDescription,
-            targetType = Constant.isSchool,
-            iframe = isIframe,
-            fileSize = isFileSize,
-        )
-        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+            val jsonObject = ApiCallRequest.isSendAttachment(
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedSchoolIds,
+                title = Constant.isCommonTitle,
+                description = Constant.isCommonDescription,
+                targetType = Constant.isSchool,
+                iframe = isIframe,
+                fileSize = isFileSize,
+            )
+            appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
 
         }, 100)
-        }
+    }
 
 
     fun noticeboardsendapi() {
@@ -792,37 +792,38 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-        val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
-        var intendedFor = ""
+            val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
+            var intendedFor = ""
 
-        if (selectedRadioId != -1) {
-            findViewById<RadioButton>(selectedRadioId)
-            intendedFor = when (selectedRadioId) {
-                R.id.radioAll -> Constant.all__
-                R.id.radioStaff -> Constant.staff
-                R.id.radioStudent -> Constant.student
-                else -> ""
-            }
+            if (selectedRadioId != -1) {
+                findViewById<RadioButton>(selectedRadioId)
+                intendedFor = when (selectedRadioId) {
+                    R.id.radioAll -> Constant.all__
+                    R.id.radioStaff -> Constant.staff
+                    R.id.radioStudent -> Constant.student
+                    else -> ""
+                }
 //            intendedFor = selectedRadioButton.text.toString().lowercase() // Force lowercase
-        }
+            }
 
-        val noticeDetails = intent.getSerializableExtra(Constant.notice_data) as? NoticeBoardDetails
-        if (noticeDetails != null) {
-            val jsonObject = ApiCallRequest.isSendNotice(
-                title = noticeDetails.title,
-                description = noticeDetails.description,
-                startDate = noticeDetails.txtStartDate,
-                endDate = noticeDetails.txtEndDate,
-                target_code = selectedSchoolIds,
-                intended_for = intendedFor,
-                iframe = isIframe,
-                fileSize = isFileSize,
-            )
-            Log.d("Object", jsonObject.toString())
-            appViewModel!!.sendnotice(isAccessToken!!, jsonObject, this)
+            val noticeDetails =
+                intent.getSerializableExtra(Constant.notice_data) as? NoticeBoardDetails
+            if (noticeDetails != null) {
+                val jsonObject = ApiCallRequest.isSendNotice(
+                    title = noticeDetails.title,
+                    description = noticeDetails.description,
+                    startDate = noticeDetails.txtStartDate,
+                    endDate = noticeDetails.txtEndDate,
+                    target_code = selectedSchoolIds,
+                    intended_for = intendedFor,
+                    iframe = isIframe,
+                    fileSize = isFileSize,
+                )
+                Log.d("Object", jsonObject.toString())
+                appViewModel!!.sendnotice(isAccessToken!!, jsonObject, this)
 
-        }
-    }, 100)
+            }
+        }, 100)
 
     }
 
