@@ -228,4 +228,9 @@
 
 
 
+    <color name="notification_title">#0D47A1</color>         <!-- dark blue -->
+    <color name="notification_body">#212121</color>          <!-- near black -->
+    <color name="notification_body_dark">#FFFFFF</color>     <!-- optional fallback -->
+    <color name="notification_accent">#1976D2</color>
+
 </resources>
