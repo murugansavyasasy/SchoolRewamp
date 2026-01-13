@@ -139,11 +139,15 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
         }
 
 
-        val channel = NotificationChannel(
-            Constant.reminder_channel, Constant.Reminders, NotificationManager.IMPORTANCE_HIGH
-        )
-        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        manager.createNotificationChannel(channel)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                Constant.reminder_channel,
+                Constant.Reminders,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+        }
     }
 
     private fun scrollToMessageId(headerId: String?) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.SchoolChimes" parent="android:Theme.Material.Light.NoActionBar" >
     </style>
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/PrimaryColor</item>
         <!-- Defining that new color in ColorPrimaryDark -->

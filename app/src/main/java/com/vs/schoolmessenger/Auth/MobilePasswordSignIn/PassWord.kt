@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
 import android.graphics.Paint
+import android.text.InputFilter
 import android.text.InputType
 import android.view.View
 import android.widget.Toast
@@ -22,6 +23,7 @@ import com.vs.schoolmessenger.databinding.PassWordNewBinding
 class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
     private var isPasswordVisible = false
+
     override fun getViewBinding(): PassWordNewBinding {
         return PassWordNewBinding.inflate(layoutInflater)
     }

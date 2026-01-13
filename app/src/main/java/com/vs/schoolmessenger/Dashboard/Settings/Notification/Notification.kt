@@ -244,6 +244,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
     ) {
 
         if (Constant.isParentChoose) {
+            Constant.isSelectedMenuName = ""
             when (data.menu_id) {
                 Constant.M_COMMUNICATION -> {
                     val detailIntent = Intent(this, CommunicationParent::class.java)
