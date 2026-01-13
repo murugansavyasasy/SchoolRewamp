@@ -47,6 +47,33 @@
                 android:text="@string/fee_details"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp" />
+
+            <RelativeLayout
+                android:id="@+id/rytRefresh"
+                android:layout_width="0dp"
+                android:gravity="end"
+                android:visibility="visible"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/lblRef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Refresh"
+                    android:textColor="@color/PrimaryColor"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <ImageView
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblRef"
+                    android:id="@+id/imgBack"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:src="@drawable/refresh" />
+
+
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
