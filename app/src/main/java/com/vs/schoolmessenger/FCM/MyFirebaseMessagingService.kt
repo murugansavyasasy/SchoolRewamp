@@ -61,6 +61,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
         val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         var msgInfo: String? = null
+        Log.d("isNotificationType",remoteMessage.data[Constant.type_].toString())
         if (!type.equals(Constant.isCall)) {
             Log.d("msg_info","msg_info")
             msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
