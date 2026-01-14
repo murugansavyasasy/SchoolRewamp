@@ -325,6 +325,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
                 itemView.setBackgroundColor(Color.parseColor("#FFE082"))
 
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     itemView.background = originalBackground
                 }, 3000)
