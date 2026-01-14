@@ -1762,30 +1762,44 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
     private fun openCameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null) {
-            val photoFile: File? = try {
-                createImageFile()
-            } catch (ex: IOException) {
-                ex.printStackTrace()
-                null
-            }
 
-            if (photoFile != null) {
-                val photoURI = FileProvider.getUriForFile(
-                    this, "${applicationContext.packageName}.fileprovider", photoFile
-                )
-                cameraImageFilePath = photoFile.absolutePath
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.CAMERA_IMAGE_REQUEST)
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.could_not_create_file_for_photo),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
+        val photoFile = try {
+            createImageFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+
+        if (photoFile == null) {
+            Toast.makeText(
+                this,
+                getString(R.string.could_not_create_file_for_photo),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val photoURI = FileProvider.getUriForFile(
+            this,
+            "${applicationContext.packageName}.fileprovider",
+            photoFile
+        )
+
+        cameraImageFilePath = photoFile.absolutePath
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        try {
+            startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
+        } catch (e: Exception) {
+            Toast.makeText(
+                this,
+                "Camera not available on this device",
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.e("CameraError", "Camera launch failed", e)
         }
     }
 

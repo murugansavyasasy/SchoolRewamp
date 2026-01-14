@@ -669,42 +669,48 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
     private fun openCameraIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-        // Check if there's a camera app
-        if (takePictureIntent.resolveActivity(packageManager) == null) {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val photoFile: File? = try {
+        val photoFile = try {
             createImageFile()
-        } catch (ex: IOException) {
-            ex.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
             null
         }
 
         if (photoFile == null) {
-            Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.could_not_create_file_for_photo),
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
-        val photoURI: Uri = FileProvider.getUriForFile(
+        val photoURI = FileProvider.getUriForFile(
             this,
             "${applicationContext.packageName}.fileprovider",
             photoFile
         )
 
-        cameraImageFilePath = photoFile.absolutePath  // keep your path
+        cameraImageFilePath = photoFile.absolutePath
 
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        // Extra flags — helps on some OEM ROMs
-        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-
-        startActivityForResult(takePictureIntent, CAMERA_IMAGE_REQUEST)
+        try {
+            startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
+        } catch (e: Exception) {
+            Toast.makeText(
+                this,
+                "Camera not available on this device",
+                Toast.LENGTH_SHORT
+            ).show()
+            Log.e("CameraError", "Camera launch failed", e)
+        }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

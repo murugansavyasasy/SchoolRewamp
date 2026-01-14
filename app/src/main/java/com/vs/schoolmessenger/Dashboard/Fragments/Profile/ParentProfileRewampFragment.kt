@@ -599,7 +599,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CreateEvent.CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
             } else {
                 Toast.makeText(
                     requireContext(),
