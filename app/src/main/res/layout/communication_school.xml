@@ -391,7 +391,8 @@
                         android:layout_marginTop="@dimen/ten"
                         android:numColumns="3"
                         android:visibility="gone"
-                        tools:listitem="@layout/schedule_call_date_data"></com.vs.schoolmessenger.Utils.ExpandableGridView>
+                        tools:listitem="@layout/schedule_call_date_data">
+                    </com.vs.schoolmessenger.Utils.ExpandableGridView>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcyHistoryDataVoiceAndText"
@@ -400,7 +401,8 @@
                         android:layout_below="@+id/gridViewScheduleCall"
                         android:layout_marginTop="@dimen/ten"
                         android:visibility="gone"
-                        tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
+                        tools:listitem="@layout/history_from_text_message">
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:id="@+id/rytNORecordFound"
