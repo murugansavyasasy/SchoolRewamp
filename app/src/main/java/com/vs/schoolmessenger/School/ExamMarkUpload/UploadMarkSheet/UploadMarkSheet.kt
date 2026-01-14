@@ -42,11 +42,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
@@ -226,6 +228,17 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             Constant.hideLoading(this@UploadMarkSheet)
             if (response != null) {
                 if (response.status == true || response.data != null) {
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_upload_marks)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
+
                     Constant.isExtractedDetails = emptyList()
                     extractedDetails = listOf(response.data!!)
                     Constant.isExtractedDetails = extractedDetails

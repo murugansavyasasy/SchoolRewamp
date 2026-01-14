@@ -10,9 +10,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
@@ -93,6 +95,17 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 ).show()
                 return@observe
             }
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.mobile_number, mobileNumber)
+                addProperty(APIKeyNames.activity, Constant.add_points_abesntees_report)
+                addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+            }
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
+
+
             if (response.status) {
                 val studentList = response.data ?: emptyList()
                 bindStudentList(studentList)

@@ -179,6 +179,17 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.rcMessageStaff.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
+
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_mngt_messages)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                }
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
+
             } else {
                 binding.rytSpinner.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE

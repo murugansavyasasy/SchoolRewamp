@@ -27,11 +27,13 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -390,6 +392,15 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
     private fun paymentSuccess(title: String, msg: String) {
+        val mobileNumber = SharedPreference.getMobileNumber(this)
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.mobile_number, mobileNumber)
+            addProperty(APIKeyNames.activity, Constant.add_points_pay_fees)
+            addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+            addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+        }
+        appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
         val dialogView =
             LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)
         val builder = AlertDialog.Builder(this@FeeDetails)

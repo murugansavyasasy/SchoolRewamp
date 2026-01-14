@@ -139,6 +139,14 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         appViewModel!!.isPunchAttendance?.observe(this) { response ->
             if (response!!.status) {
                 Constant.hideLoading(this)
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_mark_punch_attendance)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                }
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
                 Constant.showTopAlertPopup(response.message, this)
             }
         }

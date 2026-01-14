@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.PTM.Adapter.CheckAvailableSlotsDate
 import com.vs.schoolmessenger.School.PTM.Adapter.CustomCalendar
@@ -153,6 +154,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 bottomSheetDialog?.dismiss()
                 if (response.status) {
                     Constant.showTopAlertPopup(response.message, this)
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_ptm)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
                 } else {
                     Constant.showTopAlertPopup(getString(R.string.slot_creation_failed), this)
                 }

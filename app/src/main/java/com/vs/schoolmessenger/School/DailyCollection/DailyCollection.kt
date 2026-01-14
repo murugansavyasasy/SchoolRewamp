@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyData
@@ -94,6 +96,15 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.mobile_number, mobileNumber)
+                addProperty(APIKeyNames.activity, Constant.add_points_view_collections)
+                addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+            }
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
 
             if (response.status) {
                 isLoadDailyCollectionData(response.data)

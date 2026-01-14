@@ -6,11 +6,13 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
@@ -85,6 +87,16 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                     binding.progressBarGender.genderProgressLayout.visibility = View.VISIBLE
                     binding.genderdistribu1tionlabel.visibility = View.VISIBLE
                     setupPieChart(response.data)
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_school_strength)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
                 } else {
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility = View.VISIBLE

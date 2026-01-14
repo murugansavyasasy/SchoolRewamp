@@ -143,6 +143,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         if (fromNotification) {
                             scrollToMessageId(headerId)
                         }
+
+
                     } else {
                         hasFetchedMore = true
                         if (allVoiceData.isNotEmpty()) {
@@ -175,6 +177,16 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 if (response?.status == true) {
                     appendData(response.data, archiveFlag = false)
                     scrollToMessageId(headerId)
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_messages)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
                 } else {
                     if (allVoiceData.isNotEmpty()) {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE

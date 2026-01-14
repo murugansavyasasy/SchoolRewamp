@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffChatAdapter
@@ -15,6 +16,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.FilePath
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -68,6 +70,16 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
                 showErrorUI(getString(R.string.Something_went_wrong_Please_try_again))
                 return@observe
             }
+
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.mobile_number, mobileNumber)
+                addProperty(APIKeyNames.activity, Constant.add_points_view_chat_messages)
+                addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+            }
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
             if (response.status) {
                 isLoadChatData(response.data)
             } else {

@@ -128,6 +128,16 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
                 binding.rytsearch1.visibility = View.GONE
 
             }
+
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.mobile_number, mobileNumber)
+                addProperty(APIKeyNames.activity, Constant.add_points_interaction_with_student)
+                addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+            }
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
         }
 
         binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {

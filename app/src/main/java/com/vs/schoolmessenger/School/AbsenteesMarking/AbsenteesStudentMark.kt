@@ -148,6 +148,17 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     Constant.hideLoading(this@AbsenteesStudentMark)
                     Constant.showDataValidation(getString(R.string.fail), response.message, this)
                 }
+
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_mark_attendance)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                }
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
+
             } else {
                 Constant.hideLoading(this@AbsenteesStudentMark)
                 Constant.showDataValidation(
