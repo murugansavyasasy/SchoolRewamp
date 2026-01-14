@@ -7,9 +7,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -229,6 +231,16 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                 binding.bottomsheettimetable.imgNoData.visibility = View.GONE
                 binding.bottomsheettimetable.txtNoData.visibility = View.GONE
                 setupScheduleRecyclerView()
+                val mobileNumber = SharedPreference.getMobileNumber(this)
+                val jsonObject = JsonObject().apply {
+                    addProperty(APIKeyNames.mobile_number, mobileNumber)
+                    addProperty(APIKeyNames.activity, Constant.add_points_view_time_table)
+                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                }
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
+
             } else {
                 timeTableDataList = emptyList()
                 recyclerViewSchedule.visibility = View.GONE

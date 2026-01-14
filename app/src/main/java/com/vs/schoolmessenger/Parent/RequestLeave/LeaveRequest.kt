@@ -67,7 +67,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     override fun setupViews() {
         super.setupViews()
-//        isToolBarPrimaryTheme()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -90,7 +89,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 

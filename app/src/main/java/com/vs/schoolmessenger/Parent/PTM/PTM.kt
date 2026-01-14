@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
 import com.vs.schoolmessenger.Parent.PTM.DataClass.SubjectData
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -150,6 +151,15 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                         binding.rytNoDataFound.visibility = View.GONE
                         binding.recyclerViewSlots.visibility = View.VISIBLE
                         isLoadData(response.data)
+
+                        val mobileNumber = SharedPreference.getMobileNumber(this)
+                        val jsonObject = JsonObject().apply {
+                            addProperty(APIKeyNames.mobile_number, mobileNumber)
+                            addProperty(APIKeyNames.activity, Constant.add_points_view_ptm)
+                            addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                            addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                        }
+                        appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
 
 
                     } else {

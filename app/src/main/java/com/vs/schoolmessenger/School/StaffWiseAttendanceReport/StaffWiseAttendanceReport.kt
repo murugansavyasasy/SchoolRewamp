@@ -12,12 +12,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.StaffAttendanceReportAdapter
@@ -91,6 +93,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                     binding.lytNoRecordFound.visibility = View.GONE
                     val isStaffReport = response.data
                     isLoadData(isStaffReport)
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_view_staff_attendance_report)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+
                 } else {
                     binding.recycleAttendanceReportsToday.visibility = View.GONE
                     binding.lytNoRecordFound.visibility = View.VISIBLE

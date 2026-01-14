@@ -15,10 +15,12 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardClickListener
@@ -117,6 +119,15 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                     binding.rcyNoticeBoard.visibility = View.VISIBLE
                     binding.nomessage.visibility = View.GONE
                     binding.txtNoData.visibility = View.GONE
+
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_view_noticeboard)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                        addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
 
                     isloadhomeworkData(response.data)
 
