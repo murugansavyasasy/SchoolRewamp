@@ -904,6 +904,34 @@
                             </ImageView>
                         </RelativeLayout>
                     </RelativeLayout>
+
+
+                    <!-- Example: inside your layout XML -->
+                    <ProgressBar
+                        android:id="@+id/progressBarDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <!-- or a full-screen overlay -->
+                    <RelativeLayout
+                        android:id="@+id/loadingOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80000000"
+                        android:visibility="gone">
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" />
+
+                    </RelativeLayout>
+
+
+
                 </RelativeLayout>
             </RelativeLayout>
         </ScrollView>

@@ -149,7 +149,7 @@ class VoiceHistoryAdapter(
 
                 stopPlayback() // stop this holder if needed
                 listener.onItemClick(data, this)
-                listener.onItemClick(data, this)
+//                listener.onItemClick(data, this)
             }
 
             waveformSeekBar.setOnSeekChangeListener { progress ->
