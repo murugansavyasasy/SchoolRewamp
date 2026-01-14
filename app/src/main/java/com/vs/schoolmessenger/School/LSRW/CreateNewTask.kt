@@ -669,34 +669,41 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     }
 
     private fun openCameraIntent() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null) {
-            val photoFile: File? = try {
-                createImageFile()
-            } catch (ex: IOException) {
-                ex.printStackTrace()
-                null
-            }
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-            if (photoFile != null) {
-                val photoURI = FileProvider.getUriForFile(
-                    this,
-                    "${applicationContext.packageName}.fileprovider",
-                    photoFile
-                )
-                cameraImageFilePath = photoFile.absolutePath
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.could_not_create_file_for_photo),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.no_camera_app_found), Toast.LENGTH_SHORT).show()
+        // Check if there's a camera app
+        if (takePictureIntent.resolveActivity(packageManager) == null) {
+            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            null
+        }
+
+        if (photoFile == null) {
+            Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val photoURI: Uri = FileProvider.getUriForFile(
+            this,
+            "${applicationContext.packageName}.fileprovider",
+            photoFile
+        )
+
+        cameraImageFilePath = photoFile.absolutePath  // keep your path
+
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+
+        // Extra flags — helps on some OEM ROMs
+        takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+        startActivityForResult(takePictureIntent, CAMERA_IMAGE_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
