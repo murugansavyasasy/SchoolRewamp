@@ -228,33 +228,7 @@ class NotificationCallScreen :
         isUserResponse = "OC"
     }
 
-//    private fun showConnectedState() {
-//        if (isCallConnected || isActivityClosing) return
-//
-//        isCallConnected = true
-//        isCallAccepted = true
-//
-//        stopCallAnimation()
-//        binding.declineButton.visibility = View.GONE
-//        binding.messageButton.visibility = View.GONE
-//
-//        binding.acceptButton.animate()
-//            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
-//            .setDuration(300)
-//            .withEndAction {
-//                binding.ringContainer.visibility = View.GONE
-//                binding.acceptButton.visibility = View.GONE
-//                binding.callEndButton.visibility = View.VISIBLE
-//
-//                if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
-//
-//                isStartTime = getNow()
-//                playAudio(currentTrack)
-//            }.start()
-//
-//        isUserResponse = "OC"
-//
-//    }
+
 
     private fun playAudio(index: Int) {
 
@@ -305,42 +279,6 @@ class NotificationCallScreen :
     }
 
 
-//    private fun playAudio(index: Int) {
-//        Log.d("audioUrls", audioUrls!!.size.toString())
-//        if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
-//            finishPlayback()
-//            return
-//        }
-//
-//        releasePlayer()
-//        mediaPlayer = MediaPlayer()
-//
-//        try {
-//            mediaPlayer!!.setAudioAttributes(
-//                AudioAttributes.Builder()
-//                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                    .setUsage(AudioAttributes.USAGE_MEDIA)
-//                    .build()
-//            )
-//            mediaPlayer!!.setDataSource(audioUrls!![index])
-//            mediaPlayer!!.prepareAsync()
-//
-//            mediaPlayer!!.setOnPreparedListener { mp ->
-//                mp.start()
-//                startUpdatingProgress()
-//            }
-//
-//            mediaPlayer!!.setOnCompletionListener { mp ->
-//                totalElapsed += mp.duration
-//                currentTrack++
-//                playAudio(currentTrack)
-//            }
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            currentTrack++
-//            playAudio(currentTrack)
-//        }
-//    }
 
     private fun startUpdatingProgress() {
         stopUpdatingProgress()
@@ -408,37 +346,7 @@ class NotificationCallScreen :
         }
     }
 
-//    private fun calculateTotalDuration(onComplete: () -> Unit) {
-//
-//        if (audioUrls.isNullOrEmpty()) return
-//
-//        totalDurationMs = 0
-//        preparedCount = 0
-//
-//        for (url in audioUrls!!) {
-//            val tempPlayer = MediaPlayer()
-//            try {
-//                tempPlayer.setAudioAttributes(
-//                    AudioAttributes.Builder()
-//                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                        .setUsage(AudioAttributes.USAGE_MEDIA)
-//                        .build()
-//                )
-//                tempPlayer.setDataSource(url)
-//                tempPlayer.setOnPreparedListener { mp ->
-//                    totalDurationMs += mp.duration
-//                    preparedCount++
-//                    mp.release()
-//                    if (preparedCount == audioUrls!!.size) onComplete()
-//                }
-//                tempPlayer.prepareAsync()
-//            } catch (_: Exception) {
-//                preparedCount++
-//                tempPlayer.release()
-//                if (preparedCount == audioUrls!!.size) onComplete()
-//            }
-//        }
-//    }
+
 
     private fun finishPlayback() {
         stopUpdatingProgress()

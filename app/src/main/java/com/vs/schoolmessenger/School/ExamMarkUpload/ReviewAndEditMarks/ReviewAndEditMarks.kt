@@ -427,7 +427,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             StudentMarkList(
                 name = apiStudent.student_name,
                 student_id = apiStudent.student_id,
-                gender = "Male",
+                gender = apiStudent.gender,
                 rollNo = apiStudent.roll_no,
                 admission_no = apiStudent.admission_no,
                 marks = marks,
