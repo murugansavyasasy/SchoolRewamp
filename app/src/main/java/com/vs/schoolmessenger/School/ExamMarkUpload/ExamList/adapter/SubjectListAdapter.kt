@@ -49,7 +49,7 @@ class SubjectListAdapter(
     }
 
     //  Called by ExamListAdapter when API result arrives
-    fun updateData(newList: List<getSubjectWiseACtivitiesData>) {
+    fun updateData(newList: List<getSubjectWiseACtivitiesData>?) {
         subjects = newList
         notifyDataSetChanged()
     }

@@ -99,6 +99,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     var isSelectedCategory = ""
     var isSelectedCategoryId = 0
+
+    private var timeSelectedListener: TimeSelectedListener? = null
+    private var selectedHour24: Int? = null
+    private var selectedMinute24: Int? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -416,6 +420,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
+
+                    validateTimeAfterDateChange(this)
+
                 }
             }
 
@@ -500,7 +507,126 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
+    //    fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
+//        val calendar = Calendar.getInstance()
+//        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+//        val currentMinute = calendar.get(Calendar.MINUTE)
+//
+//        val timePickerDialog = TimePickerDialog(
+//            context,
+//            { _, selectedHour, selectedMinute ->
+//                // FIXED: Validate AFTER selection (reliable enforcement)
+//                val today = Calendar.getInstance()
+//                val effectiveSelectedDate = selectedDate ?: today  // Fallback to today if not set
+//                val isSameDay =
+//                    effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+//                            effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+//
+//                if (isSameDay) {
+//                    val selectedCal = Calendar.getInstance().apply {
+//                        set(Calendar.HOUR_OF_DAY, selectedHour)
+//                        set(Calendar.MINUTE, selectedMinute)
+//                        set(Calendar.SECOND, 0)
+//                        set(Calendar.MILLISECOND, 0)
+//                    }
+//                    val currentCal = Calendar.getInstance().apply {
+//                        set(Calendar.SECOND, 0)
+//                        set(Calendar.MILLISECOND, 0)
+//                    }
+//
+//                    if (selectedCal.before(currentCal)) {
+//                        // Enforce: Reset to current time and notify
+//                        val resetHour12 = if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
+//                        else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12) currentCal.get(Calendar.HOUR_OF_DAY) - 12
+//                        else currentCal.get(Calendar.HOUR_OF_DAY)
+//                        val resetAmPm =
+//                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
+//                        listener.onTimeSelected(
+//                            resetHour12,
+//                            currentCal.get(Calendar.MINUTE),
+//                            resetAmPm
+//                        )
+//                        Toast.makeText(
+//                            context,
+//                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT
+//                        ).show()  // Add this string to strings.xml: "Time cannot be in the past"
+//                        return@TimePickerDialog
+//                    }
+//                }
+//
+//                // Valid: Proceed with 12-hour format
+//                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
+//                val hourIn12Format =
+//                    if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+//                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+//            },
+//            currentHour,
+//            currentMinute,
+//            false  // 12-hour format
+//        )
+//
+//        // REMOVED: Hacky OnTimeChangedListener (no longer needed with post-selection validation)
+//
+//        timePickerDialog.show()
+//    }
+    private fun validateTimeAfterDateChange(context: Context) {
+
+        if (selectedHour24 == null || selectedMinute24 == null) return
+
+        val today = Calendar.getInstance()
+
+        val selectedDate = try {
+            val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+            sdf.parse(binding.txtStartDate.text.toString())
+        } catch (e: Exception) {
+            null
+        } ?: return
+
+        val selectedDateTime = Calendar.getInstance().apply {
+            time = selectedDate
+            set(Calendar.HOUR_OF_DAY, selectedHour24!!)
+            set(Calendar.MINUTE, selectedMinute24!!)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val isSameDay =
+            selectedDateTime.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                    selectedDateTime.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+
+        // Today + past time
+        if (isSameDay && selectedDateTime.before(today)) {
+
+            // RESET TO CURRENT TIME
+            val currentHour = today.get(Calendar.HOUR_OF_DAY)
+            val currentMinute = today.get(Calendar.MINUTE)
+
+            selectedHour24 = currentHour
+            selectedMinute24 = currentMinute
+
+            val hour12 =
+                if (currentHour == 0) 12
+                else if (currentHour > 12) currentHour - 12
+                else currentHour
+
+            val amPm =
+                if (currentHour < 12) Constant.AM
+                else Constant.PM
+
+            timeSelectedListener?.onTimeSelected(hour12, currentMinute, amPm)
+
+            Toast.makeText(
+                context,
+                context.getString(R.string.time_cannot_be_past),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
     fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
+
+        timeSelectedListener = listener
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute = calendar.get(Calendar.MINUTE)
@@ -508,57 +634,89 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val timePickerDialog = TimePickerDialog(
             context,
             { _, selectedHour, selectedMinute ->
-                // FIXED: Validate AFTER selection (reliable enforcement)
+
                 val today = Calendar.getInstance()
-                val effectiveSelectedDate = selectedDate ?: today  // Fallback to today if not set
+
+                // 🔹 GET SELECTED DATE FROM TEXTVIEW
+                val effectiveSelectedDate = try {
+                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                    val date = sdf.parse(binding.txtStartDate.text.toString())
+                    Calendar.getInstance().apply {
+                        time = date!!
+                    }
+                } catch (e: Exception) {
+                    today
+                }
+
                 val isSameDay =
                     effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                             effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
 
                 if (isSameDay) {
+
+                    // 🔹 COMBINE SELECTED DATE + TIME
                     val selectedCal = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, effectiveSelectedDate.get(Calendar.YEAR))
+                        set(Calendar.MONTH, effectiveSelectedDate.get(Calendar.MONTH))
+                        set(Calendar.DAY_OF_MONTH, effectiveSelectedDate.get(Calendar.DAY_OF_MONTH))
                         set(Calendar.HOUR_OF_DAY, selectedHour)
                         set(Calendar.MINUTE, selectedMinute)
                         set(Calendar.SECOND, 0)
                         set(Calendar.MILLISECOND, 0)
                     }
+
                     val currentCal = Calendar.getInstance().apply {
                         set(Calendar.SECOND, 0)
                         set(Calendar.MILLISECOND, 0)
                     }
 
                     if (selectedCal.before(currentCal)) {
-                        // Enforce: Reset to current time and notify
-                        val resetHour12 = if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
-                        else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12) currentCal.get(Calendar.HOUR_OF_DAY) - 12
-                        else currentCal.get(Calendar.HOUR_OF_DAY)
+
+                        val resetHour12 =
+                            if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
+                            else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12)
+                                currentCal.get(Calendar.HOUR_OF_DAY) - 12
+                            else currentCal.get(Calendar.HOUR_OF_DAY)
+
                         val resetAmPm =
-                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
+                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12)
+                                Constant.AM
+                            else
+                                Constant.PM
+
                         listener.onTimeSelected(
                             resetHour12,
                             currentCal.get(Calendar.MINUTE),
                             resetAmPm
                         )
+
                         Toast.makeText(
                             context,
-                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT
-                        ).show()  // Add this string to strings.xml: "Time cannot be in the past"
+                            context.getString(R.string.time_cannot_be_past),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                         return@TimePickerDialog
                     }
                 }
 
-                // Valid: Proceed with 12-hour format
+                // ✅ VALID TIME → CONTINUE ORIGINAL FLOW
                 val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
                 val hourIn12Format =
-                    if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                    if (selectedHour == 0) 12
+                    else if (selectedHour > 12) selectedHour - 12
+                    else selectedHour
+
+                selectedHour24 = selectedHour
+                selectedMinute24 = selectedMinute
+
                 listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+
             },
             currentHour,
             currentMinute,
-            false  // 12-hour format
+            false
         )
-
-        // REMOVED: Hacky OnTimeChangedListener (no longer needed with post-selection validation)
 
         timePickerDialog.show()
     }

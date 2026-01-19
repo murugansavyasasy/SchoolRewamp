@@ -216,6 +216,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                             .setCancelable(false)
                             .setPositiveButton("OK") { dlg, _ ->
                                 dlg.dismiss()
+                                isDateWiseSlotCount()
                                 selectedSlotIds.clear()
                                 binding.lblBookSlots.visibility = View.GONE
                                 isScheduleCallList()
@@ -253,13 +254,45 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             binding.recyclerViewDates.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerViewDates.adapter = adapter
-            val calendar = Calendar.getInstance()
-            val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
-            val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
-            val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
-            if (todayPos != -1) {
-                adapter.setDefaultSelected(todayPos)
-                binding.recyclerViewDates.scrollToPosition(todayPos)
+//            val calendar = Calendar.getInstance()
+//            val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+//            val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+//            val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
+//            if (todayPos != -1) {
+//                adapter.setDefaultSelected(todayPos)
+//                binding.recyclerViewDates.scrollToPosition(todayPos)
+//            }
+
+            //  Try to find previously selected date
+            val selectedPos = isSelectedDate?.let { savedDate ->
+                dates.indexOfFirst { (month, day, year) ->
+                    formatDate(month, day, year) == savedDate
+                }
+            } ?: -1
+
+            when {
+                //  If old selected date exists → reselect it
+                selectedPos != -1 -> {
+                    adapter.setDefaultSelected(selectedPos)
+                    binding.recyclerViewDates.scrollToPosition(selectedPos)
+                }
+
+                // Else → fallback to today
+                else -> {
+                    val calendar = Calendar.getInstance()
+                    val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    val todayMonth =
+                        SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+
+                    val todayPos = dates.indexOfFirst {
+                        it.first == todayMonth && it.second == todayDay
+                    }
+
+                    if (todayPos != -1) {
+                        adapter.setDefaultSelected(todayPos)
+                        binding.recyclerViewDates.scrollToPosition(todayPos)
+                    }
+                }
             }
         }
 
@@ -285,6 +318,35 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             }
         }
     }
+
+    fun formatDate(month: String, day: Int, year: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, monthToIndex(month))
+        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+        return SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            .format(calendar.time)
+    }
+
+    fun monthToIndex(month: String): Int {
+        return when (month.lowercase(Locale.ENGLISH)) {
+            "jan", "january" -> 0
+            "feb", "february" -> 1
+            "mar", "march" -> 2
+            "apr", "april" -> 3
+            "may" -> 4
+            "jun", "june" -> 5
+            "jul", "july" -> 6
+            "aug", "august" -> 7
+            "sep", "sept", "september" -> 8
+            "oct", "october" -> 9
+            "nov", "november" -> 10
+            "dec", "december" -> 11
+            else -> 0
+        }
+    }
+
 
     fun isLoadData(data: List<MeetingData>) {
         val adapter = ParentMeetingAdapter(data, this) { meeting, slot, isSelected ->

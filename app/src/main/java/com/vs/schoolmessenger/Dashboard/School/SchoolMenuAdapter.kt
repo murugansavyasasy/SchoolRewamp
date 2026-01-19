@@ -100,7 +100,7 @@ class SchoolMenuAdapter(
                 Constant.M_SCHOOL_STRENGTH -> imgMenu.setImageResource(R.drawable.school_strength)
                 Constant.M_QUIZ_EXAM -> imgMenu.setImageResource(R.drawable.quiz_icon)
                 Constant.M_NOTICEBOARD -> imgMenu.setImageResource(R.drawable.noticeboard_icon)
-                Constant.M_SCHOOL_CLASS_EVENTS -> imgMenu.setImageResource(R.drawable.graduationevent)
+                Constant.M_SCHOOL_CLASS_EVENTS -> imgMenu.setImageResource(R.drawable.dashboard_events_calendar_icon)
                 Constant.M_SCHEDULE_EXAM_TEST -> imgMenu.setImageResource(R.drawable.schedule_exam_icon)
                 Constant.M_MESSAGES_FROM_MANAGEMENT -> imgMenu.setImageResource(R.drawable.message_f_management)
                 Constant.M_FINANCE -> imgMenu.setImageResource(R.drawable.finance_icon)

@@ -138,8 +138,8 @@ class Attendance : BaseActivity<AttendanceBinding>() {
 
 
         // Show text values
-        binding.lblAttendancePercentage.text = attendancePercentage.roundToInt().toString()
-        binding.lblLeaveTakenPercentage.text = absentDays.roundToInt().toString()
+        binding.lblAttendancePercentage.text = attendancePercentage.toString()
+        binding.lblLeaveTakenPercentage.text = absentDays.toString()
         binding.lblOngoingDaysPercentage.text = ongoingPercentage.toString()
 
 
