@@ -112,6 +112,7 @@
 
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rlaTamil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,6 +180,7 @@
         </View>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rlaThai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -243,6 +245,7 @@
             android:background="@color/grey"></View>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rlaHindi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
