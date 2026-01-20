@@ -65,6 +65,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
     private var appViewModel: App? = null
+    private val TAG_SORT = "GENDER_SORT_DEBUG"
     private val savedFilters = mutableListOf<FilterState>()
 
     private var isStaffDetails: StaffDetails? = null
@@ -653,29 +654,139 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     }
 
     private fun applySortUsingSavedFilters() {
+
         val list = originalStudentsList.toMutableList()
 
-        val configs = savedFilters
-            .filter { it.type != "Gender" }
-            .map {
-                SortConfig(
-                    field = when (it.type) {
-                        "Student Name" -> SortField.NAME
-                        "Roll Number" -> SortField.ROLL_NO
-                        "Admission Number" -> SortField.ADMISSION_NO
-                        else -> SortField.NAME
-                    },
-                    order = if (it.value == "Ascending") SortOrder.ASC else SortOrder.DESC
-                )
+        Log.d(TAG_SORT, "----- APPLY SORT START -----")
+
+        // 🔹 Print filters
+        savedFilters.forEachIndexed { index, filter ->
+            Log.d(
+                TAG_SORT,
+                "Filter[$index] type=${filter.type}, value=${filter.value}"
+            )
+        }
+
+        // 🔹 Force Gender first
+        val orderedFilters = mutableListOf<FilterState>()
+
+        savedFilters.firstOrNull { it.type == "Gender" }?.let {
+            orderedFilters.add(it)
+            Log.d(TAG_SORT, "Gender filter moved to FIRST priority")
+        }
+
+        orderedFilters.addAll(savedFilters.filter { it.type != "Gender" })
+
+        // 🔹 Print priority order
+        orderedFilters.forEachIndexed { index, filter ->
+            Log.d(
+                TAG_SORT,
+                "Priority[$index] => ${filter.type} (${filter.value})"
+            )
+        }
+
+        list.sortWith(Comparator { a, b ->
+
+            for (filter in orderedFilters) {
+
+                val result = when (filter.type) {
+
+                    "Gender" -> {
+                        val asc = filter.value == "Ascending"
+
+                        val wA = genderWeight(a.gender, asc)
+                        val wB = genderWeight(b.gender, asc)
+
+                        Log.d(
+                            TAG_SORT,
+                            "COMPARE Gender | ${a.name}:${a.gender}($wA) vs ${b.name}:${b.gender}($wB)"
+                        )
+
+                        wA.compareTo(wB)
+                    }
+
+                    "Student Name" -> {
+                        val res = a.name.lowercase()
+                            .compareTo(b.name.lowercase())
+
+                        Log.d(
+                            TAG_SORT,
+                            "COMPARE Name | ${a.name} vs ${b.name} = $res"
+                        )
+
+                        if (filter.value == "Ascending") res else -res
+                    }
+
+                    "Roll Number" -> {
+                        val r1 = a.rollNo ?: ""
+                        val r2 = b.rollNo ?: ""
+                        val res = r1.compareTo(r2)
+
+                        Log.d(
+                            TAG_SORT,
+                            "COMPARE Roll | $r1 vs $r2 = $res"
+                        )
+
+                        if (filter.value == "Ascending") res else -res
+                    }
+
+                    "Admission Number" -> {
+                        val a1 = a.admission_no ?: ""
+                        val a2 = b.admission_no ?: ""
+                        val res = a1.compareTo(a2)
+
+                        Log.d(
+                            TAG_SORT,
+                            "COMPARE Admission | $a1 vs $a2 = $res"
+                        )
+
+                        if (filter.value == "Ascending") res else -res
+                    }
+
+                    else -> 0
+                }
+
+                // 🔴 Stop at first difference
+                if (result != 0) return@Comparator result
             }
 
-        sortStudentMarkList(list, configs)
+            0
+        })
+
+        Log.d(TAG_SORT, "----- SORT RESULT ORDER -----")
+        list.forEachIndexed { index, s ->
+            Log.d(
+                TAG_SORT,
+                "$index -> ${s.name} | gender=${s.gender}"
+            )
+        }
 
         currentStudentsList.clear()
         currentStudentsList.addAll(list)
         binding.rvMarks.adapter?.notifyDataSetChanged()
+
+        Log.d(TAG_SORT, "----- APPLY SORT END -----")
     }
 
+    private fun genderWeight(gender: String?, asc: Boolean): Int {
+        val g = gender?.lowercase()?.trim()
+
+        return if (asc) {
+            // Ascending → F FIRST
+            when (g) {
+                "female", "f" -> 0
+                "male", "m" -> 1
+                else -> 2
+            }
+        } else {
+            // Descending → M FIRST
+            when (g) {
+                "male", "m" -> 0
+                "female", "f" -> 1
+                else -> 2
+            }
+        }
+    }
     private fun addFilterRow(
         container: LinearLayout,
         state: FilterState? = null
@@ -695,7 +806,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         spnType.adapter = spinnerAdapter(typeList)
 
-        // 🔹 VALUE SPINNER (ALWAYS ASC/DESC)
         fun loadValueSpinner(restore: String? = null) {
             val values = listOf("Ascending", "Descending")
             spnValue.adapter = spinnerAdapter(values)
@@ -731,6 +841,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
         imgAdd.setOnClickListener {
 
             val type = spnType.selectedItem?.toString() ?: "Select Type"
