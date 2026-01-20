@@ -31,6 +31,11 @@ class SchoolMenuAdapter(
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
 
+    fun getItemView(recyclerView: RecyclerView, position: Int): View? {
+        return recyclerView.findViewHolderForAdapterPosition(position)?.itemView
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SHIMMER -> {
