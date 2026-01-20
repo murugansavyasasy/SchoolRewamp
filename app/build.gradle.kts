@@ -11,6 +11,7 @@ plugins {
     id("com.google.gms.google-services")
     id ("kotlin-parcelize")
     id("com.google.firebase.crashlytics")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -83,9 +84,6 @@ android {
             // Make sure new packaging is used so libs can be aligned properly
             useLegacyPackaging = false
         }
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
