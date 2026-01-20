@@ -233,8 +233,6 @@ object SharedPreference {
         )
         return sharedPreferences.getBoolean(SH_LOGOUT, false)
     }
-
-
     fun putLanguage(activity: Context, isAppLanguage: String?) {
         val prefs = activity.getSharedPreferences(SH_PREF, Context.MODE_PRIVATE)
         prefs.edit().putString(SH_LANGUAGE, isAppLanguage).apply()

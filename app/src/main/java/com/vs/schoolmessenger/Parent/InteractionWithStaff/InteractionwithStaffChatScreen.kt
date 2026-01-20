@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -29,14 +28,10 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     View.OnClickListener {
 
     private var isChildDetails: ChildDetails? = null
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-
     private lateinit var interactionWithStaffChatAdapter: InteractionWithStaffChatAdapter
-
     val staffData = Constant.StaffDataSending
-
 
     override fun getViewBinding(): StaffchatScreenBinding {
         return StaffchatScreenBinding.inflate(layoutInflater)

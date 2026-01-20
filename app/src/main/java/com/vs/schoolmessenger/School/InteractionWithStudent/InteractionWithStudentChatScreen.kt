@@ -109,7 +109,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             "${QuestionDataSending?.name ?: ""} (${QuestionDataSending?.section_name ?: ""})"
         binding.lblStudentSection.text = QuestionDataSending?.subject_name ?: ""
 
-            enableEdgeToEdge()
+        enableEdgeToEdge()
 
 
     }
