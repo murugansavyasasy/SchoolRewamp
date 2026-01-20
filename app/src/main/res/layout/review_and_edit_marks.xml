@@ -127,13 +127,27 @@
                 android:visibility="gone">
 
             </TextView>
+            <TextView
+                android:id="@+id/lblDisclaimerForAI"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblIssueFound"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/ai_can_make_mistakes_please_check_properly_before_submitting"
+                android:textColor="@color/light_gray_4"
+                android:textSize="@dimen/thirteen_sp"
+                >
+
+            </TextView>
 
 
             <View
                 android:id="@+id/View2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
-                android:layout_below="@+id/lblIssueFound"
+                android:layout_below="@+id/lblDisclaimerForAI"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginBottom="@dimen/five"
                 android:background="@color/AthensGray">
