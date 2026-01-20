@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
-
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color

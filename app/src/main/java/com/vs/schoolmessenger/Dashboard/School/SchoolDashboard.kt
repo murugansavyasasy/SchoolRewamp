@@ -482,7 +482,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             isAppearanceLightStatusBars = false // WHITE icons
             isAppearanceLightNavigationBars = false
         }
-
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             // Android 10 and below → use legacy fullscreen flags
             window.decorView.systemUiVisibility =
