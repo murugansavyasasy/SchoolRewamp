@@ -199,8 +199,13 @@ class BlockedStudentsDialog : DialogFragment(), InteractionWithStudentListener {
 
         val jsonObject = JsonObject().apply {
             addProperty("student_id", data.id)
+            addProperty("class_id", data.class_id)
+            addProperty("class_name", data.class_name)
+            addProperty("section_id", data.section_id)
+            addProperty("section_name", data.section_name)
             addProperty("is_block", false)
             addProperty("reason", "")
+
         }
         viewModel.isblockstudent(isAccessToken!!, jsonObject, requireActivity())
         dismiss()
