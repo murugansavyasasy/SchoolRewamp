@@ -1840,13 +1840,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         removeSelectedVoice()
         //Latesly edited Code 13-01-2026
         //onBackPressed()  try to check in the backpressed because i have cleared  Constant.isAwsUploadedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()
-
-        Constant.isAwsUploadedFiles.add(
-            AwsUploadedFiles(
-                isFileUrl = data.url, isFileType = Constant.AUDIO
-            )
-        )
+//        Constant.isAwsUploadedFiles.clear()
+//
+//        Constant.isAwsUploadedFiles.add(
+//            AwsUploadedFiles(
+//                isFileUrl = data.url, isFileType = Constant.AUDIO
+//            )
+//        )
 
         //Latesly edited Code 13-01-2026
         Log.d("isLog",data.url)
@@ -1965,7 +1965,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         mediaRecorder = null
         isRecording = false
         recordingHandler.removeCallbacks(recordingRunnable)
-        Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
         Constant.selectedFiles.add(
             FileItem(path = data.url, type = FileType.AUDIO)
         )
@@ -1981,6 +1980,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val currentDate: String = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = Constant.sss_ + currentDate + "." + isFileExtension
+        Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
     }
 
     private fun openAudioFilePicker() {
@@ -2137,7 +2137,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mAdapter!!.releaseMediaPlayer()
         }
         Constant.selectedFiles.clear()
-        Constant.isAwsUploadedFiles.clear()// Lastely added code 13 -01-2026
+//        Constant.isAwsUploadedFiles.clear()// Lastely added code 13 -01-2026
 
         if (binding.lnrHistoryList.isVisible == false) {
             binding.rytNORecordFound.visibility = View.GONE

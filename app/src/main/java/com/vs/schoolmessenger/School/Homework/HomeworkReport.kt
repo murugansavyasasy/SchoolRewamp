@@ -150,14 +150,26 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
                     if (it > 0) {
                         binding.rytStandardDropDown.visibility = View.VISIBLE
                         binding.rytSectionDropDown.visibility = View.VISIBLE
-                        isSectionId = isGetStandard!![0].sections[0].id
                         if (isGetStandard!!.get(0).sections.isNotEmpty()) {
+                            isSectionId = isGetStandard!![0].sections[0].id
                             isLoadStandard(isGetStandard)
                             isSection = isGetStandard!!.get(0).sections
                             binding.noDataFound.visibility = View.GONE
                             binding.lytNoDataFound.visibility = View.GONE
                             binding.line1.visibility = View.VISIBLE
                             binding.line2.visibility = View.VISIBLE
+                        }
+                        else {
+                            isSectionId = -1
+                            isLoadStandard(isGetStandard)
+                            isSection = emptyList()
+                            binding.rytSectionDropDown.visibility = View.GONE
+                            binding.rcyHomeWorkReport.visibility = View.GONE
+                            binding.noDataFound.visibility = View.VISIBLE
+                            binding.lytNoDataFound.visibility = View.VISIBLE
+                            binding.noDataFound.text = getString(R.string.no_section_found)
+                            binding.line1.visibility = View.GONE
+                            binding.line2.visibility = View.GONE
                         }
                     } else {
                         binding.rytStandardDropDown.visibility = View.GONE
@@ -251,10 +263,24 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
+                    if (isStandard[position].sections.isNotEmpty()){
+                        binding.rytSectionDropDown.visibility = View.VISIBLE
+                        isSectionId = isStandard[position].id
+                        isSection = isStandard[position].sections
+                        isLoadSection(isSection)
+                    }
+                    else{
+                        binding.rytSectionDropDown.visibility = View.GONE
+                        binding.search.visibility = View.GONE
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                        binding.line1.visibility = View.GONE
+                        binding.line2.visibility = View.GONE
+                        binding.noDataFound.visibility = View.VISIBLE
+                        binding.rcyHomeWorkReport.visibility = View.GONE
+                        binding.lytNoDataFound.visibility = View.VISIBLE
+                        binding.noDataFound.text = getString(R.string.no_section_found)
+                    }
 
-                    isSectionId = isStandard[position].id
-                    isSection = isStandard[position].sections
-                    isLoadSection(isSection)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
