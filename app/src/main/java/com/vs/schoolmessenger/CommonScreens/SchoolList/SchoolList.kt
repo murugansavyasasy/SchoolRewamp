@@ -486,7 +486,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun isUploadFilesInServer(isFileType: String?) {
         ProgressDialogHelper.show(this)
 //        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
-
+Log.d(" Constant.selectedFilesVoice", Constant.selectedFiles.size.toString())
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
@@ -549,6 +549,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         totalTasks: Int,
         onTaskComplete: () -> Unit
     ) {
+        Log.d(" Constant.selectedFilesVoice11", Constant.selectedFiles.size.toString())
+
         Constant.isAwsUploadedFiles.clear()
         val iterator = Constant.selectedFiles.iterator()
         while (iterator.hasNext()) {
@@ -562,6 +564,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 iterator.remove()
             }
         }
+        Log.d(" Constant.selectedFilesVoice333", Constant.selectedFiles.size.toString())
+        Log.d(" Constant.selectedFilesVoice5555", Constant.isAwsUploadedFiles.size.toString())
+
 
         val isCountryId = SharedPreference.getCountryId(this)
         if (Constant.selectedFiles.isEmpty()) {
@@ -861,11 +866,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         )
                         appViewModel?.isSendText(isAccessToken!!, jsonObject, this)
                     } else {
-                        if (Constant.isVoiceType == 3) {
-                            voiceSendApi()
-                        } else {
+//                        if (Constant.isVoiceType == 3) {
+//                            voiceSendApi()
+//                        } else {
                             isUploadFilesInServer("audio")
-                        }
+//                        }
                     }
                 }
 
