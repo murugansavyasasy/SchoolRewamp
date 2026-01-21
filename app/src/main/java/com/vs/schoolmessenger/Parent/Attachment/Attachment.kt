@@ -121,22 +121,32 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.lblHeaderTitle.text = finalName
             binding.lblHeaderTitle.visibility = View.VISIBLE
         }
+
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
+
+                // 🔹 Hide everything
                 binding.rytSearch1.visibility = View.GONE
                 binding.imgFilter.visibility = View.GONE
                 binding.lnrDatePicking.visibility = View.GONE
                 binding.lnrFilterRead.visibility = View.GONE
-                binding.txtSearchMenu1.setText("")
+
+                // 🔹 RESET FILTERS & SHOW ALL DATA
+                resetAttachmentFiltersAndShowAll()
+
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu1.windowToken, 0)
+
             } else {
+                // 🔹 Show search
                 binding.rytSearch1.visibility = View.VISIBLE
                 binding.imgFilter.visibility = View.VISIBLE
+
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.txtSearchMenu1, InputMethodManager.SHOW_IMPLICIT)
             }
         }
+
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
@@ -177,11 +187,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.lnrFromDate.setOnClickListener { showFromDatePicker() }
         binding.lnrToDate.setOnClickListener {
-            if (fromDateMillis == null) {
-                showToast(getString(R.string.select_from_date_first))
-            } else {
                 showToDatePicker()
-            }
         }
 
         appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
@@ -344,52 +350,73 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-
     private fun showFromDatePicker() {
         val cal = Calendar.getInstance()
 
-        DatePickerDialog(
+        val dialog = DatePickerDialog(
             this,
-            { _, y, m, d ->
-                cal.set(y, m, d, 0, 0, 0)
-                fromDateMillis = cal.timeInMillis
+            { _, year, month, dayOfMonth ->
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(year, month, dayOfMonth, 0, 0, 0)
+
+                fromDateMillis = selectedCal.timeInMillis
 
                 binding.txtFromDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(cal.time)
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                        .format(selectedCal.time)
 
-                if (toDateMillis != null) {
-                    if (fromDateMillis!! > toDateMillis!!) {
-                        showToast(getString(R.string.from_date_cannot_be_after_to_date))
-                        toDateMillis = null
-                        binding.txtToDate.text = "To Date"
-                    } else {
-                        applyCombinedFilter()
-                    }
+                // 🔴 If To Date already selected but now invalid
+                if (toDateMillis != null && fromDateMillis!! > toDateMillis!!) {
+                    showToast(getString(R.string.from_date_cannot_be_after_to_date))
+                    toDateMillis = null
+                    binding.txtToDate.text = getString(R.string.to_date)
                 }
-            },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
-        ).show()
-    }
 
-
-    private fun showToDatePicker() {
-        val cal = Calendar.getInstance()
-
-        DatePickerDialog(
-            this,
-            { _, y, m, d ->
-                cal.set(y, m, d, 23, 59, 59)
-                toDateMillis = cal.timeInMillis
-                binding.txtToDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(cal.time)
                 applyCombinedFilter()
             },
             cal.get(Calendar.YEAR),
             cal.get(Calendar.MONTH),
             cal.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+
+        // 🔹 LIMIT: From Date ≤ To Date
+        if (toDateMillis != null) {
+            dialog.datePicker.maxDate = toDateMillis!!
+        }
+
+        dialog.show()
+    }
+
+    private fun showToDatePicker() {
+        val cal = Calendar.getInstance()
+
+        val dialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(year, month, dayOfMonth, 23, 59, 59)
+
+                toDateMillis = selectedCal.timeInMillis
+
+                binding.txtToDate.text =
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                        .format(selectedCal.time)
+
+                applyCombinedFilter()
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+
+        // 🔹 LIMIT: To Date ≥ From Date
+        if (fromDateMillis != null) {
+            dialog.datePicker.minDate = fromDateMillis!!
+        }
+
+        dialog.show()
     }
 
     private fun selectReadFilter(filter: ReadFilter) {
@@ -410,7 +437,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         applyCombinedFilter()
     }
 
-
     private fun applyCombinedFilter() {
 
         // 🔹 ALWAYS start from ORIGINAL base list
@@ -422,16 +448,32 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         var resultList = baseList.toList()
 
-        // 🔹 DATE FILTER
-        if (fromDateMillis != null && toDateMillis != null) {
-            resultList = resultList.filter {
-                try {
-                    val parsedDate = apiDateFormat.parse(it.date)
-                    parsedDate != null &&
-                            parsedDate.time in fromDateMillis!!..toDateMillis!!
-                } catch (e: Exception) {
-                    false
+        // 🔹 DATE FILTER (ALL CASES HANDLED)
+        resultList = resultList.filter { item ->
+            try {
+                val parsedDate = apiDateFormat.parse(item.date)
+                    ?: return@filter false
+
+                val itemMillis = parsedDate.time
+
+                when {
+                    // ✅ From + To
+                    fromDateMillis != null && toDateMillis != null ->
+                        itemMillis in fromDateMillis!!..toDateMillis!!
+
+                    // ✅ Only From → future
+                    fromDateMillis != null ->
+                        itemMillis >= fromDateMillis!!
+
+                    // ✅ Only To → past
+                    toDateMillis != null ->
+                        itemMillis <= toDateMillis!!
+
+                    // ✅ No date filter
+                    else -> true
                 }
+            } catch (e: Exception) {
+                false
             }
         }
 
@@ -452,10 +494,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
 
-        Log.d(
-            "FILTER",
-            "Final count = ${resultList.size}"
-        )
+        Log.d("FILTER", "Final count = ${resultList.size}")
 
         mAttachmentReportAdapter?.updateFilteredList(resultList)
 
@@ -470,6 +509,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.txtNoData.visibility = View.GONE
         }
     }
+
 
     private fun isGetAttachment() {
         binding.recycleracademic.visibility = View.VISIBLE
@@ -542,10 +582,20 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 isGetAttachmentArchive()
                 binding.lblArchiveMsg.visibility = View.GONE
             }
-
             R.id.imgFilter -> {
-                binding.lnrDatePicking.visibility = View.VISIBLE
-                binding.lnrFilterRead.visibility = View.VISIBLE
+                if (binding.lnrDatePicking.visibility == View.VISIBLE) {
+
+                    // 🔹 Hide filter → RESET
+                    binding.lnrDatePicking.visibility = View.GONE
+                    binding.lnrFilterRead.visibility = View.GONE
+
+                    resetAttachmentFiltersAndShowAll()
+
+                } else {
+                    // 🔹 Show filter
+                    binding.lnrDatePicking.visibility = View.VISIBLE
+                    binding.lnrFilterRead.visibility = View.VISIBLE
+                }
             }
 
             R.id.imgClearFilter -> {
@@ -553,6 +603,41 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
     }
+
+    private fun resetAttachmentFiltersAndShowAll() {
+
+        // 🔹 Reset search
+        currentSearchQuery = ""
+        binding.txtSearchMenu1.setText("")
+
+        // 🔹 Reset date filter
+        fromDateMillis = null
+        toDateMillis = null
+        binding.txtFromDate.text = getString(R.string.from_date)
+        binding.txtToDate.text = getString(R.string.to_date)
+
+        // 🔹 Reset read filter UI
+        currentReadFilter = ReadFilter.ALL
+        binding.lblAll.setBackgroundResource(R.drawable.bg_light_green_radious)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+
+        // 🔹 Restore full list
+        val fullList = if (isArchiveMode) {
+            originalArchiveList
+        } else {
+            originalAttachmentList
+        }
+
+        mAttachmentReportAdapter?.updateFilteredList(fullList)
+
+        binding.recycleracademic.visibility =
+            if (fullList.isEmpty()) View.GONE else View.VISIBLE
+        binding.nomessage.visibility =
+            if (fullList.isEmpty()) View.VISIBLE else View.GONE
+        binding.txtNoData.visibility = View.GONE
+    }
+
 
     private fun clearDateFilter() {
         fromDateMillis = null
