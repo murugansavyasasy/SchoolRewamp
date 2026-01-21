@@ -1067,6 +1067,7 @@
     <string name="password_can_be_maximum_20_characters">Password can be maximum 20 characters</string>
     <string name="enter_password_to_proceed">Enter password to proceed</string>
     <string name="do_not_allow_past_time">Do not allow past time</string>
+    <string name="ai_can_make_mistakes_please_check_properly_before_submitting">⚠️ ️️AI can make mistakes. Please check properly before submitting.</string>
 
 
 </resources>
