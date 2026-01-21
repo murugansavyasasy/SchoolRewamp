@@ -113,6 +113,7 @@ class AutoScrollAdapterWithDots(
                 Constant.M_EXAM -> itemImage.setImageResource(R.drawable.schedule_exam_icon)
                 Constant.M_FEE_DETAILS -> itemImage.setImageResource(R.drawable.fee_details)
                 Constant.M_INTERACTION_WITH_STAFF -> itemImage.setImageResource(R.drawable.interact_with_student)
+                Constant.M_INTERACTION_WITH_STUDENT -> itemImage.setImageResource(R.drawable.interaction_with_student_dashboard_icon)
                 Constant.M_LSRW -> itemImage.setImageResource(R.drawable.lsrw_icon)
                 Constant.M_ONLINE_TEXT_BOOK -> itemImage.setImageResource(R.drawable.book)
                 Constant.M_QUIZ_EXAM -> itemImage.setImageResource(R.drawable.quiz_icon)

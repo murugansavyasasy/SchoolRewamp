@@ -44,6 +44,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var isCommunicationType = 1
     var isSeeMoreClick = true
 
+    // DATE FILTER
+    private var fromDateMillis: Long? = null
+    private var toDateMillis: Long? = null
+
+    // DATE FORMAT (MATCH API DATE)
+    private val apiDateTimeFormat =
+        java.text.SimpleDateFormat("dd-MM-yyyy hh:mm a", java.util.Locale.getDefault())
+
+
     var isFilterClick = false
     private var currentSearchQuery: String = ""
 
@@ -66,6 +75,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
+        binding.imgClearFilter.setOnClickListener(this)
 
         userDetails = SharedPreference.getUserDetails(this)
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
@@ -187,7 +197,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                 } else {
                     if (allVoiceData.isNotEmpty()) {
@@ -249,7 +259,76 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.lblRead.setOnClickListener {
             isChangeBackgroundFilter(binding.lblRead)
         }
+
+        binding.lnrFromDate.setOnClickListener {
+            showFromDatePicker()
+        }
+
+        binding.lnrToDate.setOnClickListener {
+            if (fromDateMillis == null) {
+                showToast(getString(R.string.select_from_date_first))
+            } else {
+                showToDatePicker()
+            }
+        }
+
+
         fetchInitialData()
+    }
+
+    private fun showToast(msg: String) {
+        android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showFromDatePicker() {
+        val cal = java.util.Calendar.getInstance()
+
+        android.app.DatePickerDialog(
+            this,
+            { _, y, m, d ->
+                cal.set(y, m, d, 0, 0, 0)
+                fromDateMillis = cal.timeInMillis
+
+                binding.txtFromDate.text =
+                    java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                        .format(cal.time)
+
+                // 🔥 If To Date already selected → re-filter
+                if (toDateMillis != null) {
+                    if (fromDateMillis!! > toDateMillis!!) {
+                        showToast(getString(R.string.from_date_cannot_be_after_to_date))
+                        toDateMillis = null
+                        binding.txtToDate.text = "To Date"
+                    } else {
+                        applyCombinedFilter()
+                    }
+                }
+            },
+            cal.get(java.util.Calendar.YEAR),
+            cal.get(java.util.Calendar.MONTH),
+            cal.get(java.util.Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun showToDatePicker() {
+        val cal = java.util.Calendar.getInstance()
+
+        android.app.DatePickerDialog(
+            this,
+            { _, y, m, d ->
+                cal.set(y, m, d, 23, 59, 59)
+                toDateMillis = cal.timeInMillis
+
+                binding.txtToDate.text =
+                    java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                        .format(cal.time)
+
+                applyCombinedFilter()
+            },
+            cal.get(java.util.Calendar.YEAR),
+            cal.get(java.util.Calendar.MONTH),
+            cal.get(java.util.Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
 
@@ -296,29 +375,29 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         if (isSelectedFilter == binding.lblAll) {
             isCommunicationType = 1
-            if (binding.RdbAll.isChecked == true) {
+            if (binding.RdbAll.isChecked) {
                 isFilterType = Constant.ALL
-            } else if (binding.RdbText.isChecked == true) {
+            } else if (binding.RdbText.isChecked) {
                 isFilterType = Constant.TEXT_ALL
-            } else if (binding.RdbVoice.isChecked == true) {
+            } else if (binding.RdbVoice.isChecked) {
                 isFilterType = Constant.VOICE_ALL
             }
         } else if (isSelectedFilter == binding.lblUnread) {
             isCommunicationType = 2
             if (binding.RdbAll.isChecked) {
                 isFilterType = Constant.UNREAD
-            } else if (binding.RdbText.isChecked == true) {
+            } else if (binding.RdbText.isChecked) {
                 isFilterType = Constant.TEXT_UNREAD
-            } else if (binding.RdbVoice.isChecked == true) {
+            } else if (binding.RdbVoice.isChecked) {
                 isFilterType = Constant.VOICE_UNREAD
             }
         } else if (isSelectedFilter == binding.lblRead) {
             isCommunicationType = 3
-            if (binding.RdbAll.isChecked == true) {
+            if (binding.RdbAll.isChecked) {
                 isFilterType = Constant.READ
-            } else if (binding.RdbText.isChecked == true) {
+            } else if (binding.RdbText.isChecked) {
                 isFilterType = Constant.TEXT_READ
-            } else if (binding.RdbVoice.isChecked == true) {
+            } else if (binding.RdbVoice.isChecked) {
                 isFilterType = Constant.VOICE_READ
             }
         }
@@ -326,50 +405,68 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         applyCombinedFilter()
     }
 
-
     private fun applyCombinedFilter() {
-        Log.d("isFilterType", isFilterType)
 
-        var filteredList = when (isFilterType) {
+        var filteredList = allVoiceData.toList()
 
-            Constant.TEXT, Constant.TEXT_ALL -> allVoiceData.filter { it.type == Constant.TEXT }
-            Constant.VOICE, Constant.VOICE_ALL -> allVoiceData.filter { it.type == Constant.VOICE }
-
-            Constant.READ -> allVoiceData.filter { !it.is_unread!! }
-            Constant.UNREAD -> allVoiceData.filter { it.is_unread!! }
-
-            Constant.TEXT_READ -> allVoiceData.filter { it.type == Constant.TEXT && !it.is_unread!! }
-            Constant.VOICE_READ -> allVoiceData.filter { it.type == Constant.VOICE && !it.is_unread!! }
-
-            Constant.TEXT_UNREAD -> allVoiceData.filter { it.type == Constant.TEXT && it.is_unread!! }
-            Constant.VOICE_UNREAD -> allVoiceData.filter { it.type == Constant.VOICE && it.is_unread!! }
-
-            else -> allVoiceData
-        }
-        if (currentSearchQuery.isNotEmpty()) {
+        // 🔹 DATE FILTER (FIXED)
+        if (fromDateMillis != null && toDateMillis != null) {
             filteredList = filteredList.filter { item ->
-                val contentMatch =
-                    item.content.orEmpty().contains(currentSearchQuery, ignoreCase = true)
-                val titleMatch =
-                    item.title.orEmpty().contains(currentSearchQuery, ignoreCase = true)
-                val typeMatch = item.type.orEmpty().contains(currentSearchQuery, ignoreCase = true)
-                val timeMatch = item.time.orEmpty().contains(currentSearchQuery, ignoreCase = true)
-
-                val dateToCheck = try {
-                    Constant.convertDateTimeFormat(item.date.orEmpty())
+                try {
+                    val dateTime = "${item.date} ${item.time}"
+                    val parsedDate = apiDateTimeFormat.parse(dateTime)
+                    parsedDate != null &&
+                            parsedDate.time in fromDateMillis!!..toDateMillis!!
                 } catch (e: Exception) {
-                    item.date.orEmpty()
+                    false
                 }
-                val dateMatch = dateToCheck.contains(currentSearchQuery, ignoreCase = true)
+            }
+        }
 
-                contentMatch || titleMatch || dateMatch || typeMatch || timeMatch
+        // 🔹 TYPE + READ FILTER (UNCHANGED)
+        filteredList = when (isFilterType) {
+
+            Constant.TEXT, Constant.TEXT_ALL ->
+                filteredList.filter { it.type == Constant.TEXT }
+
+            Constant.VOICE, Constant.VOICE_ALL ->
+                filteredList.filter { it.type == Constant.VOICE }
+
+            Constant.READ ->
+                filteredList.filter { !it.is_unread!! }
+
+            Constant.UNREAD ->
+                filteredList.filter { it.is_unread!! }
+
+            Constant.TEXT_READ ->
+                filteredList.filter { it.type == Constant.TEXT && !it.is_unread!! }
+
+            Constant.VOICE_READ ->
+                filteredList.filter { it.type == Constant.VOICE && !it.is_unread!! }
+
+            Constant.TEXT_UNREAD ->
+                filteredList.filter { it.type == Constant.TEXT && it.is_unread!! }
+
+            Constant.VOICE_UNREAD ->
+                filteredList.filter { it.type == Constant.VOICE && it.is_unread!! }
+
+            else -> filteredList
+        }
+
+        // 🔹 SEARCH FILTER (UNCHANGED)
+        if (currentSearchQuery.isNotEmpty()) {
+            val q = currentSearchQuery
+            filteredList = filteredList.filter {
+                it.title.orEmpty().contains(q, true) ||
+                        it.content.orEmpty().contains(q, true) ||
+                        it.type.orEmpty().contains(q, true) ||
+                        it.time.orEmpty().contains(q, true)
             }
         }
 
         adapter?.updateList(filteredList, isSeeMoreClick)
         checkAndShowNoData(filteredList)
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -378,8 +475,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 isFilterClick = true
                 if (binding.rytFilter.isVisible) {
                     binding.rytFilter.visibility = View.GONE
+                    binding.lnrDatePicking.visibility = View.GONE
                 } else {
                     binding.rytFilter.visibility = View.VISIBLE
+                    binding.lnrDatePicking.visibility = View.VISIBLE
                 }
             }
 
@@ -411,6 +510,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     binding.txtSearchMenu.text.clear()
                     fetchMoreData()
                 }
+            }
+
+            R.id.imgClearFilter -> {
+                clearDateFilter()
             }
         }
     }
@@ -611,4 +714,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }.show(supportFragmentManager, "parentcommunication_tour")
         }
     }
+    private fun clearDateFilter() {
+        fromDateMillis = null
+        toDateMillis = null
+        binding.txtFromDate.text = getString(R.string.FromDate)
+        binding.txtToDate.text = getString(R.string.to_date)
+        applyCombinedFilter()
+    }
+
 }

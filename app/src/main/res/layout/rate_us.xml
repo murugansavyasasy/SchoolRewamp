@@ -82,12 +82,27 @@
                     android:visibility="visible" />
 
 
+                <TextView
+                    android:id="@+id/lblTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="asdnkjasnkjdkjsad"
+                    android:textColor="@color/custom_orange_color"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="visible">
+                </TextView>
+
 
                 <TextView
                     android:id="@+id/lblhytre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ratingBar"
+                    android:layout_below="@+id/lblTitle"
                     style="@style/CustomTextStylePoppinsBold"
                     android:text="How would you rate your experience ?"
                     android:textColor="@color/black"
@@ -97,20 +112,7 @@
                 </TextView>
 
 
-                <TextView
-                    android:id="@+id/lblTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblhytre"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:text=""
-                    android:textColor="@color/custom_orange_color"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="visible">
-                </TextView>
+
 
 
 
@@ -122,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:layout_marginTop="@dimen/ten"
-                    android:layout_below="@+id/lblTitle"
+                    android:layout_below="@+id/lblhytre"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:visibility="gone"/>
@@ -137,6 +139,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/bg_outline_orange"
                     android:gravity="center"
                     style="@style/CustomTextStylePoppinsBold"

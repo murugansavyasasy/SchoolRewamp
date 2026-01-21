@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/AthensGray">
 
     <View
@@ -11,22 +11,18 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/headerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +30,10 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <TextView
             android:id="@+id/lblHeaderTitle"
@@ -48,9 +47,6 @@
     </LinearLayout>
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/headerview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/linearlayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,12 +54,15 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerview">
 
         <ImageView
             android:id="@+id/imgFilter"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/filter_icon"
@@ -93,10 +92,10 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:maxLines="1"
                 android:imeOptions="actionDone"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -106,19 +105,188 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        android:layout_height="0dp">
-        <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout1">
 
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/fifteen"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/fifteen">
+
+            <LinearLayout
+                android:id="@+id/lnrDatePicking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/five"
+                android:paddingEnd="@dimen/ten"
+                android:visibility="gone">
+
+                <!-- FROM DATE -->
+                <LinearLayout
+                    android:id="@+id/lnrFromDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="@string/FromDate"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/ten"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty"
+                        android:background="@android:drawable/editbox_background"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
+
+                        <TextView
+                            android:id="@+id/txtFromDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/FromDate"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <ImageView
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:src="@drawable/calender_icon_color" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ARROW -->
+                <ImageView
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:src="@drawable/right_arrow"
+                    android:visibility="gone" />
+
+                <!-- TO DATE -->
+                <LinearLayout
+                    android:id="@+id/lnrToDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="@string/ToDate"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/ten"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty"
+                        android:background="@android:drawable/editbox_background"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/ten">
+
+                        <TextView
+                            android:id="@+id/txtToDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/ToDate"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <ImageView
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:src="@drawable/calender_icon_color" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgClearFilter"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:src="@drawable/close_red_color">
+
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrFilterRead"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginStart="@dimen/fifty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifty"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblAll"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_light_green_radious"
+                    android:gravity="center"
+                    android:text="@string/all"
+                    android:textColor="@color/navi_blue2"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblUnread"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gray_light_radiuos"
+                    android:gravity="center"
+                    android:text="@string/unread"
+                    android:textColor="@color/navi_blue2"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblRead"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gray_light_radiuos"
+                    android:gravity="center"
+                    android:text="@string/read"
+                    android:textColor="@color/navi_blue2"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+            </LinearLayout>
+
             <LinearLayout
 
                 android:id="@+id/rytFilter"
@@ -187,11 +355,11 @@
                 android:id="@+id/recycleracademic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/five"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/five" />
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:overScrollMode="never"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -224,28 +392,27 @@
 
                 <TextView
                     android:id="@+id/isArchiveErrorMsg"
-                    android:gravity="center"
-                    android:visibility="gone"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone">
 
                 </TextView>
+
                 <TextView
                     android:id="@+id/lblArchiveMsg"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/ten"
-                    android:layout_gravity="end"
-                    android:textColor="@color/PrimaryColor"
                     android:text="@string/underline_see_archived_messages"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:textColor="@color/PrimaryColor"></TextView>
 
             </LinearLayout>
-
 
 
         </LinearLayout>
