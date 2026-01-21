@@ -117,7 +117,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var filteredMenuList = ArrayList<MenuDetail>()
 
 
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -574,6 +573,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.autoScrollRecyclerView.visibility = View.GONE
         }
     }
+
     private fun isLoadData() {
         val safeActivity = activity ?: return
 
@@ -650,15 +650,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-      //  if (isSchoolDashBoardData == null) {
-            isDashBoardData()
-     //   } else {
-       //     isLoadData()
-            setupRecyclerView()
+        //  if (isSchoolDashBoardData == null) {
+        isDashBoardData()
+        //   } else {
+        //     isLoadData()
+        setupRecyclerView()
 //            appViewModel!!.isDashBoardCountData(
 //                access_token, Constant.staff_, requireActivity()
 //            )
-       // }
+        // }
         Log.d("Loading", "Dashboard Data is Refreshed")
     }
 
@@ -918,6 +918,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
             else -> null
         }
         activityClass?.let {
