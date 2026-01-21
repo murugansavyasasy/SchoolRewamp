@@ -235,10 +235,10 @@
 
             <ImageView
                 android:id="@+id/imgNoData"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
                 android:contentDescription="@string/no_data"
-                android:src="@drawable/your_meeting_nodata" />
+                android:src="@drawable/no_ptm_parent_message" />
 
             <TextView
                 android:id="@+id/txtNoData"
