@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -30,7 +29,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Locale
 
 class AttachmentAdapter(
-    private var attachmentList: List<AttachmentDataReport>?,
+    private val attachmentList: MutableList<AttachmentDataReport>,
     private val childClickListener: OnAttachmentReportClickListener,
     private val context: Context,
     var isLoading: Boolean,
@@ -53,6 +52,18 @@ class AttachmentAdapter(
         return if (isLoading) 5 else filteredList.size
     }
 
+    fun updateFilteredList(newList: List<AttachmentDataReport>) {
+        isLoading = false
+
+        filteredList.clear()
+        filteredList.addAll(newList)
+
+        originalList.clear()
+        originalList.addAll(newList)
+
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -72,7 +83,6 @@ class AttachmentAdapter(
             holder.bind(filteredList, position, childClickListener, this)
         }
     }
-
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -98,30 +108,14 @@ class AttachmentAdapter(
                 filteredList.clear()
                 filteredList.addAll(results?.values as? List<AttachmentDataReport> ?: emptyList())
 
-                notifyDataSetChanged() // SAFE
+                notifyDataSetChanged()
+
                 val isEmpty = filteredList.isEmpty()
                 noDataImage?.visibility = if (isEmpty) View.VISIBLE else View.GONE
                 noDataText?.visibility = if (isEmpty) View.VISIBLE else View.GONE
                 childClickListener.onFilterEmpty(isEmpty)
             }
         }
-    }
-
-    fun AppendData(newList: List<AttachmentDataReport>) {
-        if (newList.isEmpty()) return
-
-        if (isLoading) {
-            isLoading = false
-            originalList.addAll(newList)
-            filteredList.addAll(newList)
-            notifyDataSetChanged()
-            return
-        }
-
-        val oldSize = filteredList.size
-        originalList.addAll(newList)
-        filteredList.addAll(newList)
-        notifyItemRangeInserted(oldSize, newList.size)
     }
 
     fun getCurrentListSize(): Int = filteredList.size

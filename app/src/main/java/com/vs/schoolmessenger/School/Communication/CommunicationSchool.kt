@@ -50,7 +50,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
-import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
@@ -337,41 +336,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
     }
 
-
-//    private fun initializeDefaultTimes() {
-//        val now = Calendar.getInstance()
-//
-//        // From time = current time
-//        fromHour24 = now.get(Calendar.HOUR_OF_DAY)
-//        fromMinute = now.get(Calendar.MINUTE)
-//
-//        // To time = current time + 40 minutes
-//        val toCal = now.clone() as Calendar
-//        toCal.add(Calendar.MINUTE, 40)
-//
-//        toHour24 = toCal.get(Calendar.HOUR_OF_DAY)
-//        toMinute = toCal.get(Calendar.MINUTE)
-//
-//        // Update UI
-////        binding.lblStartTime.text = formatTime12h(fromHour24!!, fromMinute!!)
-//        val (hour24, minute) = getDefaultTimePlus10Minutes()
-//        fromHour24 = hour24
-//        fromMinute = minute
-//        binding.lblStartTime.text = formatTime12h(hour24, minute)
-//        binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
-//    }
-
-    private fun getDefaultTimePlus10Minutes(): Pair<Int, Int> {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MINUTE, 10)
-
-        val hour24 = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-
-        return Pair(hour24, minute)
-    }
-
-
     private fun formatTime12h(hour24: Int, minute: Int): String {
         val cal = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, hour24)
@@ -505,32 +469,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         timePicker.show()
-    }
-
-    private fun isValidDuration(): Boolean {
-        if (fromHour24 == null || fromMinute == null || toHour24 == null || toMinute == null) {
-            return true // let it pass if any is not set yet
-        }
-
-        val fromCal = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, fromHour24!!)
-            set(Calendar.MINUTE, fromMinute!!)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-
-        val toCal = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, toHour24!!)
-            set(Calendar.MINUTE, toMinute!!)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-
-        // Add 40 minutes to from
-        val minToCal = fromCal.clone() as Calendar
-        minToCal.add(Calendar.MINUTE, 40)
-
-        return !toCal.before(minToCal)
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
@@ -1142,22 +1080,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
 
-
-//            R.id.rlaToTime -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                isFromTime = false
-//
-//                val preHour = toHour24 ?: fromHour24
-//                val preMin = toMinute ?: fromMinute?.plus(40)?.let {
-//                    if (it >= 60) it - 60 else it
-//                }
-//                val carryHour = if (fromMinute != null && fromMinute!! + 40 >= 60) 1 else 0
-//
-//                showTimePickerDialog(
-//                    this, this, preHour?.plus(carryHour), preMin
-//                )
-//            }
-
             R.id.lnrScheduleCall -> {
                 KeyboardUtils.hideKeyboard(this)
                 val dateAdapter = DateAdapter(this) { updatedList -> }
@@ -1363,80 +1285,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 }
             }
-
-
-//            R.id.rlaSendVoice -> {
-//                KeyboardUtils.hideKeyboard(this)
-//                if (Constant.isVoiceType == 3) {
-//                    if (Constant.selectedFiles.isNotEmpty()) {
-//                        if (binding.edtTitle.text.toString().isNotBlank()) {
-//                            if (isScheduleCall) {
-//                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
-//                                    if (selectedDates.isNotEmpty()) {
-//                                        isGoToRecipient()
-//                                    } else {
-//                                        Constant.showValidationAlertPopup(
-//                                            getString(R.string.alert),
-//                                            getString(R.string.Select_schedule_date),
-//                                            this
-//                                        )
-//                                    }
-//                                } else {
-//                                    Constant.showValidationAlertPopup(
-//                                        getString(R.string.alert),
-//                                        getString(R.string.select_the_time),
-//                                        this
-//                                    )
-//                                }
-//                            } else {
-//                                isGoToRecipient()
-//                            }
-//                        } else {
-//                            binding.edtTitle.error = getString(R.string.This_field_required)
-//                        }
-//                    } else {
-//                        Constant.showValidationAlertPopup(
-//                            getString(R.string.alert),
-//                            getString(R.string.Voice_title_required),
-//                            this
-//                        )
-//                    }
-//                } else {
-//                    if (Constant.selectedFiles.isNotEmpty()) {
-//                        if (binding.edtTitle.text.toString().isNotBlank()) {
-//                            if (isScheduleCall) {
-//                                if (binding.lblStartTime.text.toString() != "Select time" && binding.lblEndTime.text.toString() != "Select time") {
-//                                    if (selectedDates.isNotEmpty()) {
-//                                        isGoToRecipient()
-//                                    } else {
-//                                        Constant.showValidationAlertPopup(
-//                                            getString(R.string.alert),
-//                                            getString(R.string.Select_schedule_date),
-//                                            this
-//                                        )
-//                                    }
-//                                } else {
-//                                    Constant.showValidationAlertPopup(
-//                                        getString(R.string.alert),
-//                                        getString(R.string.select_the_time),
-//                                        this
-//                                    )
-//                                }
-//                            } else {
-//                                isGoToRecipient()
-//                            }
-//                        } else {
-//                            binding.edtTitle.error = getString(R.string.This_field_required)
-//                        }
-//                    } else {
-//                        Constant.showValidationAlertPopup(
-//                            getString(R.string.alert),
-//                            getString(R.string.Voice_title_required),
-//                            this
-//                        )
-//                    }
-//                }
-//            }
 
             R.id.imgVoicePlay -> {
 
