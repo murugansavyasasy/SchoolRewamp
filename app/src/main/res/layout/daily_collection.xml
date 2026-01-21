@@ -190,7 +190,6 @@
                 android:gravity="center"
                 android:padding="@dimen/eight"
                 android:text="@string/DailyCollection_class">
-
             </TextView>
 
 

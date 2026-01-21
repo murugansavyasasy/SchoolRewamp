@@ -65,25 +65,14 @@
                 </ImageView>
 
 
-                <TextView
-                    android:id="@+id/lblhytre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgFeedBack"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:text="How would you rate your experience ?"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sixteen_sp"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
-                </TextView>
+
 
 
                 <RatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblhytre"
+                    android:layout_below="@+id/imgFeedBack"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
@@ -95,10 +84,24 @@
 
 
                 <TextView
-                    android:id="@+id/lblTitle"
+                    android:id="@+id/lblhytre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ratingBar"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="How would you rate your experience ?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp">
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblhytre"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:gravity="center"

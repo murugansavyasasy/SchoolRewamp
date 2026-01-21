@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.getkeepsafe.taptargetview.TapTarget
-import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -46,7 +44,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-
+        showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -277,91 +275,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         }
     }
 
-
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus && shouldShowDailyCollectionTour()) {
-            showDailyCollectionFeatureDiscovery()
-        }
-    }
-
-
-    private fun showDailyCollectionFeatureDiscovery() {
-
-        TapTargetSequence(this)
-            .targets(
-
-                // FROM DATE
-                TapTarget.forView(
-                    binding.linearLayout2,
-                    "From Date",
-                    "Select the starting date to filter daily collections"
-                )
-                    .outerCircleColor(R.color.PrimaryColor)
-                    .targetCircleColor(android.R.color.white)
-                    .textColor(android.R.color.white)
-                    .descriptionTextSize(14)
-                    .titleTextSize(18)
-                    .cancelable(false),
-
-                // TO DATE
-                TapTarget.forView(
-                    binding.linearLayout4,
-                    "To Date",
-                    "Choose the ending date for the collection report"
-                )
-                    .outerCircleColor(R.color.PrimaryColor)
-                    .targetCircleColor(android.R.color.white)
-                    .textColor(android.R.color.white)
-                    .descriptionTextSize(14)
-                    .titleTextSize(18)
-                    .cancelable(false),
-
-                // CATEGORY / CLASS / MODE
-                TapTarget.forView(
-                    binding.relativeLayout8,
-                    "View Type",
-                    "Switch between Category, Class, or Payment Mode to analyze collections"
-                )
-                    .outerCircleColor(R.color.PrimaryColor)
-                    .targetCircleColor(android.R.color.white)
-                    .textColor(android.R.color.white)
-                    .descriptionTextSize(14)
-                    .titleTextSize(18)
-                    .cancelable(true)
-            )
-            .listener(object : TapTargetSequence.Listener {
-                override fun onSequenceFinish() {
-                    markDailyCollectionTourShown()
-                }
-
-                override fun onSequenceStep(
-                    lastTarget: TapTarget?,
-                    targetClicked: Boolean
-                ) {
-                    // Optional: analytics
-                }
-
-                override fun onSequenceCanceled(lastTarget: TapTarget?) {
-                    markDailyCollectionTourShown()
-                }
-            })
-            .start()
-    }
-
-
-    private fun shouldShowDailyCollectionTour(): Boolean {
-        val prefs = getSharedPreferences("feature_tour", MODE_PRIVATE)
-        return !prefs.getBoolean("daily_collection_tour_shown", false)
-    }
-
-    private fun markDailyCollectionTourShown() {
-        val prefs = getSharedPreferences("feature_tour", MODE_PRIVATE)
-        prefs.edit().putBoolean("daily_collection_tour_shown", true).apply()
-    }
-
-
     override fun onDateSelected(date: String) {
         when (selectedDateTarget) {
 
@@ -382,5 +295,17 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         }
 
         isGetDailyCollection()
+    }
+
+
+    private fun showTourIfNeeded() {
+        val prefs = getSharedPreferences("app_tour_prefs", MODE_PRIVATE)
+        val isShown = prefs.getBoolean("daily_collection_tour", false)
+
+        if (!isShown) {
+            DailyCollectionTourDialog {
+                prefs.edit().putBoolean("daily_collection_tour", true).apply()
+            }.show(supportFragmentManager, "DailyCollectionTour")
+        }
     }
 }

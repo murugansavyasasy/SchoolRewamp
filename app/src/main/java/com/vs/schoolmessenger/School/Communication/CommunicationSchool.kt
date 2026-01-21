@@ -50,7 +50,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
-import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
@@ -59,6 +58,7 @@ import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.KeyboardUtils
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
+import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -137,6 +137,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
         super.setupViews()
+        showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
@@ -2173,6 +2174,22 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun showTourIfNeeded() {
+        val prefs = getSharedPreferences("communication_prefs", MODE_PRIVATE)
+        val isShown = prefs.getBoolean("communication_tour", false)
+
+        if (!isShown) {
+            val tourImages = arrayListOf(
+                R.drawable.daily_collection_tour_1,
+                R.drawable.daily_collection_tour_2
+            )
+
+            TourDialog.newInstance(tourImages) {
+                prefs.edit().putBoolean("communication_tour", true).apply()
+            }.show(supportFragmentManager, "CommunicationTour")
         }
     }
 }

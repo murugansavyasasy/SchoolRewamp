@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
 import androidx.core.view.isVisible
 import androidx.core.view.isGone
+import com.vs.schoolmessenger.Utils.TourDialog
 
 class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,
     OnAttachmentReportClickListener {
@@ -53,6 +54,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun setupViews() {
         super.setupViews()
+        showTourIfNeeded()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -388,4 +390,21 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.txtNoData.visibility = View.GONE
         }
     }
+
+    private fun showTourIfNeeded() {
+        val prefs = getSharedPreferences("parentattachment_prefs", MODE_PRIVATE)
+        val isShown = prefs.getBoolean("parentattachment_tour", false)
+
+        if (!isShown) {
+            val tourImages = arrayListOf(
+                R.drawable.daily_collection_tour_1,
+                R.drawable.daily_collection_tour_2
+            )
+
+            TourDialog.newInstance(tourImages) {
+                prefs.edit().putBoolean("parentattachment_tour", true).apply()
+            }.show(supportFragmentManager, "parentattachment_tour")
+        }
+    }
+
 }
