@@ -611,9 +611,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             val dir = externalCacheDir ?: cacheDir
             val timeStamp =
                 SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
-            val fileName = "${Constant.Communication_}$timeStamp${Constant.wav}"
+            val fileName = "${Constant.original_}$timeStamp${Constant.m4a}"
             val filePath = "${dir.absolutePath}/$fileName"
             audioFilePath = filePath
+            Log.d("recordedFilePath",filePath)
             isFileName = fileName
             Constant.isVoiceType = 1
             mediaRecorder = MediaRecorder().apply {
