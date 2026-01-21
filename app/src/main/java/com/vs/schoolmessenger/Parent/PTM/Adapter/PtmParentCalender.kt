@@ -51,7 +51,7 @@ class PtmParentCalender(
         val countData = slotCounts.find { it.event_date == formattedDate }
         if (countData != null && countData.count != "0") {
             holder.lblSlotCount.visibility = View.VISIBLE
-            (holder.lblSlotCount as TextView).text = countData.count
+            (holder.lblSlotCount as TextView).text = "Avl : " + countData.count
         } else {
 //            holder.lblSlotCount.visibility = View.GONE
 //            holder.lblSlotCount.visibility = View.INVISIBLE
