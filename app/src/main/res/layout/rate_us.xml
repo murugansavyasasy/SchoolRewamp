@@ -29,19 +29,17 @@
                 android:visibility="visible"
                 android:padding="20dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/lblClose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/ten"
-                    android:text="@string/Close"
+                   android:src="@drawable/close_red_color1"
                     android:padding="@dimen/five"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/fifteen_sp">
+                    style="@style/CustomTextStylePoppinsBold">
 
-                </TextView>
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,6 +48,7 @@
                     android:layout_marginBottom="@dimen/ten"
                     android:text="@string/lblRateus"
                     android:padding="@dimen/five"
+                    android:visibility="gone"
                     style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp">
@@ -61,24 +60,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/hundred"
                     android:layout_marginTop="@dimen/thirty"
-                    android:src="@drawable/rate_us"
+                    android:src="@drawable/rateusicon"
                     android:visibility="visible">
                 </ImageView>
 
 
                 <TextView
-                    android:id="@+id/lblTitle"
+                    android:id="@+id/lblhytre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgFeedBack"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:text="@string/lblHowsatisfied"
+                    android:text="How would you rate your experience ?"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="visible">
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp">
                 </TextView>
 
 
@@ -86,7 +83,7 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblTitle"
+                    android:layout_below="@+id/lblhytre"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
@@ -96,13 +93,33 @@
                     android:visibility="visible" />
 
 
+
+                <TextView
+                    android:id="@+id/lblTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text=""
+                    android:textColor="@color/custom_orange_color"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="visible">
+                </TextView>
+
+
+
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:layout_marginTop="@dimen/ten"
-                    android:layout_below="@+id/ratingBar"
+                    android:layout_below="@+id/lblTitle"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:visibility="gone"/>
@@ -116,9 +133,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/thirty"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:layout_marginBottom="@dimen/thirty"
                     android:background="@drawable/bg_outline_orange"
                     android:gravity="center"
                     style="@style/CustomTextStylePoppinsBold"

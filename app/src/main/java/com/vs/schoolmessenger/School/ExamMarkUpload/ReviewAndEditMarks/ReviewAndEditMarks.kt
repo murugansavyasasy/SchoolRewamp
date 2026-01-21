@@ -95,6 +95,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
+        binding.lblDisclaimerForAI.visibility=if (Constant.isMarkUploadFromAi) View.VISIBLE else View.GONE
+
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.lytSearch.setOnClickListener(this)

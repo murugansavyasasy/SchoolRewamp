@@ -148,6 +148,7 @@ class RateUsDialog(   private val fromScreen: String?,
         lblMayBeLater.visibility = View.GONE
         lnrRatingContent.visibility = View.VISIBLE
         recyclerCategories.visibility = View.VISIBLE
+
     }
 
     private fun showMaybeLater() = with(binding) {
@@ -155,6 +156,7 @@ class RateUsDialog(   private val fromScreen: String?,
         lblMayBeLater.visibility = View.VISIBLE
         lnrRatingContent.visibility = View.GONE
         recyclerCategories.visibility = View.GONE
+
     }
 
     override fun onClick(v: View?) {
