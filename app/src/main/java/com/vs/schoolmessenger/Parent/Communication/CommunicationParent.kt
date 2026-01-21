@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Communication
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
@@ -28,6 +29,9 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.CommunicationBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickListener,
     VoiceClickListener {
@@ -119,19 +123,22 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.linearlayout1.visibility == View.VISIBLE) {
+
+                // 🔹 Hide search & filter
                 binding.linearlayout1.visibility = View.GONE
                 binding.rytFilter.visibility = View.GONE
-                binding.txtSearchMenu.text.clear()
+                binding.lnrDatePicking.visibility = View.GONE
+
+                resetAllFiltersAndShowFullList()
+
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
             } else {
+                // 🔹 Show search
                 binding.linearlayout1.visibility = View.VISIBLE
                 binding.rytFilter.visibility = View.GONE
-                binding.txtSearchMenu.text.clear()
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-
+                binding.txtSearchMenu.setText("")
             }
         }
 
@@ -265,11 +272,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
 
         binding.lnrToDate.setOnClickListener {
-            if (fromDateMillis == null) {
-                showToast(getString(R.string.select_from_date_first))
-            } else {
-                showToDatePicker()
-            }
+            showToDatePicker()
         }
 
 
@@ -279,58 +282,74 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private fun showToast(msg: String) {
         android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
     }
-
     private fun showFromDatePicker() {
-        val cal = java.util.Calendar.getInstance()
+        val cal = Calendar.getInstance()
 
-        android.app.DatePickerDialog(
+        val dialog = DatePickerDialog(
             this,
             { _, y, m, d ->
-                cal.set(y, m, d, 0, 0, 0)
-                fromDateMillis = cal.timeInMillis
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(y, m, d, 0, 0, 0)
+
+                fromDateMillis = selectedCal.timeInMillis
 
                 binding.txtFromDate.text =
-                    java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
-                        .format(cal.time)
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                        .format(selectedCal.time)
 
-                // 🔥 If To Date already selected → re-filter
-                if (toDateMillis != null) {
-                    if (fromDateMillis!! > toDateMillis!!) {
-                        showToast(getString(R.string.from_date_cannot_be_after_to_date))
-                        toDateMillis = null
-                        binding.txtToDate.text = "To Date"
-                    } else {
-                        applyCombinedFilter()
-                    }
+                // 🔴 If invalid range
+                if (toDateMillis != null && fromDateMillis!! > toDateMillis!!) {
+                    showToast(getString(R.string.from_date_cannot_be_after_to_date))
+                    toDateMillis = null
+                    binding.txtToDate.text = getString(R.string.to_date)
                 }
-            },
-            cal.get(java.util.Calendar.YEAR),
-            cal.get(java.util.Calendar.MONTH),
-            cal.get(java.util.Calendar.DAY_OF_MONTH)
-        ).show()
-    }
-
-    private fun showToDatePicker() {
-        val cal = java.util.Calendar.getInstance()
-
-        android.app.DatePickerDialog(
-            this,
-            { _, y, m, d ->
-                cal.set(y, m, d, 23, 59, 59)
-                toDateMillis = cal.timeInMillis
-
-                binding.txtToDate.text =
-                    java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
-                        .format(cal.time)
 
                 applyCombinedFilter()
             },
-            cal.get(java.util.Calendar.YEAR),
-            cal.get(java.util.Calendar.MONTH),
-            cal.get(java.util.Calendar.DAY_OF_MONTH)
-        ).show()
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+
+        // 🔹 LIMIT: From Date ≤ To Date
+        if (toDateMillis != null) {
+            dialog.datePicker.maxDate = toDateMillis!!
+        }
+
+        dialog.show()
     }
 
+    private fun showToDatePicker() {
+        val cal = Calendar.getInstance()
+
+        val dialog = DatePickerDialog(
+            this,
+            { _, y, m, d ->
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(y, m, d, 23, 59, 59)
+
+                toDateMillis = selectedCal.timeInMillis
+
+                binding.txtToDate.text =
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                        .format(selectedCal.time)
+
+                applyCombinedFilter()
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+
+        // 🔹 LIMIT: To Date ≥ From Date
+        if (fromDateMillis != null) {
+            dialog.datePicker.minDate = fromDateMillis!!
+        }
+
+        dialog.show()
+    }
 
     private fun scrollToMessageId(headerId: String?) {
         if (msg_id == -1) return
@@ -349,7 +368,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
         Log.d("ScrollDebug", "No index found for headerId $headerId")
     }
-
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
@@ -409,17 +427,31 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         var filteredList = allVoiceData.toList()
 
-        // 🔹 DATE FILTER (FIXED)
-        if (fromDateMillis != null && toDateMillis != null) {
-            filteredList = filteredList.filter { item ->
-                try {
-                    val dateTime = "${item.date} ${item.time}"
-                    val parsedDate = apiDateTimeFormat.parse(dateTime)
-                    parsedDate != null &&
-                            parsedDate.time in fromDateMillis!!..toDateMillis!!
-                } catch (e: Exception) {
-                    false
+        // 🔹 DATE FILTER (ALL CASES HANDLED)
+        filteredList = filteredList.filter { item ->
+            try {
+                val dateTime = "${item.date} ${item.time}"
+                val itemMillis =
+                    apiDateTimeFormat.parse(dateTime)?.time ?: return@filter false
+
+                when {
+                    // ✅ From + To
+                    fromDateMillis != null && toDateMillis != null ->
+                        itemMillis in fromDateMillis!!..toDateMillis!!
+
+                    // ✅ Only From → future data
+                    fromDateMillis != null ->
+                        itemMillis >= fromDateMillis!!
+
+                    // ✅ Only To → past data
+                    toDateMillis != null ->
+                        itemMillis <= toDateMillis!!
+
+                    // ✅ No date filter
+                    else -> true
                 }
+            } catch (e: Exception) {
+                false
             }
         }
 
@@ -472,11 +504,16 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         when (v?.id) {
 
             R.id.imgFilter -> {
-                isFilterClick = true
                 if (binding.rytFilter.isVisible) {
+                    // 🔹 HIDE FILTER → RESET EVERYTHING
                     binding.rytFilter.visibility = View.GONE
                     binding.lnrDatePicking.visibility = View.GONE
+
+                    resetAllFiltersAndShowFullList()
+
                 } else {
+                    // 🔹 SHOW FILTER
+                    isFilterClick = true
                     binding.rytFilter.visibility = View.VISIBLE
                     binding.lnrDatePicking.visibility = View.VISIBLE
                 }
@@ -517,6 +554,36 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
         }
     }
+
+    private fun resetAllFiltersAndShowFullList() {
+
+        // 🔹 Reset search
+        currentSearchQuery = ""
+        binding.txtSearchMenu.setText("")
+
+        // 🔹 Reset read/unread selection (UI)
+        isCommunicationType = 1
+        isFilterType = Constant.ALL
+
+        fromDateMillis = null
+        toDateMillis = null
+        binding.txtFromDate.text = getString(R.string.from_date)
+        binding.txtToDate.text = getString(R.string.to_date)
+
+        binding.lblAll.setBackgroundResource(R.drawable.bg_light_green_radious)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+
+        // 🔹 Reset radio buttons (voice/text/all)
+        binding.RdbAll.isChecked = true
+
+        // 🔹 Show full API data
+        adapter?.updateList(allVoiceData, isSeeMoreClick)
+        checkAndShowNoData(allVoiceData)
+
+        isFilterClick = false
+    }
+
 
     private fun fetchInitialData() {
         isInitialLoad = true
