@@ -127,6 +127,13 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         binding.lnrUpload.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
+        //Note:here ai_mark_entry comes true means for this selected exam for this exam,mark upload can be done in AI false means not
+        if (Constant.isMarkUploadExamListDataDetails?.ai_mark_entry==true){
+            binding.cardUploadImage.visibility= View.VISIBLE
+        }
+        else{
+            binding.cardUploadImage.visibility= View.GONE
+        }
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
