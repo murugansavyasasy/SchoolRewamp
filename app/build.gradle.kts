@@ -351,6 +351,7 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
 
     implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.getkeepsafe.taptargetview:taptargetview:1.15.0")
 
 
 // or a newer version
