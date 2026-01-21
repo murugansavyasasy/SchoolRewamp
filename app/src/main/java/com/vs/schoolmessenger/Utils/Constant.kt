@@ -489,8 +489,10 @@ object Constant {
     var isUpdate = "isUpdate"
     var new = "new"
     var Communication_ = "Communication_"
+    var original_ = "original_"
     var current = "current"
     var wav = ".wav"
+    var m4a = ".m4a"
     var wav_ = "wav"
     var isCurrentAcademicYearId = 0
 

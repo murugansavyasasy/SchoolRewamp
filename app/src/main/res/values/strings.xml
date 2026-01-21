@@ -1068,6 +1068,8 @@
     <string name="enter_password_to_proceed">Enter password to proceed</string>
     <string name="do_not_allow_past_time">Do not allow past time</string>
     <string name="ai_can_make_mistakes_please_check_properly_before_submitting">⚠️ ️️AI can make mistakes. Please check properly before submitting.</string>
+    <string name="from_date_cannot_be_after_to_date">From Date cannot be after To Date</string>
+    <string name="select_from_date_first">Select From Date first</string>
 
 
 </resources>

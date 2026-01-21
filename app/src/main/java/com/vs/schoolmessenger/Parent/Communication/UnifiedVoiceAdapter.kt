@@ -309,7 +309,7 @@ class UnifiedVoiceAdapter(
                         tvSeeMore.visibility = View.VISIBLE
                         lblnewiconText.visibility = View.GONE
                         lblSeeMore.text = context.getString(R.string.see_more_2)
-                    }else{
+                    } else {
                         tvSeeMore.visibility = View.GONE
                         lblnewiconText.visibility = View.GONE
                     }

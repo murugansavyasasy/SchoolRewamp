@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Attachment
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
@@ -10,8 +11,10 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,8 +31,9 @@ import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
-import androidx.core.view.isVisible
-import androidx.core.view.isGone
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,
     OnAttachmentReportClickListener {
@@ -38,10 +42,29 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
 
+
+    private var fromDateMillis: Long? = null
+    private var toDateMillis: Long? = null
+    private var originalAttachmentList = mutableListOf<AttachmentDataReport>()
+    private var originalArchiveList = mutableListOf<AttachmentDataReport>()
+
+    private var activeList = mutableListOf<AttachmentDataReport>()
+    private var isArchiveMode = false
+
+    private enum class ReadFilter {
+        ALL, READ, UNREAD
+    }
+
+    private var currentReadFilter = ReadFilter.ALL
+
+    private val apiDateFormat =
+        SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+
     var mAttachmentReportAdapter: AttachmentAdapter? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
+    private var currentSearchQuery: String = ""
 
     private var msg_id: Int = -1
     private var headerId: String? = null
@@ -75,7 +98,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -88,7 +110,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
+        binding.lnrToDate.setOnClickListener(this)
+        binding.lnrFromDate.setOnClickListener(this)
         binding.lblArchiveMsg.setOnClickListener(this)
+        binding.imgClearFilter.setOnClickListener(this)
         binding.root.post {
             val finalName =
                 Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
@@ -99,12 +124,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
                 binding.rytSearch1.visibility = View.GONE
+                binding.imgFilter.visibility = View.GONE
+                binding.lnrDatePicking.visibility = View.GONE
+                binding.lnrFilterRead.visibility = View.GONE
                 binding.txtSearchMenu1.setText("")
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.txtSearchMenu1.windowToken, 0)
             } else {
                 binding.rytSearch1.visibility = View.VISIBLE
-                binding.txtSearchMenu1.requestFocus()
+                binding.imgFilter.visibility = View.VISIBLE
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.txtSearchMenu1, InputMethodManager.SHOW_IMPLICIT)
             }
@@ -135,23 +163,49 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.txtSearchMenu1.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = binding.txtSearchMenu1.text.toString()
-                mAttachmentReportAdapter?.filter?.filter(query)
+        binding.txtSearchMenu1.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtSearchMenu1.windowToken, 0)
-                binding.txtSearchMenu1.clearFocus()
-                true
-            } else false
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                currentSearchQuery = s?.toString()?.trim().orEmpty()
+
+                applyCombinedFilter()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.lnrFromDate.setOnClickListener { showFromDatePicker() }
+        binding.lnrToDate.setOnClickListener {
+            if (fromDateMillis == null) {
+                showToast(getString(R.string.select_from_date_first))
+            } else {
+                showToDatePicker()
+            }
         }
 
         appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
-                        mAttachmentReportAdapter!!.AppendData(response.data)
+                        originalArchiveList.clear()
+                        originalArchiveList.addAll(response.data)
+
+                        isArchiveMode = true
+
+                        activeList.clear()
+                        activeList.addAll(originalArchiveList)
+
+                        mAttachmentReportAdapter = AttachmentAdapter(
+                            activeList,
+                            this,
+                            this,
+                            Constant.isShimmerViewDisable,
+                            binding.nomessage,
+                            binding.txtNoData
+                        )
+
+                        binding.recycleracademic.adapter = mAttachmentReportAdapter
                         binding.txtSearchMenu1.text.clear()
                         binding.isArchiveErrorMsg.visibility = View.GONE
                         binding.recycleracademic.visibility = View.VISIBLE
@@ -236,13 +290,31 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
 
                 binding.txtNoData.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.recycleracademic.visibility = View.VISIBLE
-                isLoadData(response.data)
+                originalAttachmentList.clear()
+                originalAttachmentList.addAll(response.data)
+
+                isArchiveMode = false
+
+                activeList.clear()
+                activeList.addAll(originalAttachmentList)
+
+                mAttachmentReportAdapter = AttachmentAdapter(
+                    activeList,
+                    this,
+                    this,
+                    Constant.isShimmerViewDisable,
+                    binding.nomessage,
+                    binding.txtNoData
+                )
+
+                binding.recycleracademic.adapter = mAttachmentReportAdapter
+
                 Log.d("Message Id Value Indication", msg_id.toString())
                 if (fromNotification) {
                     scrollToMessageId(headerId)
@@ -252,35 +324,164 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
+
+        binding.lblAll.setOnClickListener {
+            selectReadFilter(ReadFilter.ALL)
+        }
+
+        binding.lblUnread.setOnClickListener {
+            selectReadFilter(ReadFilter.UNREAD)
+        }
+
+        binding.lblRead.setOnClickListener {
+            selectReadFilter(ReadFilter.READ)
+        }
+
         isGetAttachment()
     }
 
-    fun isLoadData(data: List<AttachmentDataReport>) {
-
-        mAttachmentReportAdapter = AttachmentAdapter(
-            data,
-            this,
-            this,
-            Constant.isShimmerViewDisable,
-            binding.nomessage,
-            binding.txtNoData
-        )
-        binding.recycleracademic.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
-        binding.recycleracademic.isNestedScrollingEnabled = false
-        binding.recycleracademic.adapter = mAttachmentReportAdapter
-
+    fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+
+    private fun showFromDatePicker() {
+        val cal = Calendar.getInstance()
+
+        DatePickerDialog(
+            this,
+            { _, y, m, d ->
+                cal.set(y, m, d, 0, 0, 0)
+                fromDateMillis = cal.timeInMillis
+
+                binding.txtFromDate.text =
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(cal.time)
+
+                if (toDateMillis != null) {
+                    if (fromDateMillis!! > toDateMillis!!) {
+                        showToast(getString(R.string.from_date_cannot_be_after_to_date))
+                        toDateMillis = null
+                        binding.txtToDate.text = "To Date"
+                    } else {
+                        applyCombinedFilter()
+                    }
+                }
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+
+    private fun showToDatePicker() {
+        val cal = Calendar.getInstance()
+
+        DatePickerDialog(
+            this,
+            { _, y, m, d ->
+                cal.set(y, m, d, 23, 59, 59)
+                toDateMillis = cal.timeInMillis
+                binding.txtToDate.text =
+                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(cal.time)
+                applyCombinedFilter()
+            },
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun selectReadFilter(filter: ReadFilter) {
+        currentReadFilter = filter
+
+        // Reset all backgrounds
+        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+
+        // Highlight selected
+        when (filter) {
+            ReadFilter.ALL -> binding.lblAll.setBackgroundResource(R.drawable.bg_light_green_radious)
+            ReadFilter.UNREAD -> binding.lblUnread.setBackgroundResource(R.drawable.bg_light_green_radious)
+            ReadFilter.READ -> binding.lblRead.setBackgroundResource(R.drawable.bg_light_green_radious)
+        }
+
+        applyCombinedFilter()
+    }
+
+
+    private fun applyCombinedFilter() {
+
+        // 🔹 ALWAYS start from ORIGINAL base list
+        val baseList = if (isArchiveMode) {
+            originalArchiveList
+        } else {
+            originalAttachmentList
+        }
+
+        var resultList = baseList.toList()
+
+        // 🔹 DATE FILTER
+        if (fromDateMillis != null && toDateMillis != null) {
+            resultList = resultList.filter {
+                try {
+                    val parsedDate = apiDateFormat.parse(it.date)
+                    parsedDate != null &&
+                            parsedDate.time in fromDateMillis!!..toDateMillis!!
+                } catch (e: Exception) {
+                    false
+                }
+            }
+        }
+
+        // 🔹 READ / UNREAD FILTER
+        resultList = when (currentReadFilter) {
+            ReadFilter.UNREAD -> resultList.filter { it.is_unread }
+            ReadFilter.READ -> resultList.filter { !it.is_unread }
+            ReadFilter.ALL -> resultList
+        }
+
+        // 🔹 SEARCH FILTER (ONLY if query is NOT empty)
+        if (currentSearchQuery.isNotEmpty()) {
+            val q = currentSearchQuery.lowercase(Locale.getDefault())
+            resultList = resultList.filter {
+                it.title?.lowercase()?.contains(q) == true ||
+                        it.description?.lowercase()?.contains(q) == true ||
+                        it.sent_by?.lowercase()?.contains(q) == true
+            }
+        }
+
+        Log.d(
+            "FILTER",
+            "Final count = ${resultList.size}"
+        )
+
+        mAttachmentReportAdapter?.updateFilteredList(resultList)
+
+        if (resultList.isEmpty()) {
+            binding.recycleracademic.visibility = View.GONE
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_data_found)
+        } else {
+            binding.recycleracademic.visibility = View.VISIBLE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+        }
+    }
 
     private fun isGetAttachment() {
         binding.recycleracademic.visibility = View.VISIBLE
         mAttachmentReportAdapter =
-            AttachmentAdapter(null,
+            AttachmentAdapter(
+                mutableListOf(),
                 this,
                 this,
                 Constant.isShimmerViewShow
             )
-        binding.recycleracademic.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
+        binding.recycleracademic.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recycleracademic.adapter = mAttachmentReportAdapter
         binding.recycleracademic.isNestedScrollingEnabled = false
 
@@ -341,7 +542,24 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 isGetAttachmentArchive()
                 binding.lblArchiveMsg.visibility = View.GONE
             }
+
+            R.id.imgFilter -> {
+                binding.lnrDatePicking.visibility = View.VISIBLE
+                binding.lnrFilterRead.visibility = View.VISIBLE
+            }
+
+            R.id.imgClearFilter -> {
+                clearDateFilter()
+            }
         }
+    }
+
+    private fun clearDateFilter() {
+        fromDateMillis = null
+        toDateMillis = null
+        binding.txtFromDate.text = getString(R.string.FromDate)
+        binding.txtToDate.text = getString(R.string.to_date)
+        applyCombinedFilter()
     }
 
 

@@ -59,8 +59,8 @@ class AwsUploadingPreSigned {
             when (Constant.SELECTED_MENU_ID) {
                 M_COMMUNICATION -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
-                    isFolderName = "voice"
-                    bucketPath = "$isFolderName/$instituteID/$currentDate"
+                    isFolderName = "voice/original"
+                    bucketPath = "$isFolderName/$currentDate"
 
                 }
 

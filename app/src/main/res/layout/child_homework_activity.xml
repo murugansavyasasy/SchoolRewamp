@@ -17,12 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
-
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <ScrollView
@@ -33,9 +32,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/btnSubmit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -320,25 +318,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/six"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/lightblue_primary"
                     app:cardCornerRadius="@dimen/twele"
+                    app:cardElevation="@dimen/two"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/viewline3"
-                    app:cardElevation="@dimen/two"
-                    app:cardBackgroundColor="@color/lightblue_primary">
+                    app:layout_constraintTop_toBottomOf="@+id/viewline3">
 
                     <TextView
                         android:id="@+id/lblschoolvalue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/fourteen"
-                        android:paddingEnd="@dimen/fourteen"
                         android:paddingTop="@dimen/ten"
+                        android:paddingEnd="@dimen/fourteen"
                         android:paddingBottom="@dimen/ten"
                         android:text="Sample"
-                        android:textSize="@dimen/fourteen_sp"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/fourteen_sp" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -459,11 +457,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/sixteen"
         android:background="@drawable/rect_shadow_light_primary"
+        android:padding="@dimen/ten"
         android:text="@string/submit"
         android:textColor="@color/white"
         android:textSize="@dimen/fourteen_sp"
         android:visibility="gone"
-        android:padding="@dimen/ten"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -471,7 +469,6 @@
     <include
         android:id="@+id/childlsrwlayoutxml"
         layout="@layout/child_homework_lsrw"
-        android:visibility="gone">
-    </include>
+        android:visibility="gone"></include>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
