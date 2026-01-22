@@ -282,7 +282,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
     }
     private fun showFromDatePicker() {
-        val cal = Calendar.getInstance()
+        val todayCal = Calendar.getInstance()
 
         val dialog = DatePickerDialog(
             this,
@@ -306,21 +306,25 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
                 applyCombinedFilter()
             },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            todayCal.get(Calendar.YEAR),
+            todayCal.get(Calendar.MONTH),
+            todayCal.get(Calendar.DAY_OF_MONTH)
         )
 
-        // 🔹 LIMIT: From Date ≤ To Date
+        // 🔹 Disable future dates
+        dialog.datePicker.maxDate = todayCal.timeInMillis
+
+        // 🔹 From Date ≤ To Date (if selected)
         if (toDateMillis != null) {
-            dialog.datePicker.maxDate = toDateMillis!!
+            dialog.datePicker.maxDate =
+                minOf(todayCal.timeInMillis, toDateMillis!!)
         }
 
         dialog.show()
     }
 
     private fun showToDatePicker() {
-        val cal = Calendar.getInstance()
+        val todayCal = Calendar.getInstance()
 
         val dialog = DatePickerDialog(
             this,
@@ -337,18 +341,22 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
                 applyCombinedFilter()
             },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            todayCal.get(Calendar.YEAR),
+            todayCal.get(Calendar.MONTH),
+            todayCal.get(Calendar.DAY_OF_MONTH)
         )
 
-        // 🔹 LIMIT: To Date ≥ From Date
+        // 🔹 Disable future dates
+        dialog.datePicker.maxDate = todayCal.timeInMillis
+
+        // 🔹 To Date ≥ From Date
         if (fromDateMillis != null) {
             dialog.datePicker.minDate = fromDateMillis!!
         }
 
         dialog.show()
     }
+
 
     private fun scrollToMessageId(headerId: String?) {
         if (msg_id == -1) return

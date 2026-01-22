@@ -124,7 +124,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch1.visibility == View.VISIBLE) {
+            if (binding.rytSearch1.isVisible) {
 
                 // 🔹 Hide everything
                 binding.rytSearch1.visibility = View.GONE
@@ -200,7 +200,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
                         isArchiveMode = true
 
-                        activeList.clear()
+                        originalArchiveList.forEach { it.is_archive = true }
+
                         activeList.addAll(originalArchiveList)
 
                         mAttachmentReportAdapter = AttachmentAdapter(
@@ -211,7 +212,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                             binding.nomessage,
                             binding.txtNoData
                         )
-
+                        applyCombinedFilter()
                         binding.recycleracademic.adapter = mAttachmentReportAdapter
                         binding.txtSearchMenu1.text.clear()
                         binding.isArchiveErrorMsg.visibility = View.GONE
@@ -319,7 +320,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     binding.nomessage,
                     binding.txtNoData
                 )
-
+                applyCombinedFilter()
                 binding.recycleracademic.adapter = mAttachmentReportAdapter
 
                 Log.d("Message Id Value Indication", msg_id.toString())
@@ -352,7 +353,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     private fun showFromDatePicker() {
-        val cal = Calendar.getInstance()
+        val todayCal = Calendar.getInstance()
 
         val dialog = DatePickerDialog(
             this,
@@ -367,30 +368,34 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         .format(selectedCal.time)
 
-                // 🔴 If To Date already selected but now invalid
+                // ❌ If From > To → reset To
                 if (toDateMillis != null && fromDateMillis!! > toDateMillis!!) {
                     showToast(getString(R.string.from_date_cannot_be_after_to_date))
                     toDateMillis = null
                     binding.txtToDate.text = getString(R.string.to_date)
                 }
 
+                // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            todayCal.get(Calendar.YEAR),
+            todayCal.get(Calendar.MONTH),
+            todayCal.get(Calendar.DAY_OF_MONTH)
         )
 
-        // 🔹 LIMIT: From Date ≤ To Date
+        // 🔹 Disable FUTURE dates
+        dialog.datePicker.maxDate = todayCal.timeInMillis
+
+        // 🔹 If To Date already selected → From ≤ To
         if (toDateMillis != null) {
-            dialog.datePicker.maxDate = toDateMillis!!
+            dialog.datePicker.maxDate =
+                minOf(todayCal.timeInMillis, toDateMillis!!)
         }
 
         dialog.show()
     }
-
     private fun showToDatePicker() {
-        val cal = Calendar.getInstance()
+        val todayCal = Calendar.getInstance()
 
         val dialog = DatePickerDialog(
             this,
@@ -405,20 +410,25 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         .format(selectedCal.time)
 
+                // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+            todayCal.get(Calendar.YEAR),
+            todayCal.get(Calendar.MONTH),
+            todayCal.get(Calendar.DAY_OF_MONTH)
         )
 
-        // 🔹 LIMIT: To Date ≥ From Date
+        // 🔹 Disable FUTURE dates
+        dialog.datePicker.maxDate = todayCal.timeInMillis
+
+        // 🔹 If From Date selected → To ≥ From
         if (fromDateMillis != null) {
             dialog.datePicker.minDate = fromDateMillis!!
         }
 
         dialog.show()
     }
+
 
     private fun selectReadFilter(filter: ReadFilter) {
         currentReadFilter = filter
@@ -440,37 +450,24 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     private fun applyCombinedFilter() {
 
-        // 🔹 ALWAYS start from ORIGINAL base list
-        val baseList = if (isArchiveMode) {
-            originalArchiveList
-        } else {
-            originalAttachmentList
-        }
+        var resultList = activeList.toList()
 
-        var resultList = baseList.toList()
-
-        // 🔹 DATE FILTER (ALL CASES HANDLED)
+        // 🔹 DATE FILTER (ALL CASES)
         resultList = resultList.filter { item ->
             try {
-                val parsedDate = apiDateFormat.parse(item.date)
-                    ?: return@filter false
-
+                val parsedDate = apiDateFormat.parse(item.date) ?: return@filter false
                 val itemMillis = parsedDate.time
 
                 when {
-                    // ✅ From + To
                     fromDateMillis != null && toDateMillis != null ->
                         itemMillis in fromDateMillis!!..toDateMillis!!
 
-                    // ✅ Only From → future
                     fromDateMillis != null ->
                         itemMillis >= fromDateMillis!!
 
-                    // ✅ Only To → past
                     toDateMillis != null ->
                         itemMillis <= toDateMillis!!
 
-                    // ✅ No date filter
                     else -> true
                 }
             } catch (e: Exception) {
@@ -478,14 +475,14 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
 
-        // 🔹 READ / UNREAD FILTER
+        // 🔹 READ / UNREAD
         resultList = when (currentReadFilter) {
             ReadFilter.UNREAD -> resultList.filter { it.is_unread }
             ReadFilter.READ -> resultList.filter { !it.is_unread }
             ReadFilter.ALL -> resultList
         }
 
-        // 🔹 SEARCH FILTER (ONLY if query is NOT empty)
+        // 🔹 SEARCH
         if (currentSearchQuery.isNotEmpty()) {
             val q = currentSearchQuery.lowercase(Locale.getDefault())
             resultList = resultList.filter {
@@ -495,23 +492,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
 
-        Log.d("FILTER", "Final count = ${resultList.size}")
-
         mAttachmentReportAdapter?.updateFilteredList(resultList)
 
-        if (resultList.isEmpty()) {
-            binding.recycleracademic.visibility = View.GONE
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_data_found)
-        } else {
-            binding.recycleracademic.visibility = View.VISIBLE
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-        }
+        binding.recycleracademic.visibility =
+            if (resultList.isEmpty()) View.GONE else View.VISIBLE
+        binding.nomessage.visibility =
+            if (resultList.isEmpty()) View.VISIBLE else View.GONE
+        binding.txtNoData.visibility =
+            if (resultList.isEmpty()) View.VISIBLE else View.GONE
     }
-
-
     private fun isGetAttachment() {
         binding.recycleracademic.visibility = View.VISIBLE
         mAttachmentReportAdapter =
