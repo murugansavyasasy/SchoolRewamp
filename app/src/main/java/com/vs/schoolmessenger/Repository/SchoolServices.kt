@@ -1775,9 +1775,9 @@ class SchoolServices {
 
 
     //    //get HomeworkDetails
-    fun isHomeWorkDetails(isToken: String, activity: Activity) {
+    fun isHomeWorkDetails(isToken: String, activity: Activity,date: String) {
         Log.d("GetHomeworkData", isToken.toString())
-        RestClient.apiInterfaces.isHomeWorkDetails(isToken)
+        RestClient.apiInterfaces.isHomeWorkDetails(isToken,date)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
                     call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>

@@ -37,7 +37,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     private var appViewModel: App? = null
     private var isHomeWorkDate = ""
     private var mAdapter: HomeworkParentAdapter? = null
-    var isHomeWorkData: List<GetDateWiseHomeworkData>? = null
+    var isHomeWorkData: List<GetHomeworkDetails> = emptyList()
     private lateinit var dateList: List<CalendarDate>
     private lateinit var calendarAdapter: CalendarAdapter
 
@@ -85,29 +85,22 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         isHomeWorkDate = todayDate
         calendarAdapter = CalendarAdapter(dateList, todayDate) {
             isHomeWorkDate = it.fullDate
-            val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
-            if (isHomeWorkData != null) {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                binding.cytNoDataFound.visibility = View.GONE
-                binding.recyclerView.visibility = View.VISIBLE
-                binding.lytSearch.visibility = View.GONE
-                binding.edtSearch.setText("")
-                mAdapter!!.updateList(isHomeWorkData.homework, isHomeWorkData.date)
-            } else {
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
-                binding.lytSearch.visibility = View.GONE
-                binding.edtSearch.setText("")
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.cytNoDataFound.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
-                mAdapter!!.updateList(emptyList(), "")
-            }
+
+            // hide keyboard & search
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.edtSearch.windowToken, 0)
+            binding.lytSearch.visibility = View.GONE
+            binding.edtSearch.setText("")
+
+            // reset UI
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.cytNoDataFound.visibility = View.GONE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+
+            isHomeWorkList(isHomeWorkDate)
         }
 
-        isHomeWorkList()
+        isHomeWorkList(isHomeWorkDate)
         binding.recyclerViewCalendar.adapter = calendarAdapter
 
         binding.recyclerViewCalendar.post {
@@ -157,7 +150,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                     appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
 
                     isHomeWorkData = response.data
-                    val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
                     if (isHomeWorkData != null) {
                         binding.lytSearch.visibility = View.GONE
                         binding.edtSearch.setText("")
@@ -165,7 +157,8 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         binding.cytNoDataFound.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
-                        isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
+
+                        isLoadHomeWorkData(isHomeWorkData, isHomeWorkDate)
                         scrollToMessageId(msg_id)
                     } else {
                         binding.lytSearch.visibility = View.GONE
@@ -189,13 +182,20 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             }
         }
     }
-
-    fun isLoadHomeWorkData(data: List<GetHomeworkDetails>, isHomeWorkDate: String) {
-        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable, isHomeWorkDate,this)
+    fun isLoadHomeWorkData(
+        data: List<GetHomeworkDetails>,
+        isHomeWorkDate: String
+    ) {
+        mAdapter = HomeworkParentAdapter(
+            data,
+            this,
+            Constant.isShimmerViewDisable,
+            isHomeWorkDate,
+            this
+        )
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
-        binding.recyclerView.setHasFixedSize(true)
     }
 
     fun generateCalendarDates(): List<CalendarDate> {
@@ -234,12 +234,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         }
     }
 
-
     override fun onResume() {
         super.onResume()
-        isHomeWorkList()
-        Constant.isCompletedHomeworkId?.let { homeworkId ->
-            updateList(homeworkId)
+        Constant.isCompletedHomeworkId?.let {
+            updateList(it)
             Constant.isCompletedHomeworkId = null
         }
     }
@@ -267,7 +265,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
 
-    fun isHomeWorkList() {
+    fun isHomeWorkList(isHomeWorkDate: String) {
         mAdapter = HomeworkParentAdapter(
             emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate,this
         )
@@ -275,7 +273,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
         binding.recyclerView.setHasFixedSize(true)
-        appViewModel?.isHomeWorkDetails(isAccessToken!!, this)
+        appViewModel?.isHomeWorkDetails(isAccessToken!!, this,isHomeWorkDate)
     }
 
     override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
@@ -315,27 +313,20 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         startActivity(intent)
     }
 
-
     private fun scrollToMessageId(msg_id: Int) {
         if (msg_id == -1) return
 
-        isHomeWorkData?.let { dateWiseList ->
-            val flatList = dateWiseList.flatMap { it.homework }
+        val index = isHomeWorkData.indexOfFirst {
+            it.id.toIntOrNull() == msg_id
+        }
 
-            val index = flatList.indexOfFirst { it.id.toIntOrNull() == msg_id }
-
-            if (index != -1) {
-                Log.d("ScrollDebug", "Scrolling to index $index (msg_id: $msg_id)")
-                binding.recyclerView.post {
-                    binding.recyclerView.smoothScrollToPosition(index)
-                    highlightItemTemporarily(binding.recyclerView, index)
-                }
-            } else {
-                Log.d("ScrollDebug", "No index found for msg_id $msg_id")
+        if (index != -1) {
+            binding.recyclerView.post {
+                binding.recyclerView.smoothScrollToPosition(index)
+                highlightItemTemporarily(binding.recyclerView, index)
             }
         }
     }
-
 
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {

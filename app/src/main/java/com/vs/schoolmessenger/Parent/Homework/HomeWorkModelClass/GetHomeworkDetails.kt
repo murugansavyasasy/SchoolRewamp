@@ -9,6 +9,7 @@ data class GetHomeworkDetails(
     val id: String,
     val iframe: String,
     val file_size: String,
+    val date: String, 
     val thumbnail: String,
     val detail_id: String,
     val sent_by: String,

@@ -426,7 +426,9 @@ interface ApiInterfaces {
     @GET(APIMethods.isHomeWorkDetails)
     fun isHomeWorkDetails(
         @Header(APIKeyNames.Authorization) token: String,
-    ): Call<GetHomeworkData?>
+        @Query("date") isDate: String?,
+
+        ): Call<GetHomeworkData?>
 
 
     @Headers("Content-Type: application/json")
