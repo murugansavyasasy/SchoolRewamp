@@ -1025,6 +1025,13 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
+
+    override fun onStop() {
+        super.onStop()
+        Constant.hideLoading(requireActivity())
+    }
+
+
     override fun onFailure(errorMessage: String?) {
         requireActivity().runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")

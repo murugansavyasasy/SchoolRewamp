@@ -340,10 +340,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(Color.parseColor("#FFE082"))
+            viewHolder?.itemView?.setBackgroundColor(resources.getColor(R.color.light_yellow_5, null))
             recyclerView.postDelayed({
                 viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
-            }, 2000)
+            }, Constant.TIME_OUT)
         }
     }
 

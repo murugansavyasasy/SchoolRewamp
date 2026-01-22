@@ -44,7 +44,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -295,17 +294,5 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         }
 
         isGetDailyCollection()
-    }
-
-
-    private fun showTourIfNeeded() {
-        val prefs = getSharedPreferences("app_tour_prefs", MODE_PRIVATE)
-        val isShown = prefs.getBoolean("daily_collection_tour", false)
-
-        if (!isShown) {
-            DailyCollectionTourDialog {
-                prefs.edit().putBoolean("daily_collection_tour", true).apply()
-            }.show(supportFragmentManager, "DailyCollectionTour")
-        }
     }
 }

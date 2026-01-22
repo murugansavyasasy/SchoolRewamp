@@ -133,6 +133,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isStaffDetails: StaffDetails? = null
     private var recordingStartTime: Long = 0
 
+    private var isTourDialogShown = false
+
 
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
@@ -2027,18 +2029,24 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun showTourIfNeeded() {
-        val prefs = getSharedPreferences("communication_prefs", MODE_PRIVATE)
-        val isShown = prefs.getBoolean("communication_tour", false)
-
-        if (!isShown) {
+        if (isTourDialogShown) return
+        if (!SharedPreference.isTourShown(
+                this,
+                SharedPreference.KEY_SCHOOL_COMMUNICATION_TOUR
+            )
+        ) {
+            isTourDialogShown = true
             val tourImages = arrayListOf(
                 R.drawable.daily_collection_tour_1,
                 R.drawable.daily_collection_tour_2
             )
 
             TourDialog.newInstance(tourImages) {
-                prefs.edit().putBoolean("communication_tour", true).apply()
-            }.show(supportFragmentManager, "CommunicationTour")
+                SharedPreference.setTourShown(
+                    this,
+                    SharedPreference.KEY_SCHOOL_COMMUNICATION_TOUR
+                )
+            }.show(supportFragmentManager, "school_communication_tour")
         }
     }
 }
