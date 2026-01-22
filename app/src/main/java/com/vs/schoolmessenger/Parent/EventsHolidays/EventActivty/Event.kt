@@ -399,11 +399,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
             viewHolder?.itemView?.let { itemView ->
                 val originalBackground = itemView.background
 
-                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+                itemView.setBackgroundColor(
+                    resources.getColor(R.color.light_yellow_5, null)
+                )
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     itemView.background = originalBackground
-                }, 3000)
+                }, Constant.TIME_OUT)
             }
         }
     }

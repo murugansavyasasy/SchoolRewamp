@@ -118,6 +118,12 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Constant.hideLoading(requireActivity())
+    }
+
+
     override fun onDocumentClicked(
         field: ProfileField,
         position: Int

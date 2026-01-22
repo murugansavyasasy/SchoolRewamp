@@ -169,6 +169,7 @@ object Constant {
     val M_SCHOOL_CLASS_EVENTS = 29
     val M_PARENT_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
+
     val M_SCHOOL_STRENGTH = 31
     val M_STAFF_WISE_ATTENDANCE_REPORT = 33
     val M_STUDENT_REPORT = 35
@@ -741,6 +742,7 @@ object Constant {
     var Terms_and_Conditions = "Terms and Conditions"
     var offer_show = "offer_show"
 
+    val TIME_OUT = 5000L
 
     // VIMEO
     var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"

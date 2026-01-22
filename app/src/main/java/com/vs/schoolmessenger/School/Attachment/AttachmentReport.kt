@@ -81,7 +81,7 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     override fun setupViews() {
         //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
         super.setupViews()
-        showTourIfNeeded()
+
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -462,19 +462,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
 
 
-    private fun showTourIfNeeded() {
-        val prefs = getSharedPreferences("attachment_prefs", MODE_PRIVATE)
-        val isShown = prefs.getBoolean("attachment_tour", false)
 
-        if (!isShown) {
-            val tourImages = arrayListOf(
-                R.drawable.daily_collection_tour_1,
-                R.drawable.daily_collection_tour_2
-            )
 
-            TourDialog.newInstance(tourImages) {
-                prefs.edit().putBoolean("attachment_tour", true).apply()
-            }.show(supportFragmentManager, "attachment_tour")
-        }
-    }
 }
