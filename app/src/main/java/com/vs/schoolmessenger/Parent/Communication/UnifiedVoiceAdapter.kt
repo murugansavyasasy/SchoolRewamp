@@ -112,7 +112,8 @@ class UnifiedVoiceAdapter(
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
-        private val lblPostedBy: TextView = itemView.findViewById(R.id.lblPostedBy)
+        private val lblVoicePostedBy: TextView = itemView.findViewById(R.id.lblVoicePostedBy)
+        private val lblMsgPostedBy: TextView = itemView.findViewById(R.id.lblMsgPostedBy)
 
 
         private var isExpanded = false
@@ -156,7 +157,7 @@ class UnifiedVoiceAdapter(
                 lblSeeMoreClick.visibility = View.GONE
             }
 
-            lblPostedBy.text="${context.getString(R.string.posted_by)}-${data.sent_by}"
+
 
             lblSeeMoreClick.setOnClickListener {
                 lblSeeMoreClick.visibility = View.GONE
@@ -166,6 +167,14 @@ class UnifiedVoiceAdapter(
             rytIsEmergency.visibility = if (data.is_emergency == true) View.VISIBLE else View.GONE
 
             if (data.type.equals(Constant.VOICE)) {
+                if (data.sent_by!=null) {
+                    lblVoicePostedBy.visibility= View.VISIBLE
+                }
+                else{
+                    lblVoicePostedBy.visibility= View.GONE
+                }
+                lblVoicePostedBy.text = "${context.getString(R.string.posted_by)}-${data.sent_by}"
+
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
                 lblTitle.text = data.title ?: ""
@@ -236,6 +245,15 @@ class UnifiedVoiceAdapter(
                     adapter.currentlyPlayingHolder = this
                 }
             } else {
+
+                if (data.sent_by!=null) {
+                    lblMsgPostedBy.visibility= View.VISIBLE
+                }
+                else{
+                    lblMsgPostedBy.visibility= View.GONE
+                }
+                lblMsgPostedBy.text = "${context.getString(R.string.posted_by)}-${data.sent_by}"
+
                 // --- TEXT type ---
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
