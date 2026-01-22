@@ -27,6 +27,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.CommunicationBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -68,6 +69,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun setupViews() {
         super.setupViews()
+        showTourIfNeeded()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -763,6 +765,21 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         finish()
     }
 
+    private fun showTourIfNeeded() {
+        val prefs = getSharedPreferences("parentcommunication_prefs", MODE_PRIVATE)
+        val isShown = prefs.getBoolean("parentcommunication_tour", false)
+
+        if (!isShown) {
+            val tourImages = arrayListOf(
+                R.drawable.daily_collection_tour_1,
+                R.drawable.daily_collection_tour_2
+            )
+
+            TourDialog.newInstance(tourImages) {
+                prefs.edit().putBoolean("parentcommunication_tour", true).apply()
+            }.show(supportFragmentManager, "parentcommunication_tour")
+        }
+    }
     private fun clearDateFilter() {
         fromDateMillis = null
         toDateMillis = null
