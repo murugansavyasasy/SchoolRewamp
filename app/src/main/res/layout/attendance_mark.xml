@@ -250,7 +250,7 @@
 
                     <ImageView
                         android:id="@+id/ErrImgMarkAttendanceScreen"
-                        android:layout_width="@dimen/two_fifty"
+                        android:layout_width="@dimen/two_hundred"
                         android:layout_height="@dimen/two_hundred"
                         android:src="@drawable/no_data_found">
                     </ImageView>
