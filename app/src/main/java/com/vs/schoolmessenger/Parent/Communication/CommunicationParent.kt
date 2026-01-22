@@ -161,7 +161,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                             scrollToMessageId(headerId)
                         }
 
-
                     } else {
                         hasFetchedMore = true
                         if (allVoiceData.isNotEmpty()) {

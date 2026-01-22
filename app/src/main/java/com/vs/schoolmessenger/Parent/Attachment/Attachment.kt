@@ -105,9 +105,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-
-
-
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.imgFilter.setOnClickListener(this)
         binding.lnrToDate.setOnClickListener(this)
@@ -187,7 +184,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.lnrFromDate.setOnClickListener { showFromDatePicker() }
         binding.lnrToDate.setOnClickListener {
-                showToDatePicker()
+            showToDatePicker()
         }
 
         appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
@@ -582,6 +579,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 isGetAttachmentArchive()
                 binding.lblArchiveMsg.visibility = View.GONE
             }
+
             R.id.imgFilter -> {
                 if (binding.lnrDatePicking.visibility == View.VISIBLE) {
 
