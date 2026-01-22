@@ -156,7 +156,7 @@ class UnifiedVoiceAdapter(
                 lblSeeMoreClick.visibility = View.GONE
             }
 
-            lblPostedBy.text="${context.getString(R.string.posted_by)} ${data.sent_by}"
+            lblPostedBy.text="${context.getString(R.string.posted_by)}-${data.sent_by}"
 
             lblSeeMoreClick.setOnClickListener {
                 lblSeeMoreClick.visibility = View.GONE
