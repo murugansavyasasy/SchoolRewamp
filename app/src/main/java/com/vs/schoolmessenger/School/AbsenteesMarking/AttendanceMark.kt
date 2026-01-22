@@ -166,16 +166,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.txtSearchBox.text.clear()
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearchBox.windowToken, 0)
-            binding.lnrClasses2.visibility = View.GONE
-            binding.lnrClasses1.visibility = View.VISIBLE
-            binding.btnAbsent.visibility = View.VISIBLE
-            binding.lblAttendanceOptions.visibility = View.VISIBLE
             binding.calendarFromFragmentContainer.visibility = View.VISIBLE
             binding.lnrAttendanceReport.visibility = View.GONE
-            binding.lnrClasses2.visibility = View.GONE
             binding.rytSearchbox.visibility = View.GONE
             loadFromCalendar()
-
+            isGetStandardSection()
         }
 
         binding.lnrTabTwoName.setOnClickListener {
@@ -270,6 +265,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             val firstStandard = isGetStandard!![0]
                             binding.calendarFromFragmentContainer.visibility = View.VISIBLE
                             binding.lnrClasses.visibility = View.VISIBLE
+                            binding.btnAbsent.visibility = View.VISIBLE
+                            binding.lblAttendanceOptions.visibility = View.VISIBLE
+                            binding.lnrClasses1.visibility = View.VISIBLE
                             binding.lytNoDataFound1.visibility = View.GONE
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
@@ -278,14 +276,26 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 ShowData()
                             }
                         } else {
-
                             binding.lnrClasses.visibility = View.GONE
-                            binding.calendarFromFragmentContainer.visibility = View.GONE
+                            binding.btnAbsent.visibility = View.GONE
+                            binding.lblAttendanceOptions.visibility = View.GONE
+                            binding.lnrClasses1.visibility = View.GONE
+                            binding.lnrClasses2.visibility = View.GONE
                             binding.lytNoDataFound1.visibility = View.VISIBLE
-                            binding.noDataFound1.text = response.message
+                            binding.noDataFound1.text = getString(R.string.no_standard_found)
                         }
                     }
                 }
+                else {
+                    binding.lnrClasses.visibility = View.GONE
+                    binding.btnAbsent.visibility = View.GONE
+                    binding.lblAttendanceOptions.visibility = View.GONE
+                    binding.lnrClasses1.visibility = View.GONE
+                    binding.lnrClasses2.visibility = View.GONE
+                    binding.lytNoDataFound1.visibility = View.VISIBLE
+                    binding.noDataFound1.text = response.message
+                }
+
             }
         }
 
@@ -834,9 +844,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rcyAttendanceReport.isNestedScrollingEnabled = false
         binding.rcyAttendanceReport.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-        appViewModel!!.getStudentAttendanceReport(
-            isAccessToken!!, SectionID.toString(), fromDate, toDate, isStandardId.toString(), this
-        )
+        if (SectionID!=null && isStandardId!=null){
+            binding.lnrAttendanceReport.visibility = View.VISIBLE
+            appViewModel!!.getStudentAttendanceReport(
+                isAccessToken!!, SectionID.toString(), fromDate, toDate, isStandardId.toString(), this
+            )
+        }
+        else{
+            Toast.makeText(this,"Both Standard and Section are required", Toast.LENGTH_SHORT).show()
+            binding.lnrAttendanceReport.visibility = View.GONE
+        }
+
 
     }
 

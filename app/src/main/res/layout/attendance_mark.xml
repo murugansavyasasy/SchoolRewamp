@@ -249,9 +249,9 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="@dimen/one_fifty"
-                        android:layout_height="@dimen/one_fifty"
-                        android:layout_marginTop="@dimen/ten"
+                        android:id="@+id/ErrImgMarkAttendanceScreen"
+                        android:layout_width="@dimen/two_fifty"
+                        android:layout_height="@dimen/two_hundred"
                         android:src="@drawable/no_data_found">
                     </ImageView>
 
@@ -261,8 +261,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:text="ohcacaicsaiscniscain">
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="">
 
                     </TextView>
 
