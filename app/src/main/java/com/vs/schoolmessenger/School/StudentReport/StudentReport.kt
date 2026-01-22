@@ -162,7 +162,7 @@ private var currentSortType: SortType? = null
             } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
-                mAdapter.updateData(emptyList())
+//                mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
