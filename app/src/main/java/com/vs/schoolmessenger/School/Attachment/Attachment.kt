@@ -111,7 +111,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+       // showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground

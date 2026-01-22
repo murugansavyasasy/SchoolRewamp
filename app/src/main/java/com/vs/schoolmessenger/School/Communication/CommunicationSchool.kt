@@ -139,7 +139,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+        //showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )

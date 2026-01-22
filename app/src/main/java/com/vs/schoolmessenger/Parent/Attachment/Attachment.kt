@@ -80,7 +80,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+       // showTourIfNeeded()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
