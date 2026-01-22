@@ -175,7 +175,7 @@
                     android:text="-"
                     android:textSize="@dimen/twenty_two_sp"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textColor="@color/light_yellow_5"
+                    android:textColor="@color/light_yellow_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
