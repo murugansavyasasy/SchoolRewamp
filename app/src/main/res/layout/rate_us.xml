@@ -64,10 +64,6 @@
                     android:visibility="visible">
                 </ImageView>
 
-
-
-
-
                 <RatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
@@ -91,7 +87,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:text="asdnkjasnkjdkjsad"
+                    android:text=""
                     android:textColor="@color/custom_orange_color"
                     android:textSize="@dimen/thirteen_sp"
                     android:visibility="visible">
