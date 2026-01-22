@@ -190,7 +190,7 @@ private var currentSortType: SortType? = null
                     } else {
                         originalStudentList = emptyList()
                         currentFilteredList = emptyList()
-                        mAdapter.updateData(emptyList())
+//                        mAdapter.updateData(emptyList())
                         binding.tabLayout.visibility = View.GONE
                         binding.rlaStandardPicking.visibility = View.GONE
                         ErrorMessage(response.message)
@@ -201,7 +201,7 @@ private var currentSortType: SortType? = null
             } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
-                mAdapter.updateData(emptyList())
+//                mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 binding.rlaStandardPicking.visibility = View.GONE
                 ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later))

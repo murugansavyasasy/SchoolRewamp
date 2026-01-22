@@ -16,7 +16,8 @@ data class VoiceData(
     @SerializedName(APIKeyNames.subject) var subject: String?,
     @SerializedName(APIKeyNames.is_unread) var is_unread: Boolean? = null,
     @SerializedName(APIKeyNames.is_emergency) var is_emergency: Boolean? = null,
-    @SerializedName(APIKeyNames.is_archive) var is_archive: Boolean? = null
+    @SerializedName(APIKeyNames.is_archive) var is_archive: Boolean? = null,
+    @SerializedName(APIKeyNames.sent_by) var sent_by: String? = null
 )
 
 

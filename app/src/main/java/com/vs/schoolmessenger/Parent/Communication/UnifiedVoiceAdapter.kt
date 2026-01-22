@@ -112,6 +112,8 @@ class UnifiedVoiceAdapter(
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
+        private val lblPostedBy: TextView = itemView.findViewById(R.id.lblPostedBy)
+
 
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
@@ -153,6 +155,8 @@ class UnifiedVoiceAdapter(
             } else {
                 lblSeeMoreClick.visibility = View.GONE
             }
+
+            lblPostedBy.text="${context.getString(R.string.posted_by)} ${data.sent_by}"
 
             lblSeeMoreClick.setOnClickListener {
                 lblSeeMoreClick.visibility = View.GONE

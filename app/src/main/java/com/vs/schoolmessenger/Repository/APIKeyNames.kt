@@ -46,6 +46,7 @@ object APIKeyNames {
     const val upload_details = "upload_details"
     const val exam_section_id = "exam_section_id"
     const val is_archive = "is_archive"
+    const val sent_by = "sent_by"
     const val is_unread = "is_unread"
     const val sender_info = "sender_info"
     const val leave_type = "leave_type"
