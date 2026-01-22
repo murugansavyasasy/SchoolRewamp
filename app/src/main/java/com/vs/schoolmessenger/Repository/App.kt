@@ -859,10 +859,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     //get homework details
-    fun isHomeWorkDetails(isToken: String, activity: Activity) {
+    fun isHomeWorkDetails(isToken: String, activity: Activity,date: String) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories?.isHomeWorkDetails(isToken, activity)
+        apiSchoolRepositories?.isHomeWorkDetails(isToken, activity,date)
     }
 
 
