@@ -77,6 +77,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
                 // Description
                 binding.description.text = submission.description
+                Constant.isVideoPostedDate=submission.submitted_date
 
                 val remarkString = submission.remark.trim().replace("%", "")  // "68%" → "68"
                 val remark =
@@ -86,6 +87,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
                 val progressLevel = remark.coerceIn(0, 100) * 100
                 binding.imgPieChart.setImageLevel(progressLevel)
+
 
                 // IMAGE LIST (non-audio items)
                 val imageList = submission.file_path

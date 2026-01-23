@@ -195,7 +195,7 @@ class AssignmentAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
-
+                Constant.isVideoPostedDate=data.created_date + " "+ data.created_time
                 val targetType = when (data.recipient_type.trim()) {
                     "SCHOOL" -> 1
                     "STANDARD" -> 2
@@ -241,6 +241,7 @@ class AssignmentAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
+                Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                 val targetType = when (data.recipient_type.trim()) {
                     "SCHOOL" -> 1
                     "STANDARD" -> 2
@@ -296,7 +297,7 @@ class AssignmentAdapter(
                                     url = it.url,
                                 )
                             }
-
+                            Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                             val targetType = when (data.recipient_type.trim()) {
                                 "SCHOOL" -> 1
                                 "STANDARD" -> 2

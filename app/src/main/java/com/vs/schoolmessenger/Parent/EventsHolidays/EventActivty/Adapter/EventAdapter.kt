@@ -162,7 +162,7 @@ class EventAdapter(
                         url = it.url,
                     )
                 }
-
+                Constant.isVideoPostedDate=data.date + " "+ data.time
                 val isHomeWorkData = FilePreview(
                     id = "",
                     title = data.title,

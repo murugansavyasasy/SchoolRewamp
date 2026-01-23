@@ -81,7 +81,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         showTourIfNeeded()
         enableEdgeToEdge()
 
-
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             WindowCompat.getInsetsController(window, window.decorView).apply {
                 isAppearanceLightStatusBars = false // WHITE icons

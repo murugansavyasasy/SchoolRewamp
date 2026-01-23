@@ -131,7 +131,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     private var isQuestionBankErrorMsg: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter2: PickQuestionAdapter
-
     val isVideoSelectedArrayList = mutableListOf<QuizAttachmentData>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -264,7 +263,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
 
         if (isQuizCreateData != null) {
             if (isQuizCreateData!!.type == "ADD_NOW") {
-                binding.lblSendQuiz.text=getString(R.string.NEXT)
+                binding.lblSendQuiz.text = getString(R.string.NEXT)
                 Log.d("ScreenName", "AddNowScreen")
                 Constant.isQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
                 isSavedQuestionLimit = isQuizCreateData!!.no_of_question.toInt()
@@ -291,7 +290,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             }
         } else {
             Log.d("ScreenName", "AddQuestionScreen")
-            binding.lblSendQuiz.text=getString(R.string.send_quiz)
+            binding.lblSendQuiz.text = getString(R.string.send_quiz)
             Constant.isQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSavedQuestionLimit = intent.getIntExtra(Constant.limitQuestion, -1)
             isSubmittedCount = intent.getIntExtra(Constant.submittedCount, -1)
@@ -422,7 +421,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         binding.rcAddQuestion.isNestedScrollingEnabled = false
         binding.rcAddQuestion.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         binding.rcAddQuestion.adapter = quizAdapter
-        appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID,this)
+        appViewModel?.isGetQuizQuestionReport(isAccessToken ?: "", isQuizID, this)
     }
 
     private fun getPathFromUri(uri: Uri): String? {
@@ -445,7 +444,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
     }
 
     private fun isFetchFromQuestionBank() {
-        appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID,this)
+        appViewModel?.isGetPickFromQBank(isAccessToken ?: "", isSubjectID, this)
     }
 
     fun showResumeListDialog(
@@ -595,13 +594,13 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 if (quizAdapter!!.getUpdatedList().size > 0) {
                     binding.rcAddQuestion.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
-                    binding.lblSendQuiz.isEnabled=true
-                    binding.lblSendQuiz.alpha=1f
+                    binding.lblSendQuiz.isEnabled = true
+                    binding.lblSendQuiz.alpha = 1f
                 } else {
                     binding.rcAddQuestion.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
-                    binding.lblSendQuiz.isEnabled=false
-                    binding.lblSendQuiz.alpha=0.5f
+                    binding.lblSendQuiz.isEnabled = false
+                    binding.lblSendQuiz.alpha = 0.5f
                 }
 
             } else {
@@ -758,7 +757,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 } $remaining ${getString(R.string.more)} $remainingText ${getString(R.string.to_complete_the_quiz_but_don_t_worry_you_can_add_them_later)} \n ${
                     getString(
                         R.string.note_the_quiz_will_be_visible_to_students_only_after_all_questions_are_filled
-                    )}"
+                    )
+                }"
 
             Constant.showSendConfirmationDialog(
                 this,
@@ -808,10 +808,9 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     if (isQuizCreateData!!.type == "ADD_NOW") {
                         if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
                             if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
-                                if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size){
+                                if (isSavedQuestionLimit == quizAdapter!!.getUpdatedList().size) {
                                     isAddQuestionSubmit()
-                                }
-                                else{
+                                } else {
                                     val currentCount = quizAdapter!!.getUpdatedList().size
                                     val remaining =
                                         isSavedQuestionLimit - quizAdapter!!.getUpdatedList().size
@@ -862,9 +861,8 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                             }
                         }
                     }
-                }
-                else {
-                    Log.d("Iscoming","IsComingtoAddQuestionScreen")
+                } else {
+                    Log.d("Iscoming", "IsComingtoAddQuestionScreen")
                     if (quizAdapter!!.showValidationErrors(binding.rcAddQuestion)) {
                         if (quizAdapter!!.getUpdatedList().size <= isSavedQuestionLimit) {
                             if (isSubmittedCount <= 0) {
@@ -917,14 +915,14 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
             Log.d("isLog", "isEmpty")
             binding.rcAddQuestion.visibility = View.GONE
             binding.lytList.visibility = View.VISIBLE
-            binding.lblSendQuiz.isEnabled=false
-            binding.lblSendQuiz.alpha=0.5f
+            binding.lblSendQuiz.isEnabled = false
+            binding.lblSendQuiz.alpha = 0.5f
         } else {
             Log.d("isLog", "isNotEmpty")
             binding.rcAddQuestion.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
-            binding.lblSendQuiz.isEnabled=true
-            binding.lblSendQuiz.alpha=1f
+            binding.lblSendQuiz.isEnabled = true
+            binding.lblSendQuiz.alpha = 1f
 
         }
     }
@@ -972,7 +970,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     addProperty("id", id)
                 }
 
-                appViewModel?.isDeleteQuizQuestion(isAccessToken!!, jsonObject,this)
+                appViewModel?.isDeleteQuizQuestion(isAccessToken!!, jsonObject, this)
 
             }
         }
@@ -1696,7 +1694,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         mainJson.add("questions", questionsArray)
         mainJson.addProperty("quiz_id", quizRequest.quiz_id)
         Log.d("FINAL_JSON", mainJson.toString())
-        appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson,this)
+        appViewModel!!.isQuizAddQuestion(isAccessToken!!, mainJson, this)
 
     }
 
