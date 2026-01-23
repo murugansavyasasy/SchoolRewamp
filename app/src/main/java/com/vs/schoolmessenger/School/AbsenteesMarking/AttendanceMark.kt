@@ -272,10 +272,23 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
                             if (callApi) {
+                                binding.btnAbsent.visibility = View.GONE
+                                binding.lnrClasses2.visibility = View.GONE
+                                binding.lnrClasses1.visibility = View.GONE
+                                binding.lblAttendanceOptions.visibility = View.GONE
                                 loadData()
                                 ShowData()
                             }
                         } else {
+                            if (callApi) {
+                                binding.btnAbsent.visibility = View.GONE
+                                binding.lnrClasses2.visibility = View.GONE
+                                binding.lnrClasses1.visibility = View.GONE
+                                binding.lblAttendanceOptions.visibility = View.GONE
+                                binding.lnrAttendanceReport.visibility = View.GONE
+                            }
+                            isStandardId=null
+                            SectionID=null
                             binding.lnrClasses.visibility = View.GONE
                             binding.btnAbsent.visibility = View.GONE
                             binding.lblAttendanceOptions.visibility = View.GONE
@@ -287,6 +300,15 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
                 }
                 else {
+                    isStandardId=null
+                    SectionID=null
+                    if (callApi) {
+                        binding.btnAbsent.visibility = View.GONE
+                        binding.lnrClasses2.visibility = View.GONE
+                        binding.lnrClasses1.visibility = View.GONE
+                        binding.lblAttendanceOptions.visibility = View.GONE
+                        binding.lnrAttendanceReport.visibility = View.GONE
+                    }
                     binding.lnrClasses.visibility = View.GONE
                     binding.btnAbsent.visibility = View.GONE
                     binding.lblAttendanceOptions.visibility = View.GONE
@@ -851,7 +873,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             )
         }
         else{
-            Toast.makeText(this,"Both Standard and Section are required", Toast.LENGTH_SHORT).show()
             binding.lnrAttendanceReport.visibility = View.GONE
         }
 
