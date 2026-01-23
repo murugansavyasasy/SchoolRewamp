@@ -34,13 +34,8 @@ object SharedPreference {
     private const val KEY_FINGER_PRINT_SKIPPED = "finger_print_skipped"
     private const val KEY_FINGER_PRINT_SETUP_SKIP = "finger_print_setup_skip"
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-
-
-    const val KEY_SCHOOL_COMMUNICATION_TOUR = "school_communication_tour"
-    const val KEY_SCHOOL_ATTACHMENT_TOUR = "school_attachment_tour"
-
-    const val KEY_PARENT_ATTACHMENT_TOUR = "parent_attachment_tour"
-    const val KEY_PARENT_COMMUNICATION_TOUR = "parent_communication_tour"
+    const val KEY_SCHOOL_DASHBOARD_TOUR = "school_dashboard_tour"
+    const val KEY_PARENT_DASHBOARD_TOUR = "parent_dashboard_tour"
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 

@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
 import com.vs.schoolmessenger.databinding.NavHeaderBinding
 
@@ -59,8 +60,10 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     var childDetails: ChildDetails? = null
     var userDetails: UserDetails? = null
     var access_token = ""
+    private var isTourDialogShown = false
     override fun setupViews() {
         super.setupViews()
+        showTourIfNeeded()
         setupToolbarBlueWhite()
 
 
@@ -401,6 +404,31 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                 view.updatePadding(bottom = systemBars.bottom)
                 insets
             }
+        }
+    }
+
+
+    private fun showTourIfNeeded() {
+        if (isTourDialogShown) return
+        if (!SharedPreference.isTourShown(
+                this,
+                SharedPreference.KEY_PARENT_DASHBOARD_TOUR
+            )
+        ) {
+            isTourDialogShown = true
+            val tourImages = arrayListOf(
+                R.drawable.receiver_msg,
+                R.drawable.receiver_file,
+                R.drawable.receivertaskprojects,
+                R.drawable.receiverattendanceleavereq
+            )
+
+            TourDialog.newInstance(tourImages) {
+                SharedPreference.setTourShown(
+                    this,
+                    SharedPreference.KEY_PARENT_DASHBOARD_TOUR
+                )
+            }.show(supportFragmentManager, Constant.parent_dashboard_tour)
         }
     }
 

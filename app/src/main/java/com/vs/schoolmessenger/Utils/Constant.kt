@@ -688,6 +688,8 @@ object Constant {
     var isQuizQuestionPickCount = 0
     var category_name = "category_name"
     var category = "category"
+    var parent_dashboard_tour = "parent_dashboard_tour"
+    var school_dashboard_tour = "school_dashboard_tour"
     var name__ = "name"
     var selected__ = "selected"
     var discount = "discount"

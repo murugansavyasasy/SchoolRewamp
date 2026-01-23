@@ -75,11 +75,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
 
-    private var isTourDialogShown = false
 
     override fun setupViews() {
         super.setupViews()
-        // showTourIfNeeded()
+
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -706,28 +705,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         }
     }
 
-    private fun showTourIfNeeded() {
 
-        if (isTourDialogShown) return
-        if (!SharedPreference.isTourShown(
-                this,
-                SharedPreference.KEY_PARENT_ATTACHMENT_TOUR
-            )
-        ) {
-
-            isTourDialogShown = true
-            val tourImages = arrayListOf(
-                R.drawable.daily_collection_tour_1,
-                R.drawable.daily_collection_tour_2
-            )
-
-            TourDialog.newInstance(tourImages) {
-                SharedPreference.setTourShown(
-                    this,
-                    SharedPreference.KEY_PARENT_ATTACHMENT_TOUR
-                )
-            }.show(supportFragmentManager, "parent_attachment_tour")
-        }
-    }
 
 }
