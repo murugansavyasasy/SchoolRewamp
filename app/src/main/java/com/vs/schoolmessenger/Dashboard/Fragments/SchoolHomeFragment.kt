@@ -95,7 +95,7 @@ import java.util.Locale
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding
-    lateinit var isMenuAdapter: SchoolMenuAdapter
+    private var isMenuAdapter: SchoolMenuAdapter? = null
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var staffDetails: StaffDetails? = null
@@ -316,7 +316,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.rytNORecordFound.visibility = View.GONE
         }
 
-        isMenuAdapter.updateList(filteredMenuList)
+        isMenuAdapter!!.updateList(filteredMenuList)
     }
 
 
