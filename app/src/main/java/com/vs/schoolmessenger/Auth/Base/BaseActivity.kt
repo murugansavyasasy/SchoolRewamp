@@ -9,6 +9,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -67,7 +68,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected lateinit var binding: VB
     protected abstract fun getViewBinding(): VB
 
-
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Prevent recreation crash
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
@@ -572,6 +576,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
+
+
 
 
     fun isToolBarPrimaryParent(mainViewId: Int, statusBarBgView: View) {

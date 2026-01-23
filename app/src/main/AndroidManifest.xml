@@ -60,6 +60,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolChimes"
         android:usesCleartextTraffic="true"
+        android:resizeableActivity="false"
         tools:targetApi="31">
         <profileable android:shell="true" />
 
@@ -116,12 +117,14 @@
         <activity
             android:name=".Parent.ExamMarks.ExamMarkResults"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".FCM.NotificationCallScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustResize|adjustPan" />
 
 
@@ -129,152 +132,186 @@
         <activity
             android:name=".School.MarkYourAttendance.AddLocationActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.SelectRecipient.RecipientActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"
+            android:configChanges="uiMode|orientation|screenSize"
             tools:ignore="DuplicateActivity" />
         <activity
             android:name=".Parent.QuizExam.AttendQuiz"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.QuizExam.SubmittedQuizPreview"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.QuizExam.QuizExamReport.AddQuestion"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Dashboard.Settings.WhatsNew.WhatsNewActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".School.QuizExam.QuizExamReport.SubmitReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.QuizExam.QuizActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.MyAssignmentSubmission.Mysubmission"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Attachment.Attachment"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.QuizExam.Quiz"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.QuizExam.ExamQuiz"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.StudentReport.StudentReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".Parent.LSRW.MySubmissionView"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Auth.MobilePasswordSignIn.MobileNumber"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Auth.MobilePasswordSignIn.PassWord"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".School.LeaveRequests.LeaveRequests"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.RequestLeave.NewLeaveRequest"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:configChanges="uiMode|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Parent.RequestLeave.OutPass"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.CertificateRequest.CertificateViewActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.AssignmentFilePicking"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.LsrwMain"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.CreateNewTask"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.WebView"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LessonPlan.LessonPlanSummary.LessonPlan"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".School.LessonPlan.LessonPlanCreate.LessonPlanCreateActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Homework.HomeWorkCreate"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="uiMode|orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Parent.ParentDashboard"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Assignment.AssignmentCreate"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="uiMode|orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Auth.OTP.OTP"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Auth.CreateResetChangePassword.PasswordGeneration"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Auth.TermsConditions.TermsAndConditions"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Auth.MobilePasswordSignIn.Login"
@@ -284,353 +321,430 @@
         <activity
             android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudent"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.InteractionWithStaff.InteractionwithStaffChatScreen"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudentChatScreen"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Auth.Country.CountryScreen"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".Testing.MainActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Settings.ContactUs.ContactUs"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Assignment.AssignmentStudentList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Assignment.AssignmentStudentListDetail"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Settings.RateUs.RateUs"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Settings.RateUs.RatingSuccess"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Dashboard.Settings.Faq.Faq"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Testing.AutoScrolling"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Parent.Homework.HomeWork"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.LessonPlan.LessonPlanEdit.LessonPlanEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Dashboard.School.SchoolDashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Utils.VimeoVideoPlay"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Communication.CommunicationSchool"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="uiMode|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".CommonScreens.SpecificStudentData.SpecificStudent"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Event.CreateEvent"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="uiMode|orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.LsrwReportAndStatics"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.ExamMarkUpload.ClassList.ClassList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
 
         <activity
             android:name=".School.ExamMarkUpload.ExamList.ExamList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.ExamMarkUpload.MapActivity.MapActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
         <activity
             android:name=".School.LSRW.CompletedTaskList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="uiMode|orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.LSRW.ActiveTaskList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.SchoolList.SchoolList"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.RequestLeave.LeaveRequest"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Noticeboard.NoticeBoard"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.CertificateRequest.CertificateRequest"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:configChanges="uiMode|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".School.LSRW.SubmittedStudentListRemarkSubmit"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Coupon.CouponView.CouponDashboardActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Coupon.CouponView.MycouponViewActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Coupon.CouponView.CouponActivateActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Coupon.CouponView.CouponOrderActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Dashboard.Parent.ExamMark"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.ExamTest.ExamTest"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.FeeDetails.FeeDetails"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.WhereIsMyBus.StudentBusLocation"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.FeeDetails.FeeReceiptViewActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Communication.CommunicationParent"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.InteractionWithStaff.InteractionWithStaff"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.LSRW.LSRW"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.EventsHolidays.EventActivty.Event"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".Parent.PTM.PTM"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
             android:name=".Dashboard.Combination.PrioritySelection"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Timetable.TimeTable"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Assignment.Assignment"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Attendance.Attendance"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.EventsHolidays.HolidayActivity.Holidays"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.EBooks.Ebooks"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Parent.Attendance.AttendanceReport.AttendanceReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.MessageFromManagement.MessageFromManagement"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.AbsenteesMarking.AttendanceMark"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.PTM.Activity.PTM"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.SchoolNeeds.SchoolNeeds"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.ImportantInfo.ImportantInfo"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.DriverBusLocationUpdate.DriverBusLocationUpdate"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.AbsenteesReport.AbsenteesReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.DailyCollection.DailyCollection"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.FeePendingReport.FeePendingReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.AbsenteesReport.AbsenteesStudents"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.StaffWiseAttendanceReport.StaffWiseAttendanceReport"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".School.Attachment.Attachment"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="uiMode|orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CommonScreens.FilesViewActivity"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".AlbumImage.AlbumSelectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Testing.Testing"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Parent.Homework.HomeWorkAdapter.ChildHomeWork"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.PTM.Activity.StaffSlotDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.PTM.Activity.CreateSlots"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Assignment.AssignmentReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Homework.HomeworkReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.NoticeBoard.NoticeBoardReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Event.EventReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Attachment.AttachmentReport"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:configChanges="uiMode|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
 

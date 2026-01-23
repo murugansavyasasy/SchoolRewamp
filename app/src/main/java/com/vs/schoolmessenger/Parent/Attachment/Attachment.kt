@@ -75,11 +75,10 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
 
-    private var isTourDialogShown = false
 
     override fun setupViews() {
         super.setupViews()
-        // showTourIfNeeded()
+
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -232,6 +231,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     } else {
                         binding.isArchiveErrorMsg.visibility = View.VISIBLE
                         binding.isArchiveErrorMsg.text = response.message
+                        binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
                         if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                             binding.txtNoData.visibility = View.GONE
                             binding.rytSearch1.visibility = View.GONE
@@ -254,6 +254,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 } else {
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
+                    binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
+
                     if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                         binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -272,11 +274,14 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.isArchiveErrorMsg.layoutParams = layoutParams
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     }
+
                 }
             } else {
                 binding.isArchiveErrorMsg.visibility = View.VISIBLE
                 binding.isArchiveErrorMsg.text =
                     getString(R.string.something_went_wrong_please_try_again_later)
+                binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
+
                 if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                     binding.txtNoData.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
@@ -700,28 +705,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         }
     }
 
-    private fun showTourIfNeeded() {
 
-        if (isTourDialogShown) return
-        if (!SharedPreference.isTourShown(
-                this,
-                SharedPreference.KEY_PARENT_ATTACHMENT_TOUR
-            )
-        ) {
-
-            isTourDialogShown = true
-            val tourImages = arrayListOf(
-                R.drawable.daily_collection_tour_1,
-                R.drawable.daily_collection_tour_2
-            )
-
-            TourDialog.newInstance(tourImages) {
-                SharedPreference.setTourShown(
-                    this,
-                    SharedPreference.KEY_PARENT_ATTACHMENT_TOUR
-                )
-            }.show(supportFragmentManager, "parent_attachment_tour")
-        }
-    }
 
 }

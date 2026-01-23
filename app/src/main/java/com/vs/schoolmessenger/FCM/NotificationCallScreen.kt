@@ -101,7 +101,8 @@ class NotificationCallScreen :
             if (response != null) {
                 response.status
                 response.message
-                finish()
+                finishAffinity()
+
             }
         }
 

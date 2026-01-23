@@ -684,7 +684,7 @@
     <string name="absentees_students_list">👨🏻‍🎓 Absent Students</string>
     <string name="on_duty">On Duty</string>
     <string name="late">&#160;Late</string>
-    <string name="what_s_new">What\'s New</string>
+    <string name="what_s_new">Exciting features</string>
     <string name="no_country_found">No country found</string>
     <string name="ptm">PTM</string>
     <string name="purpose_of_meeting">Purpose of Meeting</string>
@@ -1074,6 +1074,7 @@
     <string name="show_older_messages">Show older messages</string>
     <string name="previous">Previous</string>
     <string name="skip">Skip</string>
+    <string name="applied_on">Applied on</string>
 
 
 </resources>

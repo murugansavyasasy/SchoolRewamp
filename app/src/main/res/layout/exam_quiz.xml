@@ -217,6 +217,7 @@
                     android:background="@android:color/transparent"
                     android:editable="true"
                     android:focusable="true"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Enterdescription"
@@ -277,6 +278,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:digits="0123456789"
+                android:maxLength="4"
                 android:hint="@string/no_of_question"
                 android:inputType="number">
 

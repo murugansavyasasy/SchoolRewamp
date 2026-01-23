@@ -88,7 +88,7 @@ import java.util.Locale
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: ParentHomeFragmentBinding
-    lateinit var isMenuAdapter: ChildMenuAdapter
+    private var isMenuAdapter: ChildMenuAdapter? = null
     var childDetails: ChildDetails? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
@@ -209,7 +209,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
             if (response != null) {
-                Constant.hideLoadingEnable(requireActivity())
+                val safeActivity = activity ?: return@observe
+
+                Constant.hideLoadingEnable(safeActivity)
                 val status = response.status
                 response.message
                 if (status) {
@@ -299,7 +301,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.rytNORecordFound.visibility = View.GONE
         }
 
-        isMenuAdapter.updateList(filteredMenuList)
+        isMenuAdapter!!.updateList(filteredMenuList)
     }
 
 
@@ -469,7 +471,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         // Convert image to byte array (for contact photo)
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.school_splash_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
@@ -598,7 +600,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
         isMenuItems.clear()
         isMenuItems.addAll(filtered)
-        isMenuAdapter.updateList(isMenuItems.toList())
+        isMenuAdapter!!.updateList(isMenuItems.toList())
     }
 
 
