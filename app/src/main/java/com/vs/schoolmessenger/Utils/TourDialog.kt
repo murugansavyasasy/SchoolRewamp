@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Utils
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,9 +32,18 @@ class TourDialog(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        val dialog = Dialog(
+            requireContext(),
+            android.R.style.Theme_Black_NoTitleBar_Fullscreen
+        )
+
         dialog.setContentView(R.layout.tour_xml)
         dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+
+        dialog.setOnKeyListener { _, keyCode, event ->
+            keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP
+        }
 
         images = requireArguments().getIntegerArrayList(KEY_IMAGES) ?: arrayListOf()
 
@@ -44,7 +54,6 @@ class TourDialog(
 
         img.setImageResource(images[step])
         updatePreviousVisibility(previous)
-
 
         next.setOnClickListener {
             step++
@@ -57,7 +66,6 @@ class TourDialog(
             }
         }
 
-
         previous.setOnClickListener {
             if (step > 0) {
                 step--
@@ -66,7 +74,6 @@ class TourDialog(
             }
         }
 
-
         skip.setOnClickListener {
             dismiss()
             onFinish()
@@ -74,6 +81,7 @@ class TourDialog(
 
         return dialog
     }
+
 
     private fun updatePreviousVisibility(previous: TextView) {
         previous.visibility =
