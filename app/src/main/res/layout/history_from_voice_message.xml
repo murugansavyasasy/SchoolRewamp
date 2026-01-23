@@ -186,7 +186,7 @@
 
                 <TextView
                     android:layout_marginBottom="@dimen/ten"
-                    android:id="@+id/lblPostedBy"
+                    android:id="@+id/lblVoicePostedBy"
                     android:layout_below="@+id/relative_layout"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
@@ -194,6 +194,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/sixteen"
                     android:text=""
+                    android:visibility="gone"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/twele_sp"></TextView>
 
@@ -202,7 +203,7 @@
                     android:id="@+id/rlaSendVoice"
                     android:layout_width="@dimen/eighty"
                     android:layout_height="@dimen/thirty_five"
-                    android:layout_below="@+id/lblPostedBy"
+                    android:layout_below="@+id/lblVoicePostedBy"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/eight"
@@ -341,6 +342,20 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="visible"></TextView>
+
+                    <TextView
+                        android:layout_marginTop="@dimen/five"
+                        android:visibility="gone"
+                        android:id="@+id/lblMsgPostedBy"
+                        android:layout_below="@+id/lblDateText"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/sixteen"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/twele_sp"></TextView>
 
                     <RelativeLayout
                         android:id="@+id/rlaSelectText"

@@ -36,8 +36,8 @@
     <string name="lblForgotPassword">Forgot Password ?</string>
     <string name="lblDidntreceive"> Didn\’t receive the verification code?</string>
     <string name="lblValidate">Validate</string>
-    <string name="lblChooseyourrole">Choose Your Role</string>
-    <string name="lblLoginteacherparent">Login As Principal or Student</string>
+    <string name="lblChooseyourrole">Choose your role</string>
+    <string name="lblLoginteacherparent">Login as Principal or Student</string>
     <string name="lblHome">Home</string>
     <string name="lblHelp">Help</string>
     <string name="lblAttachment">Attachment</string>
@@ -1072,6 +1072,8 @@
     <string name="select_from_date_first">Select From Date first</string>
     <string name="to_date_should_be_same_as_or_after_from_date">To date should be same as or after From date</string>
     <string name="show_older_messages">Show older messages</string>
+    <string name="previous">Previous</string>
+    <string name="skip">Skip</string>
 
 
 </resources>

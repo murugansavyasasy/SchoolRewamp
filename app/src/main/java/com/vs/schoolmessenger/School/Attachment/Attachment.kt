@@ -62,6 +62,7 @@ import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.AttachmentBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
@@ -104,9 +105,13 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
+    private var isTourDialogShown = false
+
+
 
     override fun setupViews() {
         super.setupViews()
+       // showTourIfNeeded()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -1035,6 +1040,32 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 isAttachmentPosition = intent.getIntExtra("isPosition", -1)
                 isEditProcess(attachmentDataList)
             }
+        }
+    }
+
+
+    private fun showTourIfNeeded() {
+        if (isTourDialogShown) return
+
+        if (!SharedPreference.isTourShown(
+                this,
+                SharedPreference.KEY_SCHOOL_ATTACHMENT_TOUR
+            )
+        ) {
+
+            isTourDialogShown = true
+
+            val tourImages = arrayListOf(
+                R.drawable.daily_collection_tour_1,
+                R.drawable.daily_collection_tour_2
+            )
+
+            TourDialog.newInstance(tourImages) {
+                SharedPreference.setTourShown(
+                    this,
+                    SharedPreference.KEY_SCHOOL_ATTACHMENT_TOUR
+                )
+            }.show(supportFragmentManager, "school_attachment_tour")
         }
     }
 }

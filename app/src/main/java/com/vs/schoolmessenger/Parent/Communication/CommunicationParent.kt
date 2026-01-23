@@ -66,10 +66,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
+    private var isTourDialogShown = false
 
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+        //showTourIfNeeded()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -382,11 +383,13 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             viewHolder?.itemView?.let { itemView ->
                 val originalBackground = itemView.background
 
-                itemView.setBackgroundColor(Color.parseColor("#FFE082"))
+                itemView.setBackgroundColor(
+                    resources.getColor(R.color.light_yellow_5, null)
+                )
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     itemView.background = originalBackground
-                }, 3000)
+                }, Constant.TIME_OUT)
             }
         }
     }
@@ -774,18 +777,25 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     }
 
     private fun showTourIfNeeded() {
-        val prefs = getSharedPreferences("parentcommunication_prefs", MODE_PRIVATE)
-        val isShown = prefs.getBoolean("parentcommunication_tour", false)
 
-        if (!isShown) {
+        if (isTourDialogShown) return
+        if (!SharedPreference.isTourShown(
+                this,
+                SharedPreference.KEY_PARENT_COMMUNICATION_TOUR
+            )
+        ) {
+            isTourDialogShown = true
             val tourImages = arrayListOf(
                 R.drawable.daily_collection_tour_1,
                 R.drawable.daily_collection_tour_2
             )
 
             TourDialog.newInstance(tourImages) {
-                prefs.edit().putBoolean("parentcommunication_tour", true).apply()
-            }.show(supportFragmentManager, "parentcommunication_tour")
+                SharedPreference.setTourShown(
+                    this,
+                    SharedPreference.KEY_PARENT_COMMUNICATION_TOUR
+                )
+            }.show(supportFragmentManager, "parent_communication_tour")
         }
     }
     private fun clearDateFilter() {

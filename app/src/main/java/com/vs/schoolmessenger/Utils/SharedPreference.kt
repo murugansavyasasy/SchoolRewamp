@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 
 object SharedPreference {
 
+    private const val PREF_NAME = "communication_prefs"
     private const val SH_PREF = "SH_PREF"
     private const val SH_LANGUAGE = "isLanguage"
     private const val SH_AGREE = "isAgreeTerms"
@@ -32,10 +33,16 @@ object SharedPreference {
     private const val KEY_LOGGED_IN = "logged_in"
     private const val KEY_FINGER_PRINT_SKIPPED = "finger_print_skipped"
     private const val KEY_FINGER_PRINT_SETUP_SKIP = "finger_print_setup_skip"
-
-
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
+
+    const val KEY_SCHOOL_COMMUNICATION_TOUR = "school_communication_tour"
+    const val KEY_SCHOOL_ATTACHMENT_TOUR = "school_attachment_tour"
+
+    const val KEY_PARENT_ATTACHMENT_TOUR = "parent_attachment_tour"
+    const val KEY_PARENT_COMMUNICATION_TOUR = "parent_communication_tour"
+    private fun prefs(context: Context) =
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun setFingerPrintSetupSkip(activity: Activity, enabled: Boolean) {
         val sharedPreferences = EncryptedSharedPreferences.create(
@@ -429,4 +436,15 @@ object SharedPreference {
     }
 
 
+
+    fun isTourShown(context: Context, key: String): Boolean {
+        return prefs(context).getBoolean(key, false)
+    }
+
+    fun setTourShown(context: Context, key: String) {
+        prefs(context)
+            .edit()
+            .putBoolean(key, true)
+            .apply()
+    }
 }
