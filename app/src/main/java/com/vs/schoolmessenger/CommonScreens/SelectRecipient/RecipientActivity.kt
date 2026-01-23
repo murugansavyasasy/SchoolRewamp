@@ -236,6 +236,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isLoadSubject(isGetSubjectListData)
                     }
                 } else {
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
                     Constant.showDataValidation(
                         resources.getString(R.string.Oops),
                         response.message,
@@ -986,12 +988,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (selectedIds.isNotEmpty()) {
                     var isAcademicYearNote: String? = null
                     if (!isCurrentAcademicYear) {
-                        if (isTargetType != Constant.isStaff){
+                        if (isTargetType != Constant.isStaff) {
                             isAcademicYearNote =
                                 resources.getString(R.string.NOTE_message_addressed) + isSelectedAcademicYear + resources.getString(
                                     R.string.which_communication_academic
                                 )
-                        }else{
+                        } else {
                             isAcademicYearNote =
                                 resources.getString(R.string.are_you_sure_want_to_send_this_message)
                         }
@@ -1767,6 +1769,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        Log.d("idString", idString.toString())
         if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
             isGetSubjectList(idString)
         }

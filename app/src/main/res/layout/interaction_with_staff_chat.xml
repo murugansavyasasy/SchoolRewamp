@@ -16,7 +16,8 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/circle_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/ten">
 
         <TextView
             android:id="@+id/user_name"

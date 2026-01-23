@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -56,12 +57,14 @@ class CustomDateAdapter(
 
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dateBox: TextView = itemView.findViewById(R.id.dateBox)
+        private val linaer_layout: LinearLayout = itemView.findViewById(R.id.linaer_layout)
 
         fun bind(dateItem: CustomDateItem) {
             if (dateItem.day == null) {
                 dateBox.text = ""
                 dateBox.isClickable = false
-                dateBox.setBackgroundResource(0)
+//                dateBox.setBackgroundResource(0)
+                linaer_layout.setBackgroundResource(0)
                 return
             }
 
@@ -69,7 +72,8 @@ class CustomDateAdapter(
             dateBox.text = dateItem.day.toString()
             dateBox.isClickable = isSelectionEnabled && dateItem.isSelectable
 
-            dateBox.setBackgroundColor(Color.TRANSPARENT)
+//            dateBox.setBackgroundColor(Color.TRANSPARENT)
+            linaer_layout.setBackgroundColor(Color.TRANSPARENT)
 
             val calendar = Calendar.getInstance()
             calendar.set(dateItem.year, dateItem.month - 1, dateItem.day)
@@ -80,10 +84,12 @@ class CustomDateAdapter(
                         dateItem.year == todayYear
 
             if (dateItem.isHoliday) {
-                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
+//                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
+                linaer_layout.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
                 dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else if (isToday) {
-                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
+//                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
+                linaer_layout.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
                 dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
                 dateBox.background = null
@@ -103,17 +109,18 @@ class CustomDateAdapter(
                     if (dateStr != null) {
                         if (selectedDates.contains(dateStr)) {
                             selectedDates.remove(dateStr)
-                            dateBox.setBackgroundColor(Color.TRANSPARENT)
+                            linaer_layout.setBackgroundColor(Color.TRANSPARENT)
                         } else {
                             selectedDates.add(dateStr)
-                            dateBox.background = selectedBackgroundDrawable
+                            linaer_layout.background = selectedBackgroundDrawable
                         }
                         onDateClick(selectedDates.toList())
                     }
                 }
 
                 if (selectedDates.contains(dateStr)) {
-                    dateBox.background = selectedBackgroundDrawable
+//                    dateBox.background = selectedBackgroundDrawable
+                    linaer_layout.background = selectedBackgroundDrawable
                 }
             } else {
                 dateBox.setOnClickListener(null)

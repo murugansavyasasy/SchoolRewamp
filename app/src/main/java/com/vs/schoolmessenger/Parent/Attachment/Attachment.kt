@@ -45,7 +45,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
 
-
     private var fromDateMillis: Long? = null
     private var toDateMillis: Long? = null
     private var originalAttachmentList = mutableListOf<AttachmentDataReport>()
@@ -80,7 +79,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun setupViews() {
         super.setupViews()
-       // showTourIfNeeded()
+        // showTourIfNeeded()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -351,6 +350,16 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isGetAttachment()
     }
 
+    private fun updateClearFilterVisibility() {
+        binding.imgClearFilter.visibility =
+            if (fromDateMillis != null || toDateMillis != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
+
     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -377,7 +386,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     toDateMillis = null
                     binding.txtToDate.text = getString(R.string.to_date)
                 }
-
+                updateClearFilterVisibility()
                 // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
@@ -397,6 +406,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         dialog.show()
     }
+
     private fun showToDatePicker() {
         val todayCal = Calendar.getInstance()
 
@@ -412,7 +422,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.txtToDate.text =
                     SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         .format(selectedCal.time)
-
+                updateClearFilterVisibility()
                 // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
@@ -504,6 +514,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtNoData.visibility =
             if (resultList.isEmpty()) View.VISIBLE else View.GONE
     }
+
     private fun isGetAttachment() {
         binding.recycleracademic.visibility = View.VISIBLE
         mAttachmentReportAdapter =
@@ -551,22 +562,25 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
 
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+    private fun highlightItemTemporarily(
+        recyclerView: RecyclerView,
+        position: Int
+    ) {
         recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
-                val originalBackground = itemView.background
+            val viewHolder =
+                recyclerView.findViewHolderForAdapterPosition(position) as? AttachmentAdapter.DataViewHolder
+                    ?: return@post
 
-                itemView.setBackgroundColor(
-                    resources.getColor(R.color.light_yellow_5, null)
-                )
+            val headerLayout = viewHolder.headerLayout
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    itemView.background = originalBackground
-                }, Constant.TIME_OUT)
-            }
+            headerLayout.setBackgroundResource(R.color.light_yellow_5)
+
+            headerLayout.postDelayed({
+                headerLayout.setBackgroundResource(R.color.white)
+            }, Constant.TIME_OUT)
         }
     }
+
 
 
     override fun onClick(v: View?) {
@@ -600,7 +614,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     private fun resetAttachmentFiltersAndShowAll() {
-
+        binding.imgClearFilter.visibility = View.GONE
         // 🔹 Reset search
         currentSearchQuery = ""
         binding.txtSearchMenu1.setText("")
@@ -635,6 +649,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
 
     private fun clearDateFilter() {
+        binding.imgClearFilter.visibility = View.GONE
         fromDateMillis = null
         toDateMillis = null
         binding.txtFromDate.text = getString(R.string.FromDate)
