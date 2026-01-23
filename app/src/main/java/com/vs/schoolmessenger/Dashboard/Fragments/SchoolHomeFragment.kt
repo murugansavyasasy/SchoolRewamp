@@ -224,7 +224,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
             if (response != null) {
-                Constant.hideLoadingEnable(requireActivity())
+                val safeActivity = activity ?: return@observe
+                Constant.hideLoadingEnable(safeActivity)
                 val status = response.status
                 response.message
                 if (status) {
