@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.NavHeaderBinding
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
@@ -67,6 +68,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var access_token = ""
+    private var isTourDialogShown = false
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
@@ -76,6 +78,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
+        showTourIfNeeded()
         enableEdgeToEdge()
 
 
@@ -508,4 +511,25 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
     }
 
+    private fun showTourIfNeeded() {
+        if (isTourDialogShown) return
+        if (!SharedPreference.isTourShown(
+                this,
+                SharedPreference.KEY_SCHOOL_DASHBOARD_TOUR
+            )
+        ) {
+            isTourDialogShown = true
+            val tourImages = arrayListOf(
+                R.drawable.sender_msg,
+                R.drawable.sender_file
+            )
+
+            TourDialog.newInstance(tourImages) {
+                SharedPreference.setTourShown(
+                    this,
+                    SharedPreference.KEY_SCHOOL_DASHBOARD_TOUR
+                )
+            }.show(supportFragmentManager, "school_dashboard_tour")
+        }
+    }
 }
