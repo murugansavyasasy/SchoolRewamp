@@ -262,7 +262,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_gray_light_radiuos"
+                    android:background="@drawable/gray_bg_radius"
                     android:gravity="center"
                     android:text="@string/unread"
                     android:textColor="@color/navi_blue2"
@@ -277,7 +277,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_gray_light_radiuos"
+                    android:background="@drawable/gray_bg_radius"
                     android:gravity="center"
                     android:text="@string/read"
                     android:textColor="@color/navi_blue2"
@@ -409,7 +409,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/ten"
-                    android:text="@string/underline_see_archived_messages"
+                    android:text="@string/show_older_messages"
                     android:textColor="@color/PrimaryColor"></TextView>
 
             </LinearLayout>

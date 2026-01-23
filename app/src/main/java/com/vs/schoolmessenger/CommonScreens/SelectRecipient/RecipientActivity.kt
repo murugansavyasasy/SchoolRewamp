@@ -235,6 +235,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.subjectlabel.visibility = View.VISIBLE
                         isLoadSubject(isGetSubjectListData)
                     }
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
                 }
             }
         }
@@ -980,10 +986,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (selectedIds.isNotEmpty()) {
                     var isAcademicYearNote: String? = null
                     if (!isCurrentAcademicYear) {
-                        isAcademicYearNote =
-                            resources.getString(R.string.NOTE_message_addressed) + isSelectedAcademicYear + resources.getString(
-                                R.string.which_communication_academic
-                            )
+                        if (isTargetType != Constant.isStaff){
+                            isAcademicYearNote =
+                                resources.getString(R.string.NOTE_message_addressed) + isSelectedAcademicYear + resources.getString(
+                                    R.string.which_communication_academic
+                                )
+                        }else{
+                            isAcademicYearNote =
+                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                        }
+//                        isAcademicYearNote =
+//                            resources.getString(R.string.NOTE_message_addressed) + isSelectedAcademicYear + resources.getString(
+//                                R.string.which_communication_academic
+//                            )
                     } else {
                         isAcademicYearNote =
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
@@ -1016,7 +1031,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 showSendConfirmationDialog(
                                     resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                         R.string._s
-                                    ), isAcademicYearNote
+                                    ), isAcademicYearNote!!
                                 )
                             }
 

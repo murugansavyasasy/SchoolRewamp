@@ -1071,6 +1071,7 @@
     <string name="from_date_cannot_be_after_to_date">From Date cannot be after To Date</string>
     <string name="select_from_date_first">Select From Date first</string>
     <string name="to_date_should_be_same_as_or_after_from_date">To date should be same as or after From date</string>
+    <string name="show_older_messages">Show older messages</string>
     <string name="previous">Previous</string>
     <string name="skip">Skip</string>
 
