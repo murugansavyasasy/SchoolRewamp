@@ -496,7 +496,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
         }
         else  {
             if (data.menu_id == Constant.M_ATTACHMENTS || data.menu_id == Constant.M_COMMUNICATION) {
-                Constant.isSelectedMenuName = "Mgmt Msgs"
+                Constant.isSelectedMenuName = "Admin Msgs"
                 val intent = Intent(this, MessageFromManagement::class.java)
                 startActivity(intent)
             }

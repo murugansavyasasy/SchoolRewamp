@@ -310,49 +310,49 @@
 
             <RadioGroup
                 android:id="@+id/rdgCommunication"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/thirty"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/thirty"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="16dp">
 
                 <RadioButton
                     android:id="@+id/RdbAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_gray_radious"
                     android:checked="true"
-                    android:gravity="center"
-                    android:text="@string/all">
-
-                </RadioButton>
+                    android:text="All"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginEnd="12dp"/>
 
                 <RadioButton
                     android:id="@+id/RdbVoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_gray_radious"
-                    android:gravity="center"
-                    android:text="@string/voice">
-
-                </RadioButton>
+                    android:text="Voice"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:layout_marginEnd="12dp"/>
 
                 <RadioButton
                     android:id="@+id/RdbText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_gray_radious"
-                    android:gravity="center"
-                    android:text="@string/text">
-
-                </RadioButton>
+                    android:text="Text"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"/>
 
             </RadioGroup>
 
@@ -457,7 +457,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginBottom="@dimen/fifteen"
-                android:text="@string/see_archived_messages"
+                android:text="@string/show_older_messages"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />

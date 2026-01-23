@@ -257,6 +257,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="start"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:hint="@string/Enterdescription"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp" />

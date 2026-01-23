@@ -435,9 +435,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         currentReadFilter = filter
 
         // Reset all backgrounds
-        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
-        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
-        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblAll.setBackgroundResource(R.drawable.gray_bg_radius)
+        binding.lblUnread.setBackgroundResource(R.drawable.gray_bg_radius)
+        binding.lblRead.setBackgroundResource(R.drawable.gray_bg_radius)
 
         // Highlight selected
         when (filter) {
@@ -615,7 +615,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         // 🔹 Reset read filter UI
         currentReadFilter = ReadFilter.ALL
         binding.lblAll.setBackgroundResource(R.drawable.bg_light_green_radious)
-        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblUnread.setBackgroundResource(R.drawable.gray_bg_radius)
         binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
 
         // 🔹 Restore full list

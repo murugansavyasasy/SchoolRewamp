@@ -217,9 +217,9 @@
     <string name="Students">Students</string>
     <string name="Student_s"> Student (s)</string>
     <string name="Please_select_least_student">Please select at least one student to send the message.</string>
-    <string name="Login_Management">Login As Management</string>
-    <string name="Login_As">Login As</string>
-    <string name="Login_Student_Parent">Login As Student/Parent</string>
+    <string name="Login_Management">Login as Management</string>
+    <string name="Login_As">Login as</string>
+    <string name="Login_Student_Parent">Login as Student/Parent</string>
     <string name="Invalid_role">Invalid user role</string>
     <string name="Student_Parent">Student/Parent</string>
     <string name="Staff_details_available">Staff details not available</string>
@@ -1071,6 +1071,7 @@
     <string name="from_date_cannot_be_after_to_date">From Date cannot be after To Date</string>
     <string name="select_from_date_first">Select From Date first</string>
     <string name="to_date_should_be_same_as_or_after_from_date">To date should be same as or after From date</string>
+    <string name="show_older_messages">Show older messages</string>
     <string name="previous">Previous</string>
     <string name="skip">Skip</string>
 

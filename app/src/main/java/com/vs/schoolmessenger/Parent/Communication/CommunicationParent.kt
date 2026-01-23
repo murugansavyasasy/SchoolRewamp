@@ -704,11 +704,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         data: VoiceData,
         holder: UnifiedVoiceAdapter.DataViewHolder
     ) {
-        isSeeMoreClick = false
-        if (!hasFetchedMore) {
-            hasFetchedMore = true
-            fetchMoreData()
-        }
+//        isSeeMoreClick = false
+//        if (!hasFetchedMore) {
+//            hasFetchedMore = true
+//            fetchMoreData()
+//        }
     }
 
     private fun isChangeBackRoundCommunicationType(
