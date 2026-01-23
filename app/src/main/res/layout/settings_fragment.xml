@@ -647,7 +647,7 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/new_1">
+                        android:src="@drawable/ic_features">
 
                     </ImageView>
 

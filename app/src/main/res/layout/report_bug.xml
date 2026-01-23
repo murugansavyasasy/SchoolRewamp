@@ -138,6 +138,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="top"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:hint="@string/lblEntertheBug"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp" />
