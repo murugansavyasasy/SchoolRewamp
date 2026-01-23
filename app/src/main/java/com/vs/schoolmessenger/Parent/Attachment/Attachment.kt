@@ -231,6 +231,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     } else {
                         binding.isArchiveErrorMsg.visibility = View.VISIBLE
                         binding.isArchiveErrorMsg.text = response.message
+                        binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
                         if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                             binding.txtNoData.visibility = View.GONE
                             binding.rytSearch1.visibility = View.GONE
@@ -253,6 +254,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 } else {
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
+                    binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
 
                     if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                         binding.txtNoData.visibility = View.GONE
@@ -278,6 +280,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.isArchiveErrorMsg.visibility = View.VISIBLE
                 binding.isArchiveErrorMsg.text =
                     getString(R.string.something_went_wrong_please_try_again_later)
+                binding.isArchiveErrorMsg.requestFocus() //Manually focusing showing the error msg
+
                 if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                     binding.txtNoData.visibility = View.GONE
                     binding.rytSearch1.visibility = View.GONE
