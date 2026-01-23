@@ -19,10 +19,6 @@ android {
     compileSdk = 35
     ndkVersion = "28.0.12433566"
 
-//    android {
-//        ndkVersion = "26.1.10909125"
-//    }
-
     packaging {
         jniLibs {
             useLegacyPackaging = false
@@ -30,13 +26,12 @@ android {
     }
 
     defaultConfig {
-
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 159
+        versionName = "2.0.0"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
@@ -55,18 +50,12 @@ android {
             )
         }
     }
-
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
         isCoreLibraryDesugaringEnabled = true
     }
 
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_1_8
-//        targetCompatibility = JavaVersion.VERSION_1_8
-//    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -76,9 +65,6 @@ android {
         buildConfig = true
 
     }
-
-
-
     packagingOptions {
         jniLibs {
             // Make sure new packaging is used so libs can be aligned properly
@@ -97,9 +83,7 @@ android {
             dimension = "school"
 //            applicationIdSuffix = "" // No suffix for the main app
             applicationId = "com.vs.schoolmessenger"
-
         }
-
         // ✅ 2️⃣ Dynamically Generate Other Flavors
         val schoolsFile = rootDir.resolve("app/schools.json")
         if (schoolsFile.exists()) {
@@ -109,7 +93,6 @@ android {
             schools.forEach { school ->
                 val id = school["id"] as String
                 val package_name = school["package_suffix"] as String
-
                 create(id) {
                     dimension = "school"
 //                    applicationIdSuffix = suffix
@@ -135,7 +118,6 @@ android {
             val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
 
             val srcDir = file("${projectDir}/src")
-
             schools.forEach { school ->
                 val schoolId = school["id"].toString()
                 val schoolName = school["name"].toString()
@@ -146,7 +128,6 @@ android {
                 val dark_blue_color = school["dark_blue_color"].toString()
                 val light_sky_blue_color = school["light_sky_blue_color"].toString()
                 val iconName = school["icon"].toString()
-
 
                 val flavorResDir = File(srcDir, "$schoolId/res")
                 val drawableDir = File(flavorResDir, "drawable")
@@ -206,7 +187,6 @@ android {
             }
         }
     }
-
 
     tasks.register("generateGoogleServicesJson") {
         doLast {
@@ -333,32 +313,16 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("io.socket:socket.io-client:2.1.0") // stable version
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-
     // Firebase BOM (manages all Firebase versions)
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
-
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
-
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation ("com.google.android.play:review-ktx:2.0.1")
-
     implementation("com.kizitonwose.calendar:view:2.5.0")
-
     implementation("com.google.android.flexbox:flexbox:3.0.0")
-
     implementation ("androidx.core:core-splashscreen:1.0.1")
 
-
-// or a newer version
-
-//    // Smallest version (no audio/video codecs)
-//    implementation("com.arthenica:ffmpeg-kit-min:4.5.LTS")
-//// Full version with video codecs
-//    implementation("com.arthenica:ffmpeg-kit-full:4.5.LTS")
-//// With HTTPS and extended support
-//    implementation("com.arthenica:ffmpeg-kit-full-gpl:4.5.LTS")
 }

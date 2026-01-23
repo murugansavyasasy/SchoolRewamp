@@ -210,6 +210,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val safeActivity = activity ?: return@observe
+
                 Constant.hideLoadingEnable(safeActivity)
                 val status = response.status
                 response.message
@@ -470,7 +471,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         // Convert image to byte array (for contact photo)
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.school_splash_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
