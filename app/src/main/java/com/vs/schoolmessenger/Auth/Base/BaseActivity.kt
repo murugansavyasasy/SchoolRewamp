@@ -323,7 +323,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val frameContainer = findViewById<View>(R.id.frameContainer)
 
         WindowCompat.getInsetsController(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // white icons
+            isAppearanceLightStatusBars = true // white icons
         }
 
         // Apply insets to root (only left/right, NO bottom padding here anymore)

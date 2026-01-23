@@ -560,22 +560,25 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
 
-    private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
+    private fun highlightItemTemporarily(
+        recyclerView: RecyclerView,
+        position: Int
+    ) {
         recyclerView.post {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.let { itemView ->
-                val originalBackground = itemView.background
+            val viewHolder =
+                recyclerView.findViewHolderForAdapterPosition(position) as? AttachmentAdapter.DataViewHolder
+                    ?: return@post
 
-                itemView.setBackgroundColor(
-                    resources.getColor(R.color.light_yellow_5, null)
-                )
+            val headerLayout = viewHolder.headerLayout
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    itemView.background = originalBackground
-                }, Constant.TIME_OUT)
-            }
+            headerLayout.setBackgroundResource(R.color.light_yellow_5)
+
+            headerLayout.postDelayed({
+                headerLayout.setBackgroundResource(R.color.white)
+            }, Constant.TIME_OUT)
         }
     }
+
 
 
     override fun onClick(v: View?) {

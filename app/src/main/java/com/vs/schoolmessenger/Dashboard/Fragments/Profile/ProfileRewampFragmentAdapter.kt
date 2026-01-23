@@ -119,28 +119,47 @@ class ProfileRewampFragmentAdapter(
             when (field.type) {
                 Constant.text_, Constant.mobile, Constant.number -> {
                     titlelayout.visibility = View.VISIBLE
-                    if (field.optional == false) {
-                        titlelabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
+
+                    val editStatusText = if (field.is_editable) {
+                        " <font color='#4CAF50'>(Editable)</font>"
+                    } else {
+                        " <font color='#9E9E9E'>(Non-editable)</font>"
+                    }
+
+                    titlelabel.text = if (!field.optional) {
+                        Html.fromHtml(
+                            "${field.title} <font color='#FF0000'>*</font>$editStatusText",
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        titlelabel.text = field.title
+                        Html.fromHtml(
+                            "${field.title}$editStatusText",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
                     }
 
                     titlevalue.setSafeTextWatcher(field) { field.value = it }
                     titlevalue.isEnabled = field.is_editable
                 }
 
+
                 Constant.image_ -> {
                     imagelayout.visibility = View.VISIBLE
+
+                    val editStatusText = if (field.is_editable) {
+                        " <font color='#4CAF50'>(Editable)</font>"
+                    } else {
+                        " <font color='#9E9E9E'>(Non-editable)</font>"
+                    }
+
+
                     if (field.optional == false) {
                         imagelabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
+                            "${field.title} <font color='#FF0000'>*</font>$editStatusText",
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        imagelabel.text = field.title
+                        imagelabel.text = "${field.title}$editStatusText"
                     }
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
@@ -177,21 +196,34 @@ class ProfileRewampFragmentAdapter(
 
                 Constant.document_ -> {
                     imagelayout.visibility = View.VISIBLE
-                    if (field.optional == false) {
-                        imagelabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
+
+                    val editStatusText = if (field.is_editable) {
+                        "<font color='#4CAF50'>(Editable)</font>"
                     } else {
-                        imagelabel.text = field.title
+                        "<font color='#9E9E9E'>(Non-editable)</font>"
                     }
+
+                    val labelText = if (field.optional == false) {
+                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                    } else {
+                        "${field.title} $editStatusText"
+                    }
+
+                    imagelabel.text = Html.fromHtml(
+                        labelText,
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
 
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
 
                     val files = field.file_path?.map { doc ->
-                        val fileName = doc.documentName ?: doc.documentPath.substringAfterLast("/")
-                        val extension = fileName.substringAfterLast(".", "").uppercase()
+                        val fileName = doc.documentName
+                            ?: doc.documentPath.substringAfterLast("/")
+
+                        val extension = fileName.substringAfterLast(".", "")
+                            .uppercase()
+
                         val type = when (extension) {
                             "JPG", "JPEG", "PNG", "GIF" -> "IMG"
                             "PDF" -> "PDF"
@@ -201,11 +233,14 @@ class ProfileRewampFragmentAdapter(
                             "MP3", "WAV" -> "AUD"
                             else -> extension.ifEmpty { "FILE" }
                         }
+
                         CommonFileData(type = type, path = doc.documentPath)
                     } ?: emptyList()
 
                     recyclerView.adapter = DocumentImageAdapter(
-                        context = itemView.context, files = files, isSubjectName = field.title ?: ""
+                        context = itemView.context,
+                        files = files,
+                        isSubjectName = field.title.orEmpty()
                     )
 
                     if (field.isRcyImagesAttached) {
@@ -220,57 +255,88 @@ class ProfileRewampFragmentAdapter(
                     }
                 }
 
+
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
-                    if (field.optional == false) {
-                        remarkslabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
+
+                    val editStatusText = if (field.is_editable) {
+                        "<font color='#4CAF50'>(Editable)</font>"
                     } else {
-                        remarkslabel.text = field.title
+                        "<font color='#9E9E9E'>(Non-editable)</font>"
                     }
+
+                    val labelText = if (field.optional == false) {
+                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                    } else {
+                        "${field.title} $editStatusText"
+                    }
+
+                    remarkslabel.text = Html.fromHtml(
+                        labelText,
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+
                     remarksvalue.setSafeTextWatcher(field) { field.value = it }
                     remarksvalue.isEnabled = field.is_editable
                 }
 
+
                 Constant.calendar -> {
                     datelayout.visibility = View.VISIBLE
-                    if (field.optional == false) {
-                        datelabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
+
+                    val editStatusText = if (field.is_editable) {
+                        "<font color='#4CAF50'>(Editable)</font>"
                     } else {
-                        datelabel.text = field.title
+                        "<font color='#9E9E9E'>(Non-editable)</font>"
                     }
-                    datevalue.text = field.value ?: ""
+
+                    val labelText = if (field.optional == false) {
+                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                    } else {
+                        "${field.title} $editStatusText"
+                    }
+
+                    datelabel.text = Html.fromHtml(
+                        labelText,
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+
+                    datevalue.text = field.value.orEmpty()
 
                     datelayout.setOnClickListener {
-                        if (field.is_editable) {
-                            val calendar = Calendar.getInstance()
-                            val year = calendar.get(Calendar.YEAR)
-                            val month = calendar.get(Calendar.MONTH)
-                            val day = calendar.get(Calendar.DAY_OF_MONTH)
+                        if (!field.is_editable) return@setOnClickListener
 
-                            DatePickerDialog(
-                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
-                                    val selectedDate = String.format(
-                                        "%02d-%02d-%04d",
-                                        selectedDay,
-                                        selectedMonth + 1,
-                                        selectedYear
-                                    )
-                                    datevalue.text = selectedDate
-                                    field.value = selectedDate
-                                }, year, month, day
-                            ).show()
-                        }
+                        val calendar = Calendar.getInstance()
+
+                        DatePickerDialog(
+                            itemView.context,
+                            { _, year, month, day ->
+                                val selectedDate = String.format(
+                                    "%02d-%02d-%04d",
+                                    day,
+                                    month + 1,
+                                    year
+                                )
+                                datevalue.text = selectedDate
+                                field.value = selectedDate
+                            },
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH)
+                        ).apply {
+                            datePicker.maxDate = System.currentTimeMillis()
+                        }.show()
                     }
                 }
 
+
                 Constant.gender -> {
                     genderLayout.visibility = View.VISIBLE
+                    val editStatusText = if (field.is_editable) {
+                        " <font color='#4CAF50'>(Editable)</font>"
+                    } else {
+                        " <font color='#9E9E9E'>(Non-editable)</font>"
+                    }
                     val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
                     val radioGroup: RadioGroup = itemView.findViewById(R.id.radioGenderGroup)
                     val radioMale: RadioButton = itemView.findViewById(R.id.radioMale)
@@ -280,11 +346,11 @@ class ProfileRewampFragmentAdapter(
 
                     if (field.optional == false) {
                         genderLabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
+                            "${field.title} <font color='#FF0000'>*</font>$editStatusText",
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        genderLabel.text = field.title
+                        genderLabel.text =  "${field.title}$editStatusText"
                     }
 
                     when (field.value?.lowercase()) {
@@ -311,28 +377,38 @@ class ProfileRewampFragmentAdapter(
                 Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
 
-                    if (field.optional == false) {
-                        dropdownlabel.text = Html.fromHtml(
-                            "${field.title} <font color='#FF0000'>*</font>",
-                            Html.FROM_HTML_MODE_LEGACY
-                        )
+                    val editStatusText = if (field.is_editable) {
+                        "<font color='#4CAF50'>(Editable)</font>"
                     } else {
-                        dropdownlabel.text = field.title
+                        "<font color='#9E9E9E'>(Non-editable)</font>"
                     }
 
+                    val labelText = if (field.optional == false) {
+                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                    } else {
+                        "${field.title} $editStatusText"
+                    }
 
-                    val options = field.options ?: emptyList()
+                    dropdownlabel.text = Html.fromHtml(
+                        labelText,
+                        Html.FROM_HTML_MODE_LEGACY
+                    )
+
+                    val options = field.options.orEmpty()
 
                     val adapterDropdown = ArrayAdapter(
-                        itemView.context, android.R.layout.simple_dropdown_item_1line, options
+                        itemView.context,
+                        android.R.layout.simple_dropdown_item_1line,
+                        options
                     )
-                    dropdownvalue.setAdapter(adapterDropdown)
 
-                    dropdownvalue.setText(field.value ?: "", false)
+                    dropdownvalue.setAdapter(adapterDropdown)
+                    dropdownvalue.setText(field.value.orEmpty(), false)
                     dropdownvalue.isEnabled = field.is_editable
 
                     dropdownvalue.setSafeTextWatcher(field) { field.value = it }
                 }
+
             }
         }
 

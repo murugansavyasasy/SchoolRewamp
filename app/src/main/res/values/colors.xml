@@ -185,7 +185,7 @@
     <color name="light_green4">#50C878</color>
 
     <color name="light_orange4">#f5a961</color>
-    <color name="light_yellow_5">#FFCC00</color>
+    <color name="light_yellow_5">#679df1</color>
     <color name="light_yellow_6">#FFCC00</color>
 
 
@@ -233,5 +233,11 @@
     <color name="notification_body">#212121</color>          <!-- near black -->
     <color name="notification_body_dark">#FFFFFF</color>     <!-- optional fallback -->
     <color name="notification_accent">#1976D2</color>
+
+
+
+    <color name="notification_title_color">#000000</color>
+    <color name="notification_body_color">#6E6E6E</color>
+
 
 </resources>

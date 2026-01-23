@@ -183,6 +183,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:text=""
                         android:hint="@string/Enterdescription" />
                 </RelativeLayout>
