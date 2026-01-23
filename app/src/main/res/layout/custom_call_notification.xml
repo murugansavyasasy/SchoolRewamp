@@ -48,6 +48,7 @@
                 android:maxLines="1"
                 android:text="@string/incoming_call"
                 android:textSize="11sp"
+                android:textColor="@color/text_primary"
                 android:textStyle="bold" />
 
         </RelativeLayout>

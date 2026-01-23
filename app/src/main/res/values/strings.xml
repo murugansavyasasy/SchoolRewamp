@@ -36,8 +36,8 @@
     <string name="lblForgotPassword">Forgot Password ?</string>
     <string name="lblDidntreceive"> Didn\’t receive the verification code?</string>
     <string name="lblValidate">Validate</string>
-    <string name="lblChooseyourrole">Choose Your Role</string>
-    <string name="lblLoginteacherparent">Login As Principal or Student</string>
+    <string name="lblChooseyourrole">Choose your role</string>
+    <string name="lblLoginteacherparent">Login as Principal or Student</string>
     <string name="lblHome">Home</string>
     <string name="lblHelp">Help</string>
     <string name="lblAttachment">Attachment</string>

@@ -77,12 +77,18 @@ class AttachmentAdapter(
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (!isLoading && holder is DataViewHolder && position < filteredList.size) {
-            holder.bind(filteredList, position, childClickListener, this)
+        if (holder is DataViewHolder && position < filteredList.size) {
+
+            holder.headerLayout.setBackgroundResource(R.color.white)
+
+            if (!isLoading) {
+                holder.bind(filteredList, position, childClickListener, this)
+            }
         }
     }
+
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -127,6 +133,10 @@ class AttachmentAdapter(
         private val context: Context,
         private val listener: OnAttachmentReportClickListener
     ) : RecyclerView.ViewHolder(itemView) {
+
+
+        val headerLayout: RelativeLayout =
+            itemView.findViewById(R.id.rytHeader)
 
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)

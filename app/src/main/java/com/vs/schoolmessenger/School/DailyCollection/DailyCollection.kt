@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyD
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.ThemeRestartHelper
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar

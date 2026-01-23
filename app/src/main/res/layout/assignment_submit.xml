@@ -23,19 +23,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="visible">
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:visibility="visible">
 
-        <TextView
+    <TextView
             android:id="@+id/lblTitle"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
@@ -235,6 +240,9 @@
             </TextView>
         </RelativeLayout>
 
+
     </RelativeLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
