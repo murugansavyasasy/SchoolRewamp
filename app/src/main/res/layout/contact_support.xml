@@ -76,7 +76,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:text="04438462020"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/navi_blue2"
                 android:textStyle="bold">
@@ -130,8 +130,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:text="support@savyasasy.com"
+                android:layout_marginEnd="@dimen/ten"
+                android:textColor="@color/navi_blue2"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblContacttMail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="schoolchimes@savyasasy.com"
                 android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/navi_blue2"
                 android:textStyle="bold">
