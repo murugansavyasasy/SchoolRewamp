@@ -304,7 +304,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     toDateMillis = null
                     binding.txtToDate.text = getString(R.string.to_date)
                 }
-
+                updateClearFilterVisibility()
                 applyCombinedFilter()
             },
             todayCal.get(Calendar.YEAR),
@@ -324,6 +324,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         dialog.show()
     }
 
+    private fun updateClearFilterVisibility() {
+        binding.imgClearFilter.visibility =
+            if (fromDateMillis != null || toDateMillis != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
     private fun showToDatePicker() {
         val todayCal = Calendar.getInstance()
 
@@ -339,7 +348,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 binding.txtToDate.text =
                     SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         .format(selectedCal.time)
-
+                updateClearFilterVisibility()
                 applyCombinedFilter()
             },
             todayCal.get(Calendar.YEAR),
@@ -434,7 +443,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     }
 
     private fun applyCombinedFilter() {
-
         var filteredList = allVoiceData.toList()
 
         // 🔹 DATE FILTER (ALL CASES HANDLED)
@@ -566,7 +574,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     }
 
     private fun resetAllFiltersAndShowFullList() {
-
+        binding.imgClearFilter.visibility = View.GONE
         // 🔹 Reset search
         currentSearchQuery = ""
         binding.txtSearchMenu.setText("")
@@ -799,6 +807,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
     }
     private fun clearDateFilter() {
+        binding.imgClearFilter.visibility = View.GONE
         fromDateMillis = null
         toDateMillis = null
         binding.txtFromDate.text = getString(R.string.FromDate)

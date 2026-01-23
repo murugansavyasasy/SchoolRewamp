@@ -30,6 +30,8 @@
                 android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:padding="@dimen/two"
+                android:scaleType="fitCenter"
                 android:src="@drawable/splash_icon1" />
 
         </androidx.cardview.widget.CardView>

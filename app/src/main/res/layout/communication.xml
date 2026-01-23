@@ -237,6 +237,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="@string/FromDate"
                             android:textColor="#000000"
                             android:textSize="@dimen/thirteen_sp" />
@@ -286,6 +287,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="@string/ToDate"
                             android:textColor="#000000"
                             android:textSize="@dimen/thirteen_sp" />
@@ -299,9 +301,10 @@
 
                 <ImageView
                     android:id="@+id/imgClearFilter"
-                    android:src="@drawable/close_red_color"
                     android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five">
+                    android:layout_height="@dimen/twenty_five"
+                    android:src="@drawable/close_red_color"
+                    android:visibility="gone">
 
                 </ImageView>
 
@@ -312,47 +315,47 @@
                 android:id="@+id/rdgCommunication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/RdbAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
                     android:checked="true"
-                    android:text="All"
-                    android:textSize="14sp"
-                    android:gravity="center_vertical"
                     android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
                     android:paddingStart="0dp"
                     android:paddingEnd="0dp"
-                    android:layout_marginEnd="12dp"/>
+                    android:text="All"
+                    android:textSize="14sp" />
 
                 <RadioButton
                     android:id="@+id/RdbVoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Voice"
-                    android:textSize="14sp"
-                    android:gravity="center_vertical"
+                    android:layout_marginEnd="12dp"
                     android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
                     android:paddingStart="0dp"
                     android:paddingEnd="0dp"
-                    android:layout_marginEnd="12dp"/>
+                    android:text="Voice"
+                    android:textSize="14sp" />
 
                 <RadioButton
                     android:id="@+id/RdbText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Text"
-                    android:textSize="14sp"
-                    android:gravity="center_vertical"
                     android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
                     android:paddingStart="0dp"
-                    android:paddingEnd="0dp"/>
+                    android:paddingEnd="0dp"
+                    android:text="Text"
+                    android:textSize="14sp" />
 
             </RadioGroup>
 

@@ -22,8 +22,8 @@
             android:id="@+id/imgStudentProfile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:padding="@dimen/three"
+            android:padding="@dimen/two"
+            android:scaleType="fitCenter"
             android:src="@drawable/profile"
             app:shapeAppearanceOverlay="@style/CircleImageShape" />
 

@@ -119,7 +119,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = SchoolHomeFragmentBinding.inflate(inflater)
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         Constant.checkBiometricSupport(requireActivity())
@@ -163,7 +162,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
         }
-
         getGlobalVariables(access_token)
         appViewModel!!.isGlobalVariables?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -226,6 +224,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
             if (response != null) {
+                Constant.hideLoadingEnable(requireActivity())
                 val status = response.status
                 response.message
                 if (status) {
@@ -235,7 +234,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     // isGetAds()
                     isLoadData()
                     setupRecyclerView()
-
                 }
             }
         }
@@ -285,6 +283,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Constant.showLoadingDisableScreen(requireActivity())
     }
 
     private fun filterDashboardMenu(query: String) {
@@ -625,7 +628,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun isDashBoardData() {
-
         isMenuAdapter =
             SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
