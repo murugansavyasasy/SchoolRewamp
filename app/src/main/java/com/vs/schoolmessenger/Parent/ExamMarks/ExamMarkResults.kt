@@ -1,8 +1,16 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
 
+import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -30,11 +38,42 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-//        isToolBarPrimaryTheme()
-        isExamMarks(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
-        )
+
+        enableEdgeToEdge()
+
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = true
+        }
+
+        val mainView = binding.main
+        val toolbarLayout = findViewById<View>(R.id.ImageLayout)
+        findViewById<View>(R.id.rytHeader)
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                left = systemBars.left,
+                right = systemBars.right,
+                bottom = systemBars.bottom
+            )
+
+            binding.statusBarBackground.updateLayoutParams {
+                height = systemBars.top
+            }
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { _, insets ->
+            insets
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
