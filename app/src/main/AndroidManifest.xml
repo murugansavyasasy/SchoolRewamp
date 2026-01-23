@@ -204,7 +204,7 @@
         <activity
             android:name=".Parent.RequestLeave.NewLeaveRequest"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Parent.RequestLeave.OutPass"
             android:theme="@style/AppTheme"
@@ -434,7 +434,7 @@
         <activity
             android:name=".Parent.CertificateRequest.CertificateRequest"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".School.LSRW.SubmittedStudentListRemarkSubmit"
             android:theme="@style/AppTheme"

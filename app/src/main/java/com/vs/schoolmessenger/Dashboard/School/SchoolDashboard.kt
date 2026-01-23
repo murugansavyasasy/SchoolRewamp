@@ -529,7 +529,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     this,
                     SharedPreference.KEY_SCHOOL_DASHBOARD_TOUR
                 )
-            }.show(supportFragmentManager, "school_dashboard_tour")
+            }.show(supportFragmentManager, Constant.parent_dashboard_tour)
         }
     }
 }

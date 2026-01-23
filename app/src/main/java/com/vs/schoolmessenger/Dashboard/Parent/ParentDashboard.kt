@@ -428,7 +428,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     this,
                     SharedPreference.KEY_PARENT_DASHBOARD_TOUR
                 )
-            }.show(supportFragmentManager, "parent_dashboard_tour")
+            }.show(supportFragmentManager, Constant.parent_dashboard_tour)
         }
     }
 

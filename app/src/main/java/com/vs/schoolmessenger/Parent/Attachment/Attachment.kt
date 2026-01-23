@@ -45,7 +45,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
 
-
     private var fromDateMillis: Long? = null
     private var toDateMillis: Long? = null
     private var originalAttachmentList = mutableListOf<AttachmentDataReport>()
@@ -254,6 +253,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 } else {
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
+
                     if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                         binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -272,6 +272,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.isArchiveErrorMsg.layoutParams = layoutParams
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     }
+
                 }
             } else {
                 binding.isArchiveErrorMsg.visibility = View.VISIBLE
@@ -348,6 +349,16 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isGetAttachment()
     }
 
+    private fun updateClearFilterVisibility() {
+        binding.imgClearFilter.visibility =
+            if (fromDateMillis != null || toDateMillis != null) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
+
     fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -374,7 +385,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     toDateMillis = null
                     binding.txtToDate.text = getString(R.string.to_date)
                 }
-
+                updateClearFilterVisibility()
                 // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
@@ -394,6 +405,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         dialog.show()
     }
+
     private fun showToDatePicker() {
         val todayCal = Calendar.getInstance()
 
@@ -409,7 +421,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.txtToDate.text =
                     SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                         .format(selectedCal.time)
-
+                updateClearFilterVisibility()
                 // 🔥 Re-apply filter
                 applyCombinedFilter()
             },
@@ -501,6 +513,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtNoData.visibility =
             if (resultList.isEmpty()) View.VISIBLE else View.GONE
     }
+
     private fun isGetAttachment() {
         binding.recycleracademic.visibility = View.VISIBLE
         mAttachmentReportAdapter =
@@ -600,7 +613,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     private fun resetAttachmentFiltersAndShowAll() {
-
+        binding.imgClearFilter.visibility = View.GONE
         // 🔹 Reset search
         currentSearchQuery = ""
         binding.txtSearchMenu1.setText("")
@@ -635,6 +648,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
 
     private fun clearDateFilter() {
+        binding.imgClearFilter.visibility = View.GONE
         fromDateMillis = null
         toDateMillis = null
         binding.txtFromDate.text = getString(R.string.FromDate)

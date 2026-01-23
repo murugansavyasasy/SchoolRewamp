@@ -32,6 +32,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebSettings
@@ -475,6 +476,7 @@ object Constant {
     var role = "role"
     var menuId = "menuId"
     var welcome = "welcome"
+    var isVideoPostedDate = ""
     var school_name = "school_name"
     var member_name = "member_name"
     var NOTIFICATION_DISMISSED = "NOTIFICATION_DISMISSED"
@@ -666,6 +668,8 @@ object Constant {
     var Week = "Week"
     var Class = "Class"
     var double_iffin = "--"
+    val LOADER_TAG = "GLOBAL_LOADER"
+
     var geo_ = "geo:"
     var camma = ","
     var questionQEqual = "?q="
@@ -684,6 +688,8 @@ object Constant {
     var isQuizQuestionPickCount = 0
     var category_name = "category_name"
     var category = "category"
+    var parent_dashboard_tour = "parent_dashboard_tour"
+    var school_dashboard_tour = "school_dashboard_tour"
     var name__ = "name"
     var selected__ = "selected"
     var discount = "discount"
@@ -796,7 +802,7 @@ object Constant {
     var add_points_interaction_with_student = "INTERACT_WITH_STUDENT"
     var add_points_view_student_report = "VIEW_STUDENT_REPORT"
     var add_points_abesntees_report = "VIEW_ABSENTEEISM_REPORT"
-    var add_points_view_staff_attendance_report= "VIEW_STAFF_ATTENDANCE_REPORT"
+    var add_points_view_staff_attendance_report = "VIEW_STAFF_ATTENDANCE_REPORT"
     var add_points_upload_marks = "UPLOAD_MARKS"
     var add_points_school_strength = "VIEW_SCHOOL_STRENGTH"
     var add_points_view_exam_schedule = "VIEW_EXAM_SCHUDLE"
@@ -1294,9 +1300,6 @@ object Constant {
             "${word.first()}${word.last()}".uppercase()
         }
     }
-
-
-
 
 
     private fun isSameDay(calendar: Calendar, date: Date): Boolean {
@@ -2393,7 +2396,32 @@ object Constant {
         val loaderView =
             LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
         rootView.addView(loaderView)
+    }
 
+    fun showLoadingDisableScreen(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+
+        if (rootView.findViewWithTag<View>(LOADER_TAG) != null) return
+
+        val loaderView = LayoutInflater.from(context)
+            .inflate(R.layout.lottie_loader, rootView, false)
+
+        loaderView.tag = LOADER_TAG
+        rootView.addView(loaderView)
+        context.window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    fun hideLoadingEnable(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+
+        val loader = rootView.findViewWithTag<View>(LOADER_TAG)
+        loader?.let { rootView.removeView(it) }
+        context.window.clearFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
     }
 
     fun getDateDetails(input: String): Triple<String, Int, String> {
@@ -3149,15 +3177,17 @@ object Constant {
         h[offset] = (value.toInt() and 0xff).toByte()
         h[offset + 1] = ((value.toInt() shr 8) and 0xff).toByte()
     }
+
     fun clearAllSharedPreferences(context: Context) {
         val sharedPrefsDir = File(context.applicationInfo.dataDir, "shared_prefs")
         if (sharedPrefsDir.exists()) {
             sharedPrefsDir.listFiles()?.forEach { file ->
                 file.delete()
-                Log.d("Deleting_shared","")
+                Log.d("Deleting_shared", "")
             }
         }
     }
+
     fun clearAllLocalStorage(context: Context) {
 
         // SharedPreferences
@@ -3182,11 +3212,12 @@ object Constant {
         context.cacheDir.deleteRecursively()
         context.externalCacheDir?.deleteRecursively()
     }
+
     fun shouldResetApp(context: Context): Boolean {
         val prefs = context.getSharedPreferences("app_version", Context.MODE_PRIVATE)
 
         val oldVersion = prefs.getInt("version", -1)
-        Log.d("oldVersionCheck",oldVersion.toString())
+        Log.d("oldVersionCheck", oldVersion.toString())
         val newVersion = 500
 
         if (oldVersion != newVersion) {
@@ -3195,6 +3226,7 @@ object Constant {
         }
         return false
     }
+
     fun restartApp(context: Context) {
         val intent = context.packageManager
             .getLaunchIntentForPackage(context.packageName)

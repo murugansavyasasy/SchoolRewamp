@@ -209,6 +209,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
             if (response != null) {
+                Constant.hideLoadingEnable(requireActivity())
                 val status = response.status
                 response.message
                 if (status) {
@@ -268,6 +269,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        Constant.showLoadingDisableScreen(requireActivity())
+    }
     private fun filterDashboardMenu(query: String) {
         filteredMenuList.clear()
 

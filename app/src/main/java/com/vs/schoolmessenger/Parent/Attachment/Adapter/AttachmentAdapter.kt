@@ -67,8 +67,7 @@ class AttachmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.attachment_report_item)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attachment_report_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -94,16 +93,16 @@ class AttachmentAdapter(
         return object : Filter() {
 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query =
-                    constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
+                val query = constraint?.toString()?.trim()?.lowercase(Locale.getDefault()) ?: ""
 
                 val result = if (query.isEmpty()) {
                     originalList
                 } else {
                     originalList.filter {
-                        it.title?.lowercase()?.contains(query) == true ||
-                                it.description?.lowercase()?.contains(query) == true ||
-                                it.sent_by?.lowercase()?.contains(query) == true
+                        it.title?.lowercase()
+                            ?.contains(query) == true || it.description?.lowercase()
+                            ?.contains(query) == true || it.sent_by?.lowercase()
+                            ?.contains(query) == true
                     }
                 }
 
@@ -164,8 +163,7 @@ class AttachmentAdapter(
                 "${context.getString(R.string.posted_on)} - ${Constant.convertToReadableDate(data.date)}"
 
             lblTitle.text = data.title
-            lblPostedBy.text =
-                "${context.getString(R.string.posted_by)} - ${data.sent_by}"
+            lblPostedBy.text = "${context.getString(R.string.posted_by)} - ${data.sent_by}"
 
             lblDescription.text = data.description
             lblDescription.maxLines = 3
@@ -188,8 +186,7 @@ class AttachmentAdapter(
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 lblDescription.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-                lblDescription.ellipsize =
-                    if (isExpanded) null else TextUtils.TruncateAt.END
+                lblDescription.ellipsize = if (isExpanded) null else TextUtils.TruncateAt.END
                 lblSeeMore.text =
                     context.getString(if (isExpanded) R.string.See_Less_1 else R.string.see_more)
             }
@@ -197,6 +194,7 @@ class AttachmentAdapter(
             if (data.file_path.isNotEmpty()) {
                 rcyFile.visibility = View.VISIBLE
                 rcyFile.layoutManager = GridLayoutManager(context, 3)
+                Constant.isVideoPostedDate = data.date
                 rcyFile.adapter = AttachmentFileView(data.file_path, context, "")
                 rcyFile.isNestedScrollingEnabled = false
             } else {
@@ -206,8 +204,7 @@ class AttachmentAdapter(
             imgEditAndDelete.visibility =
                 if (data.can_edit && data.can_delete) View.VISIBLE else View.GONE
 
-            imgReadUnRead.visibility =
-                if (data.is_unread) View.VISIBLE else View.GONE
+            imgReadUnRead.visibility = if (data.is_unread) View.VISIBLE else View.GONE
 
             imgEditAndDelete.setOnClickListener {
                 val pos = bindingAdapterPosition
@@ -230,7 +227,7 @@ class AttachmentAdapter(
 
             rytHeader.setOnClickListener {
                 markAsRead()
-
+                Constant.isVideoPostedDate = data.date
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -264,19 +261,16 @@ class AttachmentAdapter(
                 context.startActivity(intent)
             }
 
-            rcyFile.addOnItemTouchListener(
-                object : RecyclerView.SimpleOnItemTouchListener() {
-                    override fun onInterceptTouchEvent(
-                        rv: RecyclerView,
-                        e: MotionEvent
-                    ): Boolean {
-                        if (e.action == MotionEvent.ACTION_UP) {
-                            markAsRead()
-                        }
-                        return false
+            rcyFile.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(
+                    rv: RecyclerView, e: MotionEvent
+                ): Boolean {
+                    if (e.action == MotionEvent.ACTION_UP) {
+                        markAsRead()
                     }
+                    return false
                 }
-            )
+            })
         }
     }
 

@@ -108,6 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:id="@+id/nestedScrollView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +162,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/FromDate"
+                            android:gravity="center"
                             android:textColor="#000000"
                             android:textSize="@dimen/thirteen_sp" />
 
@@ -210,6 +212,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/ToDate"
+                            android:gravity="center"
                             android:textColor="#000000"
                             android:textSize="@dimen/thirteen_sp" />
 
@@ -224,6 +227,7 @@
                     android:id="@+id/imgClearFilter"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
+                    android:visibility="gone"
                     android:src="@drawable/close_red_color">
 
                 </ImageView>

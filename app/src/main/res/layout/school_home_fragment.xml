@@ -104,8 +104,8 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/sixteen"
                 android:background="@drawable/bg_profile"
-                android:padding="@dimen/ten"
-                android:scaleType="centerCrop"
+                android:padding="@dimen/two"
+                android:scaleType="fitCenter"
                 android:src="@drawable/school_sample" />
 
         </LinearLayout>
