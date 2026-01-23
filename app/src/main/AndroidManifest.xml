@@ -60,6 +60,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolChimes"
         android:usesCleartextTraffic="true"
+        android:resizeableActivity="false"
         tools:targetApi="31">
         <profileable android:shell="true" />
 

@@ -30,7 +30,11 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimaryTheme()
+//        isToolBarPrimaryTheme()
+        isExamMarks(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
