@@ -165,6 +165,7 @@ class AssignmentParentAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
+                Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                 markAsRead()
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -204,6 +205,7 @@ class AssignmentParentAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
+                Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                 markAsRead()
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -237,6 +239,7 @@ class AssignmentParentAdapter(
             }
 
             rytList.setOnClickListener {
+                Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                 markAsRead()
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
@@ -275,6 +278,7 @@ class AssignmentParentAdapter(
                     val child = rv.findChildViewUnder(e.x, e.y)
                     if (child != null && e.action == MotionEvent.ACTION_UP) {
                         rv.getChildAdapterPosition(child)
+                        Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
                         val convertedList = data.file_path.map {
                             GetFilePathDetails(
                                 type = it.type,

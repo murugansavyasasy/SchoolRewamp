@@ -83,7 +83,6 @@ class ImageSliderAdapter(
                     DefaultImage.setImageResource(getIconForType(data.type))
                 }
             }
-
         }
 
         private fun getIconForType(type: String): Int {

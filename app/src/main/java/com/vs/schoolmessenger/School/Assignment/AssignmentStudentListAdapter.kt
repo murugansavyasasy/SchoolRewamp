@@ -166,6 +166,7 @@ class AssignmentStudentListAdapter(
             statusLabel.text = data.submit_status
 
             layout.setOnClickListener {
+
                 if (data.submit_status.equals(Constant.SUBMITTED, true)) {
                     val intent = Intent(context, AssignmentStudentListDetail::class.java).apply {
                         putParcelableArrayListExtra(

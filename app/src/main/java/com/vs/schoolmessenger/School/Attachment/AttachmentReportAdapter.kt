@@ -238,7 +238,7 @@ class AttachmentReportAdapter(
             rcyFile.setOnClickListener { markAsRead() }
             rytHeader.setOnClickListener {
                 markAsRead()
-
+                Constant.isVideoPostedDate=data.date
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -272,11 +272,25 @@ class AttachmentReportAdapter(
 
 
             }
+            val attachmentAdapter = AttachmentFileView(
+                fileList = data.file_path,
+                context = context,
+                isSubjectName = "",
+                parentDate = data.date,
+                onItemClick = { clickedDate ->
+                    Constant.isVideoPostedDate = clickedDate
+                    Log.d("ATTACH_DATE", clickedDate)
+                }
+            )
 
-            val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
             rcyFile.layoutManager = GridLayoutManager(context, 3)
             rcyFile.isNestedScrollingEnabled = false
             rcyFile.adapter = attachmentAdapter
+
+//            val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
+//            rcyFile.layoutManager = GridLayoutManager(context, 3)
+//            rcyFile.isNestedScrollingEnabled = false
+//            rcyFile.adapter = attachmentAdapter
 
 
             rcyFile.addOnItemTouchListener(

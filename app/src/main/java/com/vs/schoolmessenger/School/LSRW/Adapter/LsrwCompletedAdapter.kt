@@ -114,6 +114,7 @@ class LsrwCompletedAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
+                Constant.isVideoPostedDate = item.created_on
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -147,6 +148,7 @@ class LsrwCompletedAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
+                Constant.isVideoPostedDate = item.created_on
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -185,6 +187,7 @@ class LsrwCompletedAdapter(
                         val child = rv.findChildViewUnder(e.x, e.y)
                         if (child != null && e.action == MotionEvent.ACTION_UP) {
                             rv.getChildAdapterPosition(child)
+                            Constant.isVideoPostedDate = item.created_on
                             val convertedList = item.file_path.map {
                                 GetFilePathDetails(
                                     type = it.type,

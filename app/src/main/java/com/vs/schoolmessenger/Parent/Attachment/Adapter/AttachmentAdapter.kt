@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -86,7 +87,6 @@ class AttachmentAdapter(
             }
         }
     }
-
 
 
     override fun getFilter(): Filter {
@@ -194,8 +194,19 @@ class AttachmentAdapter(
             if (data.file_path.isNotEmpty()) {
                 rcyFile.visibility = View.VISIBLE
                 rcyFile.layoutManager = GridLayoutManager(context, 3)
-                Constant.isVideoPostedDate = data.date
-                rcyFile.adapter = AttachmentFileView(data.file_path, context, "")
+//                rcyFile.adapter = AttachmentFileView(data.file_path, context,    parentDate = data.date, "")
+
+                rcyFile.adapter = AttachmentFileView(
+                    fileList = data.file_path,
+                    context = context,
+                    isSubjectName = "",
+                    parentDate = data.date,
+                    onItemClick = { clickedDate ->
+                        Constant.isVideoPostedDate = clickedDate
+                        Log.d("ATTACH_DATE", clickedDate)
+                    }
+                )
+
                 rcyFile.isNestedScrollingEnabled = false
             } else {
                 rcyFile.visibility = View.GONE

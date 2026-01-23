@@ -289,6 +289,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             val updatedData = data.copy(is_unread = false)
             mAdapter?.updateItem(updatedData)
         }
+        Constant.isVideoPostedDate=data.created_on
 
         val isHomeWorkData = FilePreview(
             id = data.id,
