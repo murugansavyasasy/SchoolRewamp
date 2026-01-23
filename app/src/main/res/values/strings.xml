@@ -1074,6 +1074,7 @@
     <string name="show_older_messages">Show older messages</string>
     <string name="previous">Previous</string>
     <string name="skip">Skip</string>
+    <string name="applied_on">Applied on</string>
 
 
 </resources>

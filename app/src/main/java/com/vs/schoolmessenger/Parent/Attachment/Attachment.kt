@@ -255,6 +255,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 } else {
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
+
                     if (mAttachmentReportAdapter!!.getCurrentListSize() == 0) {
                         binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -273,6 +274,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                         binding.isArchiveErrorMsg.layoutParams = layoutParams
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     }
+
                 }
             } else {
                 binding.isArchiveErrorMsg.visibility = View.VISIBLE

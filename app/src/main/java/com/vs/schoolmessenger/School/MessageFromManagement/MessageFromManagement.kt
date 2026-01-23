@@ -63,6 +63,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     var isMenuCount = -1
     private var isDialogShowing = false
 
+    private var currentPlayPause: ImageView? = null
+    private var currentSeekBar: SeekBar? = null
+    private var currentLblCurrent: TextView? = null
 
     var TYPE: String? = ""
     var selectedSchoolId = ""
@@ -803,6 +806,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         lblTotal: TextView,
         seekBarLayout: LinearLayout
     ) {
+        currentPlayPause = imgPlayPause
+        currentSeekBar = seekBar
+        currentLblCurrent = lblCurrent
+
         if (data.content.isNullOrEmpty()) {
             seekBarLayout.visibility = View.GONE
             return
@@ -866,7 +873,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
-        // 🔹 Manual seek
+        // Manual seek
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
@@ -922,10 +929,25 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
         mediaPlayer?.release()
         mediaPlayer = null
+
+        // RESET UI STATE
+        currentPlayPause?.setImageResource(R.drawable.play_icon_2)
+        currentSeekBar?.progress = 0
+        currentLblCurrent?.text = "00:00"
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        releaseMediaPlayer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releaseMediaPlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
         releaseMediaPlayer()
     }
 
