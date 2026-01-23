@@ -116,6 +116,8 @@ object Constant {
     var scrollX = 0
     var isSyncing = false
     var isParentChoose = false
+    var isVisibleParentArchieveErrMsg = false
+    var isParentArchieveErrMsg = ""
     var country_details: Country? = null
     var user_details: UserDetails? = null
     var user_data: List<UserValidationData>? = null
