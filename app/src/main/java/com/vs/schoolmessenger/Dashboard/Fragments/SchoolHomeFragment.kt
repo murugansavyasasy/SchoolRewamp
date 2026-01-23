@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -93,8 +92,6 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding

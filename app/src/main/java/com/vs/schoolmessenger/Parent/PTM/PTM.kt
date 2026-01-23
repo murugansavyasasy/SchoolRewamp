@@ -553,6 +553,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             binding.toolbarLayout.imgBack.visibility = View.VISIBLE
             binding.rytsearch.visibility = View.GONE
             binding.txtSearchMeeting.setText("")
+            isDateWiseSlotCount()
         }
     }
 

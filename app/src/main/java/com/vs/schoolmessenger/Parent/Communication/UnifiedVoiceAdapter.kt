@@ -150,18 +150,18 @@ class UnifiedVoiceAdapter(
             adapter: UnifiedVoiceAdapter
         ) {
 
-            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
-                lblSeeMoreClick.visibility = View.VISIBLE
-            } else {
-                lblSeeMoreClick.visibility = View.GONE
-            }
+//            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
+//                lblSeeMoreClick.visibility = View.VISIBLE
+//            } else {
+//                lblSeeMoreClick.visibility = View.GONE
+//            }
 
             lblPostedBy.text="${context.getString(R.string.posted_by)}-${data.sent_by}"
 
-            lblSeeMoreClick.setOnClickListener {
-                lblSeeMoreClick.visibility = View.GONE
-                listener.onSeeMoreClick(data, this@DataViewHolder)
-            }
+//            lblSeeMoreClick.setOnClickListener {
+//                lblSeeMoreClick.visibility = View.GONE
+//                listener.onSeeMoreClick(data, this@DataViewHolder)
+//            }
 
             rytIsEmergency.visibility = if (data.is_emergency == true) View.VISIBLE else View.GONE
 

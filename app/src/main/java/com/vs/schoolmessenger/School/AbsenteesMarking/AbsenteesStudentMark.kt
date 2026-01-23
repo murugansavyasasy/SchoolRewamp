@@ -122,8 +122,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             getString(R.string.rolldsc)
         )
 
-
-
         binding.cbSelect.setOnClickListener {
             mAdapter.setAllAbsent(binding.cbSelect.isChecked, isCurrentAttendanceType.toString())
             isCountAttendance()
@@ -156,6 +154,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
+                Log.d("jsonObject",jsonObject.toString())
                 appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
 
 
