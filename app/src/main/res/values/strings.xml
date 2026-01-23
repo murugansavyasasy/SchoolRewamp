@@ -217,9 +217,9 @@
     <string name="Students">Students</string>
     <string name="Student_s"> Student (s)</string>
     <string name="Please_select_least_student">Please select at least one student to send the message.</string>
-    <string name="Login_Management">Login As Management</string>
-    <string name="Login_As">Login As</string>
-    <string name="Login_Student_Parent">Login As Student/Parent</string>
+    <string name="Login_Management">Login as Management</string>
+    <string name="Login_As">Login as</string>
+    <string name="Login_Student_Parent">Login as Student/Parent</string>
     <string name="Invalid_role">Invalid user role</string>
     <string name="Student_Parent">Student/Parent</string>
     <string name="Staff_details_available">Staff details not available</string>
