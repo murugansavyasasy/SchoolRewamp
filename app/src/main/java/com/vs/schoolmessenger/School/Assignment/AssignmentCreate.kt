@@ -591,16 +591,43 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
 
             val fileName = getFileName(uri)
-            val type = when {
-                fileName.endsWith(".pdf", true) -> FileType.PDF
-                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx", true
-                ) -> FileType.EXCEL
+            val safeMime = mimeType ?: ""
 
-                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
-                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
-                fileName.endsWith(".txt", true) -> FileType.TXT
+            val type = when {
+
+                // ✅ PDF
+                safeMime == "application/pdf" ||
+                        fileName.endsWith(".pdf", true) ->
+                    FileType.PDF
+
+                // ✅ WORD
+                safeMime == "application/msword" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                        fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) ->
+                    FileType.DOC
+
+                // ✅ EXCEL
+                safeMime == "application/vnd.ms-excel" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                        fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) ->
+                    FileType.EXCEL
+
+                // ✅ POWERPOINT
+                safeMime == "application/vnd.ms-powerpoint" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                        fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) ->
+                    FileType.PPT
+
+                // ✅ TEXT
+                safeMime == "text/plain" ||
+                        fileName.endsWith(".txt", true) ->
+                    FileType.TXT
+
+                // ✅ IMAGE
+                safeMime.startsWith("image/") ||
+                        fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) ->
+                    FileType.IMAGE
+
                 else -> FileType.OTHER
             }
             if (Constant.selectedFiles.size < MAX_FILES + 1) {
