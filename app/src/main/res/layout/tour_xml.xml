@@ -17,7 +17,7 @@
         android:layout_gravity="bottom"
         android:gravity="end"
         android:weightSum="3"
-        android:layout_marginBottom="@dimen/fifty"
+        android:layout_marginBottom="@dimen/fourty_five"
         android:orientation="horizontal">
 
         <TextView
