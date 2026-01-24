@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/sixteen"
-                        android:text="10:56 AM"
+                        android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/twele_sp"></TextView>
 
@@ -178,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/eight"
                         android:layout_toStartOf="@id/lblTime"
-                        android:text="01 Apr 2024"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="visible"></TextView>

@@ -108,7 +108,8 @@
                     android:text="@string/text"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
         </LinearLayout>
 
