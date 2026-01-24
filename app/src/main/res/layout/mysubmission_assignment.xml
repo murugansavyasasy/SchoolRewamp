@@ -25,81 +25,80 @@
         />
 
     <LinearLayout
-        android:id="@+id/headerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 
-        <TextView
-            android:id="@+id/lblHeaderTitle"
-            style="@style/CustomTextStylePoppinsBold"
+        <LinearLayout
+            android:id="@+id/headerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp" />
-    </LinearLayout>
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+           >
+
+            <TextView
+                android:id="@+id/lblHeaderTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/headerview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/rcyAssignment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/five">
-    </androidx.recyclerview.widget.RecyclerView>
-
-
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/rcyAssignment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/lytList"
-        android:layout_width="0dp"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/nomessages"
-            android:textColor="@color/black"
-            android:visibility="gone"
-            android:textSize="@dimen/fifteen_sp"
-            />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+           android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/five">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
             android:gravity="center"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:visibility="gone"
-            android:textSize="@dimen/fifteen_sp"
-            />
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:visibility="gone"
+                android:src="@drawable/nomessages"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+
+                android:text="@string/no_list_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                />
 
 
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
