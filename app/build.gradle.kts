@@ -30,7 +30,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 159
+        versionCode = 160
         versionName = "8.0.0"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
