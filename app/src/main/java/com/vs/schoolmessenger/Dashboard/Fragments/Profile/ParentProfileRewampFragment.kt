@@ -563,7 +563,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
+        if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
         } else {
             val intent = Intent(requireContext(), AlbumSelectActivity::class.java)

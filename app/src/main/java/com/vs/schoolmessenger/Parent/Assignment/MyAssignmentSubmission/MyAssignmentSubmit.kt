@@ -738,7 +738,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
+        if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
