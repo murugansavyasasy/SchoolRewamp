@@ -100,6 +100,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
 object Constant {
@@ -116,6 +117,8 @@ object Constant {
     var scrollX = 0
     var isSyncing = false
     var isParentChoose = false
+    var isVisibleParentArchieveErrMsg = false
+    var isParentArchieveErrMsg = ""
     var country_details: Country? = null
     var user_details: UserDetails? = null
     var user_data: List<UserValidationData>? = null
@@ -904,6 +907,19 @@ object Constant {
         }
     }
 
+    fun isWithin30Minutes(postedDate: String): Boolean {
+        val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        format.isLenient = false
+
+        val postedTime = format.parse(postedDate) ?: return false
+        val currentTime = Date()
+
+        val diffInMillis = currentTime.time - postedTime.time
+        val diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
+
+        return diffInMinutes in 0..30
+    }
+
 
     fun redirectToMessage(context: Context, phoneNumber: String) {
         val smsUri = Uri.parse(sms + phoneNumber)
@@ -1027,6 +1043,14 @@ object Constant {
     fun getAndroidSecureId(activity: Activity): String {
         return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID)
             ?: "Empty"
+    }
+
+    fun removeSeconds(dateTime: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+
+        val date = inputFormat.parse(dateTime) ?: return dateTime
+        return outputFormat.format(date)
     }
 
     fun errorAlert(activity: Activity, title: String, content: String) {

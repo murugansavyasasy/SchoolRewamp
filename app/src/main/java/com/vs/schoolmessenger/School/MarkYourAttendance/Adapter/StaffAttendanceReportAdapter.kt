@@ -118,13 +118,13 @@ class StaffAttendanceReportAdapter(
             lblDay.text = result.third
 
             lnrParentCard.setOnClickListener {
-                attendanceMap.forEach { (_, value) ->
+//                attendanceMap.forEach { (_, value) ->
 //                    if (value == Constant.Present) {
                         listener.onItemClick(data)
 //                    } else if (value == Constant.Absent) {
 //                        Log.d("The user has no attendance history", "")
 //                    }
-                }
+//                }
             }
         }
 

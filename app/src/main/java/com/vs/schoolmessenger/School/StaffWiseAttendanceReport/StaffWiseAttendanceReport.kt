@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.StaffWiseAttendanceReport
 
 import android.app.Dialog
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -376,6 +377,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLocationHistory(data: StaffAttendanceReportData) {
+        Log.d("isComing","isComing")
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
 

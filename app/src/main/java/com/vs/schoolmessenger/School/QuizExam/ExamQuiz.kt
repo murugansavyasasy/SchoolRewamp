@@ -423,6 +423,11 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
     }
 
     private fun showTabTwo() {
+        //Ensure to remove all the caches from create quiz Page
+        val saveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
+        val isQuizRequestBody: QuizRequestBody? = null
+        QuizDataTempHolder.quizDataBody = saveCreateExamQuizDetails
+        QuizTempHolder.quizBody = isQuizRequestBody
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
         binding.lytList.visibility = View.GONE
