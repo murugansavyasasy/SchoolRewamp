@@ -114,15 +114,12 @@ class UnifiedVoiceAdapter(
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
         private val lblVoicePostedBy: TextView = itemView.findViewById(R.id.lblVoicePostedBy)
         private val lblMsgPostedBy: TextView = itemView.findViewById(R.id.lblMsgPostedBy)
-
-
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
-
         private var lastClickTime = 0L
         private val CLICK_DELAY_MS = 500L
 
