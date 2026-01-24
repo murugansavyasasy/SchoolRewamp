@@ -14,7 +14,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="100dp"
             android:background="@drawable/bg_update_available_gradient"
             android:padding="10dp">
 
@@ -47,35 +47,22 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/lblTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:text="✨ Important Update Available!!✨"
+                        android:paddingVertical="@dimen/fifteen"
+                        android:text="✨Update Available!!✨"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="@dimen/ten_sp"
-                        android:text="New Experience"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/fifteen_sp" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="🚀 A Better Experience Awaits!"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
+
 
                 <TextView
+                    android:id="@+id/lblContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -84,14 +71,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:lineSpacingExtra="5dp"
-                    android:text="Please update now to enjoy the best experience."
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+
 
                 <TextView
                     android:visibility="gone"

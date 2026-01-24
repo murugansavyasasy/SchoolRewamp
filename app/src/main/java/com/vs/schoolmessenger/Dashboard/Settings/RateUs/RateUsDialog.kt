@@ -33,7 +33,6 @@ class RateUsDialog(   private val fromScreen: String?,
 
     private var _binding: RateUsBinding? = null
     private val binding get() = _binding!!
-
     private var ratingValue = 0
     private lateinit var appViewModel: App
     private var mobileNumber = ""
@@ -123,7 +122,8 @@ class RateUsDialog(   private val fromScreen: String?,
         selectedRemark = allRemarks?.firstOrNull { it.rating == star }
 
         selectedRemark?.let { remark ->
-            binding.lblTitle.text = remark.name
+            binding.lblTitle.text = remark.value
+            binding.lblhytre.text = remark.name
             bindCategoryList(remark.category ?: emptyList())
         }
     }

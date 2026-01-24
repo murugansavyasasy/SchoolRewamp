@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesCalendarListener
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -24,19 +25,15 @@ class CustomAbsenteesCalendarFragment : Fragment() {
     private var minDate: LocalDate? = null
     private var maxDate: LocalDate? = null
     private var calendarTag: String? = null
-
     private var today: LocalDate = LocalDate.now()
-
     private var calendar: YearMonth = YearMonth.now()
-
-    private var calendarDateListener: AbsenteesCalendarDateListener? = null
+    private var calendarListener: AbsenteesCalendarListener? = null  // Updated type
 
     companion object {
         private const val ARG_MIN_DATE = "minDate"
         private const val ARG_MAX_DATE = "maxDate"
         private const val ARG_SELECTED_DATE = "selectedDate"
         private const val ARG_TAG = "tag"
-
         fun newInstance(
             minDate: String,
             maxDate: String,
@@ -66,12 +63,10 @@ class CustomAbsenteesCalendarFragment : Fragment() {
                 ?.let { dateStr -> LocalDate.parse(dateStr, formatter) }
             calendarTag = it.getString(ARG_TAG)
         }
-
         selectedDate?.let {
             calendar = YearMonth.of(it.year, it.month)
         }
-
-        calendarDateListener = activity as? AbsenteesCalendarDateListener
+        calendarListener = activity as? AbsenteesCalendarListener  // Updated cast
     }
 
     override fun onCreateView(
@@ -85,30 +80,26 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.dateRecyclerView)
         val holidayLabel = view.findViewById<TextView>(R.id.holidaylabel)
         holidayLabel.visibility = View.GONE
-
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         calendarAdapter = CalendarAbsenteesAdapter(
             onDateClicked = { date ->
                 selectedDate = date
                 calendarAdapter.setSelectedDate(date)
-                calendarDateListener?.onDateSelected(date.toString(), calendarTag ?: "")
+                calendarListener?.onDateSelected(date.toString(), calendarTag ?: "")  // Updated call
             },
             minDate = minDate,
             maxDate = maxDate,
             isAbsenteesReport = calendarTag == "absentees_calendar"
         )
         recyclerView.adapter = calendarAdapter
-
         prevButton.setOnClickListener {
             calendar = calendar.minusMonths(1)
             updateCalendar()
         }
-
         nextButton.setOnClickListener {
             calendar = calendar.plusMonths(1)
             updateCalendar()
         }
-
         updateCalendar()
     }
 
@@ -119,8 +110,15 @@ class CustomAbsenteesCalendarFragment : Fragment() {
     private fun updateCalendar() {
         currentMonthText.text =
             "${calendar.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${calendar.year}"
+
+        // Clear selection when month changes
+        selectedDate = null
+        calendarAdapter.setSelectedDate(null)
+
         val dates = generateDates(calendar)
         calendarAdapter.submitList(dates, selectedDate, today)
+
+        calendarListener?.onMonthChanged(calendar.monthValue, calendar.year)
     }
 
     private fun generateDates(yearMonth: YearMonth): List<LocalDate?> {
@@ -128,14 +126,9 @@ class CustomAbsenteesCalendarFragment : Fragment() {
         val firstOfMonth = yearMonth.atDay(1)
         val dayOfWeek = firstOfMonth.dayOfWeek.value % 7
         repeat(dayOfWeek) { days.add(null) }
-
         for (day in 1..yearMonth.lengthOfMonth()) {
             days.add(yearMonth.atDay(day))
         }
         return days
-    }
-
-    interface AbsenteesCalendarDateListener {
-        fun onDateSelected(date: String, tag: String)
     }
 }

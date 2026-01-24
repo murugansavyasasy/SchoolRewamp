@@ -1200,6 +1200,15 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
         val btnLater = dialogView.findViewById<TextView>(R.id.btnLater)
+        val lblTitle = dialogView.findViewById<TextView>(R.id.lblTitle)
+        val lblContent = dialogView.findViewById<TextView>(R.id.lblContent)
+        lblTitle.setText(versionData[0].toaster_title)
+
+        if(!versionData[0].new_version_updates.equals("")) {
+            val list = versionData[0].new_version_updates.split("~")
+            val finalText = list.joinToString("\n"){ "• $it" }
+            lblContent.setText(finalText)
+        }
 
         if (versionData[0].force_update) {
             btnUpdateButton.visibility = View.VISIBLE

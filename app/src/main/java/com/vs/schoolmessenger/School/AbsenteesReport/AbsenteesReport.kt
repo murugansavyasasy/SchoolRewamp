@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesCalendarListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.OnAbsenteeClickListener
@@ -30,6 +31,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
@@ -37,16 +39,20 @@ import java.util.Locale
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
     AbsenteesClickListener, AbsenteesStudentDetailClickListener,
-    CustomAbsenteesCalendarFragment.AbsenteesCalendarDateListener {
+    AbsenteesCalendarListener {
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
     private var absenteeList: List<AbsenteeData> = emptyList()
     private var studentAdapter: AbsenteesStudentListDetailAdapter? = null
     private var errorMessage: String? = ""
+    private var currentMonth: Int = YearMonth.now().monthValue
+    private var currentYear: Int = YearMonth.now().year
+
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
     }
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimarySchool(
@@ -70,7 +76,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         supportFragmentManager.beginTransaction()
             .replace(R.id.calenderlayout, calendarFragment, "CustomCalendarFragment")
             .commit()
-        fetchAbsenteeData()
+        // Remove initial fetch here; let the fragment's initial onMonthChanged handle it
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response == null) {
@@ -80,7 +86,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             if (response.status) {
                 absenteeList = response.data ?: emptyList()
                 updateCalendarWithAbsentDates()
-                setDefaultDateData()
+                setDefaultDateForMonth()
             } else {
                 showErrorUI(response.message ?: getString(R.string.no_data_available))
             }
@@ -103,9 +109,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
             }
             appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
-
-
-
             if (response.status) {
                 val studentList = response.data ?: emptyList()
                 bindStudentList(studentList)
@@ -121,12 +124,17 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             }
         }
     }
-    private fun fetchAbsenteeData() {
+
+    private fun fetchAbsenteeData(month: Int = YearMonth.now().monthValue, year: Int = YearMonth.now().year) {
         Constant.showLoading(this)
         appViewModel?.getabsenteescountbydate(
-            isAccessToken ?: "", this
+            isAccessToken ?: "",
+            month,
+            year,
+            this
         )
     }
+
     private fun updateCalendarWithAbsentDates() {
         val fragment =
             supportFragmentManager.findFragmentByTag("CustomCalendarFragment") as? CustomAbsenteesCalendarFragment
@@ -144,40 +152,63 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             it.setAbsentDates(absentDates)
         }
     }
-    private fun setDefaultDateData() {
-        val today = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-        filterByDate(today)
+
+    private fun setDefaultDateForMonth() {
+        val now = YearMonth.now()
+        val isCurrentMonth = currentMonth == now.monthValue && currentYear == now.year
+        if (isCurrentMonth && absenteeList.isNotEmpty()) {
+            // For current month only, default to today if available, else earliest
+            val today = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+            if (absenteeList.any { it.absent_date_only == today }) {
+                filterByDate(today)
+            } else {
+                val earliestDate = absenteeList.minByOrNull { it.absent_date_only }?.absent_date_only
+                earliestDate?.let { filterByDate(it) }
+            }
+        } else {
+            // For non-current months (or empty data), hide UI until date is selected
+            showNoDataUI()
+        }
     }
+
+    private fun showNoDataUI() {
+        binding.linearLayoutcontainer.visibility = View.GONE
+        binding.rlaabsenteesreport2.visibility = View.GONE
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.selectedDateText.visibility = View.GONE
+        binding.absentListTitle.visibility = View.GONE
+        binding.absentStudentsRecyclerView.visibility = View.GONE
+        // Optionally set a generic no-data message if needed
+        // binding.noDataFound.text = getString(R.string.no_data_available)
+    }
+
     private fun filterByDate(date: String) {
         val filtered = absenteeList.find { it.absent_date_only == date }
         if (filtered != null) {
             binding.selectedDateText.text = formatDateDisplay(date)
+            binding.selectedDateText.visibility = View.VISIBLE
+            binding.linearLayoutcontainer.visibility = View.VISIBLE
+            binding.rlaabsenteesreport2.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
+            binding.absentListTitle.visibility = View.VISIBLE
+            binding.absentStudentsRecyclerView.visibility = View.VISIBLE
 
             val text = "Total Absent : ${filtered.total_absentees}"
             val span = SpannableString(text)
-
             span.setSpan(
                 ForegroundColorSpan(Color.RED),
                 text.indexOf(filtered.total_absentees),
                 text.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-
             binding.totalabsentesscount.text = span
-
             binding.absenteesbystandard.text = "${"Absentees by standard"} : ${filtered.class_wise[0].total_absentees}"
-
             loadClassWiseRecycler(filtered.class_wise, date)
         } else {
-            binding.linearLayoutcontainer.visibility = View.GONE
-            binding.rlaabsenteesreport2.visibility = View.GONE
-            binding.lytNoDataFound.visibility = View.VISIBLE
-            binding.selectedDateText.visibility = View.GONE
-            binding.linearLayoutcontainer.visibility = View.GONE
-            binding.absentListTitle.visibility = View.GONE
-            binding.absentStudentsRecyclerView.visibility = View.GONE
+            showNoDataUI()
         }
     }
+
     private fun loadClassWiseRecycler(classWiseList: List<ClassWise>, selectedDate: String) {
         binding.linearLayoutcontainer.visibility = View.VISIBLE
         binding.rlaabsenteesreport2.visibility = View.VISIBLE
@@ -211,7 +242,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 ) {
                     showStudentShimmer()
                     binding.absenteesbystandard.text = "${"Absentees by standard"} : $totalabsenteesclasswise"
-
                     // Update basic info
                     binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
                     binding.totalstudentscount.text =
@@ -253,6 +283,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             )
         }
     }
+
     private fun bindStudentList(studentList: List<Student>) {
         if (studentAdapter == null) {
             studentAdapter = AbsenteesStudentListDetailAdapter(
@@ -265,6 +296,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             studentAdapter?.updateData(studentList)
         }
     }
+
     private fun showStudentShimmer() {
         studentAdapter = AbsenteesStudentListDetailAdapter(
             listOf(), this, this, true
@@ -273,6 +305,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.absentStudentsRecyclerView.adapter = studentAdapter
     }
+
     private fun formatDateDisplay(date: String): String {
         val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val output = SimpleDateFormat("EEE MMM dd, yyyy", Locale.getDefault())
@@ -282,6 +315,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             date
         }
     }
+
     private fun showErrorUI(message: String) {
         binding.linearLayoutcontainer.visibility = View.GONE
         binding.rlaabsenteesreport2.visibility = View.GONE
@@ -292,23 +326,28 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         binding.absentListTitle.visibility = View.GONE
         binding.absentStudentsRecyclerView.visibility = View.GONE
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
         }
     }
+
     override fun onDateSelected(data: AbsenteeData) {
         filterByDate(data.absent_date_only)
     }
+
     override fun onFooterItemClicked(position: Int, data: Student) {
 // Toast.makeText(this, "Clicked: ${data.student_name}", Toast.LENGTH_SHORT).show()
         Log.d("Profile Clicked", "Profile Clicked response checked")
     }
+
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             Toast.makeText(this, getString(R.string.no_student_found), Toast.LENGTH_SHORT).show()
         }
     }
+
     override fun onDateSelected(date: String, tag: String) {
         try {
             val input = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -318,5 +357,14 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         } catch (e: Exception) {
             filterByDate(date)
         }
+    }
+
+    override fun onMonthChanged(month: Int, year: Int) {
+        currentMonth = month
+        currentYear = year
+        // Immediately hide previous data UI on month change
+        showNoDataUI()
+        // Then fetch new data for the selected month/year
+        fetchAbsenteeData(month, year)
     }
 }

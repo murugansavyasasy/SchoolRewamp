@@ -97,7 +97,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             if (response != null) {
                 response.status
                 response.message
-                finishAffinity()
+                finish()
 
             }
         }

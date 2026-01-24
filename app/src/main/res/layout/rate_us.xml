@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblTitle"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:text="How would you rate your experience ?"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp"
                     android:visibility="visible"
@@ -246,7 +246,7 @@
                     android:layout_centerHorizontal="true"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/thumbs_up" />
+                    app:lottie_rawRes="@raw/done" />
 
                 <TextView
                     android:id="@+id/lblThankyou"
