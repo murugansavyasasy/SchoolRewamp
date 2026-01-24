@@ -147,14 +147,16 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
         isFilesList.clear()
+
         if (Constant.commonFileList.isNotEmpty()) {
             Log.d("commonFileList", Constant.commonFileList.toString())
             val first = Constant.commonFileList[0]
             if (first.type != FileType.VIDEO.toString()
                 && !first.path.startsWith("content://")
                 && !first.path.contains("amazonaws.")
+                && !first.path.contains("file:///storage")
             ) {
-                Constant.commonFileList.removeAt(0)
+                    Constant.commonFileList.removeAt(0)
             }
 
             if (first.path.contains("amazonaws.") || first.type == FileType.VIDEO.toString()) {
@@ -177,6 +179,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 )
             }
         }
+        Log.d("Constant.selectedFiles", isFilesList.size.toString())
 
         adapter = FileViewerAdapter(this, isFilesList)
 

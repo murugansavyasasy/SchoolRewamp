@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +30,8 @@ class DocumentImageAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fileview_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.fileview_item, parent, false)
         return FileViewHolder(view)
     }
 
@@ -69,7 +70,6 @@ class DocumentImageAdapter(
         val clickListener = View.OnClickListener {
             Constant.commonFileList = files.toMutableList()
             Constant.selectedFileIndex = position
-
             val intent = Intent(context, FilesViewActivity::class.java)
             intent.putExtra(Constant.subjectName, isSubjectName)
             context.startActivity(intent)

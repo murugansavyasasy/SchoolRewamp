@@ -114,6 +114,7 @@ class UnifiedVoiceAdapter(
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
         private val lblVoicePostedBy: TextView = itemView.findViewById(R.id.lblVoicePostedBy)
         private val lblMsgPostedBy: TextView = itemView.findViewById(R.id.lblMsgPostedBy)
+        private val lblNoRecordFound: TextView = itemView.findViewById(R.id.lblNoRecordFound)
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
         private var isPrepared = false
@@ -148,15 +149,29 @@ class UnifiedVoiceAdapter(
             adapter: UnifiedVoiceAdapter
         ) {
 
-            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
+            if (position == adapter.itemCount - 1 && !Constant.isArchiveMessageClick) {
                 lblSeeMoreClick.visibility = View.VISIBLE
+                lblNoRecordFound.visibility = View.GONE
             } else {
                 lblSeeMoreClick.visibility = View.GONE
+                lblNoRecordFound.visibility = View.GONE
+            }
+
+            if (position == adapter.itemCount - 1 && Constant.isCommunicationArchiveMessage) {
+                lblNoRecordFound.visibility = View.VISIBLE
+                lblNoRecordFound.text = Constant.isParentArchieveErrMsg
+                lblNoRecordFound.post {
+                    lblNoRecordFound.isFocusableInTouchMode = true
+                    lblNoRecordFound.requestFocus()
+                }
+            } else {
+                lblNoRecordFound.visibility = View.GONE
             }
 
 
 
             lblSeeMoreClick.setOnClickListener {
+                Constant.isArchiveMessageClick = true
                 lblSeeMoreClick.visibility = View.GONE
                 listener.onSeeMoreClick(data, this@DataViewHolder)
             }
@@ -164,11 +179,10 @@ class UnifiedVoiceAdapter(
             rytIsEmergency.visibility = if (data.is_emergency == true) View.VISIBLE else View.GONE
 
             if (data.type.equals(Constant.VOICE)) {
-                if (data.sent_by!=null) {
-                    lblVoicePostedBy.visibility= View.VISIBLE
-                }
-                else{
-                    lblVoicePostedBy.visibility= View.GONE
+                if (data.sent_by != null) {
+                    lblVoicePostedBy.visibility = View.VISIBLE
+                } else {
+                    lblVoicePostedBy.visibility = View.GONE
                 }
                 lblVoicePostedBy.text = "${context.getString(R.string.posted_by)}-${data.sent_by}"
 
@@ -243,11 +257,10 @@ class UnifiedVoiceAdapter(
                 }
             } else {
 
-                if (data.sent_by!=null) {
-                    lblMsgPostedBy.visibility= View.VISIBLE
-                }
-                else{
-                    lblMsgPostedBy.visibility= View.GONE
+                if (data.sent_by != null) {
+                    lblMsgPostedBy.visibility = View.VISIBLE
+                } else {
+                    lblMsgPostedBy.visibility = View.GONE
                 }
                 lblMsgPostedBy.text = "${context.getString(R.string.posted_by)}-${data.sent_by}"
 

@@ -1106,7 +1106,7 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 2
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }

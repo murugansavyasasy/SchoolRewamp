@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -236,7 +237,6 @@ class ProfileRewampFragmentAdapter(
 
                         CommonFileData(type = type, path = doc.documentPath)
                     } ?: emptyList()
-
                     recyclerView.adapter = DocumentImageAdapter(
                         context = itemView.context,
                         files = files,

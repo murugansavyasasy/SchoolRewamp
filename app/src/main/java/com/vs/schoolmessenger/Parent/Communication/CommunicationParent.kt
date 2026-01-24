@@ -73,6 +73,9 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+        Constant.isArchiveMessageClick=false
+        Constant.isCommunicationArchiveMessage=false
+
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
@@ -156,6 +159,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             if (response != null) {
                 if (response?.status == true) {
                     if (response.data.isNotEmpty()) {
+                        Constant.isCommunicationArchiveMessage=false
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         appendData(response.data, archiveFlag = true)
                         if (fromNotification) {
@@ -163,6 +167,9 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         }
 
                     } else {
+                        Constant.isCommunicationArchiveMessage=true
+                        Constant.isParentArchieveErrMsg=response.message
+                        adapter?.notifyDataSetChanged()
                         hasFetchedMore = true
                         if (allVoiceData.isNotEmpty()) {
                             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
@@ -175,6 +182,9 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         )
                     }
                 } else {
+                    Constant.isCommunicationArchiveMessage=true
+                    Constant.isParentArchieveErrMsg=response.message
+                    adapter?.notifyDataSetChanged()
                     if (allVoiceData.isNotEmpty()) {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     } else {

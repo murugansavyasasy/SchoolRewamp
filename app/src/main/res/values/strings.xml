@@ -1075,6 +1075,7 @@
     <string name="previous">Previous</string>
     <string name="skip">Skip</string>
     <string name="applied_on">Applied on</string>
+    <string name="cancelled">Cancelled</string>
 
 
 </resources>
