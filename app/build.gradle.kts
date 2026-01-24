@@ -31,7 +31,7 @@ android {
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 160
-        versionName = "8.0.0"
+        versionName = "8.0"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
