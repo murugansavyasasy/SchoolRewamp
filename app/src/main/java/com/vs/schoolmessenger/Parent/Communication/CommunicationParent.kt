@@ -566,6 +566,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
             R.id.seeMoreLabel -> {
                 if (!hasFetchedMore) {
+                    Constant.isArchiveMessageClick=true
                     hasFetchedMore = true
                     isSeeMoreClick = false
                     binding.seeMoreLabel.visibility = View.GONE

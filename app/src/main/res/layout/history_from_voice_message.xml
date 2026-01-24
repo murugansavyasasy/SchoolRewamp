@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rect_shadow_white">
+   >
 
     <RelativeLayout
         android:id="@+id/rytCommunication"
@@ -13,6 +13,7 @@
             android:id="@+id/rlaVoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rect_shadow_white"
             android:visibility="visible">
 
 
@@ -244,6 +245,7 @@
         <RelativeLayout
             android:id="@+id/rlaText"
             android:layout_width="match_parent"
+            android:background="@drawable/rect_shadow_white"
             android:layout_height="wrap_content"
             android:visibility="gone">
 
