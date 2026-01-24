@@ -110,9 +110,14 @@ class CustomAbsenteesCalendarFragment : Fragment() {
     private fun updateCalendar() {
         currentMonthText.text =
             "${calendar.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${calendar.year}"
+
+        // Clear selection when month changes
+        selectedDate = null
+        calendarAdapter.setSelectedDate(null)
+
         val dates = generateDates(calendar)
         calendarAdapter.submitList(dates, selectedDate, today)
-        // Notify activity of month change (initial load and button clicks)
+
         calendarListener?.onMonthChanged(calendar.monthValue, calendar.year)
     }
 
