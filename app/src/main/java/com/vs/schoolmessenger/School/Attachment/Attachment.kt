@@ -79,7 +79,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         return AttachmentBinding.inflate(layoutInflater)
     }
 
-    private lateinit var pickImagesLauncher: ActivityResultLauncher<String>
 
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -139,84 +138,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
-        pickImagesLauncher =
-            registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
-                if (uris.isNullOrEmpty()) return@registerForActivityResult
-
-//                if (uris.size > MAX_FILES) {
-//                    Toast.makeText(
-//                        this,
-//                        "You can select only $MAX_FILES images",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return@registerForActivityResult
-//                }
-
-                Log.d("Constant.RemainingNEW", Constant.Remaining.toString())
-
-                if (Constant.Remaining > 0 && !uris.isNullOrEmpty()) {
-
-                    val previousCount = Constant.selectedFiles.size
-                    Constant.Remaining -= uris.size
-
-                    uris.forEach { uri ->
-                        val mimeType = contentResolver.getType(uri)
-                        val path = when (uri.scheme) {
-                            Constant.file_ -> uri.path
-                            else -> getPathFromUri(uri)
-                        }
-
-                        if (path == null) {
-                            Log.w("addPath", "Could not resolve path from URI: $uri")
-                            return@forEach
-                        }
-
-                        val fileName = getFileName(uri).ifEmpty { File(path).name }
-
-                        val type = when {
-                            mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                            mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                            mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                            fileName.endsWith(".pdf", true) -> FileType.PDF
-                            fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx",
-                                true
-                            ) -> FileType.DOC
-
-                            fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx",
-                                true
-                            ) -> FileType.EXCEL
-
-                            fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx",
-                                true
-                            ) -> FileType.PPT
-
-                            fileName.endsWith(".txt", true) -> FileType.TXT
-                            else -> FileType.OTHER
-                        }
-
-                        Log.d("MAX_FILES", MAX_FILES.toString())
-
-                        if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                        } else {
-                            Constant.Remaining = 0
-                        }
-
-                        Log.d("SelectedFile", "URI: $uri, Type: $type")
-                    }
-                    mAdapter?.notifyDataSetChanged()
-                    val addedCount = Constant.selectedFiles.size - previousCount
-                    val totalCount = Constant.selectedFiles.size
-
-                    Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-                } else if (Constant.Remaining <= 0) {
-                }
-
-
-            }
 
 
         appViewModel!!.isEditAttachment?.observe(this) { response ->
@@ -402,19 +323,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
+        } else {
+            val intent = Intent(this, AlbumSelectActivity::class.java)
+            intent.putExtra(Constant.isFileType, isFileType)
+            albumResultLauncher.launch(intent)
         }
-        else if(isFileType == Constant.VIDEO){
-            pickImagesLauncher.launch("video/*")
 
-        }
-        else if(isFileType == Constant.IMAGE){
-            pickImagesLauncher.launch("image/*")
-
-        }
-        else if(isFileType == Constant.AUDIO){
-            pickImagesLauncher.launch("audio/*")
-
-        }
     }
 
     // Opens the system file picker for DOCUMENT on Android 10 and below
