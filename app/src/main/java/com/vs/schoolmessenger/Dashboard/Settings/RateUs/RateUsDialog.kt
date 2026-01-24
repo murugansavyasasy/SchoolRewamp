@@ -122,7 +122,8 @@ class RateUsDialog(   private val fromScreen: String?,
         selectedRemark = allRemarks?.firstOrNull { it.rating == star }
 
         selectedRemark?.let { remark ->
-            binding.lblTitle.text = remark.name
+            binding.lblTitle.text = remark.value
+            binding.lblhytre.text = remark.name
             bindCategoryList(remark.category ?: emptyList())
         }
     }
