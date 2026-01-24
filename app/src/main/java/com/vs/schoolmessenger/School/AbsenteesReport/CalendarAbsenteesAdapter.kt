@@ -29,14 +29,35 @@ class CalendarAbsenteesAdapter(
         notifyDataSetChanged()
     }
 
-    fun setSelectedDate(date: LocalDate) {
-        selectedDate = date
-        notifyDataSetChanged()
+
+    fun setSelectedDate(date: LocalDate?) {
+        val oldDate = this.selectedDate
+        this.selectedDate = date
+
+        // Notify changes for old and new positions
+        if (oldDate != null) {
+            val oldPos = findPositionForDate(oldDate)
+            if (oldPos != -1) notifyItemChanged(oldPos)
+        }
+
+        if (date != null) {
+            val newPos = findPositionForDate(date)
+            if (newPos != -1) notifyItemChanged(newPos)
+        }
     }
 
     fun setAbsentDates(dates: Set<LocalDate>) {
         absentDates = dates
         notifyDataSetChanged()
+    }
+
+    private fun findPositionForDate(target: LocalDate): Int {
+        for (i in days.indices) {
+            if (days[i]?.isEqual(target) == true) {
+                return i
+            }
+        }
+        return -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
