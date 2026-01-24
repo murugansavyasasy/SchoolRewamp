@@ -76,6 +76,7 @@ object APIKeyNames {
     const val Authorization = "Authorization"
     const val status_type = "status_type"
     const val month_id = "month_id"
+    const val year_id = "year_id"
     const val Req_device_type = "device_type"
     const val Req_version_code = "version_code"
     const val Req_country_id = "country_id"

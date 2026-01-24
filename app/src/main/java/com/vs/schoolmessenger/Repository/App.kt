@@ -961,10 +961,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getabsenteescountbydate(isToken: String, activity: Activity) {
+    fun getabsenteescountbydate(isToken: String, month_id: Int, year_id: Int, activity: Activity) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
+        apiSchoolRepositories.getabsenteescountbydate(isToken,month_id,year_id, activity)
     }
 
     fun getabsenteesstudentbydate(

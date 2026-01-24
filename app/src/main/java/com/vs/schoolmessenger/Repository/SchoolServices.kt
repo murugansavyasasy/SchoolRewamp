@@ -2257,9 +2257,9 @@ class SchoolServices {
 
 
     fun getabsenteescountbydate(
-        isToken: String, activity: Activity
+        isToken: String,month_id: Int, year_id: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getabsenteescountbydate(isToken)
+        RestClient.apiInterfaces.getabsenteescountbydate(isToken,month_id,year_id)
             ?.enqueue(object : Callback<AbsenteesResponse?> {
                 override fun onResponse(
                     call: Call<AbsenteesResponse?>, response: Response<AbsenteesResponse?>

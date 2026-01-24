@@ -612,7 +612,9 @@ interface ApiInterfaces {
 
     @GET(APIMethods.getabsenteescountbydate)
     fun getabsenteescountbydate(
-        @Header(APIKeyNames.Authorization) token: String
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.month_id) month_id: Int?,
+        @Query(APIKeyNames.year_id) year_id: Int?
     ): Call<AbsenteesResponse?>
 
     @GET(APIMethods.getabsenteesstudentbydate)

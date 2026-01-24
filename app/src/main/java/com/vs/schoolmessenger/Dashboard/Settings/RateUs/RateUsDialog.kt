@@ -33,7 +33,6 @@ class RateUsDialog(   private val fromScreen: String?,
 
     private var _binding: RateUsBinding? = null
     private val binding get() = _binding!!
-
     private var ratingValue = 0
     private lateinit var appViewModel: App
     private var mobileNumber = ""

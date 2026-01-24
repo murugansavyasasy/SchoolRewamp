@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesCalendarListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Listener.OnAbsenteeClickListener
@@ -30,6 +31,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
@@ -37,7 +39,7 @@ import java.util.Locale
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
     AbsenteesClickListener, AbsenteesStudentDetailClickListener,
-    CustomAbsenteesCalendarFragment.AbsenteesCalendarDateListener {
+    AbsenteesCalendarListener {
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
@@ -70,6 +72,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         supportFragmentManager.beginTransaction()
             .replace(R.id.calenderlayout, calendarFragment, "CustomCalendarFragment")
             .commit()
+        // Initial fetch for current month/year (will be called again from fragment's initial onMonthChanged, but idempotent)
         fetchAbsenteeData()
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -121,10 +124,14 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             }
         }
     }
-    private fun fetchAbsenteeData() {
+    private fun fetchAbsenteeData(month: Int = YearMonth.now().monthValue, year: Int = YearMonth.now().year) {
         Constant.showLoading(this)
+
         appViewModel?.getabsenteescountbydate(
-            isAccessToken ?: "", this
+            isAccessToken ?: "",
+            month,
+            year,
+            this
         )
     }
     private fun updateCalendarWithAbsentDates() {
@@ -318,5 +325,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         } catch (e: Exception) {
             filterByDate(date)
         }
+    }
+
+    override fun onMonthChanged(month: Int, year: Int) {
+        // Fetch absentee data for the new month/year when prev/next buttons are clicked (or initial load)
+        fetchAbsenteeData(month, year)
     }
 }
