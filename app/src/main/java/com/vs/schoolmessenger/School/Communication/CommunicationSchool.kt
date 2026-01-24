@@ -244,7 +244,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 stopRecording()
             }
             binding.rlaSeekBarAndTitle.visibility = View.GONE
-            binding.rlaTitle.visibility = View.GONE
+//            binding.rlaTitle.visibility = View.GONE
             Constant.selectedFiles.clear()
             binding.rlaAddLocalFile.visibility = View.VISIBLE
             binding.rytVoiceRecord.visibility = View.VISIBLE
@@ -868,7 +868,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         MAX_RECORDING_TIME = 180
         binding.lblDurationOfVoice.text = Constant._00_00_03_00
         binding.rlaSeekBarAndTitle.visibility = View.GONE
-        binding.rlaTitle.visibility = View.GONE
+//        binding.rlaTitle.visibility = View.GONE
         binding.lblStartDuration.text = Constant.time_zero
         binding.lblEndDuration.text = ""
         binding.waveformSeekBar.updateWithLevel(0f)
@@ -1785,7 +1785,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaAddLocalFile.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
         binding.rlaSeekBarAndTitle.visibility = View.GONE
-        binding.rlaTitle.visibility = View.GONE
+//        binding.rlaTitle.visibility = View.GONE
         binding.edtTitle.setText("")
         binding.lblStartDuration.text = Constant.time_zero
         binding.lblEndDuration.text = ""

@@ -57,39 +57,85 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         isWithOutHotCodeImage = intent.getBooleanExtra("isWithOutHotCodeImage", false)
-
         setupPermissionLauncher()
         setupDocumentPicker()
 
         if (Constant.SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+//            binding.toolbarLayout.tvSelectionCount.text =
+//                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
             binding.toolbarLayout.tvSelectionCount.text =
-                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
-            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-            binding.toolbarLayout.tvSelectedFiles.text =
-                "Total Selected Files : ${Constant.isQuizQuestionPickCount}"
+                "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size}  / ${Constant.isFileLimit}"
+
+
+//            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
+//            binding.toolbarLayout.tvSelectedFiles.text =
+//                "Total Selected Files : ${Constant.isQuizQuestionPickCount}"
         } else {
-            binding.toolbarLayout.tvSelectionCount.text =
-                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
-            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-//here we are checking for default first image in recycler view
-            if (!isWithOutHotCodeImage) {
-                binding.toolbarLayout.tvSelectedFiles.text =
-                    "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+            if (Constant.selectedFiles.size != 1) {
+                binding.toolbarLayout.btnDone.visibility = View.VISIBLE
             } else {
-                binding.toolbarLayout.tvSelectedFiles.text =
-                    "Total Selected Files : ${Constant.selectedFiles.size}"
+                binding.toolbarLayout.btnDone.visibility = View.GONE
             }
+            if (!isWithOutHotCodeImage) {
+                binding.toolbarLayout.tvSelectionCount.text =
+                    "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size - 1} / ${Constant.isFileLimit}"
+
+            } else {
+                binding.toolbarLayout.tvSelectionCount.text =
+                    "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size} / ${Constant.isFileLimit}"
+
+            }
+//            binding.toolbarLayout.tvSelectionCount.text = "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
+//            binding.toolbarLayout.tvSelectionCount.text =
+//                "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size - 1} / ${Constant.isFileLimit}"
+
+
+//            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
+//here we are checking for default first image in recycler view
+//            if (!isWithOutHotCodeImage) {
+//                binding.toolbarLayout.tvSelectedFiles.text =
+//                    "Total Selected Files : ${Constant.selectedFiles.size - 1}"
+//            } else {
+//                binding.toolbarLayout.tvSelectedFiles.text =
+//                    "Total Selected Files : ${Constant.selectedFiles.size}"
+//            }
 
         }
 
-        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
-            binding.toolbarLayout.tvSelectionCount.text =
-                "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
-            binding.toolbarLayout.btnDone.visibility =
-                if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
-        }, onItemClicked = { uri ->
-            Log.d("AlbumSelectActivity", "Clicked file: $uri")
-        })
+        adapter = FileGridAdapter(
+            isWithOutHotCodeImage,
+            Constant.isFileLimit,
+            onSelectionChanged = { selectedUris ->
+
+                val alreadySelectedCount =
+                    if (Constant.SELECTED_MENU_ID == Constant.M_QUIZ_EXAM || isWithOutHotCodeImage) {
+                        Constant.selectedFiles.size
+                    } else {
+                        (Constant.selectedFiles.size - 1).coerceAtLeast(0)
+                    }
+
+                val isPickingFilesCount = selectedUris.size + alreadySelectedCount
+
+                binding.toolbarLayout.tvSelectionCount.text =
+                    "Selected Files : $isPickingFilesCount / ${Constant.isFileLimit}"
+
+                binding.toolbarLayout.btnDone.visibility =
+                    if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
+            },
+            onItemClicked = { uri ->
+                Log.d("AlbumSelectActivity", "Clicked file: $uri")
+            }
+        )
+
+
+//        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
+//            val isPickingFilesCount = selectedUris.size + Constant.selectedFiles.size - 1
+//            binding.toolbarLayout.tvSelectionCount.text =
+//                "Selected Files : ${isPickingFilesCount} / ${Constant.isFileLimit}"
+//            binding.toolbarLayout.btnDone.visibility = if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
+//        }, onItemClicked = { uri ->
+//            Log.d("AlbumSelectActivity", "Clicked file: $uri")
+//        })
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
@@ -146,16 +192,15 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 Environment.isExternalStorageManager()
             } else {
-                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_GRANTED
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED &&
-                        checkSelfPermission(Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED
+                checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(
+                    Manifest.permission.READ_MEDIA_VIDEO
+                ) == PackageManager.PERMISSION_GRANTED
             } else {
-                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_GRANTED
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             }
         }
     }
@@ -204,18 +249,14 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
     }
 
     private fun showPermissionRequiredDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.permission_required))
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
             .setMessage(getString(R.string.storage_permission_is_required_to_load_files_please_enable_it_in_settings))
-            .setCancelable(false)
-            .setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
                 openedSettings = true
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 intent.data = Uri.parse("package:$packageName")
                 startActivity(intent)
-            }
-            .setNegativeButton(getString(R.string.Cancel)) { _, _ -> finish() }
-            .show()
+            }.setNegativeButton(getString(R.string.Cancel)) { _, _ -> finish() }.show()
     }
 
     // ---------------------------------------------------------
@@ -224,9 +265,7 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
 
     private fun loadFiles() {
         if (fileType.uppercase() == Constant.DOCUMENT) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
-                !Environment.isExternalStorageManager()
-            ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
                 openAllFileAccessSettings()
                 return
             }
@@ -272,7 +311,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
     private fun openDocumentPicker() {
         documentPickerLauncher.launch(
             arrayOf(
-                "application/pdf", "application/msword",
+                "application/pdf",
+                "application/msword",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 "application/vnd.ms-powerpoint",
                 "application/vnd.openxmlformats-officedocument.presentationml.presentation",
@@ -292,12 +332,12 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val collection = MediaStore.Files.getContentUri("external")
 
         val projection = arrayOf(
-            MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.MIME_TYPE
+            MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.MIME_TYPE
         )
 
         val mimeTypes = arrayOf(
-            "application/pdf", "application/msword",
+            "application/pdf",
+            "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "application/vnd.ms-powerpoint",
             "application/vnd.openxmlformats-officedocument.presentationml.presentation",
@@ -309,8 +349,11 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val selection = mimeTypes.joinToString(prefix = "mime_type IN (", postfix = ")") { "?" }
 
         val cursor = contentResolver.query(
-            collection, projection,
-            selection, mimeTypes, "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+            collection,
+            projection,
+            selection,
+            mimeTypes,
+            "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
         )
 
         cursor?.use {
@@ -335,7 +378,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val cursor = contentResolver.query(
             collection,
             arrayOf(MediaStore.Images.Media._ID),
-            null, null,
+            null,
+            null,
             "${MediaStore.Images.Media.DATE_ADDED} DESC"
         )
 
@@ -354,7 +398,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val cursor = contentResolver.query(
             collection,
             arrayOf(MediaStore.Video.Media._ID),
-            null, null,
+            null,
+            null,
             "${MediaStore.Video.Media.DATE_ADDED} DESC"
         )
 
@@ -373,7 +418,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val cursor = contentResolver.query(
             collection,
             arrayOf(MediaStore.Audio.Media._ID),
-            null, null,
+            null,
+            null,
             "${MediaStore.Audio.Media.DATE_ADDED} DESC"
         )
 

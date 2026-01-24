@@ -497,9 +497,9 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 ).show()
             } else {
                 if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
-                    Constant.isFileLimit = 2
+                    Constant.isFileLimit = 10
                 } else if (selectedVideoCount == 1) {
-                    Constant.isFileLimit = 1
+                    Constant.isFileLimit = 10
                 }
                 openAlbumSelectActivity(Constant.VIDEO)
                 dialog.dismiss()

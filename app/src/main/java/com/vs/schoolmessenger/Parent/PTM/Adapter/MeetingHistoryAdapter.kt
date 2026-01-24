@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.datastore.dataStore
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.PTM.DataClass.MeetingItem
 import com.vs.schoolmessenger.Parent.PTM.Listener.OnCancelClickListener
@@ -135,10 +136,11 @@ class MeetingHistoryAdapter(
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 16f
                 setColor(
-                    if (meeting.status.equals("Completed", true))
+                    if (meeting.status.equals("Completed", true)) {
                         Color.parseColor("#5cc885")
-                    else
+                    } else {
                         Color.parseColor("#4085ef")
+                    }
                 )
             }
 
@@ -238,6 +240,22 @@ class MeetingHistoryAdapter(
                 } else {
                     Toast.makeText(context, "Meeting URL not available", Toast.LENGTH_SHORT).show()
                 }
+
+            }
+            if (meeting.is_cancelled_by_staff) {
+                cancelButton.visibility = View.GONE
+                callButton.visibility = View.GONE
+                tvStatus.text = "Cancelled"
+
+                val bgDrawable = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = 16f
+                    setColor(
+                        Color.parseColor("#ff1a1a")
+                    )
+                }
+
+                tvStatus.background = bgDrawable
 
             }
         }

@@ -125,6 +125,7 @@ class SchoolMenuAdapter(
                 Constant.M_SCHOOL_NEEDS -> imgMenu.setImageResource(R.drawable.school_needs)
                 Constant.M_ONLINE_TEXT_BOOK -> imgMenu.setImageResource(R.drawable.book)
                 Constant.M_UPLOAD_MARKS -> imgMenu.setImageResource(R.drawable.exam_mark_icon)
+                Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
 
             }
 

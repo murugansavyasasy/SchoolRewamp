@@ -23,9 +23,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class NotificationCallScreen :
-    BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
-
+class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
     private var dX = 0f
     private var originalX = 0f
     private var isCallConnected = false
@@ -58,7 +56,6 @@ class NotificationCallScreen :
     private var isListeningDuration = "00:00"
     private var isTotalDurationListened = 0
     private var authViewModel: Auth? = null
-
     private var ei1: String? = ""
     private var ei2: String? = ""
     private var ei3: String? = ""
@@ -70,7 +67,6 @@ class NotificationCallScreen :
     private var isUserResponse: String? = "NO"
 
     private var totalDurationCalculated = 0L
-
 
 
     override fun getViewBinding(): NotificationCallScreenBinding {
@@ -203,8 +199,7 @@ class NotificationCallScreen :
 
         binding.acceptButton.animate()
             .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
-            .setDuration(300)
-            .withEndAction {
+            .setDuration(300).withEndAction {
 
                 binding.ringContainer.visibility = View.GONE
                 binding.acceptButton.visibility = View.GONE
@@ -230,7 +225,6 @@ class NotificationCallScreen :
     }
 
 
-
     private fun playAudio(index: Int) {
 
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
@@ -244,10 +238,8 @@ class NotificationCallScreen :
 
         try {
             mediaPlayer!!.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
+                AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA).build()
             )
 
             mediaPlayer!!.setDataSource(audioUrls!![index])
@@ -258,8 +250,7 @@ class NotificationCallScreen :
                 // ✅ ADD duration when it is guaranteed
                 if (mp.duration > 0) {
                     totalDurationCalculated += mp.duration
-                    binding.lblTotalDuration.text =
-                        formatDuration(totalDurationCalculated)
+                    binding.lblTotalDuration.text = formatDuration(totalDurationCalculated)
                 }
 
                 mp.start()
@@ -278,7 +269,6 @@ class NotificationCallScreen :
             playAudio(currentTrack)
         }
     }
-
 
 
     private fun startUpdatingProgress() {
@@ -321,10 +311,8 @@ class NotificationCallScreen :
             val tempPlayer = MediaPlayer()
             try {
                 tempPlayer.setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
+                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA).build()
                 )
                 tempPlayer.setDataSource(url)
                 tempPlayer.setOnPreparedListener { mp ->
@@ -346,7 +334,6 @@ class NotificationCallScreen :
             }
         }
     }
-
 
 
     private fun finishPlayback() {

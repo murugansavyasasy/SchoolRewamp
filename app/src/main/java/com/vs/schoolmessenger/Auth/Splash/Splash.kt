@@ -179,7 +179,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                         noInternetalertDialog!!.dismiss()
                     }
                     Log.d("goToNext", "goToNext1")
-                    // goToNext()
                 }
             }
 
@@ -356,8 +355,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                             autoLoginFlowCheck(isVersionData!!)
                         }
                     }
-
-
                 }
             }
         }
@@ -367,12 +364,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         animateCardEntrance()
         animateFirstDotWithEmphasis()
         binding.confettiContainer.post { playBubbleAnimation() }
-        //animateRemainingDots()
-//
-//        binding.root.postDelayed({
-//            finish()
-//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-//        }, 3000)
     }
 
     private fun playBubbleAnimation() {
@@ -571,7 +562,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun animateLogoPulse() {
-//        binding.root.postDelayed({
         val pulseScaleX = ObjectAnimator.ofFloat(binding.imgLogo, "scaleX", 1f, 1.1f, 1f)
         val pulseScaleY = ObjectAnimator.ofFloat(binding.imgLogo, "scaleY", 1f, 1.1f, 1f)
         AnimatorSet().apply {
@@ -580,7 +570,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             interpolator = AccelerateDecelerateInterpolator()
             start()
         }
-//        }, 3000)
     }
 
     override fun isToolBarNoticeCallTheme() {

@@ -398,11 +398,22 @@
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
         android:visibility="gone"
-        android:text="@string/see_archived_messages"
+        android:text="@string/show_older_messages"
         android:textColor="@color/navi_blue2"
         android:textSize="@dimen/fifteen_sp"></TextView>
 
-
-
-
+    <TextView
+        android:id="@+id/lblNoRecordFound"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/twenty"
+        android:layout_centerInParent="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_below="@+id/rytCommunication"
+        android:visibility="gone"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"></TextView>
 </RelativeLayout>

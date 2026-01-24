@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -915,6 +916,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         ClassList::class.java
+                    }
+                }
+            }
+
+            Constant.M_COUPON_PACKET -> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    CouponDashboardActivity::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        CouponDashboardActivity::class.java
                     }
                 }
             }
