@@ -114,15 +114,12 @@ class UnifiedVoiceAdapter(
         private val rytIsEmergency: View = itemView.findViewById(R.id.rytIsEmergency)
         private val lblVoicePostedBy: TextView = itemView.findViewById(R.id.lblVoicePostedBy)
         private val lblMsgPostedBy: TextView = itemView.findViewById(R.id.lblMsgPostedBy)
-
-
         private var isExpanded = false
         private var mediaPlayer: MediaPlayer? = null
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
-
         private var lastClickTime = 0L
         private val CLICK_DELAY_MS = 500L
 
@@ -151,18 +148,18 @@ class UnifiedVoiceAdapter(
             adapter: UnifiedVoiceAdapter
         ) {
 
-//            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
-//                lblSeeMoreClick.visibility = View.VISIBLE
-//            } else {
-//                lblSeeMoreClick.visibility = View.GONE
-//            }
+            if (position == adapter.itemCount - 1 && adapter.isSeeMoreClick) {
+                lblSeeMoreClick.visibility = View.VISIBLE
+            } else {
+                lblSeeMoreClick.visibility = View.GONE
+            }
 
 
 
-//            lblSeeMoreClick.setOnClickListener {
-//                lblSeeMoreClick.visibility = View.GONE
-//                listener.onSeeMoreClick(data, this@DataViewHolder)
-//            }
+            lblSeeMoreClick.setOnClickListener {
+                lblSeeMoreClick.visibility = View.GONE
+                listener.onSeeMoreClick(data, this@DataViewHolder)
+            }
 
             rytIsEmergency.visibility = if (data.is_emergency == true) View.VISIBLE else View.GONE
 
