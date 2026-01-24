@@ -320,8 +320,8 @@
                     android:id="@+id/imgNoData"
                     android:layout_width="@dimen/two_fifty"
                     android:layout_height="@dimen/two_fifty"
-                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/lnrTabsContainer"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/no_ptm_school_message"
                     android:visibility="gone" />
 

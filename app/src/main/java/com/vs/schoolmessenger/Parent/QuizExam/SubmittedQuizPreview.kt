@@ -153,7 +153,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         }
 
         binding.rcSubmitedQuiz.adapter = adapter1
-        appViewModel?.isGetMySubmission(isAccessToken ?: "", isQuizID,this)
+        appViewModel?.isGetMySubmission(isAccessToken ?: "", isQuizID, this)
     }
 
     override fun onClick(p0: View?) {

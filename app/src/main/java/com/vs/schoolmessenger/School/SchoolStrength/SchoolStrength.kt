@@ -95,7 +95,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                 } else {
                     binding.txtNoData.text = response.message
@@ -210,7 +210,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         }
 
 
-
         val staffStrength1 = firstItem.totalStaffStrength.toIntOrNull() ?: 0
         val studentStrength = firstItem.totalStudentStrength.toIntOrNull() ?: 0
         val totalStaffStudentStrength = staffStrength1 + studentStrength
@@ -230,8 +229,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             getString(R.string.male_) + " " + firstItem.totalmalestaffsstrength
         binding.summaryStaticscardview.femaleStaffcount.text =
             getString(R.string.female_) + " " + firstItem.totalfemalestaffsstrength
-
-
 
 
         val malestaffStrength = firstItem.totalmalestaffsstrength.toIntOrNull() ?: 0
@@ -256,11 +253,15 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 //        binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
         binding.summaryStaticscardview.boyscount1.text =
             getString(R.string.boys) + " " + firstItem.totalBoysStrength
-        binding.summaryStaticscardview.otherscount1.text = "Others" + " " + firstItem.totalOthersStrength
-        binding.summaryStaticscardview.othersstaffcount.text = "Others" + " " + firstItem.totalotherstaffsstrength
+        binding.summaryStaticscardview.otherscount1.text =
+            "Others" + " " + firstItem.totalOthersStrength
+        binding.summaryStaticscardview.othersstaffcount.text =
+            "Others" + " " + firstItem.totalotherstaffsstrength
         binding.summaryStaticscardview.girlscount1.text =
             getString(R.string.girls) + " " + firstItem.totalGirlsStrength
-        binding.summaryStaticscardview.othersCount.text = ((firstItem.totalStaffStrength?.toIntOrNull() ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull() ?: 0)).toString()
+        binding.summaryStaticscardview.othersCount.text =
+            ((firstItem.totalStaffStrength?.toIntOrNull()
+                ?: 0) + (firstItem.totalStudentStrength?.toIntOrNull() ?: 0)).toString()
 
 
         if (firstItem.previous.message.isNullOrEmpty()) {

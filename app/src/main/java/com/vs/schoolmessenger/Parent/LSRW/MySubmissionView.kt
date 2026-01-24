@@ -62,14 +62,14 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
                 val submission = response.data[0]
 
 
-                if(submission.description.isNullOrEmpty()) {
+                if (submission.description.isNullOrEmpty()) {
                     binding.descriptionCardview.visibility = View.GONE
                 } else {
                     binding.descriptionCardview.visibility = View.VISIBLE
                 }
 
 
-                if(submission.remark.isNullOrEmpty()) {
+                if (submission.remark.isNullOrEmpty()) {
                     binding.piechartFramelayout.visibility = View.GONE
                 } else {
                     binding.piechartFramelayout.visibility = View.VISIBLE
@@ -77,7 +77,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
                 // Description
                 binding.description.text = submission.description
-                Constant.isVideoPostedDate=submission.submitted_date
+                Constant.isVideoPostedDate = submission.submitted_date
 
                 val remarkString = submission.remark.trim().replace("%", "")  // "68%" → "68"
                 val remark =
@@ -147,7 +147,7 @@ class MySubmissionView : BaseActivity<StudentlistRemarksubmitBinding>() {
 
     private fun fetchMySubmissionList() {
         Constant.showLoading(this)
-        appViewModel?.islsrwmysubmission(isAccessToken!!, id,this)
+        appViewModel?.islsrwmysubmission(isAccessToken!!, id, this)
     }
 
     override fun onBackPressed() {

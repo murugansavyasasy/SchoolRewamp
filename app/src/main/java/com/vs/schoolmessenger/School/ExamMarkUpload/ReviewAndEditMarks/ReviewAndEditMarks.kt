@@ -13,17 +13,13 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -95,7 +91,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
-        binding.lblDisclaimerForAI.visibility=if (Constant.isMarkUploadFromAi) View.VISIBLE else View.GONE
+        binding.lblDisclaimerForAI.visibility =
+            if (Constant.isMarkUploadFromAi) View.VISIBLE else View.GONE
 
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -790,6 +787,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
         }
     }
+
     private fun addFilterRow(
         container: LinearLayout,
         state: FilterState? = null

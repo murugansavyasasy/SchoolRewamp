@@ -740,7 +740,12 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetDailyCollectionReport(
-        isToken: String, istype: String, isfromdate: String, istodate: String, country_id: String, activity: Activity
+        isToken: String,
+        istype: String,
+        isfromdate: String,
+        istodate: String,
+        country_id: String,
+        activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
@@ -749,16 +754,36 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+    fun isDetailedPendingReport(
+        isToken: String,
+        isAcademicYearId: Int,
+        country_id: String,
+        activity: Activity
+    ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isDetailedPendingReport(isToken, isAcademicYearId, country_id, activity)
+        apiSchoolRepositories.isDetailedPendingReport(
+            isToken,
+            isAcademicYearId,
+            country_id,
+            activity
+        )
     }
 
-    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+    fun isDetailedWisePendingReport(
+        isToken: String,
+        isAcademicYearId: Int,
+        country_id: String,
+        activity: Activity
+    ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id, activity)
+        apiSchoolRepositories.isDetailedWisePendingReport(
+            isToken,
+            isAcademicYearId,
+            country_id,
+            activity
+        )
     }
 
     fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
@@ -859,10 +884,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     //get homework details
-    fun isHomeWorkDetails(isToken: String, activity: Activity,date: String) {
+    fun isHomeWorkDetails(isToken: String, activity: Activity, date: String) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories?.isHomeWorkDetails(isToken, activity,date)
+        apiSchoolRepositories?.isHomeWorkDetails(isToken, activity, date)
     }
 
 
@@ -964,7 +989,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getabsenteescountbydate(isToken: String, month_id: Int, year_id: Int, activity: Activity) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.getabsenteescountbydate(isToken,month_id,year_id, activity)
+        apiSchoolRepositories.getabsenteescountbydate(isToken, month_id, year_id, activity)
     }
 
     fun getabsenteesstudentbydate(
@@ -1947,16 +1972,15 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiSchoolRepositories.uploadmarks(part,activity)
+        apiSchoolRepositories.uploadmarks(part, activity)
     }
 
 
-
-    fun savemarks(isToken:String,jsonObject: JsonObject, activity: Activity) {
+    fun savemarks(isToken: String, jsonObject: JsonObject, activity: Activity) {
 
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiSchoolRepositories.savemarks(isToken,jsonObject)
+        apiSchoolRepositories.savemarks(isToken, jsonObject)
     }
 
 }

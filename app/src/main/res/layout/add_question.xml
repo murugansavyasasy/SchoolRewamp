@@ -38,24 +38,25 @@
 
         <TextView
             android:id="@+id/marqueeText"
-            android:layout_marginBottom="@dimen/five"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:layout_marginBottom="@dimen/five"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
-            style="@style/CustomTextStylePoppinsBold"
+            android:singleLine="true"
             android:textColor="@color/dark_bg_orange"
             android:textSize="@dimen/thirteen_sp"
             android:visibility="gone" />
 
         <RelativeLayout
-            android:layout_below="@+id/marqueeText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/marqueeText">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

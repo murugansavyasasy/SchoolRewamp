@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/five"
-    app:cardCornerRadius="@dimen/twele"
     android:background="@drawable/outline_gray"
+    app:cardCornerRadius="@dimen/twele"
     app:cardElevation="@dimen/four">
 
     <LinearLayout
@@ -16,10 +16,10 @@
 
         <TextView
             android:id="@+id/tvMeetingTitle"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
@@ -32,12 +32,12 @@
 
             <TextView
                 android:id="@+id/tvProfileIcon"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
                 android:background="@drawable/bg_card_gradient"
                 android:gravity="center"
                 android:text="S"
-                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/twenty" />
 
@@ -49,47 +49,47 @@
 
                 <TextView
                     android:id="@+id/tvParentName"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/fifteen_sp" />
 
                 <TextView
                     android:id="@+id/tvSubject"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two"
                     android:text=""
-                    style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
         </LinearLayout>
 
-<!--        <Button-->
-<!--            android:id="@+id/btnMeetingType"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/sixteen"-->
-<!--            android:backgroundTint="#7156b4"-->
-<!--            android:drawableLeft="@drawable/phone_icon_bg"-->
-<!--            android:drawablePadding="@dimen/eight"-->
-<!--            android:paddingHorizontal="@dimen/sixteen"-->
-<!--            android:paddingVertical="@dimen/twele"-->
-<!--            android:text="In Person"-->`
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/fourteen" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btnMeetingType"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/sixteen"-->
+        <!--            android:backgroundTint="#7156b4"-->
+        <!--            android:drawableLeft="@drawable/phone_icon_bg"-->
+        <!--            android:drawablePadding="@dimen/eight"-->
+        <!--            android:paddingHorizontal="@dimen/sixteen"-->
+        <!--            android:paddingVertical="@dimen/twele"-->
+        <!--            android:text="In Person"-->`
+        <!--            style="@style/CustomTextStylePoppinsBold"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="@dimen/fourteen" />-->
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
+            android:background="@drawable/bg_meeting_type"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:background="@drawable/bg_meeting_type"
             android:paddingHorizontal="@dimen/sixteen"
             android:paddingVertical="@dimen/five">
 
@@ -98,8 +98,8 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/eight"
-                android:src="@drawable/phone_icon_bg"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:src="@drawable/phone_icon_bg" />
 
             <TextView
                 android:id="@+id/btnMeetingType"
@@ -112,11 +112,11 @@
         </LinearLayout>
 
         <TextView
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
             android:text="Select Meeting Slot"
-            style="@style/CustomTextStylePoppinsMedium"
             android:textSize="@dimen/fifteen_sp" />
 
         <androidx.recyclerview.widget.RecyclerView

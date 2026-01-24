@@ -22,10 +22,10 @@
         android:id="@+id/imgOnboard"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="-50dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/disabled_girl_in_involved_in_business_presentation_discussion"
-        android:layout_marginBottom="-50dp"
         app:layout_constraintBottom_toTopOf="@id/imgWaveBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.35"
@@ -55,9 +55,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Super Easy Transaction"
-                android:maxLines="4"
                 android:ellipsize="end"
+                android:maxLines="4"
+                android:text="Super Easy Transaction"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/thirty_sp" />
 
@@ -66,10 +66,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:visibility="gone"
                 android:text="Pay anything, anywhere, anytime more easy with this emoney. This is a long sample text that will now scroll properly without being hidden behind the image or wave. Just keep adding more text to test scrolling comfortably."
                 android:textColor="#808080"
-                android:textSize="@dimen/fourteen_sp" />
+                android:textSize="@dimen/fourteen_sp"
+                android:visibility="gone" />
         </LinearLayout>
 
 

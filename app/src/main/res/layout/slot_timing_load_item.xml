@@ -2,19 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/outline_gray_card"
     android:layout_margin="4dp"
+    android:background="@drawable/outline_gray_card"
     android:padding="12dp">
 
     <TextView
         android:id="@+id/lblTiming"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
-        android:layout_toStartOf="@+id/imgRemove"
-        android:layout_marginEnd="@dimen/three"
         android:layout_height="wrap_content"
-        android:text="10:00 - 11:00"
+        android:layout_marginEnd="@dimen/three"
+        android:layout_toStartOf="@+id/imgRemove"
         android:gravity="center"
+        android:text="10:00 - 11:00"
         android:textColor="@color/black"
         android:textSize="@dimen/ten_sp" />
 
@@ -24,9 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblTiming"
-        android:layout_toStartOf="@+id/imgRemove"
-        android:layout_marginEnd="@dimen/three"
         android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/three"
+        android:layout_toStartOf="@+id/imgRemove"
         android:gravity="center"
         android:text="@string/Available"
         android:textColor="@color/green"

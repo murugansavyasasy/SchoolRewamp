@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lnrEntireQuestion"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -71,9 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
-            android:imeOptions="actionNext"
             android:background="@drawable/rect_gray_radius"
             android:hint="Enter Chapter here"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight"
             tools:ignore="LabelFor" />
 
@@ -109,10 +109,10 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:clickable="true"
-            android:imeOptions="actionNext"
             android:drawablePadding="10dp"
             android:focusable="true"
             android:hint="@string/enter_question_here"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight" />
 
 
@@ -123,21 +123,21 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/ten"
-            android:visibility="gone"
             android:text="@string/add_files_to_question"
             android:textColor="@color/iconBlue"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyQuestions"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -172,8 +172,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
-            android:imeOptions="actionNext"
             android:hint="@string/enter_option_a"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight" />
 
         <TextView
@@ -181,36 +181,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:visibility="gone"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/five"
             android:text="Add image"
             android:textColor="@color/iconBlue"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <FrameLayout
-            android:layout_marginTop="@dimen/five"
-            android:layout_width="@dimen/eighty"
-            android:visibility="gone"
             android:id="@+id/framOptionA"
-            android:layout_height="@dimen/eighty">
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgOptionA"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-               />
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressOptionA"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
         <RelativeLayout
@@ -257,34 +256,33 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/five"
-            android:visibility="gone"
             android:text="@string/add_image"
             android:textColor="@color/iconBlue"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <FrameLayout
-            android:layout_marginTop="@dimen/five"
-            android:layout_width="@dimen/eighty"
-            android:visibility="gone"
             android:id="@+id/framOptionB"
-            android:layout_height="@dimen/eighty">
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgOptionB"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressOptionB"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -321,8 +319,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
-            android:imeOptions="actionNext"
             android:hint="@string/enter_option_c"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight" />
 
         <TextView
@@ -332,34 +330,33 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/five"
-            android:visibility="gone"
             android:text="@string/add_image"
             android:textColor="@color/iconBlue"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <FrameLayout
-            android:layout_marginTop="@dimen/five"
             android:id="@+id/framOptionC"
             android:layout_width="@dimen/eighty"
-            android:visibility="gone"
-            android:layout_height="@dimen/eighty">
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgOptionC"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressOptionC"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -396,8 +393,8 @@
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_gray_radius"
             android:drawablePadding="10dp"
-            android:imeOptions="actionNext"
             android:hint="@string/enter_option_d"
+            android:imeOptions="actionNext"
             android:padding="@dimen/eight" />
 
         <TextView
@@ -407,34 +404,33 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/attachment_icon_2"
             android:drawablePadding="@dimen/five"
-            android:visibility="gone"
             android:text="@string/add_image"
             android:textColor="@color/iconBlue"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
         <FrameLayout
-            android:layout_marginTop="@dimen/five"
             android:id="@+id/framOptionD"
             android:layout_width="@dimen/eighty"
-            android:visibility="gone"
-            android:layout_height="@dimen/eighty">
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgOptionD"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/progressOptionD"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
 
@@ -484,8 +480,8 @@
                     android:layout_marginTop="@dimen/five"
                     android:background="@drawable/rect_gray_radius"
                     android:ellipsize="none"
-                    android:imeOptions="actionNext"
                     android:hint="@string/enter_correct_answer_here"
+                    android:imeOptions="actionNext"
                     android:padding="@dimen/eight"
                     android:scrollHorizontally="true"
                     android:singleLine="true" />
@@ -565,9 +561,9 @@
                     android:background="@drawable/rect_gray_radius"
                     android:ellipsize="none"
                     android:hint="@string/enter_mark_here"
+                    android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:imeOptions="actionNext"
                     android:padding="@dimen/eight"
                     android:scrollHorizontally="true"
                     android:singleLine="true" />

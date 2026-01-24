@@ -12,36 +12,36 @@
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Toolbar -->
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <!-- Main container below toolbar -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/AthensGray"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
         <TextView
             android:id="@+id/lblParentToolBar"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/leave_history"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/leave_history"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty" />
 
@@ -50,8 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_below="@id/lblParentToolBar"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_grey"
             android:visibility="gone">
@@ -71,8 +71,8 @@
                 android:layout_toEndOf="@id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
-                android:maxLines="1"
                 android:imeOptions="actionDone"
+                android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
@@ -85,8 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rytSearch"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="@dimen/ten" />
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten" />
 
         <LinearLayout
             android:id="@+id/lytList"

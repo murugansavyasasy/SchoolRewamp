@@ -6,8 +6,8 @@
 
     <TextView
         android:id="@+id/lblClasses"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/CustomTextStylePoppinsMedium"
         android:textSize="@dimen/fifteen_sp" />
 </LinearLayout>

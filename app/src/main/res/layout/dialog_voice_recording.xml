@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="@dimen/twenty_four"
-    android:gravity="center"
-    android:background="@drawable/bg_dialog_round"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_round"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/twenty_four">
 
     <TextView
-        android:text="Hi, I'm listening. Click Stop to finish the recording."
-        android:textSize="@dimen/eighteen_sp"
         style="@style/CustomTextStylePoppinsBold"
-        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/twenty"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="Hi, I'm listening. Click Stop to finish the recording."
+        android:textColor="@color/black"
+        android:textSize="@dimen/eighteen_sp" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="@dimen/one_fifty"
@@ -28,17 +28,16 @@
         app:lottie_speed="0.5" />
 
 
-
     <TextView
         android:id="@+id/btnStop"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="@dimen/one_sixty"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/ten"
         android:text="Stop"
         android:textAllCaps="false"
-        android:padding="@dimen/ten"
         android:textColor="@color/red"
-        android:layout_width="@dimen/one_sixty"
-        android:gravity="center"
-        android:textSize="@dimen/eighteen_sp"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/eighteen_sp" />
 
 </LinearLayout>

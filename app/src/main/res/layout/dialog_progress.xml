@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="@dimen/twenty"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
->
+    android:orientation="vertical"
+    android:padding="@dimen/twenty">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/ten"
         android:text="@string/downloading_video"
-        android:textSize="@dimen/thirteen_sp"
-        android:paddingBottom="@dimen/ten" />
+        android:textSize="@dimen/thirteen_sp" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:progressDrawable="@drawable/custom_progress_bar"
-        android:max="100" />
+        android:max="100"
+        android:progressDrawable="@drawable/custom_progress_bar" />
 
     <TextView
         android:id="@+id/progress_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0%"
-        android:textSize="@dimen/thirteen_sp"
         android:layout_gravity="end"
-        android:paddingTop="@dimen/ten" />
+        android:paddingTop="@dimen/ten"
+        android:text="0%"
+        android:textSize="@dimen/thirteen_sp" />
 </LinearLayout>

@@ -14,12 +14,12 @@
             android:id="@+id/layoutDateRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/bg_orange"
             android:backgroundTint="@color/light_lavender"
-            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:padding="@dimen/five"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/five">
 
             <ImageView
                 android:id="@+id/imgCalendar"
@@ -31,11 +31,11 @@
 
             <TextView
                 android:id="@+id/tvDate"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/four"
                 android:text="12 Sep 2025"
-                style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/Blue"
                 android:textSize="@dimen/sixteen" />
         </LinearLayout>

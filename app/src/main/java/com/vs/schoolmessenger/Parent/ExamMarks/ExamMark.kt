@@ -155,7 +155,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
                     Constant.hideLoading(this)
                     showErrorUI(response?.message ?: getString(R.string.no_data_available))
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -290,7 +290,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     }
 
     override fun onExamSelected(examid: String, examName: String) {
-        appViewModel?.getProgressMarks(isAccessToken ?: "", examid,this)
+        appViewModel?.getProgressMarks(isAccessToken ?: "", examid, this)
         examTitle = examName
     }
 
@@ -317,13 +317,13 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     private fun fetchexamtimetable() {
         Constant.showLoading(this)
         appViewModel?.getexams(
-            isAccessToken ?: "",this
+            isAccessToken ?: "", this
         )
     }
 
     private fun fetchexammark() {
         appViewModel?.getexamslist(
-            isAccessToken ?: "",this
+            isAccessToken ?: "", this
         )
     }
 

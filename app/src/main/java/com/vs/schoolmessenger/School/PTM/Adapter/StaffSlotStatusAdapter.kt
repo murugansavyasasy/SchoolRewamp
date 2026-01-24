@@ -105,7 +105,8 @@ class StaffSlotStatusAdapter(
             lblBookedName.text = data.booked_by
             lblStatus.text = data.status
             lblDuration.text = "Duration - ${data.meeting_duration} Minutes"
-            lblTime.text = "${data.from_time} - ${data.to_time} (${data.meeting_duration ?: ""} Minutes)"
+            lblTime.text =
+                "${data.from_time} - ${data.to_time} (${data.meeting_duration ?: ""} Minutes)"
             lblStandardAndSection.text = "${data.my_class} - ${data.my_section}"
 
 
@@ -134,7 +135,8 @@ class StaffSlotStatusAdapter(
                     lblWaitingBooking.text = "Slot Cancelled"
                     lblStatus.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
-                    lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    lblWaitingBooking.background =
+                        context.getDrawable(R.drawable.bg_light_red_radious)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.red_close_icon_))
                     imgDot.visibility = if (data.can_cancel) View.VISIBLE else View.GONE
                 }
@@ -152,7 +154,8 @@ class StaffSlotStatusAdapter(
 
                 "Completed" -> {
                     lblWaitingBooking.visibility = View.GONE
-                    rltStatus.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    rltStatus.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     imgStatus.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                     imgDot.visibility = View.GONE
                     lblStatus.setTextColor(context.getColor(R.color.dark_green_2))

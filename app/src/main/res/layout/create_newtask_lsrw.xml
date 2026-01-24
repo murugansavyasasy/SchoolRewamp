@@ -151,8 +151,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_scrollview"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_scrollview">
 
         <RelativeLayout
             android:id="@+id/rytcreateNewTasklsrw"
@@ -196,8 +196,8 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/enter_title"
                     android:background="@android:color/transparent"
+                    android:hint="@string/enter_title"
                     android:paddingHorizontal="@dimen/ten" />
 
             </LinearLayout>
@@ -220,9 +220,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/two"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_toEndOf="@id/lblDescription"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
@@ -257,8 +257,8 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="start"
-                    android:inputType="textMultiLine|textCapSentences"
                     android:hint="@string/Enterdescription"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
@@ -281,9 +281,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTextCount"
                 android:layout_marginStart="@dimen/two"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/lblTextCount"
                 android:layout_toEndOf="@id/lbldate"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
@@ -309,15 +309,15 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
+                android:clickable="true"
                 android:drawableEnd="@drawable/calendar_icon"
                 android:drawablePadding="8dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:gravity="start|center_vertical"
                 android:hint="@string/dd_mm_yyyy"
                 android:padding="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp"
-                android:clickable="true"
-                android:focusable="false"
-                android:focusableInTouchMode="false"/>
+                android:textSize="@dimen/thirteen_sp" />
 
 
             <RelativeLayout

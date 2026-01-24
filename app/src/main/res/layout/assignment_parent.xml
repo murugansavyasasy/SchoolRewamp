@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AthensGray"
-    android:id="@+id/main">
+    android:background="@color/AthensGray">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relative_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/parent_side_tool_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/headerview"
@@ -51,7 +51,6 @@
         </LinearLayout>
 
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyAssignment"
             android:layout_width="match_parent"
@@ -61,9 +60,9 @@
             android:layout_marginTop="@dimen/ten"
             android:clipToPadding="false"
             android:fadeScrollbars="false"
-            android:visibility="visible"
             android:paddingHorizontal="@dimen/five"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:visibility="visible" />
 
 
         <LinearLayout
@@ -71,8 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rcyAssignment"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <ImageView
@@ -80,8 +79,7 @@
                 android:layout_width="@dimen/two_fifty"
                 android:layout_height="@dimen/two_fifty"
                 android:layout_gravity="center"
-                android:src="@drawable/no_assignment_message"
-                />
+                android:src="@drawable/no_assignment_message" />
 
             <TextView
                 android:id="@+id/txtNoData"

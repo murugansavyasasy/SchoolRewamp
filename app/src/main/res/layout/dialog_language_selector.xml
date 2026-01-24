@@ -54,13 +54,13 @@
 
             <CheckBox
                 android:id="@+id/chEnglish"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -83,11 +83,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblEnglish"
-                    android:text="@string/lblEnglish"
                     android:layout_marginTop="@dimen/ten"
+                    android:text="@string/lblEnglish"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                   ></TextView>
+                    android:textSize="@dimen/thirteen_sp"></TextView>
 
                 <ImageView
                     android:id="@+id/imgEnglish"
@@ -112,24 +111,24 @@
 
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rlaTamil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaEnglish"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
-            android:padding="@dimen/five">
+            android:padding="@dimen/five"
+            android:visibility="gone">
 
             <CheckBox
                 android:id="@+id/chTamil"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -180,24 +179,24 @@
         </View>
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rlaThai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaTamil"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
-            android:padding="@dimen/five">
+            android:padding="@dimen/five"
+            android:visibility="gone">
 
             <CheckBox
                 android:id="@+id/chThai"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -245,24 +244,24 @@
             android:background="@color/grey"></View>
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rlaHindi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaThai"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
-            android:padding="@dimen/five">
+            android:padding="@dimen/five"
+            android:visibility="gone">
 
             <CheckBox
                 android:id="@+id/chHindi"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomCheckbox"
                 tools:ignore="MissingConstraints" />
 
 
@@ -316,18 +315,18 @@
             android:id="@+id/rlaArabic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_below="@+id/view4"
             android:layout_marginStart="@dimen/five"
-            android:padding="@dimen/five">
+            android:padding="@dimen/five"
+            android:visibility="gone">
 
             <CheckBox
                 android:id="@+id/chArabic"
+                style="@style/CustomCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/five"
-                style="@style/CustomCheckbox"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 tools:ignore="MissingConstraints" />
@@ -374,10 +373,10 @@
             android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaArabic"
             android:layout_marginStart="@dimen/fifteen"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
-            android:background="@color/grey"></View>
+            android:background="@color/grey"
+            android:visibility="gone"></View>
     </RelativeLayout>
 
     <TextView

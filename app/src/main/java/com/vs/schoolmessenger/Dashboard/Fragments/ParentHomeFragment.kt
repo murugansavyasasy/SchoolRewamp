@@ -275,6 +275,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         super.onStart()
         Constant.showLoadingDisableScreen(requireActivity())
     }
+
     private fun filterDashboardMenu(query: String) {
         filteredMenuList.clear()
 
@@ -631,6 +632,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
         view.clearFocus()
     }
+
     private fun isGetAds() {
         activity?.let { safeActivity ->
             appViewModel?.isGetAds(childDetails!!.access_token, "102", safeActivity)

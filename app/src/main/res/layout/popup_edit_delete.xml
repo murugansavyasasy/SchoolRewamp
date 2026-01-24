@@ -39,8 +39,7 @@
         <ImageView
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
-            android:src="@drawable/delete_bin"
-            />
+            android:src="@drawable/delete_bin" />
 
         <TextView
             android:layout_width="wrap_content"

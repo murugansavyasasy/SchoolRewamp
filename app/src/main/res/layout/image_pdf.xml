@@ -33,19 +33,19 @@
 
     <TextView
         android:id="@+id/lblDescription"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytHeader"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
-        android:text="@string/Description"
-        style="@style/CustomTextStylePoppinsBold"
-        >
+        android:text="@string/Description">
 
     </TextView>
 
     <EditText
         android:id="@+id/edtDescription"
+        style="@style/CustomTextStylePoppinsRegular"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hundred"
         android:layout_below="@+id/lblDescription"
@@ -58,11 +58,9 @@
         android:focusableInTouchMode="true"
         android:gravity="start"
         android:hint="@string/Enterdescription"
-        style="@style/CustomTextStylePoppinsRegular"
         android:maxLength="100"
         android:padding="@dimen/ten"
-        android:textSize="@dimen/thirteen_sp"
-       >
+        android:textSize="@dimen/thirteen_sp">
 
     </EditText>
 
@@ -70,18 +68,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtDescription"
-        android:layout_marginTop="@dimen/five"
-       >
+        android:layout_marginTop="@dimen/five">
 
         <TextView
             android:id="@+id/lblAddPhoto"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
-            android:text="@string/AddPhoto"
-            style="@style/CustomTextStylePoppinsBold"
-            >
+            android:text="@string/AddPhoto">
 
         </TextView>
 
@@ -92,8 +88,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/camera_icon">
-        </ImageView>
+            android:src="@drawable/camera_icon"></ImageView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyImages"

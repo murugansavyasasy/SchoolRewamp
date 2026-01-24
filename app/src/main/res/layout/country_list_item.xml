@@ -43,20 +43,19 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/twenty"
             android:layout_toEndOf="@+id/imgCountryLogo"
-            android:text="Select Country"
-             />
+            android:text="Select Country" />
 
 
         <LinearLayout
             android:id="@+id/lnrRadio"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/ten"
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/white_circle_bg"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <View
                 android:layout_width="match_parent"

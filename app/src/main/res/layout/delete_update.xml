@@ -16,12 +16,13 @@
         android:gravity="center"
         android:text="@string/lblConfirm"
         android:textColor="@color/black"
-        android:visibility="visible"
         android:textSize="@dimen/eighteen_sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/alertMessage"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -29,7 +30,6 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
         android:gravity="center"
-        style="@style/CustomTextStylePoppinsMedium"
         android:text="@string/are_you_sure_you_want_to_delete_this_lesson_plan"
         android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fifteen_sp" />
@@ -48,25 +48,23 @@
             android:id="@+id/btnCancel"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:visibility="visible"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2"
-            android:textSize="@dimen/fifteen_sp" />
-
-
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
 
 
         <TextView
             android:id="@+id/btnOk"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/permission_ok"
             android:textColor="@color/navi_blue2"

@@ -218,7 +218,7 @@ class SchoolEventCompletedAdapter(
             val convertedList = data.file_path.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             }
-            Constant.isVideoPostedDate=data.date + " "+ data.time
+            Constant.isVideoPostedDate = data.date + " " + data.time
             val isHomeWorkData = FilePreview(
                 id = data.id,
                 title = data.title,

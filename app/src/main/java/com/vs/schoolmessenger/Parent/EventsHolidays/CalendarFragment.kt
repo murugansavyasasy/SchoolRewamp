@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.EventsHolidays
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

@@ -40,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/five"
-            >
+            android:layout_marginEnd="@dimen/five">
 
             <RelativeLayout
                 android:id="@+id/rytSearch1"
@@ -77,53 +76,50 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_below="@+id/rytSearch1"
                 android:id="@+id/lblExamName"
-                android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytSearch1"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:textColor="@color/dark_orange_2"
                 android:textSize="@dimen/eighteen_sp"
-                android:textStyle="bold"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
             <TextView
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginHorizontal="@dimen/ten"
                 android:id="@+id/lblMonthName"
-                android:layout_below="@+id/lblExamName"
-                android:layout_width="match_parent"
-                android:textStyle="bold"
                 style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblExamName"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
                 android:textSize="@dimen/fifteen_sp"
-                android:layout_height="wrap_content">
+                android:textStyle="bold">
 
             </TextView>
 
             <TextView
-                android:padding="@dimen/fifteen"
-                android:background="@drawable/rect_radius_fill_stoke_15"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:layout_below="@+id/lblMonthName"
-                android:drawablePadding="@dimen/ten"
                 android:id="@+id/lblSampleMsg"
-                android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsRegular"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblMonthName"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/rect_radius_fill_stoke_15"
+                android:drawablePadding="@dimen/ten"
+                android:padding="@dimen/fifteen"
                 android:text="@string/map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcMapActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
                 android:layout_below="@+id/lblSampleMsg"
-                android:layout_marginTop="@dimen/twenty_five">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginTop="@dimen/twenty_five"
+                android:nestedScrollingEnabled="false"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/lytList"
@@ -140,8 +136,7 @@
                     android:layout_width="@dimen/two_hundred"
                     android:layout_height="@dimen/two_hundred"
                     android:layout_marginTop="@dimen/twenty_five"
-                    android:src="@drawable/no_data_found">
-                </ImageView>
+                    android:src="@drawable/no_data_found"></ImageView>
 
                 <TextView
                     android:id="@+id/txtNoData"
@@ -156,58 +151,57 @@
                 </TextView>
             </LinearLayout>
 
-           <RelativeLayout
-               android:id="@+id/lnrTips"
-               android:layout_width="match_parent"
-               android:padding="@dimen/fifteen"
-               android:layout_marginTop="@dimen/ten"
-               android:layout_below="@+id/lytList"
-               android:background="@drawable/rect_radius15_fill_stroke"
-               android:layout_marginHorizontal="@dimen/ten"
-               android:layout_height="wrap_content">
-               <ImageView
-                   android:id="@+id/imgBulb"
-                   android:layout_width="@dimen/twenty"
-                   android:src="@drawable/bulb"
-                   android:layout_alignParentStart="true"
-                   android:layout_height="@dimen/twenty">
-               </ImageView>
-               <TextView
-                   android:layout_toEndOf="@+id/imgBulb"
-                   android:id="@+id/lblTips"
-                   android:layout_width="match_parent"
-                   style="@style/CustomTextStylePoppinsRegular"
-                   android:textSize="@dimen/fifteen_sp"
-                   android:layout_height="wrap_content">
-               </TextView>
-           </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/lnrTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lytList"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/rect_radius15_fill_stroke"
+                android:padding="@dimen/fifteen">
+
+                <ImageView
+                    android:id="@+id/imgBulb"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/bulb"></ImageView>
+
+                <TextView
+                    android:id="@+id/lblTips"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgBulb"
+                    android:textSize="@dimen/fifteen_sp"></TextView>
+            </RelativeLayout>
 
 
             <LinearLayout
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/twenty"
-                android:layout_below="@+id/lnrTips"
-                android:paddingHorizontal="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/lnrUpload"
                 android:layout_width="wrap_content"
-                android:paddingVertical="@dimen/eight"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrTips"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/rect_orange_bg"
-                android:layout_height="wrap_content">
+                android:paddingHorizontal="@dimen/twenty"
+                android:paddingVertical="@dimen/eight">
+
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/fifteen_sp"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/continue_to_review"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"></TextView>
             </LinearLayout>
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

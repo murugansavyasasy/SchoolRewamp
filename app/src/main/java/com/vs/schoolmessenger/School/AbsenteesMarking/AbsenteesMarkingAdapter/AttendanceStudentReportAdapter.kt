@@ -101,9 +101,9 @@ class AttendanceStudentReportAdapter(
 
         private fun setStatusView(view: TextView, status: String) {
             val drawableRes = when (status.uppercase()) {
-                "P"  -> R.drawable.report_present_icon
+                "P" -> R.drawable.report_present_icon
                 "P~" -> R.drawable.report_present_icon
-                "A"  -> R.drawable.report_absent_icon
+                "A" -> R.drawable.report_absent_icon
                 "OD" -> R.drawable.report_od_icon
                 else -> R.drawable.report_nottaken_icon
             }

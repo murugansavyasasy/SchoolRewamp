@@ -45,8 +45,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/gallery_icon">
-                </ImageView>
+                    android:src="@drawable/gallery_icon"></ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -56,8 +55,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/gallery"
-                   >
+                    android:text="@string/gallery">
 
                 </TextView>
 
@@ -77,8 +75,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/camera_icon">
-                </ImageView>
+                    android:src="@drawable/camera_icon"></ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -88,8 +85,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/camera"
-                   >
+                    android:text="@string/camera">
 
                 </TextView>
 
@@ -112,8 +108,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/ic_document">
-                </ImageView>
+                    android:src="@drawable/ic_document"></ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -123,8 +118,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/document"
-                    >
+                    android:text="@string/document">
 
                 </TextView>
             </RelativeLayout>
@@ -153,8 +147,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/video_icon">
-                </ImageView>
+                    android:src="@drawable/video_icon"></ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
@@ -164,16 +157,10 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/video"
-                    >
+                    android:text="@string/video">
 
                 </TextView>
             </RelativeLayout>
-
-
-
-
-
 
 
             <RelativeLayout
@@ -203,20 +190,18 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/voice"
-                    >
+                    android:text="@string/voice">
 
                 </TextView>
             </RelativeLayout>
-
 
 
             <RelativeLayout
                 android:id="@+id/rlavoicerecorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/thirty"
                 android:visibility="gone">
 
@@ -239,12 +224,10 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/voice_record"
-                    >
+                    android:text="@string/voice_record">
 
                 </TextView>
             </RelativeLayout>
-
 
 
         </RelativeLayout>

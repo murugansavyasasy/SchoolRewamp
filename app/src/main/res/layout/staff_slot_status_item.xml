@@ -13,23 +13,21 @@
         android:padding="@dimen/ten">
 
         <RelativeLayout
-            android:paddingHorizontal="@dimen/eight"
             android:id="@+id/rltStatus"
-            android:paddingVertical="@dimen/five"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/bg_light_green_radious"
-           >
+            android:paddingHorizontal="@dimen/eight"
+            android:paddingVertical="@dimen/five">
 
             <ImageView
                 android:id="@+id/imgStatus"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:layout_marginStart="@dimen/five"
-                android:src="@drawable/checkmark_circle">
-            </ImageView>
+                android:src="@drawable/checkmark_circle"></ImageView>
 
             <TextView
                 android:id="@+id/lblStatus"
@@ -55,9 +53,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            app:tint="@color/PrimaryColor"
             android:padding="@dimen/eight"
-            android:src="@drawable/threedot">
+            android:src="@drawable/threedot"
+            app:tint="@color/PrimaryColor">
 
         </ImageView>
 
@@ -66,19 +64,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rltStatus"
-            android:drawableStart="@drawable/clock_icon_2"
-            android:drawablePadding="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/clock_icon_2"
+            android:drawablePadding="@dimen/five"
             android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
 
         </TextView>
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/lblDuration"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
@@ -88,7 +85,8 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Duraction - 10 Minutes"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
@@ -127,9 +125,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="Booked By : "
-                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fourteen_sp">
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold">
 
             </TextView>
 
@@ -152,10 +150,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblBookedBy"
-                android:layout_toStartOf="@+id/imgExpand"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_toStartOf="@+id/imgExpand"
                 android:layout_toEndOf="@+id/imgUser"
                 android:text="Sathish G"
                 android:textColor="@color/black"
@@ -167,10 +165,10 @@
                 android:id="@+id/imgExpand"
                 android:layout_width="@dimen/twenty_four"
                 android:layout_height="@dimen/twenty_four"
-                android:src="@drawable/ic_down_blue_round"
+                android:layout_below="@+id/lblBookedBy"
                 android:layout_alignParentEnd="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_below="@+id/lblBookedBy" />
+                android:src="@drawable/ic_down_blue_round"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/lblStandardAndSection"

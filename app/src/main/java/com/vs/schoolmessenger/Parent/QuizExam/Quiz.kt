@@ -98,8 +98,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
 
 
-
-
 //            binding.toolbarLayout.lblStudentName.text = finalName
 //            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
 
@@ -376,7 +374,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.rcUpcoming.layoutManager = LinearLayoutManager(this)
         binding.rcUpcoming.adapter = adapter
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType,this)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType, this)
     }
 
     private fun isFetchCompletedEQList() {
@@ -384,7 +382,7 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.rcCompleted.layoutManager = LinearLayoutManager(this)
         binding.rcCompleted.adapter = adapter1
 
-        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType,this)
+        appViewModel?.isQuizExamList(isAccessToken ?: "", isType, isStatusType, this)
     }
 
     override fun onBackPressed() {

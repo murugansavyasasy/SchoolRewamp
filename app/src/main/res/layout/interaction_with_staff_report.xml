@@ -9,24 +9,24 @@
 
     <TextView
         android:id="@+id/lblLogo"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="@dimen/fifty"
         android:layout_height="@dimen/fifty"
-        android:gravity="center"
-        android:text="SA"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:background="@drawable/circle_bg_violet"
+        android:gravity="center"
+        android:text="SA"
         android:textColor="@color/white"
-        android:textSize="@dimen/sixteen_sp"
-        style="@style/CustomTextStylePoppinsBold"
-        android:background="@drawable/circle_bg_violet" />
+        android:textSize="@dimen/sixteen_sp" />
 
     <LinearLayout
         android:id="@+id/lytHeader"
-        android:layout_toEndOf="@id/lblLogo"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_toEndOf="@id/lblLogo"
         android:orientation="horizontal">
 
         <!-- Left Side: Details -->
@@ -41,10 +41,10 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saran Raj"
-                android:textColor="@color/black"
                 android:ellipsize="end"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="Saran Raj"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/subjectheader"
@@ -52,28 +52,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/eight"
-                android:text="TAMIL"
-                android:textColor="@color/PrimaryColor"
                 android:ellipsize="end"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="TAMIL"
+                android:textColor="@color/PrimaryColor" />
 
             <TextView
                 android:id="@+id/lblDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/eight"
-                android:textSize="@dimen/twele_sp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="A common messages"
                 android:textColor="@color/grey"
-                android:ellipsize="end"
-                android:maxLines="2" />
+                android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="end|center_vertical">
+            android:gravity="end|center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/yesterdayheader"

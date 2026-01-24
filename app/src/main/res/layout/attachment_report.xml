@@ -83,8 +83,7 @@
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:alpha="0.4"
-                    android:src="@drawable/search_icon">
-                </ImageView>
+                    android:src="@drawable/search_icon"></ImageView>
 
                 <EditText
                     android:id="@+id/edtSearch"
@@ -120,13 +119,12 @@
         </RelativeLayout>
 
 
-
         <LinearLayout
             android:id="@+id/lytList"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rytAttachmentReport"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView

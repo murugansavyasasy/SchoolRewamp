@@ -4,62 +4,62 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/eight"
     android:background="@drawable/bg_card_container"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/classvalue"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Class : II"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/fifteen_sp"
         android:gravity="center"
         android:maxLines="1"
-        style="@style/CustomTextStylePoppinsBold" />
+        android:text="Class : II"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/fifteen_sp" />
 
     <TextView
         android:id="@+id/sectionvalue"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Section : A"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/thirteen_sp"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/four"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
-        android:layout_marginTop="@dimen/four" />
+        android:text="Section : A"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/thirteen_sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twele"
         android:background="@drawable/bg_inner_box"
         android:orientation="vertical"
-        android:padding="@dimen/ten"
-        android:layout_marginTop="@dimen/twele">
+        android:padding="@dimen/ten">
 
         <TextView
             android:id="@+id/absentvalue"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="Absent : 5 / 6"
             android:textColor="@color/PrimaryColor"
-            android:textSize="@dimen/fifteen_sp"
-            android:maxLines="1"
-            android:gravity="center"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_gravity="center_horizontal" />
+            android:textSize="@dimen/fifteen_sp" />
 
         <ProgressBar
             android:id="@+id/progressAbsent"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/eight"
-            android:progress="80"
-            android:max="100"
-            android:visibility="invisible"
             android:layout_marginTop="@dimen/eight"
-            android:progressDrawable="@drawable/progress_custom" />
+            android:max="100"
+            android:progress="80"
+            android:progressDrawable="@drawable/progress_custom"
+            android:visibility="invisible" />
     </LinearLayout>
 </LinearLayout>

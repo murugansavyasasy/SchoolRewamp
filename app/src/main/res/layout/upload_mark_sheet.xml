@@ -51,8 +51,7 @@
                 android:layout_marginHorizontal="@dimen/ten"
                 android:text="@string/upload_mark_sheet"
                 android:textColor="@color/dark_orange_2"
-                android:textSize="@dimen/eighteen">
-            </TextView>
+                android:textSize="@dimen/eighteen"></TextView>
 
             <TextView
                 android:id="@+id/lblClassDetail"
@@ -100,8 +99,7 @@
                             android:layout_centerVertical="true"
                             android:background="@drawable/rect_bg_gray"
                             android:padding="@dimen/ten"
-                            android:src="@drawable/upload_image">
-                        </ImageView>
+                            android:src="@drawable/upload_image"></ImageView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -118,8 +116,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/ten"
                                 android:text="@string/ai_powered_upload"
-                                android:textSize="@dimen/eighteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/eighteen_sp"></TextView>
 
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
@@ -129,8 +126,7 @@
                                 android:alpha="0.6"
                                 android:text="@string/upload_image_for_automatic_detection"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/fifteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/fifteen_sp"></TextView>
                         </LinearLayout>
 
                         <ImageView
@@ -246,26 +242,27 @@
                                 android:textColor="#7A7A7A"
                                 android:textSize="14sp" />
                         </LinearLayout>
+
                         <LinearLayout
-                            android:visibility="gone"
-                            android:layout_marginTop="@dimen/ten"
                             android:id="@+id/lnrUpload"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/rect_orange_bg"
                             android:gravity="center"
                             android:paddingVertical="@dimen/eight"
-                            android:background="@drawable/rect_orange_bg"
-                            android:layout_height="wrap_content">
+                            android:visibility="gone">
+
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/fifteen_sp"
                                 android:layout_width="wrap_content"
-                                android:textColor="@color/white"
-                                android:gravity="center"
-                                android:drawablePadding="@dimen/twele"
+                                android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/right_arrow_ic"
+                                android:drawablePadding="@dimen/twele"
+                                android:gravity="center"
                                 android:text="@string/continue_to_upload"
-                                android:layout_height="wrap_content">
-                            </TextView>
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/fifteen_sp"></TextView>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -318,8 +315,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:text="@string/manually_entry"
-                            android:textSize="@dimen/eighteen_sp">
-                        </TextView>
+                            android:textSize="@dimen/eighteen_sp"></TextView>
 
                         <TextView
                             style="@style/CustomTextStylePoppinsBold"
@@ -329,8 +325,7 @@
                             android:alpha="0.6"
                             android:text="@string/skip_upload_and_enter_marks_manually"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp">
-                        </TextView>
+                            android:textSize="@dimen/fifteen_sp"></TextView>
                     </LinearLayout>
 
                     <ImageView

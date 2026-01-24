@@ -11,16 +11,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/interaction_school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rytsearch1"
@@ -31,8 +31,8 @@
         android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_grey"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <ImageView
@@ -41,9 +41,9 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/ten"
             android:src="@drawable/ic_search_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/txtVideoMenu1"
@@ -51,33 +51,33 @@
             android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:maxLines="1"
             android:imeOptions="actionDone"
-            android:singleLine="true"
+            android:maxLines="1"
             android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintStart_toEndOf="@id/imgSearch1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/imgSearch1"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/blocklist_label"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:gravity="end"
         android:text="Blocked Student List"
         android:textColor="@color/PrimaryColor"
-        android:gravity="end"
-        android:visibility="gone"
-        style="@style/CustomTextStylePoppinsBold"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@+id/rytsearch1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytsearch1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcystudentdata"
@@ -86,23 +86,23 @@
         android:layout_marginTop="@dimen/five"
         android:background="@color/gray_white"
         android:nestedScrollingEnabled="false"
-        app:layout_constraintTop_toBottomOf="@+id/blocklist_label"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blocklist_label" />
 
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/gray_white"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/blocklist_label"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blocklist_label">
 
         <ImageView
             android:id="@+id/nomessage"

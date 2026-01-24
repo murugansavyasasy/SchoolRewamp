@@ -2,9 +2,9 @@
     android:id="@+id/txtFilter"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/fourty"
+    android:layout_marginEnd="@dimen/eight"
+    android:background="@drawable/bg_filter_unselected"
     android:gravity="center"
     android:paddingHorizontal="@dimen/twenty"
-    android:textSize="@dimen/fourteen_sp"
     android:textColor="@color/black"
-    android:background="@drawable/bg_filter_unselected"
-    android:layout_marginEnd="@dimen/eight"/>
+    android:textSize="@dimen/fourteen_sp" />

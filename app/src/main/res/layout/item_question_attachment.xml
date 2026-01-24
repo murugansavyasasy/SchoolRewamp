@@ -1,23 +1,24 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/hundred"
-    android:layout_height="@dimen/hundred"
-    >
+    android:layout_height="@dimen/hundred">
+
     <RelativeLayout
-        android:padding="@dimen/ten"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten">
+
         <ImageView
             android:id="@+id/imgAttachment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/imgRemove"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_gravity="top|end"
         android:background="@drawable/white_circle_bg"
-        android:src="@drawable/del_icon"
-      />
+        android:src="@drawable/del_icon" />
 </FrameLayout>

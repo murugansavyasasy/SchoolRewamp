@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.School.LeaveRequests
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable

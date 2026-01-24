@@ -227,7 +227,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
     private fun isFetchQuizQuestionList() {
         Constant.showLoading(this)
-        appViewModel?.isGetQuestions(isAccessToken ?: "", isQuizID,this)
+        appViewModel?.isGetQuestions(isAccessToken ?: "", isQuizID, this)
     }
 
 
@@ -375,12 +375,11 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
         // Show / hide attachments
         if (currentQuestion.filePath.isNotEmpty()) {
 
-            if (currentQuestion.filePath.size==1){
+            if (currentQuestion.filePath.size == 1) {
                 binding.rcAttachement.visibility = View.VISIBLE
                 binding.rytAttchment.visibility = View.VISIBLE
                 binding.indicator.visibility = View.GONE
-            }
-            else{
+            } else {
                 binding.indicator.visibility = View.VISIBLE
                 binding.rcAttachement.visibility = View.VISIBLE
                 binding.rytAttchment.visibility = View.VISIBLE
@@ -464,11 +463,17 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
             binding.prevButton1.setTextColor(ContextCompat.getColor(this, R.color.white))
         } else {
             binding.prevButton.isEnabled = true
-            binding.prevButton.background.setTint(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.prevButton.background.setTint(
+                ContextCompat.getColor(
+                    this,
+                    R.color.PrimaryColor
+                )
+            )
             binding.igLeftImage.setColorFilter(ContextCompat.getColor(this, R.color.white))
             binding.prevButton1.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
     }
+
     private fun openImagePreview(imageUrl: String) {
         if (imageUrl.isBlank()) return
 
@@ -513,7 +518,6 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
 
         binding.questionCounter.text = spannable
     }
-
 
 
     private fun updateProgressBar() {
@@ -561,7 +565,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     Constant.showLoading(this)
                     val jsonObject = buildAnswerJson()
                     Log.d("FinalAnswer", jsonObject.toString())
-                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject,this)
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject, this)
                 }
             }
         } else {
@@ -577,7 +581,7 @@ class AttendQuiz : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     Constant.showLoading(this)
                     val jsonObject = buildAnswerJson()
                     Log.d("FinalAnswer", jsonObject.toString())
-                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject,this)
+                    appViewModel?.isSubmitQuiz(isAccessToken!!, jsonObject, this)
                 }
             }
         }

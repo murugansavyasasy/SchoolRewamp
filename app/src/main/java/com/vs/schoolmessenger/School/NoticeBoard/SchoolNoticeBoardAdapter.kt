@@ -268,7 +268,7 @@ class SchoolNoticeBoardAdapter(
             val convertedList = noticeData.file_path?.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             } ?: emptyList()
-            Constant.isVideoPostedDate=noticeData.created_on
+            Constant.isVideoPostedDate = noticeData.created_on
             val preview = FilePreview(
                 id = noticeData.id,
                 title = noticeData.title,

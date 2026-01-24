@@ -62,12 +62,12 @@ class HolidaysFragment : Fragment(), View.OnClickListener {
         loadCalendarFragment()
 
         appViewModel?.IsGetHolidayReport?.observe(viewLifecycleOwner) { response ->
-                binding.calendarFragmentContainer.visibility = View.VISIBLE
-                binding.lnrErrorMsg.visibility = View.GONE
-                val calendarFragment = CalendarFragment.newInstance(response?.data?:emptyList())
-                childFragmentManager.commit {
-                    replace(R.id.calendarFragmentContainer, calendarFragment)
-                }
+            binding.calendarFragmentContainer.visibility = View.VISIBLE
+            binding.lnrErrorMsg.visibility = View.GONE
+            val calendarFragment = CalendarFragment.newInstance(response?.data ?: emptyList())
+            childFragmentManager.commit {
+                replace(R.id.calendarFragmentContainer, calendarFragment)
+            }
         }
 
         return binding.root

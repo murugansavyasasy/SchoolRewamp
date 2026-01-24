@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.StaffWiseAttendanceReport
 
 import android.app.Dialog
-import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -98,11 +97,14 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                     val mobileNumber = SharedPreference.getMobileNumber(this)
                     val jsonObject = JsonObject().apply {
                         addProperty(APIKeyNames.mobile_number, mobileNumber)
-                        addProperty(APIKeyNames.activity, Constant.add_points_view_staff_attendance_report)
+                        addProperty(
+                            APIKeyNames.activity,
+                            Constant.add_points_view_staff_attendance_report
+                        )
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                 } else {
                     binding.recycleAttendanceReportsToday.visibility = View.GONE
@@ -377,7 +379,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLocationHistory(data: StaffAttendanceReportData) {
-        Log.d("isComing","isComing")
+        Log.d("isComing", "isComing")
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
 

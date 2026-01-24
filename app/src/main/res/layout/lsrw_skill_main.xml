@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:id="@+id/main">
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ten"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <!-- Scrollable content -->
     <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,11 +42,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/ten"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingStart="@dimen/ten"
-                android:paddingEnd="@dimen/ten"
-                android:gravity="center_vertical">
+                android:paddingEnd="@dimen/ten">
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"

@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.LSRW
 
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -302,7 +301,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
     private fun fetchLsrwstatsReportData(month: Int) {
         Constant.showLoading(this)
         binding.rclsrwheader.visibility = View.VISIBLE
-        appViewModel?.islsrwstats(isAccessToken ?: "", month,this)
+        appViewModel?.islsrwstats(isAccessToken ?: "", month, this)
     }
 
     override fun onClick(v: View?) {

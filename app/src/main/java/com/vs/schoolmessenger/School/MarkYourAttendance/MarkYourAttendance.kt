@@ -146,7 +146,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
@@ -236,7 +236,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
     }
-
 
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {

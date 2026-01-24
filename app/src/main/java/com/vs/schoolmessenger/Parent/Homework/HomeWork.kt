@@ -146,7 +146,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
 
                     isHomeWorkData = response.data
                     if (isHomeWorkData != null) {
@@ -181,6 +181,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             }
         }
     }
+
     fun isLoadHomeWorkData(
         data: List<GetHomeworkDetails>,
         isHomeWorkDate: String
@@ -266,13 +267,13 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
     fun isHomeWorkList(isHomeWorkDate: String) {
         mAdapter = HomeworkParentAdapter(
-            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate,this
+            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate, this
         )
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
         binding.recyclerView.setHasFixedSize(true)
-        appViewModel?.isHomeWorkDetails(isAccessToken!!, this,isHomeWorkDate)
+        appViewModel?.isHomeWorkDetails(isAccessToken!!, this, isHomeWorkDate)
     }
 
     override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
@@ -289,7 +290,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             val updatedData = data.copy(is_unread = false)
             mAdapter?.updateItem(updatedData)
         }
-        Constant.isVideoPostedDate=data.created_on
+        Constant.isVideoPostedDate = data.created_on
 
         val isHomeWorkData = FilePreview(
             id = data.id,
@@ -331,7 +332,12 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(resources.getColor(R.color.light_yellow_5, null))
+            viewHolder?.itemView?.setBackgroundColor(
+                resources.getColor(
+                    R.color.light_yellow_5,
+                    null
+                )
+            )
             recyclerView.postDelayed({
                 viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
             }, Constant.TIME_OUT)

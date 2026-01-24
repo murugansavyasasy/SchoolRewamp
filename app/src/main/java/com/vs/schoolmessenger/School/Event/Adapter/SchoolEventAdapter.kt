@@ -111,6 +111,7 @@ class SchoolEventAdapter(
         isLoading = false
         notifyDataSetChanged()
     }
+
     fun getCurrentList(): List<SchoolEventItem> {
         return filteredList
     }
@@ -187,7 +188,7 @@ class SchoolEventAdapter(
             val convertedList = data.file_path.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             }
-            Constant.isVideoPostedDate=data.date + " "+ data.time
+            Constant.isVideoPostedDate = data.date + " " + data.time
 
             val isHomeWorkData = FilePreview(
                 id = data.id,

@@ -10,17 +10,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relative_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <include
             android:id="@+id/toolbarLayout"
@@ -66,8 +66,8 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/twenty"
                     android:layout_below="@+id/rcycategory_event"
+                    android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/ongoing_events"
                     android:textSize="@dimen/eighteen_sp" />
@@ -93,9 +93,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/twenty"
                     android:src="@drawable/dotindicator" />
-
-
-
 
 
                 <TextView
@@ -173,7 +170,6 @@
                     android:fadeScrollbars="false"
                     android:paddingHorizontal="@dimen/ten"
                     android:scrollbars="none" />
-
 
 
             </RelativeLayout>

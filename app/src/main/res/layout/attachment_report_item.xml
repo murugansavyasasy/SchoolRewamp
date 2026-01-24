@@ -1,39 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/rytHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/five"
     android:layout_marginBottom="@dimen/five"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/imgReadUnRead"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
-        android:layout_marginStart="@dimen/five"
         android:layout_alignParentEnd="true"
-        android:visibility="gone"
-        android:background="@drawable/new_icon1"/>
+        android:layout_marginStart="@dimen/five"
+        android:background="@drawable/new_icon1"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/imgEditAndDelete"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
+        android:layout_below="@id/imgReadUnRead"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/ten"
-        android:layout_below="@id/imgReadUnRead"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:src="@drawable/ic_more_vert"/>
+        android:src="@drawable/ic_more_vert" />
 
     <TextView
         android:id="@+id/lblTitle"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/imgEditAndDelete"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:text=""/>
+        android:layout_toStartOf="@+id/imgEditAndDelete"
+        android:text="" />
 
     <TextView
         android:id="@+id/lblDescription"
@@ -43,10 +44,10 @@
         android:layout_below="@+id/lblTitle"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
-        android:text=""
-        android:textColor="@color/black"
+        android:ellipsize="end"
         android:maxLines="10"
-        android:ellipsize="end"/>
+        android:text=""
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/lblSeeMore"
@@ -56,48 +57,48 @@
         android:layout_below="@+id/lblDescription"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
-        android:visibility="gone"
         android:text="@string/SeeMore"
         android:textColor="@color/dark_blue_1"
-        android:textSize="@dimen/thirteen_sp"/>
+        android:textSize="@dimen/thirteen_sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblSeeMore"
-        android:visibility="gone"/>
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/lblDate"
-        android:layout_below="@+id/rcyFile"
-        android:layout_marginTop="@dimen/ten"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcyFile"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
         android:gravity="end"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@color/mild_grey_dark"
-        android:text="12 Oct 2923 Saturaday">
+        android:text="12 Oct 2923 Saturaday"
+        android:textColor="@color/mild_grey_dark">
 
     </TextView>
 
     <TextView
         android:id="@+id/lblPostedBy"
-        android:layout_width="match_parent"
-        android:textSize="@dimen/thirteen_sp"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginTop="@dimen/three"
-        android:textColor="@color/mild_grey_dark"
-        android:gravity="end"
         style="@style/CustomTextStylePoppinsMedium"
-        android:text="Posted By : "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lblDate"
-        android:layout_height="wrap_content"/>
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/three"
+        android:layout_marginEnd="@dimen/twenty"
+        android:gravity="end"
+        android:text="Posted By : "
+        android:textColor="@color/mild_grey_dark"
+        android:textSize="@dimen/thirteen_sp" />
 
     <!-- Divider -->
     <View
@@ -107,6 +108,6 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:visibility="gone"
-        android:background="@color/grey"/>
+        android:background="@color/grey"
+        android:visibility="gone" />
 </RelativeLayout>

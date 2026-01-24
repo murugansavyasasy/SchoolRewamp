@@ -10,15 +10,14 @@
 
     <TextView
         android:id="@+id/alertTitle"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
         android:text="@string/isSuccess"
         android:textColor="@color/black"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textSize="@dimen/sixteen_sp"
-         />
+        android:textSize="@dimen/sixteen_sp" />
 
     <TextView
         android:id="@+id/alertMessage"
@@ -48,23 +47,23 @@
             android:id="@+id/btnCancel"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:visibility="gone"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2"
-            android:textSize="@dimen/fourteen_sp" />
+            android:textSize="@dimen/fourteen_sp"
+            android:visibility="gone" />
 
 
         <TextView
             android:id="@+id/btnOk"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/permission_ok"
             android:textColor="@color/navi_blue2"

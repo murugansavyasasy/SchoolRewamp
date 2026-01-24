@@ -23,7 +23,7 @@ object ApiCallRequest {
         circularType: String,
         fileName: String
     ): JsonObject {
-        Log.d("isFilepath",Constant.isAwsUploadedFiles[0].isFileUrl)
+        Log.d("isFilepath", Constant.isAwsUploadedFiles[0].isFileUrl)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
         jsonObject.addProperty(APIKeyNames.voice_link, Constant.isAwsUploadedFiles[0].isFileUrl)

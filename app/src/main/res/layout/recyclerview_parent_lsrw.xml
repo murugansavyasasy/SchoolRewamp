@@ -1,92 +1,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerrelative_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/headerrelative_layout"
-    android:padding="@dimen/fifteen"
-    android:background="@drawable/rect_white"
-    android:elevation="4dp"
     android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
     android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginBottom="@dimen/five"
-    android:clipToPadding="false">
+    android:background="@drawable/rect_white"
+    android:clipToPadding="false"
+    android:elevation="4dp"
+    android:padding="@dimen/fifteen">
 
     <ImageView
         android:id="@+id/imgNewImage"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
-        android:layout_marginStart="@dimen/five"
         android:layout_alignParentEnd="true"
-        android:elevation="@dimen/ten"
+        android:layout_marginStart="@dimen/five"
         android:layout_marginTop="-10dp"
         android:background="@drawable/new_icon1"
-        android:visibility="gone">
-    </ImageView>
+        android:elevation="@dimen/ten"
+        android:visibility="gone"></ImageView>
 
 
     <ImageView
         android:id="@+id/imgIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/headphonesvgformat"
-        android:padding="5dp"
         android:layout_alignParentStart="true"
-        android:background="@drawable/bg_icon_round"
         android:layout_marginEnd="10dp"
-        android:contentDescription="@string/app_name" />
+        android:background="@drawable/bg_icon_round"
+        android:contentDescription="@string/app_name"
+        android:padding="5dp"
+        android:src="@drawable/headphonesvgformat" />
 
 
     <TextView
         android:id="@+id/txtTitle"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/imgIcon"
         android:text="TAMIL"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/txtSubtitle"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtTitle"
         android:layout_toEndOf="@id/imgIcon"
         android:text="Listening"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textSize="14sp"
-        android:textColor="@color/purple_700" />
+        android:textColor="@color/purple_700"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/txtMainDesc"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgIcon"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
         android:text="I’m not sure what to say about the beach for"
-        android:textSize="14sp"
-       style="@style/CustomTextStylePoppinsBold"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/txtSubDesc"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtMainDesc"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="25dp"
-        android:text="I’m not going back to the house and the beach for a few hours and then I’m going to bed and then I’ll head back home to get my stuff ready to the beach and then"
-        android:textSize="13sp"
         android:ellipsize="end"
         android:maxLines="3"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@color/bpTransparent_black" />
-
-
-
-
+        android:text="I’m not going back to the house and the beach for a few hours and then I’m going to bed and then I’ll head back home to get my stuff ready to the beach and then"
+        android:textColor="@color/bpTransparent_black"
+        android:textSize="13sp" />
 
 
     <LinearLayout
@@ -182,36 +177,35 @@
         android:layout_height="20dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/right_arrow"
-        android:contentDescription="arrow" />
-
+        android:contentDescription="arrow"
+        android:src="@drawable/right_arrow" />
 
 
     <TextView
         android:id="@+id/txtProfile"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/rytList"
         android:layout_alignParentStart="true"
-        android:drawableLeft="@drawable/profile"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/profile"
         android:drawablePadding="6dp"
         android:text="CHANDHRU V"
-        android:textSize="14sp"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
     <TextView
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/txtProfile"
         android:layout_alignParentEnd="true"
-        android:text="@string/Start"
         android:layout_marginTop="10dp"
-        android:textSize="14sp"
-        style="@style/CustomTextStylePoppinsBold"
-        android:textColor="@color/teal_900"
         android:drawableRight="@drawable/doublearrowsvgformatstyle"
-        android:drawablePadding="4dp" />
+        android:drawablePadding="4dp"
+        android:text="@string/Start"
+        android:textColor="@color/teal_900"
+        android:textSize="14sp" />
 
 </RelativeLayout>

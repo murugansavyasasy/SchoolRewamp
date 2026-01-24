@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Faq
 
-import android.os.Build
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,7 +72,7 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
     }
 
     private fun loadfaqdata() {
-        appViewModel?.isfrequentlyasked(isAccessToken!!,this)
+        appViewModel?.isfrequentlyasked(isAccessToken!!, this)
 
     }
 

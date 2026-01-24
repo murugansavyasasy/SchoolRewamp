@@ -336,12 +336,15 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             R.id.rytStart1 -> {
                 AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }
+
             R.id.rlaStartDate -> {
                 AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }
+
             R.id.rytStartDate -> {
                 AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }
+
             R.id.imgCalendar -> {
                 AssignmentCustomshowDatePickerDialog(this, this, isSelectedDate)
             }

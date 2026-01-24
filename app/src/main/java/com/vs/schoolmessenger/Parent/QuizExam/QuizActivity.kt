@@ -166,6 +166,7 @@ class QuizActivity : BaseActivity<ActivityQuizBinding>(), View.OnClickListener {
                 fileUrl.lowercase().endsWith(".pdf") -> Constant.PDF
                 fileUrl.lowercase().endsWith(".mp4") ||
                         fileUrl.lowercase().contains("video") -> Constant.VIDEO
+
                 else -> Constant.IMAGE
             }
 

@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center"
     android:layout_marginBottom="@dimen/ten"
     android:background="@drawable/white_bg_radius"
+    android:gravity="center"
+    android:orientation="horizontal"
     android:padding="@dimen/twele">
 
     <ImageView
@@ -16,24 +16,23 @@
 
     <LinearLayout
         android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <TextView
 
             android:id="@+id/txtHolidayName"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            style="@style/CustomTextStylePoppinsBold"/>
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:layout_marginTop="@dimen/five"
             android:id="@+id/txtHolidayDate"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/CustomTextStylePoppinsBold"
-           />
+            android:layout_marginTop="@dimen/five" />
     </LinearLayout>
 </LinearLayout>

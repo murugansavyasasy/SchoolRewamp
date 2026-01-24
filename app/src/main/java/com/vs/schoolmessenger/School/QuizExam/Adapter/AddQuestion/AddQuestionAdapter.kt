@@ -163,7 +163,7 @@ class AddQuestionAdapter(
                     isAllValid = false
                 }
 
-                item.question.isBlank()-> {
+                item.question.isBlank() -> {
                     holder?.edtQuestion?.error = context.getString(R.string.this_is_required)
 //                    Toast.makeText(
 //                        context,
@@ -173,7 +173,7 @@ class AddQuestionAdapter(
                     isAllValid = false
                 }
 
-                item.a_option.isBlank()  -> {
+                item.a_option.isBlank() -> {
                     holder?.edtOptionA?.error = context.getString(R.string.this_is_required)
 //                    Toast.makeText(
 //                        context,
@@ -194,7 +194,7 @@ class AddQuestionAdapter(
                     isAllValid = false
                 }
 
-                item.c_option.isBlank()-> {
+                item.c_option.isBlank() -> {
 //                    Toast.makeText(
 //                        context,
 //                        context.getString(R.string.an_option_c_or_an_image_must_be_added), Toast.LENGTH_SHORT
@@ -332,12 +332,12 @@ class AddQuestionAdapter(
                 "Question $adapterPosition attachments = ${data.file_path?.size}"
             )
 
-            lblAddImageD.visibility= View.VISIBLE
-            lblAddImageC.visibility= View.VISIBLE
-            lblAddImageB.visibility= View.VISIBLE
-            lblAddImageA.visibility= View.VISIBLE
-            lblQuestionPick.visibility= View.VISIBLE
-            rcyQuestions.visibility= View.VISIBLE
+            lblAddImageD.visibility = View.VISIBLE
+            lblAddImageC.visibility = View.VISIBLE
+            lblAddImageB.visibility = View.VISIBLE
+            lblAddImageA.visibility = View.VISIBLE
+            lblQuestionPick.visibility = View.VISIBLE
+            rcyQuestions.visibility = View.VISIBLE
 
             rytSpinnerHeader.visibility = View.VISIBLE
             edtCorrectAns.visibility = View.GONE
@@ -427,32 +427,32 @@ class AddQuestionAdapter(
                 rcyQuestions.requestLayout()
             }
             imgOptionA.setOnClickListener {
-                openImagePreview(context,data.a_image.toString())
+                openImagePreview(context, data.a_image.toString())
             }
             imgOptionB.setOnClickListener {
-                openImagePreview(context,data.b_image.toString())
+                openImagePreview(context, data.b_image.toString())
             }
             imgOptionC.setOnClickListener {
-                openImagePreview(context,data.c_image.toString())
+                openImagePreview(context, data.c_image.toString())
             }
             imgOptionD.setOnClickListener {
-                openImagePreview(context,data.d_image.toString())
+                openImagePreview(context, data.d_image.toString())
             }
 
             lblremove.setOnClickListener {
 
                 //Local item (USER, QBANK)
-                if (data.id.isNullOrEmpty() || data.sourceType!= QuestionSource.API) {
-                    Log.d("QuestionType","USER & QUESTION BANK Question")
+                if (data.id.isNullOrEmpty() || data.sourceType != QuestionSource.API) {
+                    Log.d("QuestionType", "USER & QUESTION BANK Question")
                     removeItem(position)
                     return@setOnClickListener
                 }
 
                 // Delete only for API Data
 //                We ask for the Confirmation to delete API question
-                Log.d("QuestionType","API Question")
-                listener.onDeleteQuizQuestion(data.id,) { isSuccess ->
-                    Log.d("QuestionType","API Question")
+                Log.d("QuestionType", "API Question")
+                listener.onDeleteQuizQuestion(data.id) { isSuccess ->
+                    Log.d("QuestionType", "API Question")
                     if (isSuccess) {
                         removeItem(position)
                     } else {

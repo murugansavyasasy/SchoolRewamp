@@ -59,11 +59,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val isVoiceUrl = remoteMessage.data[Constant.isVoiceUrlNotifi] ?: Constant.normal
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
-        val msgId = remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
+        val msgId =
+            remoteMessage.data[Constant.msg_id] ?: ""  // Separate top-level msg_id from payload
         var msgInfo: String? = null
-        Log.d("isNotificationType",remoteMessage.data[Constant.type_].toString())
+        Log.d("isNotificationType", remoteMessage.data[Constant.type_].toString())
         if (!type.equals(Constant.isCall)) {
-            Log.d("msg_info","msg_info")
+            Log.d("msg_info", "msg_info")
             msgInfo = remoteMessage.data[Constant.msg_info] ?: ""
         }
 
@@ -89,7 +90,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     title,
                     body,
                     receiver_id.toString(),
-                    isWelcomeUrl,isVoiceUrl,ei1,ei2,ei3,ei4,ei5,school_name,member_name,call_title,role,circular_id,retrycount
+                    isWelcomeUrl,
+                    isVoiceUrl,
+                    ei1,
+                    ei2,
+                    ei3,
+                    ei4,
+                    ei5,
+                    school_name,
+                    member_name,
+                    call_title,
+                    role,
+                    circular_id,
+                    retrycount
                 )
             } else {
 
@@ -160,7 +173,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 return
             }
         }
-        Log.d("Received_Call","notification_call")
+        Log.d("Received_Call", "notification_call")
         // Create Intent for notification tap
         val intent = Intent(this, NotificationCallScreen::class.java).apply {
             putExtra(Constant.menu_name, title)
@@ -236,7 +249,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         try {
             val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
                 setTextViewText(R.id.notification_title, title ?: "School Chimes")
-                setTextViewText(R.id.lblContent, body ?: Constant.incoming_call) // NEW: Set body text too
+                setTextViewText(
+                    R.id.lblContent,
+                    body ?: Constant.incoming_call
+                ) // NEW: Set body text too
                 // Optional: Set button visibilities if dynamic
                 // setViewVisibility(R.id.imgDecline, View.VISIBLE) // e.g., show/hide based on state
             }
@@ -248,7 +264,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.e(TAG, "Error setting up custom notification: ${e.message}")
             // Fallback to basic notification without custom views if RemoteViews fails
-            builder.setStyle(NotificationCompat.BigTextStyle().bigText(body ?: Constant.incoming_call))
+            builder.setStyle(
+                NotificationCompat.BigTextStyle().bigText(body ?: Constant.incoming_call)
+            )
         }
         try {
             val notificationId = uniqueID.takeIf { it != 0 } ?: (0..999999).random()
@@ -360,7 +378,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Create collapsed RemoteViews (1 line for body with ellipsis)
         val remoteViewCollapsed = RemoteViews(packageName, R.layout.custom_notification).apply {
             setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
-            setTextViewText(R.id.notification_body, messageBody ?: Constant.You_have_a_new_message_from_your_school)
+            setTextViewText(
+                R.id.notification_body,
+                messageBody ?: Constant.You_have_a_new_message_from_your_school
+            )
             setInt(R.id.notification_body, "setMaxLines", 1) // Show only 1 line initially
             // Handle image for collapsed (will hide if no space)
             if (bitmap != null) {
@@ -374,7 +395,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Create expanded RemoteViews (up to 5 lines for body)
         val remoteViewExpanded = RemoteViews(packageName, R.layout.custom_notification).apply {
             setTextViewText(R.id.notification_title, title ?: Constant.School_Chimes)
-            setTextViewText(R.id.notification_body, messageBody ?: Constant.You_have_a_new_message_from_your_school)
+            setTextViewText(
+                R.id.notification_body,
+                messageBody ?: Constant.You_have_a_new_message_from_your_school
+            )
             setInt(R.id.notification_body, "setMaxLines", 100) // Show full multi-line content
             // Handle image for expanded (always visible if present)
             if (bitmap != null) {
@@ -389,7 +413,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.school_splash_logo)
             .setContentTitle(title ?: Constant.School_Chimes)
-            .setContentText(messageBody ?: Constant.You_have_a_new_message_from_your_school) // Fallback text
+            .setContentText(
+                messageBody ?: Constant.You_have_a_new_message_from_your_school
+            ) // Fallback text
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

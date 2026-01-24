@@ -14,4 +14,4 @@ data class getActivitySubjectNameData(
     val paper: List<getActivityPaperNameData>,
     var isSelected: Boolean = false
 
-): Parcelable
+) : Parcelable

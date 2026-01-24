@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Settings.WhatsNew
 
-import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -86,11 +85,11 @@ class WhatsNewActivity : BaseActivity<ActivityWhatsNewBinding>(), View.OnClickLi
         binding.rcywhatsnew.adapter = whatsnewAdapter
 
         if (Constant.isParentChoose) {
-            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.parent,this)
+            appViewModel!!.getdashboardnewupdates(isAccessToken!!, Constant.parent, this)
         } else {
             appViewModel!!.getdashboardnewupdates(
                 isAccessToken!!,
-                Constant.user_details!!.staff_role,this
+                Constant.user_details!!.staff_role, this
             )
         }
     }

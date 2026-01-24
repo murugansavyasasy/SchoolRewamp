@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
     android:background="@color/white">
 
@@ -12,26 +12,25 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <LinearLayout
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <LinearLayout
             android:id="@+id/headerview"
@@ -41,8 +40,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-           >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblHeaderTitle"
@@ -59,17 +57,16 @@
             android:id="@+id/rcyAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_marginStart="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/five">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginEnd="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
 
 
         <LinearLayout
-            android:gravity="center"
             android:id="@+id/lytList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -78,11 +75,10 @@
                 android:layout_height="@dimen/two_fifty"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/twenty"
-                android:visibility="gone"
                 android:src="@drawable/nomessages"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtNoData"
@@ -90,12 +86,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:visibility="gone"
-
                 android:text="@string/no_list_found"
+
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                />
+                android:visibility="gone" />
 
 
         </LinearLayout>

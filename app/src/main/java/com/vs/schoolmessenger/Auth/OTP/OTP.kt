@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint
-import android.os.Build
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher

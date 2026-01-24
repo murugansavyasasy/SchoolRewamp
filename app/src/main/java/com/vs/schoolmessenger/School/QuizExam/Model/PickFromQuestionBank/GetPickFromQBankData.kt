@@ -34,8 +34,6 @@ data class GetPickFromQBankData(
 )
 
 
-
-
 //package com.vs.schoolmessenger.School.QuizExam.Model.PickFromQuestionBank
 //
 //import com.google.gson.annotations.SerializedName

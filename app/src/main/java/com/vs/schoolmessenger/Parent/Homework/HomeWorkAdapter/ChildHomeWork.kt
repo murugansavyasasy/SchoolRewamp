@@ -69,17 +69,13 @@ import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.Assignme
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
-import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
 import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
-import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
@@ -679,7 +675,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
 
             if (data!!.isMenuType == Constant.M_NOTICEBOARD && data!!.isParentAssignment == false) {
-                if(userDetails?.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails?.staff_role.equals(Constant.isStaffRole)) {
                     binding.sendtostandardLabel.visibility = View.GONE
                     binding.noticeboardcardview.visibility = View.GONE
                 } else {
@@ -689,7 +685,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     binding.lblschoolvalue.text = data!!.school_name
                 }
             }
-
 
 
         }

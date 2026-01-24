@@ -101,10 +101,9 @@
                     <ImageView
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_location" />
-
 
 
                 </RelativeLayout>
@@ -228,10 +227,10 @@
                         android:background="@android:color/transparent"
                         android:editable="true"
                         android:focusable="true"
-                        android:inputType="textMultiLine|textCapSentences"
                         android:focusableInTouchMode="true"
                         android:gravity="start"
                         android:hint="@string/Enterdescription"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:padding="@dimen/ten">
 
                     </EditText>
@@ -362,8 +361,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text=""
-                                            android:textColor="@color/mild_grey_dark">
-                                        </TextView>
+                                            android:textColor="@color/mild_grey_dark"></TextView>
 
                                         <TextView
                                             android:id="@+id/txtStartDate"
@@ -371,8 +369,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="@dimen/three"
-                                            android:text="">
-                                        </TextView>
+                                            android:text=""></TextView>
                                     </LinearLayout>
 
                                 </RelativeLayout>

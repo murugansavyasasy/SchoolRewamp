@@ -142,38 +142,38 @@
 
                 <RadioButton
                     android:id="@+id/radioMale"
-                    android:layout_width="wrap_content"
-                    android:background="@drawable/field_background"
-                    android:paddingVertical="@dimen/five"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/thirteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:text="@string/male" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/field_background"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/five"
+                    android:text="@string/male"
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:background="@drawable/field_background"
-                    android:textSize="@dimen/thirteen_sp"
                     android:layout_marginStart="@dimen/sixteen"
-                    android:text="@string/female" />
+                    android:background="@drawable/field_background"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/five"
+                    android:text="@string/female"
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <RadioButton
                     android:id="@+id/radioOthers"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:background="@drawable/field_background"
-                    android:paddingVertical="@dimen/five"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:textSize="@dimen/thirteen_sp"
                     android:layout_marginStart="@dimen/sixteen"
-                    android:text="@string/others" />
+                    android:background="@drawable/field_background"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/five"
+                    android:text="@string/others"
+                    android:textSize="@dimen/thirteen_sp" />
             </RadioGroup>
         </LinearLayout>
 
@@ -206,6 +206,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/dropdownvalue"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -213,7 +214,6 @@
                     android:focusable="false"
                     android:inputType="none"
                     android:padding="0dp"
-                    style="@style/CustomTextStylePoppinsMedium"
                     android:popupBackground="@android:color/white"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp" />
@@ -269,8 +269,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:weightSum="1">
 
                 <TextView
@@ -289,23 +289,20 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
+                    android:background="@drawable/background_radius_button"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/plus_add"
-                    android:background="@drawable/background_radius_button"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
-
-
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                />
+                android:layout_marginTop="8dp" />
 
             <FrameLayout
                 android:id="@+id/selectedFilesContainer"
@@ -315,7 +312,6 @@
                 android:visibility="gone" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

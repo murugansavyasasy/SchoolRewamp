@@ -128,11 +128,10 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         //Note:here ai_mark_entry comes true means for this selected exam for this exam,mark upload can be done in AI false means not
-        if (Constant.isMarkUploadExamListDataDetails?.ai_mark_entry==true){
-            binding.cardUploadImage.visibility= View.VISIBLE
-        }
-        else{
-            binding.cardUploadImage.visibility= View.GONE
+        if (Constant.isMarkUploadExamListDataDetails?.ai_mark_entry == true) {
+            binding.cardUploadImage.visibility = View.VISIBLE
+        } else {
+            binding.cardUploadImage.visibility = View.GONE
         }
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -243,7 +242,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
 
                     Constant.isExtractedDetails = emptyList()
@@ -253,13 +252,18 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                     intent.putExtra("entry_type", true)
                     this.startActivity(intent)
                 } else {
-                    val errorMessage = response.message ?: getString(R.string.failed_to_process_marksheet)
+                    val errorMessage =
+                        response.message ?: getString(R.string.failed_to_process_marksheet)
                     Log.e("UploadMarksError", "Extraction failed: $errorMessage")
                     Toast.makeText(this@UploadMarkSheet, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Log.e("UploadMarksError", "No response received")
-                Toast.makeText(this@UploadMarkSheet, getString(R.string.failed_to_process_marksheet), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@UploadMarkSheet,
+                    getString(R.string.failed_to_process_marksheet),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

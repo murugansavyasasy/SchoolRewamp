@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/AthensGray">
 
 
@@ -28,9 +28,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:text="Saran"
-            android:visibility="gone"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
 
         <TextView
@@ -99,74 +99,73 @@
     </LinearLayout>
 
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:visibility="gone"
         android:layout_below="@+id/linear_layo212ut"
+        android:layout_margin="12dp"
+        android:padding="0dp"
+        android:visibility="gone"
         app:cardCornerRadius="18dp"
-        app:cardElevation="2dp"
-        android:padding="0dp">
+        app:cardElevation="2dp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="#F6F6F6"
+                android:orientation="vertical"
                 android:padding="14dp">
 
                 <TextView
                     android:id="@+id/txtQuestion"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hello Sir"
-                    android:textSize="13sp"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/txtAskedBy"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="Asked by - Amir Khan"
-                    android:textSize="12sp"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="#555555" />
+                    android:textColor="#555555"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/txtAnswer"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hellioo"
                 android:padding="16dp"
+                android:text="Hellioo"
                 android:textColor="#000000"
-                style="@style/CustomTextStylePoppinsBold"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtTimestamp"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="end"
                 android:text="24 Oct 2025"
-                android:textSize="12sp"
                 android:textColor="#555555"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_gravity="end"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
 

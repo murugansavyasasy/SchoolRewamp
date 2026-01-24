@@ -144,7 +144,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             }
         }
 
-        if(Constant.isSelectedMenuName.isNullOrEmpty()){
+        if (Constant.isSelectedMenuName.isNullOrEmpty()) {
             binding.toolbarLayout.lblParentToolBar.text = Constant.Messages
         } else {
             binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
@@ -162,10 +162,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
 
                 if (response.status) {
-                    if(isMultipleSchool){
+                    if (isMultipleSchool) {
                         userDetails?.let { setupSchoolSpinner(it.staff_details) }
-                    }
-                    else{
+                    } else {
                         isLoadMsgStaff(response.data)
                     }
                     binding.rcMessageStaff.visibility = View.VISIBLE
@@ -190,7 +189,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
 
             } else {
@@ -454,9 +453,18 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     lastSelectedPosition = position
 
 //                    Constant.showLoading(this@MessageFromManagement)
-                    adapter = MessageFromStaffAdapter(mutableListOf(), this@MessageFromManagement, this@MessageFromManagement, Constant.isShimmerViewShow)
+                    adapter = MessageFromStaffAdapter(
+                        mutableListOf(),
+                        this@MessageFromManagement,
+                        this@MessageFromManagement,
+                        Constant.isShimmerViewShow
+                    )
                     binding.rcMessageStaff.layoutManager =
-                        LinearLayoutManager(this@MessageFromManagement, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MessageFromManagement,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     binding.rcMessageStaff.adapter = adapter
                     binding.rcMessageStaff.isNestedScrollingEnabled = false
 
@@ -594,12 +602,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcMessageStaff.adapter = adapter
         binding.rcMessageStaff.isNestedScrollingEnabled = false
-        appViewModel?.isGetMessageStaff(isAccessToken ?: "",this)
+        appViewModel?.isGetMessageStaff(isAccessToken ?: "", this)
     }
 
     fun isGetMessageFromStaffArchive() {
         Constant.showLoading(this)
-        appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "",this)
+        appViewModel?.isGetMessageStaffArchive(isAccessToken ?: "", this)
     }
 
     fun ErrorMessage(errorMessage: String) {
@@ -707,13 +715,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 if (data.file_path.isNullOrEmpty()) {
                     indicator.visibility = View.GONE
                     recyclerView.visibility = View.GONE
-                }
-                else {
-                    if (data.file_path.size==1){
+                } else {
+                    if (data.file_path.size == 1) {
                         recyclerView.visibility = View.VISIBLE
                         indicator.visibility = View.GONE
-                    }
-                    else{
+                    } else {
                         indicator.visibility = View.VISIBLE
                         recyclerView.visibility = View.VISIBLE
                     }

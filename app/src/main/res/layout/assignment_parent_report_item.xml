@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/headerrelative_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white">
 
@@ -12,12 +12,9 @@
         android:layout_height="@dimen/thirty"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/five"
-        android:elevation="@dimen/ten"
         android:background="@drawable/new_icon1"
-        android:visibility="gone">
-    </ImageView>
-
-
+        android:elevation="@dimen/ten"
+        android:visibility="gone"></ImageView>
 
 
     <TextView
@@ -38,9 +35,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/ten"
-        android:visibility="gone"
         android:contentDescription="Calendar icon"
-        android:src="@drawable/ic_more_vert" />
+        android:src="@drawable/ic_more_vert"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/createddate"
@@ -115,78 +112,74 @@
     </LinearLayout>
 
 
-
-
     <LinearLayout
+        android:id="@+id/linearassigned_layout"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/thirty"
-        android:id="@+id/linearassigned_layout"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/five"
         android:background="@drawable/rect_shadow_light_green1"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/five">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/calenderstylesvg"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/calenderstylesvg" />
 
         <TextView
             android:id="@+id/lblassigned"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/five"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="Assigned : 24 Aug 2025"
             android:textColor="@color/dark_blue_1"
-            android:textSize="@dimen/twele_sp"
-            android:gravity="center"
-            android:layout_marginStart="@dimen/five"
-            android:maxLines="1"
-            android:ellipsize="end"
-            />
+            android:textSize="@dimen/twele_sp" />
 
     </LinearLayout>
 
 
     <LinearLayout
+        android:id="@+id/category_linear"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/thirty"
-        android:orientation="horizontal"
         android:layout_below="@+id/lnrSendBy"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
-        android:paddingHorizontal="@dimen/five"
-        android:gravity="center_vertical"
         android:layout_toEndOf="@+id/linearassigned_layout"
         android:background="@drawable/rect_light_grey"
-        android:id="@+id/category_linear">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/five">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/categoryimagesvg"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/categoryimagesvg" />
 
         <TextView
             android:id="@+id/lblCategory"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="GENERAL"
-            android:maxLines="1"
-            android:gravity="center"
-            android:textSize="@dimen/twele_sp"
-            android:textColor="@color/black"
             android:layout_marginStart="@dimen/five"
-            />
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="GENERAL"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twele_sp" />
 
     </LinearLayout>
-
 
 
     <RelativeLayout
@@ -198,72 +191,66 @@
         android:layout_marginTop="@dimen/five">
 
         <LinearLayout
+            android:id="@+id/lbldeadline_linear"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/thirty"
-            android:id="@+id/lbldeadline_linear"
             android:background="@drawable/rect_shadow_light_green1"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/five"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/five">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bookformatsvg"/>
+                android:src="@drawable/bookformatsvg" />
+
             <TextView
                 android:id="@+id/lblsubject"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/five"
-                android:text="TAMIL"
-                android:maxLines="1"
                 android:gravity="center"
-                android:textSize="12sp"
+                android:maxLines="1"
+                android:text="TAMIL"
                 android:textColor="@color/dark_blue_1"
-                >
-            </TextView>
+                android:textSize="12sp"></TextView>
         </LinearLayout>
-
-
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/thirty"
-            android:orientation="horizontal"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
-            android:paddingHorizontal="@dimen/five"
-            android:gravity="center_vertical"
             android:layout_toEndOf="@+id/lbldeadline_linear"
-            android:background="@drawable/bg_icon_round_lightyellow">
+            android:background="@drawable/bg_icon_round_lightyellow"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/five">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/calendersvgformat"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/calendersvgformat" />
 
             <TextView
                 android:id="@+id/lbldeadline"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Deadline 24 Aug 2025"
-                android:textSize="12sp"
-                android:maxLines="1"
-                android:textColor="@color/jaffa"
                 android:layout_marginStart="5dp"
-                />
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Deadline 24 Aug 2025"
+                android:textColor="@color/jaffa"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
 
     </RelativeLayout>
-
-
 
 
     <LinearLayout
@@ -355,50 +342,44 @@
     </LinearLayout>
 
 
-
-
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytList"
         android:layout_centerHorizontal="false"
-        android:layout_marginTop="@dimen/five"
-        android:visibility="visible"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten">
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/ten"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/lblSubmitted"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_dark_blue"
             android:gravity="center"
-            style="@style/CustomTextStylePoppinsBold"
-            android:text="@string/my_submissions"
-            android:paddingVertical="@dimen/five"
             android:paddingHorizontal="@dimen/fifteen"
+            android:paddingVertical="@dimen/five"
+            android:text="@string/my_submissions"
             android:textColor="@color/white"
-            android:textSize="13sp">
-        </TextView>
+            android:textSize="13sp"></TextView>
 
 
         <TextView
             android:id="@+id/lblNotSubmitted"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_green_radoius_10dp"
             android:layout_alignParentEnd="true"
-            android:backgroundTint="@color/dark_green_9"
             android:layout_marginEnd="10dp"
-            android:paddingVertical="@dimen/five"
+            android:background="@drawable/bg_green_radoius_10dp"
+            android:backgroundTint="@color/dark_green_9"
             android:paddingHorizontal="@dimen/fifteen"
+            android:paddingVertical="@dimen/five"
             android:text="@string/submit"
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold">
-        </TextView>
-
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
 
     </RelativeLayout>

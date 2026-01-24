@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <TextView
-        android:layout_marginStart="@dimen/ten"
         android:id="@+id/subjectName"
-        android:layout_width="match_parent"
         style="@style/CustomTextStylePoppinsBold"
-        android:textSize="@dimen/twenty_sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
         android:textColor="@color/PrimaryColor"
-        android:layout_height="wrap_content">
-    </TextView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subjectRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/eight"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"/>
+        android:textSize="@dimen/twenty_sp"></TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subjectRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:padding="@dimen/eight" />
 </LinearLayout>

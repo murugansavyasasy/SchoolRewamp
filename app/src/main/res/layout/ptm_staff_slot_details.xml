@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <View
@@ -18,19 +18,18 @@
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/toolbarLayout">
+        android:layout_below="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty"
                 android:text="@string/function_meeting"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"></TextView>
@@ -259,9 +258,9 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/twenty"
                     android:padding="@dimen/ten"
-                    android:layout_centerHorizontal="true"
                     android:text="@string/join_meeting"
                     android:textColor="@color/white"
                     android:textSize="@dimen/eighteen"></TextView>
@@ -272,11 +271,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/twenty"
-                    android:visibility="gone"
                     android:layout_marginEnd="@dimen/twenty"
                     android:padding="@dimen/ten"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen"></TextView>
+                    android:textSize="@dimen/thirteen"
+                    android:visibility="gone"></TextView>
             </RelativeLayout>
 
             <TextView

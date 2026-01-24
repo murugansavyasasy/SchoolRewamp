@@ -112,7 +112,7 @@ class SubmittedStudentlistAdapter(
                     Log.d("Not Submitted the list", " Not submitted any records")
                     return@setOnClickListener
                 } else {
-                    Constant.isVideoPostedDate=item.submitted_date
+                    Constant.isVideoPostedDate = item.submitted_date
                     val convertedList = item.file_path.map {
                         GetFilePathDetails(
                             type = it.type,
@@ -151,7 +151,7 @@ class SubmittedStudentlistAdapter(
                     Log.d("Not Submitted the list", " Not submitted any records")
                     return@setOnClickListener
                 } else {
-                    Constant.isVideoPostedDate=item.submitted_date
+                    Constant.isVideoPostedDate = item.submitted_date
                     val convertedList = item.file_path.map {
                         GetFilePathDetails(
                             type = it.type,
@@ -198,7 +198,7 @@ class SubmittedStudentlistAdapter(
                             val child = rv.findChildViewUnder(e.x, e.y)
                             if (child != null && e.action == MotionEvent.ACTION_UP) {
                                 rv.getChildAdapterPosition(child)
-                                Constant.isVideoPostedDate=item.submitted_date
+                                Constant.isVideoPostedDate = item.submitted_date
                                 val convertedList = item.file_path.map {
                                     GetFilePathDetails(
                                         type = it.type,

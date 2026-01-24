@@ -373,7 +373,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         binding.rcQuizExamReport.layoutManager = LinearLayoutManager(this)
         binding.rcQuizExamReport.adapter = adapter
 
-        appViewModel?.isGetQuizExamReport(isAccessToken ?: "", isType,this)
+        appViewModel?.isGetQuizExamReport(isAccessToken ?: "", isType, this)
     }
 
 
@@ -474,7 +474,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                                     addProperty("title", title)
                                     addProperty("description", description)
                                 }
-                                appViewModel?.isEditQuiz(isAccessToken!!, request,this)
+                                appViewModel?.isEditQuiz(isAccessToken!!, request, this)
                             }
                         }
                     }
@@ -593,7 +593,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             if (confirmed) {
                 Constant.showLoading(this)
                 isDeletedId = id
-                appViewModel?.isDeleteQuiz(isAccessToken!!, request,this)
+                appViewModel?.isDeleteQuiz(isAccessToken!!, request, this)
             }
         }
     }

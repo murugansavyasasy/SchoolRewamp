@@ -3,12 +3,12 @@
     android:height="10dp"
     android:viewportWidth="16"
     android:viewportHeight="16">
-  <path
-      android:pathData="M8,1v14M1,8h14"
-      android:strokeLineJoin="round"
-      android:strokeWidth="2"
-      android:fillColor="@color/white"
-      android:fillType="evenOdd"
-      android:strokeColor="@color/white"
-      android:strokeLineCap="round"/>
+    <path
+        android:fillColor="@color/white"
+        android:fillType="evenOdd"
+        android:pathData="M8,1v14M1,8h14"
+        android:strokeWidth="2"
+        android:strokeColor="@color/white"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
 </vector>

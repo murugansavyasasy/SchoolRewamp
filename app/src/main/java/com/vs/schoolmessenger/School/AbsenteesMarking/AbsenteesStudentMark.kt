@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -154,8 +153,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                Log.d("jsonObject",jsonObject.toString())
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                Log.d("jsonObject", jsonObject.toString())
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
 
             } else {

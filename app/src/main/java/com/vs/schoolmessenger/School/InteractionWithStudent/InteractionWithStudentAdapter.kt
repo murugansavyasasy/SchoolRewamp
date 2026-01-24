@@ -118,7 +118,7 @@ class InteractionWithStudentAdapter(
                 lblDesc.text = student.last_msg
             }
 
-            if(student.last_msg_time .isNullOrEmpty()) {
+            if (student.last_msg_time.isNullOrEmpty()) {
                 yesterdayheader.visibility = View.GONE
             } else {
                 yesterdayheader.visibility = View.VISIBLE

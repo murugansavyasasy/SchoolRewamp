@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -391,8 +390,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:numColumns="3"
                         android:visibility="gone"
-                        tools:listitem="@layout/schedule_call_date_data">
-                    </com.vs.schoolmessenger.Utils.ExpandableGridView>
+                        tools:listitem="@layout/schedule_call_date_data"></com.vs.schoolmessenger.Utils.ExpandableGridView>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcyHistoryDataVoiceAndText"
@@ -401,8 +399,7 @@
                         android:layout_below="@+id/gridViewScheduleCall"
                         android:layout_marginTop="@dimen/ten"
                         android:visibility="gone"
-                        tools:listitem="@layout/history_from_text_message">
-                    </androidx.recyclerview.widget.RecyclerView>
+                        tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:id="@+id/rytNORecordFound"
@@ -480,8 +477,7 @@
                         <ImageView
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
-                            android:src="@drawable/arrowright">
-                        </ImageView>
+                            android:src="@drawable/arrowright"></ImageView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -929,7 +925,6 @@
                             android:layout_centerInParent="true" />
 
                     </RelativeLayout>
-
 
 
                 </RelativeLayout>

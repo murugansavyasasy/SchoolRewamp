@@ -23,8 +23,8 @@
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- 🔹 FrameLayout holds RecyclerView and overlayed controls -->
     <FrameLayout
@@ -39,12 +39,11 @@
         <!-- Background content -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOnboarding"
-            android:background="@color/white"
             android:layout_width="match_parent"
-            tools:listitem="@layout/item_onboarding"
             android:layout_height="match_parent"
-            android:clipToPadding="false">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:background="@color/white"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_onboarding"></androidx.recyclerview.widget.RecyclerView>
 
         <!-- Floating overlay container -->
         <LinearLayout
@@ -59,55 +58,56 @@
                 android:id="@+id/layoutDots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:orientation="horizontal" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
                 <TextView
                     android:id="@+id/btnSkip"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:paddingHorizontal="@dimen/fifteen"
                     android:paddingVertical="@dimen/five"
                     android:text="Skip"
-                    android:textColor="@color/white"
-                    android:layout_gravity="end"
                     android:textAllCaps="false"
-                    />
+                    android:textColor="@color/white" />
 
                 <RelativeLayout
                     android:id="@+id/rytNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_marginStart="@dimen/five"
                     android:layout_toEndOf="@+id/btnSkip"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="end"
                     android:background="@drawable/bg__rounded_rect"
                     android:paddingHorizontal="@dimen/fifteen"
-                    android:paddingVertical="@dimen/five"
-                    android:layout_height="wrap_content">
+                    android:paddingVertical="@dimen/five">
+
                     <TextView
                         android:id="@+id/btnNext"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="@string/next"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/white"
                         android:textAllCaps="false"
-                        />
+                        android:textColor="@color/white" />
+
                     <ImageView
-                        android:layout_marginStart="@dimen/three"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/btnNext"
                         android:layout_width="@dimen/fifteen"
-                        android:src="@drawable/right_arrow_ic"
-                        android:layout_height="@dimen/fifteen">
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toEndOf="@+id/btnNext"
+                        android:src="@drawable/right_arrow_ic">
 
                     </ImageView>
                 </RelativeLayout>

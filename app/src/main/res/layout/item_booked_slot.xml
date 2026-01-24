@@ -12,65 +12,64 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/rytEntireStatusBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
-            android:id="@+id/rytEntireStatusBanner"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-           <RelativeLayout
-               android:layout_centerVertical="true"
-               android:layout_alignParentStart="true"
-               android:layout_toStartOf="@+id/rlDotParent"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content">
-               <RelativeLayout
-                   android:id="@+id/rytStatusBanner"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingHorizontal="@dimen/twele"
-                   android:paddingVertical="@dimen/five"
-                   android:background="@drawable/bg_light_green_radious"
-                   >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                   <ImageView
-                       android:id="@+id/imgCheckmark"
-                       android:layout_width="@dimen/twenty"
-                       android:layout_height="@dimen/twenty"
-                       android:layout_centerVertical="true"
-                       android:src="@drawable/checkmark_circle" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/rlDotParent">
 
-                   <TextView
-                       android:id="@+id/lblStatus"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_centerVertical="true"
-                       android:layout_marginStart="@dimen/five"
-                       android:layout_toEndOf="@id/imgCheckmark"
-                       android:text="Booked"
-                       android:textColor="@color/green"
-                       android:textSize="@dimen/fifteen_sp" />
+                <RelativeLayout
+                    android:id="@+id/rytStatusBanner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_light_green_radious"
+                    android:paddingHorizontal="@dimen/twele"
+                    android:paddingVertical="@dimen/five">
 
-               </RelativeLayout>
-           </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/imgCheckmark"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/checkmark_circle" />
+
+                    <TextView
+                        android:id="@+id/lblStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@id/imgCheckmark"
+                        android:text="Booked"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/fifteen_sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_centerVertical="true"
                 android:id="@+id/rlDotParent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:orientation="horizontal"
+                android:layout_centerVertical="true"
                 android:gravity="center"
-              >
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/lblDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,15 +81,17 @@
                     android:padding="@dimen/five"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/imgDot"
                     android:layout_width="@dimen/thirty_five"
                     android:layout_height="@dimen/thirty_five"
+                    android:layout_alignParentEnd="true"
                     android:padding="@dimen/eight"
-                    app:tint="@color/PrimaryColor"
                     android:src="@drawable/threedot"
-                    android:layout_alignParentEnd="true" />
+                    app:tint="@color/PrimaryColor" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -116,16 +117,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/four"
+            android:drawableStart="@drawable/calendar_icon_2"
+            android:drawablePadding="@dimen/five"
             android:text="00 Jan 0000"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="@dimen/twele_sp"
-            android:drawablePadding="@dimen/five"
-            android:drawableStart="@drawable/calendar_icon_2"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/lblTitle"
             app:layout_constraintStart_toStartOf="@id/lblTitle"
             app:layout_constraintTop_toBottomOf="@id/lblTitle" />
-
 
 
         <TextView
@@ -133,18 +133,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/four"
+            android:drawableStart="@drawable/clock_icon_2"
+            android:drawablePadding="@dimen/five"
             android:text="07:30 pm - 07:40 pm"
             android:textColor="@color/black"
             android:textSize="@dimen/twele_sp"
             android:textStyle="bold"
-            android:drawablePadding="@dimen/five"
-            android:drawableStart="@drawable/clock_icon_2"
             app:layout_constraintEnd_toEndOf="@id/lblTitle"
             app:layout_constraintStart_toStartOf="@id/lblTitle"
             app:layout_constraintTop_toBottomOf="@id/lblDate2" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/lblDuration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -152,37 +151,39 @@
             android:text="Duration - 10 Minutes"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/lblTitle"
             app:layout_constraintStart_toStartOf="@id/lblTitle"
             app:layout_constraintTop_toBottomOf="@id/lblTime" />
 
         <RelativeLayout
             android:id="@+id/rytMode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four"
             app:layout_constraintEnd_toEndOf="@id/lblTitle"
             app:layout_constraintStart_toStartOf="@id/lblTitle"
-            app:layout_constraintTop_toBottomOf="@id/lblDuration"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/four"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@id/lblDuration">
+
             <ImageView
-                android:layout_centerVertical="true"
                 android:id="@+id/imgMeetingType"
-                android:src="@drawable/location_simple_icon"
                 android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
                 android:layout_alignParentStart="true"
-                android:layout_height="@dimen/fifteen">
-            </ImageView>
-            <TextView
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imgMeetingType"
+                android:src="@drawable/location_simple_icon"></ImageView>
+
+            <TextView
                 android:id="@+id/lblMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="In Person"
-                android:textStyle="bold"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@+id/imgMeetingType"
+                android:text="In Person"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
+                android:textSize="@dimen/twele_sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -221,9 +222,9 @@
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
                     android:layout_marginTop="12dp"
-                    app:shapeAppearanceOverlay="@style/CircleImageShape"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lblBookedBy" />
+                    app:layout_constraintTop_toBottomOf="@id/lblBookedBy"
+                    app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
                 <TextView
                     android:id="@+id/lblName"
@@ -244,9 +245,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two"
                     android:text="II - B1"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twele_sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@id/lblName"
                     app:layout_constraintStart_toStartOf="@id/lblName"
                     app:layout_constraintTop_toBottomOf="@id/lblName" />
@@ -326,18 +327,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_five"
             android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:background="@drawable/bg_light_radious_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text=""
+            android:textColor="@color/dark_blue_2"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/lblTitle"
             app:layout_constraintStart_toStartOf="@id/lblTitle"
-            app:layout_constraintTop_toBottomOf="@id/rytMode"
-            android:layout_marginEnd="@dimen/twenty_five"
-            android:background="@drawable/bg_light_radious_blue"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/fifteen"
-            android:padding="@dimen/ten"
-            android:visibility="gone"
-            android:text=""
-            android:textColor="@color/dark_blue_2">
+            app:layout_constraintTop_toBottomOf="@id/rytMode">
 
         </TextView>
 

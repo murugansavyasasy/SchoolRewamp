@@ -184,7 +184,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedPendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
-            country_id?: "",
+            country_id ?: "",
             this
         )
     }
@@ -194,7 +194,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         appViewModel?.isDetailedWisePendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
-            country_id?: "",
+            country_id ?: "",
             this
         )
     }

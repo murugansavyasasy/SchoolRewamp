@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray_white"
-    >
+    android:background="@color/gray_white">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
@@ -79,9 +78,9 @@
             android:background="@color/gray4" />
 
         <LinearLayout
-            android:layout_marginHorizontal="@dimen/one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/one"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -91,49 +90,49 @@
                 android:padding="@dimen/fifteen">
 
 
-            <RelativeLayout
-                android:id="@+id/rytInstitute"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:background="@drawable/rect_grey">
+                <RelativeLayout
+                    android:id="@+id/rytInstitute"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:background="@drawable/rect_grey">
 
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_star" />
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_star" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/rytInstitute"
-                    android:layout_centerVertical="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/institution"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/institution"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
 
-                <TextView
-                    android:id="@+id/lblSchoolName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:gravity="end"
-                    android:layout_height="wrap_content"
-                    android:text="App rewamp testing school"
-                    android:textColor="@color/PrimaryColor"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        android:id="@+id/lblSchoolName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="end"
+                        android:text="App rewamp testing school"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/thirteen_sp" />
 
                 </LinearLayout>
 
@@ -150,46 +149,47 @@
                 android:padding="@dimen/fifteen">
 
 
-            <RelativeLayout
-                android:id="@+id/rytStaffIcon"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:background="@drawable/rect_grey">
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_user_icon" />
+                <RelativeLayout
+                    android:id="@+id/rytStaffIcon"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:background="@drawable/rect_grey">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_user_icon" />
+
+                </RelativeLayout>
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/rytStaffIcon"
-                    android:layout_centerVertical="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/staff_name"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/staff_name"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
 
-                <TextView
-                    android:id="@+id/lblStaffName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:gravity="end"
-                    android:layout_height="wrap_content"
-                    android:text="MURUGAN N"
-                    android:textColor="@color/PrimaryColor"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        android:id="@+id/lblStaffName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="end"
+                        android:text="MURUGAN N"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/thirteen_sp" />
 
                 </LinearLayout>
 
@@ -205,46 +205,47 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/fifteen">
 
-            <RelativeLayout
-                android:id="@+id/rytDesignationIcon"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:background="@drawable/rect_grey">
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_checked_icon" />
+                <RelativeLayout
+                    android:id="@+id/rytDesignationIcon"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:background="@drawable/rect_grey">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_checked_icon" />
+
+                </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_toEndOf="@+id/rytDesignationIcon"
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/rytDesignationIcon"
                     android:orientation="horizontal">
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/designation"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/designation"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
 
-                <TextView
-                    android:id="@+id/lblDesignation"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:gravity="end"
-                    android:layout_height="wrap_content"
-                    android:text="Principal"
-                    android:textColor="@color/PrimaryColor"
-                    android:textSize="@dimen/thirteen_sp" />
+                    <TextView
+                        android:id="@+id/lblDesignation"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="end"
+                        android:text="Principal"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/thirteen_sp" />
 
                 </LinearLayout>
 
@@ -256,10 +257,10 @@
                 android:background="@color/gray4" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/fifteen">
+                android:padding="@dimen/fifteen"
+                android:visibility="gone">
 
 
                 <ImageView
@@ -336,26 +337,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
-            android:visibility="gone"
             android:background="@drawable/rect_bg_light_green_present"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/fifteen"
-            android:paddingVertical="@dimen/five">
+            android:paddingVertical="@dimen/five"
+            android:visibility="gone">
 
             <View
-                android:layout_centerVertical="true"
                 android:id="@+id/vwCircle"
                 android:layout_width="@dimen/ten"
                 android:layout_height="@dimen/ten"
-                android:background="@drawable/circle_bg_green"/>
+                android:layout_centerVertical="true"
+                android:background="@drawable/circle_bg_green" />
 
             <TextView
-                android:layout_toEndOf="@+id/vwCircle"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/ten"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/vwCircle"
                 android:text="@string/active"
                 android:textColor="@color/green"
                 android:textSize="@dimen/thirteen_sp" />
@@ -364,14 +365,14 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="@dimen/ten"
-        android:padding="@dimen/five"
         android:id="@+id/rcyPunchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytAttendance"
-        tools:listitem="@layout/punch_history_item"
-        android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_margin="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:padding="@dimen/five"
+        tools:listitem="@layout/punch_history_item"></androidx.recyclerview.widget.RecyclerView>
 
 
     <TextView

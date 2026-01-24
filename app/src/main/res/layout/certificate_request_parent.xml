@@ -17,19 +17,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
 
@@ -47,8 +47,8 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_grey"
-                android:visibility="gone"
                 android:backgroundTint="@color/white"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/header_text4">
 
 
@@ -67,13 +67,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/five"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
                     android:layout_toEndOf="@+id/imgSearch1"
                     android:background="@android:color/transparent"
                     android:hint="@string/lblSearch"
-                    android:maxLines="1" />
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
 
             </RelativeLayout>
 
@@ -123,8 +123,7 @@
                         android:id="@+id/spinner_text"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty"
-                        android:layout_centerVertical="true">
-                    </Spinner>
+                        android:layout_centerVertical="true"></Spinner>
                 </RelativeLayout>
 
                 <TextView
@@ -222,9 +221,9 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:inputType="textMultiLine"
                     android:background="@drawable/text_bg"
                     android:hint="@string/enter_your_reason_here"
+                    android:inputType="textMultiLine"
                     android:padding="@dimen/ten" />
 
                 <Button
@@ -271,8 +270,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 android:paddingBottom="@dimen/ten"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/header_text4">
 
                 <ImageView

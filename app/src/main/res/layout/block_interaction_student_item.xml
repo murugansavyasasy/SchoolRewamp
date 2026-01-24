@@ -46,14 +46,13 @@
                 android:textColor="@color/black" />
 
 
-
             <TextView
                 android:id="@+id/reason"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
                 android:maxLines="3"
                 android:text="Saraajkjkn Raj"
                 android:textColor="@color/grey" />
@@ -64,12 +63,11 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
                 android:maxLines="3"
                 android:text="Saraajkjkn Raj"
                 android:textColor="@color/grey" />
-
 
 
             <TextView
@@ -80,9 +78,9 @@
                 android:layout_marginTop="@dimen/eight"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:visibility="gone"
                 android:text=" I - B "
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/blocked_on"

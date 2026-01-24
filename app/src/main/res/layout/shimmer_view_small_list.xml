@@ -5,10 +5,10 @@
     android:layout_height="wrap_content">
 
     <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/twenty"
-        android:id="@+id/shimmer_view_container"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -26,8 +26,8 @@
             <View
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/twenty"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="@dimen/twenty_five"/>
+                android:layout_marginTop="@dimen/twenty_five"
+                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
 

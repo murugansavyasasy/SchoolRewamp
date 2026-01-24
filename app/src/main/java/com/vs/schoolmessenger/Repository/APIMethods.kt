@@ -203,7 +203,6 @@ object APIMethods {
     const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
 
 
-
     const val isblockstudent = "/comm/api/interaction/block-student"
     const val isblockstudentlist = "/comm/api/interaction/blocked-students"
     const val isfrequentlyasked = "/dashboard/api/dashboard/faqs"

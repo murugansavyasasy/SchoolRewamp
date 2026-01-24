@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical">
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/imgPlayPause"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/play_icon_voice"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:src="@drawable/play_icon_voice" />
 
     <SeekBar
         android:id="@+id/seekBar"

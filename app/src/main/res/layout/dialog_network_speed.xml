@@ -2,44 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/twenty"
     android:background="@drawable/dialog_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/twenty">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/network_speed"
-        android:textSize="@dimen/twenty_sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:paddingBottom="@dimen/ten"/>
+        android:gravity="center"
+        android:paddingBottom="@dimen/ten"
+        android:text="@string/network_speed"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty_sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/downloadSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/five"
         android:text="@string/download_speed"
-        android:textSize="@dimen/fifteen_sp"
         android:textColor="@color/black"
-        android:paddingBottom="@dimen/five"/>
+        android:textSize="@dimen/fifteen_sp" />
 
     <TextView
         android:id="@+id/uploadSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/ten"
         android:text="@string/upload_speed"
-        android:textSize="@dimen/fifteen_sp"
         android:textColor="@color/black"
-        android:paddingBottom="@dimen/ten"/>
+        android:textSize="@dimen/fifteen_sp" />
 
     <Button
         android:id="@+id/closeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Close"
         android:background="@drawable/button_background"
-        android:textColor="@color/white"/>
+        android:text="@string/Close"
+        android:textColor="@color/white" />
 </LinearLayout>

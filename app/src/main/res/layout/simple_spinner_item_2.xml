@@ -2,25 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingHorizontal="@dimen/zero"
     android:paddingVertical="@dimen/zero">
 
     <TextView
         android:id="@+id/lblTextItem"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/four"
         android:text=""
         android:textColor="@android:color/black"
-        android:textSize="@dimen/thirteen_sp"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_marginEnd="@dimen/four" />
+        android:textSize="@dimen/thirteen_sp" />
 
     <ImageView
         android:id="@+id/dropDownArrow"
         android:layout_width="@dimen/fifteen"
         android:layout_height="@dimen/ten"
-        android:src="@drawable/down_arrow_3"
-        android:layout_marginEnd="@dimen/zero" />
+        android:layout_marginEnd="@dimen/zero"
+        android:src="@drawable/down_arrow_3" />
 </LinearLayout>

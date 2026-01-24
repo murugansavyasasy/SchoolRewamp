@@ -73,7 +73,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
                 addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                 addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
             }
-            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
             if (response.status) {
                 isLoadChatData(response.data)
@@ -197,7 +197,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             file_path = fileList
         )
 
-        appViewModel?.sendquestion(isAccessToken!!, request,this)
+        appViewModel?.sendquestion(isAccessToken!!, request, this)
 
     }
 

@@ -51,10 +51,10 @@
             <RelativeLayout
                 android:id="@+id/rytRefresh"
                 android:layout_width="0dp"
-                android:gravity="end"
-                android:visibility="visible"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="end"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/lblRef"
@@ -65,11 +65,11 @@
                     android:textSize="@dimen/fifteen_sp" />
 
                 <ImageView
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_toEndOf="@+id/lblRef"
                     android:id="@+id/imgBack"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblRef"
                     android:src="@drawable/refresh" />
 
 

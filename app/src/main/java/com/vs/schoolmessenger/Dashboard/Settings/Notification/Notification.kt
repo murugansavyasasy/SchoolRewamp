@@ -5,7 +5,6 @@ import android.app.TaskStackBuilder
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -493,8 +492,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener,
                     // default behavior
                 }
             }
-        }
-        else  {
+        } else {
             if (data.menu_id == Constant.M_ATTACHMENTS || data.menu_id == Constant.M_COMMUNICATION) {
                 Constant.isSelectedMenuName = "Admin Msgs"
                 val intent = Intent(this, MessageFromManagement::class.java)

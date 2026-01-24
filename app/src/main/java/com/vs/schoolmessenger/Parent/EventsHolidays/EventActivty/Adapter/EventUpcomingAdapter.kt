@@ -89,7 +89,6 @@ class EventUpcomingAdapter(
     }
 
 
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -184,7 +183,7 @@ class EventUpcomingAdapter(
             val convertedList = data.file_path.map {
                 GetFilePathDetails(type = it.type, url = it.url)
             }
-            Constant.isVideoPostedDate=data.date + " "+ data.time
+            Constant.isVideoPostedDate = data.date + " " + data.time
             val isHomeWorkData = FilePreview(
                 id = "",
                 title = data.title,

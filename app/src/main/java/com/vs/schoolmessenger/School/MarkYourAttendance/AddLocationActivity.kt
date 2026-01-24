@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Geocoder
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

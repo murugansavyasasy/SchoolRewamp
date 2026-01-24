@@ -85,11 +85,13 @@ class CustomDateAdapter(
 
             if (dateItem.isHoliday) {
 //                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
-                linaer_layout.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
+                linaer_layout.background =
+                    ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
                 dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else if (isToday) {
 //                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
-                linaer_layout.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
+                linaer_layout.background =
+                    ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
                 dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
                 dateBox.background = null

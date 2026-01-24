@@ -7,50 +7,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/fifteen"
-        android:padding="@dimen/five"
-        android:layout_marginTop="@dimen/five">
+        android:padding="@dimen/five">
 
         <CheckBox
             android:id="@+id/chMultipleSchool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/chMultipleSchool"
-            android:layout_marginStart="@dimen/ten"
             android:layout_alignParentTop="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@id/chMultipleSchool"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lblgroupname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="@dimen/fifteen_sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="@dimen/fifteen_sp"
                 android:textColor="@color/black"
-                android:visibility="gone"/>
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/lblDesignation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="@dimen/fifteen_sp"
                 android:textColor="@color/light_gray_"
-                android:visibility="gone"/>
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -61,106 +61,100 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:text="Created On:"
+            android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp"
-            android:visibility="gone"
-            android:textColor="@color/grey"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 
 </RelativeLayout>
 
 
-
-
-
-
-
-
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    app:cardCornerRadius="@dimen/eight"-->
-<!--    app:cardElevation="@dimen/four">-->
+    <!--<RelativeLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    app:cardCornerRadius="@dimen/eight"-->
+    <!--    app:cardElevation="@dimen/four">-->
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="@dimen/fifteen"-->
-<!--        android:layout_marginEnd="@dimen/fifteen_sp"-->
-<!--        android:padding="@dimen/five"-->
-<!--        android:layout_marginTop="@dimen/five">-->
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/fifteen"-->
+    <!--        android:layout_marginEnd="@dimen/fifteen_sp"-->
+    <!--        android:padding="@dimen/five"-->
+    <!--        android:layout_marginTop="@dimen/five">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/lblgroupname"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/group_name"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:layout_toStartOf="@+id/lblCreated"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/lblgroupname"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/group_name"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:textSize="@dimen/fifteen_sp"-->
+    <!--            android:layout_toStartOf="@+id/lblCreated"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_marginTop="@dimen/five"-->
+    <!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/lblEmployeeId"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/employee_id"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:layout_below="@+id/lblgroupname"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/lblEmployeeId"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/employee_id"-->
+    <!--            android:textSize="@dimen/fifteen_sp"-->
+    <!--            android:visibility="gone"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:layout_below="@+id/lblgroupname"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/lblDesignation"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/destination"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:visibility="gone"-->
-<!--            android:textColor="@color/light_gray_"-->
-<!--            android:layout_below="@+id/lblEmployeeId"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/lblDesignation"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/destination"-->
+    <!--            android:textSize="@dimen/fifteen_sp"-->
+    <!--            android:visibility="gone"-->
+    <!--            android:textColor="@color/light_gray_"-->
+    <!--            android:layout_below="@+id/lblEmployeeId"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:layout_toEndOf="@+id/chMultipleSchool"/>-->
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/chMultipleSchool"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_height="wrap_content" />-->
+    <!--        <CheckBox-->
+    <!--            android:id="@+id/chMultipleSchool"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_height="wrap_content" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/lblCreated"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:text="@string/created_on_colon"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            android:textColor="@color/grey"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--           />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/lblCreated"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:visibility="gone"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:text="@string/created_on_colon"-->
+    <!--            android:layout_marginTop="@dimen/five"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:textSize="@dimen/thirteen_sp"-->
+    <!--            android:textColor="@color/grey"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--           />-->
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_below="@+id/chMultipleSchool"-->
-<!--            android:layout_height="@dimen/point_six"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            android:background="@color/grey_mild"-->
-<!--            >-->
+    <!--        <View-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_below="@+id/chMultipleSchool"-->
+    <!--            android:layout_height="@dimen/point_six"-->
+    <!--            android:layout_marginTop="@dimen/five"-->
+    <!--            android:background="@color/grey_mild"-->
+    <!--            >-->
 
-<!--        </View>-->
-<!--    </RelativeLayout>-->
-<!--</RelativeLayout>-->
+    <!--        </View>-->
+    <!--    </RelativeLayout>-->
+    <!--</RelativeLayout>-->

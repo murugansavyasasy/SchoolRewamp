@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.School.AbsenteesMarking
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.support.annotation.DrawableRes
 import android.text.Editable
 import android.text.Spannable
@@ -257,9 +256,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             if (isGetStandard!!.get(0).sections.size > 0) {
                                 isSection = isGetStandard!!.get(0).sections
                                 SectionID = isGetStandard!!.get(0).sections.get(0).id
-                            }
-                            else{
-                                Toast.makeText(this, getString(R.string.no_section_found), Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.no_section_found),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             isLoadStandard(isGetStandard)
                             val firstStandard = isGetStandard!![0]
@@ -287,8 +289,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 binding.lblAttendanceOptions.visibility = View.GONE
                                 binding.lnrAttendanceReport.visibility = View.GONE
                             }
-                            isStandardId=null
-                            SectionID=null
+                            isStandardId = null
+                            SectionID = null
                             binding.lnrClasses.visibility = View.GONE
                             binding.btnAbsent.visibility = View.GONE
                             binding.lblAttendanceOptions.visibility = View.GONE
@@ -298,10 +300,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                             binding.noDataFound1.text = getString(R.string.no_standard_found)
                         }
                     }
-                }
-                else {
-                    isStandardId=null
-                    SectionID=null
+                } else {
+                    isStandardId = null
+                    SectionID = null
                     if (callApi) {
                         binding.btnAbsent.visibility = View.GONE
                         binding.lnrClasses2.visibility = View.GONE
@@ -866,13 +867,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rcyAttendanceReport.isNestedScrollingEnabled = false
         binding.rcyAttendanceReport.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-        if (SectionID!=null && isStandardId!=null){
+        if (SectionID != null && isStandardId != null) {
             binding.lnrAttendanceReport.visibility = View.VISIBLE
             appViewModel!!.getStudentAttendanceReport(
-                isAccessToken!!, SectionID.toString(), fromDate, toDate, isStandardId.toString(), this
+                isAccessToken!!,
+                SectionID.toString(),
+                fromDate,
+                toDate,
+                isStandardId.toString(),
+                this
             )
-        }
-        else{
+        } else {
             binding.lnrAttendanceReport.visibility = View.GONE
         }
 
@@ -897,7 +902,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 ?.filter { it.isNotEmpty() && it != "-" } ?: emptyList()
 
             // Count OD student once per student
-            if (statusParts.any { it.equals("P~", true)}) {
+            if (statusParts.any { it.equals("P~", true) }) {
                 totalODStudents++
             }
 
@@ -927,7 +932,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 //        val latePercentage = if (validCount > 0) (lateCount * 100f) / validCount else 0f
 
 
-
 // Format to two decimal places
 //        val presentFormatted = String.format("%.1f", presentPercentage)
 
@@ -947,7 +951,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
         // Show total OD students
-        binding.lblLateRate.text = "\uD83D\uDC68\uD83C\uDFFB\u200D\uD83C\uDF93"+" "+totalODStudents.toString()
+        binding.lblLateRate.text =
+            "\uD83D\uDC68\uD83C\uDFFB\u200D\uD83C\uDF93" + " " + totalODStudents.toString()
 
         mAdapter =
             AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
@@ -967,7 +972,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             Triple("P", getString(R.string.present), R.drawable.report_present_icon),
             Triple("OD", getString(R.string.OD), R.drawable.report_od_icon),
             //            Triple("LA", getString(R.string.Late_2), R.drawable.report_latercomer_icon),
-            Triple("P ᴸᴬ", getString(R.string.present_late), R.drawable.report_present_icon), // Late
+            Triple(
+                "P ᴸᴬ",
+                getString(R.string.present_late),
+                R.drawable.report_present_icon
+            ), // Late
             Triple("A", getString(R.string.absent), R.drawable.report_absent_icon),
         )
 
@@ -992,19 +1001,39 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             val fnLabelStart = text.length
             text.append(fnLabel)
-            text.setSpan(AbsoluteSizeSpan(16, true), fnLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(16, true),
+                fnLabelStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             val fnValueStart = text.length
             text.append(fnValue)
-            text.setSpan(AbsoluteSizeSpan(13, true), fnValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(13, true),
+                fnValueStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             val anLabelStart = text.length
             text.append(anLabel)
-            text.setSpan(AbsoluteSizeSpan(16, true), anLabelStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(16, true),
+                anLabelStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             val anValueStart = text.length
             text.append(anValue)
-            text.setSpan(AbsoluteSizeSpan(13, true), anValueStart, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(
+                AbsoluteSizeSpan(13, true),
+                anValueStart,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             textAlignment = TextView.TEXT_ALIGNMENT_VIEW_START
             this.text = text

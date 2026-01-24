@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -204,7 +203,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                     allOngoingEvents = data.on_going
@@ -469,7 +468,6 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         }
     }
-
 
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {

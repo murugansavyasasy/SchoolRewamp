@@ -238,7 +238,7 @@ class AttachmentReportAdapter(
             rcyFile.setOnClickListener { markAsRead() }
             rytHeader.setOnClickListener {
                 markAsRead()
-                Constant.isVideoPostedDate=data.date
+                Constant.isVideoPostedDate = data.date
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,

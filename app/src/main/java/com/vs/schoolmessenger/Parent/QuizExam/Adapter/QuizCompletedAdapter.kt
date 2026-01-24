@@ -115,7 +115,6 @@ class QuizCompletedAdapter(
     }
 
 
-
     private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
         val adapter = recyclerView.adapter ?: return
         this.createIndicators(adapter.itemCount, 0)
@@ -167,7 +166,7 @@ class QuizCompletedAdapter(
         private val lnrAnswerDetails: LinearLayout = itemView.findViewById(R.id.lnrAnswerDetails)
 
         fun bind(data: QuizDetails, position: Int) {
-            data class OptionUI(val bg: LinearLayout,val card: CardView,val text: TextView)
+            data class OptionUI(val bg: LinearLayout, val card: CardView, val text: TextView)
 
             //we are are matching the answer with ID and handling the UI Colour change behaviour
             val uiMap = mapOf(
@@ -186,11 +185,10 @@ class QuizCompletedAdapter(
             questionText.text = "${position + 1}) ${data.question}"
 
             if (!data.q_file_path.isNullOrEmpty()) {
-                if(data.q_file_path.size==1){
+                if (data.q_file_path.size == 1) {
                     indicator.visibility = View.GONE
                     rcAttachement.visibility = View.VISIBLE
-                }
-                else{
+                } else {
                     indicator.visibility = View.VISIBLE
                     rcAttachement.visibility = View.VISIBLE
                 }
@@ -204,8 +202,7 @@ class QuizCompletedAdapter(
                 )
                 indicator.attachToRecyclerView(rcAttachement)
 
-            }
-            else {
+            } else {
                 indicator.visibility = View.GONE
                 rcAttachement.visibility = View.GONE
             }
@@ -228,11 +225,10 @@ class QuizCompletedAdapter(
             }
 
 
-
             val studentAns = data.student_answer?.trim()
             val correctAns = data.correct_answer?.trim()
 
-                //See we here just checking whether the studentAns and correctAns is match based on that we are handling the UI
+            //See we here just checking whether the studentAns and correctAns is match based on that we are handling the UI
             when {
 
                 studentAns.equals(Constant.N_A, true) -> {

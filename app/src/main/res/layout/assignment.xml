@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_white">
 
 
@@ -12,97 +12,93 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar"
-            app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <LinearLayout
+        android:id="@+id/toolbarLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tabOneName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/Create"
+                android:textColor="@color/iconBlue"></TextView>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue"></View>
+        </LinearLayout>
 
 
         <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/toolbarLayout1"
+            android:id="@+id/lnrTabTwoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/ten"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/lnrTabOneName"
+            <TextView
+                android:id="@+id/tabTwoName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:text="@string/Reports"></TextView>
 
-                <TextView
-                    android:id="@+id/tabOneName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/Create"
-                    android:textColor="@color/iconBlue">
-                </TextView>
-
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginTop="@dimen/five"
-                    android:background="@color/iconBlue">
-                </View>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/lnrTabTwoName"
+            <View
+                android:id="@+id/line3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabTwoName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/Reports">
-                </TextView>
-
-                <View
-                    android:id="@+id/line3"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginTop="@dimen/five"
-                    android:background="@color/white">
-                </View>
-            </LinearLayout>
-
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/white"></View>
         </LinearLayout>
 
+    </LinearLayout>
+
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout1">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -113,10 +109,10 @@
 
             <RelativeLayout
                 android:id="@+id/rytTitle"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten">
 
                 <TextView
                     android:id="@+id/lblStar8"
@@ -128,44 +124,43 @@
                     android:text="@string/mandatory"
                     android:textColor="@color/red" />
 
-            <TextView
-                android:id="@+id/lblCategory"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Catogory"
-                >
+                <TextView
+                    android:id="@+id/lblCategory"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Catogory">
 
-            </TextView>
+                </TextView>
 
 
                 <RelativeLayout
                     android:id="@+id/rytHistory"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:paddingHorizontal="@dimen/ten"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:paddingHorizontal="@dimen/ten">
 
                     <ImageView
-                        android:layout_centerVertical="true"
                         android:id="@+id/imgHistory"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/ten"
-                        android:backgroundTint="@color/PrimaryColor"
                         android:layout_marginEnd="@dimen/five"
+                        android:backgroundTint="@color/PrimaryColor"
                         android:src="@drawable/ic_history">
 
                     </ImageView>
 
                     <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/imgHistory"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/imgHistory"
                         android:text="@string/history"
                         android:textColor="@color/PrimaryColor" />
 
@@ -185,26 +180,26 @@
 
 
                 <Spinner
-                    android:layout_marginStart="@dimen/three"
                     android:id="@+id/spinnerType"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:background="@null"
-                    android:paddingVertical="@dimen/five"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/spinnerTypeimg"
-                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_toStartOf="@+id/spinnerTypeimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true"
+                    android:paddingVertical="@dimen/five" />
+
                 <ImageView
                     android:id="@+id/spinnerTypeimg"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
 
                 </ImageView>
 
@@ -215,9 +210,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rytSendingType"
                 android:layout_marginStart="@dimen/two"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/rytSendingType"
                 android:layout_toEndOf="@id/lblTitle"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
@@ -231,8 +226,7 @@
                 android:layout_below="@+id/rytSendingType"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="@string/Title">
-            </TextView>
+                android:text="@string/Title"></TextView>
 
 
             <LinearLayout
@@ -248,16 +242,14 @@
                 android:orientation="horizontal">
 
 
-
                 <EditText
-                    android:paddingHorizontal="@dimen/ten"
                     android:id="@+id/edtTitle"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
-                    android:hint="@string/enter_title"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:layout_height="match_parent">
-
+                    android:hint="@string/enter_title"
+                    android:paddingHorizontal="@dimen/ten">
 
 
                 </EditText>
@@ -274,8 +266,8 @@
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 50"
-                android:visibility="gone"
-                android:textColor="@color/light_gray">
+                android:textColor="@color/light_gray"
+                android:visibility="gone">
 
             </TextView>
 
@@ -287,8 +279,7 @@
                 android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                android:text="@string/Description"
-                >
+                android:text="@string/Description">
 
             </TextView>
 
@@ -296,9 +287,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/two"
                 android:layout_marginTop="@dimen/eight"
-                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_toEndOf="@id/lblDescription"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
@@ -322,16 +313,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
+                    android:ellipsize="none"
                     android:gravity="start|top"
                     android:hint="@string/Enterdescription"
-                    android:padding="@dimen/ten"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:scrollbars="vertical"
                     android:inputType="textMultiLine|textCapSentences"
+                    android:overScrollMode="always"
+                    android:padding="@dimen/ten"
+                    android:scrollbars="vertical"
                     android:singleLine="false"
                     android:text=""
-                    android:overScrollMode="always"
-                    android:ellipsize="none" />
+                    android:textSize="@dimen/thirteen_sp" />
 
 
             </LinearLayout>
@@ -347,8 +338,8 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 500"
-                android:visibility="gone"
-                android:textColor="@color/light_gray">
+                android:textColor="@color/light_gray"
+                android:visibility="gone">
 
             </TextView>
 
@@ -357,8 +348,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
                 android:layout_below="@+id/lblTextCount"
+                android:layout_marginTop="@dimen/eight"
                 android:layout_toEndOf="@id/lblSubDate"
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
@@ -373,87 +364,88 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="@string/SubmissionDate"
-              >
+                android:text="@string/SubmissionDate">
 
             </TextView>
 
             <LinearLayout
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="@dimen/twenty"
-                android:paddingVertical="@dimen/eight"
-                android:weightSum="1"
-                android:paddingHorizontal="@dimen/ten"
-                android:background="@drawable/field_background"
                 android:id="@+id/rytStart1"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSubDate"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
-                >
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@drawable/field_background"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/ten"
+                android:paddingVertical="@dimen/eight"
+                android:weightSum="1">
 
                 <RelativeLayout
                     android:id="@+id/rlaStartDate"
-                    android:layout_weight="0.65"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.65">
+
                     <RelativeLayout
                         android:id="@+id/rytStartDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <ImageView
-                            android:layout_centerVertical="true"
                             android:id="@+id/imgCalendar"
-                            android:layout_alignParentStart="true"
                             android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
                             android:background="@drawable/rect_purple_rounded"
                             android:padding="@dimen/ten"
-                            android:src="@drawable/white_calendar_icon"
-                            android:layout_height="@dimen/fourty">
+                            android:src="@drawable/white_calendar_icon">
 
                         </ImageView>
+
                         <LinearLayout
-                            android:layout_toEndOf="@+id/imgCalendar"
-                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
-                            android:orientation="vertical"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/five"
-                            android:layout_height="wrap_content">
+                            android:layout_toEndOf="@+id/imgCalendar"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/lblDay"
-                                android:layout_width="wrap_content"
-                                android:text=""
                                 style="@style/CustomTextStylePoppinsRegular"
-                                android:textColor="@color/mild_grey_dark"
-                                android:layout_height="wrap_content">
-                            </TextView>
-                            <TextView
-                                android:layout_marginTop="@dimen/three"
-                                android:id="@+id/txtStartDate"
                                 android:layout_width="wrap_content"
-                                android:text="jasjdknsdjnkj"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/mild_grey_dark"></TextView>
+
+                            <TextView
+                                android:id="@+id/txtStartDate"
                                 style="@style/CustomTextStylePoppinsBold"
-                                android:layout_height="wrap_content">
-                            </TextView>
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/three"
+                                android:text="jasjdknsdjnkj"></TextView>
                         </LinearLayout>
 
                     </RelativeLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:visibility="gone"
-                    android:layout_weight="0.35"
                     android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.35"
                     android:gravity="center|end"
-                    android:layout_height="match_parent">
+                    android:visibility="gone">
+
                     <RelativeLayout
-                        android:paddingVertical="@dimen/five"
-                        android:paddingHorizontal="@dimen/five"
-                        android:background="@drawable/rect_black_stoke_bg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        >
+                        android:background="@drawable/rect_black_stoke_bg"
+                        android:paddingHorizontal="@dimen/five"
+                        android:paddingVertical="@dimen/five">
 
                         <ImageView
                             android:id="@+id/imgTimeDown"
@@ -463,12 +455,12 @@
                             android:src="@drawable/clock" />
 
                         <TextView
-                            android:layout_marginStart="@dimen/five"
                             android:id="@+id/lblTimePick"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
-                            android:layout_toEndOf="@+id/imgTimeDown"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_toEndOf="@+id/imgTimeDown"
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
@@ -497,13 +489,13 @@
                 </TextView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/eight"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_toEndOf="@+id/lblAddPhoto"
                     android:text="@string/Optional"
-                    style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/mild_grey1"
                     android:textSize="@dimen/thirteen_sp">
 
@@ -515,8 +507,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
-                    android:visibility="invisible"
-                    android:src="@drawable/ic_attach_file">
+                    android:src="@drawable/ic_attach_file"
+                    android:visibility="invisible">
 
                 </ImageView>
 

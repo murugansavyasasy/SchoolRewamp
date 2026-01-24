@@ -156,7 +156,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 && !first.path.contains("amazonaws.")
                 && !first.path.contains("file:///storage")
             ) {
-                    Constant.commonFileList.removeAt(0)
+                Constant.commonFileList.removeAt(0)
             }
 
             if (first.path.contains("amazonaws.") || first.type == FileType.VIDEO.toString()) {

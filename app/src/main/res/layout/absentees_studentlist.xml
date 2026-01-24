@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <View
@@ -11,112 +11,107 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/studendreport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/fifteen">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        android:id="@+id/rytSearch"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/studendreport"
-        android:layout_margin="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:background="@drawable/rect_grey">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:alpha="0.3"
-            android:src="@drawable/ic_search" />
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
-        <EditText
-            android:id="@+id/txtSearchMenu"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/studendreport"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/imgSearch"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:inputType="textCapSentences"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginTop="@dimen/fifteen"></androidx.recyclerview.widget.RecyclerView>
+
+
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@+id/studendreport"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:background="@drawable/rect_grey">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:alpha="0.3"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/studentlistreport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch"
+            android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/nomessages"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/no_list_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen" />
+
+
+        </LinearLayout>
 
     </RelativeLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/studentlistreport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
-        android:layout_marginTop="@dimen/five">
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/lytList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/nomessages"
-            android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
-            />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
-            />
-
-
-    </LinearLayout>
-
-</RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

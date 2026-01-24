@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,6 +129,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         isLoadDataAdapter(isSlot)
         isLoadClasses(isSlotsDetails.std_sec_details)
     }
+
     private fun formatApiDateToDisplay(apiDate: String?): String {
         if (apiDate.isNullOrBlank()) return ""
 
@@ -294,9 +294,9 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
-                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen,this)
+                appViewModel!!.isSlotCancelReOpen(isAccessToken!!, isReopen, this)
             } else {
-                appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject,this)
+                appViewModel!!.isSlotCancelClose(isAccessToken!!, mainObject, this)
             }
 
             alertDialog.dismiss()

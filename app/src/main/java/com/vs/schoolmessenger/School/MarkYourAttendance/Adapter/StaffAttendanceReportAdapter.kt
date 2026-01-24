@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.MarkYourAttendance.Adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -120,7 +119,7 @@ class StaffAttendanceReportAdapter(
             lnrParentCard.setOnClickListener {
 //                attendanceMap.forEach { (_, value) ->
 //                    if (value == Constant.Present) {
-                        listener.onItemClick(data)
+                listener.onItemClick(data)
 //                    } else if (value == Constant.Absent) {
 //                        Log.d("The user has no attendance history", "")
 //                    }

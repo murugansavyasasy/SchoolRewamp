@@ -1,337 +1,337 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:padding="@dimen/twenty"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:layout_height="match_parent">
+    android:padding="@dimen/twenty">
+
     <RelativeLayout
-        android:paddingBottom="@dimen/ten"
-        android:orientation="vertical"
-        android:background="@drawable/white_bg_radius"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_bg_radius"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/ten">
+
         <ImageView
-            android:layout_marginBottom="@dimen/five"
-            android:layout_alignParentEnd="true"
-            android:layout_width="@dimen/twenty_five"
-            android:src="@drawable/close_icon_3"
             android:id="@+id/imgBack"
-            android:layout_marginTop="@dimen/three"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/three"
-            android:layout_height="@dimen/twenty_five">
+            android:layout_marginTop="@dimen/three"
+            android:layout_marginBottom="@dimen/five"
+            android:src="@drawable/close_icon_3">
 
 
         </ImageView>
+
         <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/imgBack"
-            android:scrollbars="none"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/rcAttachement"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:layout_height="@dimen/two_hundred">
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-            <me.relex.circleindicator.CircleIndicator2
-                android:id="@+id/indicator"
-                style="@style/IndicatorStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/twenty"
-                android:layout_below="@+id/rcAttachement"
-                android:layout_centerInParent="true"
-                android:elevation="@dimen/four"
-                android:visibility="gone" />
+            android:scrollbars="none">
 
             <RelativeLayout
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:layout_below="@+id/indicator"
                 android:layout_width="match_parent"
-                android:id="@+id/rlaAudioDetails"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/voiceImg"
-                    android:layout_alignParentStart="true"
-                    android:layout_width="@dimen/one_fifty"
-                    android:src="@drawable/voice_illustrate"
-                    android:layout_height="@dimen/one_fifty">
-                </ImageView>
-                <LinearLayout
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/voiceImg"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcAttachement"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tvAudioTittle"
-                        android:text="This is Sample Audio Ignore this"
-                        android:maxLines="1"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_centerVertical="true"
-                            android:id="@+id/imgEmergency"
-                            android:visibility="gone"
-                            android:layout_alignParentStart="true"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_marginEnd="@dimen/five"
-                            android:src="@drawable/emergencyvoice_indicator"
-                            android:layout_height="@dimen/twenty">
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
-                        </ImageView>
-                        <TextView
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/imgEmergency"
-                            android:layout_alignParentEnd="true"
-                            android:id="@+id/lblEmergency"
-                            style="@style/CustomTextStylePoppinsMedium"
-                            android:layout_width="match_parent"
-                            android:text="@string/voice"
-                            android:textSize="@dimen/sixteen_sp"
-                            android:layout_height="wrap_content">
 
-                        </TextView>
-                    </RelativeLayout>
+                <me.relex.circleindicator.CircleIndicator2
+                    android:id="@+id/indicator"
+                    style="@style/IndicatorStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_below="@+id/rcAttachement"
+                    android:layout_centerInParent="true"
+                    android:elevation="@dimen/four"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rlaAudioDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/indicator"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten">
+
+                    <ImageView
+                        android:id="@+id/voiceImg"
+                        android:layout_width="@dimen/one_fifty"
+                        android:layout_height="@dimen/one_fifty"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/voice_illustrate"></ImageView>
 
                     <LinearLayout
-                        android:id="@+id/recentSeekbarlayout"
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_height="wrap_content">
-                        <SeekBar
-                            android:id="@+id/recentseekbar"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/voiceImg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvAudioTittle"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:indeterminate="false"
-                            android:progressTint="@color/PrimaryColor"
-                            android:thumbTint="@color/PrimaryColor" />
+                            android:maxLines="1"
+                            android:text="This is Sample Audio Ignore this"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imgEmergency"
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/five"
+                                android:src="@drawable/emergencyvoice_indicator"
+                                android:visibility="gone">
+
+                            </ImageView>
+
+                            <TextView
+                                android:id="@+id/lblEmergency"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/imgEmergency"
+                                android:text="@string/voice"
+                                android:textSize="@dimen/sixteen_sp">
+
+                            </TextView>
+                        </RelativeLayout>
 
                         <LinearLayout
-                            android:layout_below="@+id/rlaAudioImgBar"
-                            android:layout_marginStart="@dimen/five"
-                            android:layout_marginTop="@dimen/five"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/recentSeekbarlayout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            >
+                            android:layout_marginTop="@dimen/ten"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/lblEmgRecentduration"
+                            <SeekBar
+                                android:id="@+id/recentseekbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:indeterminate="false"
+                                android:progressTint="@color/PrimaryColor"
+                                android:thumbTint="@color/PrimaryColor" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="00:00"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                />
+                                android:layout_below="@+id/rlaAudioImgBar"
+                                android:layout_marginStart="@dimen/five"
+                                android:layout_marginTop="@dimen/five">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" / "
-                                style="@style/CustomTextStylePoppinsMedium"
-                                />
+                                <TextView
+                                    android:id="@+id/lblEmgRecentduration"
+                                    style="@style/CustomTextStylePoppinsMedium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="00:00" />
 
-                            <TextView
-                                android:id="@+id/lblRecentTotalDuration"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="00:00"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                />
+                                <TextView
+                                    style="@style/CustomTextStylePoppinsMedium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" / " />
+
+                                <TextView
+                                    android:id="@+id/lblRecentTotalDuration"
+                                    style="@style/CustomTextStylePoppinsMedium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="00:00" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/imgRecentEmgplaypause"
+                                android:layout_width="@dimen/twenty_five"
+                                android:layout_height="@dimen/twenty_five"
+                                android:layout_gravity="end"
+                                android:layout_marginStart="@dimen/eight"
+                                android:src="@drawable/play_icon_2" />
+
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/imgRecentEmgplaypause"
-                            android:layout_width="@dimen/twenty_five"
-                            android:layout_height="@dimen/twenty_five"
-                            android:layout_gravity="end"
-                            android:layout_marginStart="@dimen/eight"
-                            android:src="@drawable/play_icon_2"
-                            />
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/two"
+                        android:layout_below="@+id/voiceImg"
+                        android:background="@color/athens_gray"></View>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlaAudioDetails"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgTime"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/time_icon"></ImageView>
+
+                        <TextView
+                            android:id="@+id/lblSentTime"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_toEndOf="@+id/imgTime"
+                            android:text="@string/posted_on"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvPostOn"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="acubicsaubca"
+                        android:textColor="@color/gnt_gray"
+                        android:textSize="@dimen/fifteen_sp"></TextView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten">
+
+                        <ImageView
+                            android:id="@+id/imgLblTitle"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/pin_icon_2"
+                            app:tint="@color/PrimaryColor"></ImageView>
+
+                        <TextView
+                            android:id="@+id/lblTitle"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_toEndOf="@+id/imgLblTitle"
+                            android:text="@string/Title"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="Sample Testing"
+                        android:textSize="@dimen/fifteen_sp"></TextView>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rytDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten">
+
+                        <ImageView
+                            android:id="@+id/imgDescription"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/edit_icon_2"
+                            app:tint="@color/PrimaryColor"></ImageView>
+
+                        <TextView
+                            android:id="@+id/lblDescription"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_toEndOf="@+id/imgDescription"
+                            android:text="@string/Description"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="Hello this is testing Messsge Please Ignore this!"
+                        android:textSize="@dimen/fifteen_sp"></TextView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten">
+
+                        <ImageView
+                            android:id="@+id/imgSendBy"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/person_circle"></ImageView>
+
+                        <TextView
+                            android:id="@+id/lblSendBy"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_toEndOf="@+id/imgSendBy"
+                            android:text="Sent by Saranraj"
+                            android:textColor="@color/gnt_gray"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+                    </RelativeLayout>
+
 
                 </LinearLayout>
-                <View
-                    android:layout_below="@+id/voiceImg"
-                    android:layout_width="match_parent"
-                    android:background="@color/athens_gray"
-                    android:layout_height="@dimen/two">
-                </View>
             </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:layout_below="@+id/rlaAudioDetails"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/imgTime"
-                        android:src="@drawable/time_icon"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty">
-                    </ImageView>
-                    <TextView
-                        android:text="@string/posted_on"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_toEndOf="@+id/imgTime"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblSentTime"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                </RelativeLayout>
-                <TextView
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:id="@+id/tvPostOn"
-                    android:text="acubicsaubca"
-                    android:textColor="@color/gnt_gray"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </TextView>
-
-                <RelativeLayout
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/imgLblTitle"
-                        android:src="@drawable/pin_icon_2"
-                        app:tint="@color/PrimaryColor"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_centerVertical="true"
-                        >
-                    </ImageView>
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_toEndOf="@+id/imgLblTitle"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblTitle"
-                        android:text="@string/Title"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                </RelativeLayout>
-                <TextView
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:id="@+id/tvTitle"
-                    android:text="Sample Testing"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </TextView>
-
-
-                <RelativeLayout
-                    android:id="@+id/rytDescription"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/imgDescription"
-                        app:tint="@color/PrimaryColor"
-                        android:src="@drawable/edit_icon_2"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty">
-                    </ImageView>
-                    <TextView
-                        android:text="@string/Description"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_toEndOf="@+id/imgDescription"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:id="@+id/lblDescription"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                </RelativeLayout>
-                <TextView
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:id="@+id/tvDescription"
-                    android:text="Hello this is testing Messsge Please Ignore this!"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </TextView>
-
-                <RelativeLayout
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/imgSendBy"
-                        android:src="@drawable/person_circle"
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty">
-                    </ImageView>
-                    <TextView
-                        android:text="Sent by Saranraj"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_toEndOf="@+id/imgSendBy"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:id="@+id/lblSendBy"
-                        android:textColor="@color/gnt_gray"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                </RelativeLayout>
-
-
-            </LinearLayout>
-        </RelativeLayout>
         </ScrollView>
-        
+
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

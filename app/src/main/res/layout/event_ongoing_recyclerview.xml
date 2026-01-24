@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/header"
-    android:background="@drawable/dark_pink_background"
-    android:padding="@dimen/five"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/five"
     android:layout_marginEnd="@dimen/five"
-    android:layout_height="wrap_content">
+    android:background="@drawable/dark_pink_background"
+    android:padding="@dimen/five">
 
 
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/ten"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_marginStart="@dimen/ten"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/event_header"
@@ -25,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="Christmaasjus Day Celebration"
             android:textColor="@color/white"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:lines="1"
-            android:ellipsize="end"
             android:textSize="@dimen/sixteen_sp" />
 
         <TextView
@@ -40,8 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
-            android:maxLines="3"
             android:lines="3"
+            android:maxLines="3"
             android:text="Festival 10:00 AM -17/07"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
@@ -110,6 +109,7 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
@@ -120,19 +120,18 @@
 
                 <TextView
                     android:id="@+id/total_numbers"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="@dimen/thirty_six"
                     android:layout_height="@dimen/thirty_six"
+                    android:layout_marginStart="@dimen/minus_fifteen"
                     android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
                     android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/bg_image_background_white_coupon"
-                    android:text="+9"
                     android:gravity="center"
-                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="+9"
                     android:textSize="@dimen/fifteen_sp"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/minus_fifteen"
-                    android:layout_marginEnd="@dimen/five"
-                    />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -173,7 +172,6 @@
                 android:layout_weight="1" />
 
 
-
             <TextView
                 android:id="@+id/status_event"
                 style="@style/CustomTextStylePoppinsBold"
@@ -187,8 +185,7 @@
                 android:paddingTop="@dimen/eight"
                 android:paddingEnd="@dimen/ten"
                 android:paddingBottom="@dimen/eight"
-                android:text="Today's Event"
-                 />
+                android:text="Today's Event" />
 
         </LinearLayout>
 

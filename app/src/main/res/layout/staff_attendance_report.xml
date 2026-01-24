@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/gray_white">
 
     <View
@@ -12,21 +12,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
         <LinearLayout
             android:id="@+id/lnrParent"
@@ -67,185 +67,183 @@
 
         </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rytAttendanceHistorySceen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/lnrParent"
-        android:layout_marginTop="@dimen/fifteen"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:id="@+id/lnrSpinners"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/sixty"
-                android:layout_marginStart="@dimen/thirty"
-                android:background="@drawable/bg_white_light_radious"
-                android:gravity="center">
-
-                <Spinner
-                    android:id="@+id/spinnerYears"
-                    android:layout_marginStart="@dimen/three"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:background="@null"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/spinnerYearsimg"
-                    android:drawSelectorOnTop="true"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:id="@+id/spinnerYearsimg"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
-                    android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
-                </ImageView>
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/sixty"
-                android:layout_marginStart="@dimen/five"
-                android:layout_marginEnd="@dimen/thirty"
-                android:background="@drawable/bg_white_light_radious"
-                android:gravity="center">
-
-                <Spinner
-                    android:id="@+id/spinnerMonths"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/three"
-                    android:background="@null"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/spinnerMonthsimg"
-                    android:drawSelectorOnTop="true"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:id="@+id/spinnerMonthsimg"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
-                    android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
-
-                </ImageView>
-
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/lblSelectStaff"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrSpinners"
-            android:visibility="gone"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:text="@string/select_staff">
-
-        </TextView>
-
         <RelativeLayout
-            android:id="@+id/rlaStaff"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/thirty"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/thirty"
-            android:gravity="center"
-            android:layout_below="@+id/lblSelectStaff"
-            android:background="@drawable/bg_white_light_radious"
-            android:visibility="gone">
-
-            <Spinner
-                android:id="@+id/spinnerStaffList"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:background="@null"
-                android:paddingVertical="@dimen/five"
-                android:layout_marginStart="@dimen/three"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/spinnerStaffListimg"
-                android:drawSelectorOnTop="true"
-                android:layout_height="wrap_content"
-                />
-            <ImageView
-                android:id="@+id/spinnerStaffListimg"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_drop_down"
-                android:layout_marginEnd="@dimen/three"
-                app:tint="@color/black"
-                android:layout_height="wrap_content">
-
-            </ImageView>
-
-
-
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleAttendanceReportsToday"
+            android:id="@+id/rytAttendanceHistorySceen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rlaStaff"
-            android:visibility="gone"
-            tools:listitem="@layout/giometric_attendance_report_item_list" />
+            android:layout_below="@+id/lnrParent"
+            android:layout_marginTop="@dimen/fifteen"
+            android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/lytNoRecordFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/imgNorecord"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/two_hundred"
-                android:layout_centerInParent="true"
-                android:src="@drawable/man_doing_fingerprint_research"
-                android:visibility="visible">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/lblNoRecords"
-                style="@style/CustomTextStylePoppinsBold"
+            <LinearLayout
+                android:id="@+id/lnrSpinners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgNorecord"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="center"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="@dimen/one_fifty"
+                    android:layout_height="@dimen/sixty"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:gravity="center">
+
+                    <Spinner
+                        android:id="@+id/spinnerYears"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toStartOf="@+id/spinnerYearsimg"
+                        android:background="@null"
+                        android:drawSelectorOnTop="true" />
+
+                    <ImageView
+                        android:id="@+id/spinnerYearsimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/three"
+                        android:src="@drawable/ic_drop_down"
+                        app:tint="@color/black"></ImageView>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/one_fifty"
+                    android:layout_height="@dimen/sixty"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:gravity="center">
+
+                    <Spinner
+                        android:id="@+id/spinnerMonths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toStartOf="@+id/spinnerMonthsimg"
+                        android:background="@null"
+                        android:drawSelectorOnTop="true" />
+
+                    <ImageView
+                        android:id="@+id/spinnerMonthsimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/three"
+                        android:src="@drawable/ic_drop_down"
+                        app:tint="@color/black">
+
+                    </ImageView>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblSelectStaff"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrSpinners"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/select_staff"
+                android:visibility="gone">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/rlaStaff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSelectStaff"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginEnd="@dimen/thirty"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/spinnerStaffList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_toStartOf="@+id/spinnerStaffListimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true"
+                    android:paddingVertical="@dimen/five" />
+
+                <ImageView
+                    android:id="@+id/spinnerStaffListimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/three"
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
+
+                </ImageView>
+
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleAttendanceReportsToday"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rlaStaff"
+                android:visibility="gone"
+                tools:listitem="@layout/giometric_attendance_report_item_list" />
+
+            <LinearLayout
+                android:id="@+id/lytNoRecordFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgNorecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/man_doing_fingerprint_research"
+                    android:visibility="visible">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblNoRecords"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgNorecord"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
-
-</RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

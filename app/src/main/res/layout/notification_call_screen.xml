@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:keepScreenOn="true"
-    android:background="@drawable/action_bg">
+    android:background="@drawable/action_bg"
+    android:keepScreenOn="true">
 
 
     <ImageView
         android:id="@+id/logoImage"
         android:layout_width="@dimen/two_hundred"
         android:layout_height="@dimen/two_hundred"
-        android:padding="20dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/thirty"
         android:background="@drawable/glow_circle"
         android:contentDescription="School Chimes Logo"
+        android:padding="20dp"
         android:src="@drawable/app_logo"
         app:layout_constraintVertical_bias="0.30" />
 
@@ -126,10 +126,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:text="@string/decline_or_slide_to_answer"
             android:textColor="@color/gray"
             android:textSize="@dimen/sixteen_sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -161,7 +161,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                 } else {
                     Constant.showTopAlertPopup(getString(R.string.slot_creation_failed), this)
@@ -503,7 +503,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             Log.d("jsonArray", jsonArray.toString())
-            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray,this)
+            appViewModel!!.isSlotValidationForStaff(isAccessToken!!, jsonArray, this)
         }
     }
 
@@ -659,7 +659,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         }
 
         Log.d("isCreateSlots", jsonArray.toString())
-        appViewModel!!.isSlotCreating(isAccessToken!!, jsonArray,this)
+        appViewModel!!.isSlotCreating(isAccessToken!!, jsonArray, this)
     }
 
 

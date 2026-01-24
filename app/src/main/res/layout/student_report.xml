@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:id="@+id/main">
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
         android:id="@+id/rytSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/five"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <RelativeLayout
 
@@ -65,10 +64,10 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="@string/lblSearch"
-                android:maxLines="1"
                 android:imeOptions="actionDone"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -83,27 +82,27 @@
             android:layout_marginEnd="@dimen/eight"
             android:background="@drawable/white_circle_bg"
             android:padding="@dimen/five"
-            android:visibility="gone"
-            android:src="@drawable/del_icon">
+            android:src="@drawable/del_icon"
+            android:visibility="gone">
 
         </ImageView>
     </RelativeLayout>
 
 
     <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rytSearchBar"
         android:id="@+id/lnrSort"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearchBar"
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/two"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytSearchBar">
 
         <RelativeLayout
             android:id="@+id/rlaSort"
@@ -125,44 +124,43 @@
             </ImageView>
 
             <RelativeLayout
-                android:paddingVertical="@dimen/five"
-                android:layout_toEndOf="@+id/imgSort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
-                >
+                android:layout_toEndOf="@+id/imgSort"
+                android:paddingVertical="@dimen/five">
 
                 <Spinner
                     android:id="@+id/isSpinnerSort"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:background="@null"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/isSpinnerSortimg"
-                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/isSpinnerSortimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true" />
+
                 <ImageView
                     android:id="@+id/isSpinnerSortimg"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
 
                 </ImageView>
 
             </RelativeLayout>
 
-<!--            <Spinner-->
-<!--                android:layout_marginStart="@dimen/five"-->
-<!--                android:layout_toEndOf="@+id/imgSort"-->
-<!--                android:id="@+id/isSpinnerSort"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/custom_spinner_background" />-->
+            <!--            <Spinner-->
+            <!--                android:layout_marginStart="@dimen/five"-->
+            <!--                android:layout_toEndOf="@+id/imgSort"-->
+            <!--                android:id="@+id/isSpinnerSort"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@drawable/custom_spinner_background" />-->
 
         </RelativeLayout>
 
@@ -177,24 +175,24 @@
             android:gravity="center">
 
             <Spinner
-                android:paddingVertical="@dimen/five"
                 android:id="@+id/isSpinner"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:background="@null"
-                android:layout_toStartOf="@+id/isSpinnerimg"
-                android:layout_alignParentStart="true"
                 android:layout_height="wrap_content"
-                />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/isSpinnerimg"
+                android:background="@null"
+                android:paddingVertical="@dimen/five" />
+
             <ImageView
                 android:id="@+id/isSpinnerimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_drop_down"
                 android:layout_marginEnd="@dimen/three"
-                app:tint="@color/black"
-                android:layout_height="wrap_content">
+                android:src="@drawable/ic_drop_down"
+                app:tint="@color/black">
 
             </ImageView>
 
@@ -202,63 +200,63 @@
     </LinearLayout>
 
     <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lnrSort"
-        android:layout_below="@+id/lnrSort"
-        android:orientation="horizontal"
         android:id="@+id/tabLayout"
-        android:weightSum="1"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnrSort"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnrSort">
 
         <RelativeLayout
-            android:paddingVertical="@dimen/five"
-            android:layout_weight="0.6"
-            android:layout_marginStart="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_weight="0.6"
             android:background="@drawable/light_gray_radius"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingVertical="@dimen/five">
 
             <Spinner
                 android:id="@+id/isGenderCatory"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:background="@null"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/isGenderCatoryimg"
-                android:drawSelectorOnTop="true"
                 android:layout_height="wrap_content"
-                />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/isGenderCatoryimg"
+                android:background="@null"
+                android:drawSelectorOnTop="true" />
+
             <ImageView
                 android:id="@+id/isGenderCatoryimg"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_drop_down"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/three"
-                app:tint="@color/black"
-                android:layout_height="wrap_content">
+                android:src="@drawable/ic_drop_down"
+                app:tint="@color/black">
 
             </ImageView>
 
-<!--            <Spinner-->
-<!--                android:id="@+id/isGenderCatory"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/custom_spinner_background" />-->
+            <!--            <Spinner-->
+            <!--                android:id="@+id/isGenderCatory"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@drawable/custom_spinner_background" />-->
         </RelativeLayout>
 
         <HorizontalScrollView
             android:id="@+id/tabLayout1"
-            android:layout_weight="0.4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_marginBottom="@dimen/five"
+            android:layout_weight="0.4"
             android:background="@color/white"
             android:fillViewport="true"
             android:padding="@dimen/two"
@@ -272,30 +270,29 @@
 
                 <TextView
                     android:id="@+id/tapNameAsc"
-                    android:background="@drawable/light_gray_radius"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/eight"
                     android:text="@string/nameasc"
-                    android:textSize="@dimen/ten_sp">
-                </TextView>
+                    android:textSize="@dimen/ten_sp"></TextView>
 
                 <TextView
                     android:id="@+id/tapNameDsc"
-                    android:background="@drawable/light_gray_radius"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
+                    android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/namedsc"
@@ -303,7 +300,6 @@
 
 
                 <TextView
-                    android:background="@drawable/light_gray_radius"
                     android:id="@+id/tapRollAsc"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
@@ -311,16 +307,16 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
+                    android:drawableEnd="@drawable/arrow_down2"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/roll_no"
-                    android:drawableEnd="@drawable/arrow_down2"
                     android:textSize="@dimen/ten_sp" />
 
 
                 <TextView
-                    android:background="@drawable/light_gray_radius"
                     android:id="@+id/tapRollDsc"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
@@ -328,13 +324,13 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
+                    android:drawableEnd="@drawable/arrow_up"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:drawableEnd="@drawable/arrow_up"
                     android:text="@string/roll_no"
-                    android:textSize="@dimen/ten_sp">
-                </TextView>
+                    android:textSize="@dimen/ten_sp"></TextView>
 
 
                 <TextView
@@ -345,12 +341,12 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
+                    android:drawableEnd="@drawable/arrow_down2"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:background="@drawable/light_gray_radius"
                     android:padding="@dimen/ten"
                     android:text="@string/no_asc"
-                    android:drawableEnd="@drawable/arrow_down2"
                     android:textSize="@dimen/ten_sp" />
 
 
@@ -362,30 +358,30 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/light_gray_radius"
+                    android:drawableEnd="@drawable/arrow_up"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:background="@drawable/light_gray_radius"
                     android:padding="@dimen/ten"
-                    android:drawableEnd="@drawable/arrow_up"
                     android:text="@string/no_dsc"
-                    android:textSize="@dimen/ten_sp">
-                </TextView>
+                    android:textSize="@dimen/ten_sp"></TextView>
 
 
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
+
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/rlaStandardPicking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayout"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:weightSum="1">
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
         <LinearLayout
             android:id="@+id/lnrStandardDetails"
@@ -403,8 +399,7 @@
                 android:text="@string/Standard"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
 
             <RelativeLayout
@@ -418,33 +413,33 @@
 
 
                 <Spinner
-                    android:paddingVertical="@dimen/five"
                     android:id="@+id/isSpinnerStandard"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:background="@null"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/isSpinnerStandardimg"
-                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/isSpinnerStandardimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true"
+                    android:paddingVertical="@dimen/five" />
+
                 <ImageView
                     android:id="@+id/isSpinnerStandardimg"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
 
                 </ImageView>
 
-<!--                <Spinner-->
-<!--                    android:id="@+id/isSpinnerStandard"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/custom_spinner_background" />-->
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/isSpinnerStandard"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:background="@drawable/custom_spinner_background" />-->
             </RelativeLayout>
         </LinearLayout>
 
@@ -476,25 +471,25 @@
                 android:gravity="center">
 
                 <Spinner
-                    android:paddingVertical="@dimen/five"
                     android:id="@+id/isSpinnerSection"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:background="@null"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/isSpinnerSectionimg"
-                    android:drawSelectorOnTop="true"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/isSpinnerSectionimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true"
+                    android:paddingVertical="@dimen/five" />
+
                 <ImageView
                     android:id="@+id/isSpinnerSectionimg"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_drop_down"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/three"
-                    app:tint="@color/black"
-                    android:layout_height="wrap_content">
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
 
                 </ImageView>
 
@@ -507,37 +502,35 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcyStudentReport"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/rlaStandardPicking"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginEnd="@dimen/ten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/lytNoDataFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rcyStudentReport"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlaStandardPicking">
 
         <ImageView
             android:layout_width="@dimen/two_hundred"
             android:layout_height="@dimen/two_hundred"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/no_student_report_message">
-        </ImageView>
+            android:src="@drawable/no_student_report_message"></ImageView>
 
         <TextView
             android:id="@+id/noDataFound"

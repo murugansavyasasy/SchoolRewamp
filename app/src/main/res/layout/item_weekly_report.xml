@@ -1,19 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="@dimen/eight">
 
     <TextView
         android:id="@+id/txtweek"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/eight"
         android:text="Week 1"
-        android:textSize="@dimen/fourteen_sp"
-        style="@style/CustomTextStylePoppinsMedium"
         android:textColor="@android:color/black"
-        android:layout_marginEnd="@dimen/eight"/>
+        android:textSize="@dimen/fourteen_sp" />
 
 
     <ProgressBar
@@ -21,20 +21,20 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
         android:layout_weight="1"
-        android:progress="0"
-        android:max="100"
-        android:progressDrawable="@android:drawable/progress_horizontal"
         android:indeterminate="false"
-        android:layout_marginEnd="@dimen/eight"/>
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@android:drawable/progress_horizontal" />
 
     <TextView
         android:id="@+id/txtpercentage"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
-        android:textSize="@dimen/fourteen_sp"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/fourteen_sp" />
 
 </LinearLayout>

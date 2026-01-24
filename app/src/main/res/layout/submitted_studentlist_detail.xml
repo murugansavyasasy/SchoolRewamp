@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/tools"
     android:layout_margin="@dimen/eight"
     android:backgroundTint="@android:color/white"
+    app:ignore="NamespaceTypo"
     card_view:cardCornerRadius="@dimen/twele"
-    card_view:cardElevation="@dimen/four"
-    app:ignore="NamespaceTypo">
-
+    card_view:cardElevation="@dimen/four">
 
 
     <RelativeLayout
@@ -24,10 +23,10 @@
             android:layout_height="@dimen/fourty_eight"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/twele"
-            android:textColor="@android:color/white"
             android:background="@drawable/bg_circle_avatar"
             android:gravity="center"
             android:text="J"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/twenty_sp" />
 
 
@@ -36,11 +35,11 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/avatarText"
-            android:text="SARANRAJ SHANMUjnGAM"
-            android:maxLines="2"
-            android:ellipsize="end"
             android:layout_toStartOf="@+id/statusButton"
+            android:layout_toEndOf="@id/avatarText"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="SARANRAJ SHANMUjnGAM"
             android:textColor="@android:color/black"
             android:textSize="@dimen/fifteen_sp" />
 
@@ -52,11 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lblStudentName"
             android:layout_marginTop="@dimen/two"
-            android:layout_toEndOf="@id/avatarText"
-            android:text="I - B"
-            android:maxLines="2"
-            android:ellipsize="end"
             android:layout_toStartOf="@+id/statusButton"
+            android:layout_toEndOf="@id/avatarText"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="I - B"
             android:textColor="@color/light_gray_5"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -116,7 +115,6 @@
                 android:text="Pending"
                 android:textColor="@android:color/holo_red_dark" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -216,9 +214,9 @@
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="arrow"
             android:src="@drawable/right_arrow"
-            android:visibility="gone"
-            android:contentDescription="arrow" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

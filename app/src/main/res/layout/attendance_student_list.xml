@@ -2,23 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/ten"
-    >
+    android:layout_marginTop="@dimen/ten">
 
     <LinearLayout
-        android:weightSum="1"
-        android:gravity="center"
         android:id="@+id/lnrHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6"
             android:layout_gravity="center_vertical"
+            android:layout_weight="0.6"
             android:orientation="vertical"
             android:padding="@dimen/ten">
 
@@ -38,8 +37,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:text="123456"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/twele_sp"
-                />
+                android:textSize="@dimen/twele_sp" />
 
             <TextView
                 android:id="@+id/lblRollNo"
@@ -55,91 +53,87 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="0.4"
             android:layout_height="wrap_content"
-            >
+            android:layout_weight="0.4">
 
             <!-- Left: Switch + Label -->
             <LinearLayout
-                android:layout_centerVertical="true"
                 android:id="@+id/lnrSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:layout_alignParentStart="true">
+                android:orientation="vertical">
 
                 <com.vs.schoolmessenger.School.AbsenteesMarking.ODCustomSwitch
                     android:id="@+id/switchOD"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty_five"
-                    />
+                    android:layout_height="@dimen/twenty_five" />
 
                 <TextView
-                    android:layout_gravity="center"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/three"
                     android:layout_height="wrap_content"
-                    android:text="@string/on_duty"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/three"
                     android:gravity="center"
-                    />
+                    android:text="@string/on_duty" />
             </LinearLayout>
 
             <!-- Divider between columns -->
             <View
-                android:layout_centerVertical="true"
                 android:id="@+id/divider"
                 android:layout_width="@dimen/two"
                 android:layout_height="@dimen/fourty_five"
-                android:layout_toEndOf="@id/lnrSwitch"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
+                android:layout_toEndOf="@id/lnrSwitch"
                 android:background="@color/grey_mild" />
 
             <!-- Right: Present / Absent / OD -->
             <LinearLayout
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/divider"
                 android:layout_alignParentEnd="true"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/divider"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <!-- Present -->
                 <LinearLayout
                     android:id="@+id/lnrEntirePresent"
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/lnrPresent"
-                        android:gravity="center"
                         android:layout_width="@dimen/thirty_five"
-                        android:background="@drawable/present_green_circle_bg"
                         android:layout_height="@dimen/thirty_five"
-                        android:layout_marginVertical="@dimen/five">
+                        android:layout_marginVertical="@dimen/five"
+                        android:background="@drawable/present_green_circle_bg"
+                        android:gravity="center">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="P"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/sixteen_sp"
                             android:textColor="@color/white"
-                             />
+                            android:textSize="@dimen/sixteen_sp" />
                     </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/cbLaterComer"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/twenty"
-                        android:text="@string/late"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:button="@drawable/small_ch_square"
-                        />
+                        android:text="@string/late" />
 
                 </LinearLayout>
 
@@ -148,44 +142,42 @@
                     android:id="@+id/lnrAbsent"
                     android:layout_width="@dimen/thirty_five"
                     android:layout_height="@dimen/thirty_five"
-                    android:gravity="center"
                     android:background="@drawable/absent_red_circle_bg"
+                    android:gravity="center"
                     android:visibility="gone">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="A"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/sixteen_sp"
                         android:textColor="@color/white"
-                        />
+                        android:textSize="@dimen/sixteen_sp" />
                 </LinearLayout>
 
                 <!-- OD -->
                 <LinearLayout
                     android:id="@+id/lnrOD"
                     android:layout_width="@dimen/thirty_five"
-                    android:background="@drawable/onduty_yellow_circle_bg"
                     android:layout_height="@dimen/thirty_five"
                     android:layout_marginVertical="@dimen/five"
+                    android:background="@drawable/onduty_yellow_circle_bg"
                     android:gravity="center"
                     android:visibility="gone">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="OD"
-                        android:textSize="@dimen/sixteen_sp"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/white"
+                        android:textSize="@dimen/sixteen_sp"
 
                         />
                 </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>
-
 
 
     </LinearLayout>
@@ -201,152 +193,152 @@
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_marginTop="@dimen/ten"-->
-<!--&gt;-->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_marginTop="@dimen/ten"-->
+    <!--&gt;-->
 
-<!--    <LinearLayout-->
-<!--        android:gravity="center"-->
-<!--        android:id="@+id/lnrHeader"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal">-->
-
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="@dimen/zero"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:orientation="vertical"-->
-<!--            android:padding="@dimen/ten">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblName"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Murugan"-->
-<!--                android:textSize="@dimen/twele_sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblAdmissionNoValue"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:text="123456"-->
-<!--                android:textColor="@color/light_gray"-->
-<!--                android:textSize="@dimen/ten_sp"-->
-<!--                 />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lnrRollNo"-->
-<!--            android:layout_width="@dimen/zero"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginHorizontal="@dimen/five"-->
-<!--            android:layout_weight="1"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:padding="@dimen/five">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblRollNo"-->
-<!--                style="@style/CustomTextStylePoppinsMedium"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:text="111"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/twele_sp" />-->
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_marginEnd="@dimen/five"-->
-<!--            android:id="@+id/lnrRightColumn"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity=""-->
-<!--            android:orientation="vertical">-->
-
-<!--            &lt;!&ndash; Present &ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/lnrPresent"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:layout_marginBottom="@dimen/five"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:background="@drawable/rect_green_stroke"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingHorizontal="@dimen/ten"-->
-<!--                android:paddingVertical="@dimen/five">-->
+    <!--    <LinearLayout-->
+    <!--        android:gravity="center"-->
+    <!--        android:id="@+id/lnrHeader"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal">-->
 
 
-<!--                <TextView-->
-<!--                    style="@style/CustomTextStylePoppinsMedium"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="@dimen/five"-->
-<!--                    android:text="@string/present"-->
-<!--                    android:textColor="@color/green"-->
-<!--                    android:textSize="@dimen/twele_sp" />-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="@dimen/zero"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_gravity="center_vertical"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:padding="@dimen/ten">-->
 
-<!--                <View-->
-<!--                    android:layout_width="@dimen/twenty"-->
-<!--                    android:layout_height="@dimen/twenty"-->
-<!--                    android:background="@drawable/circle_bg_green" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblName"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Murugan"-->
+    <!--                android:textSize="@dimen/twele_sp" />-->
 
-<!--            </LinearLayout>-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblAdmissionNoValue"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:text="123456"-->
+    <!--                android:textColor="@color/light_gray"-->
+    <!--                android:textSize="@dimen/ten_sp"-->
+    <!--                 />-->
 
-<!--            &lt;!&ndash; Absent (Initially hidden) &ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:id="@+id/lnrAbsent"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/five"-->
-<!--                android:layout_gravity="end"-->
-<!--                android:background="@drawable/rect_red_stroke"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingHorizontal="@dimen/ten"-->
-<!--                android:paddingVertical="@dimen/five"-->
-<!--                android:visibility="gone">-->
+    <!--        </LinearLayout>-->
 
-<!--                <View-->
-<!--                    android:id="@+id/imgAbsent"-->
-<!--                    android:layout_width="@dimen/twenty"-->
-<!--                    android:layout_height="@dimen/twenty"-->
-<!--                    android:background="@drawable/circle_bg_red" />-->
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/lnrRollNo"-->
+    <!--            android:layout_width="@dimen/zero"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginHorizontal="@dimen/five"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:padding="@dimen/five">-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/lblAbsent"-->
-<!--                    style="@style/CustomTextStylePoppinsMedium"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="@dimen/five"-->
-<!--                    android:text="@string/absent"-->
-<!--                    android:textColor="@color/red"-->
-<!--                    android:textSize="@dimen/twele_sp" />-->
-<!--            </LinearLayout>-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblRollNo"-->
+    <!--                style="@style/CustomTextStylePoppinsMedium"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:text="111"-->
+    <!--                android:textAlignment="center"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/twele_sp" />-->
+    <!--        </LinearLayout>-->
 
-<!--            &lt;!&ndash; Admission Info &ndash;&gt;-->
-<!--        </LinearLayout>-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_marginEnd="@dimen/five"-->
+    <!--            android:id="@+id/lnrRightColumn"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:gravity=""-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            &lt;!&ndash; Present &ndash;&gt;-->
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/lnrPresent"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:layout_marginBottom="@dimen/five"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:background="@drawable/rect_green_stroke"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:paddingHorizontal="@dimen/ten"-->
+    <!--                android:paddingVertical="@dimen/five">-->
 
 
-<!--    </LinearLayout>-->
+    <!--                <TextView-->
+    <!--                    style="@style/CustomTextStylePoppinsMedium"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginEnd="@dimen/five"-->
+    <!--                    android:text="@string/present"-->
+    <!--                    android:textColor="@color/green"-->
+    <!--                    android:textSize="@dimen/twele_sp" />-->
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/point_five"-->
-<!--        android:layout_below="@id/lnrHeader"-->
-<!--        android:layout_marginHorizontal="@dimen/ten"-->
-<!--        android:layout_marginTop="@dimen/ten"-->
-<!--        android:background="@color/grey" />-->
-<!--</RelativeLayout>-->
+    <!--                <View-->
+    <!--                    android:layout_width="@dimen/twenty"-->
+    <!--                    android:layout_height="@dimen/twenty"-->
+    <!--                    android:background="@drawable/circle_bg_green" />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            &lt;!&ndash; Absent (Initially hidden) &ndash;&gt;-->
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/lnrAbsent"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:layout_gravity="end"-->
+    <!--                android:background="@drawable/rect_red_stroke"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:paddingHorizontal="@dimen/ten"-->
+    <!--                android:paddingVertical="@dimen/five"-->
+    <!--                android:visibility="gone">-->
+
+    <!--                <View-->
+    <!--                    android:id="@+id/imgAbsent"-->
+    <!--                    android:layout_width="@dimen/twenty"-->
+    <!--                    android:layout_height="@dimen/twenty"-->
+    <!--                    android:background="@drawable/circle_bg_red" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblAbsent"-->
+    <!--                    style="@style/CustomTextStylePoppinsMedium"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="@dimen/five"-->
+    <!--                    android:text="@string/absent"-->
+    <!--                    android:textColor="@color/red"-->
+    <!--                    android:textSize="@dimen/twele_sp" />-->
+    <!--            </LinearLayout>-->
+
+    <!--            &lt;!&ndash; Admission Info &ndash;&gt;-->
+    <!--        </LinearLayout>-->
+
+
+    <!--    </LinearLayout>-->
+
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/point_five"-->
+    <!--        android:layout_below="@id/lnrHeader"-->
+    <!--        android:layout_marginHorizontal="@dimen/ten"-->
+    <!--        android:layout_marginTop="@dimen/ten"-->
+    <!--        android:background="@color/grey" />-->
+    <!--</RelativeLayout>-->

@@ -62,6 +62,7 @@ class ExamQuizReportAdapter(
         itemList = newList
         notifyDataSetChanged()
     }
+
     fun removeItemById(id: String) {
         val mutableList = itemList?.toMutableList() ?: return
         val index = mutableList.indexOfFirst { it.id == id }
@@ -96,11 +97,10 @@ class ExamQuizReportAdapter(
             lblCreatedOn.text =
                 context.getString(R.string.sent_at) + Constant.convertDateFormatType(data.sent_time)
 
-            if(!data.open_to_student){
-                lnrPendingQuiz.visibility=View.VISIBLE
-            }
-            else{
-                lnrPendingQuiz.visibility=View.GONE
+            if (!data.open_to_student) {
+                lnrPendingQuiz.visibility = View.VISIBLE
+            } else {
+                lnrPendingQuiz.visibility = View.GONE
             }
 
             val images = listOf(
@@ -125,8 +125,7 @@ class ExamQuizReportAdapter(
 
             if (data.can_edit || data.can_delete) {
                 imgOptions.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 imgOptions.visibility = View.GONE
             }
 

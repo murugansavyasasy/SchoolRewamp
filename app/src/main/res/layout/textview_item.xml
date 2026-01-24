@@ -5,13 +5,13 @@
 
     <TextView
         android:id="@+id/lblStatus"
-        android:textSize="@dimen/fifteen_sp"
         style="@style/CustomTextStylePoppinsBold1"
-        android:text="@string/Complete"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="@dimen/fifteen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:text="@string/Complete"
+        android:textSize="@dimen/fifteen_sp">
 
     </TextView>
 

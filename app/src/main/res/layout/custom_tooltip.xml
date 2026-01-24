@@ -2,30 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/bg_tooltip_background"
-    android:padding="@dimen/eight"
     android:layout_marginStart="@dimen/fourty"
-    android:layout_marginEnd="@dimen/fourty"
     android:layout_marginTop="@dimen/twele"
-    android:elevation="@dimen/four">
+    android:layout_marginEnd="@dimen/fourty"
+    android:background="@drawable/bg_tooltip_background"
+    android:elevation="@dimen/four"
+    android:orientation="vertical"
+    android:padding="@dimen/eight">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/eight"
-        android:src="@drawable/tooltip_arrow"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/minus_ten"
         android:rotation="0"
-        android:layout_marginBottom="@dimen/minus_ten" />
+        android:src="@drawable/tooltip_arrow" />
 
     <!-- Message -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/on_enabling_this_call_will_be_dialed_on_priority_you_can_record_up_to_30_secs_only"
-        android:textColor="@color/black"
-        android:textSize="@dimen/twele_sp"
+        android:layout_marginTop="@dimen/four"
         android:background="@android:color/white"
         android:padding="@dimen/eight"
-        android:layout_marginTop="@dimen/four" />
+        android:text="@string/on_enabling_this_call_will_be_dialed_on_priority_you_can_record_up_to_30_secs_only"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twele_sp" />
 </LinearLayout>

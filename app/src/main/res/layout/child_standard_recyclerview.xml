@@ -4,20 +4,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/six"
+    app:cardBackgroundColor="@color/lightblue_primary"
     app:cardCornerRadius="@dimen/twele"
-    app:cardElevation="@dimen/two"
-    app:cardBackgroundColor="@color/lightblue_primary">
+    app:cardElevation="@dimen/two">
 
     <TextView
         android:id="@+id/lblvalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/fourteen"
-        android:paddingEnd="@dimen/fourteen"
         android:paddingTop="@dimen/ten"
+        android:paddingEnd="@dimen/fourteen"
         android:paddingBottom="@dimen/ten"
         android:text="Sample"
-        android:textSize="@dimen/fourteen_sp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/fourteen_sp" />
 
 </androidx.cardview.widget.CardView>

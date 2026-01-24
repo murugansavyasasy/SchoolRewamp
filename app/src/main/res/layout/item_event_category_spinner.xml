@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:padding="@dimen/ten"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/ten">
 
     <ImageView
         android:id="@+id/imgIcon"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/txtName"
@@ -19,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:text=""
-        android:textSize="@dimen/thirteen_sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
 </LinearLayout>

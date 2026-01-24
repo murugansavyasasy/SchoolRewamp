@@ -58,7 +58,8 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         appViewModel?.init()
         recyclerViewDays = binding.recyclerViewDays
         dayHeader = binding.bottomsheettimetable.dayHeader
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         recyclerViewSchedule = binding.bottomsheettimetable.recyclerViewSchedule
         setupRecyclerViewDays()
@@ -238,7 +239,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
 
             } else {

@@ -127,6 +127,7 @@
                 android:visibility="gone">
 
             </TextView>
+
             <TextView
                 android:id="@+id/lblDisclaimerForAI"
                 style="@style/CustomTextStylePoppinsRegular"
@@ -137,8 +138,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/ai_can_make_mistakes_please_check_properly_before_submitting"
                 android:textColor="@color/light_gray_4"
-                android:textSize="@dimen/thirteen_sp"
-                >
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
 
@@ -211,8 +211,7 @@
                     android:id="@+id/rvMarks"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="none" >
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:scrollbars="none"></androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
             <LinearLayout

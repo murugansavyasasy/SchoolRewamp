@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:id="@+id/main">
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rytSearchbox"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_marginTop="@dimen/five"
         android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/ten"
         android:layout_marginBottom="@dimen/five"
         android:background="@drawable/rect_grey"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -56,24 +55,19 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/rytSearchbox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/rcycompletedtaskrcy"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -81,22 +75,26 @@
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/five"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytSearchbox" />
 
 
     <LinearLayout
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/rytSearchbox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/lytNoDataFound"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbarLayout"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rytSearchbox">
 
         <ImageView
             android:id="@+id/noDataImage"

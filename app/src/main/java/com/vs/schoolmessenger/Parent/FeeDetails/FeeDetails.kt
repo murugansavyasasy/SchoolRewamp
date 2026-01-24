@@ -201,7 +201,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
                 }
             }
-            R.id.rytRefresh ->{
+
+            R.id.rytRefresh -> {
                 isClickedTap = 2
                 Constant.hideLoading(this)
                 binding.payWebview.visibility = View.VISIBLE
@@ -340,7 +341,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     fun viewInvoice(invoiceId: String) {
         Constant.showLoading(this)
-        appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId,this)
+        appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId, this)
 
         appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -351,8 +352,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 val intent = Intent(this, FeeReceiptViewActivity::class.java)
                 intent.putExtra("pdf_url", response.data[0])
                 startActivity(intent)
-            }
-            else {
+            } else {
                 Toast.makeText(
                     this,
                     response?.message ?: getString(R.string.unable_to_fetch_invoice),
@@ -384,7 +384,12 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     private fun highlightItemTemporarily(recyclerView: RecyclerView, position: Int) {
         recyclerView.post {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
-            viewHolder?.itemView?.setBackgroundColor(resources.getColor(R.color.light_yellow_5, null))
+            viewHolder?.itemView?.setBackgroundColor(
+                resources.getColor(
+                    R.color.light_yellow_5,
+                    null
+                )
+            )
             recyclerView.postDelayed({
                 viewHolder?.itemView?.setBackgroundColor(Color.TRANSPARENT)
             }, Constant.TIME_OUT)
@@ -399,7 +404,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
             addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
         }
-        appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+        appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
         val dialogView =
             LayoutInflater.from(this@FeeDetails).inflate(R.layout.payment_success, null)

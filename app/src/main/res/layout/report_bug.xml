@@ -138,8 +138,8 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="top"
-                    android:inputType="textMultiLine|textCapSentences"
                     android:hint="@string/lblEntertheBug"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
@@ -169,8 +169,8 @@
                     android:layout_marginTop="@dimen/eight"
                     android:layout_toEndOf="@id/lblAddPhoto"
                     android:text="@string/mandatory"
-                    android:visibility="gone"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/red"
+                    android:visibility="gone" />
 
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
@@ -243,10 +243,10 @@
                     android:background="@drawable/background_radius_button"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:visibility="gone"
                     android:text="Open Quiz Page"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

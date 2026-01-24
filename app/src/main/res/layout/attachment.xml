@@ -81,7 +81,7 @@
                             android:layout_marginTop="@dimen/twenty"
                             android:paddingHorizontal="@dimen/ten">
 
-                        <ImageView
+                            <ImageView
                                 android:id="@+id/imgHistory"
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"
@@ -89,8 +89,7 @@
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_marginEnd="@dimen/five"
                                 android:backgroundTint="@color/PrimaryColor"
-                                android:src="@drawable/ic_history">
-                            </ImageView>
+                                android:src="@drawable/ic_history"></ImageView>
 
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
@@ -122,8 +121,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
-                            android:paddingHorizontal="@dimen/ten"
                             android:hint="@string/enter_title"
+                            android:paddingHorizontal="@dimen/ten"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
 
@@ -156,8 +155,7 @@
                         android:layout_below="@+id/lblTitleTextCount"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/eight"
-                        android:text="@string/Description">
-                    </TextView>
+                        android:text="@string/Description"></TextView>
 
 
                     <TextView
@@ -193,10 +191,10 @@
                             android:background="@android:color/transparent"
                             android:editable="true"
                             android:focusable="true"
-                            android:inputType="textMultiLine|textCapSentences"
                             android:focusableInTouchMode="true"
                             android:gravity="start"
                             android:hint="@string/Enterdescription"
+                            android:inputType="textMultiLine|textCapSentences"
                             android:padding="@dimen/ten">
 
                         </EditText>

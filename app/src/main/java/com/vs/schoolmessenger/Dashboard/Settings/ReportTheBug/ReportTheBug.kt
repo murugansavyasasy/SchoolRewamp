@@ -39,7 +39,6 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Parent.QuizExam.QuizActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -52,11 +51,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnImageClickListener {
+class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnImageClickListener {
 
     override fun getViewBinding(): ReportBugBinding {
         return ReportBugBinding.inflate(layoutInflater)
     }
+
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     private val PICK_DOCUMENT_REQUEST = 1003
@@ -252,6 +252,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnIm
             Toast.makeText(this, getString(R.string.gmail_not_installed), Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun loadMenu() {
         Log.d("DropdownMenuList", Constant.menuNameList.toString())
 
@@ -539,7 +540,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnIm
 
         when (requestCode) {
 
-           CAMERA_IMAGE_REQUEST -> {
+            CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
                     if (file.exists()) {
@@ -576,6 +577,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener,OnIm
                     Toast.makeText(this, R.string.camera_image_failed, Toast.LENGTH_SHORT).show()
                 }
             }
+
             PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data

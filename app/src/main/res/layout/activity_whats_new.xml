@@ -60,6 +60,7 @@
 
                         <TextView
                             android:id="@+id/lblParentToolBar"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/white_bg_radius1"
@@ -67,19 +68,18 @@
                             android:paddingVertical="@dimen/seven"
                             android:text="@string/product_update"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/twele_sp"
-                          style="@style/CustomTextStylePoppinsBold"/>
+                            android:textSize="@dimen/twele_sp" />
 
                         <TextView
                             android:id="@+id/lblSchoolName"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
                             android:gravity="center"
                             android:text="@string/what_s_new_2"
-                            android:layout_marginTop="@dimen/ten"
                             android:textColor="@color/white"
                             android:textSize="@dimen/twenty_sp"
-                           style="@style/CustomTextStylePoppinsBold"
                             android:visibility="visible" />
 
                     </LinearLayout>
@@ -111,12 +111,12 @@
 
         <LinearLayout
             android:id="@+id/lytList"
-            android:gravity="center"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/dotIndicatorContainer"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/nomessage"
@@ -125,8 +125,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/no_data_found"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                 />
+                android:textSize="@dimen/fifteen_sp" />
 
             <TextView
                 android:id="@+id/txtNoData"
@@ -136,8 +135,7 @@
                 android:layout_gravity="center"
                 android:text="@string/no_list_found"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                />
+                android:textSize="@dimen/fifteen_sp" />
 
 
         </LinearLayout>

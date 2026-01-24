@@ -29,8 +29,8 @@
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/five"
             android:layout_toEndOf="@+id/imgCalender"
-            android:textSize="@dimen/thirteen_sp"
-            android:text="01 Apr, 2025">
+            android:text="01 Apr, 2025"
+            android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
@@ -41,10 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgCalender"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginBottom="@dimen/five"
             android:layout_marginTop="@dimen/ten"
-            android:maxLines="1"
+            android:layout_marginBottom="@dimen/five"
             android:ellipsize="end"
+            android:maxLines="1"
             android:text="Study Certificate"
             android:textSize="@dimen/fifteen_sp">
 
@@ -60,12 +60,12 @@
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_marginBottom="@dimen/ten"
             android:layout_toStartOf="@+id/imgNext"
-            android:maxLines="1"
             android:ellipsize="end"
-            android:visibility="gone"
+            android:maxLines="1"
             android:text="Study Certificate"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 

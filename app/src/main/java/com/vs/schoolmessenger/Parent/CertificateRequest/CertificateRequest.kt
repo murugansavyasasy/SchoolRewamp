@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log

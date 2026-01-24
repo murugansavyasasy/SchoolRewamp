@@ -73,21 +73,21 @@
 
         <TextView
             android:id="@+id/btnCancel"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingVertical="@dimen/ten"
-            style="@style/CustomTextStylePoppinsRegular"
             android:gravity="center"
+            android:paddingVertical="@dimen/ten"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2" />
 
         <Button
             android:id="@+id/btnUpdate"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/CustomTextStylePoppinsRegular"
             android:backgroundTint="@color/navi_blue2"
             android:text="@string/Update"
             android:textColor="@android:color/white" />

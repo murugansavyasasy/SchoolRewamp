@@ -16,8 +16,8 @@
             android:id="@+id/questionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:layout_marginTop="@dimen/ten"
+            android:gravity="start"
             android:text="@string/question_will_appear_here"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
@@ -27,8 +27,7 @@
             android:id="@+id/rcAttachement"
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
-            android:layout_marginTop="@dimen/five">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
 
         <me.relex.circleindicator.CircleIndicator2
             android:id="@+id/indicator"
@@ -111,10 +110,10 @@
 
                                     <ImageView
                                         android:id="@+id/imgOptionA"
-                                        android:layout_toEndOf="@+id/imgCheckmarkA"
                                         android:layout_width="@dimen/fourty"
                                         android:layout_height="@dimen/fourty"
                                         android:layout_centerVertical="true"
+                                        android:layout_toEndOf="@+id/imgCheckmarkA"
                                         android:src="@drawable/default_image_icon"
                                         android:visibility="gone" />
                                 </RelativeLayout>
@@ -204,9 +203,9 @@
 
                                     <ImageView
                                         android:id="@+id/imgOptionB"
-                                        android:layout_toEndOf="@id/imgCheckmarkB"
                                         android:layout_width="@dimen/fourty"
                                         android:layout_height="@dimen/fourty"
+                                        android:layout_toEndOf="@id/imgCheckmarkB"
                                         android:src="@drawable/default_image_icon"
                                         android:visibility="gone" />
                                 </RelativeLayout>
@@ -216,8 +215,8 @@
                                     style="@style/CustomTextStylePoppinsRegular"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@id/rightIconContainerB"
                                     android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@id/rightIconContainerB"
                                     android:padding="10dp"
                                     android:text="Option 2"
                                     android:textColor="@color/azure_radiance"
@@ -295,9 +294,9 @@
 
                                     <ImageView
                                         android:id="@+id/imgOptionC"
-                                        android:layout_toEndOf="@id/imgCheckmarkC"
                                         android:layout_width="@dimen/fourty"
                                         android:layout_height="@dimen/fourty"
+                                        android:layout_toEndOf="@id/imgCheckmarkC"
                                         android:src="@drawable/default_image_icon"
                                         android:visibility="gone" />
                                 </RelativeLayout>
@@ -307,8 +306,8 @@
                                     style="@style/CustomTextStylePoppinsRegular"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@id/rightIconContainerC"
                                     android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@id/rightIconContainerC"
                                     android:padding="10dp"
                                     android:text="Option 3"
                                     android:textColor="@color/azure_radiance"
@@ -365,6 +364,7 @@
                             android:orientation="horizontal"
                             android:paddingHorizontal="@dimen/ten"
                             android:paddingVertical="@dimen/ten">
+
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -385,9 +385,9 @@
 
                                     <ImageView
                                         android:id="@+id/imgOptionD"
-                                        android:layout_toEndOf="@id/imgCheckmarkD"
                                         android:layout_width="@dimen/fourty"
                                         android:layout_height="@dimen/fourty"
+                                        android:layout_toEndOf="@id/imgCheckmarkD"
                                         android:src="@drawable/default_image_icon"
                                         android:visibility="gone" />
                                 </RelativeLayout>
@@ -397,8 +397,8 @@
                                     style="@style/CustomTextStylePoppinsRegular"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toStartOf="@id/rightIconContainerD"
                                     android:layout_centerVertical="true"
+                                    android:layout_toStartOf="@id/rightIconContainerD"
                                     android:padding="10dp"
                                     android:text="Option 4"
                                     android:textColor="@color/azure_radiance"
@@ -416,13 +416,12 @@
         </LinearLayout>
 
         <View
-            android:layout_marginTop="@dimen/eight"
             android:layout_width="match_parent"
-            android:background="@color/gray5"
-            android:layout_height="@dimen/one">
+            android:layout_height="@dimen/one"
+            android:layout_marginTop="@dimen/eight"
+            android:background="@color/gray5">
 
         </View>
-
 
 
         <LinearLayout
@@ -435,14 +434,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <RelativeLayout
-                    android:layout_marginEnd="@dimen/five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   >
+                    android:layout_marginEnd="@dimen/five">
 
                     <ImageView
                         android:id="@+id/imgCA"
@@ -457,11 +456,12 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/five"
                         android:layout_toEndOf="@+id/imgCA"
-                        android:text="@string/correct_answer1"
                         android:drawablePadding="@dimen/five"
+                        android:text="@string/correct_answer1"
                         android:textSize="@dimen/thirteen_sp"></TextView>
 
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/lblCorrectanswer"
                     style="@style/CustomTextStylePoppinsBold"
@@ -473,20 +473,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <RelativeLayout
-                    android:layout_marginStart="@dimen/five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_marginStart="@dimen/five">
 
                     <ImageView
                         android:id="@+id/imgYA"
-                        android:layout_centerVertical="true"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/checked_icon">
 
                     </ImageView>
@@ -496,19 +496,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="@string/your_answer"
                         android:layout_toEndOf="@+id/imgYA"
                         android:drawablePadding="@dimen/five"
+                        android:text="@string/your_answer"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/lblYourResponse"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/twenty_five"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:textSize="@dimen/thirteen_sp"></TextView>
             </LinearLayout>
 

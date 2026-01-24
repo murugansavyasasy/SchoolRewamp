@@ -4,57 +4,54 @@
     android:background="@drawable/dual_color_background">
 
 
-
     <TextView
         android:id="@+id/lblNoRecord"
         android:layout_width="match_parent"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="@dimen/fifteen_sp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/no_records_found"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:text="@string/no_records_found"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="bold"
+        android:visibility="gone">
 
     </TextView>
 
 
-
-
     <RelativeLayout
+        android:id="@+id/relative_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/relative_layout">
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
             android:layout_marginStart="@dimen/eight"
-            android:layout_marginTop="@dimen/twenty"/>
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/left_arrow" />
+
         <TextView
             android:id="@+id/backtext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/back"
+            android:layout_marginStart="@dimen/eight"
+            android:layout_toEndOf="@id/back"
             android:text="@string/my_coupons"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_toEndOf="@id/back"
-            android:layout_marginStart="@dimen/eight"
-            android:layout_alignTop="@id/back"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgSearchToolBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:src="@drawable/search_icon_white" />
-
 
 
     </RelativeLayout>
@@ -64,13 +61,13 @@
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
+        android:layout_below="@+id/relative_layout"
         android:layout_margin="@dimen/sixteen"
+        android:background="@drawable/bg_search"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/twele"
-        android:visibility="gone"
-        android:layout_below="@+id/relative_layout"
-        android:background="@drawable/bg_search"
-        android:gravity="center_vertical">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -84,18 +81,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_weight="1"
-            android:hint="@string/search"
             android:background="@null"
+            android:hint="@string/search"
             android:textColor="@color/black"
             android:textColorHint="@color/light_gray_7"
-            android:visibility="visible"
-            android:textSize="@dimen/sixteen_sp"/>
+            android:textSize="@dimen/sixteen_sp"
+            android:visibility="visible" />
     </LinearLayout>
 
 
     <include
         android:id="@+id/coupontablayout"
-        layout="@layout/coupon_tablayout"/>
+        layout="@layout/coupon_tablayout" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -103,23 +100,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/coupontablayout"
-        android:clipToPadding="false"
-        android:scrollIndicators="none"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="@dimen/five"
-        android:scrollbars="vertical"
-        android:layout_marginTop="10dp"/>
+        android:clipToPadding="false"
+        android:scrollIndicators="none"
+        android:scrollbars="vertical" />
 
 
     <ProgressBar
         android:id="@+id/isProgressBar"
         android:layout_width="@dimen/fifty"
-        android:visibility="visible"
+        android:layout_height="@dimen/fifty"
+        android:layout_below="@+id/coupontablayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/fourty"
-        android:layout_below="@+id/coupontablayout"
-        android:layout_height="@dimen/fifty">
+        android:visibility="visible">
 
     </ProgressBar>
 
@@ -139,14 +136,13 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/nomessage"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/no_list_found"
         android:textSize="@dimen/eighteen_sp"
-        android:layout_below="@+id/nomessage"
-        android:gravity="center"
         android:visibility="gone" />
-
 
 
 </RelativeLayout>

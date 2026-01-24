@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,7 +84,10 @@ class CustomAbsenteesCalendarFragment : Fragment() {
             onDateClicked = { date ->
                 selectedDate = date
                 calendarAdapter.setSelectedDate(date)
-                calendarListener?.onDateSelected(date.toString(), calendarTag ?: "")  // Updated call
+                calendarListener?.onDateSelected(
+                    date.toString(),
+                    calendarTag ?: ""
+                )  // Updated call
             },
             minDate = minDate,
             maxDate = maxDate,

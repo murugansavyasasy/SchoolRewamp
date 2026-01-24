@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:gravity="center"
-    android:paddingEnd="@dimen/ten"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/ten">
+
     <TextView
         android:id="@+id/lblDay"
-        android:text="M"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:layout_height="wrap_content"
+        android:text="M"></TextView>
+
     <View
         android:id="@+id/lnrBackground"
-        android:layout_marginTop="@dimen/five"
         android:layout_width="@dimen/twenty_five"
-        android:layout_height="@dimen/twenty_five">
-    </View>
+        android:layout_height="@dimen/twenty_five"
+        android:layout_marginTop="@dimen/five"></View>
 
 
 </LinearLayout>

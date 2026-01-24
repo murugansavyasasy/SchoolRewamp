@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gender_progress_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:id="@+id/gender_progress_layout"
     android:orientation="vertical"
     android:padding="12dp">
 
@@ -28,16 +28,16 @@
                 android:layout_height="14dp"
                 android:layout_marginEnd="4dp"
                 android:src="@drawable/teachersvgformat"
-                app:tint="@color/green_56"/>
+                app:tint="@color/green_56" />
 
             <TextView
                 android:id="@+id/staff_percentage"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15 Staff (80.0%)"
                 android:textColor="@color/green_56"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsBold" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
@@ -61,29 +61,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
         android:layout_marginTop="5dp"
+        android:gravity="end"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/student_percentage"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:text="11 Students (20.0%)"
             android:textColor="@color/PrimaryColor"
-            android:textSize="12sp"
-            style="@style/CustomTextStylePoppinsBold" />
+            android:textSize="12sp" />
 
         <ImageView
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:src="@drawable/doubleprofile"
-            app:tint="@color/PrimaryColor"/>
+            app:tint="@color/PrimaryColor" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/others_count"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -91,6 +92,5 @@
         android:text="0 Unspecified"
         android:textColor="#9E9E9E"
         android:textSize="11sp"
-        android:visibility="gone"
-        style="@style/CustomTextStylePoppinsBold" />
+        android:visibility="gone" />
 </LinearLayout>

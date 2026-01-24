@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Assignment
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -189,7 +188,7 @@ class StudentListFragment : Fragment(), View.OnClickListener, AssignmentStudentL
             binding.txtNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         }
 
-        appViewModel?.getassignmentlist(isAccessToken!!, assignmentId!!, type!!,requireActivity())
+        appViewModel?.getassignmentlist(isAccessToken!!, assignmentId!!, type!!, requireActivity())
     }
 
     override fun onClick(v: View?) {

@@ -165,6 +165,7 @@ class QuestionAttachmentAdapter(
         }
 
     }
+
     private fun getMimeTypeFromUri(uri: Uri): String {
         val contentResolver = context.contentResolver
         return contentResolver.getType(uri) ?: "*/*"

@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -127,7 +126,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                     isloadhomeworkData(response.data)
 

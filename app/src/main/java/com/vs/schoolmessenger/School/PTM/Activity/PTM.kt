@@ -97,8 +97,8 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             Constant.isSelectedMenuName = menu_name!!
         }
 
-        binding.lnrTabBookedSlots.isEnabled=false
-        binding.lnrTabMeeting.isEnabled=false
+        binding.lnrTabBookedSlots.isEnabled = false
+        binding.lnrTabMeeting.isEnabled = false
         binding.layoutDatePicking.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
@@ -120,8 +120,8 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
 
         appViewModel.isPtmSlotResponse?.observe(this) { response ->
             //Only when response comes the tab will be enabled
-            binding.lnrTabBookedSlots.isEnabled=true
-            binding.lnrTabMeeting.isEnabled=false
+            binding.lnrTabBookedSlots.isEnabled = true
+            binding.lnrTabMeeting.isEnabled = false
             if (response != null && response.status) {
                 isSlotCategory = response.data
                 isLoadData(isSlotCategory)
@@ -141,8 +141,8 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
 
         appViewModel.isBookedSlotsData?.observe(this) { response ->
             //Only when response comes the tab will be enabled
-            binding.lnrTabBookedSlots.isEnabled=false
-            binding.lnrTabMeeting.isEnabled=true
+            binding.lnrTabBookedSlots.isEnabled = false
+            binding.lnrTabMeeting.isEnabled = true
             if (response != null && response.status) {
                 isBookedSlotData = response.data
                 isLoadBookedData(isBookedSlotData)
@@ -447,7 +447,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             json.addProperty("action", action)
 
             Constant.showLoading(this)
-            appViewModel.isSlotCancelClose(isAccessToken!!, json,this)
+            appViewModel.isSlotCancelClose(isAccessToken!!, json, this)
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, getString(R.string.invalid_request), Toast.LENGTH_SHORT).show()
@@ -477,7 +477,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.rcyComplete.adapter =
             UpComingSlotAdapter(null, this, this, Constant.isShimmerViewShow)
 
-        appViewModel.isSlotForStaff(isAccessToken!!, "ALL",this)
+        appViewModel.isSlotForStaff(isAccessToken!!, "ALL", this)
     }
 
     override fun onClick(p0: View?) {
@@ -567,7 +567,12 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             isBookedSlot = false
             loadData()
         } else if (isClickedTab == binding.lnrTabBookedSlots) {
-            binding.txtTabBookedSlots.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.txtTabBookedSlots.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.PrimaryColor
+                )
+            )
             binding.viewTabBookedSlots.setBackgroundColor(
                 ContextCompat.getColor(
                     this, R.color.PrimaryColor
@@ -608,7 +613,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.rcyComplete.adapter =
             BookedSlotAdapter(emptyList(), this, this, Constant.isShimmerViewShow)
 
-        appViewModel.isBookedSlotsData(isAccessToken!!, "ALL",this)
+        appViewModel.isBookedSlotsData(isAccessToken!!, "ALL", this)
     }
 
     override fun onBookedSlotCancelReOpenClickListener(
@@ -685,9 +690,9 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
                 add("slot_ids", slotArray)
             }
             if (isSlotReOpen) {
-                appViewModel.isSlotCancelReOpen(isAccessToken!!, isReopen,this)
+                appViewModel.isSlotCancelReOpen(isAccessToken!!, isReopen, this)
             } else {
-                appViewModel.isSlotCancelClose(isAccessToken!!, mainObject,this)
+                appViewModel.isSlotCancelClose(isAccessToken!!, mainObject, this)
             }
             alertDialog.dismiss()
             Constant.showLoading(this)

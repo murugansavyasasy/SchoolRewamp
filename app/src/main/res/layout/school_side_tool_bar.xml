@@ -41,23 +41,23 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
                     android:layout_toStartOf="@+id/btnDone"
                     android:gravity="start"
-                    android:layout_marginTop="@dimen/five"
                     android:text=""
                     android:textColor="@color/white" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tvSelectedFiles"-->
-<!--                    style="@style/CustomTextStylePoppinsBold"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/tvSelectionCount"-->
-<!--                    android:layout_toStartOf="@+id/btnDone"-->
-<!--                    android:gravity="start"-->
-<!--                    android:text="Selected Files : 0"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:visibility="gone" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tvSelectedFiles"-->
+                <!--                    style="@style/CustomTextStylePoppinsBold"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/tvSelectionCount"-->
+                <!--                    android:layout_toStartOf="@+id/btnDone"-->
+                <!--                    android:gravity="start"-->
+                <!--                    android:text="Selected Files : 0"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:visibility="gone" />-->
 
                 <TextView
                     android:id="@+id/btnDone"

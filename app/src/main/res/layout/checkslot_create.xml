@@ -1,28 +1,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/ten"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:padding="@dimen/ten">
 
     <ImageView
-        android:layout_width="@dimen/thirty"
-        android:layout_alignParentEnd="true"
         android:id="@+id/imgClose"
-        android:src="@drawable/close_red_color"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
-        android:layout_height="@dimen/thirty">
+        android:src="@drawable/close_red_color">
 
     </ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcySlotDate"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/ten"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgClose"
         android:layout_above="@id/lblCreateSlot"
-       />
+        android:layout_below="@+id/imgClose"
+        android:layout_marginTop="@dimen/ten" />
 
     <TextView
         android:id="@+id/lblCreateSlot"

@@ -69,7 +69,7 @@ class ActivitySubjectListAdapter(
 
         fun bind(item: getActivityPaperNameData, position: Int) {
 
-            Log.d("isEntryType",isEntryType.toString())
+            Log.d("isEntryType", isEntryType.toString())
             if (isEntryType) {
                 imgCheck.setOnClickListener {
                     lblHint.visibility = View.GONE

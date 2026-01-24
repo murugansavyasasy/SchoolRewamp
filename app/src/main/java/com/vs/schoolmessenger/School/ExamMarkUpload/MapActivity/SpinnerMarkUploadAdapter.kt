@@ -42,7 +42,7 @@ class SpinnerMarkUploadAdapter(
 
         textView.text = items[position]
 
-        viewDiv.visibility =  View.GONE
+        viewDiv.visibility = View.GONE
 
         // Tick on selected item using drawableEnd
         if (position == selectedPosition) {

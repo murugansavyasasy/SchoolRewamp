@@ -14,8 +14,7 @@
         layout="@layout/school_side_tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/statusBarBackground"
-        />
+        android:layout_below="@+id/statusBarBackground" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -221,21 +220,21 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/add_attachments"
-                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp" />
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/lblStar9"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two"
                 android:layout_below="@+id/headerrelative_layout"
+                android:layout_marginStart="@dimen/two"
                 android:layout_toEndOf="@id/attachment_label"
                 android:text="@string/mandatory"
-                android:visibility="gone"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/rytRecyclewview"
@@ -248,9 +247,9 @@
                     android:id="@+id/rcyImages"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
                     android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never"
-                    android:layout_marginTop="@dimen/ten"/>
+                    android:overScrollMode="never" />
 
 
             </RelativeLayout>
@@ -263,22 +262,22 @@
                 android:layout_below="@+id/rytRecyclewview"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:visibility="gone"
                 android:text="@string/add_description"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp" />
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/lblStar8"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two"
                 android:layout_below="@+id/rytRecyclewview"
+                android:layout_marginStart="@dimen/two"
                 android:layout_toEndOf="@id/description_label"
                 android:text="@string/mandatory"
-                android:visibility="gone"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
 
             <EditText
@@ -292,19 +291,19 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_edittext_rounded"
                 android:hint="@string/description2"
-                android:visibility="gone"
                 android:padding="@dimen/twele"
-                android:textSize="@dimen/fifteen_sp" />
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_description"
-                android:background="@drawable/rect_shadow_light_primary"
-                android:text="@string/submit"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/rect_shadow_light_primary"
+                android:text="@string/submit"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fourteen_sp"
                 android:visibility="gone" />

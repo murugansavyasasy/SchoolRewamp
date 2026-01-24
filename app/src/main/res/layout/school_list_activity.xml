@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_school_list_bg"
             android:alpha="0.2"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_school_list_bg" />
 
 
         <include
@@ -38,205 +37,204 @@
             layout="@layout/school_side_tool_bar" />
 
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:visibility="gone"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tvAcademicYearLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_academic_year"
-            android:textColor="@color/light_gray"
-            android:textSize="@dimen/fourteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_marginEnd="@dimen/ten"/>
-
-        <RelativeLayout
-            android:id="@+id/rytAcademicYear"
+        <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblCategory"
+            android:layout_below="@+id/toolbarLayout"
             android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/bg_white_light_radious"
-            android:gravity="center">
-
-            <Spinner
-                android:id="@+id/isSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_spinner_background" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/lnrTab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
-        android:layout_below="@+id/linearlayout"
-        android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/five"
-        android:background="@drawable/rect_light_gray"
-        android:orientation="horizontal"
-        android:padding="@dimen/one"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/lblSelectReceipients"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/white_radious"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center"
-            android:text="@string/select_resipent"
-            android:textColor="@color/black"
-            style="@style/CustomTextStylePoppinsBold">
-        </TextView>
-
-        <TextView
-            android:id="@+id/lblSendToMultipleSchool"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center"
-            style="@style/CustomTextStylePoppinsBold"
-            android:text="@string/send_to_multiple_school"
-            android:textColor="@color/black">
-
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sendOnlyLayout"
-        android:layout_below="@+id/lnrTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/ten"
-        android:paddingStart="@dimen/ten"
-        android:paddingEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/five"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select target :"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/ten"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupSendTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioAll"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_height="wrap_content"
-                android:text="@string/all"
-                android:layout_width="match_parent"
-                android:textColor="@color/dark_blue_1"
-                android:layout_weight="1"
-                android:checked="true"
-                android:buttonTint="@color/dark_blue_1"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <RadioButton
-                android:id="@+id/radioStaff"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_height="wrap_content"
-                android:text="@string/staff"
-                android:textColor="@color/dark_blue_1"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:buttonTint="@color/dark_blue_1" />
-
-            <RadioButton
-                android:id="@+id/radioStudent"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_height="wrap_content"
-                android:text="@string/student"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:textColor="@color/dark_blue_1"
-                android:buttonTint="@color/dark_blue_1"/>
-        </RadioGroup>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleSchools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/sendOnlyLayout"
-        android:layout_marginBottom="@dimen/ten"
-        android:padding="@dimen/ten"
-        android:layout_above="@+id/bottomContainer"
-        tools:listitem="@layout/schools_list_item" />
-
-    <LinearLayout
-        android:id="@+id/bottomContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/ten"
-        android:paddingTop="@dimen/five">
-
-        <RelativeLayout
-            android:id="@+id/rytSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rect_btn_orange"
-            android:gravity="center_horizontal"
-            android:visibility="gone"
-            android:padding="@dimen/eight"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginEnd="@dimen/twenty">
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <TextView
-                android:id="@+id/lblSend"
+                android:id="@+id/tvAcademicYearLabel"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="@string/choose_academic_year"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <RelativeLayout
+                android:id="@+id/rytAcademicYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblCategory"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/linearlayout"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:background="@drawable/rect_light_gray"
+            android:orientation="horizontal"
+            android:padding="@dimen/one"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lblSelectReceipients"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/white_radious"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="@string/select_resipent"
+                android:textColor="@color/black"></TextView>
+
+            <TextView
+                android:id="@+id/lblSendToMultipleSchool"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="@string/send_to_multiple_school"
+                android:textColor="@color/black">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sendOnlyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrTab"
+            android:layout_marginBottom="@dimen/five"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/ten"
+            android:paddingEnd="@dimen/ten"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="Select target :"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupSendTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioAll"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/dark_blue_1"
+                    android:checked="true"
+                    android:text="@string/all"
+                    android:textColor="@color/dark_blue_1"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <RadioButton
+                    android:id="@+id/radioStaff"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/dark_blue_1"
+                    android:text="@string/staff"
+                    android:textColor="@color/dark_blue_1" />
+
+                <RadioButton
+                    android:id="@+id/radioStudent"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/dark_blue_1"
+                    android:text="@string/student"
+                    android:textColor="@color/dark_blue_1" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleSchools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomContainer"
+            android:layout_below="@+id/sendOnlyLayout"
+            android:layout_marginBottom="@dimen/ten"
+            android:padding="@dimen/ten"
+            tools:listitem="@layout/schools_list_item" />
+
+        <LinearLayout
+            android:id="@+id/bottomContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/five"
+            android:paddingBottom="@dimen/ten">
+
+            <RelativeLayout
+                android:id="@+id/rytSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@drawable/rect_btn_orange"
                 android:gravity="center_horizontal"
-                android:visibility="visible"
-                android:text="@string/Send"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="normal"/>
+                android:padding="@dimen/eight"
+                android:visibility="gone">
 
-            <ImageView
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:layout_toEndOf="@+id/lblSend"
-                android:layout_marginStart="@dimen/five"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white" />
-        </RelativeLayout>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/lblSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:text="@string/Send"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
 
-</RelativeLayout>
+                <ImageView
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_toEndOf="@+id/lblSend"
+                    android:src="@drawable/send_icon_white" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

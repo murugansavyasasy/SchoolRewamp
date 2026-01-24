@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/eight"
     android:orientation="vertical"
-    android:padding="@dimen/ten"
-    android:layout_margin="@dimen/eight">
+    android:padding="@dimen/ten">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,25 +14,24 @@
 
         <TextView
             android:id="@+id/sectionname"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Section A"
-            android:textSize="14sp"
-            style="@style/CustomTextStylePoppinsBold"
-           />
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/totalcount"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:background="@drawable/bg_pill"
-            android:text="0 Students"
-            android:textSize="13sp"
             android:paddingHorizontal="@dimen/twele"
             android:paddingVertical="@dimen/four"
-            style="@style/CustomTextStylePoppinsBold"/>
+            android:text="0 Students"
+            android:textSize="13sp" />
     </RelativeLayout>
 
 
@@ -47,24 +46,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:src="@drawable/schoolstrengthmale"
-                app:tint="@color/color_blue_primary"
-                android:layout_marginEnd="6dp"/>
+                app:tint="@color/color_blue_primary" />
 
             <TextView
                 android:id="@+id/boyscount"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Boys : 0"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
@@ -72,24 +71,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:src="@drawable/schoolstrengthfemale"
-                app:tint="@color/pinkcolorcustom"
-                android:layout_marginEnd="6dp"/>
+                app:tint="@color/pinkcolorcustom" />
 
             <TextView
                 android:id="@+id/girlscount"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Girls : 0"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
@@ -97,26 +96,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/otherscount"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Not specified : 0"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </com.google.android.flexbox.FlexboxLayout>
-
-
 
 
 </LinearLayout>

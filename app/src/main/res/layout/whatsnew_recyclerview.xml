@@ -9,10 +9,10 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_container"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,9 +24,8 @@
                 android:id="@+id/banner_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-               />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/menu_name"
@@ -35,10 +34,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/twenty"
-                android:textColor="@color/black"
-                android:textSize="@dimen/eighteen_sp"
+                android:ellipsize="end"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp" />
 
             <TextView
                 android:id="@+id/description_value"
@@ -49,9 +48,9 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:paddingBottom="@dimen/ten"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/fourteen_sp"
-                android:text="" />
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
     </ScrollView>
 

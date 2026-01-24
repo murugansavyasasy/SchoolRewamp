@@ -50,7 +50,6 @@ import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -264,7 +263,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
 
     private fun fetchProfileData() {
-        appViewModel.isParentprofilelist(isAccessToken!!,requireActivity())
+        appViewModel.isParentprofilelist(isAccessToken!!, requireActivity())
         Constant.showLoading(requireActivity())
     }
 

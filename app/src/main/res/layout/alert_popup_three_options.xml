@@ -6,41 +6,39 @@
     android:layout_marginEnd="@dimen/fourty_five"
     android:background="@drawable/rect_white_light_radious"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/ten"
-    >
+    android:paddingBottom="@dimen/ten">
 
     <TextView
         android:id="@+id/alertTitle"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
-        style="@style/CustomTextStylePoppinsBold"
         android:text="@string/confirmation"
-        android:textSize="@dimen/sixteen_sp"
-        />
+        android:textSize="@dimen/sixteen_sp" />
 
     <TextView
         android:id="@+id/lblSelectTarget"
+        style="@style/CustomTextStylePoppinsRegular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/selected_target_1"
-        style="@style/CustomTextStylePoppinsRegular"
         android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fourteen_sp" />
 
     <TextView
         android:id="@+id/alertMessage"
-        android:layout_width="wrap_content"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginStart="@dimen/fifteen_sp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
         style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="@dimen/fifteen_sp"
         android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:gravity="center"
         android:text="@string/are_you_sure_want_to_send_this_message"
         android:textColor="@color/light_gray_4"
         android:textSize="@dimen/fourteen_sp" />
@@ -60,10 +58,10 @@
 
         <TextView
             android:id="@+id/btnCancel"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            style="@style/CustomTextStylePoppinsBold"
             android:gravity="center"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2" />
@@ -75,10 +73,10 @@
 
         <TextView
             android:id="@+id/btnLater"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            style="@style/CustomTextStylePoppinsBold"
             android:gravity="center"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2" />
@@ -90,11 +88,11 @@
 
         <TextView
             android:id="@+id/lblAddnow"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/yes_send"
             android:textColor="@color/navi_blue2" />
     </LinearLayout>

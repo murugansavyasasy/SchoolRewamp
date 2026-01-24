@@ -90,7 +90,8 @@ class BookedSlotAdapter(
             lblDate.text = Constant.covertDate(data.date.toString()) ?: ""
             lblDate2.text = Constant.covertDate(data.date.toString()) ?: ""
             lblMode.text = data.event_mode ?: ""
-            lblTime.text = "${data.from_time ?: ""} - ${data.to_time ?: ""} (${data.meeting_duration ?: ""} Minutes)"
+            lblTime.text =
+                "${data.from_time ?: ""} - ${data.to_time ?: ""} (${data.meeting_duration ?: ""} Minutes)"
             lblDuration.text = "Duration - ${data.meeting_duration ?: ""} Minutes"
             lblName.text = data.student_name ?: ""
             lblClass.text = "${data.class_name ?: ""} - ${data.section_name ?: ""}"
@@ -98,17 +99,28 @@ class BookedSlotAdapter(
             txtMother.text = data.mother_name ?: ""
 
             when (data.event_mode) {
-                "Virtual","virtual", "online", "video call", "zoom" -> {
+                "Virtual", "virtual", "online", "video call", "zoom" -> {
                     imgMeetingType.setImageResource(R.drawable.network)
-                    imgMeetingType.setColorFilter(ContextCompat.getColor(context, R.color.black), PorterDuff.Mode.SRC_IN)
+                    imgMeetingType.setColorFilter(
+                        ContextCompat.getColor(context, R.color.black),
+                        PorterDuff.Mode.SRC_IN
+                    )
                 }
-                "In Person","in person", "in-person", "person" -> {
+
+                "In Person", "in person", "in-person", "person" -> {
                     imgMeetingType.setImageResource(R.drawable.location_simple_icon)
-                    imgMeetingType.setColorFilter(ContextCompat.getColor(context, R.color.black), PorterDuff.Mode.SRC_IN)
+                    imgMeetingType.setColorFilter(
+                        ContextCompat.getColor(context, R.color.black),
+                        PorterDuff.Mode.SRC_IN
+                    )
                 }
-                "Phone Call","phone call", "call", "phone" -> {
+
+                "Phone Call", "phone call", "call", "phone" -> {
                     imgMeetingType.setImageResource(R.drawable.phone_icon_2)
-                    imgMeetingType.setColorFilter(ContextCompat.getColor(context, R.color.black), PorterDuff.Mode.SRC_IN)
+                    imgMeetingType.setColorFilter(
+                        ContextCompat.getColor(context, R.color.black),
+                        PorterDuff.Mode.SRC_IN
+                    )
                 }
             }
 
@@ -128,14 +140,14 @@ class BookedSlotAdapter(
                 notifyDataSetChanged()
             }
 
-            if (data.can_cancel!!){
-                if (data.slot_status=="Completed"){
-                    imgDot.visibility= View.GONE
-                }else{
-                    imgDot.visibility= View.VISIBLE
+            if (data.can_cancel!!) {
+                if (data.slot_status == "Completed") {
+                    imgDot.visibility = View.GONE
+                } else {
+                    imgDot.visibility = View.VISIBLE
                 }
-            }else{
-                imgDot.visibility= View.GONE
+            } else {
+                imgDot.visibility = View.GONE
             }
             if (data.is_cancelled_by_staff!!) {
                 lblWaitingBooking.visibility = View.VISIBLE
@@ -152,18 +164,21 @@ class BookedSlotAdapter(
                     lblWaitingBooking.visibility = View.GONE
                     cardBookedBy.visibility = View.VISIBLE
                     lblStatus.setTextColor(context.getColor(R.color.Blue))
-                    rytStatusBanner.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    rytStatusBanner.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     imgCheckmark.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
 
                 } else if (data.slot_status == "Cancelled") {
                     lblWaitingBooking.visibility = View.VISIBLE
                     cardBookedBy.visibility = View.GONE
-                    rytStatusBanner.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    rytStatusBanner.background =
+                        context.getDrawable(R.drawable.bg_light_red_radious)
                     lblWaitingBooking.text = "Slot Cancelled"
                     lblStatus.setTextColor(context.getColor(R.color.red))
                     lblWaitingBooking.setTextColor(context.getColor(R.color.red))
                     imgCheckmark.setImageDrawable(context.getDrawable(R.drawable.red_close_icon_))
-                    lblWaitingBooking.background = context.getDrawable(R.drawable.bg_light_red_radious)
+                    lblWaitingBooking.background =
+                        context.getDrawable(R.drawable.bg_light_red_radious)
                 } else if (data.slot_status == "Expired") {
                     lblWaitingBooking.visibility = View.VISIBLE
                     cardBookedBy.visibility = View.GONE
@@ -175,19 +190,22 @@ class BookedSlotAdapter(
                     imgCheckmark.setImageDrawable(context.getDrawable(R.drawable.expired))
                 } else if (data.slot_status == "Completed") {
                     lblWaitingBooking.visibility = View.GONE
-                    rytStatusBanner.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    rytStatusBanner.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     cardBookedBy.visibility = View.VISIBLE
                     lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
                     imgCheckmark.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                 } else if (data.slot_status == "Booked") {
-                    rytStatusBanner.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    rytStatusBanner.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     lblWaitingBooking.visibility = View.GONE
                     cardBookedBy.visibility = View.VISIBLE
                     lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
                     imgCheckmark.setImageDrawable(context.getDrawable(R.drawable.checkmark_circle_icon))
                 } else if (data.slot_status == "Upcoming") {
                     lblWaitingBooking.visibility = View.GONE
-                    rytStatusBanner.background = context.getDrawable(R.drawable.rect_bg_light_green_radius)
+                    rytStatusBanner.background =
+                        context.getDrawable(R.drawable.rect_bg_light_green_radius)
                     cardBookedBy.visibility = View.VISIBLE
                     lblStatus.setTextColor(context.getColor(R.color.dark_green_2))
                     lblStatus.text = "Booked"

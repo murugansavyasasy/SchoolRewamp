@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/light_gray1"
     android:orientation="vertical"
-    android:padding="@dimen/fifteen"
-   >
+    android:padding="@dimen/fifteen">
 
     <ImageView
         android:id="@+id/imgOne"
@@ -18,15 +17,14 @@
 
     <TextView
         android:id="@+id/txtNumberOne"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
         android:layout_toEndOf="@+id/imgOne"
         android:padding="@dimen/ten"
         android:text=""
-        style="@style/CustomTextStylePoppinsBold"
-        android:textSize="@dimen/fifteen_sp"
-         />
+        android:textSize="@dimen/fifteen_sp" />
 
 
     <ImageView
@@ -42,6 +40,7 @@
 
     <TextView
         android:id="@+id/txtNumberTwo"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtNumberOne"
@@ -49,10 +48,8 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_toEndOf="@+id/imgTwo"
         android:padding="@dimen/ten"
-        style="@style/CustomTextStylePoppinsBold"
         android:text=""
-        android:textSize="@dimen/fifteen_sp"
-        />
+        android:textSize="@dimen/fifteen_sp" />
 
 
 </RelativeLayout>

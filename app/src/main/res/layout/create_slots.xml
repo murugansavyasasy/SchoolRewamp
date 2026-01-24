@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/gray">
 
     <View
@@ -18,20 +18,19 @@
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
 
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white">layout_below
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">layout_below
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -79,8 +78,7 @@
                     android:background="@drawable/field_background"
                     android:hint="@string/purpose_of_meeting"
                     android:padding="@dimen/ten"
-                    android:textSize="@dimen/thirteen_sp">
-                </EditText>
+                    android:textSize="@dimen/thirteen_sp"></EditText>
 
                 <TextView
                     android:id="@+id/lblSelectMeetingMode"
@@ -177,7 +175,7 @@
                     android:hint="@string/paste_your_text_here"
                     android:padding="@dimen/ten"
                     android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -445,14 +443,14 @@
                     <RelativeLayout
                         android:id="@+id/rytPickDurationBreak"
                         android:layout_width="match_parent"
-                        android:padding="@dimen/five"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblSelectBreakTime"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="1"
-                        android:background="@drawable/field_background">
+                        android:background="@drawable/field_background"
+                        android:padding="@dimen/five">
 
                         <ImageView
                             android:id="@+id/imgDuration"

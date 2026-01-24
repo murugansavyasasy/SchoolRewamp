@@ -23,7 +23,6 @@ import com.bumptech.glide.request.target.Target
 import com.github.chrisbanes.photoview.PhotoView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import java.net.URLEncoder
 
 class FileViewerAdapter(
@@ -45,9 +44,9 @@ class FileViewerAdapter(
         holder.loadingBar.visibility = View.VISIBLE
 
         if (item.type == Constant.IMAGE) {
-            holder.lblVideoAvailable.visibility= View.GONE
-            holder.documentWebView.visibility= View.GONE
-            holder.loadingBar.visibility= View.GONE
+            holder.lblVideoAvailable.visibility = View.GONE
+            holder.documentWebView.visibility = View.GONE
+            holder.loadingBar.visibility = View.GONE
             holder.imageView.visibility = View.VISIBLE
             Glide.with(context)
                 .load(item.path)
@@ -126,7 +125,8 @@ class FileViewerAdapter(
                             }
 
                             holder.documentWebView.setInitialScale(1)
-                            holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
+                            holder.documentWebView.scrollBarStyle =
+                                WebView.SCROLLBARS_INSIDE_OVERLAY
                             holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
                             holder.documentWebView.webViewClient = object : WebViewClient() {

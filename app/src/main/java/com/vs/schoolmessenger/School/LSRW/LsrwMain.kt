@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -179,7 +178,7 @@ class LsrwMain : BaseActivity<LsrwSkillMainBinding>(), View.OnClickListener,
         Constant.showLoading(this)
         binding.rcylsrwreport.visibility = View.VISIBLE
         binding.rcylsrwreport.isNestedScrollingEnabled = false
-        appViewModel?.islsrwskillsreport(isAccessToken ?: "",this)
+        appViewModel?.islsrwskillsreport(isAccessToken ?: "", this)
     }
 
     private fun setupFilters(active: List<LsrwTask>, completed: List<LsrwTask>) {

@@ -2,9 +2,6 @@ package com.vs.schoolmessenger.Parent.Attachment
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Color
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -31,9 +28,6 @@ import com.vs.schoolmessenger.School.Attachment.OnAttachmentReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
-import androidx.core.view.isVisible
-import androidx.core.view.isGone
-import com.vs.schoolmessenger.Utils.TourDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -585,7 +579,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
 
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.lblArchiveMsg -> {
@@ -704,7 +697,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.txtNoData.visibility = View.GONE
         }
     }
-
 
 
 }

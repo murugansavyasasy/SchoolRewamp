@@ -114,7 +114,7 @@ class HomeWorkReportAdapter(
 
 
             binding.cardRoot.setOnClickListener {
-                Constant.isVideoPostedDate=item.created_on
+                Constant.isVideoPostedDate = item.created_on
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
                         type = it.type,

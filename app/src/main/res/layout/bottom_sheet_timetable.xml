@@ -1,8 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:fillViewport="true"
+    android:layout_height="match_parent"
     android:background="@drawable/timetable_item_bg"
-    android:layout_height="match_parent">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +11,7 @@
 
         <TextView
             android:id="@+id/day_header"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
@@ -18,9 +19,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:padding="@dimen/sixteen_sp"
             android:text="@string/monday"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/eighteen_sp"
-            />
+            android:textSize="@dimen/eighteen_sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSchedule"
@@ -47,20 +46,18 @@
 
             <TextView
                 android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CustomTextStylePoppinsBold"
-                android:gravity="center"
-                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:gravity="center"
                 android:text="@string/no_timetable_available"
-                android:textSize="@dimen/sixteen_sp"
-                />
+                android:textSize="@dimen/sixteen_sp" />
         </LinearLayout>
 
 
     </LinearLayout>
-
 
 
 </ScrollView>

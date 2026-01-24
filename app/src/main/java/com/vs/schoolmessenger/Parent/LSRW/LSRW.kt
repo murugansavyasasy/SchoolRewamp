@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -62,7 +61,10 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
             receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
 
-            Log.d("NoticeBoard_EXTRAS", "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name")
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
@@ -145,7 +147,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                 } else {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -199,7 +201,7 @@ class LSRW : BaseActivity<LsrwBinding>(), View.OnClickListener, lsrwitemclicklis
         Constant.showLoading(this)
         binding.rcyrecyclerview.visibility = View.VISIBLE
         binding.rcyrecyclerview.isNestedScrollingEnabled = false
-        appViewModel.islsrwSkilllist(isAccessToken ?: "",this)
+        appViewModel.islsrwSkilllist(isAccessToken ?: "", this)
     }
 
     private fun filterList(query: String) {

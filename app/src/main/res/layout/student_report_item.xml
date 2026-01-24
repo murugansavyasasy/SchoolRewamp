@@ -36,159 +36,150 @@
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
                     android:background="@drawable/rect_shadow_white"></ImageView>
-<!--                <com.google.android.material.imageview.ShapeableImageView-->
-<!--                    android:id="@+id/imgStudent"-->
-<!--                    android:layout_width="@dimen/seventy"-->
-<!--                    android:layout_height="@dimen/eighty_five"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    android:src="@drawable/default_profile"-->
-<!--                    app:shapeAppearanceOverlay="@style/RoundedRectangle"-->
-<!--                    android:adjustViewBounds="true"/>-->
+                <!--                <com.google.android.material.imageview.ShapeableImageView-->
+                <!--                    android:id="@+id/imgStudent"-->
+                <!--                    android:layout_width="@dimen/seventy"-->
+                <!--                    android:layout_height="@dimen/eighty_five"-->
+                <!--                    android:scaleType="centerCrop"-->
+                <!--                    android:src="@drawable/default_profile"-->
+                <!--                    app:shapeAppearanceOverlay="@style/RoundedRectangle"-->
+                <!--                    android:adjustViewBounds="true"/>-->
 
                 <RelativeLayout
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/imgStudent">
 
                     <LinearLayout
-                        android:gravity="center"
                         android:id="@+id/lnrAdmission"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/admission_no"
-                            android:textColor="@color/black"
-                           >
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
-                            android:layout_weight="0.48"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.48"
                             android:text=" : "
-                            android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium1"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
                             android:id="@+id/lblAdmisionNumber"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="1785278272"
-                            android:textColor="@color/black"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:gravity="center"
                         android:id="@+id/lnrAge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lnrAdmission"
                         android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/Gender"
-                            android:textColor="@color/black"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=" : "
                             android:layout_weight="0.48"
-                            android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium1"
-                            >
+                            android:text=" : "
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
                             android:id="@+id/lblGender"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="Male"
-                            android:textColor="@color/black"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
                     </LinearLayout>
 
 
                     <LinearLayout
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lnrAge"
                         android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/Dateofbirth"
-                            android:textColor="@color/black"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=" : "
                             android:layout_weight="0.48"
-                            android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium1"
-                            >
+                            android:text=" : "
+                            android:textColor="@color/black">
 
                         </TextView>
 
                         <TextView
                             android:id="@+id/lblDOB"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
-                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="Apr 1 , 2021"
-                            android:textColor="@color/black"
-                            >
+                            android:textColor="@color/black">
 
                         </TextView>
                     </LinearLayout>
@@ -205,164 +196,152 @@
 
                 <TextView
                     android:id="@+id/lblStudentName"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="center"
-                    style="@style/CustomTextStylePoppinsBold"
                     android:text="Sathish"
-                    android:textColor="@color/black"
-                    >
+                    android:textColor="@color/black">
 
                 </TextView>
 
                 <TextView
                     android:id="@+id/lblStandardAndSection"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
                     android:layout_below="@+id/lblStudentName"
+                    android:layout_marginStart="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="center"
-                    style="@style/CustomTextStylePoppinsBold"
                     android:text="II-A"
-                    android:textColor="@color/black"
-                    >
+                    android:textColor="@color/black">
 
                 </TextView>
 
 
-
                 <LinearLayout
-                    android:gravity="center"
                     android:id="@+id/lnrFatherName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblStandardAndSection"
                     android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="@string/Fathername"
-                        >
+                        android:text="@string/Fathername">
 
                     </TextView>
 
                     <TextView
-                        android:layout_weight="0.48"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=" : "
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        >
+                        android:layout_weight="0.48"
+                        android:text=" : ">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/lblFatherName"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="Ganesan"
-                        >
+                        android:text="Ganesan">
 
                     </TextView>
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lnrTeacherName"
                     android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="@string/roll_no"
-                        >
+                        android:text="@string/roll_no">
 
                     </TextView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=" : "
                         android:layout_weight="0.48"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        >
+                        android:text=" : ">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/lblRollNo"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="21"
-                        >
+                        android:text="21">
 
                     </TextView>
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:gravity="center"
                     android:id="@+id/lnrTeacherName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lnrFatherName"
                     android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="@string/class_teacher_2"
-                        >
+                        android:text="@string/class_teacher_2">
 
                     </TextView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=" : "
                         android:layout_weight="0.48"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                      >
+                        android:text=" : ">
 
                     </TextView>
 
                     <TextView
                         android:id="@+id/lblTeacherName"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
-                        style="@style/CustomTextStylePoppinsMedium1"
-                        android:text="Abi"
-                        >
+                        android:text="Abi">
 
                     </TextView>
                 </LinearLayout>
@@ -371,15 +350,14 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_marginStart="@dimen/five"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginBottom="@dimen/five"
                 android:layout_below="@+id/rlaNames"
-                >
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five">
 
 
                 <LinearLayout
@@ -396,61 +374,62 @@
                     </ImageView>
 
                     <TextView
-                        android:layout_marginStart="@dimen/five"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
                         android:drawablePadding="@dimen/three"
                         android:text="@string/call"
                         android:textColor="@color/navi_blue2">
 
                     </TextView>
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_marginStart="@dimen/thirty"
                     android:id="@+id/lnrSMS"
-                    android:gravity="center"
-                    android:layout_toEndOf="@+id/lnrMobileNumber"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_toEndOf="@+id/lnrMobileNumber"
+                    android:gravity="center">
+
                     <ImageView
                         android:layout_width="@dimen/twenty_five"
-                        android:src="@drawable/message_icon"
-                        android:layout_height="@dimen/twenty_five">
-                    </ImageView>
+                        android:layout_height="@dimen/twenty_five"
+                        android:src="@drawable/message_icon"></ImageView>
+
                     <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/five"
                         android:drawablePadding="@dimen/three"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="@string/sms"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:textColor="@color/navi_blue2"
-                        >
-                    </TextView>
+                        android:textColor="@color/navi_blue2"></TextView>
                 </LinearLayout>
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/thirty"
                     android:id="@+id/lnrEmail"
-                    android:layout_toEndOf="@+id/lnrSMS"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_toEndOf="@+id/lnrSMS"
+                    android:gravity="center">
+
                     <ImageView
                         android:layout_width="@dimen/twenty_five"
-                        android:src="@drawable/mail_send_icon"
-                        android:layout_height="@dimen/twenty_five">
+                        android:layout_height="@dimen/twenty_five"
+                        android:src="@drawable/mail_send_icon">
 
                     </ImageView>
 
                     <TextView
-                        android:layout_marginStart="@dimen/five"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_marginStart="@dimen/five"
                         android:text="@string/mail"
-                        android:textColor="@color/navi_blue2"
-                        >
+                        android:textColor="@color/navi_blue2">
 
                     </TextView>
                 </LinearLayout>

@@ -57,9 +57,7 @@ import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.KeyboardUtils
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.ThemeRestartHelper
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
-import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -133,7 +131,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isUserDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
     private var recordingStartTime: Long = 0
-
 
 
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
@@ -267,9 +264,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
             changeLabel()
         }
-
-
-
 
 
         // Initialize handler for updating recording time
@@ -559,7 +553,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             val fileName = "${Constant.original_}$timeStamp${Constant.m4a}"
             val filePath = "${dir.absolutePath}/$fileName"
             audioFilePath = filePath
-            Log.d("recordedFilePath",filePath)
+            Log.d("recordedFilePath", filePath)
             isFileName = fileName
             Constant.isVoiceType = 1
             mediaRecorder = MediaRecorder().apply {
@@ -1705,7 +1699,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //        )
 
         //Latesly edited Code 13-01-2026
-        Log.d("isLog",data.url)
+        Log.d("isLog", data.url)
         // UI setup
         if (Constant.isCommunicationType == 2) {
             binding.rlaScheduleCallPickDate.visibility = View.VISIBLE

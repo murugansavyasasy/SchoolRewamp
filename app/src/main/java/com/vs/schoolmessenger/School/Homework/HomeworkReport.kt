@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -158,8 +157,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
                             binding.lytNoDataFound.visibility = View.GONE
                             binding.line1.visibility = View.VISIBLE
                             binding.line2.visibility = View.VISIBLE
-                        }
-                        else {
+                        } else {
                             isSectionId = -1
                             isLoadStandard(isGetStandard)
                             isSection = emptyList()
@@ -263,13 +261,12 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
-                    if (isStandard[position].sections.isNotEmpty()){
+                    if (isStandard[position].sections.isNotEmpty()) {
                         binding.rytSectionDropDown.visibility = View.VISIBLE
                         isSectionId = isStandard[position].id
                         isSection = isStandard[position].sections
                         isLoadSection(isSection)
-                    }
-                    else{
+                    } else {
                         binding.rytSectionDropDown.visibility = View.GONE
                         binding.search.visibility = View.GONE
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -468,7 +465,7 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.rytStart,R.id.rlaStartDate,R.id.rytStartDate,R.id.imgCalendar -> {
+            R.id.rytStart, R.id.rlaStartDate, R.id.rytStartDate, R.id.imgCalendar -> {
                 showDatePickerDialogSelectedDate(this, isSelectedDate, this)
             }
         }

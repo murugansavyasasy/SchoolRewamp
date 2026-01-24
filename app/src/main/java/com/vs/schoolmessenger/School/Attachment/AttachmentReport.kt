@@ -39,7 +39,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
-import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.AttachmentReportBinding
 
 class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickListener,
@@ -244,7 +243,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
     }
 
 
-
     private fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -397,15 +395,15 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
-        if (data.get(isAttachmentPosition).can_edit){
-            layoutEdit.visibility=View.VISIBLE
-        }else{
-            layoutEdit.visibility=View.GONE
+        if (data.get(isAttachmentPosition).can_edit) {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
         }
-        if (data.get(isAttachmentPosition).can_delete){
-            layoutDelete.visibility= View.VISIBLE
-        }else{
-            layoutDelete.visibility= View.GONE
+        if (data.get(isAttachmentPosition).can_delete) {
+            layoutDelete.visibility = View.VISIBLE
+        } else {
+            layoutDelete.visibility = View.GONE
         }
 
         layoutEdit.setOnClickListener {
@@ -459,9 +457,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
 
     override fun onFilterEmpty(showNoData: Boolean) {
     }
-
-
-
 
 
 }

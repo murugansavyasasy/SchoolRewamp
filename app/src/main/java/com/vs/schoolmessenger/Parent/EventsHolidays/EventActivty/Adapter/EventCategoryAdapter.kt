@@ -96,7 +96,6 @@ class EventCategoryAdapter(
     }
 
 
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 

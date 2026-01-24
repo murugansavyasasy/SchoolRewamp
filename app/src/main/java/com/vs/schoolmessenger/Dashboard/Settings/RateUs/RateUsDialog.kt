@@ -28,8 +28,10 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RateUsBinding
 
-class RateUsDialog(   private val fromScreen: String?,
-                      private val listener: RateUsListener?) : DialogFragment(), View.OnClickListener {
+class RateUsDialog(
+    private val fromScreen: String?,
+    private val listener: RateUsListener?
+) : DialogFragment(), View.OnClickListener {
 
     private var _binding: RateUsBinding? = null
     private val binding get() = _binding!!
@@ -219,7 +221,7 @@ class RateUsDialog(   private val fromScreen: String?,
     private fun observeSubmitReviewResponse() {
         appViewModel.reviewpost!!.observe(viewLifecycleOwner) { response ->
 
-            if(response != null) {
+            if (response != null) {
                 if (response?.status == true) {
                     binding.rateUs.visibility = View.GONE
                     binding.rateusSuccess.visibility = View.VISIBLE
@@ -233,8 +235,7 @@ class RateUsDialog(   private val fromScreen: String?,
                         listener?.onRateUsCompleted(false)
                     }
                 }
-            }
-            else{
+            } else {
                 dismiss()
                 if (fromScreen == Constant.SplashScreen__) {
                     listener?.onRateUsCompleted(false)

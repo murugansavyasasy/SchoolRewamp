@@ -161,6 +161,6 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
     }
 
     private fun fetchexammark() {
-        appViewModel?.getviewmarks(isAccessToken ?: "", exam_id,this)
+        appViewModel?.getviewmarks(isAccessToken ?: "", exam_id, this)
     }
 }

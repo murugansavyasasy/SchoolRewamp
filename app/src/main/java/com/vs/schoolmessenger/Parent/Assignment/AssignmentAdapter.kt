@@ -185,7 +185,8 @@ class AssignmentAdapter(
             } else {
                 R.drawable.progress_bar_assignment
             }
-            progressBarAssignment.progressDrawable = ContextCompat.getDrawable(context, progressDrawableRes)
+            progressBarAssignment.progressDrawable =
+                ContextCompat.getDrawable(context, progressDrawableRes)
             // Re-set progress after updating drawable to ensure it applies correctly
             progressBarAssignment.progress = submittedCount
 
@@ -195,7 +196,7 @@ class AssignmentAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
-                Constant.isVideoPostedDate=data.created_date + " "+ data.created_time
+                Constant.isVideoPostedDate = data.created_date + " " + data.created_time
                 val targetType = when (data.recipient_type.trim()) {
                     "SCHOOL" -> 1
                     "STANDARD" -> 2
@@ -241,7 +242,7 @@ class AssignmentAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
-                Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
+                Constant.isVideoPostedDate = data.created_date + " " + data.created_time
                 val targetType = when (data.recipient_type.trim()) {
                     "SCHOOL" -> 1
                     "STANDARD" -> 2
@@ -297,7 +298,7 @@ class AssignmentAdapter(
                                     url = it.url,
                                 )
                             }
-                            Constant.isVideoPostedDate=data.created_date+ " "+ data.created_time
+                            Constant.isVideoPostedDate = data.created_date + " " + data.created_time
                             val targetType = when (data.recipient_type.trim()) {
                                 "SCHOOL" -> 1
                                 "STANDARD" -> 2

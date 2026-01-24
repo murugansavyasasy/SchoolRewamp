@@ -110,7 +110,7 @@ class LSRWAdapter(
 
 
             rytList2.setOnClickListener {
-                Constant.isVideoPostedDate=item.date + " "+ item.time
+                Constant.isVideoPostedDate = item.date + " " + item.time
                 markAsRead()
                 val convertedList = item.file_path.map {
                     GetFilePathDetails(
@@ -146,7 +146,7 @@ class LSRWAdapter(
             }
 
             headerrelative_layout.setOnClickListener {
-                Constant.isVideoPostedDate=item.date + " "+ item.time
+                Constant.isVideoPostedDate = item.date + " " + item.time
                 markAsRead()
                 val convertedList = item.file_path.map {
                     Log.d("FileType", "type = ${it.type}")
@@ -189,7 +189,7 @@ class LSRWAdapter(
                     val child = rv.findChildViewUnder(e.x, e.y)
                     if (child != null && e.action == MotionEvent.ACTION_UP) {
                         rv.getChildAdapterPosition(child)
-                        Constant.isVideoPostedDate=item.date + " "+ item.time
+                        Constant.isVideoPostedDate = item.date + " " + item.time
                         val convertedList = item.file_path.map {
                             GetFilePathDetails(
                                 type = it.type,

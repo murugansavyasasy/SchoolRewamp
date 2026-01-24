@@ -7,7 +7,6 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import com.vs.schoolmessenger.R
 import kotlin.math.sin
 

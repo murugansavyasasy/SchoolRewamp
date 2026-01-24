@@ -54,21 +54,21 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener {
         loadCalendarFragment()
 
         appViewModel?.IsGetHolidayReport?.observe(this) { response ->
-                val mobileNumber = SharedPreference.getMobileNumber(this)
-                val jsonObject = JsonObject().apply {
-                    addProperty(APIKeyNames.mobile_number, mobileNumber)
-                    addProperty(APIKeyNames.activity, Constant.add_points_view_holidays)
-                    addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
-                    addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
-                }
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.mobile_number, mobileNumber)
+                addProperty(APIKeyNames.activity, Constant.add_points_view_holidays)
+                addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
+                addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
+            }
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
-                binding.calendarFragmentContainer.visibility = View.VISIBLE
-                binding.lnrErrorMsg.visibility = View.GONE
-                val calendarFragment = CalendarFragment.newInstance(response?.data?:emptyList())
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.calendarFragmentContainer, calendarFragment)
-                    .commit()
+            binding.calendarFragmentContainer.visibility = View.VISIBLE
+            binding.lnrErrorMsg.visibility = View.GONE
+            val calendarFragment = CalendarFragment.newInstance(response?.data ?: emptyList())
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.calendarFragmentContainer, calendarFragment)
+                .commit()
         }
     }
 

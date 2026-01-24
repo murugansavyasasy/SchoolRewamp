@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/childrelative_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/relativelayout_header"
-    android:layout_marginTop="10dp"
-    android:background="@drawable/bg_file_item"
-    android:visibility="visible"
-    android:layout_marginEnd="10dp"
     android:layout_marginStart="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/bg_file_item"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/imgDelete"
@@ -23,6 +22,7 @@
 
     <TextView
         android:id="@+id/imgFileType"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="10dp"
@@ -30,10 +30,9 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_icon_round"
         android:gravity="center"
-        style="@style/CustomTextStylePoppinsBold"
         android:text="IMG"
         android:textColor="@color/PrimaryColor"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/txtFileName"

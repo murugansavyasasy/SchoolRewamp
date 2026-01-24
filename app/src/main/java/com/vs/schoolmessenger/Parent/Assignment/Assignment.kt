@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.Assignment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -138,7 +137,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
 
                     isAssignmentReportData = response.data
                     loadAssignmentReportData()
@@ -193,7 +192,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
             AssignmentParentAdapter(mutableListOf(), this, this, Constant.isShimmerViewDisable)
         binding.rcyAssignment.adapter = isAssignmentAdapter
 
-        appViewModel?.isAssignmentlist(isAccessToken!!,this)
+        appViewModel?.isAssignmentlist(isAccessToken!!, this)
 
     }
 
@@ -301,7 +300,7 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
     override fun onResume() {
         super.onResume()
-        appViewModel?.isAssignmentlist(isAccessToken!!,this)
+        appViewModel?.isAssignmentlist(isAccessToken!!, this)
     }
 
 }

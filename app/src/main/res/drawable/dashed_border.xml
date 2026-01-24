@@ -7,5 +7,5 @@
         android:color="@color/clr_green"
         android:dashWidth="8dp"
         android:dashGap="4dp" />
-    <corners android:radius="4dp"/>
+    <corners android:radius="4dp" />
 </shape>

@@ -19,7 +19,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        Log.d("Contact_us_email",Constant.isGlobalVariableData!!.support_email)
+        Log.d("Contact_us_email", Constant.isGlobalVariableData!!.support_email)
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblContact)
@@ -50,6 +50,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
             R.id.lblContacttMail -> {
                 Constant.redirectToMail(this, binding.lblContacttMail.text.toString(), "", "")
             }
+
             R.id.lblContacttMail2 -> {
                 Constant.redirectToMail(this, binding.lblContacttMail2.text.toString(), "", "")
             }

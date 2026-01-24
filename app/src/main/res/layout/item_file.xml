@@ -32,14 +32,14 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignStart="@id/imageView"
-        android:layout_alignEnd="@id/imageView"
         android:layout_alignTop="@id/imageView"
+        android:layout_alignEnd="@id/imageView"
         android:layout_alignBottom="@id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
         android:padding="2dp"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
         android:src="@drawable/video_3"
         android:visibility="gone" />
 
@@ -60,8 +60,8 @@
         android:layout_alignTop="@id/imageView"
         android:layout_alignEnd="@id/imageView"
         android:layout_margin="@dimen/ten"
-        android:src="@drawable/ic_circle_check_mark"
         android:background="@android:color/transparent"
+        android:src="@drawable/ic_circle_check_mark"
         android:visibility="gone" />
 
     <ProgressBar

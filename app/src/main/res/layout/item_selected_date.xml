@@ -1,14 +1,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/eight"
-    android:foreground="?attr/selectableItemBackground"
-    android:elevation="@dimen/four"
-    android:clipToPadding="false"
+    android:backgroundTint="@android:color/white"
     android:clipChildren="false"
-    android:padding="@dimen/eight"
-    android:backgroundTint="@android:color/white">
+    android:clipToPadding="false"
+    android:elevation="@dimen/four"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="@dimen/eight">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -26,16 +26,16 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/eight"
             android:text="12 Sep 2025"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/ten_sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:padding="@dimen/eight"
-            app:layout_constraintStart_toEndOf="@id/btnRemove"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"/>
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/btnRemove"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

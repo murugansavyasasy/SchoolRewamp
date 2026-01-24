@@ -16,13 +16,16 @@ class NotificationDismissService : Service() {
                     }
                     Constant.mediaPlayer.reset()
                     Constant.mediaPlayer.release()
-                } catch (ignored: Exception) {}
+                } catch (ignored: Exception) {
+                }
                 // Recreate a fresh instance so code expecting non-null can use it
                 try {
                     Constant.mediaPlayer = android.media.MediaPlayer()
-                } catch (ignored: Exception) {}
+                } catch (ignored: Exception) {
+                }
             }
-        } catch (ignored: Exception) {}
+        } catch (ignored: Exception) {
+        }
 
         stopSelf()
         return START_NOT_STICKY

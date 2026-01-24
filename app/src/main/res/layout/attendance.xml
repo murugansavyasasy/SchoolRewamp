@@ -2,39 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AthensGray"
-    android:id="@+id/main">
+    android:background="@color/AthensGray">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/light_gray4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_gray4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <include
             android:id="@+id/toolbarLayout"
             layout="@layout/parent_side_tool_bar_without_curve" />
 
 
-
         <RelativeLayout
-            android:layout_below="@+id/toolbarLayout"
             android:id="@+id/rytHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
             android:background="@drawable/bg_header_rounded"
             android:paddingBottom="@dimen/fifty">
 
@@ -43,8 +42,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_marginStart="@dimen/twenty"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty">
 
@@ -53,161 +52,171 @@
         </RelativeLayout>
 
 
-
         <androidx.cardview.widget.CardView
-            android:layout_below="@+id/rytHead"
-            android:layout_width="match_parent"
-            app:cardCornerRadius="@dimen/ten"
             android:id="@+id/cardCalendarDetails"
-            android:elevation="@dimen/six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytHead"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginEnd="@dimen/twenty"
             android:layout_marginTop="@dimen/minus_thirty"
-            android:layout_height="wrap_content">
+            android:layout_marginEnd="@dimen/twenty"
+            android:elevation="@dimen/six"
+            app:cardCornerRadius="@dimen/ten">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/twenty"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/twenty">
+
                 <LinearLayout
                     android:id="@+id/lnrCalendarDetails"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:id="@+id/lblDate"
-                                android:layout_width="wrap_content"
-                                android:text="00"
                                 style="@style/CustomTextStylePoppinsBold"
-                                android:textSize="@dimen/fourty_sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00"
                                 android:textColor="@color/PrimaryColor"
-                                android:layout_height="wrap_content">
-                            </TextView>
+                                android:textSize="@dimen/fourty_sp"></TextView>
                         </LinearLayout>
+
                         <TextView
                             android:id="@+id/lblDateSuffix"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
-                            android:text="th"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/two"
                             android:layout_marginTop="@dimen/five"
                             android:gravity="top"
                             android:maxLength="2"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/twele_sp"
+                            android:text="th"
                             android:textColor="@color/PrimaryColor"
-                            android:layout_height="wrap_content">
-                        </TextView>
+                            android:textSize="@dimen/twele_sp"></TextView>
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_marginStart="@dimen/five"
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/lblDay"
-                            android:layout_width="match_parent"
-                            android:text="Wednesday"
-                            android:textSize="@dimen/fifteen"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:layout_height="wrap_content">
-                        </TextView>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Wednesday"
+                            android:textSize="@dimen/fifteen"></TextView>
+
                         <TextView
                             android:id="@+id/lblMonthYear"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:text="August 2025"
                             style="@style/CustomTextStylePoppinsMedium"
-                            android:textSize="@dimen/twele_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="August 2025"
                             android:textColor="@color/light_gray"
-                            android:layout_height="wrap_content">
-                        </TextView>
+                            android:textSize="@dimen/twele_sp"></TextView>
                     </LinearLayout>
                 </LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/lblHeading"
-                    android:layout_below="@+id/lnrCalendarDetails"
-                    android:layout_marginTop="@dimen/fifteen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrCalendarDetails"
+                    android:layout_marginTop="@dimen/fifteen">
+
                     <TextView
-                        android:layout_centerVertical="true"
                         android:id="@+id/lblHeadingWeek"
-                        android:layout_width="wrap_content"
-                        android:text="@string/this_week_status"
                         style="@style/CustomTextStylePoppinsRegular"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/this_week_status"></TextView>
+
                     <ImageView
                         android:id="@+id/imgInfo"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/info_icon"
                         android:layout_marginStart="@dimen/three"
                         android:layout_toEndOf="@+id/lblHeadingWeek"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen">
+                        android:src="@drawable/info_icon">
 
                     </ImageView>
                 </RelativeLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_below="@+id/lblHeading"
-                    android:layout_marginTop="@dimen/ten"
                     android:id="@+id/rcWeekStatus"
-                    android:layout_height="wrap_content">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblHeading"
+                    android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
         <ScrollView
-            android:layout_below="@+id/cardCalendarDetails"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cardCalendarDetails"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/sixteen"
-            android:layout_height="match_parent">
+            android:paddingBottom="@dimen/sixteen">
+
             <LinearLayout
-                android:paddingBottom="@dimen/thirty"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="@dimen/twenty"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/thirty">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardCornerRadius="@dimen/ten"
+                    android:layout_height="wrap_content"
                     android:elevation="@dimen/six"
-                    android:layout_height="wrap_content">
+                    app:cardCornerRadius="@dimen/ten">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <LinearLayout
-                            android:orientation="horizontal"
-                            android:weightSum="3"
                             android:layout_width="match_parent"
-                            android:paddingTop="@dimen/twenty"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:paddingStart="@dimen/twenty"
+                            android:paddingTop="@dimen/twenty"
                             android:paddingEnd="@dimen/twenty"
-                            android:layout_height="wrap_content">
+                            android:weightSum="3">
+
                             <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_weight="1"
-                                android:padding="@dimen/fifteen"
                                 android:layout_width="@dimen/zero"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="@dimen/fifteen">
+
                                 <FrameLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/ninety"
-                                    >
+                                    android:layout_height="@dimen/ninety">
 
                                     <ProgressBar
                                         android:id="@+id/attendanceProgressBar"
@@ -222,42 +231,44 @@
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:orientation="horizontal"
-                                        android:gravity="center"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_height="match_parent">
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
                                         <TextView
                                             android:id="@+id/lblAttendancePercentage"
+                                            style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="0"
                                             android:maxLength="3"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:textSize="@dimen/fifteen_sp"
+                                            android:text="0"
                                             android:textColor="@color/PrimaryColor"
-                                            />
+                                            android:textSize="@dimen/fifteen_sp" />
+
                                         <TextView
+                                            style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="%"
                                             android:layout_marginTop="@dimen/three"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:textSize="@dimen/thirteen_sp"
+                                            android:text="%"
                                             android:textColor="@color/PrimaryColor"
-                                            />
+                                            android:textSize="@dimen/thirteen_sp" />
                                     </LinearLayout>
                                 </FrameLayout>
+
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:text="@string/attendance"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/twele_sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/ten"
-                                    android:layout_height="wrap_content">
+                                    android:gravity="center"
+                                    android:text="@string/attendance"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
+
                             <View
                                 android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"
@@ -265,14 +276,15 @@
 
                             <LinearLayout
                                 android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
-                                android:padding="15dp"
-                                android:layout_height="wrap_content">
+                                android:padding="15dp">
+
                                 <FrameLayout
-                                    android:layout_weight="1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/ninety">
+                                    android:layout_height="@dimen/ninety"
+                                    android:layout_weight="1">
 
                                     <ProgressBar
                                         android:id="@+id/leaveTakenProgressBar"
@@ -287,41 +299,43 @@
 
                                     <TextView
                                         android:id="@+id/lblLeaveTakenPercentage"
+                                        style="@style/CustomTextStylePoppinsBold"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="center"
-                                        android:text="0"
                                         android:maxLength="3"
-                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:text="0"
                                         android:textColor="@color/PrimaryColor"
-                                        android:textSize="@dimen/fifteen_sp"
-                                        />
+                                        android:textSize="@dimen/fifteen_sp" />
                                 </FrameLayout>
+
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:text="@string/leave_taken"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/twele_sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/ten"
-                                    android:layout_height="wrap_content">
+                                    android:gravity="center"
+                                    android:text="@string/leave_taken"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
+
                             <View
                                 android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
+
                             <LinearLayout
                                 android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:padding="15dp"
                                 android:orientation="vertical"
-                                android:layout_height="wrap_content">
+                                android:padding="15dp">
+
                                 <FrameLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/ninety"
-                                    >
+                                    android:layout_height="@dimen/ninety">
 
                                     <ProgressBar
                                         android:id="@+id/ongoingDaysProgressBar"
@@ -333,106 +347,109 @@
                                         android:progress="0"
                                         android:progressDrawable="@drawable/progress_circle_drawable"
                                         android:rotation="270" />
+
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:orientation="horizontal"
-                                        android:gravity="center"
+                                        android:layout_height="match_parent"
                                         android:layout_gravity="center"
-                                        android:layout_height="match_parent">
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
                                         <TextView
                                             android:id="@+id/lblOngoingDaysPercentage"
+                                            style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="0"
                                             android:maxLength="3"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:textSize="@dimen/fifteen_sp"
+                                            android:text="0"
                                             android:textColor="@color/PrimaryColor"
-                                            />
+                                            android:textSize="@dimen/fifteen_sp" />
+
                                         <TextView
+                                            style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="%"
                                             android:layout_marginTop="@dimen/three"
-                                            style="@style/CustomTextStylePoppinsBold"
-                                            android:textSize="@dimen/thirteen_sp"
+                                            android:text="%"
                                             android:textColor="@color/PrimaryColor"
-                                            />
+                                            android:textSize="@dimen/thirteen_sp" />
                                     </LinearLayout>
 
                                 </FrameLayout>
+
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:text="@string/ongoing_days"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/twele_sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/ten"
-                                    android:layout_height="wrap_content">
+                                    android:gravity="center"
+                                    android:text="@string/ongoing_days"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
 
                         </LinearLayout>
+
                         <TextView
-                            android:layout_marginBottom="@dimen/ten"
-                            android:layout_marginTop="@dimen/five"
-                            android:visibility="gone"
                             android:id="@+id/lblErrorMessage"
-                            android:layout_width="match_parent"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:textColor="@color/red"
-                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/twenty"
+                            android:layout_marginTop="@dimen/five"
                             android:layout_marginEnd="@dimen/twenty"
-                            android:layout_height="wrap_content">
-                        </TextView>
+                            android:layout_marginBottom="@dimen/ten"
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:visibility="gone"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardCornerRadius="@dimen/ten"
-                    android:elevation="@dimen/six"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
-                    android:layout_height="wrap_content">
+                    android:elevation="@dimen/six"
+                    app:cardCornerRadius="@dimen/ten">
+
                     <LinearLayout
-                        android:padding="@dimen/two"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/two">
 
 
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:id="@+id/lnrLeaveRequest"
-                                android:padding="@dimen/twenty"
-                                android:gravity="center"
                                 android:layout_width="@dimen/zero"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/twenty">
+
                                 <ImageView
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty"
                                     android:src="@drawable/leave_request_icon_school"
-                                    android:layout_width="@dimen/thirty"
-                                    android:layout_height="@dimen/thirty"
                                     android:tint="@color/PrimaryColor"
-                                    tools:ignore="UseAppTint">
-                                </ImageView>
+                                    tools:ignore="UseAppTint"></ImageView>
 
                                 <TextView
-                                    android:layout_marginTop="@dimen/five"
+                                    style="@style/CustomTextStylePoppinsMedium"
                                     android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:gravity="center"
                                     android:text="@string/ask_leave"
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/twele_sp"
-                                    android:layout_height="wrap_content">
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
@@ -443,29 +460,29 @@
                                 android:background="@color/very_light_grey" />
 
                             <LinearLayout
-                                android:layout_weight="1"
-                                android:orientation="vertical"
                                 android:id="@+id/lnrLeaveHistory"
-                                android:padding="@dimen/twenty"
                                 android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:gravity="center"
-                                android:layout_height="wrap_content">
+                                android:orientation="vertical"
+                                android:padding="@dimen/twenty">
 
                                 <ImageView
                                     android:layout_width="@dimen/thirty"
                                     android:layout_height="@dimen/thirty"
+                                    android:src="@drawable/leave_request_icon_2"
                                     android:tint="@color/PrimaryColor"
-                                    tools:ignore="UseAppTint"
-                                    android:src="@drawable/leave_request_icon_2"></ImageView>
+                                    tools:ignore="UseAppTint"></ImageView>
 
                                 <TextView
-                                    android:layout_marginTop="@dimen/five"
-                                    android:layout_width="wrap_content"
-                                    android:text="@string/leave_requests"
-                                    android:gravity="center"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:textSize="@dimen/twele_sp"
-                                    android:layout_height="wrap_content">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:gravity="center"
+                                    android:text="@string/leave_requests"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
@@ -476,71 +493,75 @@
                                 android:background="@color/very_light_grey" />
 
                             <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:id="@+id/lnrAttendanceReport"
-                                android:padding="@dimen/twenty"
-                                android:gravity="center"
                                 android:layout_width="@dimen/zero"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/twenty">
+
                                 <ImageView
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty"
                                     android:src="@drawable/absentees_report_icon"
                                     android:tint="@color/PrimaryColor"
-                                    tools:ignore="UseAppTint"
-                                    android:layout_width="@dimen/thirty"
-                                    android:layout_height="@dimen/thirty">
-                                </ImageView>
+                                    tools:ignore="UseAppTint"></ImageView>
 
                                 <TextView
-                                    android:layout_marginTop="@dimen/five"
-                                    android:layout_width="wrap_content"
-                                    android:text="@string/leave_history"
-                                    android:gravity="center"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:textSize="@dimen/twele_sp"
-                                    android:layout_height="wrap_content">
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:gravity="center"
+                                    android:text="@string/leave_history"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
 
                         </LinearLayout>
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/one"
                             android:background="@color/very_light_grey" />
+
                         <LinearLayout
-                            android:orientation="horizontal"
-                            android:weightSum="3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
                             <LinearLayout
 
                                 android:id="@+id/lnrHoliday"
-                                android:padding="@dimen/twenty"
-                                android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:layout_width="@dimen/zero"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:gravity="center"
-                                android:layout_height="wrap_content">
+                                android:orientation="vertical"
+                                android:padding="@dimen/twenty">
+
                                 <ImageView
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty"
                                     android:src="@drawable/holidays_icon"
                                     android:tint="@color/PrimaryColor"
-                                    tools:ignore="UseAppTint"
-                                    android:layout_width="@dimen/thirty"
-                                    android:layout_height="@dimen/thirty">
-                                </ImageView>
+                                    tools:ignore="UseAppTint"></ImageView>
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:text="@string/HoliDay"
                                     style="@style/CustomTextStylePoppinsMedium"
-                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/five"
-                                    android:textSize="@dimen/twele_sp"
-                                    android:layout_height="wrap_content">
+                                    android:gravity="center"
+                                    android:text="@string/HoliDay"
+                                    android:textSize="@dimen/twele_sp">
 
                                 </TextView>
                             </LinearLayout>
+
                             <View
                                 android:layout_width="@dimen/one"
                                 android:layout_height="match_parent"

@@ -182,7 +182,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
     private fun fetchPauketPoints() {
         val mobileNumberLong = AppCredentials.isMobileNumber.toLong()
-        appViewModel.isGetPauketPoints(isAccessToken ?: "", mobileNumberLong, 1,requireActivity())
+        appViewModel.isGetPauketPoints(isAccessToken ?: "", mobileNumberLong, 1, requireActivity())
     }
 
 

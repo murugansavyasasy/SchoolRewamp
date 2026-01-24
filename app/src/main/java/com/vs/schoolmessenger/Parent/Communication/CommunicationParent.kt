@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Parent.Communication
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -27,7 +26,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.CommunicationBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -73,8 +71,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        Constant.isArchiveMessageClick=false
-        Constant.isCommunicationArchiveMessage=false
+        Constant.isArchiveMessageClick = false
+        Constant.isCommunicationArchiveMessage = false
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.rlaTextMessage.setOnClickListener(this)
@@ -159,7 +157,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             if (response != null) {
                 if (response?.status == true) {
                     if (response.data.isNotEmpty()) {
-                        Constant.isCommunicationArchiveMessage=false
+                        Constant.isCommunicationArchiveMessage = false
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                         appendData(response.data, archiveFlag = true)
                         if (fromNotification) {
@@ -167,8 +165,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         }
 
                     } else {
-                        Constant.isCommunicationArchiveMessage=true
-                        Constant.isParentArchieveErrMsg=response.message
+                        Constant.isCommunicationArchiveMessage = true
+                        Constant.isParentArchieveErrMsg = response.message
                         adapter?.notifyDataSetChanged()
                         hasFetchedMore = true
                         if (allVoiceData.isNotEmpty()) {
@@ -182,8 +180,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                         )
                     }
                 } else {
-                    Constant.isCommunicationArchiveMessage=true
-                    Constant.isParentArchieveErrMsg=response.message
+                    Constant.isCommunicationArchiveMessage = true
+                    Constant.isParentArchieveErrMsg = response.message
                     adapter?.notifyDataSetChanged()
                     if (allVoiceData.isNotEmpty()) {
                         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
@@ -290,6 +288,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private fun showToast(msg: String) {
         android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
     }
+
     private fun showFromDatePicker() {
         val todayCal = Calendar.getInstance()
 

@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-   >
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/rootHeader"
@@ -49,8 +48,8 @@
                         android:id="@+id/customPieChart"
                         android:layout_width="@dimen/hundred"
                         android:layout_height="@dimen/hundred"
-                        android:layout_marginEnd="@dimen/ten"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/ten"
                         android:padding="10dp" />
 
                     <ImageView
@@ -76,8 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        android:text="Principles of  Management"
-                      >
+                        android:text="Principles of  Management">
 
                     </TextView>
 
@@ -90,8 +88,7 @@
                         android:layout_below="@+id/lblSubject"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/four"
-                        android:text="Sathish"
-                        >
+                        android:text="Sathish">
 
                     </TextView>
 
@@ -104,8 +101,7 @@
                         android:layout_below="@+id/lblStaffName"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/four"
-                        android:text="XII - A"
-                      >
+                        android:text="XII - A">
 
                     </TextView>
 

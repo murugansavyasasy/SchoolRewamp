@@ -60,7 +60,6 @@
                 </LinearLayout>
 
 
-
                 <TextView
                     android:id="@+id/lblContent"
                     android:layout_width="match_parent"
@@ -72,32 +71,31 @@
                     android:textSize="@dimen/fifteen_sp" />
 
 
-
                 <TextView
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="🌟 What You Can Expect in the New Version"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="✔ Super-fast performance"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/btnUpdate"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="25dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/CustomTextStylePoppinsBold"
                     android:background="@drawable/bg_update_available_gradient"
                     android:gravity="center"
                     android:text="Update"

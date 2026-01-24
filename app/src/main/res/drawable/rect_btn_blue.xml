@@ -4,7 +4,11 @@
     <!-- Soft Drop Shadow Stack (Light and Spread Out) -->
     <item>
         <shape>
-            <padding android:top="3dp" android:bottom="3dp" android:left="3dp" android:right="3dp" />
+            <padding
+                android:bottom="3dp"
+                android:left="3dp"
+                android:right="3dp"
+                android:top="3dp" />
             <solid android:color="@color/PrimaryColor" />
             <corners android:radius="10dp" />
         </shape>
@@ -12,7 +16,11 @@
 
     <item>
         <shape>
-            <padding android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp" />
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="2dp"
+                android:top="2dp" />
             <solid android:color="@color/PrimaryColor" />
             <corners android:radius="10dp" />
         </shape>
@@ -20,7 +28,11 @@
 
     <item>
         <shape>
-            <padding android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp" />
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
             <solid android:color="@color/PrimaryColor" />
             <corners android:radius="10dp" />
         </shape>
@@ -37,59 +49,59 @@
 </layer-list>
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-<!--    &lt;!&ndash; Drop Shadow Stack (Light Black Shadow) &ndash;&gt;-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
-<!--            <solid android:color="#00000000" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
-<!--            <solid android:color="#08000000" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
-<!--            <solid android:color="#10000000" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
-<!--            <solid android:color="#18000000" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
-<!--            <solid android:color="#25000000" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
+    <!--    &lt;!&ndash; Drop Shadow Stack (Light Black Shadow) &ndash;&gt;-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
+    <!--            <solid android:color="#00000000" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
+    <!--            <solid android:color="#08000000" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
+    <!--            <solid android:color="#10000000" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
+    <!--            <solid android:color="#18000000" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <padding android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp" />-->
+    <!--            <solid android:color="#25000000" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
 
-<!--    &lt;!&ndash; Background &ndash;&gt;-->
-<!--    <item>-->
-<!--        <shape>-->
-<!--            <solid android:color="@color/sky_blue0" />-->
-<!--            <corners android:radius="10dp" />-->
-<!--        </shape>-->
-<!--    </item>-->
+    <!--    &lt;!&ndash; Background &ndash;&gt;-->
+    <!--    <item>-->
+    <!--        <shape>-->
+    <!--            <solid android:color="@color/sky_blue0" />-->
+    <!--            <corners android:radius="10dp" />-->
+    <!--        </shape>-->
+    <!--    </item>-->
 
-<!--</layer-list>-->
+    <!--</layer-list>-->
 
     <!--Existing Login Button design-->
-<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
-<!--    &lt;!&ndash;    <solid android:color="@color/dark_orange"&ndash;&gt;-->
-<!--    <solid android:color="@color/sky_blue0"-->
-<!--        android:shape="rectangle"/>-->
-<!--    <corners android:radius="10dp" />-->
-<!--</shape>-->
+    <!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--    &lt;!&ndash;    <solid android:color="@color/dark_orange"&ndash;&gt;-->
+    <!--    <solid android:color="@color/sky_blue0"-->
+    <!--        android:shape="rectangle"/>-->
+    <!--    <corners android:radius="10dp" />-->
+    <!--</shape>-->

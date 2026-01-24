@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <!-- TYPE CUSTOM SPINNER -->
     <!-- TYPE CUSTOM SPINNER -->
@@ -11,8 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/rect_shadow_white"
-        >
+        android:background="@drawable/rect_shadow_white">
 
         <Spinner
             android:id="@+id/spnType"
@@ -20,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/imgTypeArrow"
             android:background="@null"
-            android:paddingVertical="6dp"
-            android:drawSelectorOnTop="true" />
+            android:drawSelectorOnTop="true"
+            android:paddingVertical="6dp" />
 
         <ImageView
             android:id="@+id/imgTypeArrow"
@@ -45,8 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/rect_shadow_white"
-       >
+        android:background="@drawable/rect_shadow_white">
 
         <Spinner
             android:id="@+id/spnValue"
@@ -54,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/imgValueArrow"
             android:background="@null"
-            android:paddingVertical="6dp"
-            android:drawSelectorOnTop="true" />
+            android:drawSelectorOnTop="true"
+            android:paddingVertical="6dp" />
 
         <ImageView
             android:id="@+id/imgValueArrow"
@@ -71,8 +69,8 @@
     <ImageView
         android:id="@+id/imgAddFilter"
         android:layout_width="36dp"
-        android:layout_marginEnd="@dimen/ten"
         android:layout_height="36dp"
+        android:layout_marginEnd="@dimen/ten"
         android:src="@drawable/ic_plus_blue" />
 
 </LinearLayout>

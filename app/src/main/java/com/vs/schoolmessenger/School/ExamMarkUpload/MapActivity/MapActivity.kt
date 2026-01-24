@@ -36,6 +36,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
     override fun getViewBinding(): MapActivityBinding {
         return MapActivityBinding.inflate(layoutInflater)
     }
+
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null

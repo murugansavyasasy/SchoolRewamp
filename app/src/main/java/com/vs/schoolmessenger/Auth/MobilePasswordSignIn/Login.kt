@@ -71,7 +71,8 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
 
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
-        binding.txtMobileNumber.filters = arrayOf(InputFilter.LengthFilter(Constant.country_details!!.mobile_number_length))
+        binding.txtMobileNumber.filters =
+            arrayOf(InputFilter.LengthFilter(Constant.country_details!!.mobile_number_length))
 
 
         binding.txtPassword.setOnFocusChangeListener { _, hasFocus ->
@@ -96,7 +97,7 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("", jsonObject, this)
 
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser

@@ -72,7 +72,10 @@ class OptionAdapter(
 
             com.vs.schoolmessenger.Utils.Constant.selectedFileIndex = 0
 
-            val intent = android.content.Intent(context, com.vs.schoolmessenger.CommonScreens.FilesViewActivity::class.java)
+            val intent = android.content.Intent(
+                context,
+                com.vs.schoolmessenger.CommonScreens.FilesViewActivity::class.java
+            )
             context.startActivity(intent)
         }
 
@@ -85,7 +88,6 @@ class OptionAdapter(
             holder.binding.layoutGraph.performClick()
         }
     }
-
 
 
     override fun getItemCount(): Int = list.size

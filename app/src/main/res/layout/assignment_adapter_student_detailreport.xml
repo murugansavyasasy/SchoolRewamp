@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/header"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/five"
     tools:ignore="MissingDefaultResource">
 
@@ -31,8 +31,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
-                android:text="Sathish"
-                >
+                android:text="Sathish">
 
             </TextView>
 
@@ -41,13 +40,12 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_five"
                 android:layout_below="@+id/lbltitle"
+                android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
-                android:text="Sathish"
-                >
+                android:text="Sathish">
 
             </TextView>
 
@@ -57,14 +55,12 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblassignmentsubject"
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
-                android:layout_below="@+id/lblassignmentsubject"
-                android:text="Sathish"
-                >
-
+                android:text="Sathish">
 
 
             </TextView>
@@ -168,14 +164,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytList"
                 android:layout_marginStart="@dimen/twenty_five"
-                android:textColor="@color/bpTransparent_black"
-                android:text="I">
+                android:text="I"
+                android:textColor="@color/bpTransparent_black">
 
             </TextView>
-
-
-
-
 
 
         </RelativeLayout>

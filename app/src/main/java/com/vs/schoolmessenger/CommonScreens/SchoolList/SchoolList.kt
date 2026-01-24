@@ -493,7 +493,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun isUploadFilesInServer(isFileType: String?) {
         ProgressDialogHelper.show(this)
 //        ProgressDialogHelper.updateProgress(0)  // Start at 0% for accurate incremental updates
-Log.d(" Constant.selectedFilesVoice", Constant.selectedFiles.size.toString())
+        Log.d(" Constant.selectedFilesVoice", Constant.selectedFiles.size.toString())
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
@@ -876,7 +876,7 @@ Log.d(" Constant.selectedFilesVoice", Constant.selectedFiles.size.toString())
 //                        if (Constant.isVoiceType == 3) {
 //                            voiceSendApi()
 //                        } else {
-                            isUploadFilesInServer("audio")
+                        isUploadFilesInServer("audio")
 //                        }
                     }
                 }

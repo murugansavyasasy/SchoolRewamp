@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/five"
-   >
+    android:layout_marginTop="@dimen/five">
 
     <ImageView
         android:id="@+id/imgNewImage"
@@ -46,20 +45,20 @@
 
         <TextView
             android:id="@+id/LblHWSubjectName"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
-            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginTop="@dimen/fifteen"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp"
-             />
+            android:textSize="@dimen/eighteen_sp" />
 
 
         <TextView
             android:id="@+id/lblDateImage"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContentImage"
@@ -67,9 +66,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:text="15 Nov 2024"
-            style="@style/CustomTextStylePoppinsRegular"
-            android:textSize="@dimen/thirteen_sp"
-            />
+            android:textSize="@dimen/thirteen_sp" />
 
         <LinearLayout
             android:id="@+id/lytRecyclerwview"
@@ -103,27 +100,25 @@
 
         <TextView
             android:id="@+id/lblTitleImage"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsBold"
-            android:text="Annual Day celebrations"
-             />
+            android:text="Annual Day celebrations" />
 
 
         <TextView
             android:id="@+id/lblContentImage"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitleImage"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:maxLines="3"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
-          />
+            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress." />
 
 
         <TextView

@@ -9,17 +9,17 @@
         android:id="@+id/flagImageView"
         android:layout_width="@dimen/twenty_two"
         android:layout_height="@dimen/twenty"
-        android:layout_marginEnd="@dimen/ten"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/ten"
         android:scaleType="fitXY" />
 
     <TextView
-        android:layout_toRightOf="@+id/flagImageView"
-        android:layout_centerVertical="true"
         android:id="@+id/countryNameTextView"
         style="@style/CustomTextStylePoppinsRegular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/flagImageView"
         android:textColor="@android:color/black"
         android:textSize="@dimen/fifteen_sp" />
 </RelativeLayout>

@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -111,12 +110,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         val versionName = pInfo.versionName
 
-        val versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            pInfo.longVersionCode
-        } else {
-            @Suppress("DEPRECATION")
-            pInfo.versionCode.toLong()
-        }
+        val versionCode =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                pInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                pInfo.versionCode.toLong()
+            }
 
         binding.lblAppVersion.text =
             "${getString(R.string.App_Version)} - $versionName"
@@ -454,16 +454,16 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         chThai.buttonTintList = null
 
 
-        fun isCheckEnabledButton(){
-            if (SharedPreference.getLanguage(requireActivity())==isSelectedLanguage){
+        fun isCheckEnabledButton() {
+            if (SharedPreference.getLanguage(requireActivity()) == isSelectedLanguage) {
                 btnConfirm.apply {
-                    alpha=0.4f
-                    isEnabled=false
+                    alpha = 0.4f
+                    isEnabled = false
                 }
-            }else{
+            } else {
                 btnConfirm.apply {
-                    alpha=1f
-                    isEnabled=true
+                    alpha = 1f
+                    isEnabled = true
                 }
             }
         }
@@ -573,15 +573,19 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             Constant.ta -> {
                 chTamil.isChecked = true
             }
+
             Constant.th -> {
                 chThai.isChecked = true
             }
+
             Constant.hi -> {
                 chHindi.isChecked = true
             }
+
             Constant.en -> {
                 chEnglish.isChecked = true
             }
+
             Constant.ar -> {
                 chArabic.isChecked = true
             }

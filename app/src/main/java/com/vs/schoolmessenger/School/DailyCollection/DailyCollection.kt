@@ -15,7 +15,6 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyD
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.ThemeRestartHelper
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -103,7 +102,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                 addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
             }
-            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
 
             if (response.status) {
@@ -202,7 +201,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             selectedType,
             from_Date ?: "",
             to_Date ?: "",
-            country_id?: "",
+            country_id ?: "",
             this
         )
     }

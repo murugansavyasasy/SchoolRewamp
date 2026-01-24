@@ -239,7 +239,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
@@ -1193,9 +1193,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         val lblContent = dialogView.findViewById<TextView>(R.id.lblContent)
         lblTitle.setText(versionData[0].toaster_title)
 
-        if(!versionData[0].new_version_updates.equals("")) {
+        if (!versionData[0].new_version_updates.equals("")) {
             val list = versionData[0].new_version_updates.split("~")
-            val finalText = list.joinToString("\n"){ "• $it" }
+            val finalText = list.joinToString("\n") { "• $it" }
             lblContent.setText(finalText)
         }
 

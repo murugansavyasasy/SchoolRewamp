@@ -15,8 +15,6 @@ data class GetHomeworkData(
 )
 
 
-
-
 //package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 //
 //import com.google.gson.annotations.SerializedName

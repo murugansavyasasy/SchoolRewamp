@@ -54,7 +54,6 @@ import com.vs.schoolmessenger.School.Event.Adapter.EventCategorySpinnerAdapter
 import com.vs.schoolmessenger.School.Event.Model.EventCategory
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
-import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT

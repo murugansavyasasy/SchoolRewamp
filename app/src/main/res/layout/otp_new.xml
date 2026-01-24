@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -10,12 +9,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <View
             android:id="@+id/statusBarBackground"
@@ -58,23 +57,23 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ScrollView
-            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-            app:layout_constraintBottom_toTopOf="@id/lnrPowered"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:fillViewport="true"
-            android:background="@color/PrimaryColor"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            >
-            <LinearLayout
-                android:paddingBottom="@dimen/thirty"
-                android:layout_marginTop="@dimen/thirty"
+            android:background="@color/PrimaryColor"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@id/lnrPowered"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/thirty"
                 android:background="@drawable/bg_rect_white_large_top_radius"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/thirty">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -86,22 +85,22 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
                     android:gravity="center"
                     android:text="@string/set_a_otp"
-                    android:layout_marginEnd="@dimen/twenty"
-                    android:layout_marginStart="@dimen/twenty"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twenty_five_sp" />
 
                 <TextView
                     android:id="@+id/lblEnter"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/twenty"
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="start"
                     android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
                     android:textColor="@color/black"
@@ -117,10 +116,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/ten"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginBottom="@dimen/ten"
                         android:orientation="horizontal"
                         android:weightSum="6">
 
@@ -210,11 +209,11 @@
                     </LinearLayout>
 
                     <RelativeLayout
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/twenty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/ten"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:gravity="start">
 
                         <TextView
@@ -259,9 +258,9 @@
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginBottom="@dimen/ten"
                         android:gravity="start"
                         android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
@@ -321,13 +320,13 @@
         </ScrollView>
 
         <RelativeLayout
-            android:layout_marginBottom="@dimen/fifteen"
             android:id="@+id/lnrPowered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fifteen"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/imgSavyasasy"
@@ -348,350 +347,349 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:id="@+id/main"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="@color/light_white">-->
+</androidx.constraintlayout.widget.ConstraintLayout><!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:id="@+id/main"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@color/light_white">-->
 
-<!--    <ScrollView-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/header"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
-<!--            <View-->
-<!--                android:id="@+id/statusBarBackground"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:background="@color/PrimaryColor"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <ScrollView-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
 
 
-<!--            <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--                android:id="@+id/toolbarLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:background="@color/PrimaryColor"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/statusBarBackground">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/header"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/statusBarBackground"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:background="@color/PrimaryColor"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
 
-<!--                <RelativeLayout-->
-<!--                    android:id="@+id/rytHeader"-->
-<!--                    android:layout_width="@dimen/fourty"-->
-<!--                    android:layout_height="@dimen/fourty"-->
-<!--                    android:layout_margin="@dimen/ten"-->
-<!--                    android:layout_marginTop="?attr/actionBarSize"-->
-<!--                    android:background="@drawable/bg_circle_white"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imgBack"-->
-<!--                        android:layout_width="@dimen/fifteen"-->
-<!--                        android:layout_height="@dimen/fifteen"-->
-<!--                        android:layout_centerInParent="true"-->
-<!--                        android:src="@drawable/ic_arrow_back_black" />-->
-<!--                </RelativeLayout>-->
+    <!--            <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--                android:id="@+id/toolbarLayout"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="0dp"-->
+    <!--                android:background="@color/PrimaryColor"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/statusBarBackground">-->
 
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_marginTop="@dimen/eighty"-->
-<!--                    android:background="@drawable/bg_rect_white_large_top_radius"-->
-<!--                    android:orientation="vertical">-->
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/rytHeader"-->
+    <!--                    android:layout_width="@dimen/fourty"-->
+    <!--                    android:layout_height="@dimen/fourty"-->
+    <!--                    android:layout_margin="@dimen/ten"-->
+    <!--                    android:layout_marginTop="?attr/actionBarSize"-->
+    <!--                    android:background="@drawable/bg_circle_white"-->
+    <!--                    android:clickable="true"-->
+    <!--                    android:focusable="true">-->
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/image_banner"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/two_hundred"-->
-<!--                        android:adjustViewBounds="true"-->
-<!--                        android:src="@drawable/ic_otp_svg" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/lbl"-->
-<!--                        style="@style/CustomTextStylePoppinsBold"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="@string/set_a_otp"-->
-<!--                        android:layout_marginEnd="@dimen/twenty"-->
-<!--                        android:layout_marginStart="@dimen/twenty"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="@dimen/twenty_five_sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/lblEnter"-->
-<!--                        android:layout_marginTop="@dimen/ten"-->
-<!--                        android:layout_marginBottom="@dimen/ten"-->
-<!--                        android:layout_marginStart="@dimen/twenty"-->
-<!--                        android:layout_marginEnd="@dimen/twenty"-->
-<!--                        style="@style/CustomTextStylePoppinsRegular"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="start"-->
-<!--                        android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="@dimen/thirteen_sp">-->
-
-<!--                    </TextView>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/rytMobileNumber"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="@dimen/ten"-->
-<!--                            android:layout_marginTop="@dimen/ten"-->
-<!--                            android:layout_marginEnd="@dimen/twenty"-->
-<!--                            android:layout_marginStart="@dimen/twenty"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:weightSum="6">-->
-
-<!--                            <EditText-->
-<!--                                android:id="@+id/txtOtp1"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-
-<!--                            <EditText-->
-
-<!--                                android:id="@+id/txtOtp2"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_marginStart="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-
-<!--                            <EditText-->
-<!--                                android:id="@+id/txtOtp3"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_marginStart="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-
-<!--                            <EditText-->
-<!--                                android:id="@+id/txtOtp4"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_marginStart="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-
-<!--                            <EditText-->
-<!--                                android:id="@+id/txtOtp5"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_marginStart="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-
-<!--                            <EditText-->
-<!--                                android:id="@+id/txtOtp6"-->
-<!--                                style="@style/CustomTextStylePoppinsBold"-->
-<!--                                android:layout_width="@dimen/zero"-->
-<!--                                android:layout_height="@dimen/fifty"-->
-<!--                                android:layout_margin="@dimen/five"-->
-<!--                                android:layout_marginStart="@dimen/five"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:background="@drawable/bg_white_stroke_box"-->
-<!--                                android:inputType="number"-->
-<!--                                android:textAlignment="center"-->
-<!--                                android:textColor="@color/black"-->
-<!--                                android:textSize="@dimen/twenty_sp" />-->
-<!--                        </LinearLayout>-->
-
-<!--                        <RelativeLayout-->
-<!--                            android:layout_marginStart="@dimen/twenty"-->
-<!--                            android:layout_marginEnd="@dimen/twenty"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginHorizontal="@dimen/ten"-->
-<!--                            android:gravity="start">-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/lblDidNot"-->
-<!--                                style="@style/CustomTextStylePoppinsRegular"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="@string/lblDidntreceive"-->
-<!--                                android:textSize="@dimen/thirteen_sp" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/lblOtpTimer"-->
-<!--                                style="@style/CustomTextStylePoppinsRegular"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginStart="@dimen/fifteen"-->
-<!--                                android:layout_toEndOf="@+id/lblDidNot"-->
-<!--                                android:text="@string/_00_00"-->
-<!--                                android:textColor="@color/red"-->
-<!--                                android:textSize="@dimen/fifteen_sp"-->
-<!--                                android:visibility="visible">-->
-
-<!--                            </TextView>-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/lblResend"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginStart="@dimen/fifteen"-->
-<!--                                android:layout_toEndOf="@+id/lblDidNot"-->
-<!--                                android:text="@string/resend"-->
-<!--                                android:textColor="@color/PrimaryColor"-->
-<!--                                android:textSize="@dimen/fifteen_sp"-->
-<!--                                android:visibility="gone" />-->
+    <!--                    <ImageView-->
+    <!--                        android:id="@+id/imgBack"-->
+    <!--                        android:layout_width="@dimen/fifteen"-->
+    <!--                        android:layout_height="@dimen/fifteen"-->
+    <!--                        android:layout_centerInParent="true"-->
+    <!--                        android:src="@drawable/ic_arrow_back_black" />-->
+    <!--                </RelativeLayout>-->
 
 
-<!--                        </RelativeLayout>-->
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:layout_marginTop="@dimen/eighty"-->
+    <!--                    android:background="@drawable/bg_rect_white_large_top_radius"-->
+    <!--                    android:orientation="vertical">-->
+
+    <!--                    <ImageView-->
+    <!--                        android:id="@+id/image_banner"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="@dimen/two_hundred"-->
+    <!--                        android:adjustViewBounds="true"-->
+    <!--                        android:src="@drawable/ic_otp_svg" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lbl"-->
+    <!--                        style="@style/CustomTextStylePoppinsBold"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:gravity="center"-->
+    <!--                        android:text="@string/set_a_otp"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:textColor="@color/black"-->
+    <!--                        android:textSize="@dimen/twenty_five_sp" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lblEnter"-->
+    <!--                        android:layout_marginTop="@dimen/ten"-->
+    <!--                        android:layout_marginBottom="@dimen/ten"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:gravity="start"-->
+    <!--                        android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"-->
+    <!--                        android:textColor="@color/black"-->
+    <!--                        android:textSize="@dimen/thirteen_sp">-->
+
+    <!--                    </TextView>-->
+
+    <!--                    <LinearLayout-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:orientation="vertical">-->
+
+    <!--                        <LinearLayout-->
+    <!--                            android:id="@+id/rytMobileNumber"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginBottom="@dimen/ten"-->
+    <!--                            android:layout_marginTop="@dimen/ten"-->
+    <!--                            android:layout_marginEnd="@dimen/twenty"-->
+    <!--                            android:layout_marginStart="@dimen/twenty"-->
+    <!--                            android:orientation="horizontal"-->
+    <!--                            android:weightSum="6">-->
+
+    <!--                            <EditText-->
+    <!--                                android:id="@+id/txtOtp1"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+
+    <!--                            <EditText-->
+
+    <!--                                android:id="@+id/txtOtp2"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_marginStart="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+
+    <!--                            <EditText-->
+    <!--                                android:id="@+id/txtOtp3"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_marginStart="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+
+    <!--                            <EditText-->
+    <!--                                android:id="@+id/txtOtp4"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_marginStart="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+
+    <!--                            <EditText-->
+    <!--                                android:id="@+id/txtOtp5"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_marginStart="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+
+    <!--                            <EditText-->
+    <!--                                android:id="@+id/txtOtp6"-->
+    <!--                                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                                android:layout_width="@dimen/zero"-->
+    <!--                                android:layout_height="@dimen/fifty"-->
+    <!--                                android:layout_margin="@dimen/five"-->
+    <!--                                android:layout_marginStart="@dimen/five"-->
+    <!--                                android:layout_weight="1"-->
+    <!--                                android:background="@drawable/bg_white_stroke_box"-->
+    <!--                                android:inputType="number"-->
+    <!--                                android:textAlignment="center"-->
+    <!--                                android:textColor="@color/black"-->
+    <!--                                android:textSize="@dimen/twenty_sp" />-->
+    <!--                        </LinearLayout>-->
+
+    <!--                        <RelativeLayout-->
+    <!--                            android:layout_marginStart="@dimen/twenty"-->
+    <!--                            android:layout_marginEnd="@dimen/twenty"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginHorizontal="@dimen/ten"-->
+    <!--                            android:gravity="start">-->
+
+    <!--                            <TextView-->
+    <!--                                android:id="@+id/lblDidNot"-->
+    <!--                                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                                android:layout_width="wrap_content"-->
+    <!--                                android:layout_height="wrap_content"-->
+    <!--                                android:text="@string/lblDidntreceive"-->
+    <!--                                android:textSize="@dimen/thirteen_sp" />-->
+
+    <!--                            <TextView-->
+    <!--                                android:id="@+id/lblOtpTimer"-->
+    <!--                                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                                android:layout_width="wrap_content"-->
+    <!--                                android:layout_height="wrap_content"-->
+    <!--                                android:layout_marginStart="@dimen/fifteen"-->
+    <!--                                android:layout_toEndOf="@+id/lblDidNot"-->
+    <!--                                android:text="@string/_00_00"-->
+    <!--                                android:textColor="@color/red"-->
+    <!--                                android:textSize="@dimen/fifteen_sp"-->
+    <!--                                android:visibility="visible">-->
+
+    <!--                            </TextView>-->
+
+    <!--                            <TextView-->
+    <!--                                android:id="@+id/lblResend"-->
+    <!--                                android:layout_width="wrap_content"-->
+    <!--                                android:layout_height="wrap_content"-->
+    <!--                                android:layout_marginStart="@dimen/fifteen"-->
+    <!--                                android:layout_toEndOf="@+id/lblDidNot"-->
+    <!--                                android:text="@string/resend"-->
+    <!--                                android:textColor="@color/PrimaryColor"-->
+    <!--                                android:textSize="@dimen/fifteen_sp"-->
+    <!--                                android:visibility="gone" />-->
 
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/lblContactTitle"-->
-<!--                            style="@style/CustomTextStylePoppinsRegular"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginEnd="@dimen/twenty"-->
-<!--                            android:layout_marginStart="@dimen/twenty"-->
-<!--                            android:layout_marginTop="@dimen/ten"-->
-<!--                            android:layout_marginBottom="@dimen/ten"-->
-<!--                            android:gravity="start"-->
-<!--                            android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"-->
-<!--                            android:textSize="@dimen/thirteen_sp">-->
-
-<!--                        </TextView>-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/lblContactUs"-->
-<!--                            style="@style/CustomTextStylePoppinsBold"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:layout_margin="@dimen/ten"-->
-<!--                            android:gravity="center"-->
-<!--                            android:text="@string/contact_us"-->
-<!--                            android:textColor="@color/PrimaryColor"-->
-<!--                            android:textSize="@dimen/fifteen_sp">-->
-
-<!--                        </TextView>-->
+    <!--                        </RelativeLayout>-->
 
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/btnNext"-->
-<!--                            style="@style/CustomTextStylePoppinsBold"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_below="@+id/lblDidNot"-->
-<!--                            android:layout_marginStart="@dimen/twenty"-->
-<!--                            android:layout_marginTop="@dimen/thirty"-->
-<!--                            android:layout_marginEnd="@dimen/twenty"-->
-<!--                            android:layout_marginBottom="@dimen/ten"-->
-<!--                            android:background="@drawable/rect_btn_blue"-->
-<!--                            android:gravity="center"-->
-<!--                            android:padding="@dimen/ten"-->
-<!--                            android:text="@string/NEXT"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:textSize="@dimen/fifteen_sp"-->
-<!--                            android:textStyle="bold" />-->
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/lblContactTitle"-->
+    <!--                            style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginEnd="@dimen/twenty"-->
+    <!--                            android:layout_marginStart="@dimen/twenty"-->
+    <!--                            android:layout_marginTop="@dimen/ten"-->
+    <!--                            android:layout_marginBottom="@dimen/ten"-->
+    <!--                            android:gravity="start"-->
+    <!--                            android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"-->
+    <!--                            android:textSize="@dimen/thirteen_sp">-->
+
+    <!--                        </TextView>-->
+
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/lblContactUs"-->
+    <!--                            style="@style/CustomTextStylePoppinsBold"-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_gravity="center"-->
+    <!--                            android:layout_margin="@dimen/ten"-->
+    <!--                            android:gravity="center"-->
+    <!--                            android:text="@string/contact_us"-->
+    <!--                            android:textColor="@color/PrimaryColor"-->
+    <!--                            android:textSize="@dimen/fifteen_sp">-->
+
+    <!--                        </TextView>-->
 
 
-<!--                        <com.vs.schoolmessenger.Utils.SpinningProgressBar-->
-<!--                            android:id="@+id/isLoading"-->
-<!--                            android:layout_width="@dimen/thirty"-->
-<!--                            android:layout_height="@dimen/thirty"-->
-<!--                            android:layout_below="@+id/lblDidNot"-->
-<!--                            android:layout_centerHorizontal="true"-->
-<!--                            android:layout_marginTop="@dimen/fourty_five"-->
-<!--                            android:layout_marginBottom="@dimen/fifty"-->
-<!--                            android:visibility="gone">-->
-
-<!--                        </com.vs.schoolmessenger.Utils.SpinningProgressBar>-->
-
-
-<!--                    </LinearLayout>-->
-<!--                </LinearLayout>-->
-<!--            </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/lnrPowered"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgSavyasasy"-->
-<!--                    android:layout_width="@dimen/thirty"-->
-<!--                    android:layout_height="@dimen/thirty"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:src="@drawable/savyasasy" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_toEndOf="@+id/imgSavyasasy"-->
-<!--                    android:text="@string/powered_by_savyasasy"-->
-<!--                    android:textColor="@color/grey" />-->
-<!--            </RelativeLayout>-->
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/btnNext"-->
+    <!--                            style="@style/CustomTextStylePoppinsBold"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_below="@+id/lblDidNot"-->
+    <!--                            android:layout_marginStart="@dimen/twenty"-->
+    <!--                            android:layout_marginTop="@dimen/thirty"-->
+    <!--                            android:layout_marginEnd="@dimen/twenty"-->
+    <!--                            android:layout_marginBottom="@dimen/ten"-->
+    <!--                            android:background="@drawable/rect_btn_blue"-->
+    <!--                            android:gravity="center"-->
+    <!--                            android:padding="@dimen/ten"-->
+    <!--                            android:text="@string/NEXT"-->
+    <!--                            android:textColor="@color/white"-->
+    <!--                            android:textSize="@dimen/fifteen_sp"-->
+    <!--                            android:textStyle="bold" />-->
 
 
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--                        <com.vs.schoolmessenger.Utils.SpinningProgressBar-->
+    <!--                            android:id="@+id/isLoading"-->
+    <!--                            android:layout_width="@dimen/thirty"-->
+    <!--                            android:layout_height="@dimen/thirty"-->
+    <!--                            android:layout_below="@+id/lblDidNot"-->
+    <!--                            android:layout_centerHorizontal="true"-->
+    <!--                            android:layout_marginTop="@dimen/fourty_five"-->
+    <!--                            android:layout_marginBottom="@dimen/fifty"-->
+    <!--                            android:visibility="gone">-->
 
-<!--    </ScrollView>-->
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--                        </com.vs.schoolmessenger.Utils.SpinningProgressBar>-->
+
+
+    <!--                    </LinearLayout>-->
+    <!--                </LinearLayout>-->
+    <!--            </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:id="@+id/lnrPowered"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imgSavyasasy"-->
+    <!--                    android:layout_width="@dimen/thirty"-->
+    <!--                    android:layout_height="@dimen/thirty"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:src="@drawable/savyasasy" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_toEndOf="@+id/imgSavyasasy"-->
+    <!--                    android:text="@string/powered_by_savyasasy"-->
+    <!--                    android:textColor="@color/grey" />-->
+    <!--            </RelativeLayout>-->
+
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    </ScrollView>-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

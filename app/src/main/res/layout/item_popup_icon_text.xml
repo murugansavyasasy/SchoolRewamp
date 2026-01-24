@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:paddingHorizontal="12dp"
     android:paddingVertical="8dp">
 
@@ -11,19 +11,19 @@
         android:id="@+id/txtInsideIcon"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/report_present_icon"
         android:gravity="center"
         android:text="P"
         android:textColor="@android:color/white"
-        android:textStyle="bold"
         android:textSize="13sp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/report_present_icon" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Present"
-        android:textSize="14sp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 </LinearLayout>

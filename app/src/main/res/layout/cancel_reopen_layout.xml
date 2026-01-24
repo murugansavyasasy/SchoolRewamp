@@ -20,8 +20,8 @@
             android:src="@drawable/arrow_trianglehead" />
 
         <TextView
-            android:layout_width="wrap_content"
             style="@style/CustomTextStylePoppinsBold1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:text="@string/ReOpen"
@@ -40,14 +40,13 @@
         <ImageView
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:src="@drawable/close_red_color"
-            />
+            android:src="@drawable/close_red_color" />
 
         <TextView
+            style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            style="@style/CustomTextStylePoppinsBold1"
             android:text="@string/Cancel"
             android:textColor="@color/black"
             android:textSize="@dimen/sixteen_sp" />

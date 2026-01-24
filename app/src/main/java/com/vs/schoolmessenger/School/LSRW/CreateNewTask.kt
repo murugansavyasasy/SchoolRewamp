@@ -731,7 +731,8 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
             // Skip audio/video
             if (mimeType?.startsWith("video/") == true ||
-                mimeType?.startsWith("audio/") == true) {
+                mimeType?.startsWith("audio/") == true
+            ) {
                 Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
                 return
             }
@@ -742,7 +743,11 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT
@@ -812,7 +817,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 }
             }
 
-       PICK_DOCUMENT_REQUEST -> {
+            PICK_DOCUMENT_REQUEST -> {
                 val clipData = data?.clipData
                 val singleUri = data?.data
 

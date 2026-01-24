@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/fifteen"
     android:layout_marginEnd="@dimen/five"
-    android:background="@drawable/purple_background"
-    android:layout_height="wrap_content">
+    android:background="@drawable/purple_background">
 
     <ImageView
         android:id="@+id/imgEditAndDelete"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
         android:elevation="@dimen/ten"
-        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_more_vert_custom"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 
     <LinearLayout
@@ -41,8 +40,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annual Day"
                 android:singleLine="true"
+                android:text="Annual Day"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -143,6 +142,7 @@
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
@@ -153,19 +153,18 @@
 
                 <TextView
                     android:id="@+id/total_numbers"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="@dimen/thirty_six"
                     android:layout_height="@dimen/thirty_six"
+                    android:layout_marginStart="@dimen/minus_fifteen"
                     android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
                     android:layout_marginBottom="@dimen/five"
                     android:background="@drawable/bg_image_background_white_coupon"
-                    android:text="+9"
                     android:gravity="center"
-                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="+9"
                     android:textSize="@dimen/fifteen_sp"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/minus_fifteen"
-                    android:layout_marginEnd="@dimen/five"
-                   />
+                    android:visibility="gone" />
 
             </LinearLayout>
 

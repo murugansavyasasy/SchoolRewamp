@@ -81,7 +81,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         isStaffDetails = SharedPreference.getStaffDetails(this)
 //        isAccessToken = isStaffDetails!!.access_token
 
-        if(Constant.isSelectedMenuName.isNullOrEmpty()){
+        if (Constant.isSelectedMenuName.isNullOrEmpty()) {
             binding.toolbarLayout.lblParentToolBar.text = Constant.NoticeBoard
         } else {
             binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
@@ -230,8 +230,7 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
         }
-        }
-
+    }
 
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {

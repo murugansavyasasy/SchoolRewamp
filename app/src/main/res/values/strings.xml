@@ -804,7 +804,7 @@
     <string name="forenoon">ForeNoon</string>
     <string name="afternoon">AfterNoon</string>
     <string name="Absentees">Absentees</string>
-   <string name="select_the_time">Select the time</string>
+    <string name="select_the_time">Select the time</string>
     <string name="you_cannot_select_a_past_time_for_today">You cannot select a past time for today.</string>
     <string name="Unknown">Unknown</string>
     <string name="time_cannot_be_past">Time cannot be past</string>

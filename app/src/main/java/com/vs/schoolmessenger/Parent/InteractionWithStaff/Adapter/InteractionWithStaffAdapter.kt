@@ -112,7 +112,7 @@ class InteractionWithStaffAdapter(
 
             unreadcount.text = staff.unread_count
             lblLogo.text = Constant.getNameInitials(staff.name)
-            if(staff.last_msg_time .isNullOrEmpty()) {
+            if (staff.last_msg_time.isNullOrEmpty()) {
                 yesterdayheader.visibility = View.GONE
             } else {
                 yesterdayheader.visibility = View.VISIBLE

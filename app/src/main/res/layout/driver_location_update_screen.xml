@@ -22,10 +22,10 @@
         </ImageView>
 
         <TextView
-            android:layout_toEndOf="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
             android:text="@string/update_bus_location"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
@@ -38,31 +38,31 @@
 
     <!-- Google Map -->
     <WebView
-        android:layout_below="@+id/rytHeader"
         android:id="@+id/mapWebView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/four_hundred" />
+        android:layout_height="@dimen/four_hundred"
+        android:layout_below="@+id/rytHeader" />
 
     <!-- Driver Info Card -->
     <LinearLayout
         android:id="@+id/driverInfoCard"
-        android:layout_below="@id/mapWebView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/sixteen"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_below="@id/mapWebView"
+        android:layout_marginTop="@dimen/eight"
         android:background="@android:color/white"
         android:elevation="@dimen/four"
-        android:layout_marginTop="@dimen/eight">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/sixteen">
 
         <ImageView
             android:layout_width="@dimen/fifty_six"
             android:layout_height="@dimen/fifty_six"
-            android:src="@drawable/profile"
-            android:scaleType="centerCrop"
             android:background="@drawable/circle_background"
-            android:padding="@dimen/four" />
+            android:padding="@dimen/four"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile" />
 
         <LinearLayout
             android:layout_width="@dimen/zero"
@@ -75,35 +75,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="John Doe"
-                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/online_location_updating"
-                android:textSize="@dimen/fourteen_sp"
-                android:textColor="@color/light_green_5" />
+                android:textColor="@color/light_green_5"
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_offline"
             android:backgroundTint="@color/dark_blue_2"
+            android:text="@string/go_offline"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
     <!-- Last updated time -->
     <TextView
-        android:layout_below="@id/driverInfoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Last updated: 2:58 PM"
+        android:layout_below="@id/driverInfoCard"
+        android:gravity="center"
         android:padding="@dimen/twele"
+        android:text="Last updated: 2:58 PM"
         android:textColor="@color/light_gray_2"
-        android:textSize="@dimen/fourteen_sp"
-        android:gravity="center" />
+        android:textSize="@dimen/fourteen_sp" />
 
 </RelativeLayout>

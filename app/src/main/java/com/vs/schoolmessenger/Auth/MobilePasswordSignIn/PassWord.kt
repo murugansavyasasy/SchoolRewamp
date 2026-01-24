@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
 import android.graphics.Paint
-import android.text.InputFilter
 import android.text.InputType
 import android.view.View
 import android.widget.Toast
@@ -64,7 +63,7 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
                         addProperty(APIKeyNames.user_type, Constant.user_type_as_parent)
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
-                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                    appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser

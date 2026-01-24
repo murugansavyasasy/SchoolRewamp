@@ -149,9 +149,9 @@
                                     android:id="@+id/rvTopPerformance"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:scrollbars="vertical"
+                                    android:nestedScrollingEnabled="true"
                                     android:overScrollMode="never"
-                                    android:nestedScrollingEnabled="true" />
+                                    android:scrollbars="vertical" />
                             </FrameLayout>
 
 

@@ -147,10 +147,13 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 }
 
-                if (isDirectToUploadPage){
+                if (isDirectToUploadPage) {
                     Log.d("UploadDebug", "Upload button clicked")
 
-                    Log.d("UploadDebug", "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}")
+                    Log.d(
+                        "UploadDebug",
+                        "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}"
+                    )
 
                     Log.d(
                         "UploadDebug",
@@ -229,7 +232,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.rcExamList.adapter = adapter
         appViewModel!!.getStaffWiseExam(
             isAccessToken!!,
-            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "",this
+            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "", this
         )
     }
 
@@ -241,12 +244,15 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             }
 
             R.id.lnrUpload -> {
-                if (selectedExamID!=""){
+                if (selectedExamID != "") {
                     selectedExamActivities = null
-                    appViewModel!!.getSubjectWiseActivities(isAccessToken!!,selectedExamID,this)
-                }
-                else{
-                    Toast.makeText(this,getString(R.string.please_select_an_exam_to_continue), Toast.LENGTH_SHORT).show()
+                    appViewModel!!.getSubjectWiseActivities(isAccessToken!!, selectedExamID, this)
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.please_select_an_exam_to_continue),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -256,9 +262,9 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     override fun onExamSelected(item: getStaffWisExamData?) {
         Log.d("Data", item.toString())
         if (item == null) {
-            isDirectToUploadPage=false
+            isDirectToUploadPage = false
             selectedExam = null
-            selectedExamID=""
+            selectedExamID = ""
             binding.lnrUpload.isEnabled = false
             binding.lnrUpload.alpha = 0.4f
             binding.lblClassContinue.visibility = View.VISIBLE
@@ -266,11 +272,11 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         }
         // valid selection
         selectedExam = item
-        selectedExamID=item.id
+        selectedExamID = item.id
         selectedExamActivities = null
         binding.lnrUpload.isEnabled = true
         binding.lnrUpload.alpha = 1f
-        isDirectToUploadPage=true
+        isDirectToUploadPage = true
         binding.lblClassContinue.visibility = View.GONE
 
     }
@@ -278,7 +284,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     override fun onExamApiCall(item: getStaffWisExamData?) {
 
         selectedExam = item
-        selectedExamID=item!!.id
+        selectedExamID = item!!.id
         selectedExamActivities = null
         Log.d("Data", item.toString())
         Log.d("isSelected", selectedExam.toString())
@@ -290,6 +296,6 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             adapter.notifyItemChanged(adapter.expandedPosition)
         }
 
-        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id,this)
+        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id, this)
     }
 }

@@ -94,7 +94,8 @@ class BlockListStudentAdapter(
         private val blocked_on: TextView = itemView.findViewById(R.id.blocked_on)
         private val reason: TextView = itemView.findViewById(R.id.reason)
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
-        private val standardSectiondetails: TextView = itemView.findViewById(R.id.standardSectiondetails)
+        private val standardSectiondetails: TextView =
+            itemView.findViewById(R.id.standardSectiondetails)
         private val lytunblock: LinearLayout = itemView.findViewById(R.id.lytunblock)
 
         @SuppressLint("ClickableViewAccessibility")

@@ -1,213 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:id="@+id/main">
+    android:background="@color/white">
 
     <View
         android:id="@+id/statusBarBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relative_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
-
-    <LinearLayout
-        android:id="@+id/headerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/lblHeaderTitle"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/toolbarLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/headerview"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/ten"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar" />
 
         <LinearLayout
-            android:id="@+id/lnrTabOneName"
+            android:id="@+id/headerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblHeaderTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/toolbarLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/headerview"
-            android:layout_weight="0.5"
-            android:orientation="vertical">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/tabOneName"
-                style="@style/CustomTextStylePoppinsBold"
+            <LinearLayout
+                android:id="@+id/lnrTabOneName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/five"
-                android:gravity="center"
-                android:text="@string/exam_timetable"
-                android:textColor="@color/iconBlue">
-            </TextView>
+                android:layout_below="@+id/headerview"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
 
-            <View
-                android:id="@+id/line1"
+                <TextView
+                    android:id="@+id/tabOneName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/exam_timetable"
+                    android:textColor="@color/iconBlue"></TextView>
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/three"
+                    android:layout_below="@+id/groupheading"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:background="@color/iconBlue"></View>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lnrTabTwoName"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/three"
-                android:layout_below="@+id/groupheading"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginEnd="@dimen/five"
-                android:background="@color/iconBlue">
-            </View>
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tabTwoName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/exam_marks"></TextView>
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/three"
+                    android:layout_below="@+id/groupheading"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginTop="@dimen/five"></View>
+            </LinearLayout>
+
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytSearch1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@+id/toolbarLayout1"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtVideoMenu1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exammarkrecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch1"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="5dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcExamTimeTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/exammarkrecyclerview"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="16dp" />
 
 
         <LinearLayout
-            android:id="@+id/lnrTabTwoName"
+            android:id="@+id/lytList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rytSearch1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@drawable/exam_marks_error_msg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
+
             <TextView
-                android:id="@+id/tabTwoName"
+                android:id="@+id/txtNoData"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
                 android:gravity="center"
-                android:text="@string/exam_marks">
-            </TextView>
-
-            <View
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/three"
-                android:layout_below="@+id/groupheading"
-                android:layout_marginStart="@dimen/five"
-                android:layout_marginTop="@dimen/five">
-            </View>
+                android:text="@string/no_list_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/rytSearch1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/toolbarLayout1"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_grey"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/ic_search" />
-
-        <EditText
-            android:id="@+id/txtVideoMenu1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/five"
-            android:layout_toEndOf="@+id/imgSearch"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:scrollHorizontally="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exammarkrecyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch1"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="5dp"
-    />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcExamTimeTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exammarkrecyclerview"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="16dp" />
-
-
-    <LinearLayout
-        android:layout_below="@+id/rytSearch1"
-        android:id="@+id/lytList"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:src="@drawable/exam_marks_error_msg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
-    </LinearLayout>
-
-</RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

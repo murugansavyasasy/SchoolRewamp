@@ -6,21 +6,20 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:scaleType="centerCrop"
         android:id="@+id/ImgPDF"
-        android:layout_height="match_parent">
-    </ImageView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"></ImageView>
 
     <WebView
-        android:visibility="gone"
         android:id="@+id/wvWebViewThumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-        android:layout_marginBottom="@dimen/ten">
+        android:layout_marginBottom="@dimen/ten"
+        android:visibility="gone">
 
     </WebView>
 

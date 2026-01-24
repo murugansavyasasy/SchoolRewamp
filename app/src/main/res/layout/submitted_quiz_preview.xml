@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/main"
-    android:background="@color/very_light_grey"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/very_light_grey">
 
 
     <View
@@ -12,67 +12,65 @@
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        android:paddingStart="@dimen/sixteen"
         android:id="@+id/lblParentToolBar"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/quiz_submission"
-        android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/ten"
+        android:paddingStart="@dimen/sixteen"
+        android:text="@string/quiz_submission"
         android:textColor="@color/black"
-        android:textSize="@dimen/twenty">
+        android:textSize="@dimen/twenty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
     </TextView>
 
 
     <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toBottomOf="@+id/lblParentToolBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:scrollbars="none"
-        android:layout_below="@+id/lblParentToolBar"
         android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_below="@+id/lblParentToolBar"
         android:fillViewport="true"
         android:overScrollMode="never"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="@dimen/zero">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblParentToolBar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sixteen"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/sixteen"
                 android:background="@drawable/white_bg_card"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_gravity="center"
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
-                    >
+                    android:layout_gravity="center">
 
                     <ProgressBar
                         android:id="@+id/quizPercent"
@@ -87,151 +85,145 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
                         android:gravity="center"
-                        android:layout_height="match_parent">
+                        android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/lblQuizPercent"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100"
                             android:maxLength="4"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/eighteen_sp"
+                            android:text="100"
                             android:textColor="@color/PrimaryColor"
-                            />
+                            android:textSize="@dimen/eighteen_sp" />
+
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="%"
                             android:layout_marginTop="@dimen/three"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/fourteen_sp"
+                            android:text="%"
                             android:textColor="@color/PrimaryColor"
-                            />
+                            android:textSize="@dimen/fourteen_sp" />
                     </LinearLayout>
                 </FrameLayout>
 
                 <TextView
                     android:id="@+id/lblMessage"
-                    android:layout_width="match_parent"
-                    android:text="Great Job"
-                    android:textSize="@dimen/seventeen_sp"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:gravity="center"
+                    android:text="Great Job"
+                    android:textSize="@dimen/seventeen_sp"></TextView>
+
                 <TextView
                     android:id="@+id/lblCompletedAt"
-                    android:layout_width="match_parent"
-                    android:text="Completed at :04.00 Am"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:gravity="center"
-                    android:textColor="@color/mild_grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:gravity="center"
+                    android:text="Completed at :04.00 Am"
+                    android:textColor="@color/mild_grey_dark"></TextView>
 
                 <TextView
                     android:id="@+id/lblSubjectTitle"
-                    android:layout_width="match_parent"
-                    android:text="Maths Quiz"
                     style="@style/CustomTextStylePoppinsMedium"
-                    android:gravity="center"
-                    android:textColor="@color/mild_grey_dark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_height="wrap_content">
-                </TextView>
+                    android:gravity="center"
+                    android:text="Maths Quiz"
+                    android:textColor="@color/mild_grey_dark"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:weightSum="3"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/eleven_sp"
-                        android:id="@+id/lblCorrectAnswer"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:drawableStart="@drawable/correct_answer"
-                        android:text="Correct : 15/20"
-                        android:padding="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/green"
-                        android:drawablePadding="@dimen/five"
-                        android:background="@drawable/gray_bg_radius"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                    android:weightSum="3">
 
                     <TextView
+                        android:id="@+id/lblCorrectAnswer"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/eleven_sp"
-                        android:id="@+id/lblWrongAnswer"
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_bg_radius"
+                        android:drawableStart="@drawable/correct_answer"
+                        android:drawablePadding="@dimen/five"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/five"
+                        android:text="Correct : 15/20"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/eleven_sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/lblWrongAnswer"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_bg_radius"
                         android:drawableStart="@drawable/wrong_answer"
+                        android:drawablePadding="@dimen/five"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/five"
                         android:text="Wrong : 03/20"
                         android:textColor="@color/red"
-                        android:gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/five"
-                        android:padding="@dimen/five"
-                        android:drawablePadding="@dimen/five"
-                        android:background="@drawable/gray_bg_radius"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:textSize="@dimen/eleven_sp"></TextView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/eleven_sp"
                         android:id="@+id/lblNotAnswer"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/orange"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
-                        android:drawableStart="@drawable/not_answered"
-                        android:text="Not Answer : 02/20"
-                        android:padding="@dimen/five"
-                        android:drawablePadding="@dimen/five"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@drawable/gray_bg_radius"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:drawableStart="@drawable/not_answered"
+                        android:drawablePadding="@dimen/five"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/five"
+                        android:text="Not Answer : 02/20"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/eleven_sp"></TextView>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <View
-                android:layout_marginStart="@dimen/sixteen"
-                android:layout_marginEnd="@dimen/sixteen"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/one"
+                android:layout_marginStart="@dimen/sixteen"
                 android:layout_marginTop="@dimen/ten"
-                android:background="@color/gray4"
-                android:layout_height="@dimen/one">
+                android:layout_marginEnd="@dimen/sixteen"
+                android:background="@color/gray4">
 
             </View>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:paddingStart="@dimen/sixteen"
-                android:paddingEnd="@dimen/sixteen"
-                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/rcSubmitedQuiz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
                 android:nestedScrollingEnabled="false"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
+                android:paddingStart="@dimen/sixteen"
+                android:paddingEnd="@dimen/sixteen"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
-                android:paddingStart="@dimen/sixteen"
-                android:paddingEnd="@dimen/sixteen"
                 android:id="@+id/lytList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingStart="@dimen/sixteen"
+                android:paddingEnd="@dimen/sixteen"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/nomessage"
@@ -241,8 +233,7 @@
                     android:layout_marginTop="@dimen/twenty"
                     android:src="@drawable/nomessages"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
-                    />
+                    android:textSize="@dimen/fifteen_sp" />
 
                 <TextView
                     android:id="@+id/txtNoData"
@@ -257,7 +248,6 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

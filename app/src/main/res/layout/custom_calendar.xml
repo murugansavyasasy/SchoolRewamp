@@ -15,85 +15,84 @@
             android:id="@+id/btnPrevMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
             android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/left_arrow_blue"
             android:contentDescription="Previous Month"
             android:gravity="start"
-            android:layout_gravity="center_vertical|start"/>
+            android:src="@drawable/left_arrow_blue" />
 
         <TextView
             android:id="@+id/tvMonthYear"
             android:layout_width="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_toEndOf="@+id/btnPrevMonth"
             android:gravity="center"
-            android:textSize="@dimen/eighteen"
-            android:textStyle="bold"
+            android:text="December 2026"
             android:textColor="@color/navi_blue2"
-            android:text="December 2026"/>
+            android:textSize="@dimen/eighteen"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/btnNextMonth"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/twenty"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right_blue"
             android:contentDescription="Next Month"
-           />
+            android:src="@drawable/arrow_right_blue" />
     </RelativeLayout>
 
     <GridView
         android:id="@+id/gridWeekdays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="7"
+        android:gravity="center"
         android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
+        android:numColumns="7"
         android:stretchMode="columnWidth"
-        android:gravity="center"/>
+        android:verticalSpacing="0dp" />
 
 
     <GridView
         android:id="@+id/gridCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="7"
         android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp"
-        android:stretchMode="columnWidth"/>
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="0dp" />
 
 
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
         android:layout_marginTop="@dimen/twele"
-        android:layout_marginEnd="8dp">
+        android:layout_marginEnd="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancelCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/eight"
             android:backgroundTint="#4285F4"
-            android:text="Cancel"
-            android:textColor="@color/white"
             android:paddingHorizontal="@dimen/twenty"
             android:paddingVertical="@dimen/eight"
-            android:layout_marginEnd="@dimen/eight"/>
+            android:text="Cancel"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnSaveCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#4285F4"
-            android:text="@string/done"
-            android:textColor="@color/white"
             android:paddingHorizontal="@dimen/twenty"
-            android:paddingVertical="@dimen/eight"/>
+            android:paddingVertical="@dimen/eight"
+            android:text="@string/done"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </LinearLayout>

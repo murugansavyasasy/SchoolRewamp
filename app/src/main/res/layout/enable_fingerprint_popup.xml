@@ -2,81 +2,77 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/rect_white"
     android:orientation="vertical"
-    android:padding="@dimen/twenty"
-    android:background="@drawable/rect_white">
+    android:padding="@dimen/twenty">
 
     <TextView
         android:id="@+id/alertTitle"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enable "
         android:layout_gravity="center"
-        android:gravity="left"
-        android:visibility="visible"
-        android:textSize="@dimen/sixteen_sp"
-        style="@style/CustomTextStylePoppinsBold"
         android:layout_marginTop="@dimen/ten"
-        android:textColor="@color/black"/>
+        android:gravity="left"
+        android:text="Enable "
+        android:textColor="@color/black"
+        android:textSize="@dimen/sixteen_sp"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/alertMessage"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="sdsdsdsd"
-        android:textSize="@dimen/fourteen_sp"
         android:layout_marginTop="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@color/black"/>
+        android:text="sdsdsdsd"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp" />
 
     <ImageView
-        android:layout_marginTop="@dimen/twenty"
         android:layout_width="@dimen/fifty"
         android:layout_height="@dimen/fifty"
-        android:src="@drawable/ic_fingerprint"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/ic_fingerprint" />
 
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/five"
-        android:layout_gravity="right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/five">
 
 
         <TextView
-            android:padding="@dimen/ten"
             android:id="@+id/lblNo"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/NO"
-            android:visibility="visible"
-            android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginTop="@dimen/ten"
-            android:textColor="@color/PrimaryColor"/>
+            android:padding="@dimen/ten"
+            android:text="@string/NO"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
 
         <TextView
-            android:layout_marginStart="@dimen/thirty"
             android:id="@+id/lblYes"
-            android:layout_toEndOf="@+id/lblNo"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/YES"
-            android:visibility="visible"
-            android:textSize="@dimen/fifteen_sp"
-            android:padding="@dimen/ten"
-            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginStart="@dimen/thirty"
             android:layout_marginTop="@dimen/ten"
-            android:textColor="@color/PrimaryColor"/>
+            android:layout_toEndOf="@+id/lblNo"
+            android:padding="@dimen/ten"
+            android:text="@string/YES"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
 
 
     </RelativeLayout>
-
-
-
 
 
 </LinearLayout>

@@ -9,7 +9,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
     id("com.google.firebase.crashlytics")
     id("org.jetbrains.kotlin.plugin.compose")
 }
@@ -215,12 +215,14 @@ android {
                 }
 
                 // Deep copy the JSON template to avoid modifying the original in memory
-                val googleServicesCopy = jsonSlurper.parseText(JsonOutput.toJson(googleServicesTemplate)) as Map<String, Any>
+                val googleServicesCopy =
+                    jsonSlurper.parseText(JsonOutput.toJson(googleServicesTemplate)) as Map<String, Any>
                 val clientList = googleServicesCopy["client"] as? List<MutableMap<String, Any>>
 
                 if (clientList != null && clientList.isNotEmpty()) {
                     val clientInfo = clientList[0]["client_info"] as? MutableMap<String, Any>
-                    val androidClientInfo = clientInfo?.get("android_client_info") as? MutableMap<String, Any>
+                    val androidClientInfo =
+                        clientInfo?.get("android_client_info") as? MutableMap<String, Any>
                     if (androidClientInfo != null) {
                         androidClientInfo["package_name"] = packageName
                     } else {
@@ -304,15 +306,15 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.compose.foundation:foundation:1.7.8")
     implementation("androidx.biometric:biometric:1.1.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 //    implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.gms:play-services-auth:20.0.0")
 //    implementation ("com.google.android.play:core:1.10.3")
-    implementation ("com.google.android.play:review-ktx:2.0.1")
-    implementation ("com.google.android.gms:play-services-maps:18.2.0")
-    implementation ("io.socket:socket.io-client:2.1.0") // stable version
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.google.android.play:review-ktx:2.0.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("io.socket:socket.io-client:2.1.0") // stable version
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     // Firebase BOM (manages all Firebase versions)
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     // Crashlytics
@@ -320,9 +322,9 @@ dependencies {
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
-    implementation ("com.google.android.play:review-ktx:2.0.1")
+    implementation("com.google.android.play:review-ktx:2.0.1")
     implementation("com.kizitonwose.calendar:view:2.5.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
 }

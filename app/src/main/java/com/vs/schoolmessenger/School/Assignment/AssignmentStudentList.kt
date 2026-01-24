@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.Assignment
 
-import android.os.Build
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
 import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AssignmentStudentListReportBinding
@@ -128,7 +126,7 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
         binding.rcystudentlist.isNestedScrollingEnabled = false
         binding.rcystudentlist.adapter = assignmentstudentlistadapter
 
-        appViewModel!!.getassignmentlist(isAccessToken!!, assignmentId!!, type!!,this)
+        appViewModel!!.getassignmentlist(isAccessToken!!, assignmentId!!, type!!, this)
     }
 
     override fun onClick(v: View?) {

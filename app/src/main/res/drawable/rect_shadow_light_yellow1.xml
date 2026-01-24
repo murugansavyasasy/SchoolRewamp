@@ -1,7 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Shadow/background layer -->
-    <item android:left="2dp" android:top="2dp">
+    <item
+        android:left="2dp"
+        android:top="2dp">
         <shape>
             <solid android:color="#ffefd9" /> <!-- Simulated shadow -->
             <corners android:radius="8dp" />

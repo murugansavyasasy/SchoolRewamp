@@ -83,7 +83,8 @@ class SchoolStrengthAdapter(
         ) {
             boyslabel.text = "${context.getString(R.string.boys)} : ${data.boys_count}"
             girlslabel.text = "${context.getString(R.string.girls)} : ${data.girls_count}"
-            unspecifiedcount.text = "${context.getString(R.string.not_specified)} : ${data.other_count}"
+            unspecifiedcount.text =
+                "${context.getString(R.string.not_specified)} : ${data.other_count}"
             totallabel.text =
                 "${context.getString(R.string.total_students)} : ${data.total_students}"
             header1.text = "${context.getString(R.string.Standard)} - ${data.name}"
@@ -105,7 +106,8 @@ class SchoolStrengthAdapter(
             val showGirlsIcon = girlsCount > 0
             val showOtherIcon = otherCount > 0
 
-            val numCategories = (if (showBoysIcon) 1 else 0) + (if (showGirlsIcon) 1 else 0) + (if (showOtherIcon) 1 else 0)
+            val numCategories =
+                (if (showBoysIcon) 1 else 0) + (if (showGirlsIcon) 1 else 0) + (if (showOtherIcon) 1 else 0)
 
             if (numCategories == 0) {
                 // All zero → hide all icons

@@ -73,6 +73,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onConfigurationChanged(newConfig)
         // Prevent recreation crash
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -578,8 +579,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
     }
-
-
 
 
     fun isToolBarPrimaryParent(mainViewId: Int, statusBarBgView: View) {

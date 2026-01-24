@@ -266,7 +266,8 @@ interface ApiInterfaces {
 
     @GET(APIMethods.getSubjectList)
     fun getSubjectList(
-        @Header(APIKeyNames.Authorization) token: String, @Query(APIKeyNames.section_ids) isSectionId: String
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_ids) isSectionId: String
 
     ): Call<NameAndIdsResponse?>
 
@@ -305,7 +306,8 @@ interface ApiInterfaces {
 
     @GET(APIMethods.isGetVoiceHistory)
     fun isGetVoiceHistory(
-        @Header(APIKeyNames.Authorization) token: String, ): Call<VoiceDetails?>
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<VoiceDetails?>
 
     @GET(APIMethods.isGetTextHistory)
     fun isGetTextHistory(
@@ -1309,7 +1311,6 @@ interface ApiInterfaces {
     ): Call<getSubjectWiseACtivities>
 
 
-
     @POST(APIMethods.getMarkDetails)
     fun getMarkDetails(
         @Header(APIKeyNames.Authorization) token: String,
@@ -1320,8 +1321,6 @@ interface ApiInterfaces {
     @Multipart
     @POST(APIMethods.uploadmarks)
     fun uploadmarks(@Part filePart: MultipartBody.Part): Call<UploadMarkResponse?>?
-
-
 
 
     @POST(APIMethods.savemarks)

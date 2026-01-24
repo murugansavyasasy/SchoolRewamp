@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <View
@@ -11,28 +11,28 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
 
         <LinearLayout
-            android:layout_below="@+id/toolbarLayout"
             android:id="@+id/toolbarLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
@@ -40,10 +40,10 @@
             android:weightSum="1">
 
             <LinearLayout
-                android:layout_marginEnd="@dimen/five"
                 android:id="@+id/lnrTabOneName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
@@ -54,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/category_wise"
-                    android:textColor="@color/iconBlue">
-                </TextView>
+                    android:textColor="@color/iconBlue"></TextView>
 
                 <View
                     android:id="@+id/line1"
@@ -63,8 +62,7 @@
                     android:layout_height="@dimen/three"
                     android:layout_below="@+id/groupheading"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@color/iconBlue">
-                </View>
+                    android:background="@color/iconBlue"></View>
             </LinearLayout>
 
 
@@ -72,8 +70,8 @@
                 android:id="@+id/lnrTabTwoName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 android:layout_marginStart="@dimen/five"
+                android:layout_weight="0.5"
                 android:orientation="vertical">
 
                 <TextView
@@ -82,8 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/class_wise">
-                </TextView>
+                    android:text="@string/class_wise"></TextView>
 
                 <View
                     android:id="@+id/line2"
@@ -91,166 +88,163 @@
                     android:layout_height="@dimen/three"
                     android:layout_below="@+id/groupheading"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@color/athens_gray"
-                    >
-                </View>
+                    android:background="@color/athens_gray"></View>
             </LinearLayout>
 
         </LinearLayout>
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/AcademicYear"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/toolbarLayout1"-->
-<!--        android:layout_marginStart="@dimen/fifteen"-->
-<!--        android:layout_marginTop="@dimen/fifteen"-->
-<!--        android:layout_marginEnd="@dimen/fifteen"-->
-<!--        android:background="@drawable/gray_bg_radius"-->
-<!--        android:orientation="horizontal">-->
+        <!--    <RelativeLayout-->
+        <!--        android:id="@+id/AcademicYear"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_below="@+id/toolbarLayout1"-->
+        <!--        android:layout_marginStart="@dimen/fifteen"-->
+        <!--        android:layout_marginTop="@dimen/fifteen"-->
+        <!--        android:layout_marginEnd="@dimen/fifteen"-->
+        <!--        android:background="@drawable/gray_bg_radius"-->
+        <!--        android:orientation="horizontal">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/lblAcademicYear"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginStart="@dimen/fifteen"-->
-<!--            android:text="@string/academic_year"-->
-<!--            >-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/lblAcademicYear"-->
+        <!--            style="@style/CustomTextStylePoppinsBold"-->
+        <!--            android:layout_alignParentStart="true"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:layout_marginStart="@dimen/fifteen"-->
+        <!--            android:text="@string/academic_year"-->
+        <!--            >-->
 
-<!--        </TextView>-->
+        <!--        </TextView>-->
 
-<!--        <RelativeLayout-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_toEndOf="@+id/lblAcademicYear"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:id="@+id/rytAcademicYearDropDown"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/fifteen"-->
-<!--            android:layout_marginEnd="@dimen/fifteen"-->
-<!--            android:gravity="center">-->
+        <!--        <RelativeLayout-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:layout_toEndOf="@+id/lblAcademicYear"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:id="@+id/rytAcademicYearDropDown"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/fifteen"-->
+        <!--            android:layout_marginEnd="@dimen/fifteen"-->
+        <!--            android:gravity="center">-->
 
-<!--            <Spinner-->
-<!--                android:id="@+id/isSpinner"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/custom_spinner_background" />-->
+        <!--            <Spinner-->
+        <!--                android:id="@+id/isSpinner"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:background="@drawable/custom_spinner_background" />-->
 
-<!--        </RelativeLayout>-->
-<!--    </RelativeLayout>-->
+        <!--        </RelativeLayout>-->
+        <!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_margin="@dimen/fifteen"
-        android:id="@+id/relative_layout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout1"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/eight">
-
-        <TextView
-            android:id="@+id/totalcollectionlabel"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/total_pending"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/thirteen_sp" />
-
-        <TextView
-            android:id="@+id/total_collection"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/totalcollectionlabel"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/five"
-            android:gravity="center"
-            android:text="00.00"
-            android:textSize="@dimen/thirty_five_sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:id="@+id/relative_layout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout5">
-
-        <TextView
-            android:layout_centerVertical="true"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/payment_history"
-            android:textColor="@color/light_gray"
-             />
-
-        <ImageView
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/twele"
-            android:src="@drawable/sandclockorange" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/lytList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/relative_layout6"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginBottom="@dimen/fifteen"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/totalsummary1"
+        <RelativeLayout
+            android:id="@+id/relative_layout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <ImageView
-            android:layout_below="@+id/totalsummary1"
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
+            android:layout_below="@+id/toolbarLayout1"
             android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:src="@drawable/no_fee_pending_message"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+            android:layout_margin="@dimen/fifteen"
+            android:layout_marginTop="@dimen/eight">
 
-        <TextView
-            android:layout_below="@+id/nomessage"
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/totalcollectionlabel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/total_pending"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/total_collection"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/totalcollectionlabel"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center"
+                android:text="00.00"
+                android:textSize="@dimen/thirty_five_sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_layout6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:gravity="center"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+            android:layout_below="@+id/relative_layout5"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:text="@string/payment_history"
+                android:textColor="@color/light_gray" />
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/twele"
+                android:src="@drawable/sandclockorange" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relative_layout6"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/totalsummary1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_below="@+id/totalsummary1"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@drawable/no_fee_pending_message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nomessage"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:gravity="center"
+                android:text="@string/no_list_found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
-
-
-</RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

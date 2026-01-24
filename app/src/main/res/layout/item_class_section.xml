@@ -9,43 +9,45 @@
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:background="@color/dark_bg_orange_2"
         android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@color/dark_bg_orange_2">
+
         <LinearLayout
-            android:layout_marginStart="@dimen/five"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
-                card_view:cardCornerRadius="@dimen/thirteen"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="@dimen/thirteen">
                 <!-- Content Layout -->
                 <LinearLayout
-                    android:paddingVertical="@dimen/thirty"
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/sixteen"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/thirty">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentStart="true"
                             android:id="@+id/tvTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/imgIcon"
                             android:text="Grade 10 - Section A"
                             android:textColor="@color/black"
-                            android:layout_toStartOf="@+id/imgIcon"
-                            android:textStyle="bold"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/imgIcon"
@@ -54,8 +56,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/thirty"
-                            android:src="@drawable/graduate_hat_icon"
-                           />
+                            android:src="@drawable/graduate_hat_icon" />
                     </RelativeLayout>
 
                     <TextView
@@ -63,11 +64,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/eight"
-                        android:text="32 Students"
                         android:alpha="0.6"
-                        android:visibility="gone"
+                        android:text="32 Students"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:textSize="@dimen/fifteen_sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -78,76 +79,76 @@
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_marginHorizontal="@dimen/ten"-->
-<!--    android:layout_marginBottom="@dimen/ten"-->
-<!--    card_view:cardCornerRadius="@dimen/sixteen"-->
-<!--    card_view:cardElevation="@dimen/four"-->
-<!--    card_view:cardUseCompatPadding="true">-->
+    <!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_marginHorizontal="@dimen/ten"-->
+    <!--    android:layout_marginBottom="@dimen/ten"-->
+    <!--    card_view:cardCornerRadius="@dimen/sixteen"-->
+    <!--    card_view:cardElevation="@dimen/four"-->
+    <!--    card_view:cardUseCompatPadding="true">-->
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/Header"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        >-->
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/Header"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        >-->
 
-<!--        <View-->
-<!--            android:id="@+id/leftRibbon"-->
-<!--            android:layout_width="8dp"-->
-<!--            android:layout_height="@dimen/hundred"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:background="@color/dark_orange_2" />-->
+    <!--        <View-->
+    <!--            android:id="@+id/leftRibbon"-->
+    <!--            android:layout_width="8dp"-->
+    <!--            android:layout_height="@dimen/hundred"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:background="@color/dark_orange_2" />-->
 
-<!--        &lt;!&ndash; Content Layout &ndash;&gt;-->
-<!--        <LinearLayout-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/sixteen"-->
-<!--            android:orientation="vertical">-->
+    <!--        &lt;!&ndash; Content Layout &ndash;&gt;-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/sixteen"-->
+    <!--            android:orientation="vertical">-->
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-<!--                <TextView-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_alignParentStart="true"-->
-<!--                    android:id="@+id/tvTitle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Grade 10 - Section A"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:layout_toStartOf="@+id/imgIcon"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textSize="15sp" />-->
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content">-->
+    <!--                <TextView-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_alignParentStart="true"-->
+    <!--                    android:id="@+id/tvTitle"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:text="Grade 10 - Section A"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:layout_toStartOf="@+id/imgIcon"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    android:textSize="15sp" />-->
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgIcon"-->
-<!--                    android:layout_width="@dimen/thirty"-->
-<!--                    android:layout_height="@dimen/thirty"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginEnd="@dimen/thirty"-->
-<!--                    android:src="@drawable/graduation_hat"-->
-<!--                    android:tint="@color/dark_orange_2" />-->
-<!--            </RelativeLayout>-->
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imgIcon"-->
+    <!--                    android:layout_width="@dimen/thirty"-->
+    <!--                    android:layout_height="@dimen/thirty"-->
+    <!--                    android:layout_alignParentEnd="true"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_marginEnd="@dimen/thirty"-->
+    <!--                    android:src="@drawable/graduation_hat"-->
+    <!--                    android:tint="@color/dark_orange_2" />-->
+    <!--            </RelativeLayout>-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvCount"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/eight"-->
-<!--                android:text="32 Students"-->
-<!--                android:alpha="0.6"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/fifteen_sp" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/tvCount"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/eight"-->
+    <!--                android:text="32 Students"-->
+    <!--                android:alpha="0.6"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/fifteen_sp" />-->
 
-<!--        </LinearLayout>-->
+    <!--        </LinearLayout>-->
 
 
-<!--    </RelativeLayout>-->
+    <!--    </RelativeLayout>-->
 
-<!--</androidx.cardview.widget.CardView>-->
+    <!--</androidx.cardview.widget.CardView>-->

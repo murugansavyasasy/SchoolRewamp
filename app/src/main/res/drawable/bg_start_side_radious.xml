@@ -4,8 +4,8 @@
     <solid android:color="@color/navi_blue3" />
 
     <corners
-        android:topLeftRadius="@dimen/fifteen"
         android:bottomLeftRadius="@dimen/fifteen"
-        android:topRightRadius="0dp"
-        android:bottomRightRadius="0dp" />
+        android:bottomRightRadius="0dp"
+        android:topLeftRadius="@dimen/fifteen"
+        android:topRightRadius="0dp" />
 </shape>

@@ -57,7 +57,6 @@ class Auth(application: Application) : AndroidViewModel(application) {
         private set
 
 
-
     fun init() {
         apiRepositories = AuthServices()
         isCountryList = apiRepositories!!.isCountryListLiveData

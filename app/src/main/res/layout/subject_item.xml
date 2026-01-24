@@ -1,52 +1,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <!-- Subject Header -->
     <LinearLayout
-        android:layout_marginHorizontal="@dimen/sixteen"
-        android:paddingVertical="@dimen/twenty"
         android:id="@+id/subHeader"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/twenty">
 
         <ImageView
             android:id="@+id/subArrow"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            app:tint="@color/dark_orange_2"
-            android:src="@drawable/right_arrow"/>
+            android:src="@drawable/right_arrow"
+            app:tint="@color/dark_orange_2" />
 
         <TextView
+            android:id="@+id/subjectName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/subjectName"
-            android:text="Mathematics"
-            android:textSize="17sp"
             android:paddingStart="12dp"
-            android:textColor="@color/black"/>
+            android:text="Mathematics"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:paddingVertical="@dimen/twenty"
-        android:layout_marginHorizontal="@dimen/sixteen"
         android:id="@+id/lnrFlexContainer"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/fifteen"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
         android:background="@color/white"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/twenty"
+        android:paddingTop="@dimen/fifteen">
 
         <TextView
-            android:layout_width="match_parent"
-            android:text="@string/activities"
-            android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsBold"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activities"
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -55,26 +55,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
-            app:flexWrap="wrap"
             app:flexDirection="row"
+            app:flexWrap="wrap"
             app:justifyContent="flex_start" />
 
     </LinearLayout>
+
     <TextView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:gravity="center"
         android:id="@+id/lblNoData"
-        android:layout_marginTop="@dimen/five"
         style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/sixteen"
+        android:layout_marginTop="@dimen/five"
+        android:gravity="center"
         android:text="@string/no_data_found"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:visibility="gone"></TextView>
+
     <View
         android:layout_width="match_parent"
-        android:background="@color/AthensGray"
-        android:layout_height="@dimen/one">
+        android:layout_height="@dimen/one"
+        android:background="@color/AthensGray">
 
     </View>
 

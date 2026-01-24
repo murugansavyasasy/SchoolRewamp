@@ -199,8 +199,8 @@ object Constant {
     var isGroup = 4
     var isStudent = 5
     var isStaff = 6
-    var isArchiveMessageClick=false
-    var isCommunicationArchiveMessage=false
+    var isArchiveMessageClick = false
+    var isCommunicationArchiveMessage = false
 
     //from notification intent values
 
@@ -317,6 +317,7 @@ object Constant {
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"
     var in_review = "In review"
+
     // String fields
     var scaleX = "scaleX"
     var scaleY = "scaleY"

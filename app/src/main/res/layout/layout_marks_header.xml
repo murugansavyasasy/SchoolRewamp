@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="#EEEEEE">
+    android:background="#EEEEEE"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <!-- FIXED COLUMN -->
     <LinearLayout
@@ -14,29 +13,28 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Student Name &amp; Gender"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold1"
-            />
+            android:textSize="@dimen/thirteen_sp" />
 
         <TextView
+            style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Roll No"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold1"/>
+            android:textSize="@dimen/thirteen_sp" />
 
         <TextView
+            style="@style/CustomTextStylePoppinsBold1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Admission No"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold1"/>
+            android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
 
     <!-- SUBJECT HEADER SCROLL -->
@@ -48,9 +46,9 @@
 
         <LinearLayout
             android:id="@+id/headerSubjectContainer"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
 </LinearLayout>

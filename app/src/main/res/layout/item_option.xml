@@ -49,21 +49,21 @@
                 android:text="Graph 3 shows a characteristic exponential rise."
                 android:textColor="@color/black"
                 android:textSize="@dimen/fourteen_sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivCheckmark"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ivCheckmark"
                 android:layout_width="@dimen/fourty"
                 android:layout_height="@dimen/fourty"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/bg_light_blue_circle"
                 android:padding="@dimen/six"
                 android:src="@drawable/tick_circle_icon"
                 android:visibility="visible"
-                android:layout_marginTop="@dimen/five"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutGraph"
                 app:layout_constraintEnd_toStartOf="@id/layoutGraph"
                 app:layout_constraintTop_toTopOf="@+id/layoutGraph"
@@ -74,9 +74,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
 
                 <ImageView

@@ -83,10 +83,9 @@
                 android:id="@+id/imgMeetingMode"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-                android:src="@drawable/phone_icon"
-                android:gravity="center"
                 android:layout_marginEnd="@dimen/eight"
-                 />
+                android:gravity="center"
+                android:src="@drawable/phone_icon" />
 
             <TextView
                 android:id="@+id/tvMode"

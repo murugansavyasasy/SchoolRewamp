@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/ten"
         android:paddingVertical="@dimen/six"
+        android:text="M Bharath  - X1 B"
         android:textColor="@color/black"
-        android:textSize="@dimen/fourteen_sp"
-        android:text="M Bharath  - X1 B" />
+        android:textSize="@dimen/fourteen_sp" />
 
     <TextView
         android:id="@+id/mobile_number"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/ten"
         android:paddingVertical="@dimen/six"
+        android:text="+91 6383904707"
         android:textColor="@color/black"
-        android:textSize="@dimen/fourteen_sp"
-        android:text="+91 6383904707" />
+        android:textSize="@dimen/fourteen_sp" />
 </LinearLayout>

@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/ten"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/ten">
 
     <TextView
+        android:id="@+id/headerlabel"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/headerlabel"
+        android:layout_marginStart="@dimen/fifteen"
         android:text="Month "
         android:textColor="@color/black"
-        android:layout_marginStart="@dimen/fifteen"
-        android:textSize="@dimen/fifteen_sp"
-        style="@style/CustomTextStylePoppinsBold"/>
+        android:textSize="@dimen/fifteen_sp" />
 
     <EditText
+        android:id="@+id/headerlabe1l"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/headerlabe1l"
         android:layout_below="@+id/headerlabel"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/field_background"
+        android:gravity="start"
+        android:padding="@dimen/ten"
         android:text="Value"
         android:textColor="@color/black"
-        android:background="@drawable/field_background"
-        android:padding="@dimen/ten"
-        android:visibility="visible"
-        android:gravity="start"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:textSize="@dimen/fifteen_sp"
-        android:layout_marginTop="@dimen/ten"
-        style="@style/CustomTextStylePoppinsMedium"/>
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/headerdatelabe1l"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerlabe1l"
-        android:text=""
-        android:background="@drawable/field_background"
-        android:padding="@dimen/ten"
-        android:visibility="gone"
-        android:gravity="start|center_vertical"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:textSize="@dimen/fifteen_sp"
         android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/field_background"
         android:drawableEnd="@drawable/ic_date_time_primary"
-    android:drawablePadding="8dp"
-    style="@style/CustomTextStylePoppinsMedium" />
-
+        android:drawablePadding="8dp"
+        android:gravity="start|center_vertical"
+        android:padding="@dimen/ten"
+        android:text=""
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone" />
 
 
     <LinearLayout
@@ -57,20 +55,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerdatelabe1l"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/field_background"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/ten"
         android:visibility="visible"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/eight"
             android:layout_weight="0.5"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="@dimen/eight">
 
             <Spinner
                 android:id="@+id/isSpinner"

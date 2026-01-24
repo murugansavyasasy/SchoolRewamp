@@ -1,94 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/twenty"
+    android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:layout_height="match_parent">
+    android:padding="@dimen/twenty">
+
     <RelativeLayout
-        android:orientation="vertical"
-        android:background="@drawable/white_bg_radius"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/white_bg_radius"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:layout_margin="@dimen/ten"
-            android:layout_above="@+id/LnrCancelOk"
-            android:orientation="vertical"
             android:id="@+id/lnrHeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/LnrCancelOk"
+            android:layout_margin="@dimen/ten"
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_width="match_parent"
-                    android:layout_toStartOf="@+id/cbSelect"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:text="@string/pick_from_question_bank"
-                    android:layout_height="wrap_content">
-                </TextView>
-                <CheckBox
-                    android:layout_alignParentEnd="true"
-                    android:id="@+id/cbSelect"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="@dimen/three"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/cbSelect"
+                    android:text="@string/pick_from_question_bank"></TextView>
+
+                <CheckBox
+                    android:id="@+id/cbSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/three"
                     android:button="@drawable/ch_square"
                     android:text="@string/Selectallaspresent"
-                    android:layout_marginTop="@dimen/five"
                     android:visibility="visible" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/rcPickFromQBank"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
+
         <LinearLayout
-            android:weightSum="1"
-            android:orientation="horizontal"
             android:id="@+id/LnrCancelOk"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
             <TextView
                 android:id="@+id/lblImportQuestion"
-                android:layout_margin="@dimen/ten"
-                android:gravity="center"
-                android:background="@drawable/bg_light_orange"
-                android:layout_weight="0.5"
-                android:padding="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/white"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:layout_weight="0.5"
+                android:background="@drawable/bg_light_orange"
+                android:gravity="center"
+                android:padding="@dimen/five"
                 android:text="@string/import_question"
-                android:layout_height="wrap_content">
+                android:textColor="@color/white">
 
             </TextView>
 
             <TextView
-                android:gravity="center"
+                android:id="@+id/lblClose"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
                 android:layout_weight="0.5"
-                android:layout_width="match_parent"
-                android:text="@string/Cancel"
-                android:id="@+id/lblClose"
-                android:padding="@dimen/five"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/white"
                 android:background="@drawable/bg_red_radoius_15dp"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="@string/Cancel"
+                android:textColor="@color/white">
 
             </TextView>
 
 
         </LinearLayout>
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

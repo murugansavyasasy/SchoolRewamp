@@ -11,19 +11,19 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
         app:layout_constraintBottom_toTopOf="@id/lnrPowered"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
         <RelativeLayout
             android:id="@+id/rytHeader"
@@ -39,8 +39,8 @@
                 android:id="@+id/imgBack"
                 android:layout_width="@dimen/fifteen"
                 android:layout_height="@dimen/fifteen"
-                android:src="@drawable/ic_arrow_back_black"
-                android:layout_centerInParent="true" />
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_back_black" />
         </RelativeLayout>
 
 
@@ -62,8 +62,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginEnd="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
                     android:gravity="start"
                     android:text="@string/enter_password_to_proceed"
                     android:textSize="@dimen/twenty_sp" />
@@ -75,14 +75,14 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="start"
-                    android:visibility="gone"
-                    android:text="@string/your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management" />
+                    android:text="@string/your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/one_fifty"
-                    android:layout_marginTop="@dimen/twenty"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_password_svg" />
 
@@ -96,9 +96,9 @@
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:text="@string/lblPassword"
                         android:textSize="@dimen/thirteen_sp" />
 
@@ -172,12 +172,12 @@
         android:id="@+id/lnrPowered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginBottom="@dimen/fifteen"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imgSavyasasy"

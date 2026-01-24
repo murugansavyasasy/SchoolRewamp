@@ -8,6 +8,6 @@ data class GetQuestionDetails(
     val question: String,
     val mark: Int,
     val options: List<OptionsData>,
-    @SerializedName ("q_file_path")
+    @SerializedName("q_file_path")
     val file_path: List<AttachmentFile>
 )

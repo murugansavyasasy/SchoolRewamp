@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
@@ -11,32 +11,32 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar"
-        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
     <HorizontalScrollView
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/tabLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginBottom="@dimen/five"
         android:background="@color/white"
-        android:layout_below="@+id/toolbarLayout"
         android:fillViewport="true"
         android:padding="@dimen/two"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -47,137 +47,132 @@
             <RelativeLayout
                 android:id="@+id/allbutton1"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/thirty"
-                android:paddingEnd="@dimen/thirty"
-                android:layout_height="wrap_content">
+                android:paddingEnd="@dimen/thirty">
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/imgAll"
-                    app:tint="@color/black"
-                    android:src="@drawable/all_icon_2"
-                    android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/all_icon_2"
+                    android:visibility="gone"
+                    app:tint="@color/black">
 
                 </ImageView>
 
                 <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imgAll"
                     android:id="@+id/allbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgAll"
                     android:text="@string/all"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp">
-                </TextView>
+                    android:textSize="@dimen/twele_sp"></TextView>
             </RelativeLayout>
-
 
 
             <RelativeLayout
                 android:id="@+id/ytsbutton1"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/ten"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/five"
+                android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp"
-                android:layout_height="wrap_content">
+                android:paddingEnd="@dimen/eighteen_sp">
+
                 <ImageView
                     android:id="@+id/imgYet"
-                    app:tint="@color/dark_orange"
-                    android:src="@drawable/waiting_for_approval"
-                    android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/waiting_for_approval"
+                    app:tint="@color/dark_orange">
 
                 </ImageView>
 
                 <TextView
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_centerVertical="true"
                     android:id="@+id/ytsbutton"
-                    android:layout_toEndOf="@+id/imgYet"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgYet"
                     android:gravity="center"
                     android:text="@string/yet_to_start"
                     android:textSize="@dimen/twele_sp" />
             </RelativeLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/inprogressbutton1"
 
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="@dimen/five"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp"
-                android:layout_height="wrap_content">
+                android:paddingEnd="@dimen/eighteen_sp">
+
                 <ImageView
                     android:id="@+id/imgProgress"
-                    android:src="@drawable/progress_icon_2"
-                    android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
-                </ImageView>
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/progress_icon_2"></ImageView>
 
                 <TextView
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imgProgress"
                     android:id="@+id/inprogressbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgProgress"
                     android:text="@string/in_progress"
                     android:textSize="@dimen/twele_sp" />
             </RelativeLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/completedbutton1"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp"
-                android:layout_height="wrap_content">
+                android:paddingEnd="@dimen/eighteen_sp">
 
                 <ImageView
                     android:id="@+id/imgComplete"
-                    android:src="@drawable/completed_icon_3"
-                    android:layout_centerVertical="true"
                     android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty">
-                </ImageView>
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/completed_icon_3"></ImageView>
 
                 <TextView
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imgComplete"
                     android:id="@+id/completedbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgComplete"
                     android:text="@string/completed"
-                    android:textSize="@dimen/twele_sp">
-                </TextView>
+                    android:textSize="@dimen/twele_sp"></TextView>
 
             </RelativeLayout>
 
@@ -186,17 +181,17 @@
     </HorizontalScrollView>
 
     <RelativeLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout1"
         android:id="@+id/rytSearch1"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
+        android:layout_below="@+id/tabLayout1"
         android:layout_margin="@dimen/ten"
         android:layout_marginStart="@dimen/ten"
-        android:layout_below="@+id/tabLayout1"
-        android:background="@drawable/rect_grey">
+        android:background="@drawable/rect_grey"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout1">
 
 
         <ImageView
@@ -209,16 +204,16 @@
 
         <EditText
             android:id="@+id/txtSearchMenu1"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
-            android:maxLines="1"
             android:imeOptions="actionDone"
-            android:singleLine="true"
+            android:maxLines="1"
             android:scrollHorizontally="true"
-            style="@style/CustomTextStylePoppinsRegular"
+            android:singleLine="true"
             android:textSize="@dimen/thirteen_sp" />
 
     </RelativeLayout>
@@ -230,10 +225,10 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/sixteen"
-        app:layout_constraintTop_toBottomOf="@id/rytSearch1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/rytSearch1" />
 
     <ImageView
         android:id="@+id/nomessage"
@@ -241,10 +236,10 @@
         android:layout_height="@dimen/two_fifty"
         android:src="@drawable/no_lessonplan_message"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@+id/tabLayout1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tabLayout1" />
 
     <TextView
         android:id="@+id/txtNoData"
@@ -255,23 +250,21 @@
         android:textColor="@color/black"
         android:textSize="@dimen/eighteen_sp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/nomessage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@id/nomessage" />
 
 
     <ImageView
         android:id="@+id/createlp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/addiconsvgformat"
+        android:layout_margin="@dimen/sixteen"
         android:contentDescription="@string/add"
         android:padding="@dimen/ten"
+        android:src="@drawable/addiconsvgformat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/sixteen" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

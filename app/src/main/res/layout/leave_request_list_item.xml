@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/four"
-    android:background="@drawable/card_outline_border"
     android:layout_marginVertical="@dimen/ten"
+    android:background="@drawable/card_outline_border"
     android:padding="@dimen/ten">
 
     <RelativeLayout
@@ -13,14 +13,13 @@
 
 
         <RelativeLayout
-            android:layout_toStartOf="@+id/lnrButtons"
             android:id="@+id/rytCard"
-            android:layout_alignParentStart="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/eight"
-            android:elevation="@dimen/two"
-            >
+            android:layout_toStartOf="@+id/lnrButtons"
+            android:elevation="@dimen/two">
 
             <LinearLayout
                 android:id="@+id/lnrDetails"
@@ -36,67 +35,66 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/textName"
-                        android:layout_alignParentStart="true"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginTop="@dimen/six"
                         android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/btnStatus"
-                        android:layout_alignParentEnd="true"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:background="@drawable/bg_leave_approved"
                         android:paddingHorizontal="@dimen/twenty_five"
                         android:paddingVertical="@dimen/six"
                         android:text="Approve"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/twele" />
+                        android:textSize="@dimen/twele"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 
-
-                    <TextView
-                        android:id="@+id/textNoOfDays"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="@dimen/six"
-                        android:text="3 Days Application"
-                        android:textColor="@color/light_gray"
-                        android:textSize="@dimen/thirteen_sp" />
+                <TextView
+                    android:id="@+id/textNoOfDays"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/six"
+                    android:text="3 Days Application"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/thirteen_sp" />
                 <!-- Date & Leave Info -->
-                    <TextView
-                        android:id="@+id/textDate"
-                        android:layout_alignParentStart="true"
-                        style="@style/CustomTextStylePoppinsBold1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:text="15 - 22 Jun 2023 "
-                        android:textSize="@dimen/seventeen" />
+                <TextView
+                    android:id="@+id/textDate"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="15 - 22 Jun 2023 "
+                    android:textSize="@dimen/seventeen" />
 
 
-
-                    <TextView
-                        android:id="@+id/textLeaveType"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/one"
-                        android:text="Casual"
-                        android:textColor="@color/amber_yellow"
-                        android:textSize="@dimen/fourteen_sp" />
+                <TextView
+                    android:id="@+id/textLeaveType"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/one"
+                    android:text="Casual"
+                    android:textColor="@color/amber_yellow"
+                    android:textSize="@dimen/fourteen_sp" />
 
 
                 <TextView
@@ -111,13 +109,14 @@
                     android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/lnrButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/five"
             android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/five"
             android:orientation="vertical">
 
             <TextView

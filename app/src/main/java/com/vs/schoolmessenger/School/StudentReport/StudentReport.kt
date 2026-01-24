@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.School.StudentReport
 
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
@@ -53,8 +52,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private lateinit var filterCaterotyType: List<String>
     private var originalStudentList: List<StudentReportData> = listOf()
     private var currentFilteredList: List<StudentReportData> = listOf()
-//    private var currentSortType: SortType = SortType.NO_ASC
-private var currentSortType: SortType? = null
+
+    //    private var currentSortType: SortType = SortType.NO_ASC
+    private var currentSortType: SortType? = null
 
     private lateinit var genderSpinnerAdapter: SpinnerLoadingAdapter
 
@@ -157,7 +157,7 @@ private var currentSortType: SortType? = null
                     addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                     addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                 }
-                appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+                appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
 
             } else {
                 originalStudentList = emptyList()

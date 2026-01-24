@@ -2,11 +2,9 @@ package com.vs.schoolmessenger.School.LSRW
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -37,11 +35,13 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ActivityTasklistBinding
 
 
-class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener,lsrwskillreportlistener {
+class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickListener,
+    lsrwskillreportlistener {
 
     override fun getViewBinding(): ActivityTasklistBinding {
         return ActivityTasklistBinding.inflate(layoutInflater)
     }
+
     private lateinit var adapter: LsrwAdapter
     private lateinit var LsrwTaskList: List<LsrwTask>
 
@@ -87,17 +87,17 @@ class ActiveTaskList : BaseActivity<ActivityTasklistBinding>(), View.OnClickList
 
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.active_task)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        val taskList = intent.getParcelableArrayListExtra<LsrwTask>(Constant.TASK_LIST) ?: arrayListOf()
-        LsrwTaskList= taskList
+        val taskList =
+            intent.getParcelableArrayListExtra<LsrwTask>(Constant.TASK_LIST) ?: arrayListOf()
+        LsrwTaskList = taskList
 
 
-        if (taskList.isNullOrEmpty()){
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.GONE
+        if (taskList.isNullOrEmpty()) {
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
             ErrorMessage(getString(R.string.no_data_found))
-        }
-        else{
+        } else {
             ShowData()
-            binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+            binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             binding.rcyactivetaskrcy.layoutManager = LinearLayoutManager(this)
             adapter = LsrwAdapter(
                 itemList = taskList,

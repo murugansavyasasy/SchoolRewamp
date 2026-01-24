@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
 import android.graphics.Color
-import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -108,7 +107,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
                 addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
             }
-            appViewModel?.isAddRewardPoints("" ?: "", jsonObject,this)
+            appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
             if (response.status) {
                 val studentList = response.data ?: emptyList()
                 bindStudentList(studentList)
@@ -125,7 +124,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         }
     }
 
-    private fun fetchAbsenteeData(month: Int = YearMonth.now().monthValue, year: Int = YearMonth.now().year) {
+    private fun fetchAbsenteeData(
+        month: Int = YearMonth.now().monthValue,
+        year: Int = YearMonth.now().year
+    ) {
         Constant.showLoading(this)
         appViewModel?.getabsenteescountbydate(
             isAccessToken ?: "",
@@ -162,7 +164,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
             if (absenteeList.any { it.absent_date_only == today }) {
                 filterByDate(today)
             } else {
-                val earliestDate = absenteeList.minByOrNull { it.absent_date_only }?.absent_date_only
+                val earliestDate =
+                    absenteeList.minByOrNull { it.absent_date_only }?.absent_date_only
                 earliestDate?.let { filterByDate(it) }
             }
         } else {
@@ -202,7 +205,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             binding.totalabsentesscount.text = span
-            binding.absenteesbystandard.text = "${"Absentees by standard"} : ${filtered.class_wise[0].total_absentees}"
+            binding.absenteesbystandard.text =
+                "${"Absentees by standard"} : ${filtered.class_wise[0].total_absentees}"
             loadClassWiseRecycler(filtered.class_wise, date)
         } else {
             showNoDataUI()
@@ -241,7 +245,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
                     total: String
                 ) {
                     showStudentShimmer()
-                    binding.absenteesbystandard.text = "${"Absentees by standard"} : $totalabsenteesclasswise"
+                    binding.absenteesbystandard.text =
+                        "${"Absentees by standard"} : $totalabsenteesclasswise"
                     // Update basic info
                     binding.absenteecount.text = "${getString(R.string.Absentees)} : $absent"
                     binding.totalstudentscount.text =

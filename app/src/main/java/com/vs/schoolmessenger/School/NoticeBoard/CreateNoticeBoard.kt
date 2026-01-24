@@ -50,8 +50,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
-import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -90,10 +88,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private var noticeboardData: NoticeStaffData? = null
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
     }
+
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null

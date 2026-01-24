@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -136,7 +135,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             // Scroll chat to bottom on keyboard open
             if (insets.bottom > 0 && ::interactionWithQuestionAdapter.isInitialized) {
                 binding.rcystaffQuestionchatdata.post {
-                    val adapter = binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
+                    val adapter =
+                        binding.rcystaffQuestionchatdata.adapter as? InteractionWithQuestionAdapter
                     adapter?.let {
                         binding.rcystaffQuestionchatdata.scrollToPosition(it.itemCount - 1)
                     }
@@ -194,7 +194,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             QuestionDataSending?.is_class_teacher ?: false,
             QuestionDataSending?.section_id ?: "",
             QuestionDataSending?.subject_id ?: "",
-            0,this
+            0, this
         )
     }
 
@@ -249,7 +249,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             is_change_answer = type,
             file_path = fileList
         )
-        appViewModel?.sendanswer(isAccessToken!!, request,this)
+        appViewModel?.sendanswer(isAccessToken!!, request, this)
         binding.replyLinearlayout.visibility = View.GONE
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.GONE
@@ -339,6 +339,6 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             addProperty("is_block", !chat.is_blocked)
             addProperty("reason", reason)
         }
-        appViewModel?.isblockstudent(isAccessToken!!, jsonObject,this)
+        appViewModel?.isblockstudent(isAccessToken!!, jsonObject, this)
     }
 }

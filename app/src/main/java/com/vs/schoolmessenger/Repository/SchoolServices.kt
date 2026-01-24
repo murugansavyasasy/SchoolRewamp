@@ -1407,9 +1407,20 @@ class SchoolServices {
 
 
     fun isGetDailyCollectionReport(
-        isToken: String, istype: String, isfromdate: String, istodate: String, country_id: String, activity: Activity
+        isToken: String,
+        istype: String,
+        isfromdate: String,
+        istodate: String,
+        country_id: String,
+        activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate, country_id)
+        RestClient.apiInterfaces.isGetDailyCollectionReport(
+            isToken,
+            istype,
+            isfromdate,
+            istodate,
+            country_id
+        )
             ?.enqueue(object : Callback<DailyCollectionReportResponse?> {
                 override fun onResponse(
                     call: Call<DailyCollectionReportResponse?>,
@@ -1477,7 +1488,12 @@ class SchoolServices {
         get() = isGetSchoolStrengthReport
 
 
-    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+    fun isDetailedPendingReport(
+        isToken: String,
+        isAcademicYearId: Int,
+        country_id: String,
+        activity: Activity
+    ) {
         RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
@@ -1512,7 +1528,12 @@ class SchoolServices {
         get() = isDetailedPendingReport
 
 
-    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, country_id: String, activity: Activity) {
+    fun isDetailedWisePendingReport(
+        isToken: String,
+        isAcademicYearId: Int,
+        country_id: String,
+        activity: Activity
+    ) {
         RestClient.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
@@ -1775,9 +1796,9 @@ class SchoolServices {
 
 
     //    //get HomeworkDetails
-    fun isHomeWorkDetails(isToken: String, activity: Activity,date: String) {
+    fun isHomeWorkDetails(isToken: String, activity: Activity, date: String) {
         Log.d("GetHomeworkData", isToken.toString())
-        RestClient.apiInterfaces.isHomeWorkDetails(isToken,date)
+        RestClient.apiInterfaces.isHomeWorkDetails(isToken, date)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
                     call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>
@@ -2257,9 +2278,9 @@ class SchoolServices {
 
 
     fun getabsenteescountbydate(
-        isToken: String,month_id: Int, year_id: Int, activity: Activity
+        isToken: String, month_id: Int, year_id: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getabsenteescountbydate(isToken,month_id,year_id)
+        RestClient.apiInterfaces.getabsenteescountbydate(isToken, month_id, year_id)
             ?.enqueue(object : Callback<AbsenteesResponse?> {
                 override fun onResponse(
                     call: Call<AbsenteesResponse?>, response: Response<AbsenteesResponse?>
@@ -4620,12 +4641,10 @@ class SchoolServices {
                                 Log.d("isAddQuestionData", response.body().toString())
                                 reviewpost.postValue(response.body())
                             }
-                        }
-                        else{
+                        } else {
                             reviewpost.postValue(null)
                         }
-                    }
-                    else{
+                    } else {
                         reviewpost.postValue(null)
 
                     }
@@ -4728,7 +4747,7 @@ class SchoolServices {
 
     fun isGetMarkDetails(
         isToken: String,
-       jsonObject: JsonObject,
+        jsonObject: JsonObject,
     ) {
         RestClient.apiInterfaces.getMarkDetails(isToken, jsonObject)
             ?.enqueue(object : Callback<MarkResponse?> {
@@ -4805,7 +4824,6 @@ class SchoolServices {
         get() = isDeleteQuiz
 
 
-
     fun isEditQuiz(
         isToken: String, jsonObject: JsonObject
     ) {
@@ -4845,18 +4863,14 @@ class SchoolServices {
         get() = isEditQuiz
 
 
-
-
-
-
-
     fun isDeleteQuizQuestion(
         isToken: String, jsonObject: JsonObject
     ) {
         RestClient.apiInterfaces.isDeleteQuizQuestion(isToken, jsonObject)
             ?.enqueue(object : Callback<DeleteQuizQuestionResponse?> {
                 override fun onResponse(
-                    call: Call<DeleteQuizQuestionResponse?>, response: Response<DeleteQuizQuestionResponse?>
+                    call: Call<DeleteQuizQuestionResponse?>,
+                    response: Response<DeleteQuizQuestionResponse?>
                 ) {
                     Log.d(
                         "DeleteQuizQuestionResponse ",
@@ -4889,10 +4903,8 @@ class SchoolServices {
         get() = isgetDeleteQuizQuestion
 
 
-
-
     fun uploadmarks(part: MultipartBody.Part, activity: Activity) {
-        RestClient.apiInterfaces.uploadmarks( part)
+        RestClient.apiInterfaces.uploadmarks(part)
             ?.enqueue(object : Callback<UploadMarkResponse?> {
                 override fun onResponse(
                     call: Call<UploadMarkResponse?>, response: Response<UploadMarkResponse?>
@@ -4906,14 +4918,13 @@ class SchoolServices {
 //                            val status = response.body()!!.status
 //                            if (status) {
 //                                Log.d("UploadMarkResponse", response.body().toString())
-                                uploadmarks.postValue(response.body())
+                        uploadmarks.postValue(response.body())
 //                            } else {
 //                                Log.d("UploadMarkResponse", response.body().toString())
 //                                uploadmarks.postValue(response.body())
 //                            }
 //                        }
-                    }
-                    else {
+                    } else {
                         Constant.hideLoading(activity)
                         uploadmarks.postValue(null)
                         val errorBodyString = response.errorBody()?.string()
@@ -4936,10 +4947,9 @@ class SchoolServices {
         get() = uploadmarks
 
 
-
-
-    fun savemarks(isToken:String,
-         jsonObject: JsonObject
+    fun savemarks(
+        isToken: String,
+        jsonObject: JsonObject
     ) {
         RestClient.apiInterfaces.savemarks(isToken, jsonObject)
             ?.enqueue(object : Callback<SaveMarksModel?> {
@@ -4975,8 +4985,6 @@ class SchoolServices {
 
     val savemarksLiveData: LiveData<SaveMarksModel?>
         get() = savemarks
-
-
 
 
 }

@@ -110,7 +110,7 @@ class HomeworkParentAdapter(
                 if (item.is_completed) {
                     binding.imgSuccess.visibility = View.VISIBLE
                     binding.imgTimimg.visibility = View.GONE
-                }else {
+                } else {
                     binding.imgTimimg.visibility = View.VISIBLE
                     binding.imgSuccess.visibility = View.GONE
                 }
@@ -122,7 +122,7 @@ class HomeworkParentAdapter(
                 if (item.is_unread) {
                     binding.imgTimimg.visibility = View.GONE
                     binding.imgSuccess.visibility = View.GONE
-                }else{
+                } else {
                     binding.imgTimimg.visibility = View.VISIBLE
                     binding.imgSuccess.visibility = View.GONE
                 }

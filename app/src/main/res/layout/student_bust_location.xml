@@ -22,14 +22,14 @@
 
         <TextView
             android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
             android:text="@string/where_is_my_bus"
-            android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold">
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -37,30 +37,28 @@
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten">
+            android:layout_marginEnd="@dimen/ten"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:layout_gravity="end"
-                style="@style/CustomTextStylePoppinsMedium"
-          >
+                android:text="">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblStudentSection"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
-                android:text=""
                 android:layout_gravity="end"
-                style="@style/CustomTextStylePoppinsMedium"
-                >
+                android:text="">
 
             </TextView>
         </LinearLayout>
@@ -69,8 +67,8 @@
 
     <WebView
         android:id="@+id/webView"
-        android:layout_below="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rytHeader" />
 
 </RelativeLayout>

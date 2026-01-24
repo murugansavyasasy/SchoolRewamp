@@ -94,7 +94,7 @@ class NotificationAdapter(
             showDivider: Boolean,
             listener: NotificationClickListener
         ) {
-            lblSendBy.visibility=View.GONE
+            lblSendBy.visibility = View.GONE
             lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content.replace("•", "")

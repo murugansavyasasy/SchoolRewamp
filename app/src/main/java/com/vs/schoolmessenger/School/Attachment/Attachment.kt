@@ -62,7 +62,6 @@ import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.TourDialog
 import com.vs.schoolmessenger.databinding.AttachmentBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
@@ -104,8 +103,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
-
 
 
     override fun setupViews() {
@@ -1041,7 +1038,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
         }
     }
-
 
 
 }

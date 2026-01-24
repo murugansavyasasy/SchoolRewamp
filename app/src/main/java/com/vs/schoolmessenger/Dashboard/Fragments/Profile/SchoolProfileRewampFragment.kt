@@ -109,7 +109,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
     private fun fetchProfileData() {
         Constant.showLoading(requireActivity())
-        appViewModel!!.isSchoolprofilelist(isAccessToken!!,requireActivity())
+        appViewModel!!.isSchoolprofilelist(isAccessToken!!, requireActivity())
     }
 
     override fun onClick(v: View?) {

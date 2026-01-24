@@ -37,15 +37,14 @@
 
             <TextView
                 android:id="@+id/end_time"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/twele"
-                style="@style/CustomTextStylePoppinsBold"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="10:30 am"
-                android:textSize="@dimen/fourteen_sp"
-                />
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
         <LinearLayout

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Parent.Coupon.CouponFragment.HomeFragment">
@@ -15,11 +15,11 @@
         <ProgressBar
             android:id="@+id/isProgressBar"
             android:layout_width="@dimen/fifty"
-            android:visibility="visible"
+            android:layout_height="@dimen/fifty"
+            android:layout_below="@+id/text_view"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fourty"
-            android:layout_below="@+id/text_view"
-            android:layout_height="@dimen/fifty">
+            android:visibility="visible">
 
         </ProgressBar>
 
@@ -56,8 +56,8 @@
                 android:id="@+id/imgSearchToolBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/twenty"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:src="@drawable/search_icon_white" />
 
@@ -148,12 +148,12 @@
             android:layout_below="@+id/totalcoinscardview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/bg_search"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/twele">
+            android:paddingHorizontal="@dimen/twele"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgSearch"
@@ -221,7 +221,6 @@
             android:scrollbars="vertical" />
 
 
-
         <TextView
             android:id="@+id/lblNoRecord"
             android:layout_width="match_parent"
@@ -236,16 +235,15 @@
             android:visibility="gone">
 
 
-
         </TextView>
 
 
         <ImageView
             android:id="@+id/nomessage"
             android:layout_width="@dimen/two_fifty"
-            android:layout_centerHorizontal="true"
             android:layout_height="@dimen/two_fifty"
             android:layout_below="@+id/text_view"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/no_search_message"
             android:textColor="@color/black"
@@ -257,14 +255,14 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/nomessage"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
+            android:gravity="center"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
-            android:layout_below="@+id/nomessage"
-            android:gravity="center"
             android:visibility="gone" />
 
 

@@ -2,19 +2,20 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/five"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/five"
     android:layout_marginVertical="@dimen/ten"
+    android:layout_marginBottom="@dimen/five"
     android:clipChildren="true"
     android:clipToPadding="true"
-    app:cardCornerRadius="@dimen/ten"
->
+    app:cardCornerRadius="@dimen/ten">
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:padding="@dimen/five"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/five">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,12 +93,10 @@
                         android:layout_height="@dimen/fifteen"
                         android:layout_centerInParent="true"
                         android:src="@drawable/delete_icon_blue"
-                        app:tint="@color/PrimaryColor"
-                        />
+                        app:tint="@color/PrimaryColor" />
                 </RelativeLayout>
 
             </RelativeLayout>
-
 
 
             <TextView
@@ -153,24 +152,24 @@
 
 
                 <RelativeLayout
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_alignParentStart="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/five">
 
                     <TextView
                         android:id="@+id/lblDot"
-                        android:layout_centerVertical="true"
                         android:layout_width="@dimen/ten"
                         android:layout_height="@dimen/ten"
+                        android:layout_centerVertical="true"
                         android:background="@drawable/circle_bg_green" />
 
                     <TextView
                         android:id="@+id/lblDistance"
-                        android:layout_centerVertical="true"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/five"
                         android:layout_toEndOf="@+id/lblDot"
                         android:text="10 Meter"
@@ -180,26 +179,25 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/five"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
 
                     <ImageView
-                        android:layout_centerVertical="true"
                         android:id="@+id/imgTime"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/time_icon"
-                        app:tint="@color/mild_grey_dark"
-                        />
+                        app:tint="@color/mild_grey_dark" />
 
                     <TextView
-                        android:layout_centerVertical="true"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/five"
                         android:layout_toEndOf="@+id/imgTime"
                         android:text="2 hours ago"

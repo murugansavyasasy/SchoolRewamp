@@ -41,8 +41,8 @@
         android:background="@color/AthensGray"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:padding="@dimen/ten"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -93,36 +93,33 @@
         android:background="@color/AthensGray"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:visibility="gone"
         android:padding="@dimen/ten"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
 
 
         <TextView
             android:id="@+id/reasontext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reason : Unwanted Talk"
             android:gravity="center"
             android:padding="10dp"
+            android:text="Reason : Unwanted Talk"
             android:textColor="@color/red"
             android:textSize="14sp" />
-
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/red"
-            android:text="@string/you_have_been_blocked_by_the_staff"
             android:gravity="center"
             android:padding="10dp"
+            android:text="@string/you_have_been_blocked_by_the_staff"
             android:textColor="@color/white"
             android:textSize="14sp" />
-
 
 
     </LinearLayout>

@@ -118,7 +118,7 @@ class AssignmentStudentListDetailAdapter(
             total_numbers.visibility = View.GONE
 
             rytList2.setOnClickListener {
-                Constant.isVideoPostedDate= Constant.removeSeconds(data.submitted_on)
+                Constant.isVideoPostedDate = Constant.removeSeconds(data.submitted_on)
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -150,7 +150,7 @@ class AssignmentStudentListDetailAdapter(
             }
 
             rytList.setOnClickListener {
-                Constant.isVideoPostedDate= Constant.removeSeconds(data.submitted_on)
+                Constant.isVideoPostedDate = Constant.removeSeconds(data.submitted_on)
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -183,7 +183,7 @@ class AssignmentStudentListDetailAdapter(
             }
 
             rlarelativelayout.setOnClickListener {
-                Constant.isVideoPostedDate= Constant.removeSeconds(data.submitted_on)
+                Constant.isVideoPostedDate = Constant.removeSeconds(data.submitted_on)
                 val convertedList = data.file_path.map {
                     GetFilePathDetails(
                         type = it.type,
@@ -221,7 +221,7 @@ class AssignmentStudentListDetailAdapter(
                         val child = rv.findChildViewUnder(e.x, e.y)
                         if (child != null && e.action == MotionEvent.ACTION_UP) {
                             rv.getChildAdapterPosition(child)
-                            Constant.isVideoPostedDate= Constant.removeSeconds(data.submitted_on)
+                            Constant.isVideoPostedDate = Constant.removeSeconds(data.submitted_on)
                             val convertedList = data.file_path.map {
                                 GetFilePathDetails(
                                     type = it.type,

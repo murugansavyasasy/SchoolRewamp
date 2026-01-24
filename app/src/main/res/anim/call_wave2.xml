@@ -4,20 +4,20 @@
         android:duration="2600"
         android:fromXScale="1.0"
         android:fromYScale="1.0"
-        android:toXScale="4.0"
-        android:toYScale="4.0"
+        android:interpolator="@android:anim/linear_interpolator"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:startOffset="800"
         android:repeatCount="infinite"
         android:repeatMode="restart"
-        android:interpolator="@android:anim/linear_interpolator" />
+        android:startOffset="800"
+        android:toXScale="4.0"
+        android:toYScale="4.0" />
 
     <alpha
         android:duration="2600"
         android:fromAlpha="0.8"
-        android:toAlpha="0.0"
-        android:startOffset="800"
         android:repeatCount="infinite"
-        android:repeatMode="restart" />
+        android:repeatMode="restart"
+        android:startOffset="800"
+        android:toAlpha="0.0" />
 </set>

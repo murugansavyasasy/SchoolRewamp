@@ -5,7 +5,6 @@ import android.content.Context
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -350,7 +349,7 @@ class ProfileRewampFragmentAdapter(
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        genderLabel.text =  "${field.title}$editStatusText"
+                        genderLabel.text = "${field.title}$editStatusText"
                     }
 
                     when (field.value?.lowercase()) {
