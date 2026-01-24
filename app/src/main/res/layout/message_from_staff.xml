@@ -6,6 +6,7 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     android:paddingTop="@dimen/fifteen"
+    android:background="@drawable/rect_shadow_white"
     android:paddingStart="@dimen/five"
     android:paddingBottom="@dimen/five"
     android:paddingEnd="@dimen/five"
@@ -27,11 +28,7 @@
 
         </ImageView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/fifteen"
-            app:cardElevation="4dp">
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -218,7 +215,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </RelativeLayout>
 
