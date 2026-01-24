@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.CommonScreens
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -128,31 +130,38 @@ class ImagePickingAdapter(
                         context.startActivity(intent)
                     } else {
 
-                        val uri = if (item.path.startsWith("content://")) {
-                            Uri.parse(item.path)
+
+                        Log.d("item.path", filePath)
+
+                        // 1️⃣ Create URI safely
+                        val uri: Uri = if (filePath.startsWith("content://")) {
+                            Uri.parse(filePath)
                         } else {
                             FileProvider.getUriForFile(
                                 context,
                                 "${context.packageName}.fileprovider",
-                                File(item.path)
+                                File(filePath)
                             )
                         }
 
-                        val mimeType = getMimeTypeFromUri(uri)
-                        val openIntent = Intent(Intent.ACTION_VIEW).apply {
+                        // 2️⃣ Get MIME type (with fallback)
+                        val mimeType = getMimeType(context, uri) ?: "*/*"
+                        Log.d("FILE_DEBUG", "uri=$uri mime=$mimeType")
+
+                        // 3️⃣ Create intent
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
                             setDataAndType(uri, mimeType)
                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
-                        val activities = context.packageManager.queryIntentActivities(
-                            openIntent,
-                            PackageManager.MATCH_DEFAULT_ONLY
-                        )
-                        if (activities.isNotEmpty()) {
-                            context.startActivity(Intent.createChooser(openIntent, "Open with"))
-                        } else {
+
+                        // 4️⃣ Open chooser safely
+                        try {
+                            context.startActivity(Intent.createChooser(intent, "Open with"))
+                        } catch (e: ActivityNotFoundException) {
                             Toast.makeText(
                                 context,
-                                "Please download an app to view this file.",
+                                "Please install an app to view this file",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -172,9 +181,17 @@ class ImagePickingAdapter(
         }
     }
 
-    private fun getMimeTypeFromUri(uri: Uri): String {
-        val contentResolver = context.contentResolver
-        return contentResolver.getType(uri) ?: "*/*"
+    private fun getMimeType(context: Context, uri: Uri): String? {
+        var mimeType: String? = context.contentResolver.getType(uri)
+
+        if (mimeType == null) {
+            val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
+            if (!extension.isNullOrEmpty()) {
+                mimeType = MimeTypeMap.getSingleton()
+                    .getMimeTypeFromExtension(extension.lowercase())
+            }
+        }
+        return mimeType
     }
 
     override fun getItemCount() = items.size

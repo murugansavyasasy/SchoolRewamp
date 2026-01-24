@@ -449,7 +449,7 @@
     <string name="sh_second_half_afternoon_session">SH: Second Half (afternoon session)</string>
     <string name="no_internet_connection">No internet connection...</string>
     <string name="reminder">Reminder</string>
-    <string name="set_a_otp">Set OTP</string>
+    <string name="set_a_otp">Enter a OTP</string>
     <string name="image">Image</string>
     <string name="search_dot">Search...</string>
     <string name="no_homework_found">No Homework Found!</string>

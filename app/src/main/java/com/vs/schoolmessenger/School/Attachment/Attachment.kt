@@ -25,6 +25,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.webkit.MimeTypeMap
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -77,6 +78,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
     }
+
 
     private var cameraPermissionDeniedCount = 0
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -135,6 +137,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
+
 
 
         appViewModel!!.isEditAttachment?.observe(this) { response ->
@@ -318,13 +321,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     private fun openAlbumSelectActivity(isFileType: String) {
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
+        if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)
             intent.putExtra(Constant.isFileType, isFileType)
             albumResultLauncher.launch(intent)
         }
+
     }
 
     // Opens the system file picker for DOCUMENT on Android 10 and below
@@ -466,17 +470,43 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
 
             val fileName = getFileName(uri)
-            val type = when {
-                fileName.endsWith(".pdf", true) -> FileType.PDF
-                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx",
-                    true
-                ) -> FileType.EXCEL
+            val safeMime = mimeType ?: ""
 
-                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
-                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
-                fileName.endsWith(".txt", true) -> FileType.TXT
+            val type = when {
+
+                // ✅ PDF
+                safeMime == "application/pdf" ||
+                        fileName.endsWith(".pdf", true) ->
+                    FileType.PDF
+
+                // ✅ WORD
+                safeMime == "application/msword" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                        fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) ->
+                    FileType.DOC
+
+                // ✅ EXCEL
+                safeMime == "application/vnd.ms-excel" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                        fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) ->
+                    FileType.EXCEL
+
+                // ✅ POWERPOINT
+                safeMime == "application/vnd.ms-powerpoint" ||
+                        safeMime == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                        fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) ->
+                    FileType.PPT
+
+                // ✅ TEXT
+                safeMime == "text/plain" ||
+                        fileName.endsWith(".txt", true) ->
+                    FileType.TXT
+
+                // ✅ IMAGE
+                safeMime.startsWith("image/") ||
+                        fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) ->
+                    FileType.IMAGE
+
                 else -> FileType.OTHER
             }
 

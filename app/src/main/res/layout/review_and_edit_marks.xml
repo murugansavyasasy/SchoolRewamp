@@ -82,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSearch1"
                 android:layout_marginHorizontal="@dimen/ten"
-                android:layout_toStartOf="@+id/imgFilter"
                 android:text="@string/review_and_edit_marks"
                 android:textColor="@color/dark_orange_2"
                 android:textSize="@dimen/twenty_sp"
