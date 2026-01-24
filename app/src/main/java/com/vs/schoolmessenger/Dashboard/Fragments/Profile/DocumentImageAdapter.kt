@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Dashboard.Fragments.Profile
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class DocumentImageAdapter(
         holder.txtFileSize.text = "${context.getString(R.string.Unknown_Size)}, $typeText"
 
         val clickListener = View.OnClickListener {
+            Log.d("IsComingSathish","IsComingSathish11111111111111111111111111")
             Constant.commonFileList = files.toMutableList()
             Constant.selectedFileIndex = position
 
