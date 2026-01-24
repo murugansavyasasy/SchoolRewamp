@@ -57,7 +57,7 @@
                     android:gravity="start"
                     android:text="Selected Files : 0"
                     android:textColor="@color/white"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/btnDone"

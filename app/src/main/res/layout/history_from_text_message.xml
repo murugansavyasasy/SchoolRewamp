@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="01 Apr 2024"
+                android:text=""
                 android:layout_marginStart="@dimen/five"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textStyle="bold"
@@ -99,7 +99,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_toEndOf="@+id/lblDate"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:text="10:56 AM"
+                android:text=""
                 android:textColor="@color/grey"
                 android:textSize="@dimen/twele_sp">
             </TextView>
