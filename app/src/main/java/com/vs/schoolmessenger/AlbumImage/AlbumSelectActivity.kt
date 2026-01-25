@@ -415,11 +415,21 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
     private fun loadAudio(): List<Uri> {
         val list = mutableListOf<Uri>()
         val collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+
+        val mimeTypes = arrayOf(
+            "audio/wav",
+            "audio/x-wav",
+            "audio/m4a",
+            "audio/mp4"
+        )
+
+        val selection = mimeTypes.joinToString(prefix = "mime_type IN (", postfix = ")") { "?" }
+
         val cursor = contentResolver.query(
             collection,
             arrayOf(MediaStore.Audio.Media._ID),
-            null,
-            null,
+            selection,
+            mimeTypes,
             "${MediaStore.Audio.Media.DATE_ADDED} DESC"
         )
 

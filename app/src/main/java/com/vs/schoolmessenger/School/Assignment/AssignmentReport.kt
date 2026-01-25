@@ -221,7 +221,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcyAssignmentReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
-                    binding.noDataFound.text = getString(R.string.no_data_found)
+                    binding.noDataFound.text = response.message ?: getString(R.string.no_data_available)
                 }
             }
         }

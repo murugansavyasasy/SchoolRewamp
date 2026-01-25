@@ -73,6 +73,7 @@ class VoiceHistoryAdapter(
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
+        private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
 
         private val rlaSendVoice: RelativeLayout =
             itemView.findViewById(R.id.rlaSendVoice)
@@ -111,6 +112,8 @@ class VoiceHistoryAdapter(
             listener: VoiceHistoryClickListener,
             adapter: VoiceHistoryAdapter
         ) {
+
+            lblnewiconVoice.visibility = View.GONE
 
             lblTitle.text = data.title
             lblSeeMoreClick.visibility = View.GONE
