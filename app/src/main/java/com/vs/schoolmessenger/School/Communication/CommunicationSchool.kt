@@ -1864,8 +1864,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mimeType == "audio/wav" ||
             mimeType == "audio/x-wav" ||
             mimeType == "audio/m4a" ||
-            mimeType == "audio/mp4" ||
-            mimeType == "audio/mpeg"   // MP3
+            mimeType == "audio/mp4"
         ) {
             return true
         }
@@ -1873,8 +1872,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         // Fallback: extension check
         val name = getFileName(uri)?.lowercase() ?: return false
         return name.endsWith(".wav") ||
-                name.endsWith(".m4a") ||
-                name.endsWith(".mp3")
+                name.endsWith(".m4a")
     }
 
     private fun getFileName(uri: Uri): String? {
@@ -2001,14 +1999,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         return when (mimeType) {
             "audio/wav", "audio/x-wav" -> "WAV"
-            "audio/mpeg" -> "MP3"
             "audio/mp4", "audio/m4a" -> "M4A"
             else -> {
                 // Fallback by extension
                 val name = getFileName(uri)?.lowercase()
                 when {
                     name?.endsWith(".wav") == true -> "WAV"
-                    name?.endsWith(".mp3") == true -> "MP3"
                     name?.endsWith(".m4a") == true -> "M4A"
                     else -> "UNKNOWN"
                 }
@@ -2023,17 +2019,18 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         return when (mimeType) {
             "audio/wav", "audio/x-wav" -> "wav"
             "audio/m4a", "audio/mp4" -> "m4a"
-            "audio/mpeg" -> "mp3"
+
             else -> {
                 val name = getFileName(uri)?.lowercase()
                 when {
                     name?.endsWith(".wav") == true -> "wav"
                     name?.endsWith(".m4a") == true -> "m4a"
-                    else -> "mp3"
+                    else -> ""
                 }
             }
         }
     }
+
 
 
     private fun showDurationLimitDialog(message: String) {
