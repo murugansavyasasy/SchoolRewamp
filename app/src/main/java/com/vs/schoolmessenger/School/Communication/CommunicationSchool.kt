@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -1833,91 +1834,207 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
     }
 
+
     private fun openAudioFilePicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            type = "audio/*"
             addCategory(Intent.CATEGORY_OPENABLE)
+
+            type = "audio/*"
+            putExtra(
+                Intent.EXTRA_MIME_TYPES,
+                arrayOf(
+                    "audio/wav",
+                    "audio/x-wav",
+                    "audio/m4a",
+                    "audio/mp4",
+                    "audio/mpeg"   // MP3
+                )
+            )
+
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         startActivityForResult(intent, PICK_AUDIO_REQUEST)
     }
 
+    private fun isAllowedAudio(uri: Uri): Boolean {
+        val mimeType = contentResolver.getType(uri)
+
+        if (
+            mimeType == "audio/wav" ||
+            mimeType == "audio/x-wav" ||
+            mimeType == "audio/m4a" ||
+            mimeType == "audio/mp4" ||
+            mimeType == "audio/mpeg"   // MP3
+        ) {
+            return true
+        }
+
+        // Fallback: extension check
+        val name = getFileName(uri)?.lowercase() ?: return false
+        return name.endsWith(".wav") ||
+                name.endsWith(".m4a") ||
+                name.endsWith(".mp3")
+    }
+
+    private fun getFileName(uri: Uri): String? {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return it.getString(
+                    it.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
+                )
+            }
+        }
+        return null
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK) {
-            val uri = data?.data
-            if (uri != null) {
-                contentResolver.takePersistableUriPermission(
-                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
 
-                val mediaPlayer = MediaPlayer()
-                try {
-                    mediaPlayer.setDataSource(this, uri)
-                    mediaPlayer.prepare()
+            val uri = data?.data ?: return
 
-                    val durationInMillis = mediaPlayer.duration
-                    val formattedDuration = formatDuration(durationInMillis)
-                    if (Constant.isCommunicationType != 2) {
-                        if (binding.SwitchEmergencyVoice.isChecked()) {
-                            if (durationInMillis > 30000) {
-                                mediaPlayer.release()
-                                showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
-                                return
-                            }
-                        } else {
-                            if (durationInMillis > 180000) {
-                                mediaPlayer.release()
-                                showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
-                                return
-                            }
+            val format = getPickedAudioFormat(uri)
+
+            Log.d("PickedAudioFormat", "User selected audio format: $format")
+
+            // 🔴 Validate format FIRST
+            if (!isAllowedAudio(uri)) {
+                Toast.makeText(
+                    this,
+                    "Only WAV, M4A or MP3 audio files are allowed",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+
+            val mediaPlayer = MediaPlayer()
+            try {
+                mediaPlayer.setDataSource(this, uri)
+                mediaPlayer.prepare()
+
+                val durationInMillis = mediaPlayer.duration
+                val formattedDuration = formatDuration(durationInMillis)
+
+                // ⏱ Duration validation (your logic)
+                if (Constant.isCommunicationType != 2) {
+                    if (binding.SwitchEmergencyVoice.isChecked()) {
+                        if (durationInMillis > 30_000) {
+                            mediaPlayer.release()
+                            showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
+                            return
                         }
                     } else {
-                        if (durationInMillis > 180000) {
+                        if (durationInMillis > 180_000) {
                             mediaPlayer.release()
                             showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
                             return
                         }
                     }
-                    mediaPlayer.release()
+                } else {
+                    if (durationInMillis > 180_000) {
+                        mediaPlayer.release()
+                        showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
+                        return
+                    }
+                }
 
-                    val timeStamp = SimpleDateFormat(
-                        Constant.yyyyMMdd_HHmmss, Locale.getDefault()
-                    ).format(Date())
-                    val isFileExtension = Constant.wav_
-                    val fileName = "${Constant.Communication_}${timeStamp}.$isFileExtension"
-                    isFileName = fileName
-                    val inputStream = contentResolver.openInputStream(uri)
-                    val outputFile = File(cacheDir, fileName)
-                    val outputStream = FileOutputStream(outputFile)
-                    inputStream?.copyTo(outputStream)
-                    inputStream?.close()
-                    outputStream.close()
-                    // Store local path for upload/use
-                    audioFilePath = outputFile.absolutePath
-                    Constant.isVoiceType = 2
-                    Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
+                mediaPlayer.release()
 
-                    // Update UI
-                    binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
-                    binding.edtTitle.setText("")
-                    binding.rlaTitle.visibility = View.VISIBLE
-                    binding.rytVoiceRecord.visibility = View.GONE
-                    binding.lblDurationOfVoice.visibility = View.GONE
-                    binding.rlaAddLocalFile.visibility = View.GONE
-                    binding.lblEndDuration.text = "/ $formattedDuration"
+                // 📄 Detect correct extension
+                val extension = getAudioExtension(uri)
 
-                } catch (e: Exception) {
-                    mediaPlayer.release()
-                    e.printStackTrace()
-                    Toast.makeText(this, getString(R.string.Failed_load_audio), Toast.LENGTH_SHORT)
-                        .show()
+                val timeStamp = SimpleDateFormat(
+                    Constant.yyyyMMdd_HHmmss,
+                    Locale.getDefault()
+                ).format(Date())
+
+                val fileName = "${Constant.Communication_}${timeStamp}.$extension"
+                isFileName = fileName
+
+                // 📂 Copy to cache
+                val inputStream = contentResolver.openInputStream(uri)
+                val outputFile = File(cacheDir, fileName)
+                val outputStream = FileOutputStream(outputFile)
+
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+
+                // Store local path
+                audioFilePath = outputFile.absolutePath
+                Constant.isVoiceType = 2
+                Constant.selectedFiles!!.add(
+                    FileItem(audioFilePath!!, FileType.AUDIO)
+                )
+
+                // 🖥 UI updates
+                binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                binding.edtTitle.setText("")
+                binding.rlaTitle.visibility = View.VISIBLE
+                binding.rytVoiceRecord.visibility = View.GONE
+                binding.lblDurationOfVoice.visibility = View.GONE
+                binding.rlaAddLocalFile.visibility = View.GONE
+                binding.lblEndDuration.text = "/ $formattedDuration"
+
+            } catch (e: Exception) {
+                mediaPlayer.release()
+                e.printStackTrace()
+                Toast.makeText(
+                    this,
+                    getString(R.string.Failed_load_audio),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun getPickedAudioFormat(uri: Uri): String {
+        val mimeType = contentResolver.getType(uri)
+
+        return when (mimeType) {
+            "audio/wav", "audio/x-wav" -> "WAV"
+            "audio/mpeg" -> "MP3"
+            "audio/mp4", "audio/m4a" -> "M4A"
+            else -> {
+                // Fallback by extension
+                val name = getFileName(uri)?.lowercase()
+                when {
+                    name?.endsWith(".wav") == true -> "WAV"
+                    name?.endsWith(".mp3") == true -> "MP3"
+                    name?.endsWith(".m4a") == true -> "M4A"
+                    else -> "UNKNOWN"
                 }
             }
         }
     }
+
+
+    private fun getAudioExtension(uri: Uri): String {
+        val mimeType = contentResolver.getType(uri)
+
+        return when (mimeType) {
+            "audio/wav", "audio/x-wav" -> "wav"
+            "audio/m4a", "audio/mp4" -> "m4a"
+            "audio/mpeg" -> "mp3"
+            else -> {
+                val name = getFileName(uri)?.lowercase()
+                when {
+                    name?.endsWith(".wav") == true -> "wav"
+                    name?.endsWith(".m4a") == true -> "m4a"
+                    else -> "mp3"
+                }
+            }
+        }
+    }
+
 
     private fun showDurationLimitDialog(message: String) {
         val builder = AlertDialog.Builder(this)
