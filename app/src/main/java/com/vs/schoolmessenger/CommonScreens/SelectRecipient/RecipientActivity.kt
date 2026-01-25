@@ -238,7 +238,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 } else {
                     binding.rytSubjectDropDown.visibility = View.GONE
                     binding.subjectlabel.visibility = View.GONE
-                    Constant.showDataValidation(
+                    isSubjectId = null
+                    Constant.showDataValidationNoDashboardRedirectSubject(
                         resources.getString(R.string.Oops),
                         response.message,
                         this
@@ -551,6 +552,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (isSelectedType == 2) {
+                Log.d("isComing", "isComing")
+
                 if (binding.chAllSelect.isChecked) {
                     isSectionAdapter!!.selectAll()
                     isSectionAdapter!!.itemList?.forEach { item ->
@@ -567,6 +570,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 }
             } else if (isSelectedType == 3) {
+
                 if (binding.chAllSelect.isChecked) {
                     isGroupStaffAdapter!!.selectAll()
                     isGroupStaffAdapter!!.itemList?.forEach { item ->
@@ -583,6 +587,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 }
             } else if (isSelectedType == 4) {
+
                 if (binding.chAllSelect.isChecked) {
                     isGroupStaffAdapter!!.selectAll()
                     isGroupStaffAdapter!!.itemList?.forEach { item ->
@@ -1767,7 +1772,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (!isSectionSelectedIds.any { it.id == data.id }) {
             isSectionSelectedIds.add(data)
         }
-
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
         Log.d("idString", idString.toString())
         if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
@@ -1789,6 +1793,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     override fun onIdUnchecked(data: Section) {
         isSectionSelectedIds.removeAll { it.id == data.id }
+        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        Log.d("idString", idString.toString())
+        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+
+            if (idString != "") {
+                isGetSubjectList(idString)
+            } else {
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                isSubjectId = null
+
+            }
+        }
         binding.chAllSelect.isChecked = false
         if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {

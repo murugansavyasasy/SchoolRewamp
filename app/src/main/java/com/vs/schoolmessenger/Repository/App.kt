@@ -1864,6 +1864,7 @@ class App(application: Application) : AndroidViewModel(application) {
         class_id: String,
         section_id: String,
         date: String,
+        isAcademicYearId: String,
         attendance_type: String,
         activity: Activity
     ) {
@@ -1874,6 +1875,7 @@ class App(application: Application) : AndroidViewModel(application) {
             class_id,
             section_id,
             date,
+            isAcademicYearId,
             attendance_type
         )
     }

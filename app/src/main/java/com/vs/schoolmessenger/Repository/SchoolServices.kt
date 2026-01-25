@@ -4336,13 +4336,15 @@ class SchoolServices {
         class_id: String,
         section_id: String,
         date: String,
+        isAcademicYearId: String,
         attendance_type: String,
-    ) {
+        ) {
         RestClient.apiInterfaces.getAttendanceStudentList(
             isToken,
             class_id,
             section_id,
             date,
+            isAcademicYearId,
             attendance_type
         )
             ?.enqueue(object : Callback<GetAttendanceStudentList?> {

@@ -1076,6 +1076,8 @@
     <string name="skip">Skip</string>
     <string name="applied_on">Applied on</string>
     <string name="cancelled">Cancelled</string>
+    <string name="receipt_No">Receipt No</string>
+    <string name="paid_Amount">Paid Amount</string>
 
 
 </resources>

@@ -1768,6 +1768,65 @@ object Constant {
     }
 
 
+    fun showDataValidationNoDashboardRedirectSubject(title: String, message: String, activity: Activity) {
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        // 👉 If popup already added, do nothing
+        if (rootView.findViewWithTag<View>("SUCCESS_POPUP") != null) {
+            return
+        }
+
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        // 👇 Set TAG to identify popup
+        view.tag = "SUCCESS_POPUP"
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+
+        titleText.text = title
+        messageText.text = message
+
+        val dimView = View(activity).apply {
+            tag = "SUCCESS_POPUP_DIM"
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            closePopup()
+        }
+    }
+
+
+
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)

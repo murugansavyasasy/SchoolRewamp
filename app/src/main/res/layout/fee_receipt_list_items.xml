@@ -35,7 +35,7 @@
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Invoice No : INV001"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen" />
 
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
-                android:text="Invoice Amount : 1200" />
+                android:text="" />
 
         </LinearLayout>
 

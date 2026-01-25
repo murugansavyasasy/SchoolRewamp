@@ -1252,6 +1252,7 @@ interface ApiInterfaces {
         @Query(APIKeyNames.class_id) class_id: String,
         @Query(APIKeyNames.section_id) section_id: String,
         @Query(APIKeyNames.date) date: String,
+        @Query(APIKeyNames.academic_year_id)academic_year_id : String,
         @Query(APIKeyNames.attendance_type) attendance_type: String
     ): Call<GetAttendanceStudentList>
 

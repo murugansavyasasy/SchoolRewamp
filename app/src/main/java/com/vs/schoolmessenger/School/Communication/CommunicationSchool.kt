@@ -638,7 +638,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val formattedDuration = formatDuration(durationInMs)
                     binding.lblEndDuration.text = "/ $formattedDuration"
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
-                    binding.edtTitle.setText("")
+//                    binding.edtTitle.setText("")
                     binding.rlaTitle.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(
@@ -867,7 +867,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblStartDuration.text = Constant.time_zero
         binding.lblEndDuration.text = ""
         binding.waveformSeekBar.updateWithLevel(0f)
-        binding.edtTitle.setText("")
+//        binding.edtTitle.setText("")
         binding.rlaAddLocalFile.visibility = View.VISIBLE
         binding.rytVoiceRecord.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
@@ -1560,6 +1560,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         imgTypeCommunication: ImageView,
         lblTypeCommunication: TextView
     ) {
+        binding.edtTitle.setText("")
         KeyboardUtils.hideKeyboard(this)
         if (isRecording) {
             stopRecording()
