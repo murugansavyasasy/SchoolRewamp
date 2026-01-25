@@ -1847,9 +1847,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     "audio/wav",
                     "audio/x-wav",
                     "audio/m4a",
-                    "audio/mp4",
-                    "audio/mpeg"   // MP3
-                )
+                    "audio/mp4")
             )
 
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
