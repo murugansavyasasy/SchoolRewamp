@@ -168,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginEnd="@dimen/ten"
-                        android:text="@string/underline_see_archived_messages"
+                        android:text="@string/show_older_messages"
                         android:textColor="@color/PrimaryColor"></TextView>
                 </LinearLayout>
 
