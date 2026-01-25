@@ -298,22 +298,6 @@ class AwsUploadingPreSigned {
     }
 
 
-//    fun getImageData(context: Context, path: String): ByteArray? {
-//        return try {
-//            if (path.startsWith("content://")) {
-//                val uri = Uri.parse(path)
-//                context.contentResolver.openInputStream(uri)?.readBytes()
-//            } else {
-//                val file = File(path)
-//                java.nio.file.Files.readAllBytes(file.toPath())
-//            }
-//        } catch (e: Exception) {
-//            Log.e("FileReadError", "Error reading file data: ${e.message}")
-//            null
-//        }
-//    }
-
-
     fun getFileExtensionFromUri(context: Context, uri: Uri): String {
         val fileName = getFileName(context, uri)
         return fileName.substringAfterLast('.', "").lowercase()
@@ -321,19 +305,21 @@ class AwsUploadingPreSigned {
 
     fun getMediaType(fileExtension: String): MediaType? {
         return when (fileExtension.lowercase()) {
-            // Images
+
+            // 🖼 Images
             "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
             "png" -> "image/png".toMediaTypeOrNull()
             "bmp" -> "image/bmp".toMediaTypeOrNull()
             "webp" -> "image/webp".toMediaTypeOrNull()
 
-            // Audio
+            // 🎵 Audio (FULL & CORRECT)
             "mp3" -> "audio/mpeg".toMediaTypeOrNull()
-            "wav" -> "audio/wav".toMediaTypeOrNull()
+            "wav" -> "audio/wav".toMediaTypeOrNull()       // primary
+            "m4a" -> "audio/mp4".toMediaTypeOrNull()       // correct for m4a
+            "aac" -> "audio/aac".toMediaTypeOrNull()
             "3gp" -> "audio/3gpp".toMediaTypeOrNull()
-            "m4a" -> "audio/mp4".toMediaTypeOrNull()
 
-            // Documents
+            // 📄 Documents
             "pdf" -> "application/pdf".toMediaTypeOrNull()
             "doc" -> "application/msword".toMediaTypeOrNull()
             "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
@@ -343,10 +329,43 @@ class AwsUploadingPreSigned {
             "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
             "txt" -> "text/plain".toMediaTypeOrNull()
 
+            // 🔒 Fallback
             else -> {
-                Log.w("MediaTypeFallback", "Unknown type: $fileExtension, using fallback.")
+                Log.w("MediaTypeFallback", "Unknown type: $fileExtension, using octet-stream")
                 "application/octet-stream".toMediaTypeOrNull()
             }
         }
     }
+
+
+//    fun getMediaType(fileExtension: String): MediaType? {
+//        return when (fileExtension.lowercase()) {
+//            // Images
+//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
+//            "png" -> "image/png".toMediaTypeOrNull()
+//            "bmp" -> "image/bmp".toMediaTypeOrNull()
+//            "webp" -> "image/webp".toMediaTypeOrNull()
+//
+//            // Audio
+//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
+//            "wav" -> "audio/wav".toMediaTypeOrNull()
+//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
+//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
+//
+//            // Documents
+//            "pdf" -> "application/pdf".toMediaTypeOrNull()
+//            "doc" -> "application/msword".toMediaTypeOrNull()
+//            "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
+//            "ppt" -> "application/vnd.ms-powerpoint".toMediaTypeOrNull()
+//            "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation".toMediaTypeOrNull()
+//            "xls" -> "application/vnd.ms-excel".toMediaTypeOrNull()
+//            "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
+//            "txt" -> "text/plain".toMediaTypeOrNull()
+//
+//            else -> {
+//                Log.w("MediaTypeFallback", "Unknown type: $fileExtension, using fallback.")
+//                "application/octet-stream".toMediaTypeOrNull()
+//            }
+//        }
+//    }
 }
