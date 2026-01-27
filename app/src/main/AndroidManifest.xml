@@ -4,7 +4,7 @@
     package="com.vs.schoolmessenger">
 
     <uses-feature
-        android:name="android.hardware.camera"
+        android:name="android.hardware.camera.any"
         android:required="true"
         tools:node="replace" />
 

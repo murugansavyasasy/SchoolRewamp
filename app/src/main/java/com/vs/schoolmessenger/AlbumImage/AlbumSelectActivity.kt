@@ -419,9 +419,10 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         val mimeTypes = arrayOf(
             "audio/wav",
             "audio/x-wav",
-            "audio/m4a",
-            "audio/mp4"
+            "audio/mp4",    // M4A
+            "audio/mpeg"    // MP3
         )
+
 
         val selection = mimeTypes.joinToString(prefix = "mime_type IN (", postfix = ")") { "?" }
 

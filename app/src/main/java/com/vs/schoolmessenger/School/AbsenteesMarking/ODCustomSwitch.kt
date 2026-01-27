@@ -21,7 +21,7 @@ class ODCustomSwitch @JvmOverloads constructor(
     private var switchRadius = 0f
     private var switchWidth = 0f
 
-    private val activeColor = ContextCompat.getColor(context, R.color.light_yellow_5)
+    private val activeColor = ContextCompat.getColor(context, R.color.light_yellow_6)
     private val inactiveColor = ContextCompat.getColor(context, R.color.grey_mild)
 
     private var listener: ((Boolean) -> Unit)? = null

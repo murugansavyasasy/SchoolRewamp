@@ -2249,6 +2249,4 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
     }
-
-
 }

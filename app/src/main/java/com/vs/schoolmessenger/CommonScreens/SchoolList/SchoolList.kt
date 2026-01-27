@@ -157,6 +157,16 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             binding.lnrTab.visibility = View.GONE
         }
 
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            response?.data?.let { academicList ->
+                val data = academicList.sortedByDescending { it.current_academic_year }
+                if (isAcademicYearList == data) return@observe
+                isAcademicYearList = data
+                val activeYear = data.find { it.current_academic_year == true }
+                Constant.isCurrentAcademicYearId = activeYear?.id!!
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
@@ -358,7 +368,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         )
     }
 
+    private fun isGetAcademicYear() {
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
+    }
+
     override fun onItemClick(data: StaffDetails) {
+        isGetAcademicYear()
         Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
         SharedPreference.putStaffDetails(this, data)
 

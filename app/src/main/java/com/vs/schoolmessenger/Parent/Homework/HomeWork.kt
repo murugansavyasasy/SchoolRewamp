@@ -305,11 +305,9 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             isMenuType = Constant.M_HOMEWORK,
             fileList = data.file_path,
         )
-
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
         intent.putExtra(Constant.isPreViewData, isHomeWorkData)
         intent.putExtra(Constant.isHomeWorkDate, isHomeWorkDate)
-        Log.d("samekkeaaaaa", isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }

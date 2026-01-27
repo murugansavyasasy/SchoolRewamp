@@ -268,112 +268,120 @@
             android:layout_below="@+id/chAllSelect"
             android:layout_marginBottom="@dimen/ten">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <!-- Scroll ONLY this area -->
+            <ScrollView
+                android:id="@+id/scrollRytList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_marginBottom="@dimen/ten"
-                android:background="@drawable/rect_white"
-                android:paddingVertical="@dimen/five"
-                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-            <TextView
-
-                android:id="@+id/subjectlabel"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerView"
-                android:layout_marginStart="@dimen/fifteen"
-                android:text="@string/subject"
-                android:visibility="gone"></TextView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/subjectlabel"
-                android:visibility="visible"
-                android:weightSum="2">
-
-                <RelativeLayout
-                    android:id="@+id/rytSubjectDropDown"
+                <!-- ScrollView must have ONE child -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_white_light_radious"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
-                    <Spinner
-                        android:id="@+id/isSpinnerSubject"
+                    <!-- RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:background="@drawable/rect_white"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingVertical="@dimen/five"
+                        android:visibility="gone" />
+
+                    <!-- Subject label -->
+                    <TextView
+                        android:id="@+id/subjectlabel"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/isSpinnerSubjectimg"
-                        android:background="@null"
-                        android:drawSelectorOnTop="true"
-                        android:paddingVertical="@dimen/five" />
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:text="@string/subject"
+                        android:visibility="gone" />
 
-                    <ImageView
-                        android:id="@+id/isSpinnerSubjectimg"
-                        android:layout_width="wrap_content"
+                    <!-- Subject & Level dropdown container -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/three"
-                        android:src="@drawable/ic_drop_down"
-                        app:tint="@color/black">
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                    </ImageView>
+                        <!-- Subject dropdown -->
+                        <RelativeLayout
+                            android:id="@+id/rytSubjectDropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:visibility="gone">
 
-                </RelativeLayout>
+                            <Spinner
+                                android:id="@+id/isSpinnerSubject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/isSpinnerSubjectimg"
+                                android:background="@null"
+                                android:drawSelectorOnTop="true"
+                                android:paddingVertical="@dimen/five" />
 
+                            <ImageView
+                                android:id="@+id/isSpinnerSubjectimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/three"
+                                android:src="@drawable/ic_drop_down"
+                                app:tint="@color/black" />
+                        </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rytLevelDropDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/fifteen"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_white_light_radious"
-                    android:visibility="gone">
+                        <!-- Level dropdown -->
+                        <RelativeLayout
+                            android:id="@+id/rytLevelDropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:visibility="gone">
 
-                    <Spinner
-                        android:id="@+id/isSpinnerLevel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/isSpinnerLevelimg"
-                        android:background="@null"
-                        android:drawSelectorOnTop="true"
-                        android:paddingVertical="@dimen/five" />
+                            <Spinner
+                                android:id="@+id/isSpinnerLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/isSpinnerLevelimg"
+                                android:background="@null"
+                                android:drawSelectorOnTop="true"
+                                android:paddingVertical="@dimen/five" />
 
-                    <ImageView
-                        android:id="@+id/isSpinnerLevelimg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/three"
-                        android:src="@drawable/ic_drop_down"
-                        app:tint="@color/black">
-
-                    </ImageView>
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
+                            <ImageView
+                                android:id="@+id/isSpinnerLevelimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/three"
+                                android:src="@drawable/ic_drop_down"
+                                app:tint="@color/black" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </RelativeLayout>
-
 
         <TextView
             android:id="@+id/textdesc"
@@ -570,7 +578,5 @@
 
             </TextView>
         </LinearLayout>
-
-
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
