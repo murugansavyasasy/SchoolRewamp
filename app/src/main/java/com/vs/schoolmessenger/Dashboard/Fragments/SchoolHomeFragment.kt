@@ -82,6 +82,7 @@ import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendan
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.Constant.isSchoolAdItem
 import com.vs.schoolmessenger.Utils.Constant.isSchoolContactDetails
 import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
@@ -171,6 +172,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 Constant.isGlobalVariableData = response.data[0]
                 checkContactPermission()
+            }
+        }
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            response?.data?.let { academicList ->
+                val data = academicList.sortedByDescending { it.current_academic_year }
+                if (isAcademicYearList == data) return@observe
+                isAcademicYearList = data
+                val activeYear = data.find { it.current_academic_year == true }
+                Constant.isCurrentAcademicYearId = activeYear?.id!!
             }
         }
 
@@ -283,7 +294,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-
+        isGetAcademicYear()
 
         return binding.root
     }
@@ -291,6 +302,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onStart() {
         super.onStart()
         Constant.showLoadingDisableScreen(requireActivity())
+    }
+
+    private fun isGetAcademicYear() {
+        appViewModel!!.isGetAcademicYear(
+            access_token!!, requireActivity()
+        )
     }
 
     private fun filterDashboardMenu(query: String) {

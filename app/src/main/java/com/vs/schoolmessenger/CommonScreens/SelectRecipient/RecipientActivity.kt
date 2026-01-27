@@ -237,6 +237,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 } else {
                     binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
                     binding.subjectlabel.visibility = View.GONE
                     isSubjectId = null
                     Constant.showDataValidationNoDashboardRedirectSubject(
@@ -760,13 +761,23 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isLoadData(isSection: List<Section>?) {
+        if (isSection!!.size > 0) {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.chAllSelect.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.GONE
+            binding.chAllSelect.visibility = View.GONE
+            Constant.showDataValidationNoDashboardRedirectSubject(
+                resources.getString(R.string.Oops),
+                this.getString(R.string.no_section_found),
+                this
+            )
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
         isSectionAdapter = SectionListAdapter(
             isSection, this@RecipientActivity, this, Constant.isShimmerViewDisable
         )
         binding.recyclerView.adapter = isSectionAdapter
-        binding.chAllSelect.visibility = View.VISIBLE
 
     }
 

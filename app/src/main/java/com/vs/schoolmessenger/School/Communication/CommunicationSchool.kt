@@ -266,7 +266,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             changeLabel()
         }
 
-
         // Initialize handler for updating recording time
         recordingHandler = Handler()
         recordingRunnable = Runnable {
@@ -288,7 +287,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
         val isCurrentTime = Constant.getCurrentTime()
         binding.lblTime.text = isCurrentTime
-
 
         Constant.setupEditTextWithScroll(
             this, binding.scrollRoot, binding.edtContentTextMessage
@@ -320,21 +318,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun initializeDefaultTimes() {
-
-        // From time = current time + 10 minutes
         val fromCal = Calendar.getInstance()
         fromCal.add(Calendar.MINUTE, 10)
-
         fromHour24 = fromCal.get(Calendar.HOUR_OF_DAY)
         fromMinute = fromCal.get(Calendar.MINUTE)
         val toCal = fromCal.clone() as Calendar
         toCal.add(Calendar.MINUTE, 40)
-
         toHour24 = toCal.get(Calendar.HOUR_OF_DAY)
         toMinute = toCal.get(Calendar.MINUTE)
-
         binding.lblStartTime.text = formatTime12h(fromHour24!!, fromMinute!!)
-
         binding.lblEndTime.text = formatTime12h(toHour24!!, toMinute!!)
     }
 
@@ -377,9 +369,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 val isTodaySelected = selectedDates.contains(today)
 
-                // ===============================
-                // FROM TIME
-                // ===============================
                 if (isFromTime) {
 
                     // 🔒 Only NOW-based restriction depends on today
@@ -416,9 +405,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblEndTime.text =
                         formatTime12h(toHour24!!, toMinute!!)
                 }
-                // ===============================
-                // TO TIME
-                // ===============================
                 else {
 
                     if (fromHour24 != null && fromMinute != null) {
@@ -715,9 +701,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
                     )
                     binding.lblStartDuration.text = "00:00"
-
                     binding.waveformSeekBar.updateWithLevel(0f)
-
                     Log.d("AudioDebug", "Playback completed.")
                 }
                 prepareAsync()
@@ -1835,44 +1819,44 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
     }
 
-
     private fun openAudioFilePicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-
             type = "audio/*"
-            putExtra(
-                Intent.EXTRA_MIME_TYPES,
-                arrayOf(
-                    "audio/wav",
-                    "audio/x-wav",
-                    "audio/m4a",
-                    "audio/mp4")
-            )
 
-            addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
         }
         startActivityForResult(intent, PICK_AUDIO_REQUEST)
     }
 
+
     private fun isAllowedAudio(uri: Uri): Boolean {
         val mimeType = contentResolver.getType(uri)
+        val name = getFileName(uri)?.lowercase() ?: ""
 
-        if (
+        return when {
+            // WAV
             mimeType == "audio/wav" ||
-            mimeType == "audio/x-wav" ||
-            mimeType == "audio/m4a" ||
-            mimeType == "audio/mp4"
-        ) {
-            return true
-        }
+                    mimeType == "audio/x-wav" -> true
 
-        // Fallback: extension check
-        val name = getFileName(uri)?.lowercase() ?: return false
-        return name.endsWith(".wav") ||
-                name.endsWith(".m4a")
+            // M4A
+            mimeType == "audio/mp4" -> true
+
+            // MP3
+            mimeType == "audio/mpeg" -> true
+
+            // Fallback by extension
+            name.endsWith(".wav") ||
+                    name.endsWith(".m4a") ||
+                    name.endsWith(".mp3") -> true
+
+            else -> false
+        }
     }
+
+
+
 
     private fun getFileName(uri: Uri): String? {
         val cursor = contentResolver.query(uri, null, null, null, null)
@@ -1998,13 +1982,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         return when (mimeType) {
             "audio/wav", "audio/x-wav" -> "WAV"
-            "audio/mp4", "audio/m4a" -> "M4A"
+            "audio/mp4" -> "M4A"
+            "audio/mpeg" -> "MP3"
+
             else -> {
-                // Fallback by extension
                 val name = getFileName(uri)?.lowercase()
                 when {
                     name?.endsWith(".wav") == true -> "WAV"
                     name?.endsWith(".m4a") == true -> "M4A"
+                    name?.endsWith(".mp3") == true -> "MP3"
                     else -> "UNKNOWN"
                 }
             }
@@ -2017,20 +2003,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         return when (mimeType) {
             "audio/wav", "audio/x-wav" -> "wav"
-            "audio/m4a", "audio/mp4" -> "m4a"
+            "audio/mp4" -> "m4a"
+            "audio/mpeg" -> "mp3"
 
             else -> {
                 val name = getFileName(uri)?.lowercase()
                 when {
                     name?.endsWith(".wav") == true -> "wav"
                     name?.endsWith(".m4a") == true -> "m4a"
+                    name?.endsWith(".mp3") == true -> "mp3"
                     else -> ""
                 }
             }
         }
     }
-
-
 
     private fun showDurationLimitDialog(message: String) {
         val builder = AlertDialog.Builder(this)
