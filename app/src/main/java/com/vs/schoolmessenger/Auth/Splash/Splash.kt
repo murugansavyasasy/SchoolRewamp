@@ -1210,7 +1210,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         btnUpdateButton.setOnClickListener {
             alertDialog.dismiss() // Close popup
             //startInAppUpdate()
-            openPlayStore()
+            openPlayStore(versionData)
         }
 
         btnLater.setOnClickListener {
@@ -1220,13 +1220,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         }
     }
 
-    private fun openPlayStore() {
+    private fun openPlayStore(versionData: List<VersionData>) {
         val appPackageName = packageName
         try {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=$appPackageName")
+                    Uri.parse(versionData[0].play_store_market_id+appPackageName)
                 )
             )
         } catch (e: Exception) {
@@ -1234,7 +1234,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    Uri.parse(versionData[0].play_store_link+appPackageName)
                 )
             )
         }

@@ -131,7 +131,8 @@ class AwsUploadingPreSigned {
             Log.e("MediaTypeError", e.message.toString())
         }
 
-        val baseURL = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
+//        val baseURL = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
+        val baseURL = Constant.isGlobalVariableData!!.presigned_cred_base_url
         RestClient.changeApiBaseUrl(baseURL)
         val apiService = RestClient.apiInterfaces
         val isFileName = getFileNameFromPath(activity, isFilePathUrl)
