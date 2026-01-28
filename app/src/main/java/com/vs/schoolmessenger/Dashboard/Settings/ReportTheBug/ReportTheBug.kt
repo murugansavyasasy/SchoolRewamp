@@ -221,29 +221,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
         val message = binding.edtReportBug.text.toString().trim()
 
         val uris = arrayListOf<Uri>()
-
-//        Constant.selectedFiles.forEach { fileItem ->
-//            try {
-//                val fileUri = Uri.parse(fileItem.path)
-//
-//                if ("content".equals(fileUri.scheme, ignoreCase = true)) {
-//                    // Already content:// URI
-//                    uris.add(fileUri)
-//                } else {
-//                    // Convert raw path -> FileProvider
-//                    val file = File(fileUri.path ?: return@forEach)
-//                    val providerUri = FileProvider.getUriForFile(
-//                        this,
-//                        "${applicationContext.packageName}.fileprovider",
-//                        file
-//                    )
-//                    uris.add(providerUri)
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-        
         Constant.selectedFiles.forEachIndexed { index, fileItem ->
             if (index == 0) return@forEachIndexed
 
