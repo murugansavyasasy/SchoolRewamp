@@ -291,7 +291,6 @@
                         android:layout_marginEnd="@dimen/fifteen"
                         android:layout_marginBottom="@dimen/ten"
                         android:background="@drawable/rect_white"
-                        android:nestedScrollingEnabled="false"
                         android:paddingVertical="@dimen/five"
                         android:visibility="gone" />
 
