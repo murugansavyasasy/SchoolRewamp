@@ -488,6 +488,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             addProperty(Constant.class_id, isFinalMapDetails!![0].class_id)
             addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
             addProperty(Constant.exam_id, Constant.isMarkUploadExamListDataDetails!!.id)
+            addProperty("academic_year_id", Constant.isUploadMarksSelectedAcademicID)
         }
 
         val selectedActivitiesArray = JsonArray()
