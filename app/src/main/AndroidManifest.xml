@@ -463,7 +463,7 @@
             android:name=".School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".School.LSRW.CompletedTaskList"
             android:configChanges="uiMode|orientation|screenSize"
