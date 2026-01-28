@@ -296,11 +296,11 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
             putExtra(Intent.EXTRA_TEXT, emailBody)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setPackage("com.google.android.gm") // force Gmail only
+//            setPackage("com.google.android.gm") // force Gmail only
         }
 
         try {
-            startActivity(intent)
+            startActivity(Intent.createChooser(intent, "Send Bug Report"))
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, getString(R.string.gmail_not_installed), Toast.LENGTH_SHORT).show()
