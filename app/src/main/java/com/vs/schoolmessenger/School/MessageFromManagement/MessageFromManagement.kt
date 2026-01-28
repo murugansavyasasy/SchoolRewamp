@@ -77,7 +77,8 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
-    private var isFirstSpinnerCall = true
+    private var isFirstSpinnerCall = false
+
 
 
 
@@ -164,14 +165,15 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
 
                 if (response.status) {
+                    binding.rcMessageStaff.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                    completeAttachmentList = response.data
                     if (isMultipleSchool) {
                         userDetails?.let { setupSchoolSpinner(it.staff_details) }
                     } else {
                         isLoadMsgStaff(response.data)
                     }
-                    binding.rcMessageStaff.visibility = View.VISIBLE
-                    binding.lytList.visibility = View.GONE
-                    completeAttachmentList = response.data
+
                     if (fromNotification) {
                         scrollToMessageId(headerId)
                     }
@@ -208,6 +210,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             Constant.hideLoading(this)
             if (response != null) {
                 if (isMultipleSchool){
+                    isFirstSpinnerCall=true
                     userDetails?.let { setupSchoolSpinner(it.staff_details) }
                 }
                 if (response.status) {
@@ -446,6 +449,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
 
+
         val schoolNames = mutableListOf<String>()
         schoolNames.add("All Schools")
         schoolNames.addAll(staffList.map { it.school_name })
@@ -464,8 +468,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 ) {
                     if (isFirstSpinnerCall) {
                         isFirstSpinnerCall = false
+                        Log.d("isComing","isNotComing")
                         return
                     }
+                    Log.d("isComing","isComing")
                     // Update spinner UI
                     adapter1.selectedPosition = position
                     adapter1.notifyDataSetChanged()

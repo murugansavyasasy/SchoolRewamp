@@ -37,6 +37,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     private var selectedExam: getStaffWisExamData? = null
     var selectedExamID = ""
     var isDirectToUploadPage = false
+    var isUploadClicked = false
 
 
     override fun setupViews() {
@@ -147,7 +148,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 }
 
-                if (isDirectToUploadPage) {
+                if (isDirectToUploadPage&&isUploadClicked) {
                     Log.d("UploadDebug", "Upload button clicked")
 
                     Log.d(
@@ -246,8 +247,10 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             R.id.lnrUpload -> {
                 if (selectedExamID != "") {
                     selectedExamActivities = null
+                    isUploadClicked=true
                     appViewModel!!.getSubjectWiseActivities(isAccessToken!!, selectedExamID, this)
                 } else {
+                    isUploadClicked=false
                     Toast.makeText(
                         this,
                         getString(R.string.please_select_an_exam_to_continue),
@@ -263,6 +266,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         Log.d("Data", item.toString())
         if (item == null) {
             isDirectToUploadPage = false
+            isUploadClicked=false
             selectedExam = null
             selectedExamID = ""
             binding.lnrUpload.isEnabled = false
@@ -277,6 +281,8 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.lnrUpload.isEnabled = true
         binding.lnrUpload.alpha = 1f
         isDirectToUploadPage = true
+        isUploadClicked=false
+
         binding.lblClassContinue.visibility = View.GONE
 
     }
@@ -286,6 +292,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         selectedExam = item
         selectedExamID = item!!.id
         selectedExamActivities = null
+        isUploadClicked=false
         Log.d("Data", item.toString())
         Log.d("isSelected", selectedExam.toString())
 
