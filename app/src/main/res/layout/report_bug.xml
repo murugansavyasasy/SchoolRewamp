@@ -165,6 +165,19 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblAddPhoto"
+                    android:text="@string/Optional"
+                    android:textColor="@color/mild_grey1"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/two"
                     android:layout_marginTop="@dimen/eight"
                     android:layout_toEndOf="@id/lblAddPhoto"

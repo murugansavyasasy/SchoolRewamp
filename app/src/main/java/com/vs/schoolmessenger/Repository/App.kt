@@ -1933,11 +1933,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getStaffWiseExam(
         isToken: String,
-        section_id: String, activity: Activity
+        section_id: String,
+        isAcademicYearId: String,
+        activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id)
+        apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id,isAcademicYearId)
     }
 
     fun getSubjectWiseActivities(

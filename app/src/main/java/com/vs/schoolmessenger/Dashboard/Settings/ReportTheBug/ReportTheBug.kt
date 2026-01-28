@@ -35,6 +35,8 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Parent.QuizExam.QuizActivity
@@ -42,6 +44,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.ReportBugBinding
 import java.io.File
@@ -68,6 +71,11 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
+    private var mobile_number = ""
+    var staffDetails: StaffDetails? = null
+    var childDetails: ChildDetails? = null
+
+
 
     override fun setupViews() {
         super.setupViews()
@@ -75,7 +83,9 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
         binding.btnReportBug.setOnClickListener(this)
         binding.btnOpenNextPage.setOnClickListener(this)
 
-
+        childDetails = SharedPreference.getChildDetails(this)
+        staffDetails = SharedPreference.getStaffDetails(this)
+        mobile_number = SharedPreference.getMobileNumber(this).toString()
 
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
@@ -203,22 +213,47 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
     }
 
     private fun sendMailWithAttachment() {
-        val email = Constant.isGlobalVariableData!!.support_email
+        val list = Constant.isGlobalVariableData!!.support_email.split("/")
+        val email1 = list.getOrNull(0)
+        val email2 = list.getOrNull(1)
+
         val subject = selectedMenu
         val message = binding.edtReportBug.text.toString().trim()
 
         val uris = arrayListOf<Uri>()
 
-        Constant.selectedFiles.forEach { fileItem ->
+//        Constant.selectedFiles.forEach { fileItem ->
+//            try {
+//                val fileUri = Uri.parse(fileItem.path)
+//
+//                if ("content".equals(fileUri.scheme, ignoreCase = true)) {
+//                    // Already content:// URI
+//                    uris.add(fileUri)
+//                } else {
+//                    // Convert raw path -> FileProvider
+//                    val file = File(fileUri.path ?: return@forEach)
+//                    val providerUri = FileProvider.getUriForFile(
+//                        this,
+//                        "${applicationContext.packageName}.fileprovider",
+//                        file
+//                    )
+//                    uris.add(providerUri)
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+        
+        Constant.selectedFiles.forEachIndexed { index, fileItem ->
+            if (index == 0) return@forEachIndexed
+
             try {
                 val fileUri = Uri.parse(fileItem.path)
 
                 if ("content".equals(fileUri.scheme, ignoreCase = true)) {
-                    // Already content:// URI
                     uris.add(fileUri)
                 } else {
-                    // Convert raw path -> FileProvider
-                    val file = File(fileUri.path ?: return@forEach)
+                    val file = File(fileUri.path ?: return@forEachIndexed)
                     val providerUri = FileProvider.getUriForFile(
                         this,
                         "${applicationContext.packageName}.fileprovider",
@@ -231,15 +266,34 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
             }
         }
 
+
+        var name = ""
+        if(Constant.isParentChoose){
+           name  = childDetails!!.name
+        }
+        else{
+           name = staffDetails!!.name
+        }
+        val mobile = mobile_number
+
+        val emailBody = """
+              Dear School Chimes Team,
+
+              Name : $name
+              Mobile Number : $mobile
+
+              Query : $message
+              """.trimIndent()
+
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = "*/*"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email1))
             putExtra(
                 Intent.EXTRA_CC,
                 arrayOf("murugan@savyasasy.com", "swathi@savyasasy.com")
             ) // CC
             putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, message)
+            putExtra(Intent.EXTRA_TEXT, emailBody)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setPackage("com.google.android.gm") // force Gmail only
@@ -368,7 +422,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
     private fun openAlbumSelectActivity(isFileType: String) {
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT ) {
+        if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
         } else {
             val intent = Intent(this, AlbumSelectActivity::class.java)

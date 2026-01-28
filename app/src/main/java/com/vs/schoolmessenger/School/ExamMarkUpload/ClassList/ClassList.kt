@@ -59,6 +59,7 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
             isValidAcademicYear =
                 isAcademicYear!!.any { it.current_academic_year }
             isAcademicYearId = isAcademicYear!![0].id
+            Constant.isUploadMarksSelectedAcademicID=isAcademicYearId.toString()
             isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         }
 
@@ -170,6 +171,7 @@ class ClassList : BaseActivity<ClassListBinding>(), View.OnClickListener {
                     val selectedOption = isAcademicYear!![position]
                     isAcademicYearId = selectedOption.id
                     isCurrentAcademicYear = selectedOption.current_academic_year
+                    Constant.isUploadMarksSelectedAcademicID=isAcademicYearId.toString()
                     Log.d(
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"

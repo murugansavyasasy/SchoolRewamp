@@ -1303,6 +1303,7 @@ interface ApiInterfaces {
     fun getStaffWiseExam(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.section_id) section_id: String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: String
     ): Call<getStaffWisExam>
 
     @GET(APIMethods.getSubjectWiseACtivities)
