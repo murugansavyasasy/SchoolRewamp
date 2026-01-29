@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableData
 
 object SharedPreference {
 
@@ -21,6 +22,7 @@ object SharedPreference {
     private const val SH_COUNTRY_ID = "isCountryId"
     private const val SH_INTRODUCTION_SKIP = "isIntroductionSkip"
     private const val SH_USER_DETAILS = "UserDetails"
+    private const val SH_GLOBAL_VARIABLES = "GlobalVariables"
     private const val SH_CHILD_DETAILS = "ChildDetails"
     private const val SH_STAFF_DETAILS = "StaffDetails"
     private const val SH_LOGOUT = "isLogout"
@@ -430,6 +432,37 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
         return sharedPreferences.getBoolean(SH_BIOMETRIC_SKIP, false)
+    }
+
+    fun putGlobalvariables(activity: Context, globalVariables: GlobalVariableData) {
+        val gson = Gson()
+        val userJson = gson.toJson(globalVariables)
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit { putString(SH_GLOBAL_VARIABLES, userJson) }
+    }
+
+
+    fun getGlobalVariables(activity: Context): GlobalVariableData? {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        val userJson = sharedPreferences.getString(SH_GLOBAL_VARIABLES, null)
+        var globalVariables: GlobalVariableData? = null
+        if (userJson != null) {
+            val gson = Gson()
+            globalVariables = gson.fromJson(userJson, GlobalVariableData::class.java)
+        }
+        return globalVariables
     }
 
 
