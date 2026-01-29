@@ -93,6 +93,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             endCallWithoutListening()
         }
     }
+
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 

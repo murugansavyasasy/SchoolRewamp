@@ -32,10 +32,11 @@ class MyApp : Application(), LifecycleObserver {
 
         val isAppLanguage = SharedPreference.getLanguage(this) ?: "en"
         LocalHelperForLanguage.wrapContext(this, isAppLanguage)
-//
+
 //        if (shouldResetApp(this)) {
 //            clearAllLocalStorage(this)
 //            restartApp(this)
 //        }
+
     }
 }
