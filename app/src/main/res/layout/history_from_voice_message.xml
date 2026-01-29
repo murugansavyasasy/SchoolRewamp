@@ -285,6 +285,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblTitleText"
                     android:layout_marginStart="@dimen/ten"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/ten"
                     android:maxLines="3"

@@ -144,6 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:text="Please attend the meeting scheduled at 5 PM."
                     android:textColor="@color/gnt_gray"
 

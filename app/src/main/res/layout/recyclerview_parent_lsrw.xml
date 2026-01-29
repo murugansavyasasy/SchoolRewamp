@@ -77,6 +77,8 @@
         android:layout_below="@id/txtMainDesc"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="25dp"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="I’m not going back to the house and the beach for a few hours and then I’m going to bed and then I’ll head back home to get my stuff ready to the beach and then"

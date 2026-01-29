@@ -63,6 +63,8 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.lnrUpload.alpha = 0.4f
 
 
+        Log.d("SelectedSectionID",Constant.isMarkUploadClassSectionDetails?.sectionId?:"")
+
 
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
@@ -248,7 +250,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                 if (selectedExamID != "") {
                     selectedExamActivities = null
                     isUploadClicked=true
-                    appViewModel!!.getSubjectWiseActivities(isAccessToken!!, selectedExamID, this)
+                    appViewModel!!.getSubjectWiseActivities(isAccessToken!!, selectedExamID,Constant.isMarkUploadClassSectionDetails?.sectionId?:"", this)
                 } else {
                     isUploadClicked=false
                     Toast.makeText(
@@ -303,6 +305,6 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             adapter.notifyItemChanged(adapter.expandedPosition)
         }
 
-        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id, this)
+        appViewModel!!.getSubjectWiseActivities(isAccessToken!!, item!!.id,Constant.isMarkUploadClassSectionDetails?.sectionId?:"", this)
     }
 }
