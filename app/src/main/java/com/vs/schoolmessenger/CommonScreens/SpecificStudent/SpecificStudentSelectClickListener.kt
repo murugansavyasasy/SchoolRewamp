@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
+package com.vs.schoolmessenger.CommonScreens.SpecificStudent
 
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 

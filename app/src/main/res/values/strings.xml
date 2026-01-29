@@ -1078,6 +1078,7 @@
     <string name="cancelled">Cancelled</string>
     <string name="receipt_No">Receipt No</string>
     <string name="paid_Amount">Paid Amount</string>
+    <string name="are_you_sure_you_want_to_sent">Are you sure you want to sent?</string>
 
 
 </resources>

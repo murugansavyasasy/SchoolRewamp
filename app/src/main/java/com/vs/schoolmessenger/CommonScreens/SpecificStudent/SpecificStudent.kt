@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
+package com.vs.schoolmessenger.CommonScreens.SpecificStudent
 
 import android.app.AlertDialog
 import android.graphics.Bitmap
@@ -627,7 +627,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             )
                     } else {
                         isAcademicYearNote =
-                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            resources.getString(R.string.are_you_sure_you_want_to_sent)
                     }
 
                     showSendConfirmationDialog(

@@ -421,7 +421,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".CommonScreens.SpecificStudentData.SpecificStudent"
+            android:name=".CommonScreens.SpecificStudent.SpecificStudent"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />

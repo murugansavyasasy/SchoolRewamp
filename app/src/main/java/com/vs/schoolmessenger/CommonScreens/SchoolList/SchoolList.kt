@@ -318,12 +318,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     if (SELECTED_MENU_ID == M_COMMUNICATION) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
-                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            resources.getString(R.string.are_you_sure_you_want_to_sent)
                         )
                     } else if (SELECTED_MENU_ID == M_ATTACHMENTS) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
-                            resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
+                            resources.getString(R.string.are_you_sure_you_want_to_sent)
                         )
                     } else if (SELECTED_MENU_ID == M_NOTICEBOARD) {
                         val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
@@ -339,7 +339,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
-                            resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
+                            getString(R.string.are_you_sure_you_want_to_sent)
                         )
                     }
                 } else {

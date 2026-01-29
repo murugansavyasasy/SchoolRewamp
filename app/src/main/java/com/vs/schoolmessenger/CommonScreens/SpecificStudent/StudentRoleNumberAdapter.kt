@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
+package com.vs.schoolmessenger.CommonScreens.SpecificStudent
 
 import android.view.LayoutInflater
 import android.view.View
