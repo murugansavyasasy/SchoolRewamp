@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.vs.schoolmessenger.AWS.S3Uploader.UploadCallbackResponse
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableData
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -131,8 +132,8 @@ class AwsUploadingPreSigned {
             Log.e("MediaTypeError", e.message.toString())
         }
 
-//        val baseURL = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
-        val baseURL = Constant.isGlobalVariableData!!.presigned_cred_base_url
+       val globalVariables = SharedPreference.getGlobalVariables(activity)
+        val baseURL = globalVariables!!.presigned_cred_base_url
         RestClient.changeApiBaseUrl(baseURL)
         val apiService = RestClient.apiInterfaces
         val isFileName = getFileNameFromPath(activity, isFilePathUrl)
