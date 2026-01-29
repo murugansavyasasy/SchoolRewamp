@@ -145,6 +145,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.status
                 response.message
                 Constant.isGlobalVariableData = response.data[0]
+                SharedPreference.putGlobalvariables(requireActivity(), response.data[0])
                 checkContactPermission()
 
             }

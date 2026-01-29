@@ -639,14 +639,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tapStandards.visibility = View.GONE
                     binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isStandard)
+//                    changeTapBg(Constant.isStandard)
+                    changeTapBg(Constant.isSection)
+
 
                 }
             }
+            binding.tapStandards.visibility = View.GONE
+
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
             when (SELECTED_MENU_ID) {

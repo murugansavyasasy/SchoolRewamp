@@ -179,6 +179,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         } else {
             binding.rlaScheduleCall.visibility = View.VISIBLE
         }
+        if(isUserDetails!!.staff_role == Constant.isStaffRole || isUserDetails!!.staff_role == Constant.isNonTeachingStaffRole){
+            binding.llEmergencyContainer.visibility = View.GONE
+        }
+        else{
+            binding.llEmergencyContainer.visibility = View.VISIBLE
+        }
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
 
         if (!checkAndRequestPermissions(this)) {
@@ -939,7 +945,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.SwitchEmergencyVoice.setChecked(false)
                 }
                 changeLabel()
-                binding.llEmergencyContainer.visibility = View.VISIBLE
+                if(isUserDetails!!.staff_role == Constant.isStaffRole || isUserDetails!!.staff_role == Constant.isNonTeachingStaffRole){
+                    binding.llEmergencyContainer.visibility = View.GONE
+                }
+                else{
+                    binding.llEmergencyContainer.visibility = View.VISIBLE
+                }
+//                binding.llEmergencyContainer.visibility = View.VISIBLE
                 isScheduleCall = false
                 Constant.isCommunicationType = 1
                 if (mAdapter != null) {
@@ -977,6 +989,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = false
                 changeLabel()
+
+
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = true
                 Constant.isCommunicationType = 2
@@ -1363,7 +1377,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.VISIBLE
-                        binding.llEmergencyContainer.visibility = View.VISIBLE
+                        if(isUserDetails!!.staff_role == Constant.isStaffRole || isUserDetails!!.staff_role == Constant.isNonTeachingStaffRole){
+                            binding.llEmergencyContainer.visibility = View.GONE
+                        }
+                        else{
+                            binding.llEmergencyContainer.visibility = View.VISIBLE
+                        }
+//                        binding.llEmergencyContainer.visibility = View.VISIBLE
                     }
 
                     2 -> {
@@ -1783,7 +1803,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Constant.selectedFiles.clear()
         binding.rlaRecordVoice.visibility = View.VISIBLE
         if (Constant.isCommunicationType == 1) {
-            binding.llEmergencyContainer.visibility = View.VISIBLE
+            if(isUserDetails!!.staff_role == Constant.isStaffRole || isUserDetails!!.staff_role == Constant.isNonTeachingStaffRole){
+                binding.llEmergencyContainer.visibility = View.GONE
+            }
+            else{
+                binding.llEmergencyContainer.visibility = View.VISIBLE
+            }
+//            binding.llEmergencyContainer.visibility = View.VISIBLE
         } else {
             binding.llEmergencyContainer.visibility = View.GONE
         }
@@ -2099,7 +2125,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.gridViewScheduleCall.visibility = View.GONE
                     binding.rlaScheduleCallPickDate.visibility = View.GONE
                     binding.rlaRecordVoice.visibility = View.VISIBLE
-                    binding.llEmergencyContainer.visibility = View.VISIBLE
+
+                    if(isUserDetails!!.staff_role == Constant.isStaffRole || isUserDetails!!.staff_role == Constant.isNonTeachingStaffRole){
+                        binding.llEmergencyContainer.visibility = View.GONE
+                    }
+                    else{
+                        binding.llEmergencyContainer.visibility = View.VISIBLE
+                    }
+//                    binding.llEmergencyContainer.visibility = View.VISIBLE
                 }
 
                 2 -> {
