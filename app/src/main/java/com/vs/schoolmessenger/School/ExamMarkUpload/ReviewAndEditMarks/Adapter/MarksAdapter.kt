@@ -202,6 +202,23 @@ class MarksAdapter(
                     )
                 })
             }
+
+            val isEditable = student.isEditList[i]
+
+            et.isEnabled = isEditable
+            et.isFocusable = isEditable
+            et.isFocusableInTouchMode = isEditable
+            et.isCursorVisible = isEditable
+
+            if (!isEditable) {
+                et.setTextColor(
+                    ContextCompat.getColor(context, R.color.mild_grey_dark)
+                )
+                et.background =
+                    ContextCompat.getDrawable(context, R.drawable.rect_grey)
+            }
+
+
         }
 
         HorizontalScrollSync.bind(holder.subjectScroll)
