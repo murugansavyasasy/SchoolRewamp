@@ -47,6 +47,7 @@
 
 
     <LinearLayout
+        android:id="@+id/lnrDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblSchoolName"
@@ -92,116 +93,198 @@
         android:id="@+id/lblCallTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/actionContainer"
+        android:layout_below="@+id/lnrDuration"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/fifty"
         android:gravity="center"
         android:text=""
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"
         android:visibility="visible" />
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/actionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginBottom="@dimen/fifty"
-        android:padding="@dimen/sixteen">
+        android:layout_marginBottom="@dimen/fifty_five">
 
-        <ImageButton
-            android:id="@+id/declineButton"
-            android:layout_width="@dimen/seventy"
-            android:layout_height="@dimen/seventy"
-            android:background="@android:color/transparent"
-            android:contentDescription="Decline call"
-            android:src="@drawable/ic_end_answer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
+        <!-- Decline Container -->
+        <LinearLayout
+            android:id="@+id/lytDecline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/decline_or_slide_to_answer"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/sixteen_sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <FrameLayout
-            android:id="@+id/ringContainer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ninety"
-            android:background="@drawable/caller_bg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <View
-                android:id="@+id/ring1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.6"
-                android:background="@drawable/incoming_glow" />
-
-            <View
-                android:id="@+id/ring2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.5"
-                android:background="@drawable/incoming_glow" />
-
-            <View
-                android:id="@+id/ring3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.3"
-                android:background="@drawable/incoming_glow" />
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/fifty_five"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/acceptButton"
-                android:layout_width="@dimen/seventy"
-                android:layout_height="@dimen/seventy"
-                android:layout_gravity="center"
-                android:background="@drawable/circle_button_white"
-                android:contentDescription="Accept call"
-                android:src="@drawable/ic_call_answer" />
-        </FrameLayout>
+                android:id="@+id/imgDeclineCall"
+                android:layout_width="@dimen/fifty_five"
+                android:layout_height="@dimen/fifty_five"
+                android:background="@drawable/circle_button_red"
+                android:contentDescription="Decline Call"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_call_end" />
 
-        <ImageButton
-            android:id="@+id/messageButton"
-            android:layout_width="@dimen/seventy"
-            android:layout_height="@dimen/seventy"
-            android:background="@android:color/transparent"
-            android:contentDescription="Send message"
-            android:src="@drawable/ic_call_answer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txtDecline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Decline"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lytAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/fifty_five"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imgAcceptCall"
+                android:layout_width="@dimen/fifty_five"
+                android:layout_height="@dimen/fifty_five"
+                android:background="@drawable/circle_bg_green"
+                android:contentDescription="Accept Call"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_call_end" />
+
+            <TextView
+                android:id="@+id/txtAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Accept"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
-        <ImageButton
-            android:id="@+id/callEndButton"
-            android:layout_width="@dimen/seventy"
-            android:layout_height="@dimen/seventy"
-            android:layout_gravity="center"
-            android:background="@drawable/circle_button_red"
-            android:contentDescription="End call"
-            android:src="@drawable/ic_call_end"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/callEndButton"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/twenty"
+        android:background="@drawable/circle_button_red"
+        android:contentDescription="End call"
+        android:src="@drawable/ic_call_end"
+        android:visibility="gone" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/actionContainer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_marginStart="@dimen/fifteen"-->
+    <!--        android:visibility="gone"-->
+    <!--        android:layout_marginEnd="@dimen/fifteen"-->
+    <!--        android:layout_marginBottom="@dimen/fifty"-->
+    <!--        android:padding="@dimen/sixteen">-->
+
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/declineButton"-->
+    <!--            android:layout_width="@dimen/seventy"-->
+    <!--            android:layout_height="@dimen/seventy"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:contentDescription="Decline call"-->
+    <!--            android:src="@drawable/ic_end_answer"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/decline_or_slide_to_answer"-->
+    <!--            android:textColor="@color/gray"-->
+    <!--            android:textSize="@dimen/sixteen_sp"-->
+    <!--            android:visibility="gone"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <FrameLayout-->
+    <!--            android:id="@+id/ringContainer"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/ninety"-->
+    <!--            android:background="@drawable/caller_bg"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/ring1"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:alpha="0.6"-->
+    <!--                android:background="@drawable/incoming_glow" />-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/ring2"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:alpha="0.5"-->
+    <!--                android:background="@drawable/incoming_glow" />-->
+
+    <!--            <View-->
+    <!--                android:id="@+id/ring3"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:alpha="0.3"-->
+    <!--                android:background="@drawable/incoming_glow" />-->
+
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/acceptButton"-->
+    <!--                android:layout_width="@dimen/seventy"-->
+    <!--                android:layout_height="@dimen/seventy"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:background="@drawable/circle_button_white"-->
+    <!--                android:contentDescription="Accept call"-->
+    <!--                android:src="@drawable/ic_call_answer" />-->
+    <!--        </FrameLayout>-->
+
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/messageButton"-->
+    <!--            android:layout_width="@dimen/seventy"-->
+    <!--            android:layout_height="@dimen/seventy"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:contentDescription="Send message"-->
+    <!--            android:src="@drawable/ic_call_answer"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/callEndButton"-->
+    <!--            android:layout_width="@dimen/seventy"-->
+    <!--            android:layout_height="@dimen/seventy"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:background="@drawable/circle_button_red"-->
+    <!--            android:contentDescription="End call"-->
+    <!--            android:src="@drawable/ic_call_end"-->
+    <!--            android:visibility="gone"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </RelativeLayout>
+
