@@ -68,7 +68,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var currentLblCurrent: TextView? = null
 
     var TYPE: String? = ""
-    var selectedSchoolId = ""
+    var selectedSchoolId = Constant.All_Schools
     var isMultipleSchool = false
 
     private var msg_id: Int = -1
@@ -77,6 +77,9 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    private var isFirstSpinnerCall = false
+
+
 
 
     override fun getViewBinding(): MessageFromManagementBinding {
@@ -162,14 +165,15 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
             if (response != null) {
 
                 if (response.status) {
+                    binding.rcMessageStaff.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+                    completeAttachmentList = response.data
                     if (isMultipleSchool) {
                         userDetails?.let { setupSchoolSpinner(it.staff_details) }
                     } else {
                         isLoadMsgStaff(response.data)
                     }
-                    binding.rcMessageStaff.visibility = View.VISIBLE
-                    binding.lytList.visibility = View.GONE
-                    completeAttachmentList = response.data
+
                     if (fromNotification) {
                         scrollToMessageId(headerId)
                     }
@@ -205,6 +209,10 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
         appViewModel?.isGetMessageStaffArchive?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
+                if (isMultipleSchool){
+                    isFirstSpinnerCall=true
+                    userDetails?.let { setupSchoolSpinner(it.staff_details) }
+                }
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
                         val updatedList = completeAttachmentList.toMutableList()
@@ -283,6 +291,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         binding.isArchiveErrorMsg.visibility = View.VISIBLE
                         binding.isArchiveErrorMsg.text = response.message
                         if (adapter.getCurrentListSize() == 0) {
+                            binding.rytSpinner.visibility = View.GONE
                             binding.lytList.visibility = View.VISIBLE
                             binding.txtNoData.visibility = View.GONE
                             binding.rytSearch1.visibility = View.GONE
@@ -290,6 +299,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                             binding.txtSearch1.text.clear()
 
                         } else {
+                            if (isMultipleSchool) {
+                                binding.rytSpinner.visibility = View.VISIBLE
+                            } else {
+                                binding.rytSpinner.visibility = View.GONE
+                            }
                             binding.lytList.visibility = View.GONE
                             val layoutParams =
                                 binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
@@ -307,6 +321,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                     binding.isArchiveErrorMsg.visibility = View.VISIBLE
                     binding.isArchiveErrorMsg.text = response.message
                     if (adapter.getCurrentListSize() == 0) {
+                        binding.rytSpinner.visibility = View.GONE
                         binding.lytList.visibility = View.VISIBLE
                         binding.txtNoData.visibility = View.GONE
                         binding.rytSearch1.visibility = View.GONE
@@ -314,6 +329,11 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                         binding.txtSearch1.text.clear()
 
                     } else {
+                        if (isMultipleSchool) {
+                            binding.rytSpinner.visibility = View.VISIBLE
+                        } else {
+                            binding.rytSpinner.visibility = View.GONE
+                        }
                         binding.lytList.visibility = View.GONE
                         val layoutParams =
                             binding.isArchiveErrorMsg.layoutParams as ViewGroup.MarginLayoutParams
@@ -429,6 +449,7 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
 
+
         val schoolNames = mutableListOf<String>()
         schoolNames.add("All Schools")
         schoolNames.addAll(staffList.map { it.school_name })
@@ -445,6 +466,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 override fun onItemSelected(
                     parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
+                    if (isFirstSpinnerCall) {
+                        isFirstSpinnerCall = false
+                        Log.d("isComing","isNotComing")
+                        return
+                    }
+                    Log.d("isComing","isComing")
                     // Update spinner UI
                     adapter1.selectedPosition = position
                     adapter1.notifyDataSetChanged()

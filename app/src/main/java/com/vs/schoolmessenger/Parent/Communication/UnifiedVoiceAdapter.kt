@@ -358,7 +358,7 @@ class UnifiedVoiceAdapter(
             }
             isPlayingVoice = false
             updatePlayPauseIcon(false)
-            waveformSeekBar.updateWithLevel(0f)
+        //    waveformSeekBar.updateWithLevel(0f)
             stopAudioProgressUpdate()
         }
 

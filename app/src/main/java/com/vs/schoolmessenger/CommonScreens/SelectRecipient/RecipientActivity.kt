@@ -122,8 +122,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isStandardId = ""
     var isClickedTab = 0
     private var isAssignmentData: AssignmentSendingData? = null
-
-
     private val uploadedFiles = mutableListOf<AwsUploadedFiles>()
     private var pendingFiles: List<FilePath> = emptyList()
     private var currentIndex = 0

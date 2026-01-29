@@ -221,17 +221,16 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
         val message = binding.edtReportBug.text.toString().trim()
 
         val uris = arrayListOf<Uri>()
+        Constant.selectedFiles.forEachIndexed { index, fileItem ->
+            if (index == 0) return@forEachIndexed
 
-        Constant.selectedFiles.forEach { fileItem ->
             try {
                 val fileUri = Uri.parse(fileItem.path)
 
                 if ("content".equals(fileUri.scheme, ignoreCase = true)) {
-                    // Already content:// URI
                     uris.add(fileUri)
                 } else {
-                    // Convert raw path -> FileProvider
-                    val file = File(fileUri.path ?: return@forEach)
+                    val file = File(fileUri.path ?: return@forEachIndexed)
                     val providerUri = FileProvider.getUriForFile(
                         this,
                         "${applicationContext.packageName}.fileprovider",
@@ -243,6 +242,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
                 e.printStackTrace()
             }
         }
+
+
         var name = ""
         if(Constant.isParentChoose){
            name  = childDetails!!.name
@@ -272,11 +273,11 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
             putExtra(Intent.EXTRA_TEXT, emailBody)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            setPackage("com.google.android.gm") // force Gmail only
+//            setPackage("com.google.android.gm") // force Gmail only
         }
 
         try {
-            startActivity(intent)
+            startActivity(Intent.createChooser(intent, "Send Bug Report"))
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, getString(R.string.gmail_not_installed), Toast.LENGTH_SHORT).show()

@@ -112,6 +112,7 @@ object Constant {
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
+    var isUploadMarksSelectedAcademicID = "-1"
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var scrollX = 0

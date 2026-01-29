@@ -65,15 +65,24 @@ class MarksAdapter(
             else -> ""
         }
 
-        val lblText = "${student.name} ($genderShort)"
+        val lblText = if (genderShort.isNullOrBlank()) {
+            student.name
+        } else {
+            "${student.name} ($genderShort)"
+        }
+
         val span = SpannableString(lblText)
 
-        span.setSpan(
-            ForegroundColorSpan(Color.RED),
-            lblText.indexOf("("),
-            lblText.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (!genderShort.isNullOrBlank()) {
+            val start = lblText.indexOf("(")
+            span.setSpan(
+                ForegroundColorSpan(Color.RED),
+                start,
+                lblText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
 
         holder.txtName.text = span
         if (student.rollNo.isNullOrBlank()) {

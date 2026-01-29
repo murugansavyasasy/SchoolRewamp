@@ -4668,8 +4668,9 @@ class SchoolServices {
     fun isGetStaffWiseExam(
         isToken: String,
         section_id: String,
+        academic_year_id: String
     ) {
-        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id)
+        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id,academic_year_id)
             ?.enqueue(object : Callback<getStaffWisExam?> {
                 override fun onResponse(
                     call: Call<getStaffWisExam?>,
