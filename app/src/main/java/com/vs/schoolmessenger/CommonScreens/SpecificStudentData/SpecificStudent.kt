@@ -243,6 +243,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         if (filteredList.isNotEmpty()) {
             binding.rcySpecificStudent.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
             mAdapter.updateList(filteredList)
         } else {
             binding.rcySpecificStudent.visibility = View.GONE
