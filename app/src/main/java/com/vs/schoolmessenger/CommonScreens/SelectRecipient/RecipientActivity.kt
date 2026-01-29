@@ -643,7 +643,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isStandard)
+//                    changeTapBg(Constant.isStandard)
+                    changeTapBg(Constant.isSection)
+
 
                 }
             }
