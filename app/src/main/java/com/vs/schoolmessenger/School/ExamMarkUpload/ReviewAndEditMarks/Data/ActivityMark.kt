@@ -5,5 +5,6 @@ data class ActivityMark(
     val name: String,
     var mark: String,      // editable
     var selected_name: String,      // editable
-    val max_mark: String
+    val max_mark: String,
+    val is_edit: Boolean
 )
