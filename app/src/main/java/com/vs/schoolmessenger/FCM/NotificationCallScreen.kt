@@ -24,11 +24,6 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
-    private var dX = 0f
-    private var originalX = 0f
-    private var isCallConnected = false
-    private var isActivityClosing = false
-    private var isCallAccepted = false
 
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
@@ -77,37 +72,27 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     override fun setupViews() {
         super.setupViews()
         isToolBarNoticeCallTheme()
-
-        startCallAnimation()
         handleIntent(intent)
-        setupSwipeActions()
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
-
         binding.callEndButton.setOnClickListener { stopAndFinishCall() }
-        binding.declineButton.setOnClickListener { endCallWithoutListening() }
-
-        calculateTotalDuration {
-            Log.d("totalDurationMs", totalDurationMs.toString())
-            binding.lblTotalDuration.text = formatDuration(totalDurationMs)
-        }
-
         authViewModel!!.isUpdateNotificationCallLog?.observe(this) { response ->
             if (response != null) {
                 response.status
                 response.message
                 finish()
-
             }
         }
 
-    }
+        binding.imgAcceptCall.setOnClickListener {
+            showConnectedState()
+        }
 
-    fun addAudio(url: String) {
-        audioUrls = audioUrls!! + url
+        binding.imgDeclineCall.setOnClickListener {
+            endCallWithoutListening()
+        }
     }
-
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 
@@ -152,57 +137,10 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
     }
-
-    private fun setupSwipeActions() {
-        binding.acceptButton.setOnTouchListener { view, event ->
-            if (isActivityClosing) return@setOnTouchListener false
-
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    dX = view.x - event.rawX
-                    originalX = view.x
-
-                    //end call
-                    isUserResponse = "NO"
-
-                }
-
-                MotionEvent.ACTION_MOVE -> {
-                    val newX = event.rawX + dX
-                    if (newX in binding.declineButton.x..binding.messageButton.x) {
-                        view.x = newX
-                    }
-                }
-
-                MotionEvent.ACTION_UP -> {
-                    val moved = view.x - originalX
-                    when {
-                        moved > 150 -> showConnectedState()
-                        moved < -150 -> endCallWithoutListening()
-                        else -> view.animate().x(originalX).setDuration(200).start()
-                    }
-                }
-            }
-            true
-        }
-    }
-
     private fun showConnectedState() {
-        if (isCallConnected || isActivityClosing) return
 
-        isCallConnected = true
-        isCallAccepted = true
-
-        stopCallAnimation()
-        binding.declineButton.visibility = View.GONE
-        binding.messageButton.visibility = View.GONE
-
-        binding.acceptButton.animate()
-            .x(binding.actionContainer.width / 2f - binding.acceptButton.width / 2f)
-            .setDuration(300).withEndAction {
-
-                binding.ringContainer.visibility = View.GONE
-                binding.acceptButton.visibility = View.GONE
+        binding.lytAccept.visibility = View.GONE
+        binding.lytDecline.visibility = View.GONE
                 binding.callEndButton.visibility = View.VISIBLE
 
                 if (Constant.mediaPlayer.isPlaying) {
@@ -212,14 +150,10 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                 totalDurationCalculated = 0L
                 currentTrack = 0
                 binding.lblCurrentDuration.text = "00:00"
-                binding.lblTotalDuration.text = "00:00"
-
                 isStartTime = getNow()
 
                 // ▶ Start playback from first audio
                 playAudio(currentTrack)
-
-            }.start()
 
         isUserResponse = "OC"
     }
@@ -228,7 +162,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private fun playAudio(index: Int) {
 
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
-            binding.lblTotalDuration.text = formatDuration(totalDurationCalculated)
             finishPlayback()
             return
         }
@@ -238,21 +171,17 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         try {
             mediaPlayer!!.setAudioAttributes(
-                AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA).build()
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
             )
 
             mediaPlayer!!.setDataSource(audioUrls!![index])
             mediaPlayer!!.prepareAsync()
 
             mediaPlayer!!.setOnPreparedListener { mp ->
-
-                // ✅ ADD duration when it is guaranteed
-                if (mp.duration > 0) {
-                    totalDurationCalculated += mp.duration
-                    binding.lblTotalDuration.text = formatDuration(totalDurationCalculated)
-                }
-
+                // ❌ DO NOT add duration here
                 mp.start()
                 startUpdatingProgress()
             }
@@ -269,8 +198,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             playAudio(currentTrack)
         }
     }
-
-
     private fun startUpdatingProgress() {
         stopUpdatingProgress()
 
@@ -294,47 +221,61 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     private fun calculateTotalDuration(onComplete: () -> Unit) {
 
-        if (audioUrls.isNullOrEmpty()) {
-            Log.e("Duration", "Audio URLs empty, skipping duration")
+        val validUrls = audioUrls?.filter { !it.isNullOrEmpty() } ?: emptyList()
+
+        if (validUrls.isEmpty()) {
+            totalDurationMs = 0
+            onComplete()
             return
         }
 
         totalDurationMs = 0
         preparedCount = 0
 
-        for (url in audioUrls!!) {
-            if (url.isNullOrEmpty()) {
-                preparedCount++
-                continue
-            }
-
+        for (url in validUrls) {
             val tempPlayer = MediaPlayer()
+
             try {
                 tempPlayer.setAudioAttributes(
-                    AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA).build()
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
                 )
+
                 tempPlayer.setDataSource(url)
                 tempPlayer.setOnPreparedListener { mp ->
                     totalDurationMs += mp.duration
                     preparedCount++
                     mp.release()
 
-                    if (preparedCount == audioUrls!!.size) {
+                    if (preparedCount == validUrls.size) {
                         onComplete()
                     }
                 }
+
+                tempPlayer.setOnErrorListener { mp, _, _ ->
+                    preparedCount++
+                    mp.release()
+
+                    if (preparedCount == validUrls.size) {
+                        onComplete()
+                    }
+                    true
+                }
+
                 tempPlayer.prepareAsync()
+
             } catch (e: Exception) {
                 preparedCount++
                 tempPlayer.release()
-                if (preparedCount == audioUrls!!.size) {
+
+                if (preparedCount == validUrls.size) {
                     onComplete()
                 }
             }
         }
     }
-
 
     private fun finishPlayback() {
         stopUpdatingProgress()
@@ -393,21 +334,21 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     override fun onPause() {
         super.onPause()
-        if (!isFinishing && isCallConnected) {
+        if (!isFinishing) {
             mediaPlayer?.pause()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (!isFinishing && isCallConnected) {
+        if (!isFinishing) {
             mediaPlayer?.start()
         }
     }
 
     override fun onStop() {
         super.onStop()
-        if (!isCallAccepted && isFinishing) {
+        if (isFinishing) {
             try {
                 mediaPlayer?.stop()
                 mediaPlayer?.release()
@@ -448,26 +389,11 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     private fun releasePlayer() {
         try {
+            mediaPlayer?.stop()
             mediaPlayer?.release()
         } catch (ignored: Exception) {
         }
         mediaPlayer = null
     }
-
-    private fun startCallAnimation() {
-        binding.ring1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave1))
-        binding.ring2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave2))
-        binding.ring3.startAnimation(AnimationUtils.loadAnimation(this, R.anim.call_wave3))
-    }
-
-    private fun stopCallAnimation() {
-        binding.ring1.clearAnimation()
-        binding.ring2.clearAnimation()
-        binding.ring3.clearAnimation()
-        binding.ring1.visibility = View.GONE
-        binding.ring2.visibility = View.GONE
-        binding.ring3.visibility = View.GONE
-    }
-
     override fun onClick(v: View?) {}
 }

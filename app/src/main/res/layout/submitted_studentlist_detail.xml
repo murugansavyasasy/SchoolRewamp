@@ -103,8 +103,7 @@
                 android:layout_marginEnd="@dimen/six"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/twele"
-                android:paddingEnd="@dimen/twele"
-                android:src="@drawable/close_red_color" />
+                android:paddingEnd="@dimen/twele" />
 
 
             <TextView

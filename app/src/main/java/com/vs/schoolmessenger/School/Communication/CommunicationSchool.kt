@@ -141,6 +141,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
+        Constant.isCommunicationType = 1
+        Constant.isVoiceType == 1
+
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags =

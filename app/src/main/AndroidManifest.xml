@@ -35,7 +35,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
     <uses-permission
@@ -743,4 +742,5 @@
 
 
     </application>
+
 </manifest>
