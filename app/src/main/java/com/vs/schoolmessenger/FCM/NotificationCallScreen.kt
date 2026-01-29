@@ -181,7 +181,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             mediaPlayer!!.prepareAsync()
 
             mediaPlayer!!.setOnPreparedListener { mp ->
-                // ❌ DO NOT add duration here
                 mp.start()
                 startUpdatingProgress()
             }

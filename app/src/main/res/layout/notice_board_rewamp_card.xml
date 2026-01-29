@@ -99,6 +99,8 @@
             android:layout_marginTop="@dimen/four"
             android:ellipsize="end"
             android:lines="3"
+            android:autoLink="web"
+            android:linksClickable="true"
             android:maxLines="3"
             android:paddingTop="@dimen/four"
             android:text="Our Annual Sports Meet is scheduled for Thursday, 8th August 2025 at the school ground. All students are encouraged to participate.\n➤ Participants must register with the Sports Coordinator by 1st August.\n➤ House t-shirts must be worn."

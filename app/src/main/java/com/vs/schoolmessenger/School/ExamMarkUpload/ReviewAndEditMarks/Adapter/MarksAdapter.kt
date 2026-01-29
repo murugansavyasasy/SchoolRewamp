@@ -215,7 +215,7 @@ class MarksAdapter(
                     ContextCompat.getColor(context, R.color.mild_grey_dark)
                 )
                 et.background =
-                    ContextCompat.getDrawable(context, R.drawable.rect_grey)
+                    ContextCompat.getDrawable(context, R.drawable.rect_btn_grey)
             }
 
 

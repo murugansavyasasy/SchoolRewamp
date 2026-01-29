@@ -84,6 +84,8 @@
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/twenty"
         android:ellipsize="end"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:maxLines="3"
         android:text="Purpose of testing student's skill"
         android:textColor="#666666"

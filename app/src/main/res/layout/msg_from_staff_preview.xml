@@ -295,6 +295,8 @@
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:linksClickable="true"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_marginEnd="@dimen/five"
                         android:text="Hello this is testing Messsge Please Ignore this!"
