@@ -336,17 +336,17 @@ class SchoolNoticeBoardAdapter(
         private fun scheduleNotification(context: Context, triggerTime: Long) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                if (!alarmManager.canScheduleExactAlarms()) {
-                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = Uri.parse("package:${context.packageName}")
-                    }
-                    context.startActivity(intent)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.Please_allow_exact_alarm_permission),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+//                if (!alarmManager.canScheduleExactAlarms()) {
+//                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+//                        data = Uri.parse("package:${context.packageName}")
+//                    }
+//                    context.startActivity(intent)
+//                    Toast.makeText(
+//                        context,
+//                        context.getString(R.string.Please_allow_exact_alarm_permission),
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
             }
         }
     }
