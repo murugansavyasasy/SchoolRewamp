@@ -5,8 +5,7 @@
 
     <uses-feature
         android:name="android.hardware.camera.any"
-        android:required="true"
-        tools:node="replace" />
+        android:required="false" />
 
     <queries>
         <intent>
@@ -744,4 +743,5 @@
 
 
     </application>
+
 </manifest>
