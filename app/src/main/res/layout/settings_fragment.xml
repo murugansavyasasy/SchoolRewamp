@@ -862,7 +862,7 @@
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
                     android:layout_marginBottom="@dimen/ten"
-                    android:text="App Version 8.0"
+                    android:text="App Version 8.1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fourteen_sp" />
 

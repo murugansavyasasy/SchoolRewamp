@@ -245,21 +245,30 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
 
 
         var name = ""
+        var School_name = ""
+        var school_ID = ""
         if(Constant.isParentChoose){
            name  = childDetails!!.name
+            School_name  = childDetails!!.school_name
+            school_ID  = childDetails!!.school_id
         }
         else{
-           name = staffDetails!!.name
+             name = staffDetails!!.name
+            School_name = staffDetails!!.school_name
+            school_ID = staffDetails!!.school_id
         }
         val mobile = mobile_number
 
         val emailBody = """
               Dear School Chimes Team,
 
-              Name : $name
+              School Name :- $School_name
+              School ID :- $school_ID
+
+              Name :- $name
               Mobile Number : $mobile
 
-              Query : $message
+              Query :- $message
               """.trimIndent()
 
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
