@@ -40,7 +40,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
+import com.vs.schoolmessenger.CommonScreens.SpecificStudent.SpecificStudent
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -1013,11 +1013,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 )
                         } else {
                             isAcademicYearNote =
-                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                                resources.getString(R.string.are_you_sure_you_want_to_sent)
                         }
                     } else {
                         isAcademicYearNote =
-                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            resources.getString(R.string.are_you_sure_you_want_to_sent)
                     }
 
                     if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || M_HOMEWORK == SELECTED_MENU_ID || M_LSRW == SELECTED_MENU_ID) {

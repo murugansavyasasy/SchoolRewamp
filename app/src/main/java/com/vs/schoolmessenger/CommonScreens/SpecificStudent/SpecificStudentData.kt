@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
+package com.vs.schoolmessenger.CommonScreens.SpecificStudent
 
 data class SpecificStudentData(
     val isId: Int,
