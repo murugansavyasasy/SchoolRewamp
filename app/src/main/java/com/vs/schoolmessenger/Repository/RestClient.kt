@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 class RestClient {
 
     companion object {
-        private var BASE_URL = "http://apiv8.schoolchimes.net/"
+        private var BASE_URL = "https://apiv8.schoolchimes.net/"
         private const val COUPON_URL = "https://api.pauket.com/api/partner/"
 
         private var retrofit: Retrofit? = null
