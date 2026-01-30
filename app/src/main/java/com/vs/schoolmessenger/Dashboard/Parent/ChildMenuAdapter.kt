@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,10 +84,14 @@ class ChildMenuAdapter(
             itemTitle.text = data.name
             itemDescription.text = data.description
 
-            if (itemCountList != null && itemCountList.size > position && itemCountList[position].unread_count != 0) {
-                imgReadCount.visibility = View.VISIBLE
-            } else {
-                imgReadCount.visibility = View.GONE
+            imgReadCount.visibility = View.GONE
+            if (itemCountList != null) {
+                for (countItem in itemCountList) {
+                    if (countItem.id == data.id && countItem.unread_count > 0) {
+                        imgReadCount.visibility = View.VISIBLE
+                        break
+                    }
+                }
             }
 
             when (data.id) {
