@@ -390,6 +390,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val markTexts = MutableList(columns.size) { "" }
             val mockTexts = MutableList(columns.size) { "" }
             val marks = MutableList<Int?>(columns.size) { null }
+            val isEditList = MutableList(columns.size) { true }
 
             apiStudent.marks.orEmpty().forEach { subject ->
                 subject.activities.orEmpty().forEach { activity ->
@@ -403,6 +404,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     if (index != -1) {
                         markTexts[index] = activity.mark
                         marks[index] = activity.mark.toIntOrNull()
+                        isEditList[index] = activity.is_edit
                     }
                 }
             }
@@ -433,7 +435,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 admission_no = apiStudent.admission_no,
                 marks = marks,
                 markTexts = markTexts,
-                mockMarkTexts = mockTexts
+                mockMarkTexts = mockTexts,
+                isEditList = isEditList
             )
         }.toMutableList()
     }
@@ -543,50 +546,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             R.id.lytSearch -> {
                 toggleSearch(true)
             }
-        }
-    }
-
-    fun sortStudentMarkList(
-        list: MutableList<StudentMarkList>,
-        configs: List<SortConfig>
-    ) {
-        if (configs.isEmpty()) return
-
-        list.sortWith { a, b ->
-
-            for (config in configs) {
-
-                val result = when (config.field) {
-
-                    SortField.NAME ->
-                        a.name.compareTo(b.name, ignoreCase = true)
-
-                    SortField.ROLL_NO -> {
-                        val r1 = a.rollNo.toIntOrNull() ?: Int.MAX_VALUE
-                        val r2 = b.rollNo.toIntOrNull() ?: Int.MAX_VALUE
-                        r1.compareTo(r2)
-                    }
-
-                    SortField.ADMISSION_NO -> {
-                        val a1 = a.admission_no.toIntOrNull() ?: Int.MAX_VALUE
-                        val a2 = b.admission_no.toIntOrNull() ?: Int.MAX_VALUE
-                        a1.compareTo(a2)
-                    }
-
-                    SortField.GENDER ->
-                        a.gender.compareTo(b.gender, ignoreCase = true)
-                }
-
-                // if difference found → return immediately
-                if (result != 0) {
-                    return@sortWith if (config.order == SortOrder.ASC) {
-                        result
-                    } else {
-                        -result
-                    }
-                }
-            }
-            0 // all equal
         }
     }
 

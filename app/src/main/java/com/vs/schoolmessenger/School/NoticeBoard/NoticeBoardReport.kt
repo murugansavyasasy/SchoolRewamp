@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -362,6 +364,17 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         }
 
     }
+
+    fun makeTextViewLinkClickable(textView: TextView) {
+        Linkify.addLinks(textView, Linkify.WEB_URLS)
+        textView.movementMethod = LinkMovementMethod.getInstance()
+
+        textView.setOnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            false
+        }
+    }
+
 
 
     fun showEditDeletePopup(data: NoticeStaffData, anchor: View) {

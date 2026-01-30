@@ -58,6 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lblTitle"
         android:layout_marginStart="@dimen/ten"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:layout_marginTop="@dimen/ten"
         android:text="Experiment with solar power building and connection between them is the real power"
         android:textColor="@color/clr_grey_dark"

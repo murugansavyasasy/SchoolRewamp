@@ -220,6 +220,20 @@ class UnifiedVoiceAdapter(
                     }
                 }
 
+                waveformSeekBar.setOnSeekChangeListener { progress ->
+
+                    if (adapter.currentlyPlayingHolder != this) return@setOnSeekChangeListener
+
+                    if (!isPrepared || mediaPlayer == null) return@setOnSeekChangeListener
+
+                    val newPosition = (progress * mediaPlayer!!.duration).toInt()
+                    mediaPlayer!!.seekTo(newPosition)
+
+                    lastPosition = newPosition
+                    lblStartDuration.text = formatTime(newPosition)
+                }
+
+
 
                 imgVoicePlay.setOnClickListener {
 

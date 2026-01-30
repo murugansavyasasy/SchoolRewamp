@@ -114,6 +114,8 @@
                     android:layout_below="@id/txtDescription"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:text="The First Time the two"
                     android:textColor="@color/light_gray_3"
                     android:textSize="@dimen/thirteen_sp" />

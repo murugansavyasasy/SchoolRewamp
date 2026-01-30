@@ -1944,11 +1944,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getSubjectWiseActivities(
         isToken: String,
-        exam_id: String, activity: Activity
+        exam_id: String,
+        section_id:String,
+        activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id)
+        apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id,section_id)
     }
 
     fun isMarkDetails(

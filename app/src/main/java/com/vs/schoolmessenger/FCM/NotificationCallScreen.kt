@@ -93,6 +93,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             endCallWithoutListening()
         }
     }
+
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 
@@ -181,7 +182,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             mediaPlayer!!.prepareAsync()
 
             mediaPlayer!!.setOnPreparedListener { mp ->
-                // ❌ DO NOT add duration here
                 mp.start()
                 startUpdatingProgress()
             }

@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/ten"
         android:text="@string/selected_target_1"
-        android:textColor="@color/light_gray_4"
+        android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:gravity="center"
         android:text="@string/are_you_sure_want_to_send_this_message"
-        android:textColor="@color/light_gray_4"
+        android:textColor="@color/black"
         android:textSize="@dimen/fourteen_sp" />
 
     <View

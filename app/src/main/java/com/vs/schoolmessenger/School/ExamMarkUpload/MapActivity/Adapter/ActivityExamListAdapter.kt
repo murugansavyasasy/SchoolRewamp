@@ -184,7 +184,9 @@ class ActivityExamListAdapter(
                         )
                     }
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                    lblMap.text = context.getString(R.string.not_started)
+//                    lblMap.text = context.getString(R.string.not_started)
+                    lblMap.visibility = View.GONE
+                    lblMap.text = ""
 
 
                 }
@@ -207,9 +209,11 @@ class ActivityExamListAdapter(
                         )
                     }
 //                    holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.light_bg_orange_5))
+                    lblMap.visibility= View.VISIBLE
                     lblMap.text = "${selectedCount} ${context.getString(R.string.of)} ${total} ${
                         context.getString(R.string.activities_mapped)
                     }"
+
 
                 }
 
@@ -232,6 +236,8 @@ class ActivityExamListAdapter(
                             )
                         )
                     }
+                    lblMap.visibility= View.VISIBLE
+
                     lblMap.text =
                         "${context.getString(R.string.all)} ${total} ${context.getString(R.string.activities_mapped)}"
 
