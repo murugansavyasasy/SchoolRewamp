@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -57,15 +58,16 @@ class CountryListAdapter(
                 lblAllCountry.visibility = View.GONE
                 rytCountry.visibility = View.VISIBLE
             }
-
             nameText.text = country.name
-
             Glide.with(context)
                 .load(country.flag_url)
                 .placeholder(R.drawable.school_sample)
-                .thumbnail(0.1f)
+                .thumbnail(0.25f)  // Slightly higher for better preview quality without much cost
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .override(600, 600)
+                .override(120, 120)  // Much smaller: matches ~30dp display size (adjust if needed)
+                .centerCrop()  // Crop to fit circle efficiently
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .error(R.drawable.school_sample)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
@@ -77,7 +79,6 @@ class CountryListAdapter(
                         Log.e("GlideError", "Image load failed", e)
                         return false
                     }
-
                     override fun onResourceReady(
                         resource: Drawable,
                         model: Any,
