@@ -138,10 +138,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@AbsenteesStudentMark)
                     Log.d("isSendAbsenteeSMS", response.message)
-                    Constant.showDataValidation(getString(R.string.success), response.message, this)
+                    Constant.showRedirecttoAttendanceMark(getString(R.string.success), response.message, this)
                 } else {
                     Constant.hideLoading(this@AbsenteesStudentMark)
-                    Constant.showDataValidation(getString(R.string.fail), response.message, this)
+                    Constant.showRedirecttoAttendanceMark(getString(R.string.fail), response.message, this)
                 }
 
                 val mobileNumber = SharedPreference.getMobileNumber(this)
@@ -157,7 +157,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
             } else {
                 Constant.hideLoading(this@AbsenteesStudentMark)
-                Constant.showDataValidation(
+                Constant.showRedirecttoAttendanceMark(
                     getString(R.string.fail),
                     getString(R.string.something_went_wrong_please_try_again_later),
                     this
