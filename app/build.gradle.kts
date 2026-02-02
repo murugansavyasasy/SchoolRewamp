@@ -29,13 +29,18 @@ android {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
-        targetSdk = 35
-        versionCode = 172
+        targetSdk = 34
+        versionCode = 175
         versionName = "8.1"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
 
         vectorDrawables {
             useSupportLibrary = true
