@@ -93,8 +93,6 @@ class HomeWorkItemAdapter(
         }
 
         private var isTextExpanded = false
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
-
 
         // Image
         private val rlaImageReport: RelativeLayout = itemView.findViewById(R.id.rlaImageReport)
@@ -262,7 +260,6 @@ class HomeWorkItemAdapter(
 
                         setOnTouchListener { _, event ->
                             if (event.action == MotionEvent.ACTION_UP) {
-//                                listener.onItemPDFClick(data) // Trigger your custom listener
                             }
                             false // Let the WebView handle the touch event as well
                         }
@@ -293,7 +290,6 @@ class HomeWorkItemAdapter(
             }
 
             imgVideoPlay.setOnClickListener {
-//                listener.onItemVideoClick(data)
             }
 
             tvSeeMoreImage.setOnClickListener {

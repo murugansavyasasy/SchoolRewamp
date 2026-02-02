@@ -215,19 +215,6 @@ object VimeoVideoUpload {
                     }
                 }
 
-//                while (inputStream?.read(buffer).also { bytesRead = it ?: -1 } != -1) {
-//                    outputStream.write(buffer, 0, bytesRead)
-//                    totalUploaded += bytesRead
-//
-//                    val percent = ((totalUploaded * 100) / videoLength).toInt()
-//                    if (percent != lastPercent && percent in 1..100) {
-//                        lastPercent = percent
-////                        withContext(Dispatchers.Main) {
-////                            listener.onProgressUpdate(percent)
-////                        }
-//                    }
-//                }
-
                 outputStream.flush()
                 outputStream.close()
 

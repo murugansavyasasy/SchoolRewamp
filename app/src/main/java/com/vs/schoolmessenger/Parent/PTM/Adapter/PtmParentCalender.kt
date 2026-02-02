@@ -53,8 +53,6 @@ class PtmParentCalender(
             holder.lblSlotCount.visibility = View.VISIBLE
             (holder.lblSlotCount as TextView).text = "Avl : " + countData.count
         } else {
-//            holder.lblSlotCount.visibility = View.GONE
-//            holder.lblSlotCount.visibility = View.INVISIBLE
             holder.lblSlotCount.text = ""
         }
 
@@ -86,14 +84,6 @@ class PtmParentCalender(
 
 
     /** Optionally select today’s date if it exists in the list */
-    fun selectToday() {
-        val today = Calendar.getInstance()
-        val todayPos = dates.indexOfFirst { (_, day) ->
-            day == today.get(Calendar.DAY_OF_MONTH)
-        }
-        if (todayPos != -1) setDefaultSelected(todayPos)
-    }
-
     /** Helper: convert month string to index */
     private fun monthToIndex(month: String): Int {
         return when (month.lowercase(Locale.ENGLISH)) {

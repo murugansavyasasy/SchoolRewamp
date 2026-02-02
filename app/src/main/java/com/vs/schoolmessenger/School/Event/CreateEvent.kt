@@ -225,14 +225,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         mAdapter?.notifyDataSetChanged()
                         val addedCount = Constant.selectedFiles.size - previousCount
                         val totalCount = Constant.selectedFiles.size
-
-//                        Toast.makeText(
-//                            this,
-//                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)} ${if (addedCount > 1) "s" else ""}",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-
-
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
                         // Toast.makeText(this,
@@ -505,69 +497,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         datePickerDialog.show()
     }
 
-
-    //    fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
-//        val calendar = Calendar.getInstance()
-//        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
-//        val currentMinute = calendar.get(Calendar.MINUTE)
-//
-//        val timePickerDialog = TimePickerDialog(
-//            context,
-//            { _, selectedHour, selectedMinute ->
-//                // FIXED: Validate AFTER selection (reliable enforcement)
-//                val today = Calendar.getInstance()
-//                val effectiveSelectedDate = selectedDate ?: today  // Fallback to today if not set
-//                val isSameDay =
-//                    effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-//                            effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
-//
-//                if (isSameDay) {
-//                    val selectedCal = Calendar.getInstance().apply {
-//                        set(Calendar.HOUR_OF_DAY, selectedHour)
-//                        set(Calendar.MINUTE, selectedMinute)
-//                        set(Calendar.SECOND, 0)
-//                        set(Calendar.MILLISECOND, 0)
-//                    }
-//                    val currentCal = Calendar.getInstance().apply {
-//                        set(Calendar.SECOND, 0)
-//                        set(Calendar.MILLISECOND, 0)
-//                    }
-//
-//                    if (selectedCal.before(currentCal)) {
-//                        // Enforce: Reset to current time and notify
-//                        val resetHour12 = if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
-//                        else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12) currentCal.get(Calendar.HOUR_OF_DAY) - 12
-//                        else currentCal.get(Calendar.HOUR_OF_DAY)
-//                        val resetAmPm =
-//                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12) Constant.AM else Constant.PM
-//                        listener.onTimeSelected(
-//                            resetHour12,
-//                            currentCal.get(Calendar.MINUTE),
-//                            resetAmPm
-//                        )
-//                        Toast.makeText(
-//                            context,
-//                            getString(R.string.time_cannot_be_past), Toast.LENGTH_SHORT
-//                        ).show()  // Add this string to strings.xml: "Time cannot be in the past"
-//                        return@TimePickerDialog
-//                    }
-//                }
-//
-//                // Valid: Proceed with 12-hour format
-//                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
-//                val hourIn12Format =
-//                    if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
-//                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
-//            },
-//            currentHour,
-//            currentMinute,
-//            false  // 12-hour format
-//        )
-//
-//        // REMOVED: Hacky OnTimeChangedListener (no longer needed with post-selection validation)
-//
-//        timePickerDialog.show()
-//    }
     private fun validateTimeAfterDateChange(context: Context) {
 
         if (selectedHour24 == null || selectedMinute24 == null) return
@@ -1083,7 +1012,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         okButton.setOnClickListener {
             alertDialog.dismiss()
             ProgressDialogHelper.show(this)
-//                ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
 
         }
@@ -1097,7 +1025,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -1140,7 +1067,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 totalTasks,
                 { completedTasks++; updateProgress() })
         }
-//        ProgressDialogHelper.updateProgress(80)
     }
 
     private fun isFileUploadInAws(

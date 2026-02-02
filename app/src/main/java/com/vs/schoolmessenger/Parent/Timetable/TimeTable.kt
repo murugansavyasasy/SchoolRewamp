@@ -47,7 +47,6 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-//        isToolBarPrimaryTheme()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground

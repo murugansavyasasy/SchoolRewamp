@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
@@ -19,8 +20,6 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
     override fun getViewBinding(): GatePassBinding {
         return GatePassBinding.inflate(layoutInflater)
     }
-
-    private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
 
 
@@ -30,12 +29,7 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val childDetails = SharedPreference.getChildDetails(this)
-//        binding.imgBack.setOnClickListener(this)
         binding.btnOk.setOnClickListener(this)
-//        binding.imgBack.setColorFilter(
-//            ContextCompat.getColor(this, R.color.white),
-//            PorterDuff.Mode.SRC_IN
-//        )
         binding.btnOk.setColorFilter(
             ContextCompat.getColor(this, R.color.white),
             PorterDuff.Mode.SRC_IN
@@ -44,12 +38,16 @@ class OutPass : BaseActivity<GatePassBinding>(), View.OnClickListener {
         if (childDetails!!.profile != "") {
             Glide.with(this)
                 .load(childDetails!!.profile)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .placeholder(R.drawable.user_vector_icon)
                 .error(R.drawable.user_vector_icon)
                 .into(binding.profileImage1)
         } else {
             Glide.with(this)
                 .load(binding.profileImage1)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .placeholder(R.drawable.user_vector_icon)
                 .error(R.drawable.user_vector_icon)
                 .into(binding.profileImage1)

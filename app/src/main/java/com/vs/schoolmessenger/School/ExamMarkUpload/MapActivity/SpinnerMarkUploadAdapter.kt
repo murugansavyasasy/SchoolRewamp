@@ -14,9 +14,6 @@ class SpinnerMarkUploadAdapter(
 ) : BaseAdapter() {
 
     var selectedPosition: Int = -1
-
-    private val disabledPositions = listOf(0, 3) // 1st and 4th not clickable
-
     override fun getCount(): Int = items.size
     override fun getItem(position: Int): Any = items[position]
     override fun getItemId(position: Int): Long = position.toLong()

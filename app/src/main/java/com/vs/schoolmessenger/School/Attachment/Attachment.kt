@@ -814,7 +814,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 totalTasks,
                 { completedTasks++; updateProgress() })
         }
-//        ProgressDialogHelper.updateProgress(80)
     }
 
     private fun isFileUploadInAws(

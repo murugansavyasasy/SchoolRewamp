@@ -250,7 +250,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             getString(R.string.Staffs) + " " + firstItem.totalStaffStrength
         binding.summaryStaticscardview.totalFemale.text =
             getString(R.string.Students) + " " + firstItem.totalStudentStrength
-//        binding.summaryStaticscardview.othersCount.text = firstItem.totalOthersStrength
         binding.summaryStaticscardview.boyscount1.text =
             getString(R.string.boys) + " " + firstItem.totalBoysStrength
         binding.summaryStaticscardview.otherscount1.text =

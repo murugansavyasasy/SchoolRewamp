@@ -48,30 +48,15 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         return AttachmentReportBinding.inflate(layoutInflater)
     }
 
-    private var cameraPermissionDeniedCount = 0
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
-    companion object {
-        private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val PICK_IMAGE_REQUEST = 1001
-        private const val MAX_FILES = 10
-
-        private const val CAMERA_IMAGE_REQUEST = 1004
-    }
-
     var mAttachmentReportAdapter: AttachmentReportAdapter? = null
 
     private var isUserDetails: UserDetails? = null
-    var isMultipleSchool = false
     private var appViewModel: App? = null
 
     var isAccessToken = ""
     var isAttachmentId = ""
     var isAttachmentPosition = 0
     private var isStaffDetails: StaffDetails? = null
-    private var cameraImageFilePath: String? = null
-    private val CAMERA_PERMISSION_REQUEST_CODE = 200
-    private var mAdapter: ImagePickingAdapter? = null
     private var completeAttachmentList: List<AttachmentDataReport> = emptyList()
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isTotalSelectedItem = 0
@@ -90,10 +75,6 @@ class AttachmentReport : BaseActivity<AttachmentReportBinding>(), View.OnClickLi
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-
-//        binding.lnrTabOneName.setOnClickListener(this)
-//        binding.lnrTabTwoName.setOnClickListener(this)
-
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
 
             Constant.hideKeyboardIfOpen(this)

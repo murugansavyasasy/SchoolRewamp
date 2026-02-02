@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
@@ -66,10 +67,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 .load(profileUrl)
                 .placeholder(defaultProfileRes) // While loading
                 .error(defaultProfileRes)       // If failed to load
+                .centerCrop()  // Crop to fit circle efficiently
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(binding.imgStudentProfile)
         } else {
             Glide.with(this)
                 .load(defaultProfileRes)
+                .centerCrop()  // Crop to fit circle efficiently
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(binding.imgStudentProfile)
         }
         binding.lblName.text = name

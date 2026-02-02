@@ -339,35 +339,4 @@ class AwsUploadingPreSigned {
         }
     }
 
-
-//    fun getMediaType(fileExtension: String): MediaType? {
-//        return when (fileExtension.lowercase()) {
-//            // Images
-//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
-//            "png" -> "image/png".toMediaTypeOrNull()
-//            "bmp" -> "image/bmp".toMediaTypeOrNull()
-//            "webp" -> "image/webp".toMediaTypeOrNull()
-//
-//            // Audio
-//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
-//            "wav" -> "audio/wav".toMediaTypeOrNull()
-//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
-//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
-//
-//            // Documents
-//            "pdf" -> "application/pdf".toMediaTypeOrNull()
-//            "doc" -> "application/msword".toMediaTypeOrNull()
-//            "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
-//            "ppt" -> "application/vnd.ms-powerpoint".toMediaTypeOrNull()
-//            "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation".toMediaTypeOrNull()
-//            "xls" -> "application/vnd.ms-excel".toMediaTypeOrNull()
-//            "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
-//            "txt" -> "text/plain".toMediaTypeOrNull()
-//
-//            else -> {
-//                Log.w("MediaTypeFallback", "Unknown type: $fileExtension, using fallback.")
-//                "application/octet-stream".toMediaTypeOrNull()
-//            }
-//        }
-//    }
 }

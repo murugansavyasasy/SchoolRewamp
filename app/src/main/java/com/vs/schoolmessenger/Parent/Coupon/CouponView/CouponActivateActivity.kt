@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -211,9 +213,19 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         binding.bottomLayout.expandableText1.text = convertHtmlToBullets(data.terms_and_conditions)
 
 
-        Glide.with(this).load(thumbnail).into(binding.imageBanner)
+        Glide.with(this)
+            .load(thumbnail)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
+            .into(binding.imageBanner)
 
-        Glide.with(this).load(data.merchant_logo).into(binding.bottomLayout.thumbnail)
+        Glide.with(this)
+            .load(data.merchant_logo)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
+            .into(binding.bottomLayout.thumbnail)
     }
 
     override fun onClick(v: View?) {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.R
 
@@ -31,6 +32,9 @@ class AdImageAdapter(val images: List<AdItem>) :
         fun bind(adItem: AdItem) {
             Glide.with(itemView.context)
                 .load("https://vs5.voicesnapforschools.com/nodejs/promotions/eviska_app.jpg")
+                .centerCrop()  // Crop to fit circle efficiently
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(imageView)
         }
     }

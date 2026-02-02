@@ -659,7 +659,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
             Constant.M_PARENT_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), Attendance::class.java)
-//            Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
             Constant.M_ATTACHMENTS -> Intent(requireActivity(), Attachment::class.java)
             Constant.M_INTERACTION_WITH_STAFF -> Intent(
@@ -671,7 +670,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
             Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
-//            Constant.M_PARENT_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_CERTIFICATE_REQUEST -> Intent(
                 requireActivity(),
                 CertificateRequest::class.java

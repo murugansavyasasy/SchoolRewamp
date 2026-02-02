@@ -1166,14 +1166,6 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         authViewModel!!.isVersionCheck(jsonObject, this)
     }
 
-    private fun isToolBarTheme() {
-        val window = this.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.white)
-        window.navigationBarColor = this.resources.getColor(R.color.white)
-    }
-
     override fun onClick(v: View?) {
         TODO("Not yet implemented")
     }

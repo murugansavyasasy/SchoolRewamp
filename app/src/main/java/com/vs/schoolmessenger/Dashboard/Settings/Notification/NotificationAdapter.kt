@@ -83,7 +83,6 @@ class NotificationAdapter(
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
         private val first_letter: TextView = itemView.findViewById(R.id.first_letter)
-        private val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
         private val line: View = itemView.findViewById(R.id.line)
         private val notification_date: TextView = itemView.findViewById(R.id.notification_date)
 

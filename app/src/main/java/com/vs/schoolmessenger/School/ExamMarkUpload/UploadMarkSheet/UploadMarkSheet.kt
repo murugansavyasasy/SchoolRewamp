@@ -586,7 +586,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                 }
             }
         }
-//        mAdapter?.notifyDataSetChanged()
     }
 
     private fun getPathFromUri(uri: Uri): String? {

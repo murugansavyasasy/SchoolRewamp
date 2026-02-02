@@ -55,22 +55,6 @@ class MonthwiseLeaveAdapter(
         filter.filter("") // trigger filter with empty query to apply status
     }
 
-//    fun filterByStatus(status: String) {
-//        filteredList = if (status.equals(Constant.All_, ignoreCase = true)) {
-//            fullList
-//        } else {
-//            fullList.mapNotNull { monthData ->
-//                val filteredDetails = monthData.details.filter {
-//                    it.status.equals(status, ignoreCase = true)
-//                }
-//                if (filteredDetails.isNotEmpty()) {
-//                    MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
-//                } else null
-//            }
-//        }
-//        notifyDataSetChanged()
-//    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], leaveRequestClickListener)
@@ -83,44 +67,6 @@ class MonthwiseLeaveAdapter(
         notifyDataSetChanged()
     }
 
-
-//    override fun getFilter(): Filter {
-//        return object : Filter() {
-//            override fun performFiltering(constraint: CharSequence?): FilterResults {
-//                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
-//
-//                val result = if (query.isEmpty()) {
-//                    fullList
-//                } else {
-//                    fullList.mapNotNull { monthData ->
-//                        val filteredDetails = monthData.details.filter {
-//                            it.student_name.lowercase().contains(query) ||
-//                                    it.section_name.lowercase().contains(query) ||
-//                                    it.reason.lowercase()
-//                                        .contains(query) || it.no_of_days.lowercase()
-//                                .contains(query)
-//                                    || it.leave_type.lowercase()
-//                                .contains(query) || it.class_name.lowercase().contains(query)
-//
-//                        }
-//                        if (filteredDetails.isNotEmpty()) {
-//                            MonthWiseLeaveData(month = monthData.month, details = filteredDetails)
-//                        } else {
-//                            null
-//                        }
-//                    }
-//                }
-//
-//                return FilterResults().apply { values = result }
-//            }
-//
-//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//                filteredList = results?.values as? List<MonthWiseLeaveData> ?: emptyList()
-//                leaveRequestClickListener.onSearchResultEmpty(filteredList.isEmpty())
-//                notifyDataSetChanged()
-//            }
-//        }
-//    }
 // Add a variable to track the selected status
 
     override fun getFilter(): Filter {

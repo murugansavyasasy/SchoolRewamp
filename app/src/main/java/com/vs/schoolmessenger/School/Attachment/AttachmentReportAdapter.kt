@@ -287,11 +287,6 @@ class AttachmentReportAdapter(
             rcyFile.isNestedScrollingEnabled = false
             rcyFile.adapter = attachmentAdapter
 
-//            val attachmentAdapter = AttachmentFileView(data.file_path, context, "")
-//            rcyFile.layoutManager = GridLayoutManager(context, 3)
-//            rcyFile.isNestedScrollingEnabled = false
-//            rcyFile.adapter = attachmentAdapter
-
 
             rcyFile.addOnItemTouchListener(
                 object : RecyclerView.SimpleOnItemTouchListener() {

@@ -228,7 +228,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (response.status) {
                     isGetSubjectListData = response.data
                     if (isGetSubjectListData!!.isNotEmpty()) {
-                        //  isSubjectId = isGetSubjectListData!!.first().id
                         binding.rytSubjectDropDown.visibility = View.VISIBLE
                         binding.subjectlabel.visibility = View.VISIBLE
                         isLoadSubject(isGetSubjectListData)
@@ -623,8 +622,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
-
-                    //show send and specific student button
                 }
 
                 M_LSRW -> {
@@ -643,10 +640,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
-//                    changeTapBg(Constant.isStandard)
                     changeTapBg(Constant.isSection)
-
-
                 }
             }
             binding.tapStandards.visibility = View.GONE
@@ -659,8 +653,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.nomessageEntire.visibility = View.GONE
                     binding.tabLayout.visibility = View.GONE
                     changeTapBg(Constant.isSection)
-                    //show send button only
-
                 }
 
                 M_ASSIGNMENT -> {
@@ -687,7 +679,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.GONE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.GONE
-//                    changeTapBg(Constant.isSchool)
                     changeTapBg(Constant.isStandard)
                     isGetAcademicYear()
                 }
@@ -701,7 +692,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.tabSectionsStudent.visibility = View.VISIBLE
                     binding.tabGroups.visibility = View.VISIBLE
                     binding.tapStaffs.visibility = View.VISIBLE
-//                    changeTapBg(Constant.isSchool)
                     changeTapBg(Constant.isStandard)
                     isGetAcademicYear()
 
@@ -855,8 +845,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isSubject.isNullOrEmpty()) return
 
         val subjectList = isSubject.toMutableList()
-//        subjectList.add(0, NameAndIds(0, "Get Subject", "", "", ""))
-
         val adapter = SubjectLoadAdapter(this, subjectList)
         binding.isSpinnerSubject.adapter = adapter
 
@@ -1367,7 +1355,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 ProgressDialogHelper.dismiss()
             }
         }
-        Log.d("UploadDebug", "ProgressDialogHelper.updateProgress(10) called")
 
         when {
             Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
@@ -1446,7 +1433,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         } catch (e: Exception) {
                             0L
                         }
-
                         Log.d(
                             "Compressor",
                             "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
@@ -1830,11 +1816,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     fun attachmentSendApi() {
-
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
 
             val jsonObject = ApiCallRequest.isSendAttachment(
@@ -1857,9 +1841,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
-
             isAssignmentData?.let {
 
                 val jsonObject = ApiCallRequest.isSendAssignment(
@@ -1896,9 +1878,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
-
             val isLsrwnewTaskSendingData =
                 intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
 
@@ -1932,13 +1912,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     fun isHomeWorkSend() {
-
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
-
             ProgressDialogHelper.dismiss()
 
             val sectionDetails =
@@ -2000,11 +1977,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     // QUIZ
     fun submitQuiz() {
-
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
 
             pendingBody = quizData!!
@@ -2065,9 +2040,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun replaceUrlsInBody(body: QuizRequestBody) {
-
         body.questions.forEach { q ->
-
             // Question attachments
             q.file_path = q.file_path.map { file ->
                 if (file.url.startsWith("http")) {
@@ -2100,13 +2073,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun callApi(body: QuizRequestBody) {
-
         runOnUiThread {
             Constant.showLoading(this)
         }
-
         Handler(Looper.getMainLooper()).postDelayed({
-
             ProgressDialogHelper.dismiss()
 
             var isQuestionId = 0
@@ -2204,14 +2174,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val list = mutableListOf<FilePath>()
 
         body.questions.forEach { q ->
-
             // Question attachments
             q.file_path.forEach { file ->
                 if (!isAlreadyUploaded(file.url)) {
                     list.add(file)
                 }
             }
-
             // Option images
             addIfLocalFilePath(q.a_image, list)
             addIfLocalFilePath(q.b_image, list)

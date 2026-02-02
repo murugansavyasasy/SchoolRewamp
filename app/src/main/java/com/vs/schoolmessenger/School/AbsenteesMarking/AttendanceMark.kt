@@ -341,7 +341,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
                     studentsList?.size?.let {
                         if (it > 0) {
-//                            studentsList = isStudentAttendanceReportResponseData
                             ShowData()
                             loadStudentReport(studentsList)
                             binding.imgSearchicon.visibility = View.VISIBLE
@@ -918,36 +917,20 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
 
 // Calculate percentages safely
-
-
-        // Combine Present + Late for percentage
         val presentPlusLateCount = presentCount + lateCount
 
         val presentPlusLatePercentage =
             if (validCount > 0) (presentPlusLateCount * 100f) / validCount else 0f
 
-//        val presentPercentage = if (validCount > 0) (presentCount * 100f) / validCount else 0f
         val absentPercentage = if (validCount > 0) (absentCount * 100f) / validCount else 0f
         val odPercentage = if (validCount > 0) (odCount * 100f) / validCount else 0f
-//        val latePercentage = if (validCount > 0) (lateCount * 100f) / validCount else 0f
-
-
-// Format to two decimal places
-//        val presentFormatted = String.format("%.1f", presentPercentage)
-
         val presentPlusLateFormatted = String.format("%.1f", presentPlusLatePercentage)
 
         val absentFormatted = String.format("%.1f", absentPercentage)
         val odFormatted = String.format("%.1f", odPercentage)
-//        val lateFormatted = String.format("%.1f", latePercentage)
-
-
-// Set to UI
-//        binding.lblPresentRate.text = "$presentFormatted%"
         binding.lblPresentRate.text = "$presentPlusLateFormatted%"
         binding.lblAbsentRate.text = "$absentFormatted%"
         binding.lblODRate.text = "$odFormatted%"
-//        binding.lblLateRate.text = "$lateFormatted%"
 
 
         // Show total OD students

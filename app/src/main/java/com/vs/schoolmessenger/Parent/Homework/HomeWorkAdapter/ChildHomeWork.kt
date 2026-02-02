@@ -108,7 +108,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     var isHomeWorkDate: String? = ""
     private var appViewModel: App? = null
     var isIframe = ""
-    var isFileSize = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
 
@@ -119,19 +118,13 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     private var audioAdapter: AudioAdapter? = null
 
     lateinit var childstandardadapter: ChildStandardAdapter
-    lateinit var assignmentchildstandardAdapter: AssignmentChildStandardAdapter
 
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
-
-    private var selectedSkill: String = Constant.Listening
-    private lateinit var tabList: List<LinearLayout>
     private var mediaRecorder: MediaRecorder? = null
     private var recordingFilePath: String? = null
     private var isRecording = false
@@ -1059,7 +1052,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             ).show()
             return
         }
-//        Constant.showLoading(this@ChildHomeWork)
         isUploadFilesInServer("Documents")
     }
 
@@ -1236,110 +1228,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
 
-//    private fun isFileUploadInAws(
-//        isFileType: String?,
-//        totalTasks: Int,
-//        onTaskComplete: () -> Unit
-//    ) {
-//        val allNonVideos = selectedFiles.toList()
-//        val imagesToCompress = allNonVideos.filter { it.type == FileType.IMAGE }
-//        val nonImages = allNonVideos.filter { it.type != FileType.IMAGE }
-//        val newSelectedFiles = mutableListOf<FileItem>()
-//        val outputDir = File(
-//            getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput"
-//        )
-//        outputDir.mkdirs()
-//        Constant.compressImageFilesOnly(
-//            context = this,
-//            files = imagesToCompress,
-//            outputDir = outputDir.absolutePath,
-//            format = Bitmap.CompressFormat.JPEG,
-//            quality = 80,
-//            maxWidth = 1280,
-//            maxHeight = 1280,
-//            onEachProcessed = { original, outputPath, success ->
-//                if (success && outputPath != null) {
-//                    val compressedFile = File(outputPath)
-//                    val originalSizeKB = try {
-//                        if (original.path.startsWith("content://")) {
-//                            contentResolver.openFileDescriptor(
-//                                Uri.parse(original.path), "r"
-//                            )?.statSize ?: 0
-//                        } else {
-//                            File(original.path).length()
-//                        }
-//                    } catch (e: Exception) {
-//                        0L
-//                    }
-//
-//                    Log.d(
-//                        "Compressor",
-//                        "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
-//                    )
-//
-//                    newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
-//                } else {
-//                    newSelectedFiles.add(original)
-//                    Log.e("Compressor", "Failed: ${original.path}")
-//                }
-//                onTaskComplete()
-//            },
-//            onComplete = {
-//                val updatedFiles = newSelectedFiles + nonImages
-//                selectedFiles.clear()
-//                selectedFiles.addAll(updatedFiles)
-//                val nonVideoCount = selectedFiles.size
-//                var awsCompleted = 0
-//                val isCountryId = SharedPreference.getCountryId(this)
-//                for (i in selectedFiles.indices) {
-//                    isAwsUploadingPreSigned?.getPreSignedUrl(
-//                        selectedFiles[i].path,
-//                        isChildDetails!!.school_id,
-//                        isFileType!!,
-//                        this,
-//                        isCountryId!!,
-//                        false,
-//                        object : UploadCallback {
-//
-//                            override fun onUploadSuccess(
-//                                response: String?, isFileUploaded: String?
-//                            ) {
-//                                isAwsUploadedFiles.add(
-//                                    AwsUploadedFiles(
-//                                        isFileUrl = isFileUploaded!!,
-//                                        isFileType = selectedFiles[i].type.name
-//                                    )
-//                                )
-//                                onTaskComplete()
-//
-//                                awsCompleted++
-//                                if (awsCompleted == nonVideoCount) {
-//                                    if (isVideoSelectedArrayList.isEmpty()) {
-//                                        onAllUploadsComplete()
-//                                    } else {
-//                                        videoUploading(totalTasks, onTaskComplete)
-//                                    }
-//                                }
-//                            }
-//
-//                            override fun onUploadError(error: String?) {
-//                                onTaskComplete()
-//                                Log.d("isUploadIssue", error.toString())
-//                                awsCompleted++
-//                                if (awsCompleted == nonVideoCount) {
-//                                    if (isVideoSelectedArrayList.isEmpty()) {
-//                                        onAllUploadsComplete()
-//                                    } else {
-//                                        videoUploading(totalTasks, onTaskComplete)
-//                                    }
-//                                }
-//                            }
-//                        })
-//                }
-//
-//                Log.d("Compressor", "All files compressed and uploaded.")
-//            })
-//    }
 
     private fun videoUploading(
         totalTasks: Int,
@@ -1378,40 +1266,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         }
     }
 
-//    private fun videoUploading(
-//        totalTasks: Int,
-//        onTaskComplete: () -> Unit
-//    ) {
-//        val iterator = isVideoSelectedArrayList.iterator()
-//        while (iterator.hasNext()) {
-//            val fileItem = iterator.next()
-//            if (fileItem.path.contains("player.vimeo.com")) {
-//                isAwsUploadedFiles.add(
-//                    AwsUploadedFiles(
-//                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
-//                    )
-//                )
-//                iterator.remove()
-//            }
-//        }
-//        Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
-//        if (isVideoSelectedArrayList.isNotEmpty()) {
-//            for (i in isVideoSelectedArrayList.indices) {
-//                Thread {
-//                    for (x in 1..10) {
-//                        Thread.sleep(400)
-//                        runOnUiThread { onTaskComplete() }
-//                    }
-//                }.start()
-//                VimeoVideoUpload.uploadVideo(
-//                    this, "lsrw", "lsrw", isVideoSelectedArrayList[i].path, this
-//                )
-//            }
-//        } else {
-//            onAllUploadsComplete()
-//        }
-//    }
-
     override fun onUploadComplete(
         success: Boolean, iframe: String?, link: String?
     ) {
@@ -1429,29 +1283,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             }
         }
     }
-
-//    override fun onUploadComplete(
-//        success: Boolean, iframe: String?, link: String?
-//    ) {
-//        runOnUiThread {
-//            var videoCompleted = 0
-//            if (success && link != null) {
-//                isAwsUploadedFiles.add(
-//                    AwsUploadedFiles(
-//                        isFileUrl = link, isFileType = "VIDEO"
-//                    )
-//                )
-//                if (!iframe.isNullOrEmpty()) {
-//                    isIframe = iframe
-//                }
-//            }
-//            videoCompleted++
-//            val videoCount = isVideoSelectedArrayList.size
-//            if (videoCompleted == videoCount) {
-//                onAllUploadsComplete()
-//            }
-//        }
-//    }
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
@@ -1825,7 +1656,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (isRecording) {
             stopVoiceRecording()
         }
-//        Constant.selectedFiles.clear()
         isAwsUploadedFiles.clear()
         isVideoSelectedArrayList.clear()
         Constant.Remaining = MAX_FILES

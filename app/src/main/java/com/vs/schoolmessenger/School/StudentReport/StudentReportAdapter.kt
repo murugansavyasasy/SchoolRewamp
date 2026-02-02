@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -98,30 +99,10 @@ class StudentReportAdapter(
             Glide.with(context)
                 .load(data.profile)
                 .placeholder(R.drawable.image_placeholder)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .error(R.drawable.default_profile)
                 .into(profileImage)
-
-//            val profileUrl = data.profile
-//            val defaultAvatar = when {
-//                data.gender.equals("male", ignoreCase = true) -> R.drawable.boy_avatar_with_no_bg
-//                data.gender.equals("female", ignoreCase = true) -> R.drawable.girl_avatar_no_bg
-//                else -> R.drawable.person_circle // fallback if gender is unknown
-//            }
-//
-//            if (profileUrl.isNullOrEmpty()) {
-//                // No profile URL → load gender-based default directly
-//                Glide.with(profileImage.context)
-//                    .load(defaultAvatar)
-//                    .placeholder(R.drawable.person_circle)
-//                    .into(profileImage)
-//            } else {
-//                // Load URL → if fails, fallback to gender-based drawable
-//                Glide.with(profileImage.context)
-//                    .load(profileUrl)
-//                    .placeholder(R.drawable.person_circle)
-//                    .error(defaultAvatar)
-//                    .into(profileImage)
-//            }
 
 
             lnrMail.setOnClickListener {

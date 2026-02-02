@@ -316,20 +316,6 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View
             }
         }
     }
-
-//    private fun highlightSelectedTab(selectedView: View) {
-//        val buttons = listOf(
-//            binding.allbutton, binding.ytsbutton, binding.inprogressbutton, binding.completedbutton
-//        )
-//        buttons.forEach {
-//            it.isEnabled = true
-//            it.setBackgroundResource(R.drawable.light_gray_radius)
-//        }
-//        selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
-//        selectedView.isEnabled = false
-//    }
-
-
     private fun RedirectToCreateLp() {
         val intent = Intent(this@LessonPlanViewDetails, LessonPlanCreateActivity::class.java)
         intent.putExtra(Constant.section_subject_id, sectionSubjectId)

@@ -110,7 +110,6 @@ class AbsenteesStudentListDetailAdapter(
         private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
         private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
 
-        //        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
         private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
         private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
         private val imageView: ShapeableImageView = itemView.findViewById(R.id.Image_value)

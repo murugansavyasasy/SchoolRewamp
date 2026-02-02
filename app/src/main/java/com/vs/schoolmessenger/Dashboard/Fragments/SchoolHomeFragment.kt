@@ -215,7 +215,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     )
                     isSchoolMenuDetails = isSchoolDashBoardData!![0].menus
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
-//                    allMenuItems = isSchoolMenuDetails!!
                     originalMenuList.clear()
                     originalMenuList.addAll(isSchoolMenuDetails!!)
 
@@ -223,8 +222,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     filteredMenuList.addAll(originalMenuList)
 
                     allMenuItems = filteredMenuList
-
-
                     //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
                     isLoadData()
@@ -670,15 +667,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        //  if (isSchoolDashBoardData == null) {
         isDashBoardData()
-        //   } else {
-        //     isLoadData()
         setupRecyclerView()
-//            appViewModel!!.isDashBoardCountData(
-//                access_token, Constant.staff_, requireActivity()
-//            )
-        // }
         Log.d("Loading", "Dashboard Data is Refreshed")
     }
 
@@ -897,7 +887,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_LEAVE_REQUEST -> {
-//                LeaveRequests::class.java
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     LeaveRequests::class.java
                 } else {

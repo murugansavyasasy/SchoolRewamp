@@ -25,7 +25,6 @@ class CertificateRequestAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -67,11 +66,6 @@ class CertificateRequestAdapter(
             itemView.findViewById(R.id.lblCertificateReason)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val rytCertificate: RelativeLayout = itemView.findViewById(R.id.rytCertificate)
-//        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
-//        private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
-//        private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
-//
-//        private val icon: ImageView = itemView.findViewById(R.id.icon)
 
         fun bind(
             data: CertificateListData,
@@ -113,26 +107,6 @@ class CertificateRequestAdapter(
                 Constant.isCertificateData = saveCertificateData
                 context.startActivity(myIntent)
             }
-
-//            lblStatus.text = data.status
-//            lblStatus.text = data.status
-
-//            if(data.url.isNotEmpty()){
-//                rytDownload.visibility = View.VISIBLE
-//            }
-//            else{
-//                rytDownload.visibility = View.GONE
-//            }
-
-//            if(data.status.equals("Approved")) {
-//                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))
-//                icon.setImageResource(R.drawable.checkimage)
-//            }
-//            else {
-//                rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_waiting))
-//                icon.setImageResource(R.drawable.sandclockicon)
-//                icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
-//            }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

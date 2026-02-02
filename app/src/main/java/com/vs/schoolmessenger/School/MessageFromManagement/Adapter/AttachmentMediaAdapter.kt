@@ -102,27 +102,22 @@ class AttachmentMediaAdapter(
                 }
 
                 Constant.PDF -> {
-//                    DefaultImage.setImageResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.url, "")
                 }
 
                 Constant.DOC, Constant.DOCX -> {
-//                    DefaultImage.setImageResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.url, "")
                 }
 
                 Constant.TXT -> {
-//                    DefaultImage.setImageResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.url, "")
                 }
 
                 Constant.PPT, Constant.PPTX -> {
-//                    DefaultImage.setImageResource(R.drawable.ppt_icon)
                     openDocumentInWebView(data.url, "")
                 }
 
                 Constant.EXCEL -> {
-//                    DefaultImage.setImageResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url, "")
                 }
 

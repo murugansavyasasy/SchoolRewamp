@@ -270,16 +270,6 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.rcyleaverequest.visibility = View.VISIBLE
             }
         }
-//        if (isEmpty) {
-//            binding.nomessage.visibility = View.VISIBLE
-//            binding.txtNoData.visibility = View.VISIBLE
-//            binding.txtNoData.text = getString(R.string.no_leave_request_found)
-//            binding.rcyleaverequest.visibility = View.GONE
-//        } else {
-//            binding.nomessage.visibility = View.GONE
-//            binding.txtNoData.visibility = View.GONE
-//            binding.rcyleaverequest.visibility = View.VISIBLE
-//        }
     }
 
     override fun onApproveClicked(

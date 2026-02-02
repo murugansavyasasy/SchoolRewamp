@@ -56,13 +56,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
 
-
-    private enum class TabType {
-        LeaveRequest, History
-    }
-
-    private val txtDesc: String = ""
-
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(

@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.R
@@ -67,7 +69,12 @@ class CouponMenuAdapter(
 
         fun bind(data: Category, position: Int) {
             textView.text = data.categoryName
-            Glide.with(context).load(data.categoryImage).placeholder(R.drawable.allimage)
+            Glide.with(context)
+                .load(data.categoryImage)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
+                .placeholder(R.drawable.allimage)
                 .into(imageview)
 
             // Set selected/unselected styles

@@ -75,7 +75,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), AssignmentClickListe
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 

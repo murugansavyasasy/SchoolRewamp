@@ -61,7 +61,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setupToolbarBlueWhite()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -481,7 +480,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
             if (toSessionIndex != -1) binding.isToSession.setSelection(toSessionIndex)
 
             Log.d("leaveCategories", leaveCategories.toString())
-//            val leaveType = leaveCategories.indexOf(originalLeaveType)
             val leaveTypeIndex = leaveCategories.indexOfFirst { it.id == originalLeaveID }
             if (leaveTypeIndex != -1) {
                 binding.isLeaveCategories.setSelection(leaveTypeIndex)
@@ -489,9 +487,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
                 originalLeaveID = leaveCategories[leaveTypeIndex].id
                 isLeaveCategoryType = leaveCategories[leaveTypeIndex].name
             }
-//            Log.d("leaveType", leaveType.toString())
-//            if (leaveType != -1) binding.isLeaveCategories.setSelection(leaveType)
-//            isLeaveCatoryID = originalLeaveID
 
             isFromSession = originalFromSession
             isToSession = originalToSession
@@ -537,16 +532,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
     private fun validateDateAndSession(showError: Boolean = true): Boolean {
         val errors = mutableListOf<String>()
         val reason = binding.etLeaveReason.text.toString().trim()
-
-//        // Validate Leave Type
-//        if (isLeaveCategoryType.isNullOrBlank() || isLeaveCategoryType == Constant.Select_a_leave_type) {
-//            errors.add(getString(R.string.leave_type_is_required))
-//        }
         if (isLeaveCatoryID < 0 || isLeaveCategoryType == Constant.Select_a_leave_type) {
             errors.add(getString(R.string.leave_type_is_required))
         }
-
-        // Validate Reason
         if (reason.isEmpty()) {
             errors.add(getString(R.string.reason_is_required))
         }
@@ -560,7 +548,6 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         if (isFromDateInvalid || isToDateInvalid) {
             errors.add(getString(R.string.both_from_and_to_dates_are_required))
         }
-
 
         // Validate Session (only if dates are valid)
         if (!isFromDateInvalid && !isToDateInvalid && fromDate != null && toDate != null) {

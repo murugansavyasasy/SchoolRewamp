@@ -99,12 +99,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrAboutTheApp.setOnClickListener(this)
         binding.lnrHowToUseApp.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
-
-//        val pInfo = requireContext().packageManager.getPackageInfo(requireActivity().packageName, 0)
-//        val versionName = pInfo.versionName
-//        pInfo.longVersionCode
-//        binding.lblAppVersion.text = "${getString(R.string.App_Version)} - $versionName"
-
         val pInfo = requireContext().packageManager
             .getPackageInfo(requireActivity().packageName, 0)
 
@@ -235,8 +229,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 )
                 dialog.show(parentFragmentManager, "RateUsDialog")
 
-//                val dialog = RateUsDialog("",this)
-//                dialog.show(parentFragmentManager, "RateUsDialog")
             }
 
             R.id.lnrFaq -> {
@@ -254,7 +246,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrLogout -> {
-//                testInAppReviewUI()
                 isShowLogoutPopup()
             }
 

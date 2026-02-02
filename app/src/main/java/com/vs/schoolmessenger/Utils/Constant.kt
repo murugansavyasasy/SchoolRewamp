@@ -116,9 +116,7 @@ object Constant {
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var scrollX = 0
-    var isSyncing = false
     var isParentChoose = false
-    var isVisibleParentArchieveErrMsg = false
     var isParentArchieveErrMsg = ""
     var country_details: Country? = null
     var user_details: UserDetails? = null
@@ -244,35 +242,22 @@ object Constant {
 
     var mediaPlayer: MediaPlayer = MediaPlayer()
 
-
-//    var MAX_FILES = 10
-
     var isAcademicYearList: List<AcademicYear>? = null
 
-    // var isParentMenuName = ""
     var isSelectedMenuName = ""
     var isSchoolMenuCount = -1
 
     var isCompletedHomeworkId: String? = null
 
-
-//    var isForward = false
-    //MarkAttendanceDetails
-
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
-
-    //    var isMarkUploadClassSectionDetails: ClassSectionData? = null
     var isMarkUploadClassSectionDetails: StandardSection? = null
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
     var isSelectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
 
     var staffWisExamList: List<getStaffWisExamData>? = emptyList()
     var isExtractedDetails: List<ParcelTableData>? = emptyList()
-
-
-    var selectedActivityMappings: List<SelectedActivityMapping> = emptyList()
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
@@ -317,7 +302,6 @@ object Constant {
     var approved = "Approved"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"
-    var in_review = "In review"
 
     // String fields
     var scaleX = "scaleX"
@@ -325,8 +309,6 @@ object Constant {
     var AM = "AM"
     var PM = "PM"
     var dd_MM_yyyy = "dd/MM/yyyy"
-    var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
-    var yyyy_MMM_dd = "yyyy MMM, dd"
     var dd_MMM_yyyy_1 = "dd MMM yyyy"
     var dd_MMM_yyyy_2 = "EEE, MMM yyyy"
     var hh_mm_a = "hh:mm a"
@@ -343,15 +325,10 @@ object Constant {
 """.trimIndent()
     var isMailTitle = "Request to configure communication academic year"
     var isAcademicYearId = "isAcademicYearId"
-    var isSectionId = "isSectionId"
-    var isStandardName = "isStandardName"
-    var isSectionName = "isSectionName"
     var isCurrentAcademicYear = "isCurrentAcademicYear"
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
-    var create_quiz_exam_data = "create_quiz_exam_data"
-    var create_quiz_exam_data_add_now = "create_quiz_exam_data_add_now"
     var edit_quiz_exam_data = "edit_quiz_exam_data"
     var notice_data = "notice_data"
     var message = "message"
@@ -373,7 +350,6 @@ object Constant {
     var homework_data = "homework_data"
     var attachment_data = "attachment_data"
     var lsrwskill_data = "lsrwskill_data"
-    var lsrwsubmitskill_data = "lsrwsubmitskill_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var type_ = "type"
@@ -385,18 +361,15 @@ object Constant {
     var parent = "parent"
     var staff_ = "staff"
     var en = "en"
-    var Ok = "Ok"
     var Cancel = "Cancel"
     var ta = "ta"
     var th = "th"
     var hi = "hi"
     var ar = "ar"
-    var Gallery = "Gallery"
     var Images = "Images"
     var mark = "mark"
     var max_mark = "max_mark"
     var incoming_call = "Incoming Call"
-    var images_ = "images"
     var image_ = "image"
     var ATTACHMENT = "ATTACHMENT"
     var ALL = "ALL"
@@ -405,7 +378,6 @@ object Constant {
     var READ = "READ"
     var VOICE = "VOICE"
     var AUDIO = "AUDIO"
-    var VOICERECORD = "VOICERECORD"
     var VIDEO = "VIDEO"
     var DOCUMENT = "DOCUMENT"
     var document_ = "document"
@@ -423,11 +395,9 @@ object Constant {
     var IMAGE = "IMAGE"
     var M4A = "M4A"
     var PDF = "PDF"
-    var XLS = "PDF"
     var DOC = "DOC"
     var DOCX = "DOCX"
     var PPT = "PPT"
-    var XLSX = "PPT"
     var PPTX = "PPTX"
     var TXT = "TXT"
     var TET2 = "TEXT"
@@ -451,19 +421,11 @@ object Constant {
     var packagename = "package"
     var timeForMateWithAMPM = "%02d:%02d %s"
     var yyyyMMdd_HHmmss = "yyyyMMdd_HHmmss"
-    var image_star = "image/*"
-    var Select_images = "Select up to 5 images"
-    var unknown_ = "unknown"
     var tel = "tel:"
     var mailto = "mailto:"
     var sms = "sms:"
-    var manufacturer = "manufacturer"
     var model = "model"
     var device = "device"
-    var brand = "brand"
-    var hardware = "hardware"
-    var product = "product"
-    var os_version = "os_version"
     var sdk_int = "sdk_int"
     var app_version = "app_version"
     var Unknown = "Unknown"
@@ -480,14 +442,11 @@ object Constant {
     var isEdit = "isEdit"
     var role = "role"
     var menuId = "menuId"
-    var welcome = "welcome"
     var isVideoPostedDate = ""
     var school_name = "school_name"
     var member_name = "member_name"
     var NOTIFICATION_DISMISSED = "NOTIFICATION_DISMISSED"
-    var Custom_Notifications = "Custom Notifications"
     var Channel_for_custom_notifications = "Channel for custom notifications"
-    var Failed_to_download_image = "Failed to download image:"
     var call_title = "call_title"
     var Present = "Present"
     var googleMap = "com.google.android.apps.maps"
@@ -501,17 +460,9 @@ object Constant {
     var current = "current"
     var wav = ".wav"
     var m4a = ".m4a"
-    var wav_ = "wav"
     var isCurrentAcademicYearId = 0
 
-    var GET_ALL_STUDENT = "GET ALL STUDENT"
-    var ALL_STUDENTS = "All students"
-    var STANDARD = "STANDARD"
-    var STANDARD_AND_SECTION = "STANDARD AND SECTION"
-    var CLASS_AND_SECTION = "Class & Section"
-
     var NO_DATA_FOUND = "No Data Found"
-    var No_STANDARD_FOUND = "No Standard Found"
 
     var isCommonTitle = ""
     var isCommonDescription = ""
@@ -541,9 +492,7 @@ object Constant {
     var setForceShowIcon = "setForceShowIcon"
     var mPopup = "mPopup"
     var x = "x"
-    var X_ = "X"
     var iffin = "-"
-    var slash = "/"
     var google_embredded_url = "https://drive.google.com/viewerng/viewer?embedded=true&url="
     var yyyy_MM_dd = "yyyy-MM-dd"
     var activated = "activated"
@@ -565,7 +514,6 @@ object Constant {
         "https://profile.schoolchimes.com/#/online-fee-payment/13601818/6063/app"
     var isStudentID = ":student_id"
     var isSchoolID = ":school_id"
-    var TOTAL = "TOTAL"
     var Listening = "Listening"
     var Speaking = "Speaking"
     var Reading = "Reading"
@@ -694,7 +642,6 @@ object Constant {
     var category_name = "category_name"
     var category = "category"
     var parent_dashboard_tour = "parent_dashboard_tour"
-    var school_dashboard_tour = "school_dashboard_tour"
     var name__ = "name"
     var selected__ = "selected"
     var discount = "discount"
@@ -846,47 +793,6 @@ object Constant {
         return networkInfo != null && networkInfo.isConnected
     }
 
-    fun setGridViewHeight(gridView: GridView, columns: Int) {
-        val adapter = gridView.adapter ?: return
-        if (columns <= 0) return
-
-        val totalItems = adapter.count
-        if (totalItems == 0) {
-            gridView.layoutParams.height = 0
-            gridView.requestLayout()
-            return
-        }
-
-        // Calculate number of rows
-        val rows = if (totalItems % columns == 0) {
-            totalItems / columns
-        } else {
-            totalItems / columns + 1
-        }
-
-        var totalHeight = 0
-
-        for (row in 0 until rows) {
-            val index = row * columns // first item in each row
-            val listItem = adapter.getView(index, null, gridView)
-
-            listItem.measure(
-                View.MeasureSpec.makeMeasureSpec(gridView.width, View.MeasureSpec.AT_MOST),
-                View.MeasureSpec.UNSPECIFIED
-            )
-
-            totalHeight += listItem.measuredHeight
-        }
-
-        // Add spacing between rows
-        totalHeight += gridView.verticalSpacing * (rows - 1)
-
-        val params = gridView.layoutParams
-        params.height = totalHeight
-        gridView.layoutParams = params
-        gridView.requestLayout()
-    }
-
     fun redirectToDialPad(context: Context, contactNo: String) {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse(tel + contactNo) // Replace with the phone number
@@ -922,16 +828,6 @@ object Constant {
         return diffInMinutes in 0..30
     }
 
-
-    fun redirectToMessage(context: Context, phoneNumber: String) {
-        val smsUri = Uri.parse(sms + phoneNumber)
-
-        val intent = Intent(Intent.ACTION_VIEW, smsUri).apply {
-            putExtra("", "")
-        }
-        context.startActivity(intent)
-    }
-
     fun redirectToMessageOnly(context: Context, phoneNumber: String) {
         val smsUri = Uri.parse("smsto:$phoneNumber")
 
@@ -942,34 +838,6 @@ object Constant {
         context.startActivity(intent)
     }
 
-
-    fun editTextCounter(
-        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
-    ) {
-
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                charSequence: CharSequence?, start: Int, count: Int, after: Int
-            ) {
-                // You can add logic here if needed
-            }
-
-            override fun onTextChanged(
-                charSequence: CharSequence?, start: Int, before: Int, count: Int
-            ) {
-                // You can add logic here if needed
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                counterLabel.text = editable!!.length.toString() + " of " + maxLength.toString()
-                if (editable != null && editable.length > maxLength) {
-                    // Restrict to the max length by trimming the input
-                    editable.delete(maxLength, editable.length)
-                    // Optionally, show a Toast or error message
-                }
-            }
-        })
-    }
 
     fun executeAfterDelay(task: () -> Unit) {
         handler.postDelayed({
@@ -1029,18 +897,6 @@ object Constant {
 
     }
 
-    fun getVideoThumbnail(context: Activity, uri: Uri): Bitmap? {
-        return try {
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(context, uri)
-            val bitmap = retriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST)
-            retriever.release()
-            bitmap
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
 
     fun getAndroidSecureId(activity: Activity): String {
         return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID)
@@ -1113,24 +969,6 @@ object Constant {
         }
     }
 
-    fun isDeveloperOptionsEnabled(context: Context): Boolean {
-        return Settings.Global.getInt(
-            context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
-        ) == 1
-    }
-
-    fun setKeyboardListener(rootView: View, onKeyboardStateChanged: (Boolean) -> Unit) {
-        rootView.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            rootView.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = rootView.height
-            val keypadHeight = screenHeight - rect.bottom
-
-            val isKeyboardOpened = keypadHeight > screenHeight * 0.15
-            onKeyboardStateChanged(isKeyboardOpened)
-        }
-    }
-
     fun hideKeyboardIfOpen(activity: Activity) {
         val inputMethodManager =
             activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -1139,30 +977,6 @@ object Constant {
         if (currentFocusView != null) {
             inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
             currentFocusView.clearFocus()
-        }
-    }
-
-
-    fun isNavigation(activity: Activity) {
-        val isUserDetails = SharedPreference.getUserDetails(activity)
-
-        val isStaffRole = isUserDetails!!.staff_role
-        var isMultipleSchool = false
-        isMultipleSchool = isUserDetails.staff_details.size > 1
-        if (isMultipleSchool) {
-            if (isStaffRole.equals(isGroupHeadRole) || isStaffRole.equals(isPrincipalRole) || isStaffRole.equals(
-                    isAdminRole
-                )
-            ) {
-                val intent = Intent(activity, SchoolList::class.java)
-                activity.startActivity(intent)
-            } else {
-                val intent = Intent(activity, RecipientActivity::class.java)
-                activity.startActivity(intent)
-            }
-        } else {
-            val intent = Intent(activity, RecipientActivity::class.java)
-            activity.startActivity(intent)
         }
     }
 
@@ -1424,10 +1238,6 @@ object Constant {
         }
 
         okButton.setOnClickListener {
-//            isAwsUploadedFiles.clear()
-//            selectedFiles.clear()
-//            isCommunicationType = 1
-
             if (isRedirect) {
                 val intent = Intent(activity, PTM::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -1440,69 +1250,6 @@ object Constant {
 
     }
 
-    fun showDatePicker(
-        context: Context, dateFormatType: Boolean, onDateSelected: (String) -> Unit
-    ) {
-        val calendar = Calendar.getInstance()
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
-                }
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
-
-                onDateSelected(formattedDate)
-            },
-            year, month, day
-
-        )
-        if (dateFormatType) {
-            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-        }
-        datePickerDialog.show()
-    }
-
-
-    fun showDatePicker12(
-        context: Context,
-        dateFormatType: Boolean,
-        defaultDate: Calendar? = null,
-        onDateSelected: (String) -> Unit
-    ) {
-        val calendar = defaultDate ?: Calendar.getInstance()
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
-                }
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
-                onDateSelected(formattedDate)
-            },
-            year, month, day
-        )
-
-        datePickerDialog.datePicker.minDate = Calendar.getInstance().timeInMillis
-
-        if (dateFormatType) {
-            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
-        }
-
-        datePickerDialog.show()
-    }
 
     fun DatePicker(
         context: Context,
@@ -1600,25 +1347,6 @@ object Constant {
 
         } catch (e: Exception) {
             input
-        }
-    }
-
-
-    fun getFileSizeInMB(context: Context, filePath: String): String {
-        return try {
-            val sizeBytes: Long = if (filePath.startsWith("content://")) {
-                val uri = Uri.parse(filePath)
-                context.contentResolver.openFileDescriptor(uri, "r")?.statSize ?: 0
-            } else {
-                val file = File(filePath)
-                if (file.exists()) file.length() else 0
-            }
-
-            val megabytes = sizeBytes / 1024.0 / 1024.0
-            String.format("%.2f MB", megabytes)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            "0.00 MB"
         }
     }
 
@@ -2085,23 +1813,6 @@ object Constant {
     }
 
     //We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
-    fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
-        return try {
-            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
-            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
-
-            val date = inputFormat.parse(inputDateStr)!!
-            val dayName = dayNameFormat.format(date)     // "Fri"
-            val dayNumber = dayNumberFormat.format(date)    // "13"
-
-            Pair(dayNumber, dayName)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Pair("", "") // fallback
-        }
-    }
-
     //We use this to convert the Date Format 12 May 2025 to 12 Monday(we get Date And Day)
     fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
         return try {
@@ -2120,26 +1831,6 @@ object Constant {
             Pair("", "") // fallback
         }
     }
-
-//    fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
-//        return try {
-//            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-//            val dayNameFormat = SimpleDateFormat("EEEE", Locale.getDefault()) // e.g., Fri
-//            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
-//            val date = inputFormat.parse(inputDateStr)!!
-//            val dayName = dayNameFormat.format(date)     // "Fri"
-//            val dayNumber = dayNumberFormat.format(date) // "13"
-//
-//            Pair(dayNumber, dayName)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            Pair("", "") // fallback
-//        }
-//    }
-
-
-    //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
-
     @SuppressLint("SimpleDateFormat")
     fun convertToReadableDate(inputDateStr: String): String {
         return try {
@@ -2176,27 +1867,6 @@ object Constant {
             inputDateStr
         }
     }
-
-//    private fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
-//        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-//                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
-//    }
-
-//    fun convertToReadableDate(inputDateStr: String): String {
-//        return try {
-//            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
-//            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-//            val date = inputFormat.parse(inputDateStr)
-//            outputFormat.format(date!!)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            inputDateStr
-//        }
-//    }
-
-
-    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to dd, MMM yyyy hh:mm a ("16, Jul 2025 04:24 PM")
-
     fun convertDateFormatType(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
@@ -2208,9 +1878,6 @@ object Constant {
             inputDateStr
         }
     }
-
-    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to dd, MMM yyyy hh:mm a ("16 Jul 2025 04:24 PM")
-
     fun convertDateFormatType2(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
@@ -2223,8 +1890,6 @@ object Constant {
         }
     }
 
-    // Convert dd-MM-yyyy hh:mm a("16-07-2025 04:24 PM" ) to MMMM yyyy (" July 2025 ")
-
     fun convertDateFormatType3(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
@@ -2236,9 +1901,6 @@ object Constant {
             inputDateStr
         }
     }
-
-
-    //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)
     fun convertToReadableDateformat(inputDate: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
@@ -2290,19 +1952,6 @@ object Constant {
 
     }
 
-    fun convertDateFormat1(input: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat(dd_MMM_yyyy_2, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
-            val date = inputFormat.parse(input)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            input // return original if there's a parsing error
-        }
-
-    }
-
-
     fun formatChatDate(createdOn: String): String {
         if (createdOn.isBlank()) return ""
 
@@ -2340,20 +1989,6 @@ object Constant {
         }
     }
 
-
-    fun CustomisedconvertDateAndTimeFormat(input: String?): String {
-        if (input.isNullOrEmpty()) return ""
-
-        return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
-            val date = inputFormat.parse(input)
-            date?.let { outputFormat.format(it) } ?: ""
-        } catch (e: Exception) {
-            ""
-        }
-    }
-
     fun formatCreatedDate(input: String?): String {
         if (input.isNullOrEmpty()) return "--"
 
@@ -2374,21 +2009,6 @@ object Constant {
         }
     }
 
-
-    // yyyy-MM-dd → dd/MM/yyyy
-    fun formatToUi(dateStr: String?): String {
-        if (dateStr.isNullOrBlank()) return "--"
-        return try {
-            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
-            val outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
-            val localDate = LocalDate.parse(dateStr, inputFormatter)
-            localDate.format(outputFormatter)
-        } catch (e: Exception) {
-            dateStr
-        }
-    }
-
-    // yyyy-MM-dd → dd-MM-yyyy
     fun formatToUi2(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"
         return try {
@@ -2433,19 +2053,6 @@ object Constant {
         }
     }
 
-
-//    fun convertDateTimeFormat(input: String): String {
-//        return try {
-//            val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
-//            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
-//            val date = inputFormat.parse(input)
-//            outputFormat.format(date!!)
-//        } catch (e: Exception) {
-//            input // return original if there's a parsing error
-//        }
-//
-//    }
-
     fun convertDateAndTimeFormat(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
@@ -2455,14 +2062,6 @@ object Constant {
         } catch (e: Exception) {
             input
         }
-    }
-
-
-    fun getTimeAfter20Minutes(): String {
-        val dateFormat = SimpleDateFormat(hh_mm_a, Locale.getDefault())
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MINUTE, 40)
-        return dateFormat.format(calendar.time)
     }
 
     fun isGPSEnabled(context: Context): Boolean {
@@ -2560,13 +2159,6 @@ object Constant {
         )
     }
 
-
-    fun getVideoSizeInMB(videoPath: String): Long {
-        val file = File(videoPath)
-        return file.length() / (1024 * 1024)  // Convert bytes to MB
-    }
-
-
     fun Context.safeOpenInputStream(path: String): InputStream? {
         return try {
             val uri = Uri.parse(path)
@@ -2650,121 +2242,6 @@ object Constant {
         }.start()
     }
 
-
-//    fun compressImageFilesOnly(
-//        context: Context,
-//        files: List<FileItem>,
-//        outputDir: String,
-//        format: Bitmap.CompressFormat,
-//        quality: Int,
-//        maxWidth: Int,
-//        maxHeight: Int,
-//        onEachProcessed: (original: FileItem, outputPath: String?, success: Boolean) -> Unit,
-//        onComplete: () -> Unit
-//    ) {
-//        Thread {
-//            val newList = mutableListOf<FileItem>()
-//
-//            for (fileItem in files.toList()) {
-//                try {
-//                    val uri = Uri.parse(fileItem.path)
-//                    val mimeType = context.contentResolver.getType(uri)
-//
-//                    val isImage = mimeType?.startsWith("image/") == true ||
-//                            fileItem.path.endsWith(".jpg", true) ||
-//                            fileItem.path.endsWith(".jpeg", true) ||
-//                            fileItem.path.endsWith(".png", true)
-//
-//                    if (!isImage) {
-//                        onEachProcessed(fileItem, fileItem.path, true)
-//                        continue
-//                    }
-//
-//                    val inputStream = context.contentResolver.openInputStream(uri)
-//                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
-//
-//                    if (bitmap != null) {
-//                        val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
-//
-//                        val compressedFile = File(
-//                            outputDir,
-//                            "IMG_${System.currentTimeMillis()}.jpg"
-//                        )
-//                        FileOutputStream(compressedFile).use { out ->
-//                            scaledBitmap.compress(format, quality, out)
-//                            out.flush()
-//                        }
-//
-//                        onEachProcessed(fileItem, compressedFile.absolutePath, true)
-//                        newList.add(fileItem)
-//                    } else {
-//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.path}")
-//                        onEachProcessed(fileItem, null, false)
-//                    }
-//                } catch (e: Exception) {
-//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
-//                    onEachProcessed(fileItem, null, false)
-//                }
-//            }
-//
-//            Handler(Looper.getMainLooper()).post {
-//                onComplete()
-//            }
-//        }.start()
-//    }
-
-
-    fun quizCompressImageFilesOnly(
-        context: Context,
-        files: String,
-        outputDir: String,
-        format: Bitmap.CompressFormat,
-        quality: Int,
-        maxWidth: Int,
-        maxHeight: Int,
-        onEachProcessed: (outputPath: String?, success: Boolean) -> Unit,
-        onComplete: () -> Unit
-    ) {
-        Thread {
-
-//            for (fileItem in files.toList()) {
-            try {
-                val uri = Uri.parse(files)
-                onEachProcessed(files, true)
-
-                val inputStream = context.contentResolver.openInputStream(uri)
-                val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
-
-                if (bitmap != null) {
-                    val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
-
-                    val compressedFile = File(
-                        outputDir,
-                        "IMG_${System.currentTimeMillis()}.jpg"
-                    )
-                    FileOutputStream(compressedFile).use { out ->
-                        scaledBitmap.compress(format, quality, out)
-                        out.flush()
-                    }
-
-                    onEachProcessed(compressedFile.absolutePath, true)
-//                        newList.add(fileItem)
-                } else {
-//                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.isUrl}")
-                    onEachProcessed(null, false)
-                }
-            } catch (e: Exception) {
-//                    Log.e("Compressor", "❌ Exception compressing ${fileItem.isUrl}", e)
-                onEachProcessed(null, false)
-            }
-            //  }
-
-            Handler(Looper.getMainLooper()).post {
-                onComplete()
-            }
-        }.start()
-    }
-
     private fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
@@ -2786,29 +2263,6 @@ object Constant {
         return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
     }
 
-
-    fun isDeveloperModeEnabled(context: Context): Boolean {
-        return Settings.Secure.getInt(
-            context.contentResolver,
-            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
-        ) == 1
-    }
-
-
-    fun showNotificationPermissionDialog(
-        packageName: String, activity: Activity, isTitle: String, isContent: String
-    ) {
-        AlertDialog.Builder(activity).setTitle(isTitle)
-            .setMessage(isContent)
-            .setPositiveButton("Go to Settings") { dialog, _ ->
-                dialog.dismiss()
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", packageName, null)
-                }
-                activity.startActivity(intent)
-
-            }.setCancelable(false).show()
-    }
 
     fun checkBiometricSupport(activity: Activity): Boolean {
         val biometricManager = BiometricManager.from(activity)
@@ -2854,13 +2308,11 @@ object Constant {
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                 SharedPreference.setFingerprintEnabled(activity, false)
-//                Toast.makeText(activity, "No biometric features available on this device.", Toast.LENGTH_LONG).show()
                 false
             }
 
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                 SharedPreference.setFingerprintEnabled(activity, false)
-//                Toast.makeText(activity, "Biometric features are currently unavailable.", Toast.LENGTH_LONG).show()
                 false
             }
 
@@ -2968,24 +2420,6 @@ object Constant {
                 .build()
         }
     }
-
-    fun formatDateSmart(dateStr: String): String {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val displayFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
-
-        val inputDate: Date = inputFormat.parse(dateStr) ?: return dateStr
-
-        val calendarInput = Calendar.getInstance().apply { time = inputDate }
-        val calendarToday = Calendar.getInstance()
-        val calendarYesterday = Calendar.getInstance().apply { add(Calendar.DATE, -1) }
-
-        return when {
-            isSameDay(calendarInput, calendarToday) -> "Today"
-            isSameDay(calendarInput, calendarYesterday) -> "Yesterday"
-            else -> displayFormat.format(inputDate)
-        }
-    }
-
     fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
@@ -3070,35 +2504,6 @@ object Constant {
         }
     }
 
-//    fun showDatePickerNormal(
-//        context: Context,
-//        onDateSelected: (String) -> Unit
-//    ) {
-//        val calendar = Calendar.getInstance()
-//        val year = calendar.get(Calendar.YEAR)
-//        val month = calendar.get(Calendar.MONTH)
-//        val day = calendar.get(Calendar.DAY_OF_MONTH)
-//
-//        val datePicker = DatePickerDialog(
-//            context,
-//            { _, selectedYear, selectedMonth, selectedDay ->
-//                val pickedCalendar = Calendar.getInstance()
-//                pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
-//
-//                // Format date as dd-MM-yyyy
-//                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-//                val formattedDate = sdf.format(pickedCalendar.time)
-//
-//                // Return selected date
-//                onDateSelected(formattedDate)
-//            },
-//            year,
-//            month,
-//            day
-//        )
-//
-//        datePicker.show()
-//    }
 
 
     fun setupEditTextWithScroll(context: Context, scrollView: ScrollView, editText: EditText) {

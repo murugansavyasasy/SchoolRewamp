@@ -113,9 +113,6 @@ class LeaveRequestAdapter(
                 btnStatus.setTextColor(Color.parseColor("#D32F2F"))
 
 
-//                btnCancel.visibility = View.VISIBLE
-//                btnApprove.visibility = View.GONE
-
             } else if (data.status == Constant.approved) {
                 lnrButtons.visibility = View.GONE
                 btnStatus.text = context.getString(R.string.approved)
@@ -126,9 +123,6 @@ class LeaveRequestAdapter(
                     R.color.light_green_1
                 )
                 btnStatus.setTextColor(Color.parseColor("#2E7D32"))
-
-//                btnCancel.visibility = View.GONE
-//                btnApprove.visibility = View.VISIBLE
 
             } else if (data.status == Constant.waiting_for_approval) {
                 btnStatus.visibility = View.GONE

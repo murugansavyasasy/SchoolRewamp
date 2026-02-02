@@ -73,15 +73,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
         isQuizEditData = intent.getSerializableExtra(Constant.edit_quiz_exam_data)
                 as? SaveEditExamQuizDetails
         Constant.isQuizReportPage = false
-//        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-//        binding.edtDescription.filters =
-//            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-//        Constant.editTextCounter(
-//            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
-//        )
-//        Constant.editTextCounter(
-//            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
-//        )
 
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -100,10 +91,6 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             }
         }
 
-//        binding.rbNextLvl.setOnClickListener {
-//            isNextLevelChecked = !isNextLevelChecked
-//            binding.rbNextLvl.isChecked = isNextLevelChecked
-//        }
 
         binding.rbNextLvl.setOnCheckedChangeListener { _, isChecked ->
             isNextLevelChecked = isChecked
@@ -547,9 +534,7 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
                         QuizDataTempHolder.quizDataBody = SaveCreateExamQuizDetails
                         QuizTempHolder.quizBody = isQuizRequestBody
 
-//                        Log.d("SaveCreateExamQuizDetails", SaveCreateExamQuizDetails.toString())
                         val intent = Intent(this, RecipientActivity::class.java)
-//                        intent.putExtra(Constant.create_quiz_exam_data, SaveCreateExamQuizDetails)
                         startActivity(intent)
                     }
                 }

@@ -57,14 +57,6 @@ class LessonPlanDetailAdapter(
                 ContextCompat.getColor(context, R.color.PrimaryColor),
                 Color.BLACK
             )
-
-
-//            tvText.text = if (detail.value.isNotEmpty()) {
-//                "${detail.name}: ${detail.value}"
-//            } else {
-//                detail.name
-//            }
-
             holder.flowLayout.addView(chipView)
         }
     }

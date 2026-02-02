@@ -87,12 +87,7 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-        //in futher if you want the rlaSpinner to be visible in the toolbar in the postion make sure gone the imgSearchToolBar and visible the imgSearchToolBarforCreate
-//        val params =
-//            binding.toolbarLayout.lytTitleAndName.layoutParams as RelativeLayout.LayoutParams// Get current layout params (RelativeLayout.LayoutParams)
-//        params.removeRule(RelativeLayout.START_OF)
-//        params.addRule(RelativeLayout.START_OF, R.id.rlaSpinner)
-//        binding.toolbarLayout.lytTitleAndName.layoutParams = params
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         userDetails = SharedPreference.getUserDetails(this)
@@ -208,7 +203,6 @@ class AssignmentReport : BaseActivity<AssignmentReportBinding>(),
                     imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
-// adapter.updateList(response.data)
                     binding.rcyAssignmentReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
                     if (fromNotification) {

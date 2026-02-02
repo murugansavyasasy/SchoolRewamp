@@ -23,12 +23,8 @@ class AbsenteesMarkAdapter(
     private var isLoading: Boolean,
     private val selectionListener: AbsenteesSelectionListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val selectedStudents = mutableListOf<GetAttendanceStudentListData>()
-    private var isTextExpanded = false
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var allMarkedAbsent = false
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA

@@ -31,7 +31,6 @@ class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.On
 
     override fun setupViews() {
         super.setupViews()
-//        isToolBarPrimaryTheme()
         isToolBarPrimaryTheme1(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FileType
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
@@ -63,7 +64,6 @@ class QuestionAttachmentAdapter(
             FileType.PPT.toString() -> R.drawable.ppt_icon
             FileType.EXCEL.toString() -> R.drawable.excel_icon
             FileType.TXT.toString() -> R.drawable.txt_icon
-//            FileType.IMAGE.toString() -> R.drawable.image_placeholder
             FileType.VIDEO.toString() -> R.drawable.video_play
             else -> R.drawable.wrong_file
         }
@@ -71,12 +71,16 @@ class QuestionAttachmentAdapter(
             val isImageUrl = fileUri
             Glide.with(context)
                 .load(isImageUrl)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .placeholder(placeholderRes)
                 .error(placeholderRes)
                 .into(h.img)
         } else {
             Glide.with(context)
                 .load(placeholderRes)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .placeholder(placeholderRes)
                 .error(placeholderRes)
                 .into(h.img)

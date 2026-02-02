@@ -22,15 +22,7 @@ class Ebooks : BaseActivity<EbooksBinding>(),
         )
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-
-        //  if (Constant.isParentMenuName.isNullOrEmpty()){
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-//        }
-//        else{
-//            binding.toolbarLayout.lblParentToolBar.text=Constant.isParentMenuName
-//        }
-
-
         Constant.loadWebView(
             this,
             binding.webView,

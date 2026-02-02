@@ -130,8 +130,6 @@ class HomeworkParentAdapter(
 
             binding.cardRoot.setOnClickListener {
                 Log.d("data", item.id)
-
-//                item.is_unread = false
                 binding.redDot.visibility = View.INVISIBLE
                 listener.onItemClick(item, isDate)
             }

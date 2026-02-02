@@ -92,7 +92,6 @@ class CertificateViewActivity : BaseActivity<CertificateViewActivityBinding>(),
             binding.rytCertificate.visibility = View.VISIBLE
             binding.wvCertificatePdf.visibility = View.VISIBLE
             binding.lblCertificateDate.visibility = View.VISIBLE
-//            binding.imgMoreOptions.visibility = View.VISIBLE
             binding.rytWaitingProcess.visibility = View.GONE
             val issuedOn = Constant.isFormatDate(Constant.isCertificateData?.issued_on.toString())
             binding.lblCertificateDate.text = issuedOn ?: ""

@@ -112,7 +112,5 @@ class GroupStaffAdapter(
         notifyDataSetChanged()
     }
 
-    fun getSelectedIds(): List<Int> {
-        return selectedIds.toList()
-    }
+
 }

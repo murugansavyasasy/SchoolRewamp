@@ -39,8 +39,6 @@ class CheckAvailableSlotsDate(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayGroup = dates[position]
-
-//        val formattedDate = formatDateForDisplay(dayGroup.date)
         holder.tvDate.text = Constant.formatDatepostedby(dayGroup.date)
 
         val adapter = SlotTimingLoadAdapter(

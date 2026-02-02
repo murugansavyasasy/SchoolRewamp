@@ -136,7 +136,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
                 isGetMessageFromStaff()
                 //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
-//                userDetails?.let { setupSchoolSpinner(it.staff_details) }
             } else {
                 isAccessToken = userDetails!!.staff_details.get(0).access_token
                 binding.rytSpinner.visibility = View.GONE
@@ -283,8 +282,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
 
                         }
-
-//                        ShowData() //last fix
                         binding.txtSearch1.text.clear()
                         binding.isArchiveErrorMsg.visibility = View.GONE
                     } else {
@@ -478,8 +475,6 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                     if (position == lastSelectedPosition) return
                     lastSelectedPosition = position
-
-//                    Constant.showLoading(this@MessageFromManagement)
                     adapter = MessageFromStaffAdapter(
                         mutableListOf(),
                         this@MessageFromManagement,
@@ -531,23 +526,12 @@ class MessageFromManagement : BaseActivity<MessageFromManagementBinding>(),
 
                             isLoadMsgStaff(filteredList)
                         }
-
-//                        Constant.hideLoading(this@MessageFromManagement)
-
                     }, 200)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
-        //Important Note:see actually what ever token we pass,From backend we recieve all the data from all school we are suppose to filter them using the school id this scenrio is for multiple school
-        // Initial fetch for all schools
-//        if (staffList.isNotEmpty()) {
-//            isAccessToken = staffList[0].access_token
-//            isStaffDetails = staffList[0]
-//            Log.d("DefaultSelection", "Default token: $isAccessToken")
-//            isGetMessageFromStaff()
-//        }
     }
 
 

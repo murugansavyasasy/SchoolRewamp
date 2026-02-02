@@ -86,7 +86,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-//        setupToolbarBlueWhite()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground

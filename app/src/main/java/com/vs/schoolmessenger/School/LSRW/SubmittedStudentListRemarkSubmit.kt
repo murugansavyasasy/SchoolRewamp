@@ -88,7 +88,6 @@ class SubmittedStudentListRemarkSubmit : BaseActivity<StudentlistRemarksubmitBin
 
 
         binding.description.text = data!!.category
-        //        binding.descriptionValue.text = data!!.description
 
         val remarkString = data!!.assignmentid?.trim()?.replace("%", "")  // "68%" → "68"
         val remark =

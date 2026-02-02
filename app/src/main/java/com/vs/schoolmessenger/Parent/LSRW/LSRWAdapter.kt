@@ -101,13 +101,8 @@ class LSRWAdapter(
 
 
             val hasFiles = !item.file_path.isNullOrEmpty()
-
-
             rytList2.visibility = if (hasFiles) View.GONE else View.GONE
             total_numbers.visibility = View.GONE
-
-
-
 
             rytList2.setOnClickListener {
                 Constant.isVideoPostedDate = item.date + " " + item.time

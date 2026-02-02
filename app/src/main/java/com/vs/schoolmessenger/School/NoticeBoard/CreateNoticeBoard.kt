@@ -232,23 +232,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                         mAdapter?.notifyDataSetChanged()
                         val addedCount = selectedFiles.size - previousCount
                         val totalCount = selectedFiles.size
-
-//                        Toast.makeText(
-//                            this,
-//                            "${getString(R.string.Added)} $addedCount ${getString(R.string.file)}${
-//                                if (addedCount > 1) "${
-//                                    getString(
-//                                        R.string.s_
-//                                    )
-//                                }" else ""
-//                            }",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-
-
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-                        //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -883,7 +868,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         okButton.setOnClickListener {
             alertDialog.dismiss()
             ProgressDialogHelper.show(this)
-//            ProgressDialogHelper.updateProgress(10)
             isUploadFilesInServer(Constant.file_)
 
         }
@@ -897,7 +881,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD) {
             selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = selectedFiles.size
         isVideoSelectedArrayList.clear()
         isAwsUploadedFiles.clear()
@@ -940,7 +923,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 totalTasks,
                 { completedTasks++; updateProgress() })
         }
-//        ProgressDialogHelper.updateProgress(80)
     }
 
 

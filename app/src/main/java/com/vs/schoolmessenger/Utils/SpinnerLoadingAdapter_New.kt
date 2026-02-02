@@ -18,11 +18,6 @@ class SpinnerLoadingAdapter_New(
     var selectedPosition: Int = -1
     private var hideFirstItem: Boolean = false
 
-    //  Call this to hide first dropdown item which will hint(select catrory or select Type etc)
-    fun enableFirstItemAsHint() {
-        hideFirstItem = true
-    }
-
     override fun getCount(): Int = items.size
 
     override fun getItem(position: Int): Any = items[position]

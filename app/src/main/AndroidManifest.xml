@@ -49,7 +49,6 @@
         android:fullBackupContent="false"
         android:icon="@mipmap/school_app_logo"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/school_app_logo"
@@ -231,11 +230,7 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".Parent.Assignment.AssignmentFilePicking"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
             android:configChanges="uiMode|orientation|screenSize"
@@ -385,12 +380,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Testing.AutoScrolling"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <activity
             android:name=".Parent.Homework.HomeWork"
             android:configChanges="uiMode|orientation|screenSize"
@@ -685,12 +675,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Testing.Testing"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <activity
             android:name=".Parent.Homework.HomeWorkAdapter.ChildHomeWork"
             android:configChanges="uiMode|orientation|screenSize"

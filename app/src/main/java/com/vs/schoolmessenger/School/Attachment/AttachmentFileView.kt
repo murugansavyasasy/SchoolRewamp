@@ -23,13 +23,6 @@ class AttachmentFileView(
     private val parentDate: String,
     private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-//class AttachmentFileView(
-//    private var fileList: List<AttachmentFilePath>?,
-//    private val context: Context,
-//    private val isSubjectName: String
-//) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     var isLoading = false
@@ -59,12 +52,6 @@ class AttachmentFileView(
         }
     }
 
-
-    //    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        if (holder is DataViewHolder && fileList != null) {
-//            holder.bind(fileList!!, position, context, isSubjectName)
-//        }
-//    }
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val imgAttachment: ImageView = itemView.findViewById(R.id.imgAttachment)
@@ -113,52 +100,6 @@ class AttachmentFileView(
         }
     }
 
-
-//    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val imgAttachment: ImageView = itemView.findViewById(R.id.imgAttachment)
-//
-//        fun bind(
-//            fullList: List<AttachmentFilePath>,
-//            position: Int,
-//            context: Context,
-//            isSubjectName: String
-//        ) {
-//            val data = fullList[position]
-//            when (data.type.uppercase()) {
-//                Constant.IMAGE -> {
-//                    Glide.with(context)
-//                        .load(data.url)
-//                        .placeholder(R.drawable.image_placeholder)
-//                        .into(imgAttachment)
-//                }
-//
-//                Constant.PDF -> imgAttachment.setBackgroundResource(R.drawable.hw_pdf_img)
-//                Constant.DOC, Constant.DOCX -> imgAttachment.setBackgroundResource(R.drawable.microsoft_word_img)
-//                Constant.TXT -> imgAttachment.setBackgroundResource(R.drawable.txt_file_img)
-//                Constant.PPT, Constant.PPTX -> imgAttachment.setBackgroundResource(R.drawable.ppt_icon)
-//                Constant.EXCEL -> imgAttachment.setBackgroundResource(R.drawable.excel_icon)
-//                Constant.VIDEO -> imgAttachment.setBackgroundResource(R.drawable.video_icon_2)
-//                else -> imgAttachment.setBackgroundResource(R.drawable.image_pdf_icon)
-//            }
-//
-//            itemView.setOnClickListener {
-//                onItemClick(parentDate)
-//                val commonList = fullList.map {
-//                    CommonFileData(
-//                        type = it.type,
-//                        path = it.url
-//                    )
-//                }.toMutableList()
-//
-//                Constant.commonFileList = commonList
-//                Constant.selectedFileIndex = position
-//
-//                val intent = Intent(context, FilesViewActivity::class.java)
-//                intent.putExtra(Constant.subjectName, isSubjectName)
-//                context.startActivity(intent)
-//            }
-//        }
-//    }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =

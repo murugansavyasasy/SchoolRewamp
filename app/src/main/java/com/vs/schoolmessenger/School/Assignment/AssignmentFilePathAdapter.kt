@@ -27,7 +27,6 @@ class AssignmentFilePathAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var visibleCount = 2
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -70,8 +69,6 @@ class AssignmentFilePathAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ShapeableImageView = itemView.findViewById(R.id.ImgPDF)
-
-        private val fileItem: RelativeLayout = itemView.findViewById(R.id.fileItem)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(

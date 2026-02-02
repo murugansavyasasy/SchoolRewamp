@@ -71,18 +71,6 @@ object AppDataCleaner {
                 }
             }
 
-//           val myFolder = File(downloadsDir, "SchoolChimes")
-//           if (myFolder.exists()) {
-//               Log.d("File Exist","exist")
-//               deleteDir(myFolder)
-//           }
-//
-//           // (Optional) clear specific external dirs like Downloads, Pictures
-//            val externalStorage = Environment.getExternalStorageDirectory()
-////            val appFolder = File(externalStorage, "Android/data/${context.packageName}")
-//            val appFolder = File(externalStorage, "Android/data/com.vs.schoolmessenger.SchoolChimesRewamp")
-//            deleteDir(appFolder)
-
             // 5. Save new version to avoid running again
             prefs.edit().putInt("last_version", currentVersion).apply()
 

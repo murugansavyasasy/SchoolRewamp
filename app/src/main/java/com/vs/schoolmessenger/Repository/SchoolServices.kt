@@ -383,42 +383,6 @@ class SchoolServices {
         savemarks = MutableLiveData()
     }
 
-//Old Dashboard Api
-//    fun isDashBoard(isToken: String, isMemberType: String, activity: Activity) {
-//        RestClient.apiInterfaces.isDashBoard(isToken, isMemberType)
-//            ?.enqueue(object : Callback<DashboardResponse?> {
-//                override fun onResponse(
-//                    call: Call<DashboardResponse?>, response: Response<DashboardResponse?>
-//                ) {
-//                    Log.d(
-//                        "isGetCountryList", response.code().toString() + " - " + response.toString()
-//                    )
-//                    if (response.code() == 200) {
-//                        if (response.body() != null) {
-//                            val status = response.body()!!.status
-//                            if (status) {
-//                                isDashBoard.postValue(response.body())
-//                            } else {
-//                                isDashBoard.postValue(response.body())
-//                            }
-//                        }
-//                    } else {
-//
-//
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<DashboardResponse?>, t: Throwable) {
-//                    isDashBoard.postValue(null)
-//                    t.printStackTrace()
-//                }
-//            })
-//    }
-//
-//    val isDashBoardLiveData: LiveData<DashboardResponse?>
-//        get() = isDashBoard
-
-
     //New Dashboard Api
     fun isDashBoard(
         isToken: String,

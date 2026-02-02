@@ -194,7 +194,6 @@ class AttachmentAdapter(
             if (data.file_path.isNotEmpty()) {
                 rcyFile.visibility = View.VISIBLE
                 rcyFile.layoutManager = GridLayoutManager(context, 3)
-//                rcyFile.adapter = AttachmentFileView(data.file_path, context,    parentDate = data.date, "")
 
                 rcyFile.adapter = AttachmentFileView(
                     fileList = data.file_path,

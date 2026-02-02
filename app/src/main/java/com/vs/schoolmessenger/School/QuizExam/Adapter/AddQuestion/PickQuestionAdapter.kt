@@ -63,9 +63,6 @@ class PickQuestionAdapter(
         return if (isLoading) 20 else itemList!!.size
     }
 
-    fun getUpdatedList(): List<GetPickFromQBankData> = itemList!!
-
-
     // Select/Deselect All (temporary only)
     fun selectAll(isChecked: Boolean) {
         if (isChecked) {

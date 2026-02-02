@@ -52,8 +52,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private lateinit var filterCaterotyType: List<String>
     private var originalStudentList: List<StudentReportData> = listOf()
     private var currentFilteredList: List<StudentReportData> = listOf()
-
-    //    private var currentSortType: SortType = SortType.NO_ASC
     private var currentSortType: SortType? = null
 
     private lateinit var genderSpinnerAdapter: SpinnerLoadingAdapter
@@ -162,7 +160,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
-//                mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 ErrorMessage(getString(R.string.Something_went_wrong_Please_try_again))
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -190,7 +187,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     } else {
                         originalStudentList = emptyList()
                         currentFilteredList = emptyList()
-//                        mAdapter.updateData(emptyList())
                         binding.tabLayout.visibility = View.GONE
                         binding.rlaStandardPicking.visibility = View.GONE
                         ErrorMessage(response.message)
@@ -201,7 +197,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             } else {
                 originalStudentList = emptyList()
                 currentFilteredList = emptyList()
-//                mAdapter.updateData(emptyList())
                 binding.tabLayout.visibility = View.GONE
                 binding.rlaStandardPicking.visibility = View.GONE
                 ErrorMessage(getString(R.string.something_went_wrong_please_try_again_later))
@@ -310,7 +305,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             ShowData()
             mAdapter.updateData(currentFilteredList)
         }
-//        sortList(currentSortType) // this will actually call the default sort at initial to avoid the sort at initial i have commet and added the  mAdapter.updateData(currentFilteredList)
 
     }
 
@@ -339,8 +333,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             genderSpinnerAdapter.notifyDataSetChanged()
             binding.isGenderCatory.setSelection(0)
             filterByGender(GenderType.ALL)
-//            highlightSelectedTab(binding.tapNameAsc)
-//            sortList(SortType.NAME_ASC)
         }
     }
 
@@ -686,7 +678,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     override fun onMessageClick(data: StudentReportData) {
-//        Constant.redirectToMessage(this, data.primary_mobile)
         Constant.redirectToMessageOnly(this, data.primary_mobile)
     }
 }

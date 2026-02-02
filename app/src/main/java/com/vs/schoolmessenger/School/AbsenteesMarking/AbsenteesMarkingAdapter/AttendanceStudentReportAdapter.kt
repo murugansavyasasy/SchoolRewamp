@@ -61,13 +61,8 @@ class AttendanceStudentReportAdapter(
         private val tvStudentName: TextView = itemView.findViewById(R.id.tvStudentName)
         private val tvAdmissionNo: TextView = itemView.findViewById(R.id.tvAdmissionNo)
         private val tvRollNo: TextView = itemView.findViewById(R.id.tvRollNo)
-
-        //        private val tvStatus1: TextView = itemView.findViewById(R.id.tvStatus1)
         private val statusFN: TextView = itemView.findViewById(R.id.statusFN)
         private val statusAN: TextView = itemView.findViewById(R.id.statusAN)
-//        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgAvatar)
-//        private val tvStatus: LinearLayout = itemView.findViewById(R.id.tvStatus)
-
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
             tvStudentName.text = data.student_name

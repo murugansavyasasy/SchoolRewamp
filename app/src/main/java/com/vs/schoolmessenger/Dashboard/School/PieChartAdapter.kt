@@ -42,7 +42,6 @@ class PieChartAdapter(private val context: Context, private val item: List<Int>)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
 
         fun bind(url: Int) {
-//            Glide.with(context).load(url).centerCrop().into(imgBanner)
         }
     }
 

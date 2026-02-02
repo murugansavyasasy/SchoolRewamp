@@ -86,7 +86,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -254,14 +253,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
             binding.recyclerViewDates.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerViewDates.adapter = adapter
-//            val calendar = Calendar.getInstance()
-//            val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
-//            val todayMonth = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
-//            val todayPos = dates.indexOfFirst { it.first == todayMonth && it.second == todayDay }
-//            if (todayPos != -1) {
-//                adapter.setDefaultSelected(todayPos)
-//                binding.recyclerViewDates.scrollToPosition(todayPos)
-//            }
 
             //  Try to find previously selected date
             val selectedPos = isSelectedDate?.let { savedDate ->
@@ -485,17 +476,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-//            R.id.lblScheduleMeeting -> {
-//                isChangeBackGroundTab(binding.lblScheduleMeeting)
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//
-//            }
-//
-//            R.id.lblYourMeeting -> {
-//                isChangeBackGroundTab(binding.lblYourMeeting)
-//                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//            }
-
             R.id.lblBookSlots -> {
                 showSendConfirmationDialog(getString(R.string.are_you_sure_want_to_book_this_slots))
             }
@@ -536,9 +516,6 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
         binding.lblScheduleMeeting.background = null
         binding.lblYourMeeting.background = null
         isSelectedTab.background = this.getDrawable(R.drawable.white_radious)
-//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.showSoftInput(binding.txtSearchMeeting, InputMethodManager.SHOW_IMPLICIT)
-
         if (isSelectedTab == binding.lblYourMeeting) {
             binding.rytScheduleMeeting.visibility = View.GONE
             binding.rytYourMeeting.visibility = View.VISIBLE

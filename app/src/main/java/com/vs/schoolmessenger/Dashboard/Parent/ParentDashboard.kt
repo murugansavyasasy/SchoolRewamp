@@ -65,11 +65,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         super.setupViews()
         showTourIfNeeded()
         setupToolbarBlueWhite()
-
-
         enableEdgeToEdge()
-
-
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             WindowCompat.getInsetsController(window, window.decorView).apply {

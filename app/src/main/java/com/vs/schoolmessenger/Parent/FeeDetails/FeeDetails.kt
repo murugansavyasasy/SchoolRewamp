@@ -216,29 +216,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.btnReceipt.setTextColor(Color.BLACK)
                 clearPopupWebViews()
                 reloadPaymentPage()
-//                loadPaymentPage(binding.payWebview)
-//                reloadPaymentPage()
             }
 
         }
     }
-
-//    private fun reloadPaymentPage() {
-//        binding.payWebview.apply {
-//            clearHistory()
-//            clearCache(true)
-//            reload()
-//        }
-//
-//        val feeUrl = Constant.isGlobalVariableData!!.fees_url
-//        val isFinalFeeUrl = feeUrl
-//            .replace(Constant.isStudentID, isChildId)
-//            .replace(Constant.isSchoolID, isSchoolID)
-//
-//        Constant.showLoading(this)
-//        binding.payWebview.loadUrl(isFinalFeeUrl)
-//        Log.d("FeeDetails", "Payment WebView reloaded: $isFinalFeeUrl")
-//    }
 
     private fun reloadPaymentPage() {
         binding.payWebview.apply {
@@ -366,114 +347,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         }
     }
 
-
-
-//    private fun loadPaymentPage(webView: WebView) {
-//        val settings = webView.settings
-//        settings.javaScriptEnabled = true
-//        settings.domStorageEnabled = true
-//        settings.setSupportMultipleWindows(true)
-//        settings.javaScriptCanOpenWindowsAutomatically = true
-//        settings.loadWithOverviewMode = true
-//        settings.useWideViewPort = true
-//        settings.setSupportZoom(true)
-//        settings.builtInZoomControls = false
-//        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-//        settings.cacheMode = WebSettings.LOAD_NO_CACHE
-//
-//        webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
-//        webView.isScrollbarFadingEnabled = true
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-//        } else {
-//            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-//        }
-//
-//        webView.webChromeClient = object : WebChromeClient() {
-//            override fun onCreateWindow(
-//                view: WebView,
-//                isDialog: Boolean,
-//                isUserGesture: Boolean,
-//                resultMsg: Message
-//            ): Boolean {
-//                val newWebView = WebView(this@FeeDetails)
-//                loadPaymentPage(newWebView)
-//                val params = FrameLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.MATCH_PARENT,
-//                    ViewGroup.LayoutParams.MATCH_PARENT
-//                )
-//                newWebView.layoutParams = params
-//                binding.webviewContainer.addView(newWebView)
-//                popupWebViewStack.push(newWebView)
-//
-//                val transport = resultMsg.obj as WebView.WebViewTransport
-//                transport.webView = newWebView
-//                resultMsg.sendToTarget()
-//                return true
-//            }
-//
-//            override fun onCloseWindow(window: WebView) {
-//                if (popupWebViewStack.isNotEmpty()) {
-//                    val closingWebView = popupWebViewStack.pop()
-//                    binding.webviewContainer.removeView(closingWebView)
-//                    closingWebView.destroy()
-//                }
-//            }
-//        }
-//
-//        webView.webViewClient = object : WebViewClient() {
-//            override fun shouldOverrideUrlLoading(
-//                view: WebView,
-//                request: WebResourceRequest
-//            ): Boolean {
-//                val uri = request.url
-//                return handleUri(view, uri)
-//            }
-//
-//            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-//                Log.d("WebView", "Navigating to: $url")
-//                val uri = Uri.parse(url)
-//                return handleUri(view, uri)
-//            }
-//
-//            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-//                super.onPageStarted(view, url, favicon)
-//                Constant.showLoading(this@FeeDetails)
-//            }
-//
-//            override fun onReceivedError(
-//                view: WebView,
-//                errorCode: Int,
-//                description: String?,
-//                failingUrl: String?
-//            ) {
-//                Constant.hideLoading(this@FeeDetails)
-//            }
-//
-//            override fun onPageFinished(view: WebView, url: String) {
-//                Constant.hideLoading(this@FeeDetails)
-//                Log.d("callbackURL", url)
-//
-//                when {
-//                    url.contains("/#/paymentsucccess/success") -> {
-//                        paymentSuccess(
-//                            getString(R.string.payment_done),
-//                            getString(R.string.payment_successful_view_download_receipt_on_receipt_tab)
-//                        )
-//                    }
-//
-//                    url.contains("/#/paymentsucccess/failed") -> {
-//                        paymentFailed(
-//                            getString(R.string.payment_failed),
-//                            getString(R.string.please_try_again_later)
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     fun viewInvoice(invoiceId: String) {
         Constant.showLoading(this)
         appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId, this)
@@ -481,9 +354,6 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null && response.status && response.data.isNotEmpty()) {
-//                val pdfUrl =
-//                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7044/2025-11-01/samplepptx.pptx"
-//                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
                 val intent = Intent(this, FeeReceiptViewActivity::class.java)
                 intent.putExtra("pdf_url", response.data[0])
                 startActivity(intent)

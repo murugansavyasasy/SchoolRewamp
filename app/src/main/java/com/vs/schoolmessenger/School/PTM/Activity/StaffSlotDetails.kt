@@ -49,7 +49,6 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-//        setupToolbarBlueWhite()
         isToolBarPrimarySchool(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground

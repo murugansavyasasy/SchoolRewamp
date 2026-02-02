@@ -30,6 +30,7 @@ import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -114,7 +115,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         access_token = userDetails!!.staff_details[0].access_token
 
         Constant.isParentChoose = false
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
@@ -157,6 +157,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile)
                         .circleCrop()
+                        .dontAnimate()  // Skip fade-in for snappier lists
+                        .priority(Priority.HIGH)  // Prioritize over other loads
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(headerBinding.imgProfile)
                 }
@@ -168,6 +170,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             .placeholder(R.drawable.default_profile)
             .error(R.drawable.default_profile)
             .circleCrop()
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(headerBinding.imgProfile)
 
@@ -310,8 +314,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 Log.d("Permission", "Contact granted: $isGranted")
 
             }
-        //  requestContactPermission()
-
         isGetAcademicYear()
     }
 
@@ -400,15 +402,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                     SharedPreference.setLoggedIn(this, false)
                     startActivity(Intent(this, Login::class.java))
                 } else {
-//                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     Constant.showErrorAlert(this, getString(R.string.Oops), message)
 
                 }
             }
-
-//            SharedPreference.putLogout(this, true)
-//            SharedPreference.setLoggedIn(this, false)
-//            startActivity(Intent(this, Login::class.java))
         }
 
         val rootView = this.window.decorView.rootView
@@ -430,33 +427,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(access_token, this)
 
-    }
-
-
-    private fun requestContactPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Show rationale if user previously denied
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.READ_CONTACTS
-                )
-            ) {
-                Constant.showNotificationPermissionDialog(
-                    packageName,
-                    this,
-                    "Contact Permission Required",
-                    "This app needs access to your contacts to function properly."
-                )
-
-            } else {
-                // No rationale needed, ask directly
-                contactPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
-            }
-        } else {
-
-        }
     }
 
 

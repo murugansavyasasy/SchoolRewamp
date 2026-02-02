@@ -60,8 +60,7 @@ class InteractionWithStaffChatAdapter(
         private val time: TextView = itemView.findViewById(R.id.time)
         private val linear_layo212ut: LinearLayout = itemView.findViewById(R.id.linear_layo212ut)
         private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
-        private val header_relativelayout: RelativeLayout =
-            itemView.findViewById(R.id.header_relativelayout)
+
         private val card_view: CardView = itemView.findViewById(R.id.card_view)
         private val txtQuestion: TextView = itemView.findViewById(R.id.txtQuestion)
         private val txtAskedBy: TextView = itemView.findViewById(R.id.txtAskedBy)

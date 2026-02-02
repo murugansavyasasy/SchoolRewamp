@@ -78,7 +78,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-//            Constant.isParentMenuName = menu_name!!
             Constant.isSelectedMenuName = menu_name!!
         }
 
@@ -92,14 +91,9 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
 
         binding.root.post {
-//            val finalName = Constant.isParentMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             val finalName =
                 Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
             Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
-
-
-//            binding.toolbarLayout.lblStudentName.text = finalName
-//            binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
 
         }
 
@@ -110,9 +104,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-
-//        binding.toolbarLayout.lblStudentName.text = getString(R.string.quiz)
-
 
         isFetchUpcomingEQList()
 
@@ -254,8 +245,6 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
-
-//        isStatusType is 1 means it is upcoming tab
         if (isStatusType == "1") {
             // Upcoming Tab
             val sourceList = isUpcoming.orEmpty()
@@ -401,6 +390,4 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
         }
     }
-
-
 }

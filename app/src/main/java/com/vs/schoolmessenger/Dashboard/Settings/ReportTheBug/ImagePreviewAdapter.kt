@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
@@ -47,10 +48,6 @@ class ImagePreviewAdapter(
         }
 
         val item = imagePathList[position]
-
-//        Glide.with(context)
-//            .load(Uri.parse(item.path))
-//            .into(holder.imgGallery)
         holder.imgCancel.tag = position
         holder.imgCancel.setOnClickListener {
             val pos = it.tag as Int   // Correct position every time
@@ -135,6 +132,8 @@ class ImagePreviewAdapter(
             .load(fileUri)
             .placeholder(placeholderRes)
             .apply(RequestOptions().dontTransform())
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
             .error(placeholderRes)
             .into(holder.imgGallery)
 

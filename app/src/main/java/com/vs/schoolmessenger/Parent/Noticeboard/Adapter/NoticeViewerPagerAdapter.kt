@@ -22,21 +22,10 @@ class NoticeViewerPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         fileList[position]
-//        when (file.type.uppercase()) {
-//            Constant.IMAGE -> {
-//                Glide.with(context)
-//                    .load(file.url)
-//                    .into(holder.imageView)
-//            }
-//            else -> {
-//
-//            }
-//        }
     }
 
     override fun getItemCount(): Int = fileList.size
 
     class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
     }
 }

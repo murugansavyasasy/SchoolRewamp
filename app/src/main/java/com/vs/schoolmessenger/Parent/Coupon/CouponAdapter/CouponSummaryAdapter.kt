@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.HomeFragment
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
@@ -144,10 +146,16 @@ class CouponSummaryAdapter(
 
             Glide.with(context)
                 .load(data.thumbnail)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(imgProduct)
 
             Glide.with(context)
                 .load(data.merchant_logo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(imgOverlay)
 
             itemView.setOnClickListener {

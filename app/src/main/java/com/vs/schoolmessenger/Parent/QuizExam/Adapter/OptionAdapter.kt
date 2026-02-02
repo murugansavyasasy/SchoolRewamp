@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.vs.schoolmessenger.Parent.QuizExam.Model.OptionModel
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ItemOptionBinding
@@ -49,6 +50,8 @@ class OptionAdapter(
                 .load(item.graphImageUrl)
                 .placeholder(R.drawable.default_image_icon)
                 .error(R.drawable.default_image_icon)
+                .dontAnimate()  // Skip fade-in for snappier lists
+                .priority(Priority.HIGH)  // Prioritize over other loads
                 .into(holder.binding.ivGraph)
         } else {
             holder.binding.ivGraph.visibility = View.GONE

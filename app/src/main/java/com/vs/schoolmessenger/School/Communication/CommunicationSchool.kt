@@ -113,8 +113,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isAcademicYearId = -1
     var isAcademicYear: List<AcademicYear>? = null
     var isFileName: String? = null
-
-    //    var isFromTime = true
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -199,9 +197,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isMultipleSchool = isUserDetails!!.staff_details.size > 1
 
-//        binding.lblStartTime.text = Constant.getCurrentTime()
-//        binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
-
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
@@ -251,7 +246,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 stopRecording()
             }
             binding.rlaSeekBarAndTitle.visibility = View.GONE
-//            binding.rlaTitle.visibility = View.GONE
             Constant.selectedFiles.clear()
             binding.rlaAddLocalFile.visibility = View.VISIBLE
             binding.rytVoiceRecord.visibility = View.VISIBLE
@@ -633,7 +627,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val formattedDuration = formatDuration(durationInMs)
                     binding.lblEndDuration.text = "/ $formattedDuration"
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
-//                    binding.edtTitle.setText("")
                     binding.rlaTitle.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(
@@ -856,11 +849,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         MAX_RECORDING_TIME = 180
         binding.lblDurationOfVoice.text = Constant._00_00_03_00
         binding.rlaSeekBarAndTitle.visibility = View.GONE
-//        binding.rlaTitle.visibility = View.GONE
         binding.lblStartDuration.text = Constant.time_zero
         binding.lblEndDuration.text = ""
         binding.waveformSeekBar.updateWithLevel(0f)
-//        binding.edtTitle.setText("")
         binding.rlaAddLocalFile.visibility = View.VISIBLE
         binding.rytVoiceRecord.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
@@ -1697,17 +1688,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
         removeSelectedVoice()
-        //Latesly edited Code 13-01-2026
-        //onBackPressed()  try to check in the backpressed because i have cleared  Constant.isAwsUploadedFiles.clear()
-//        Constant.isAwsUploadedFiles.clear()
-//
-//        Constant.isAwsUploadedFiles.add(
-//            AwsUploadedFiles(
-//                isFileUrl = data.url, isFileType = Constant.AUDIO
-//            )
-//        )
-
-        //Latesly edited Code 13-01-2026
         Log.d("isLog", data.url)
         // UI setup
         if (Constant.isCommunicationType == 2) {
@@ -1788,7 +1768,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaAddLocalFile.visibility = View.VISIBLE
         binding.lblDurationOfVoice.visibility = View.VISIBLE
         binding.rlaSeekBarAndTitle.visibility = View.GONE
-//        binding.rlaTitle.visibility = View.GONE
         binding.edtTitle.setText("")
         binding.lblStartDuration.text = Constant.time_zero
         binding.lblEndDuration.text = ""

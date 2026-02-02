@@ -100,41 +100,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
         }
 
-//        enableEdgeToEdge()
-//
-//        val mainView = binding.main
-//        val toolbarLayout = findViewById<View>(R.id.ImageLayout)
-//        findViewById<View>(R.id.rytHeader)
-//
-//
-//        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.updatePadding(
-//                left = systemBars.left,
-//                right = systemBars.right,
-//                bottom = systemBars.bottom
-//            )
-//
-//            binding.statusBarBackground.updateLayoutParams {
-//                height = systemBars.top
-//            }
-//            insets
-//        }
-//
-//        ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { v, insets ->
-//            insets
-//        }
-//
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            val window = this.window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-//            // Removed statusBarColor override to keep it transparent for edge-to-edge with colored view behind
-//            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
-//            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-//        }
-
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.visibility = View.GONE
         binding.lblSubject.text = subjectName

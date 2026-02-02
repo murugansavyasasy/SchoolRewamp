@@ -298,7 +298,6 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                         R.string.digit_mobile_number
                     )
             } else if (binding.txtPassword.text.toString().equals("")) {
-//                binding.txtPassword.error = "Password is required"
                 Toast.makeText(this, getString(R.string.password_is_required), Toast.LENGTH_SHORT)
                     .show()
             }

@@ -998,7 +998,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
         if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_NOTICEBOARD || SELECTED_MENU_ID == M_LSRW) {
             Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-//        ProgressDialogHelper.updateProgress(50)
         isTotalSelectedItem = Constant.selectedFiles.size
         isVideoSelectedArrayList.clear()
         Constant.isAwsUploadedFiles.clear()
@@ -1041,7 +1040,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                 totalTasks,
                 { completedTasks++; updateProgress() })
         }
-//        ProgressDialogHelper.updateProgress(80)
     }
 
 
@@ -1141,7 +1139,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
                                     if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        //   isUpdateEvent()
+
                                     } else {
                                         if (isAwsUploadingFile.size == isSelectedFileCount) {
                                             videoUploading(totalTasks, onTaskComplete)

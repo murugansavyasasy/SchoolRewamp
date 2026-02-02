@@ -132,8 +132,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblSchoolName.text = isStandardName + "-" + isSectionName
 
-//        binding.toolbarLayout.lblSchoolName.text =
-//            isStaffDetails!!.school_name
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
             if (response != null) {
@@ -622,7 +620,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                         else -> parts.getOrNull(0) ?: Constant.P  // first half or full day
                     }
                     currentStatus.equals(Constant.P, ignoreCase = true)
-//                            currentStatus.equals("P~", ignoreCase = true) // allow Latecomer as present
                 } == true
 
 

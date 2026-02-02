@@ -35,9 +35,6 @@ class Auth(application: Application) : AndroidViewModel(application) {
     var isOtpResponse: LiveData<OtpResponse?>? = null
         private set
 
-//    var isUserDetails: LiveData<UserDetailsResponse?>? = null
-//        private set
-
     var isPasswordChange: LiveData<PasswordCreationResponse?>? = null
         private set
 
@@ -64,7 +61,6 @@ class Auth(application: Application) : AndroidViewModel(application) {
         isUpdateNotificationCallLog = apiRepositories!!.isUpdateNotificationCallLogLiveData
         isUserValidation = apiRepositories!!.isUserValidationLiveData
         isOtpResponse = apiRepositories!!.isOtpResponseLiveData
-//        isUserDetails = apiRepositories!!.isUserDetailsLiveData
         isPasswordChange = apiRepositories!!.isPasswordChangeLiveData
         isForgetPassword = apiRepositories!!.isForgetPasswordLiveData
         isPasswordReset = apiRepositories!!.isPasswordResetLiveData

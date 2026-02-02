@@ -127,7 +127,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                     }
 
                     else -> {
-//                        binding.consRatingType.visibility = View.VISIBLE
                         binding.btnsubmit.isEnabled = true
                     }
                 }
@@ -200,7 +199,6 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         for (i in isRatingData.indices) {
             if (isRatingData[i].rating == isStarType) {
                 binding.lblContent.text = isRatingData[i].content
-//                binding.consRatingType.visibility = View.VISIBLE
                 binding.btnsubmit.isEnabled = true
                 for (k in inPutRatingContent.indices) {
 

@@ -61,15 +61,8 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
         setupDocumentPicker()
 
         if (Constant.SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
-//            binding.toolbarLayout.tvSelectionCount.text =
-//                "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
             binding.toolbarLayout.tvSelectionCount.text =
                 "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size}  / ${Constant.isFileLimit}"
-
-
-//            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-//            binding.toolbarLayout.tvSelectedFiles.text =
-//                "Total Selected Files : ${Constant.isQuizQuestionPickCount}"
         } else {
             if (Constant.selectedFiles.size != 1) {
                 binding.toolbarLayout.btnDone.visibility = View.VISIBLE
@@ -85,21 +78,6 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
                     "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size} / ${Constant.isFileLimit}"
 
             }
-//            binding.toolbarLayout.tvSelectionCount.text = "${getString(R.string.Selected_Files)} : 0 / ${Constant.isFileLimit}"
-//            binding.toolbarLayout.tvSelectionCount.text =
-//                "${getString(R.string.Selected_Files)} : ${Constant.selectedFiles.size - 1} / ${Constant.isFileLimit}"
-
-
-//            binding.toolbarLayout.tvSelectedFiles.visibility = View.VISIBLE
-//here we are checking for default first image in recycler view
-//            if (!isWithOutHotCodeImage) {
-//                binding.toolbarLayout.tvSelectedFiles.text =
-//                    "Total Selected Files : ${Constant.selectedFiles.size - 1}"
-//            } else {
-//                binding.toolbarLayout.tvSelectedFiles.text =
-//                    "Total Selected Files : ${Constant.selectedFiles.size}"
-//            }
-
         }
 
         adapter = FileGridAdapter(
@@ -126,16 +104,6 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
                 Log.d("AlbumSelectActivity", "Clicked file: $uri")
             }
         )
-
-
-//        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
-//            val isPickingFilesCount = selectedUris.size + Constant.selectedFiles.size - 1
-//            binding.toolbarLayout.tvSelectionCount.text =
-//                "Selected Files : ${isPickingFilesCount} / ${Constant.isFileLimit}"
-//            binding.toolbarLayout.btnDone.visibility = if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
-//        }, onItemClicked = { uri ->
-//            Log.d("AlbumSelectActivity", "Clicked file: $uri")
-//        })
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
@@ -422,8 +390,6 @@ class AlbumSelectActivity : BaseActivity<AlbumSelectActivityBinding>() {
             "audio/mp4",    // M4A
             "audio/mpeg"    // MP3
         )
-
-
         val selection = mimeTypes.joinToString(prefix = "mime_type IN (", postfix = ")") { "?" }
 
         val cursor = contentResolver.query(

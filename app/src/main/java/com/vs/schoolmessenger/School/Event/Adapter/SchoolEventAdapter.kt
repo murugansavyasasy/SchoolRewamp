@@ -147,7 +147,6 @@ class SchoolEventAdapter(
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
-        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
 
         fun bind(data: SchoolEventItem, listener: SchoolEventClickListener, context: Context) {

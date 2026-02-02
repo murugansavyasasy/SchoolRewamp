@@ -30,7 +30,6 @@ class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
 
-
     override fun setupViews() {
         super.setupViews()
         binding.imgHide.setOnClickListener(this)

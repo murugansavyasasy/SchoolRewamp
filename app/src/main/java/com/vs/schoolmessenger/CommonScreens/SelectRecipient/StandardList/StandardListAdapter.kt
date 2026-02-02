@@ -87,7 +87,4 @@ class StandardListAdapter(
         notifyDataSetChanged()
     }
 
-    fun getSelectedIds(): List<Int> {
-        return selectedIds.toList()
-    }
 }

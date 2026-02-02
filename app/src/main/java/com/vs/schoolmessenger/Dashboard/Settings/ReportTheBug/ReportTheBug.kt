@@ -79,7 +79,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
 
     override fun setupViews() {
         super.setupViews()
-//        binding.rlaPickImage.setOnClickListener(this)
         binding.btnReportBug.setOnClickListener(this)
         binding.btnOpenNextPage.setOnClickListener(this)
 
@@ -174,11 +173,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
 
                         Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
                     } else if (Constant.Remaining <= 0) {
-//                        Toast.makeText(
-//                            this,
-//                            getString(R.string.you_have_reached_the_maximum_file_limit),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
                     }
                 }
             }
@@ -282,7 +276,6 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
             putExtra(Intent.EXTRA_TEXT, emailBody)
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//            setPackage("com.google.android.gm") // force Gmail only
         }
 
         try {

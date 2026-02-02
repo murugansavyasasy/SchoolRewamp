@@ -946,9 +946,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                     if (response != null) {
                         if (response.status) {
                             onResult(true)
-//                            Constant.showDataValidationNoDashboardRedirect(
-//                                resources.getString(R.string.success), response.message, this
-//                            )
                         } else {
                             onResult(false)
                             Constant.showDataValidationNoDashboardRedirect(
@@ -1220,20 +1217,6 @@ class AddQuestion : BaseActivity<AddQuestionBinding>(), View.OnClickListener, Ad
                 else -> FileType.OTHER
             }
 
-
-//            val type = when {
-//                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-//                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                    ".xlsx",
-//                    true
-//                ) -> FileType.EXCEL
-//
-//                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
-//                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
-//                fileName.endsWith(".txt", true) -> FileType.TXT
-//                else -> FileType.OTHER
-//            }
 
             // RESTRICTION CHECK
             if (isQuestionPick == true && !canAddAttachment(quizItem, type)) {

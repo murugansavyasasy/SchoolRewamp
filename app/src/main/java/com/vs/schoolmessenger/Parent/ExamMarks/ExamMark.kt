@@ -36,7 +36,6 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     private lateinit var exammarkadapter: ExamMarkAdapter
 
     private var isAccessToken: String? = null
-    private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
 
     private var msg_id: Int = -1

@@ -45,9 +45,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
     override fun getViewBinding(): NoticeboardReportBinding {
         return NoticeboardReportBinding.inflate(layoutInflater)
     }
-
-
-    private var mAdapter: ImagePickingAdapter? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
@@ -81,7 +78,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-//        isAccessToken = isStaffDetails!!.access_token
 
         if (Constant.isSelectedMenuName.isNullOrEmpty()) {
             binding.toolbarLayout.lblParentToolBar.text = Constant.NoticeBoard
@@ -364,17 +360,6 @@ class NoticeBoardReport : BaseActivity<NoticeboardReportBinding>(), NoticeBoardC
         }
 
     }
-
-    fun makeTextViewLinkClickable(textView: TextView) {
-        Linkify.addLinks(textView, Linkify.WEB_URLS)
-        textView.movementMethod = LinkMovementMethod.getInstance()
-
-        textView.setOnTouchListener { v, event ->
-            v.parent.requestDisallowInterceptTouchEvent(true)
-            false
-        }
-    }
-
 
 
     fun showEditDeletePopup(data: NoticeStaffData, anchor: View) {

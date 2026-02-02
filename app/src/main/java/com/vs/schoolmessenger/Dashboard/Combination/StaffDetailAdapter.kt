@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -128,6 +129,9 @@ class StaffDetailAdapter(
             .thumbnail(0.1f)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .override(600, 600)
+            .centerCrop()  // Crop to fit circle efficiently
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
             .placeholder(R.drawable.school_sample) // Temporary image while loading
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(

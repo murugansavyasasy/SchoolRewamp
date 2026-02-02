@@ -99,7 +99,6 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
             RedirectCountryList()
         }
 
-
         binding.rytNext.setOnClickListener {
             if (currentIndex == adapter.itemCount - 1) {
                 // Last page → Go to next screen
@@ -123,8 +122,6 @@ class Introduction : BaseActivity<NewFeaturesBinding>(), View.OnClickListener {
         binding.btnSkip.visibility = if (isLastPage) View.GONE else View.VISIBLE
 
     }
-
-
     private fun setupDots(count: Int) {
         layoutDots.removeAllViews()
         val size = 25

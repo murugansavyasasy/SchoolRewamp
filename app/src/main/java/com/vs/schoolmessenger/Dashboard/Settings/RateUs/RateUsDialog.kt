@@ -226,9 +226,6 @@ class RateUsDialog(
                     binding.rateUs.visibility = View.GONE
                     binding.rateusSuccess.visibility = View.VISIBLE
 
-//                    if (fromScreen == Constant.SplashScreen__) {
-//                        listener?.onRateUsCompleted(true)
-//                    }
                 } else {
                     dismiss()
                     if (fromScreen == Constant.SplashScreen__) {

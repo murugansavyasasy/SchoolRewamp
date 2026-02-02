@@ -112,10 +112,6 @@ class CustomCalendarFragment : Fragment() {
         updateCalendar()
     }
 
-    fun setAbsentDates(dates: List<LocalDate>) {
-        calendarAdapter.setAbsentDates(dates.toSet())
-    }
-
     private fun updateCalendar() {
         currentMonthText.text =
             "${calendar.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${calendar.year}"

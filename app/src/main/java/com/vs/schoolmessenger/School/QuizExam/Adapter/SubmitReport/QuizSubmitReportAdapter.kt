@@ -73,14 +73,12 @@ class QuizSubmitReportAdapter(
             lblStandardSection.text =
                 "${context.getString(R.string.Class_)}: ${data.standard}-${data.section}"
             if (data.is_submit) {
-//                tvSubmittedOn.visibility=View.VISIBLE
                 tvSubmittedOn.text = Constant.convertDateFormatType2(data.submitted_on)
                 tvStatus1.text = context.getString(R.string.submitted)
                 tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
                 tvStatus1.setTextColor(ContextCompat.getColor(context, R.color.white))
 
             } else {
-//                tvSubmittedOn.visibility=View.GONE
                 tvStatus1.text = context.getString(R.string.pending)
                 tvStatus.background.setTint(ContextCompat.getColor(context, R.color.orange))
                 tvStatus1.setTextColor(ContextCompat.getColor(context, R.color.white))

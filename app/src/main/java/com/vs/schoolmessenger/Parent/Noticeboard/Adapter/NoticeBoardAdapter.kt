@@ -124,15 +124,8 @@ class NoticeBoardAdapter(
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
-
-        //        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
-        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
-
-        //        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-
-        //        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)

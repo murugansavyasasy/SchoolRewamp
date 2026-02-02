@@ -157,7 +157,6 @@ class SchoolEventUpcomingAdapter(
         private val options: ImageView = itemView.findViewById(R.id.options)
 
         private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
-        private val rytList2: LinearLayout = itemView.findViewById(R.id.rytList2)
 
 
         @SuppressLint("ClickableViewAccessibility")

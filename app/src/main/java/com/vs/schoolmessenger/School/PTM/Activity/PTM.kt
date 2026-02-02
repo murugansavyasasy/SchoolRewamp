@@ -235,11 +235,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         binding.tvNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         binding.imgNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         binding.lblSlotCount.visibility = View.VISIBLE
-//        binding.lblSlotCount.text = if (todaySlots.isNotEmpty()) {
-//            "${getString(R.string.You_have)} ${todaySlots.size} ${getString(R.string.meeting_s_today)}"
-//        } else {
-//            "No booked slots"
-//        }
+
     }
 
     private fun scrollToMessageId(headerId: String?) {
