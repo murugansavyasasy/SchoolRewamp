@@ -29,8 +29,8 @@ android {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
-        targetSdk = 34
-        versionCode = 175
+        targetSdk = 35
+        versionCode = 177
         versionName = "8.1"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())

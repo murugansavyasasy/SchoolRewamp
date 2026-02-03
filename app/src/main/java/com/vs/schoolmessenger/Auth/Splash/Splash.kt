@@ -1156,9 +1156,11 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
 
     private fun isVersionCheck() {
+        val isMobileNumber = SharedPreference.getMobileNumber(this)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_version_code, Constant.isVersionId)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, isMobileNumber)
         jsonObject.addProperty(
             APIKeyNames.Req_country_id,
             SharedPreference.getCountryId(this)
