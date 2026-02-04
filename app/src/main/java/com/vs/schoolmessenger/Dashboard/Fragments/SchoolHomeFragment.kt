@@ -137,9 +137,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.lblRole.text = userDetails!!.staff_details[0].role
             binding.profileImage.visibility = View.VISIBLE
 
-            if (userDetails!!.staff_details[0].school_logo != "") {
+            if (staffDetails!!.school_logo != "") {
                 Glide.with(this)
-                    .load(userDetails!!.staff_details[0].school_logo)
+                    .load(staffDetails!!.school_logo)
                     .error(R.drawable.school_sample)
                     .into(binding.profileImage)
             }

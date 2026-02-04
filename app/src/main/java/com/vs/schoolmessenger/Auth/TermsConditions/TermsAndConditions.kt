@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Auth.TermsConditions
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.BuildConfig
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.TermsAndConditionsBinding
@@ -26,7 +27,8 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
         var URL = ""
         binding.lblParentToolBar.text = when (screen_name) {
             "isTerms" -> {
-                URL = Constant.terms_condition
+//                URL = Constant.terms_condition
+                URL = BuildConfig.TERMS_URL
                 "Terms and Conditions"
             }
 

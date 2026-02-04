@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.FCM
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
@@ -26,26 +28,22 @@ import java.util.concurrent.TimeUnit
 class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), View.OnClickListener {
 
     private var mediaPlayer: MediaPlayer? = null
+    private lateinit var audioManager: AudioManager
     private val handler = Handler(Looper.getMainLooper())
-
     private var voiceUrl: String? = null
     private var welcomeUrl: String? = null
-
     private var notificationId: Int = 0
     private var audioUrls: Array<String?>? = emptyArray()
     private var audioList: MutableList<String?> = ArrayList()
-
     private var welcome_file: String? = ""
     private var school_name: String? = ""
     private var member_name: String? = ""
     private var call_title: String? = ""
-
     private var updateRunnable: Runnable? = null
     private var totalElapsed = 0
     private var currentTrack = 0
     private var preparedCount = 0
     private var totalDurationMs: Long = 0
-
     private var isStartTime: String? = null
     private var isEndTime: String? = null
     private var isListeningDuration = "00:00"
@@ -60,9 +58,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private var retrycount: String? = ""
     private var receiver_id: String? = ""
     private var isUserResponse: String? = "NO"
-
+    private var isSpecker: Boolean? = false
     private var totalDurationCalculated = 0L
-
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -73,9 +70,11 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         super.setupViews()
         isToolBarNoticeCallTheme()
         handleIntent(intent)
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
+
         binding.callEndButton.setOnClickListener { stopAndFinishCall() }
         authViewModel!!.isUpdateNotificationCallLog?.observe(this) { response ->
             if (response != null) {
@@ -91,6 +90,32 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         binding.imgDeclineCall.setOnClickListener {
             endCallWithoutListening()
+        }
+
+        binding.imgSpecker.setOnClickListener {
+
+            val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            val halfVolume = maxVolume / 2
+
+            if (isSpecker ?: false) {
+                // Set to 50%
+                audioManager.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    halfVolume,
+                    0
+                )
+                binding.imgSpecker.setImageResource(R.drawable.volume_low)
+                isSpecker = false
+            } else {
+                // Set to 100%
+                audioManager.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    maxVolume,
+                    0
+                )
+                binding.imgSpecker.setImageResource(R.drawable.volume_high)
+                isSpecker = true
+            }
         }
     }
 
@@ -138,23 +163,24 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
         }
     }
+
     private fun showConnectedState() {
 
         binding.lytAccept.visibility = View.GONE
         binding.lytDecline.visibility = View.GONE
-                binding.callEndButton.visibility = View.VISIBLE
+        binding.rytCutCll.visibility = View.VISIBLE
 
-                if (Constant.mediaPlayer.isPlaying) {
-                    Constant.mediaPlayer.stop()
-                }
-                totalElapsed = 0
-                totalDurationCalculated = 0L
-                currentTrack = 0
-                binding.lblCurrentDuration.text = "00:00"
-                isStartTime = getNow()
+        if (Constant.mediaPlayer.isPlaying) {
+            Constant.mediaPlayer.stop()
+        }
+        totalElapsed = 0
+        totalDurationCalculated = 0L
+        currentTrack = 0
+        binding.lblCurrentDuration.text = "00:00"
+        isStartTime = getNow()
 
-                // ▶ Start playback from first audio
-                playAudio(currentTrack)
+        // ▶ Start playback from first audio
+        playAudio(currentTrack)
 
         isUserResponse = "OC"
     }
@@ -183,6 +209,13 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
             mediaPlayer!!.setOnPreparedListener { mp ->
                 mp.start()
+                val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                val halfVolume = maxVolume / 2
+                audioManager.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    halfVolume,
+                    0
+                )
                 startUpdatingProgress()
             }
 
@@ -198,6 +231,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             playAudio(currentTrack)
         }
     }
+
     private fun startUpdatingProgress() {
         stopUpdatingProgress()
 
@@ -395,5 +429,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         }
         mediaPlayer = null
     }
+
     override fun onClick(v: View?) {}
 }

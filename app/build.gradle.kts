@@ -4,7 +4,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.FileReader
 
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -13,18 +12,15 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("org.jetbrains.kotlin.plugin.compose")
 }
-
 android {
     namespace = "com.vs.schoolmessenger"
     compileSdk = 35
     ndkVersion = "28.0.12433566"
-
     packaging {
         jniLibs {
             useLegacyPackaging = false
         }
     }
-
     defaultConfig {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
@@ -35,13 +31,15 @@ android {
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
+        buildConfigField(
+            "String",
+            "TERMS_URL",
+            "\"https://schoolchimes.com/vs_web/terms_conditions/\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
-
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -61,7 +59,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
         isCoreLibraryDesugaringEnabled = true
     }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -69,7 +66,6 @@ android {
         compose = true
         viewBinding = true
         buildConfig = true
-
     }
     packagingOptions {
         jniLibs {
@@ -83,35 +79,40 @@ android {
         }
     }
     flavorDimensions += "school"
-
     productFlavors {
         create("defaultFlavor") {
             dimension = "school"
-//            applicationIdSuffix = "" // No suffix for the main app
             applicationId = "com.vs.schoolmessenger"
+            buildConfigField(
+                "String",
+                "TERMS_URL",
+                "\"https://schoolchimes.com/vs_web/terms_conditions/\""
+            )
         }
         // ✅ 2️⃣ Dynamically Generate Other Flavors
         val schoolsFile = rootDir.resolve("app/schools.json")
         if (schoolsFile.exists()) {
             val jsonSlurper = JsonSlurper()
             val schools = jsonSlurper.parse(FileReader(schoolsFile)) as List<Map<String, Any>>
-
             schools.forEach { school ->
                 val id = school["id"] as String
                 val package_name = school["package_suffix"] as String
+                val termsUrl = school["terms_url"] as String
+
                 create(id) {
                     dimension = "school"
-//                    applicationIdSuffix = suffix
                     applicationId = package_name
-
+                    buildConfigField(
+                        "String",
+                        "TERMS_URL",
+                        "\"$termsUrl\""
+                    )
                 }
             }
         } else {
             println("⚠️ Warning: schools.json file not found!")
         }
     }
-
-
     tasks.register("generateFlavorResources") {
         doLast {
             val schoolsFile = file("${rootDir}/app/schools.json")
@@ -119,10 +120,8 @@ android {
                 println("⚠️ Warning: schools.json file not found!")
                 return@doLast
             }
-
             val jsonSlurper = JsonSlurper()
             val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
-
             val srcDir = file("${projectDir}/src")
             schools.forEach { school ->
                 val schoolId = school["id"].toString()
@@ -157,7 +156,6 @@ android {
                 } else {
                     println("⚠️ Warning: Logo not found for $schoolId")
                 }
-
                 // Create strings.xml
                 val stringsXml = File(valuesDir, "strings.xml")
                 stringsXml.writeText(
@@ -168,7 +166,6 @@ android {
                 |</resources>
                 """.trimMargin()
                 )
-
                 // Create colors.xml
                 val colorsXml = File(valuesDir, "colors.xml")
                 colorsXml.writeText(
@@ -185,10 +182,7 @@ android {
                 |</resources>
                 """.trimMargin()
                 )
-
                 // Create layout XML
-
-
                 println("✅ Resources created for $schoolId")
             }
         }
@@ -205,7 +199,6 @@ android {
             if (!googleServicesTemplateFile.exists()) {
                 throw GradleException("Error: google-services.json template not found!")
             }
-
             val jsonSlurper = JsonSlurper()
             val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
             val googleServicesTemplate = jsonSlurper.parse(googleServicesTemplateFile) as Map<*, *>
@@ -213,18 +206,14 @@ android {
             schools.forEach { school ->
                 val schoolId = school["id"].toString()
                 val packageName = school["package_suffix"] as String
-//                val packageName = "com.vs.schoolmessenger.$schoolId"
                 val flavorDir = File("${rootDir}/app/src/$schoolId/")
-
                 if (!flavorDir.exists()) {
                     flavorDir.mkdirs()
                 }
-
                 // Deep copy the JSON template to avoid modifying the original in memory
                 val googleServicesCopy =
                     jsonSlurper.parseText(JsonOutput.toJson(googleServicesTemplate)) as Map<String, Any>
                 val clientList = googleServicesCopy["client"] as? List<MutableMap<String, Any>>
-
                 if (clientList != null && clientList.isNotEmpty()) {
                     val clientInfo = clientList[0]["client_info"] as? MutableMap<String, Any>
                     val androidClientInfo =
@@ -237,7 +226,6 @@ android {
                 } else {
                     throw GradleException("Error: google-services.json is missing 'client' key")
                 }
-
                 val outputFile = File(flavorDir, "google-services.json")
                 outputFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(googleServicesCopy)))
                 println("✅ Generated google-services.json for $schoolId with package $packageName")
@@ -260,9 +248,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-//    implementation("androidx.camera:camera-lifecycle:1.4.2")
     implementation("com.google.mlkit:vision-common:17.3.0")
-//    implementation("com.google.android.gms:play-services-mlkit-face-detection:17.1.0")
     implementation("androidx.palette:palette-ktx:1.0.0")
     implementation("androidx.activity:activity:1.10.1")
     implementation("androidx.compose.ui:ui-graphics:1.10.0")
@@ -298,10 +284,6 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.github.massoudss:waveformSeekBar:5.0.2")
-    // Amplitude will allow you to call setSampleFrom() with files, URLs, Uri and resources
-    // Important: Only works with api level 21 and higher
-//    implementation("com.github.lincollincol:amplituda:2.2.2") // or newer version
-    //Viewpager Implementation
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     //CircleIndicator
     implementation("me.relex:circleindicator:2.1.6")
@@ -313,15 +295,12 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.7.8")
     implementation("androidx.biometric:biometric:1.1.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
-//    implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.gms:play-services-auth:20.0.0")
-//    implementation ("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:review-ktx:2.0.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("io.socket:socket.io-client:2.1.0") // stable version
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    // Firebase BOM (manages all Firebase versions)
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
@@ -332,5 +311,4 @@ dependencies {
     implementation("com.kizitonwose.calendar:view:2.5.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
-
 }

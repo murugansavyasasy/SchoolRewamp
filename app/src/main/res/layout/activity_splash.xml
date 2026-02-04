@@ -105,7 +105,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Empowering "
+                    android:text="@string/empowering"
                     android:textSize="@dimen/eighteen_sp" />
 
                 <TextView
@@ -113,7 +113,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3000+ Schools"
+                    android:text="@string/_3000_schools"
                     android:textColor="@color/purple_color_lite_2"
                     android:textSize="@dimen/eighteen_sp" />
             </LinearLayout>

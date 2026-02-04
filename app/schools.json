@@ -9,7 +9,9 @@
     "end_color": "",
     "light_sky_blue_color": "",
     "dark_blue_color": "",
-    "icon": "ic_school_a"
+    "icon": "ic_school_a",
+    "terms_url": "https://schoolchimes.com/vs_web/terms_conditions/"
+
   },
   {
     "id": "VAGGISVARI",
@@ -21,6 +23,8 @@
     "end_color": "#e8a59b",
     "light_sky_blue_color": "#e8a59b",
     "dark_blue_color": "#f27968",
-    "icon": "ic_vaggiswari_logo"
+    "icon": "ic_vaggiswari_logo",
+    "terms_url": "https://www.google.com/"
+
   }
 ]

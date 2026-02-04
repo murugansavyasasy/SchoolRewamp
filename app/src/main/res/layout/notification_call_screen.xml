@@ -165,126 +165,33 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
         </LinearLayout>
-
     </RelativeLayout>
 
-
-    <ImageButton
-        android:id="@+id/callEndButton"
-        android:layout_width="@dimen/seventy"
-        android:layout_height="@dimen/seventy"
+    <RelativeLayout
+        android:id="@+id/rytCutCll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/twenty"
-        android:background="@drawable/circle_button_red"
-        android:contentDescription="End call"
-        android:src="@drawable/ic_call_end"
-        android:visibility="gone" />
+        android:layout_marginBottom="@dimen/fifty"
+        android:gravity="center"
+        android:visibility="gone">
 
+        <ImageButton
+            android:id="@+id/callEndButton"
+            android:layout_width="@dimen/seventy"
+            android:layout_height="@dimen/seventy"
+            android:background="@drawable/circle_button_red"
+            android:contentDescription="End call"
+            android:src="@drawable/ic_call_end" />
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:id="@+id/actionContainer"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_marginStart="@dimen/fifteen"-->
-    <!--        android:visibility="gone"-->
-    <!--        android:layout_marginEnd="@dimen/fifteen"-->
-    <!--        android:layout_marginBottom="@dimen/fifty"-->
-    <!--        android:padding="@dimen/sixteen">-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/declineButton"-->
-    <!--            android:layout_width="@dimen/seventy"-->
-    <!--            android:layout_height="@dimen/seventy"-->
-    <!--            android:background="@android:color/transparent"-->
-    <!--            android:contentDescription="Decline call"-->
-    <!--            android:src="@drawable/ic_end_answer"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="@string/decline_or_slide_to_answer"-->
-    <!--            android:textColor="@color/gray"-->
-    <!--            android:textSize="@dimen/sixteen_sp"-->
-    <!--            android:visibility="gone"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <FrameLayout-->
-    <!--            android:id="@+id/ringContainer"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="@dimen/ninety"-->
-    <!--            android:background="@drawable/caller_bg"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--            <View-->
-    <!--                android:id="@+id/ring1"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:alpha="0.6"-->
-    <!--                android:background="@drawable/incoming_glow" />-->
-
-    <!--            <View-->
-    <!--                android:id="@+id/ring2"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:alpha="0.5"-->
-    <!--                android:background="@drawable/incoming_glow" />-->
-
-    <!--            <View-->
-    <!--                android:id="@+id/ring3"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:alpha="0.3"-->
-    <!--                android:background="@drawable/incoming_glow" />-->
-
-    <!--            <ImageButton-->
-    <!--                android:id="@+id/acceptButton"-->
-    <!--                android:layout_width="@dimen/seventy"-->
-    <!--                android:layout_height="@dimen/seventy"-->
-    <!--                android:layout_gravity="center"-->
-    <!--                android:background="@drawable/circle_button_white"-->
-    <!--                android:contentDescription="Accept call"-->
-    <!--                android:src="@drawable/ic_call_answer" />-->
-    <!--        </FrameLayout>-->
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/messageButton"-->
-    <!--            android:layout_width="@dimen/seventy"-->
-    <!--            android:layout_height="@dimen/seventy"-->
-    <!--            android:background="@android:color/transparent"-->
-    <!--            android:contentDescription="Send message"-->
-    <!--            android:src="@drawable/ic_call_answer"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-
-    <!--        <ImageButton-->
-    <!--            android:id="@+id/callEndButton"-->
-    <!--            android:layout_width="@dimen/seventy"-->
-    <!--            android:layout_height="@dimen/seventy"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:background="@drawable/circle_button_red"-->
-    <!--            android:contentDescription="End call"-->
-    <!--            android:src="@drawable/ic_call_end"-->
-    <!--            android:visibility="gone"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
+        <ImageButton
+            android:id="@+id/imgSpecker"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/callEndButton"
+            android:background="@drawable/volume_low" />
+    </RelativeLayout>
 </RelativeLayout>
 

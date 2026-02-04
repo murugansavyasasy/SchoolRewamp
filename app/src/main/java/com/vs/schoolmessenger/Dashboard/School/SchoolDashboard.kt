@@ -37,6 +37,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
@@ -68,6 +69,8 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
+    var staffDetails: StaffDetails? = null
+
     var access_token = ""
     private var isTourDialogShown = false
     private lateinit var drawerLayout: DrawerLayout
@@ -112,6 +115,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         }
 
         userDetails = SharedPreference.getUserDetails(this)
+        staffDetails = SharedPreference.getStaffDetails(this)
         access_token = userDetails!!.staff_details[0].access_token
 
         Constant.isParentChoose = false
@@ -122,14 +126,14 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         val headerBinding = NavHeaderBinding.bind(binding.navigationView.getHeaderView(0))
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-            access_token = userDetails!!.staff_details[0].access_token
-            headerBinding.lblSchoolName.text = userDetails!!.staff_details[0]!!.school_name
-            headerBinding.username.text = userDetails!!.staff_details[0].name
-            headerBinding.lblRole.text = userDetails!!.staff_details[0].role
+            access_token = staffDetails!!.access_token
+            headerBinding.lblSchoolName.text = staffDetails!!.school_name
+            headerBinding.username.text = staffDetails!!.name
+            headerBinding.lblRole.text = staffDetails!!.role
 
-            if (userDetails!!.staff_details[0].staff_profile != "") {
+            if (staffDetails!!.staff_profile != "") {
                 Glide.with(this)
-                    .load(userDetails!!.staff_details[0].staff_profile)
+                    .load(staffDetails!!.staff_profile)
                     .placeholder(R.drawable.default_profile)
                     .error(R.drawable.default_profile)
                     .circleCrop()
@@ -144,6 +148,17 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 headerBinding.username.text = userDetails!!.staff_details[0].name
                 headerBinding.lblRole.text = userDetails!!.staff_details[0].role
                 headerBinding.lblSchoolName.visibility = View.GONE
+
+                Glide.with(headerBinding.imgProfile.context)
+                    .load(userDetails!!.staff_details[0].staff_profile)
+                    .placeholder(R.drawable.default_profile)
+                    .error(R.drawable.default_profile)
+                    .circleCrop()
+                    .dontAnimate()  // Skip fade-in for snappier lists
+                    .priority(Priority.HIGH)  // Prioritize over other loads
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(headerBinding.imgProfile)
+
             } else {
                 headerBinding.lblSchoolName.visibility = View.VISIBLE
                 headerBinding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
@@ -165,15 +180,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             }
         }
 
-        Glide.with(headerBinding.imgProfile.context)
-            .load(userDetails!!.staff_details[0].staff_profile)
-            .placeholder(R.drawable.default_profile)
-            .error(R.drawable.default_profile)
-            .circleCrop()
-            .dontAnimate()  // Skip fade-in for snappier lists
-            .priority(Priority.HIGH)  // Prioritize over other loads
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(headerBinding.imgProfile)
+
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
 
