@@ -36,6 +36,8 @@ android {
             "TERMS_URL",
             "\"https://schoolchimes.com/vs_web/terms_conditions/\""
         )
+        buildConfigField("boolean", "ENABLE_TOUR", "true")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
@@ -88,6 +90,8 @@ android {
                 "TERMS_URL",
                 "\"https://schoolchimes.com/vs_web/terms_conditions/\""
             )
+            buildConfigField("boolean", "ENABLE_TOUR", "true")
+
         }
         // ✅ 2️⃣ Dynamically Generate Other Flavors
         val schoolsFile = rootDir.resolve("app/schools.json")
@@ -107,6 +111,8 @@ android {
                         "TERMS_URL",
                         "\"$termsUrl\""
                     )
+                    buildConfigField("boolean", "ENABLE_TOUR", "false")
+
                 }
             }
         } else {

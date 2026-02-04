@@ -400,7 +400,7 @@
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
         android:text="@string/show_older_messages"
-        android:textColor="@color/navi_blue2"
+        android:textColor="@color/PrimaryColor"
         android:textSize="@dimen/fifteen_sp"
         android:visibility="gone"></TextView>
 

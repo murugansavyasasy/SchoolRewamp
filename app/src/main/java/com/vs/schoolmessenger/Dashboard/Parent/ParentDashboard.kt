@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.BuildConfig
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
@@ -63,7 +64,9 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     private var isTourDialogShown = false
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+        if(BuildConfig.ENABLE_TOUR) {
+            showTourIfNeeded()
+        }
         setupToolbarBlueWhite()
         enableEdgeToEdge()
 

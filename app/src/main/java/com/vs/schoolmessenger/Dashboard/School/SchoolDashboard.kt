@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.BuildConfig
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Fragments.HolidaysFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.SchoolProfileRewampFragment
@@ -82,7 +83,9 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-        showTourIfNeeded()
+        if(BuildConfig.ENABLE_TOUR) {
+            showTourIfNeeded()
+        }
         enableEdgeToEdge()
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
