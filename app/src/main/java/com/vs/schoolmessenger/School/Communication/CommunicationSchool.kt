@@ -547,7 +547,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isFileName = fileName
             Constant.isVoiceType = 1
             mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
+                setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setAudioEncodingBitRate(128000)

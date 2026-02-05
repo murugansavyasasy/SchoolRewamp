@@ -143,8 +143,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="@dimen/fourty"
                     android:layout_marginTop="@dimen/five"
-                    android:weightSum="3">
+                    android:weightSum="2">
+
 
                     <TextView
                         android:id="@+id/lblCorrectAnswer"
@@ -178,22 +181,24 @@
                         android:textColor="@color/red"
                         android:textSize="@dimen/eleven_sp"></TextView>
 
-                    <TextView
-                        android:id="@+id/lblNotAnswer"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/gray_bg_radius"
-                        android:drawableStart="@drawable/not_answered"
-                        android:drawablePadding="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/five"
-                        android:text="Not Answer : 02/20"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/eleven_sp"></TextView>
-
                 </LinearLayout>
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/lblNotAnswer"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_bg_radius"
+                    android:drawableStart="@drawable/not_answered"
+                    android:drawablePadding="@dimen/five"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/five"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Not Answer : 02/20"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/eleven_sp"></TextView>
 
             </LinearLayout>
 

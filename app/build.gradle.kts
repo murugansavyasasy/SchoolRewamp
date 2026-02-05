@@ -26,7 +26,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 177
+        versionCode = 178
         versionName = "8.1"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
@@ -40,7 +40,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+            abiFilters += listOf(
+                "armeabi-v7a", "arm64-v8a", "x86",
+                "x86_64"
+            )
         }
         vectorDrawables {
             useSupportLibrary = true

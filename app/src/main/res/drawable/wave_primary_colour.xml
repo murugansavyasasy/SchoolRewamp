@@ -13,19 +13,19 @@
                 android:startY="0"
                 android:type="linear">
                 <item
-                    android:color="#FFC3DAFF"
+                    android:color="@color/splash_start"
                     android:offset="0" />
                 <item
-                    android:color="#FF6593D9"
+                    android:color="@color/splash_center"
                     android:offset="0" />
                 <item
-                    android:color="#FF85ABE6"
-                    android:offset="0.3" />
+                    android:color="@color/splash_end"
+                    android:offset="0.2" />
                 <item
-                    android:color="#FF78A3E5"
-                    android:offset="0.5" />
+                    android:color="@color/splash_end"
+                    android:offset="0.1" />
                 <item
-                    android:color="#FF4085EF"
+                    android:color="@color/PrimaryColor"
                     android:offset="0.9" />
             </gradient>
         </aapt:attr>

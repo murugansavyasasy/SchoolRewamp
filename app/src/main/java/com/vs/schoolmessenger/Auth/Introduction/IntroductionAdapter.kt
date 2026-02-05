@@ -53,35 +53,7 @@ class OnboardingAdapter(
             .error(R.drawable.no_search_message)
             .into(holder.img)
 
-//        Glide.with(context)
-//            .load(item.file_path.get(0).url)
-//            .placeholder(R.drawable.no_search_message)
-//            .thumbnail(0.25f)  // Slightly higher for better preview quality without much cost
-//            .diskCacheStrategy(DiskCacheStrategy.ALL)
-//            .override(120, 120)  // Much smaller: matches ~30dp display size (adjust if needed)
-//            .centerCrop()  // Crop to fit circle efficiently
-//            .dontAnimate()  // Skip fade-in for snappier lists
-//            .priority(Priority.HIGH)  // Prioritize over other loads
-//            .error(R.drawable.no_search_message)
-//            .listener(object : RequestListener<Drawable> {
-//                override fun onLoadFailed(
-//                    e: GlideException?,
-//                    model: Any?,
-//                    target: com.bumptech.glide.request.target.Target<Drawable>,
-//                    isFirstResource: Boolean
-//                ): Boolean {
-//                    Log.e("GlideError", "Image load failed", e)
-//                    return false
-//                }
-//                override fun onResourceReady(
-//                    resource: Drawable,
-//                    model: Any,
-//                    target: Target<Drawable>,
-//                    dataSource: DataSource,
-//                    isFirstResource: Boolean
-//                ): Boolean = false
-//            })
-//            .into(holder.img)
+
 
         holder.title.text = item.title
         holder.desc.text = item.description

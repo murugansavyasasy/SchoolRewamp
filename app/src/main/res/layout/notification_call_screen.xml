@@ -184,14 +184,15 @@
             android:contentDescription="End call"
             android:src="@drawable/ic_call_end" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imgSpecker"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/fourty_five"
+            android:layout_height="@dimen/fourty_five"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/fifteen"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/fifty"
             android:layout_toEndOf="@+id/callEndButton"
-            android:background="@drawable/volume_low" />
+            android:src="@drawable/volume_low" />
     </RelativeLayout>
 </RelativeLayout>
 
