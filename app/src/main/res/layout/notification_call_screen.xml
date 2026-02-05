@@ -189,7 +189,7 @@
             android:layout_width="@dimen/fourty_five"
             android:layout_height="@dimen/fourty_five"
             android:layout_centerVertical="true"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginStart="@dimen/fifty"
             android:layout_toEndOf="@+id/callEndButton"
             android:src="@drawable/volume_low" />
