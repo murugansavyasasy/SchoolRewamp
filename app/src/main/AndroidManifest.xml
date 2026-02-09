@@ -7,6 +7,28 @@
         android:name="android.hardware.camera.any"
         android:required="false" />
 
+
+    <!-- Microphone -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+
+    <!-- Location -->
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+
+    <!-- Biometrics -->
+    <uses-feature android:name="android.hardware.fingerprint" android:required="false"/>
+
+    <!-- Telephony -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+
+    <!-- SMS -->
+    <uses-feature android:name="android.hardware.telephony.sms" android:required="false"/>
+
+    <!-- Contacts -->
+    <uses-feature android:name="android.hardware.contacts" android:required="false"/>
+
+    <!-- Storage -->
+    <uses-feature android:name="android.hardware.storage" android:required="false"/>
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -516,11 +538,7 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".Parent.WhereIsMyBus.StudentBusLocation"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".Parent.FeeDetails.FeeReceiptViewActivity"
             android:configChanges="uiMode|orientation|screenSize"
@@ -613,11 +631,7 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".School.DriverBusLocationUpdate.DriverBusLocationUpdate"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".School.AbsenteesReport.AbsenteesReport"
             android:configChanges="uiMode|orientation|screenSize"

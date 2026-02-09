@@ -146,6 +146,14 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             }
         }
 
+        headerBinding.imgProfile.setOnClickListener {
+            val imageUrl = childDetails?.profile
+
+            if (imageUrl.isNullOrEmpty()) return@setOnClickListener
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            Constant.showImagePreview(this,imageUrl)
+        }
+
         binding.navigationView.setNavigationItemSelectedListener { item ->
 
             resetMenuBackgrounds()

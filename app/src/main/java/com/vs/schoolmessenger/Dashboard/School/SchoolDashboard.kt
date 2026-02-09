@@ -183,6 +183,17 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
             }
         }
 
+        headerBinding.imgProfile.setOnClickListener {
+            val imageUrl = when {
+                userDetails?.staff_role == Constant.isStaffRole ->
+                    staffDetails?.staff_profile
+                else ->
+                    userDetails?.staff_details?.getOrNull(0)?.staff_profile
+            }
+            if (imageUrl.isNullOrEmpty()) return@setOnClickListener
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            Constant.showImagePreview(this,imageUrl)
+        }
 
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true

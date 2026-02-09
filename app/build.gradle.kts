@@ -26,7 +26,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 179
+        versionCode = 183
         versionName = "8.1"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
@@ -244,80 +244,50 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
-    implementation("androidx.fragment:fragment-ktx:1.8.5")// or latest stable version
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    implementation("androidx.fragment:fragment-ktx:1.8.9")// or latest stable version
     implementation("androidx.activity:activity-compose:1.10.1")
-    implementation(platform("androidx.compose:compose-bom:2025.03.01"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation(platform("androidx.compose:compose-bom:2026.01.01"))
     implementation("androidx.compose.material3:material3")
-    implementation("com.google.mlkit:vision-common:17.3.0")
-    implementation("androidx.palette:palette-ktx:1.0.0")
-    implementation("androidx.activity:activity:1.10.1")
-    implementation("androidx.compose.ui:ui-graphics:1.10.0")
-    implementation("androidx.compose.foundation:foundation:1.10.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2025.03.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2026.01.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-    implementation("com.makeramen:roundedimageview:2.3.0")
     implementation("com.airbnb.android:lottie:6.0.0")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:5.0.5")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    //AWS s3 libraries
-    implementation("com.amazonaws:aws-android-sdk-s3:2.59.0")
-    implementation("com.amazonaws:aws-android-sdk-cognito:2.20.1")
-    implementation("com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.25.0")
-    implementation("org.mindrot:jbcrypt:0.4")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
     //Firebase Message
-    implementation("com.google.firebase:firebase-messaging:24.1.1")
+    implementation("com.google.firebase:firebase-messaging:25.0.1")
     implementation("com.google.firebase:firebase-common-ktx:21.0.0")
-    implementation("com.google.firebase:firebase-database:21.0.0")
+    implementation("com.google.firebase:firebase-database:22.0.1")
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
     //Load Image
     implementation("com.squareup.picasso:picasso:2.71828")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("com.github.massoudss:waveformSeekBar:5.0.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     //CircleIndicator
     implementation("me.relex:circleindicator:2.1.6")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06") // latest as of now
-    implementation("com.github.lecho:hellocharts-library:1.5.8@aar")
-    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("androidx.security:security-crypto:1.1.0") // latest as of now
     implementation("com.google.android.play:app-update-ktx:2.1.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.compose.foundation:foundation:1.7.8")
+    implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.biometric:biometric:1.1.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
-    implementation("com.google.android.gms:play-services-auth:20.0.0")
-    implementation("com.google.android.play:review-ktx:2.0.1")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("io.socket:socket.io-client:2.1.0") // stable version
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    annotationProcessor("com.github.bumptech.glide:compiler:5.0.5")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.gms:play-services-auth:21.5.0")
+    implementation("com.google.android.gms:play-services-maps:20.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
-    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-process:2.10.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
-    implementation("com.google.android.play:review-ktx:2.0.1")
-    implementation("com.kizitonwose.calendar:view:2.5.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.2.0")
+
 }

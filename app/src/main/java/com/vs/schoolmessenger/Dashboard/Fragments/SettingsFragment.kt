@@ -21,10 +21,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.BuildConfig
 import com.google.android.gms.tasks.Task
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.testing.FakeReviewManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
@@ -255,36 +251,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    fun testInAppReviewUI() {
-        val manager: ReviewManager = if (BuildConfig.DEBUG) {
-            // Use fake manager in debug builds
-            FakeReviewManager(requireActivity())
-        } else {
-            // Use real manager in release builds
-            ReviewManagerFactory.create(requireActivity())
-        }
-
-        val request = manager.requestReviewFlow()
-
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val reviewInfo: ReviewInfo = task.result
-                val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
-                flow.addOnCompleteListener {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.review_flow_completed_debug_simulation),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.failed_to_start_review_flow), Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
 
 
     private fun RedirectToWhatsnew() {
@@ -292,27 +258,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         startActivity(intent)
     }
 
-
-    private fun showInAppReview(requireActivity: FragmentActivity) {
-        val manager = ReviewManagerFactory.create(requireActivity())
-        val request: Task<ReviewInfo> =
-            manager.requestReviewFlow()
-
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // We got the ReviewInfo object
-                val reviewInfo = task.result
-                val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
-                flow.addOnCompleteListener {
-                    // The flow has finished, you cannot know if user submitted or not
-                    // Do any post-review logic here (optional)
-                }
-            } else {
-                // If something fails, fallback to Play Store app page
-                redirectToAppRating(requireActivity)
-            }
-        }
-    }
 
     private fun redirectToAppRating(context: FragmentActivity) {
         //        val packageName = context.packageName

@@ -170,6 +170,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         authViewModel!!.init()
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+
         connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         // Define the callback
         networkCallback = object : ConnectivityManager.NetworkCallback() {

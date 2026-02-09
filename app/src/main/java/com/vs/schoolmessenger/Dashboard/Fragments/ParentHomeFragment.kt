@@ -161,6 +161,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 access_token, Constant.parent, requireActivity()
             )
         }
+        binding.profileImage.setOnClickListener {
+            val imageUrl = childDetails!!.school_logo_url
+            if (imageUrl.isNullOrEmpty()) return@setOnClickListener
+            Constant.showImagePreview(requireContext(),imageUrl)
+        }
         binding.imgBurgerMenu.setOnClickListener(this)
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? ParentDashboard)?.openDrawer()

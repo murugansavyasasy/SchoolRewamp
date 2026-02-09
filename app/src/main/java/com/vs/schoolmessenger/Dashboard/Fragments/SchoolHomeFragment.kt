@@ -189,6 +189,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgBurgerMenu.setOnClickListener(this)
         binding.imgNotification.setOnClickListener(this)
 
+        binding.profileImage.setOnClickListener {
+            val imageUrl = if (userDetails!!.staff_role == Constant.isStaffRole) {
+                staffDetails?.school_logo
+            } else {
+                userDetails!!.staff_details[0].school_logo
+            }
+            if (imageUrl.isNullOrEmpty()) return@setOnClickListener
+            Constant.showImagePreview(requireContext(),imageUrl)
+        }
+
         binding.imgBurgerMenu.setOnClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
         }

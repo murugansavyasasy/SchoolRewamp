@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -32,6 +33,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -41,6 +43,7 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridView
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -49,6 +52,8 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -2551,6 +2556,35 @@ object Constant {
         } catch (e: Exception) {
             input // fallback if parsing fails
         }
+    }
+
+    fun showImagePreview(context: Context, imageUrl: String) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_image_preview)
+
+        val previewImageView = dialog.findViewById<PhotoView>(R.id.imgPreview)
+        val closeBtn = dialog.findViewById<ImageView>(R.id.btnClose)
+
+        Glide.with(context)
+            .load(imageUrl)
+            .placeholder(R.drawable.default_profile)
+            .error(R.drawable.default_profile)
+            .into(previewImageView)
+
+        closeBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+
+        dialog.show()
     }
 
 
