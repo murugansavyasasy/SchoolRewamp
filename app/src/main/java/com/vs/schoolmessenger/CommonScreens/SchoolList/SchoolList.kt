@@ -368,6 +368,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onItemClick(data: StaffDetails) {
+        isAccessToken = data.access_token
         isGetAcademicYear()
         Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
         SharedPreference.putStaffDetails(this, data)
