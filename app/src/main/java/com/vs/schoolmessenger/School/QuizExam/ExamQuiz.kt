@@ -189,8 +189,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             Constant.isQuizReportPage = false
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
-            binding.line1.setBackgroundResource(R.color.iconBlue)
-            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line1.setBackgroundResource(R.color.PrimaryColor)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
             showTabOne()
@@ -207,8 +207,8 @@ class ExamQuiz : BaseActivity<ExamQuizBinding>(),
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.line2.setBackgroundResource(R.color.PrimaryColor)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             showTabTwo()
             isFetchEQReport()

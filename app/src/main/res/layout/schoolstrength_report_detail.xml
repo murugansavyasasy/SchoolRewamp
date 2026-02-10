@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:src="@drawable/schoolstrengthmale"
-                app:tint="@color/color_blue_primary" />
+                app:tint="@color/PrimaryColor" />
 
             <TextView
                 android:id="@+id/boyscount"

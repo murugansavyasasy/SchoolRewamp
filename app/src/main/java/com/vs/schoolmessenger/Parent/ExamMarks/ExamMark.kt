@@ -225,8 +225,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             if (currentTab == TabType.EXAM_TIMETABLE) return@setOnClickListener
             currentTab = TabType.EXAM_TIMETABLE
             binding.txtVideoMenu1.text.clear()
-            binding.line1.setBackgroundResource(R.color.iconBlue)
-            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line1.setBackgroundResource(R.color.PrimaryColor)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.white)
             binding.exammarkrecyclerview.visibility = View.GONE
@@ -245,8 +245,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             currentTab = TabType.EXAM_MARKS
             binding.txtVideoMenu1.text.clear()
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.line2.setBackgroundResource(R.color.PrimaryColor)
             binding.line1.setBackgroundResource(R.color.white)
             binding.rcExamTimeTable.visibility = View.GONE
             binding.nomessage.visibility = View.GONE

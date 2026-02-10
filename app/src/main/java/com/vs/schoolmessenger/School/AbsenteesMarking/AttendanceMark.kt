@@ -157,8 +157,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.lnrTabOneName.setOnClickListener {
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
-            binding.line1.setBackgroundResource(R.color.iconBlue)
-            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line1.setBackgroundResource(R.color.PrimaryColor)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
             callApi = false
@@ -176,8 +176,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.line2.setBackgroundResource(R.color.PrimaryColor)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.txtSearchBox.windowToken, 0)
