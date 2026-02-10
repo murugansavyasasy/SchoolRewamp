@@ -77,7 +77,7 @@
                 android:layout_marginEnd="@dimen/five"
                 android:gravity="center"
                 android:text="@string/upcoming"
-                android:textColor="@color/iconBlue"></TextView>
+                android:textColor="@color/PrimaryColor"></TextView>
 
             <View
                 android:id="@+id/line1"
@@ -86,7 +86,7 @@
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/five"
-                android:background="@color/iconBlue"></View>
+                android:background="@color/PrimaryColor"></View>
         </LinearLayout>
 
 
