@@ -1620,11 +1620,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetMySubmission(
         isToken: String,
-        id: String, activity: Activity
+        id: String,
+        student_id: String,
+        activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiParentRepositories.isGetMySubmission(isToken, id)
+        apiParentRepositories.isGetMySubmission(isToken, id,student_id)
     }
 
 

@@ -5,6 +5,7 @@ class GetQuizSubmissionListData(
     val id: String,
     val standard: String,
     val section: String,
+    val student_id: String,
     val student_name: String,
     val mobile_no: String,
     val is_submitted: String,

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Parent.QuizExam.Adapter.QuizCompletedAdapter
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmissionData
 import com.vs.schoolmessenger.R
@@ -24,9 +25,12 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+
     var isQuizID = ""
     var isSubmittedOn = ""
     var isSubject = ""
+    var isStudentId = ""
 
 
     override fun getViewBinding(): SubmittedQuizPreviewBinding {
@@ -48,15 +52,33 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
-        isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = isChildDetails!!.access_token
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-        isQuizID = intent.getStringExtra(Constant.isRSSubmittedQuizId).toString()
+        //Staff/Principal no need to send the access token only student_id is enough
+        //Parent no need to send the student_id only  access tokenis enough
+        if (intent.getBooleanExtra(Constant.isQuizScreenRole, false)){
+            isStudentId = intent.getStringExtra(Constant.isSSStudentID).toString()
+            isStaffDetails = SharedPreference.getStaffDetails(this)
+            isAccessToken = isStaffDetails!!.access_token
+            binding.toolbarLayout.lblStudentName.text = intent.getStringExtra(Constant.isStudentName).toString() ?: ""
+            binding.toolbarLayout.lblStudentSection.text =
+                intent.getStringExtra(Constant.isStandardName).toString()  + " - " + intent.getStringExtra(Constant.isSectionName).toString()
+        }
+        else{
+            isStudentId =""
+            isChildDetails = SharedPreference.getChildDetails(this)
+            isAccessToken = isChildDetails!!.access_token
+            binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+            binding.toolbarLayout.lblStudentSection.text =
+                isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        }
+
         isSubject = intent.getStringExtra(Constant.isRSSubmittedSubject).toString()
+        isQuizID = intent.getStringExtra(Constant.isRSSubmittedQuizId).toString()
         isSubmittedOn = intent.getStringExtra(Constant.isRSSubmittedSubmittedOn).toString()
+
+
+
+
 
         appViewModel?.isGetMySubmission?.observe(this) { response ->
 
@@ -152,7 +174,7 @@ class SubmittedQuizPreview : BaseActivity<SubmittedQuizPreviewBinding>(), View.O
         }
 
         binding.rcSubmitedQuiz.adapter = adapter1
-        appViewModel?.isGetMySubmission(isAccessToken ?: "", isQuizID, this)
+        appViewModel?.isGetMySubmission(isAccessToken ?: "", isQuizID,isStudentId, this)
     }
 
     override fun onClick(p0: View?) {

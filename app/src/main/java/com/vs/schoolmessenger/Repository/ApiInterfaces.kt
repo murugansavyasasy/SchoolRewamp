@@ -1065,6 +1065,7 @@ interface ApiInterfaces {
     fun isGetMySubmission(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.id) id: String,
+        @Query(APIKeyNames.student_id) student_id: String
     ): Call<GetMySubmission?>?
 
 

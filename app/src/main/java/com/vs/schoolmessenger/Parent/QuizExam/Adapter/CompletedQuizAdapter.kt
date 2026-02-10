@@ -91,11 +91,15 @@ class CompletedQuizAdapter(
             }
 
             // Open QuizExam on click
+            //Staff/Principal no need to send the access token only student_id is enough
+            //Parent no need to send the student_id only  access token is enough
             val openExam = View.OnClickListener {
                 val intent = Intent(context, SubmittedQuizPreview::class.java)
                 intent.putExtra(Constant.isRSSubmittedQuizId, data.quiz_id)
                 intent.putExtra(Constant.isRSSubmittedSubject, data.subject)
                 intent.putExtra(Constant.isRSSubmittedSubmittedOn, data.submitted_on)
+                intent.putExtra(Constant.isQuizScreenRole, false)
+
                 context.startActivity(intent)
             }
             lnrEntireQuiz.setOnClickListener(openExam)

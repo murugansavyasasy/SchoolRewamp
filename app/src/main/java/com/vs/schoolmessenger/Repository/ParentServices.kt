@@ -1667,8 +1667,9 @@ class ParentServices {
     fun isGetMySubmission(
         isToken: String,
         id: String,
+        student_id: String,
     ) {
-        RestClient.apiInterfaces.isGetMySubmission(isToken, id)
+        RestClient.apiInterfaces.isGetMySubmission(isToken, id,student_id)
             ?.enqueue(object : Callback<GetMySubmission?> {
                 override fun onResponse(
                     call: Call<GetMySubmission?>,

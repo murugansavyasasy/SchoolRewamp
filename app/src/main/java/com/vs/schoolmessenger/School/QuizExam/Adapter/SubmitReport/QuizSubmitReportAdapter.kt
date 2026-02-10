@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.QuizExam.Adapter.SubmitReport
 
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Parent.QuizExam.SubmittedQuizPreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionListData
 import com.vs.schoolmessenger.Utils.Constant
@@ -19,6 +21,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 class QuizSubmitReportAdapter(
     private var itemList: List<GetQuizSubmissionListData>?,
     private var context: Context,
+    private var isSubject: String,
     private var isLoading: Boolean
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -74,7 +77,7 @@ class QuizSubmitReportAdapter(
                 "${context.getString(R.string.Class_)}: ${data.standard}-${data.section}"
             if (data.is_submit) {
                 tvSubmittedOn.text = Constant.convertDateFormatType2(data.submitted_on)
-                tvStatus1.text = context.getString(R.string.submitted)
+                tvStatus1.text = "${context.getString(R.string.submitted)} ${">>"}"
                 tvStatus.background.setTint(ContextCompat.getColor(context, R.color.green))
                 tvStatus1.setTextColor(ContextCompat.getColor(context, R.color.white))
 
@@ -101,7 +104,23 @@ class QuizSubmitReportAdapter(
                     .into(imgAvatar)
             }
 
-
+            if (data.is_submit){
+                //Staff/Principal no need to send the access token only student_id is enough
+                //Parent no need to send the student_id only  access token is enough
+                val openExam = View.OnClickListener {
+                    val intent = Intent(context, SubmittedQuizPreview::class.java)
+                    intent.putExtra(Constant.isRSSubmittedQuizId, data.id)
+                    intent.putExtra(Constant.isRSSubmittedSubject, isSubject?:"")
+                    intent.putExtra(Constant.isRSSubmittedSubmittedOn, data.submitted_on)
+                    intent.putExtra(Constant.isSSStudentID, data.student_id)
+                    intent.putExtra(Constant.isStudentName, data.student_name)
+                    intent.putExtra(Constant.isSectionName, data.section)
+                    intent.putExtra(Constant.isStandardName, data.standard)
+                    intent.putExtra(Constant.isQuizScreenRole, true)
+                    context.startActivity(intent)
+                }
+                tvStatus.setOnClickListener(openExam)
+            }
         }
     }
 

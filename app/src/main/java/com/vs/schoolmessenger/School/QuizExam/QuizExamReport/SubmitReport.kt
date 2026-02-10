@@ -156,7 +156,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
     private fun isLoadisSubList(data: List<GetQuizSubmissionListData>) {
 
         if (data.isNotEmpty()) {
-            adapter = QuizSubmitReportAdapter(data, this, Constant.isShimmerViewDisable)
+            adapter = QuizSubmitReportAdapter(data, this,isSubject, Constant.isShimmerViewDisable)
             binding.rcSubmitReport.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding.rcSubmitReport.adapter = adapter
@@ -172,7 +172,7 @@ class SubmitReport : BaseActivity<QuizSubmitReportBinding>(),
 
 
     fun isGetSubmittedList() {
-        adapter = QuizSubmitReportAdapter(null, this, Constant.isShimmerViewShow)
+        adapter = QuizSubmitReportAdapter(null, this,isSubject, Constant.isShimmerViewShow)
         binding.rcSubmitReport.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcSubmitReport.adapter = adapter
