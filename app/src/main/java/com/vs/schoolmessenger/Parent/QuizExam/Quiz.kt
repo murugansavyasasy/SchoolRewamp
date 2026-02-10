@@ -164,8 +164,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             binding.lnrTabOneName.isEnabled = false
             binding.lnrTabTwoName.isEnabled = true
             isStatusType = "1"
-            binding.line1.setBackgroundResource(R.color.iconBlue)
-            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line1.setBackgroundResource(R.color.PrimaryColor)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
             binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
             binding.line2.setBackgroundResource(R.color.athens_gray)
             binding.rytSearch1.visibility = View.GONE
@@ -182,8 +182,8 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
             binding.lnrTabOneName.isEnabled = true
             binding.lnrTabTwoName.isEnabled = false
             binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
-            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
-            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.PrimaryColor))
+            binding.line2.setBackgroundResource(R.color.PrimaryColor)
             binding.line1.setBackgroundResource(R.color.athens_gray)
             binding.rytSearch1.visibility = View.GONE
             binding.txtSearch1.text.clear()

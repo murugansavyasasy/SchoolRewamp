@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/category_wise"
-                    android:textColor="@color/iconBlue"></TextView>
+                    android:textColor="@color/PrimaryColor"></TextView>
 
                 <View
                     android:id="@+id/line1"
@@ -62,7 +62,7 @@
                     android:layout_height="@dimen/three"
                     android:layout_below="@+id/groupheading"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@color/iconBlue"></View>
+                    android:background="@color/PrimaryColor"></View>
             </LinearLayout>
 
 
