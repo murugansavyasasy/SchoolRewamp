@@ -306,6 +306,7 @@
         android:layout_marginTop="@dimen/ten">
 
         <LinearLayout
+            android:id="@+id/lnrDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -380,7 +381,9 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rytAttendance"
+        android:layout_marginTop="@dimen/twenty"
         android:text=""></TextView>
 
 </RelativeLayout>
