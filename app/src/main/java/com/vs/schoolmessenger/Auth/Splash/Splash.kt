@@ -47,6 +47,7 @@ import com.vs.schoolmessenger.Auth.Country.CountryScreen
 import com.vs.schoolmessenger.Auth.Introduction.Introduction
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -133,6 +134,8 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     private var appViewModel: App? = null
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
+    var userDetails: UserDetails? = null
+
 
     var noInternetalertDialog: AlertDialog? = null
 
@@ -611,6 +614,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             receiverId = intent.getStringExtra(Constant.receiverid)
             menu_id = intent.getIntExtra(Constant.menu_id, 0)
             msg_id = intent.getIntExtra(Constant.msg_id, 0)
+
         }
 
         if (!SharedPreference.isLoggedIn(this)) {
@@ -630,6 +634,8 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         // Open the target screen only if launched from notification
         if (fromNotification) {
+            userDetails = SharedPreference.getUserDetails(this)
+
             when (true) {
 
                 (menu_id == Constant.M_INTERACTION_WITH_STUDENT && receiverType == Constant.Staff___) -> {
@@ -755,6 +761,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 // Student Notification Redirection
 
                 (menu_id == Constant.M_COMMUNICATION && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, CommunicationParent::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -778,6 +787,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
 
                 (menu_id == Constant.M_HOMEWORK && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, HomeWork::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -800,6 +812,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_NOTICEBOARD && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, NoticeBoard::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -822,6 +837,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_LSRW && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, LSRW::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -844,6 +862,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_ASSIGNMENT && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, Assignment::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -866,6 +887,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_ATTACHMENTS && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, Attachment::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -888,6 +912,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_PARENT_CLASS_EVENTS && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, Event::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -910,6 +937,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_PTM && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, PTM::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -932,6 +962,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_ATTENDANCE_REPORT && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, LeaveRequest::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -954,6 +987,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_FEE_DETAILS && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, FeeDetails::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -976,6 +1012,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_INTERACTION_WITH_STAFF && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, InteractionWithStaff::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -998,6 +1037,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_QUIZ_EXAM && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
                     val detailIntent = Intent(this, Quiz::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -1020,6 +1062,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 }
 
                 (menu_id == Constant.M_MESSAGES_FROM_MANAGEMENT && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+                    
                     val detailIntent = Intent(this, MessageFromManagement::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)

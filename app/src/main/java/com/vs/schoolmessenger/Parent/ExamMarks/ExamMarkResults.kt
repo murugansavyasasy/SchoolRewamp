@@ -141,6 +141,14 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         binding.txtNoData.visibility = View.GONE
         binding.ExamMarkRV.visibility = View.VISIBLE
         binding.GroupCardRV.visibility = View.VISIBLE
+        binding.line2.visibility = View.VISIBLE
+        binding.examheading.visibility = View.VISIBLE
+        binding.line1.visibility = View.VISIBLE
+        binding.line3.visibility = View.VISIBLE
+        binding.groupheading.visibility = View.VISIBLE
+        binding.lblRemark.visibility = View.VISIBLE
+        binding.lblGrade.visibility = View.VISIBLE
+        binding.scoreCircleContainer.visibility = View.VISIBLE
 
         binding.ExamMarkRV.layoutManager = LinearLayoutManager(this)
         exammarkresultadapter = ExamMarkResultsAdapter(allSubjects, this, false)
@@ -158,6 +166,14 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         binding.txtNoData.visibility = View.VISIBLE
         binding.ExamMarkRV.visibility = View.GONE
         binding.GroupCardRV.visibility = View.GONE
+        binding.line2.visibility = View.GONE
+        binding.examheading.visibility = View.GONE
+        binding.groupheading.visibility = View.GONE
+        binding.line1.visibility = View.GONE
+        binding.line3.visibility = View.GONE
+        binding.lblRemark.visibility = View.GONE
+        binding.lblGrade.visibility = View.GONE
+        binding.scoreCircleContainer.visibility = View.GONE
     }
 
     private fun fetchexammark() {

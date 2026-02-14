@@ -70,10 +70,9 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-
-
-
-
+        if (fromNotification) {
+            Constant.isParentChoose = true
+        }
         dateList = generateCalendarDates()
 
         val todayDate =

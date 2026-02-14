@@ -234,12 +234,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         binding.radioGroupSendTo.check(R.id.radioAll)
         binding.radioAll.setBackgroundResource(R.drawable.radio_selected_bg)
+        isLoadData()
+
     }
 
-    override fun onResume() {
-        super.onResume()
-        isLoadData()
-    }
+
 
     private fun isLoadData() {
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
@@ -290,17 +289,22 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSelectReceipients -> {
-                binding.rytSend.visibility = View.GONE
-                binding.linearlayout.visibility = View.GONE
-                isMultipleSchool = false
-                isChangeBackRound(binding.lblSelectReceipients)
+                if (isMultipleSchool) {
+                    selectedSchoolIds.clear()
+                    binding.rytSend.visibility = View.GONE
+                    binding.linearlayout.visibility = View.GONE
+                    isMultipleSchool = false
+                    isChangeBackRound(binding.lblSelectReceipients)
+                }
             }
 
             R.id.lblSendToMultipleSchool -> {
-                binding.rytSend.visibility = View.VISIBLE
-                binding.linearlayout.visibility = View.VISIBLE
-                isMultipleSchool = true
-                isChangeBackRound(binding.lblSendToMultipleSchool)
+                if (!isMultipleSchool) {
+                    binding.rytSend.visibility = View.VISIBLE
+                    binding.linearlayout.visibility = View.VISIBLE
+                    isMultipleSchool = true
+                    isChangeBackRound(binding.lblSendToMultipleSchool)
+                }
             }
 
             R.id.rytSend -> {

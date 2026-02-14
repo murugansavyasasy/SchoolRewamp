@@ -26,7 +26,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 183
+        versionCode = 189
         versionName = "8.1"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
@@ -39,12 +39,12 @@ android {
         buildConfigField("boolean", "ENABLE_TOUR", "true")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters += listOf(
-                "armeabi-v7a", "arm64-v8a", "x86",
-                "x86_64"
-            )
-        }
+//        ndk {
+//            abiFilters += listOf(
+//                "armeabi-v7a", "arm64-v8a", "x86",
+//                "x86_64"
+//            )
+//        }
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -289,5 +289,6 @@ dependencies {
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("androidx.core:core-splashscreen:1.2.0")
+
 
 }

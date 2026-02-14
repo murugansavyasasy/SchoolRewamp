@@ -82,9 +82,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         msg_id = intent.getIntExtra(Constant.msg_id, -1)
 
         fromNotification = intent.getBooleanExtra("fromNotification", false)
-
+        if (fromNotification) {
+            Constant.isParentChoose = true
+        }
         val feeUrl = Constant.isGlobalVariableData!!.fees_url
-
         val isFinalFeeUrl = feeUrl
             .replace(Constant.isStudentID, isChildId)
             .replace(Constant.isSchoolID, isSchoolID)
