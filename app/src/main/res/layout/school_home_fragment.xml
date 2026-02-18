@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="Madhuri Sharma"
+                android:text="Madhuri Sharma  hsdbhsdjhshjas"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/lnrSchoolnames"
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBurgerMenu"
-            android:layout_below="@+id/lnrNotifi"
+            android:layout_below="@+id/rytDetails"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -112,6 +112,7 @@
                 android:layout_height="@dimen/sixty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/sixteen"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_profile"
                 android:padding="@dimen/two"
                 android:scaleType="fitCenter"

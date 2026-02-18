@@ -864,6 +864,7 @@ object Constant {
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
+        settings.loadsImagesAutomatically = true
         settings.setSupportMultipleWindows(true)
         settings.javaScriptCanOpenWindowsAutomatically = true
         settings.loadWithOverviewMode = true
@@ -872,6 +873,8 @@ object Constant {
         settings.builtInZoomControls = false
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        webView.settings.mixedContentMode =
+            WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 
         webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
         webView.isScrollbarFadingEnabled = true

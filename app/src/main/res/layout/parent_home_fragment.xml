@@ -52,7 +52,7 @@
             android:id="@+id/lblSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrNotifi"
+            android:layout_below="@+id/rytDetails"
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
             android:text=""
@@ -96,6 +96,7 @@
                 android:layout_marginEnd="@dimen/sixteen"
                 android:background="@drawable/bg_profile"
                 android:padding="@dimen/two"
+                android:layout_marginBottom="@dimen/ten"
                 android:scaleType="fitCenter"
                 android:src="@drawable/school_sample"
                 app:shapeAppearanceOverlay="@style/CircleImage" />
