@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Auth.TermsConditions
 
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.BuildConfig
@@ -27,13 +29,30 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
         var URL = ""
         binding.lblParentToolBar.text = when (screen_name) {
             "isTerms" -> {
-//                URL = Constant.terms_condition
-                URL = BuildConfig.TERMS_URL
+                if (BuildConfig.BASE_APP) {
+                    URL = BuildConfig.TERMS_URL
+                } else {
+                    val url = BuildConfig.TERMS_URL
+                    URL = Uri.parse(url)
+                        .buildUpon()
+                        .appendQueryParameter("id", BuildConfig.SCHOOL_ID)
+                        .build()
+                        .toString()
+                }
                 "Terms and Conditions"
             }
 
             "isPrivacy" -> {
-                URL = Constant.isGlobalVariableData?.privacy_policy ?: ""
+                if (BuildConfig.BASE_APP) {
+                    URL = Constant.isGlobalVariableData?.privacy_policy ?: ""
+                } else {
+                    val url  = Constant.isGlobalVariableData?.wl_privacy?: ""
+                    URL = Uri.parse(url)
+                        .buildUpon()
+                        .appendQueryParameter("id", BuildConfig.SCHOOL_ID)
+                        .build()
+                        .toString()
+                }
                 "Privacy Policy"
             }
 
@@ -49,6 +68,7 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
 
             else -> ""
         }
+        Log.d("URL",URL)
         Constant.loadWebView(
             this,
             binding.webView,

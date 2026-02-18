@@ -83,7 +83,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     override fun setupViews() {
         super.setupViews()
-        if(BuildConfig.ENABLE_TOUR) {
+        if(BuildConfig.BASE_APP) {
             showTourIfNeeded()
         }
         enableEdgeToEdge()

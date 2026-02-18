@@ -40,6 +40,8 @@ class GlobalVariableData(
     val how_to_use: String,
     val about_the_app: String,
     val privacy_policy: String,
+    val wl_privacy: String,
+    val wl_terms: String,
     val presigned_cred_base_url: String
 
 

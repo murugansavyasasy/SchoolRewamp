@@ -64,7 +64,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
     private var isTourDialogShown = false
     override fun setupViews() {
         super.setupViews()
-        if(BuildConfig.ENABLE_TOUR) {
+        if(BuildConfig.BASE_APP) {
             showTourIfNeeded()
         }
         setupToolbarBlueWhite()

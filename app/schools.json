@@ -1,6 +1,7 @@
 [
   {
     "id": "SchoolChimesRewamp",
+    "school_id": "",
     "name": "school Chimes-Beta",
     "package_suffix": "com.sss.schoolchimesrewamp",
     "color": "#4085ef",
@@ -15,6 +16,7 @@
   },
   {
     "id": "VAGGISVARI",
+    "school_id": "7415",
     "name": "VAGGISVARI VIDYALAYA",
     "package_suffix": "com.vaggisvari.connect",
     "color": "#f27968",
@@ -24,7 +26,7 @@
     "light_sky_blue_color": "#e8a59b",
     "dark_blue_color": "#f27968",
     "icon": "ic_vaggiswari_logo",
-    "terms_url": "https://www.google.com/"
+    "terms_url": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/"
 
   }
 ]

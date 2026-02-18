@@ -717,20 +717,33 @@
                             android:layout_below="@+id/lblDurationOfVoice"
                             android:layout_alignParentEnd="false"
                             android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginStart="@dimen/fifteen"
                             android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/twenty"
                             android:padding="@dimen/ten">
 
                             <TextView
+                                android:id="@+id/lblPickVoiceFile"
                                 style="@style/CustomTextStylePoppinsMedium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/choose_pre_recorded_file"
+                                android:layout_centerHorizontal="true"
                                 android:textColor="@color/navi_blue1"
                                 android:textSize="@dimen/thirteen_sp"></TextView>
-                        </RelativeLayout>
 
+                            <TextView
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/lblPickVoiceFile"
+                                android:text="(only .mp3, .m4a, .wav files are allowed)"
+                                android:textColor="@color/red_90"
+                                android:textSize="@dimen/thirteen_sp"></TextView>
+
+                        </RelativeLayout>
                         <RelativeLayout
                             android:id="@+id/rlaSeekBarAndTitle"
                             android:layout_width="match_parent"

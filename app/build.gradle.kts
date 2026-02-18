@@ -36,7 +36,8 @@ android {
             "TERMS_URL",
             "\"https://schoolchimes.com/vs_web/terms_conditions/\""
         )
-        buildConfigField("boolean", "ENABLE_TOUR", "true")
+        buildConfigField("boolean", "BASE_APP", "true")
+        buildConfigField("String", "SCHOOL_ID", "\"\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 //        ndk {
@@ -93,7 +94,9 @@ android {
                 "TERMS_URL",
                 "\"https://schoolchimes.com/vs_web/terms_conditions/\""
             )
-            buildConfigField("boolean", "ENABLE_TOUR", "true")
+            buildConfigField("boolean", "BASE_APP", "true")
+            buildConfigField("String", "SCHOOL_ID", "\"\"")
+
 
         }
         // ✅ 2️⃣ Dynamically Generate Other Flavors
@@ -105,6 +108,7 @@ android {
                 val id = school["id"] as String
                 val package_name = school["package_suffix"] as String
                 val termsUrl = school["terms_url"] as String
+                val school_id = school["school_id"] as String
 
                 create(id) {
                     dimension = "school"
@@ -114,8 +118,8 @@ android {
                         "TERMS_URL",
                         "\"$termsUrl\""
                     )
-                    buildConfigField("boolean", "ENABLE_TOUR", "false")
-
+                    buildConfigField("boolean", "BASE_APP", "false")
+                    buildConfigField("String", "SCHOOL_ID", "\"$school_id\"")
                 }
             }
         } else {
@@ -133,7 +137,7 @@ android {
             val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
             val srcDir = file("${projectDir}/src")
             schools.forEach { school ->
-                val schoolId = school["id"].toString()
+                val ID = school["id"].toString()
                 val schoolName = school["name"].toString()
                 val schoolColor = school["color"].toString()
                 val start_color = school["start_color"].toString()
@@ -143,7 +147,7 @@ android {
                 val light_sky_blue_color = school["light_sky_blue_color"].toString()
                 val iconName = school["icon"].toString()
 
-                val flavorResDir = File(srcDir, "$schoolId/res")
+                val flavorResDir = File(srcDir, "$ID/res")
                 val drawableDir = File(flavorResDir, "drawable")
                 val valuesDir = File(flavorResDir, "values")
                 val layoutDir = File(flavorResDir, "layout")
@@ -163,7 +167,7 @@ android {
                         }
                     }
                 } else {
-                    println("⚠️ Warning: Logo not found for $schoolId")
+                    println("⚠️ Warning: Logo not found for $ID")
                 }
                 // Create strings.xml
                 val stringsXml = File(valuesDir, "strings.xml")
@@ -192,7 +196,7 @@ android {
                 """.trimMargin()
                 )
                 // Create layout XML
-                println("✅ Resources created for $schoolId")
+                println("✅ Resources created for $ID")
             }
         }
     }
@@ -213,9 +217,9 @@ android {
             val googleServicesTemplate = jsonSlurper.parse(googleServicesTemplateFile) as Map<*, *>
 
             schools.forEach { school ->
-                val schoolId = school["id"].toString()
+                val ID = school["id"].toString()
                 val packageName = school["package_suffix"] as String
-                val flavorDir = File("${rootDir}/app/src/$schoolId/")
+                val flavorDir = File("${rootDir}/app/src/$ID/")
                 if (!flavorDir.exists()) {
                     flavorDir.mkdirs()
                 }
@@ -237,7 +241,7 @@ android {
                 }
                 val outputFile = File(flavorDir, "google-services.json")
                 outputFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(googleServicesCopy)))
-                println("✅ Generated google-services.json for $schoolId with package $packageName")
+                println("✅ Generated google-services.json for $ID with package $packageName")
             }
         }
     }
