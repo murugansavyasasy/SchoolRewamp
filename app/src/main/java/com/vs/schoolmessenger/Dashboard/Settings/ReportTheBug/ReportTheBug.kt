@@ -315,7 +315,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener, OnI
         val mobile = mobile_number
 
         val emailBody = """
-              Dear School Chimes Team,
+              Dear Team,
 
               School Name :- $School_name
               School ID :- $school_ID

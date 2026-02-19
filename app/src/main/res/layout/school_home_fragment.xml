@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_marginTop="@dimen/five"
+                android:layout_marginTop="@dimen/fifteen"
                 android:ellipsize="end"
                 android:text="Madhuri Sharma"
                 android:textColor="@android:color/white"
