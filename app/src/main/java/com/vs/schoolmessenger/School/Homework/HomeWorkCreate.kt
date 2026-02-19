@@ -183,8 +183,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
         if (uris.isEmpty()) return
 
-        Log.d("urisReturn", uris.size.toString())
-
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
@@ -193,17 +191,16 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             ).show()
         }
 
+        Log.d("urisReturn", uris.size.toString())
+
         val finalFiles = uris.take(Constant.isFileLimit)
 
         if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
-
             Constant.Remaining -= finalFiles.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
 
             Log.d("Constant.Remaining", Constant.Remaining.toString())
-            Log.d("FinalFilesSize", finalFiles.size.toString())
 
             finalFiles.forEach { uri ->
 
@@ -235,9 +232,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                     else -> FileType.OTHER
                 }
 
-                Log.d("MAX_FILES", Companion.MAX_FILES.toString())
-
-                // ✅ Simple Video Restriction
                 if (type == FileType.VIDEO) {
 
                     val videoCount = Constant.selectedFiles.count {
@@ -253,8 +247,7 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                         return@forEach
                     }
                 }
-
-                if (Constant.selectedFiles.size < Companion.MAX_FILES) {
+                if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
                 } else {
                     Constant.Remaining = 0
@@ -269,16 +262,11 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             val totalCount = Constant.selectedFiles.size
 
             Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-        }
-        else if (Constant.Remaining <= 0) {
-            Toast.makeText(
-                this,
-                "File limit reached",
-                Toast.LENGTH_SHORT
-            ).show()
+
+        } else if (Constant.Remaining <= 0) {
+            Log.d("LimitReached", "No remaining files allowed")
         }
     }
-
 
 
 

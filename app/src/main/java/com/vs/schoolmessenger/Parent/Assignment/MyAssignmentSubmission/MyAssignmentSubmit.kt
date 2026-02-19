@@ -229,11 +229,6 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
 
         if (uris.isEmpty()) return
 
-        Log.d("urisReturn", uris.size.toString())
-
-        var allowedUris = uris
-
-        // Normal file limit only
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
@@ -242,18 +237,19 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             ).show()
         }
 
-        allowedUris = uris.take(Constant.isFileLimit)
+        Log.d("urisReturn", uris.size.toString())
 
-        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+        val finalFiles = uris.take(Constant.isFileLimit)
+
+        if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
-
-            Constant.Remaining -= allowedUris.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
+            Constant.Remaining -= finalFiles.size
 
             Log.d("Constant.Remaining", Constant.Remaining.toString())
+            Log.d("Constant.Remaining", finalFiles.size.toString())
 
-            allowedUris.forEach { uri ->
+            finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
 
@@ -283,7 +279,8 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     else -> FileType.OTHER
                 }
 
-                // ✅ SIMPLE VIDEO RESTRICTION (Max 2 total)
+                Log.d("MAX_FILES", MAX_FILES.toString())
+
                 if (type == FileType.VIDEO) {
 
                     val videoCount = Constant.selectedFiles.count {
@@ -300,7 +297,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
                     }
                 }
 
-                if (Constant.selectedFiles.size < MAX_FILES) {
+                if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
                 } else {
                     Constant.Remaining = 0
@@ -315,16 +312,11 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
             val totalCount = Constant.selectedFiles.size
 
             Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-        }
-        else if (Constant.Remaining <= 0) {
-            Toast.makeText(
-                this,
-                "File limit reached",
-                Toast.LENGTH_SHORT
-            ).show()
+
+        } else if (Constant.Remaining <= 0) {
+            Log.d("isComing", "Limit reached")
         }
     }
-
 
 
     fun showTopAlertPopup(message: String, activity: Activity) {

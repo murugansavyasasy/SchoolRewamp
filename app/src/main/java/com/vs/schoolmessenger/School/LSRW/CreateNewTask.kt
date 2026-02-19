@@ -223,11 +223,6 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
         if (uris.isEmpty()) return
 
-        Log.d("urisReturn", uris.size.toString())
-
-        var allowedUris = uris
-
-        // Normal file limit (no special video trimming here)
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
@@ -236,18 +231,19 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             ).show()
         }
 
-        allowedUris = uris.take(Constant.isFileLimit)
+        Log.d("urisReturn", uris.size.toString())
 
-        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+        val finalFiles = uris.take(Constant.isFileLimit)
+
+        if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
-
-            Constant.Remaining -= allowedUris.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
+            Constant.Remaining -= finalFiles.size
 
             Log.d("Constant.Remaining", Constant.Remaining.toString())
+            Log.d("Constant.Remaining", finalFiles.size.toString())
 
-            allowedUris.forEach { uri ->
+            finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
 
@@ -277,39 +273,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     else -> FileType.OTHER
                 }
 
-                if (type == FileType.AUDIO) {
-
-                    Constant.showLoading(this@CreateNewTask)
-
-                    lifecycleScope.launch {
-
-                        val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
-
-                        Constant.hideLoading(this@CreateNewTask)
-
-                        if (wavFile != null) {
-
-                            Constant.selectedFiles.add(
-                                FileItem(
-                                    wavFile.absolutePath,
-                                    FileType.AUDIO
-                                )
-                            )
-
-                            mAdapter?.notifyDataSetChanged()
-                            updateRemainingCount()
-
-                        } else {
-                            Toast.makeText(
-                                this@CreateNewTask,
-                                "Audio convert failed!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-
-                    return@forEach
-                }
+                Log.d("MAX_FILES", MAX_FILES.toString())
 
                 if (type == FileType.VIDEO) {
 
@@ -327,8 +291,35 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
                     }
                 }
 
-                // Keep your MAX_FILES logic
-                if (Constant.selectedFiles.size < Companion.MAX_FILES) {
+                            if (type == FileType.AUDIO) {
+
+                Constant.showLoading(this@CreateNewTask)
+
+                lifecycleScope.launch {
+
+                    val wavFile = Constant.convertToWav(this@CreateNewTask, uri)
+
+                    Constant.hideLoading(this@CreateNewTask)
+
+                    if (wavFile != null &&
+                        Constant.selectedFiles.size < Companion.MAX_FILES
+                    ) {
+
+                        Constant.selectedFiles.add(
+                            FileItem(wavFile.absolutePath, FileType.AUDIO)
+                        )
+
+                        Constant.Remaining--
+                        if (Constant.Remaining < 0) Constant.Remaining = 0
+
+                        mAdapter?.notifyDataSetChanged()
+                    }
+                }
+
+                return@forEach
+            }
+
+                if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
                 } else {
                     Constant.Remaining = 0
@@ -343,13 +334,9 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
             val totalCount = Constant.selectedFiles.size
 
             Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-        }
-        else if (Constant.Remaining <= 0) {
-            Toast.makeText(
-                this,
-                "File limit reached",
-                Toast.LENGTH_SHORT
-            ).show()
+
+        } else if (Constant.Remaining <= 0) {
+            Log.d("isComing", "Limit reached")
         }
     }
 

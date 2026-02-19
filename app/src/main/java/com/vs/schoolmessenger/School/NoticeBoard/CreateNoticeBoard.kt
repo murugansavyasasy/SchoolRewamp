@@ -233,12 +233,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
             val previousCount = Constant.selectedFiles.size
 
-            Constant.Remaining -= finalFiles.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
-
-            Log.d("Constant.Remaining", Constant.Remaining.toString())
-            Log.d("FinalFilesSize", finalFiles.size.toString())
-
             finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
@@ -269,9 +263,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     else -> FileType.OTHER
                 }
 
-                Log.d("MAX_FILES", Companion.MAX_FILES.toString())
-
-                // ✅ Simple Video Restriction (like your previous working version)
+                // ✅ VIDEO RESTRICTION (Correct way)
                 if (type == FileType.VIDEO) {
 
                     val videoCount = Constant.selectedFiles.count {
@@ -288,8 +280,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     }
                 }
 
-                if (Constant.selectedFiles.size < Companion.MAX_FILES) {
+                if (Constant.selectedFiles.size < Companion.MAX_FILES + 1) {
+
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
+
+                    Constant.Remaining -= 1
+                    if (Constant.Remaining < 0) Constant.Remaining = 0
+
                 } else {
                     Constant.Remaining = 0
                 }
@@ -312,6 +309,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             ).show()
         }
     }
+
 
 
     private fun checkCameraPermissionAndOpenCamera() {

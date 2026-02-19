@@ -220,10 +220,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         if (uris.isEmpty()) return
 
-        Log.d("urisReturn", uris.size.toString())
-
-        var allowedUris = uris
-
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
@@ -232,19 +228,18 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             ).show()
         }
 
-        allowedUris = uris.take(Constant.isFileLimit)
+        Log.d("urisReturn", uris.size.toString())
 
-        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+        val finalFiles = uris.take(Constant.isFileLimit)
+
+        if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
 
-            Constant.Remaining -= allowedUris.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
+            // 🔴 DO NOT subtract here (important)
+            // We subtract only when file actually added
 
-            Log.d("Constant.Remaining", Constant.Remaining.toString())
-            Log.d("AllowedFilesSize", allowedUris.size.toString())
-
-            allowedUris.forEach { uri ->
+            finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
 
@@ -274,8 +269,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     else -> FileType.OTHER
                 }
 
-                Log.d("MAX_FILES", Companion.MAX_FILES.toString())
-
+                // ✅ VIDEO LIMIT (same simple logic)
                 if (type == FileType.VIDEO) {
 
                     val videoCount = Constant.selectedFiles.count {
@@ -292,8 +286,15 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     }
                 }
 
-                if (Constant.selectedFiles.size < Companion.MAX_FILES) {
+                // ✅ SAME LOGIC AS YOUR FIRST WORKING VERSION
+                if (Constant.selectedFiles.size < Companion.MAX_FILES + 1) {
+
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
+
+                    // subtract only when added
+                    Constant.Remaining -= 1
+                    if (Constant.Remaining < 0) Constant.Remaining = 0
+
                 } else {
                     Constant.Remaining = 0
                 }
@@ -316,6 +317,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             ).show()
         }
     }
+
+
 
     fun isLoadCategory(data: List<EventCategory>) {
         val adapter = EventCategorySpinnerAdapter(this, data)

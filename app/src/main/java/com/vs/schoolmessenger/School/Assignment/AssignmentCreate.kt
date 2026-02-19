@@ -237,65 +237,26 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         if (uris.isEmpty()) return
 
+        if (uris.size > Constant.isFileLimit) {
+            Toast.makeText(
+                this,
+                "You can select only $Constant.isFileLimit files",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         Log.d("urisReturn", uris.size.toString())
 
-        var allowedUris = uris
+        val finalFiles = uris.take(Constant.isFileLimit)
 
-        // ✅ VIDEO LIMIT CHECK (Max 2 videos total)
-        if (fileType == Constant.VIDEO) {
-
-            val maxVideoLimit = 2
-
-            val alreadySelectedVideoCount = Constant.selectedFiles.count {
-                it.type == FileType.VIDEO
-            }
-
-            val remainingVideoSlots = maxVideoLimit - alreadySelectedVideoCount
-
-            if (remainingVideoSlots <= 0) {
-                Toast.makeText(
-                    this,
-                    "Only $maxVideoLimit videos are allowed",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return
-            }
-
-            if (uris.size > remainingVideoSlots) {
-                Toast.makeText(
-                    this,
-                    "Only $maxVideoLimit videos are allowed",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            allowedUris = uris.take(remainingVideoSlots)
-        }
-        // 🟢 NORMAL LIMIT CHECK (Images / Other Files)
-        else {
-
-            if (uris.size > Constant.isFileLimit) {
-                Toast.makeText(
-                    this,
-                    "You can select only $Constant.isFileLimit files",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            allowedUris = uris.take(Constant.isFileLimit)
-        }
-
-        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+        if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
-
-            Constant.Remaining -= allowedUris.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
+            Constant.Remaining -= finalFiles.size
 
             Log.d("Constant.Remaining", Constant.Remaining.toString())
-            Log.d("AllowedFilesSize", allowedUris.size.toString())
 
-            allowedUris.forEach { uri ->
+            finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
 
@@ -324,11 +285,22 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
                     fileName.endsWith(".txt", true) -> FileType.TXT
                     else -> FileType.OTHER
                 }
+                if (type == FileType.VIDEO) {
 
-                Log.d("MAX_FILES", MAX_FILES.toString())
+                    val videoCount = Constant.selectedFiles.count {
+                        it.type == FileType.VIDEO
+                    }
 
-                // ✅ FIXED: Removed +1 mistake
-                if (Constant.selectedFiles.size < MAX_FILES) {
+                    if (videoCount >= 2) {
+                        Toast.makeText(
+                            this,
+                            "Only 2 videos are allowed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@forEach
+                    }
+                }
+                if (Constant.selectedFiles.size < MAX_FILES + 1) {
                     Constant.selectedFiles.add(FileItem(uri.toString(), type))
                 } else {
                     Constant.Remaining = 0
@@ -343,15 +315,13 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             val totalCount = Constant.selectedFiles.size
 
             Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-        }
-        else if (Constant.Remaining <= 0) {
-            Toast.makeText(
-                this,
-                "File limit reached",
-                Toast.LENGTH_SHORT
-            ).show()
+
+        } else if (Constant.Remaining <= 0) {
+            Log.d("isComing", "Limit reached")
         }
     }
+
+
 
 
 

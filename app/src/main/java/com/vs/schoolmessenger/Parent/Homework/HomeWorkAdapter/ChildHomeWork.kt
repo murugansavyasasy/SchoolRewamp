@@ -910,10 +910,6 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (uris.isEmpty()) return
 
-        Log.d("urisReturn", uris.size.toString())
-
-        var allowedUris = uris
-
         if (uris.size > Constant.isFileLimit) {
             Toast.makeText(
                 this,
@@ -922,23 +918,31 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             ).show()
         }
 
-        allowedUris = uris.take(Constant.isFileLimit)
+        Log.d("urisReturn", uris.size.toString())
 
-        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+        val finalFiles = uris.take(Constant.isFileLimit)
+
+        if (Constant.Remaining > 0 && finalFiles.isNotEmpty()) {
 
             val previousCount = Constant.selectedFiles.size
+            Constant.Remaining -= finalFiles.size
 
-            Constant.Remaining -= allowedUris.size
-            if (Constant.Remaining < 0) Constant.Remaining = 0
+            Log.d("Constant.Remaining", Constant.Remaining.toString())
+            Log.d("Constant.Remaining", finalFiles.size.toString())
 
-            allowedUris.forEach { uri ->
-
-                if (Constant.selectedFiles.size >= MAX_FILES) {
-                    Constant.Remaining = 0
-                    return@forEach
-                }
+            finalFiles.forEach { uri ->
 
                 val mimeType = contentResolver.getType(uri)
+
+                val path = when (uri.scheme) {
+                    Constant.file_ -> uri.path
+                    else -> getPathFromUri(uri)
+                }
+
+                if (path == null) {
+                    Log.w("addPath", "Could not resolve path from URI: $uri")
+                    return@forEach
+                }
 
                 val fileName = getFileName(uri).takeIf { it.isNotEmpty() }
                     ?: uri.lastPathSegment?.substringAfterLast("/")
@@ -955,6 +959,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                     fileName.endsWith(".txt", true) -> FileType.TXT
                     else -> FileType.OTHER
                 }
+
+                Log.d("MAX_FILES", CreateNewTask.Companion.MAX_FILES.toString())
 
                 if (type == FileType.VIDEO) {
 
@@ -974,7 +980,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
                 if (type == FileType.AUDIO) {
 
-                    Constant.showLoading(this)
+                    Constant.showLoading(this@ChildHomeWork)
 
                     lifecycleScope.launch {
 
@@ -982,35 +988,26 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
                         Constant.hideLoading(this@ChildHomeWork)
 
-                        if (wavFile != null) {
+                        if (wavFile != null &&
+                            Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES
+                        ) {
 
-                            if (Constant.selectedFiles.size < MAX_FILES) {
-                                Constant.selectedFiles.add(
-                                    FileItem(
-                                        wavFile.absolutePath,
-                                        FileType.AUDIO
-                                    )
-                                )
-                            }
+                            Constant.selectedFiles.add(
+                                FileItem(wavFile.absolutePath, FileType.AUDIO)
+                            )
+
+                            Constant.Remaining--
+                            if (Constant.Remaining < 0) Constant.Remaining = 0
 
                             mAdapter?.notifyDataSetChanged()
-
-                        } else {
-                            Toast.makeText(
-                                this@ChildHomeWork,
-                                "Audio convert failed!",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
                     }
 
                     return@forEach
                 }
 
-                if (Constant.selectedFiles.size < MAX_FILES) {
-                    Constant.selectedFiles.add(
-                        FileItem(uri.toString(), type)
-                    )
+                if (Constant.selectedFiles.size < CreateNewTask.Companion.MAX_FILES + 1) {
+                    Constant.selectedFiles.add(FileItem(uri.toString(), type))
                 } else {
                     Constant.Remaining = 0
                 }
@@ -1024,11 +1021,29 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             val totalCount = Constant.selectedFiles.size
 
             Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-        }
-        else if (Constant.Remaining <= 0) {
-            Log.d("LimitReached", "No remaining files allowed")
+
+        } else if (Constant.Remaining <= 0) {
+            Log.d("isComing", "Limit reached")
         }
     }
+
+    private fun getPathFromUri(uri: Uri): File? {
+        return try {
+            val fileName = getFileName(uri) ?: "temp_file"
+            val file = File(cacheDir, fileName)
+
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                file.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
