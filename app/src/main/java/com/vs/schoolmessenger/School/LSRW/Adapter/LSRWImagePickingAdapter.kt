@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -307,16 +308,20 @@ class LSRWImagePickingAdapter(
             notifyItemChanged(previousPos)
         }
 
-        // NOW START NEW AUDIO
         try {
+
+            Log.d("AUDIO_DEBUG_PATH", item.path)
+
             val uri = Uri.parse(item.path)
-            mediaPlayer = MediaPlayer.create(context, uri)
-                ?: throw Exception("Audio not supported")
+
+            mediaPlayer = MediaPlayer()
+            mediaPlayer?.setDataSource(context, uri)
+            mediaPlayer?.prepare()
 
             val mp = mediaPlayer!!
+
             currentPlayingItemIndex = pos
 
-            // update UI for new audio
             holder.imgVideoPlay.setImageResource(pauseIcon)
             holder.seekBar.max = mp.duration
             holder.lblCurrentDuration.text = formatTime(mp.duration.toLong())
@@ -328,7 +333,6 @@ class LSRWImagePickingAdapter(
                 override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) mp.seekTo(progress)
                 }
-
                 override fun onStartTrackingTouch(sb: SeekBar?) {}
                 override fun onStopTrackingTouch(sb: SeekBar?) {}
             })
@@ -345,9 +349,53 @@ class LSRWImagePickingAdapter(
             startProgressUpdate(holder, mp)
 
         } catch (e: Exception) {
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+            Toast.makeText(context, "Audio not supported", Toast.LENGTH_SHORT).show()
             currentPlayingItemIndex = null
         }
+
+
+        // NOW START NEW AUDIO
+//        try {
+//            val uri = Uri.parse(item.path)
+//            mediaPlayer = MediaPlayer.create(context, uri)
+//                ?: throw Exception("Audio not supported")
+//
+//            val mp = mediaPlayer!!
+//            currentPlayingItemIndex = pos
+//
+//            // update UI for new audio
+//            holder.imgVideoPlay.setImageResource(pauseIcon)
+//            holder.seekBar.max = mp.duration
+//            holder.lblCurrentDuration.text = formatTime(mp.duration.toLong())
+//            holder.seekBar.progress = 0
+//            holder.lblTime.text = "00:00"
+//
+//            holder.seekBar.setOnSeekBarChangeListener(object :
+//                SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
+//                    if (fromUser) mp.seekTo(progress)
+//                }
+//
+//                override fun onStartTrackingTouch(sb: SeekBar?) {}
+//                override fun onStopTrackingTouch(sb: SeekBar?) {}
+//            })
+//
+//            mp.setOnCompletionListener {
+//                holder.seekBar.progress = 0
+//                holder.lblTime.text = "00:00"
+//                holder.imgVideoPlay.setImageResource(playIcon)
+//                stopAudioIfPlaying()
+//                notifyItemChanged(pos)
+//            }
+//
+//            mp.start()
+//            startProgressUpdate(holder, mp)
+//
+//        } catch (e: Exception) {
+//            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+//            currentPlayingItemIndex = null
+//        }
     }
 
 

@@ -198,6 +198,9 @@ object Constant {
     var isEmergency = 101
     var isFileLimit = 0
 
+    var isVideoAllow=2
+    var isFilesAllow=10
+
     var isSchool = 1
     var isStandard = 2
     var isSection = 3

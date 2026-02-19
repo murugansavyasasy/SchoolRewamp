@@ -29,6 +29,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,7 +40,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
-import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -80,18 +80,17 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListener,
     View.OnClickListener, AssignmentStudentListClickListener, OnImageClickListener,
     TimeSelectedListener, OnDateSelectedListener, VimeoVideoUpload.UploadCompletionListener {
-
-    private lateinit var adapter: AssignmentStudentListAdapter
-
     private var assignmentData: AssignmentData? = null
 
     override fun getViewBinding(): AssignmentBinding {
         return AssignmentBinding.inflate(layoutInflater)
     }
+
+    private var pickImagesLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
 
 
     var isAssignmentId = ""
@@ -106,7 +105,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
     var isAssignmentType = ""
     var isSelectedDate = ""
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
 
 
@@ -183,6 +181,39 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
 
 
+        pickImagesLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickMultipleVisualMedia(Constant.isFilesAllow)
+            ) { uris ->
+
+                if (uris.isEmpty()) return@registerForActivityResult
+
+                if (uris.size > Constant.isFilesAllow) {
+                    Toast.makeText(this, "Maximum 10 images allowed", Toast.LENGTH_SHORT).show()
+                }
+
+                val limitedUris = uris.take(Constant.isFilesAllow)
+
+                handleSelectedImages(limitedUris, Constant.IMAGE)
+            }
+
+        pickVideoLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickMultipleVisualMedia(Constant.isVideoAllow)
+            ) { uris ->
+
+                if (uris.isEmpty()) return@registerForActivityResult
+
+                if (uris.size > Constant.isVideoAllow) {
+                    Toast.makeText(this, "Only 2 videos allowed", Toast.LENGTH_SHORT).show()
+                    return@registerForActivityResult
+                }
+
+                handleSelectedImages(uris, Constant.VIDEO)
+            }
+
+
+
         isSelectedDate = Constant.getCurrentDate()
 
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
@@ -191,76 +222,6 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         Log.d("formattedDate", formattedDate)
         Log.d("formattedDate", binding.lblDay.text.toString())
         binding.lblTimePick.text = Constant.getCurrentTime()
-
-        albumResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    val selectedUris =
-                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-
-                    Log.d("Constant.Remaining", Constant.Remaining.toString())
-
-                    if (Constant.Remaining > 0 && !selectedUris.isNullOrEmpty()) {
-
-                        val previousCount = Constant.selectedFiles.size
-                        Constant.Remaining -= selectedUris.size
-                        selectedUris.forEach { uri ->
-                            val mimeType = contentResolver.getType(uri)
-                            val path = when (uri.scheme) {
-                                Constant.file_ -> uri.path
-                                else -> getPathFromUri(uri)
-                            }
-
-                            if (path == null) {
-                                Log.w("addPath", "Could not resolve path from URI: $uri")
-                                return@forEach
-                            }
-
-                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-
-                            val type = when {
-                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                                fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(
-                                    ".docx",
-                                    true
-                                ) -> FileType.DOC
-
-                                fileName.endsWith(".xls", true) || fileName.endsWith(
-                                    ".xlsx",
-                                    true
-                                ) -> FileType.EXCEL
-
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                    ".pptx",
-                                    true
-                                ) -> FileType.PPT
-
-                                fileName.endsWith(".txt", true) -> FileType.TXT
-                                else -> FileType.OTHER
-                            }
-
-                            Log.d("MAX_FILES", MAX_FILES.toString())
-
-                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                                Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                            } else {
-                                Constant.Remaining = 0
-                            }
-
-                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-                        }
-                        mAdapter?.notifyDataSetChanged()
-                        val addedCount = Constant.selectedFiles.size - previousCount
-                        val totalCount = Constant.selectedFiles.size
-                        Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-                    } else if (Constant.Remaining <= 0) {
-                        //  Toast.makeText(this, getString(R.string.you_have_reached_the_maximum_file_limit), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
 
         appViewModel!!.isAssignmentUpdate?.observe(this) { response ->
             if (response != null) {
@@ -271,6 +232,127 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
         spinnerType()
     }
+
+    private fun handleSelectedImages(uris: List<Uri>, fileType: String) {
+
+        if (uris.isEmpty()) return
+
+        Log.d("urisReturn", uris.size.toString())
+
+        var allowedUris = uris
+
+        // ✅ VIDEO LIMIT CHECK (Max 2 videos total)
+        if (fileType == Constant.VIDEO) {
+
+            val maxVideoLimit = 2
+
+            val alreadySelectedVideoCount = Constant.selectedFiles.count {
+                it.type == FileType.VIDEO
+            }
+
+            val remainingVideoSlots = maxVideoLimit - alreadySelectedVideoCount
+
+            if (remainingVideoSlots <= 0) {
+                Toast.makeText(
+                    this,
+                    "Only $maxVideoLimit videos are allowed",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
+            if (uris.size > remainingVideoSlots) {
+                Toast.makeText(
+                    this,
+                    "Only $maxVideoLimit videos are allowed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            allowedUris = uris.take(remainingVideoSlots)
+        }
+        // 🟢 NORMAL LIMIT CHECK (Images / Other Files)
+        else {
+
+            if (uris.size > Constant.isFileLimit) {
+                Toast.makeText(
+                    this,
+                    "You can select only $Constant.isFileLimit files",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            allowedUris = uris.take(Constant.isFileLimit)
+        }
+
+        if (Constant.Remaining > 0 && allowedUris.isNotEmpty()) {
+
+            val previousCount = Constant.selectedFiles.size
+
+            Constant.Remaining -= allowedUris.size
+            if (Constant.Remaining < 0) Constant.Remaining = 0
+
+            Log.d("Constant.Remaining", Constant.Remaining.toString())
+            Log.d("AllowedFilesSize", allowedUris.size.toString())
+
+            allowedUris.forEach { uri ->
+
+                val mimeType = contentResolver.getType(uri)
+
+                val path = when (uri.scheme) {
+                    Constant.file_ -> uri.path
+                    else -> getPathFromUri(uri)
+                }
+
+                if (path == null) {
+                    Log.w("addPath", "Could not resolve path from URI: $uri")
+                    return@forEach
+                }
+
+                val fileName = getFileName(uri).takeIf { it.isNotEmpty() }
+                    ?: uri.lastPathSegment?.substringAfterLast("/")
+                    ?: "temp_file_${System.currentTimeMillis()}"
+
+                val type = when {
+                    mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                    mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                    mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                    fileName.endsWith(".pdf", true) -> FileType.PDF
+                    fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                    fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                    fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                    fileName.endsWith(".txt", true) -> FileType.TXT
+                    else -> FileType.OTHER
+                }
+
+                Log.d("MAX_FILES", MAX_FILES.toString())
+
+                // ✅ FIXED: Removed +1 mistake
+                if (Constant.selectedFiles.size < MAX_FILES) {
+                    Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                } else {
+                    Constant.Remaining = 0
+                }
+
+                Log.d("SelectedFile", "URI: $uri, Type: $type")
+            }
+
+            mAdapter?.notifyDataSetChanged()
+
+            val addedCount = Constant.selectedFiles.size - previousCount
+            val totalCount = Constant.selectedFiles.size
+
+            Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
+        }
+        else if (Constant.Remaining <= 0) {
+            Toast.makeText(
+                this,
+                "File limit reached",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
 
 
     private fun spinnerType() {
@@ -412,15 +494,21 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
         Log.d("FileComing", isFileType)
-        val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
-        } else {
-            val intent = Intent(this, AlbumSelectActivity::class.java)
-            intent.putExtra(Constant.isFileType, isFileType)
-            albumResultLauncher.launch(intent)
+        }
+        else if(isFileType == Constant.VIDEO){
+            pickVideoLauncher!!.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
+            )
+        }
+        else if(isFileType == Constant.IMAGE) {
+            pickImagesLauncher!!.launch(
+                PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                )
+            )
         }
     }
 
@@ -679,46 +767,47 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
         mAdapter?.notifyDataSetChanged()
     }
 
-    private fun getPathFromUri(uri: Uri): String? {
-        // Content scheme
-        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
-            val projection = arrayOf(MediaStore.Images.Media.DATA)
+
+    private fun getPathFromUri(uri: Uri): File? {
+        return try {
+            val fileName = getFileName(uri) ?: "temp_file"
+            val file = File(cacheDir, fileName)
+
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                file.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun getFileName(uri: Uri): String {
+        var fileName: String? = null
+
+        if (uri.scheme.equals("content", ignoreCase = true)) {
+            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
+
             contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                    return cursor.getString(columnIndex)
+                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (columnIndex != -1) {
+                        fileName = cursor.getString(columnIndex)
+                    }
                 }
             }
         }
 
-        // File scheme fallback
-        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
-            return uri.path
+        if (fileName.isNullOrEmpty()) {
+            fileName = uri.lastPathSegment
+            fileName = fileName?.substringAfterLast("/")
         }
-        return null
-    }
 
-    @SuppressLint("Range")
-    private fun getFileName(uri: Uri): String {
-        var result: String? = null
-        if (uri.scheme == Constant.content_) {
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.path
-            val cut = result?.lastIndexOf('/')
-            if (cut != null && cut != -1) {
-                result = result?.substring(cut + 1)
-            }
-        }
-        return result ?: ""
+        return fileName ?: "temp_file_${System.currentTimeMillis()}"
     }
-
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =

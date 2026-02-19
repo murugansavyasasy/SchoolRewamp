@@ -35,6 +35,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -44,7 +45,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
-import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -76,8 +76,8 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
     override fun getViewBinding(): UploadMarkSheetBinding {
         return UploadMarkSheetBinding.inflate(layoutInflater)
     }
-
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+    private var pickImagesLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
     private var appViewModel: App? = null
     private var cameraPermissionDeniedCount = 0
     private var isAccessToken: String? = null
@@ -138,6 +138,32 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
+
+        pickImagesLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickVisualMedia()
+            ) { uri ->
+
+                if (uri != null) {
+                    handleSelectedImages(listOf(uri), Constant.IMAGE)
+                }
+
+            }
+
+        pickVideoLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickMultipleVisualMedia(Constant.isVideoAllow)
+            ) { uris ->
+
+                if (uris.isEmpty()) return@registerForActivityResult
+
+                if (uris.size > Constant.isVideoAllow) {
+                    Toast.makeText(this, "Only 2 videos allowed", Toast.LENGTH_SHORT).show()
+                    return@registerForActivityResult
+                }
+
+                handleSelectedImages(uris, Constant.VIDEO)
+            }
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
@@ -149,86 +175,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         staffWisExamList = Constant.staffWisExamList
         selectedExamActivities = Constant.isSelectedExamActivities
         selectedExam = Constant.isMarkUploadExamListDataDetails
-
-        albumResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    val selectedUris =
-                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-
-                    Log.d("Constant.Remaining", Constant.Remaining.toString())
-
-                    if (Constant.Remaining > 0 && !selectedUris.isNullOrEmpty()) {
-
-                        val previousCount = Constant.selectedFiles.size
-                        Constant.Remaining -= selectedUris.size
-                        selectedUris.forEach { uri ->
-                            val mimeType = contentResolver.getType(uri)
-                            val path = when (uri.scheme) {
-                                Constant.file_ -> uri.path
-                                else -> getPathFromUri(uri)
-                            }
-
-                            if (path == null) {
-                                Log.w("addPath", "Could not resolve path from URI: $uri")
-                                return@forEach
-                            }
-
-                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-
-                            Log.d("fileName", fileName)
-
-                            val type = when {
-                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                                fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(
-                                    ".docx", true
-                                ) -> FileType.DOC
-
-                                fileName.endsWith(".xls", true) || fileName.endsWith(
-                                    ".xlsx", true
-                                ) -> FileType.EXCEL
-
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                    ".pptx", true
-                                ) -> FileType.PPT
-
-                                fileName.endsWith(".txt", true) -> FileType.TXT
-                                else -> FileType.OTHER
-                            }
-
-                            Log.d("MAX_FILES", MAX_FILES.toString())
-
-                            if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                                Constant.selectedFiles.add(FileItem(path, type))
-                            } else {
-                                Constant.Remaining = 0
-                            }
-
-                            if (Constant.selectedFiles.size > 0) {
-                                binding.lblFileName.text = fileName.toString()
-                                binding.lnrUpload.visibility = View.VISIBLE
-                            } else {
-                                binding.lblFileName.text =
-                                    getString(R.string.click_to_upload_or_drag_and_drop)
-                                binding.lnrUpload.visibility = View.GONE
-
-                            }
-                            Log.d("SelectedFile", "Path: $path, Type: $type")
-                        }
-
-                        val addedCount = Constant.selectedFiles.size - previousCount
-                        val totalCount = Constant.selectedFiles.size
-
-
-                        Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
-                    } else if (Constant.Remaining <= 0) {
-
-                    }
-                }
-            }
 
         appViewModel!!.uploadmarks?.observe(this) { response: UploadMarkResponse? ->
             Constant.hideLoading(this@UploadMarkSheet)
@@ -267,6 +213,71 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
         }
     }
+
+    private fun handleSelectedImages(uris: List<Uri>, fileType: String) {
+
+        if (uris.isEmpty()) return
+
+        Log.d("Constant.Remaining", Constant.Remaining.toString())
+
+        if (Constant.Remaining <= 0) return
+
+        val previousCount = Constant.selectedFiles.size
+
+        uris.forEach { uri ->
+
+            if (Constant.selectedFiles.size >= MAX_FILES) {
+                Constant.Remaining = 0
+                return@forEach
+            }
+
+            val mimeType = contentResolver.getType(uri)
+
+            val fileName = getFileName(uri).takeIf { it.isNotEmpty() }
+                ?: uri.lastPathSegment?.substringAfterLast("/")
+                ?: "temp_file_${System.currentTimeMillis()}"
+
+            Log.d("fileName", fileName)
+
+            val type = when {
+                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                fileName.endsWith(".pdf", true) -> FileType.PDF
+                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                fileName.endsWith(".txt", true) -> FileType.TXT
+                else -> FileType.OTHER
+            }
+
+            // 🔥 Store URI instead of path (Modern way)
+            Constant.selectedFiles.add(
+                FileItem(uri.toString(), type)
+            )
+
+            // Update remaining safely
+            Constant.Remaining = MAX_FILES - Constant.selectedFiles.size
+
+            // ---------------- UI UPDATE ----------------
+            if (Constant.selectedFiles.isNotEmpty()) {
+                binding.lblFileName.text = fileName
+                binding.lnrUpload.visibility = View.VISIBLE
+            } else {
+                binding.lblFileName.text =
+                    getString(R.string.click_to_upload_or_drag_and_drop)
+                binding.lnrUpload.visibility = View.GONE
+            }
+
+            Log.d("SelectedFile", "URI: $uri, Type: $type")
+        }
+
+        val addedCount = Constant.selectedFiles.size - previousCount
+        val totalCount = Constant.selectedFiles.size
+
+        Log.d("FinalSelectedFiles", "Total: $totalCount, Added: $addedCount")
+    }
+
 
     fun setBulletText(textView: TextView, text: String) {
         val fullText = "• $text"
@@ -331,17 +342,22 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
     private fun openAlbumSelectActivity(isFileType: String) {
         Log.d("FileComing", isFileType)
-        val sdkInt = Build.VERSION.SDK_INT
-        if (isFileType == Constant.DOCUMENT ) {
+        if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
-        } else {
-            val intent = Intent(this, AlbumSelectActivity::class.java)
-            intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra(Constant.isWithOutHotCodeImage, true)
-            albumResultLauncher.launch(intent)
+        }
+        else if(isFileType == Constant.VIDEO){
+            pickVideoLauncher!!.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
+            )
+        }
+        else if(isFileType == Constant.IMAGE) {
+            pickImagesLauncher!!.launch(
+                PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                )
+            )
         }
     }
-
     // Opens the system file picker for DOCUMENT on Android 10 and below
     private fun openSystemDocumentPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -495,7 +511,7 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             if (Constant.selectedFiles.size < MAX_FILES + 1) {
-                Constant.selectedFiles.add(FileItem(path, type))
+                Constant.selectedFiles.add(FileItem(path.toString(), type))
             } else {
                 Constant.Remaining = 0
             }
@@ -524,15 +540,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
                                 cameraImageFilePath = newFile.absolutePath
                                 file = newFile
                             }
-                        }
-
-                        val fixedBitmap = fixImageOrientation(file.absolutePath)
-
-                        if (fixedBitmap != null) {
-                            val outputStream = FileOutputStream(file)
-                            fixedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                            outputStream.flush()
-                            outputStream.close()
                         }
 
                         Constant.Remaining = Constant.Remaining - 1
@@ -588,85 +595,45 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         }
     }
 
-    private fun getPathFromUri(uri: Uri): String? {
-        // Content scheme
-        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
-            val projection = arrayOf(MediaStore.Images.Media.DATA)
-            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-                if (cursor.moveToFirst()) {
-                    val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                    return cursor.getString(columnIndex)
+    private fun getPathFromUri(uri: Uri): File? {
+        return try {
+            val fileName = getFileName(uri) ?: "temp_file"
+            val file = File(cacheDir, fileName)
+
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                file.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
                 }
             }
-        }
-
-        // File scheme fallback
-        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
-            return uri.path
-        }
-        return null
-    }
-
-    private fun fixImageOrientation(imagePath: String): Bitmap? {
-        val bitmap = BitmapFactory.decodeFile(imagePath) ?: return null
-        val exif = ExifInterface(imagePath)
-        val orientation =
-            exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-
-        val matrix = Matrix()
-        when (orientation) {
-            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
-            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
-            ExifInterface.ORIENTATION_FLIP_VERTICAL -> {
-                matrix.setRotate(180f)
-                matrix.postScale(-1f, 1f)
-            }
-
-            ExifInterface.ORIENTATION_TRANSPOSE -> {
-                matrix.setRotate(90f)
-                matrix.postScale(-1f, 1f)
-            }
-
-            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
-            ExifInterface.ORIENTATION_TRANSVERSE -> {
-                matrix.setRotate(-90f)
-                matrix.postScale(-1f, 1f)
-            }
-
-            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-90f)
-            ExifInterface.ORIENTATION_NORMAL -> return bitmap
-            else -> return bitmap
-        }
-
-        return try {
-            val fixedBitmap =
-                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-            bitmap.recycle()  // Free up memory from the original bitmap
-            fixedBitmap
-        } catch (e: OutOfMemoryError) {
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
             null
         }
     }
 
-    @SuppressLint("Range")
     private fun getFileName(uri: Uri): String {
-        var result: String? = null
-        if (uri.scheme == Constant.content_) {
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        var fileName: String? = null
+
+        if (uri.scheme.equals("content", ignoreCase = true)) {
+            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
+
+            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (columnIndex != -1) {
+                        fileName = cursor.getString(columnIndex)
+                    }
                 }
             }
         }
-        if (result == null) {
-            result = uri.path
-            val cut = result?.lastIndexOf('/')
-            if (cut != null && cut != -1) {
-                result = result?.substring(cut + 1)
-            }
+
+        if (fileName.isNullOrEmpty()) {
+            fileName = uri.lastPathSegment
+            fileName = fileName?.substringAfterLast("/")
         }
-        return result ?: ""
+
+        return fileName ?: "temp_file_${System.currentTimeMillis()}"
     }
 
     override fun onRequestPermissionsResult(
@@ -706,7 +673,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
             }
 
             R.id.lnrUpload -> {
-//                isFileUploadInAws("Image")
                 UploadMarks()
 
             }

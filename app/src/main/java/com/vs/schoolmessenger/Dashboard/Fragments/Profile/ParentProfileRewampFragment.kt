@@ -30,6 +30,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -42,12 +43,12 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
-import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
 import com.vs.schoolmessenger.Dashboard.Fragments.Profile.Listener.DocumentClickListener
+import com.vs.schoolmessenger.Parent.Assignment.MyAssignmentSubmission.MyAssignmentSubmit
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -82,8 +83,14 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     private var adapter: ProfileRewampFragmentAdapter? = null
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
     private var cameraPermissionDeniedCount = 0
+
+    private var pickImagesLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+
+    private lateinit var singleImageLauncher: ActivityResultLauncher<PickVisualMediaRequest>
+
+    private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
@@ -113,6 +120,47 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         fetchProfileData()
 
+        pickImagesLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickMultipleVisualMedia(Constant.isFilesAllow)
+            ) { uris ->
+
+                if (uris.isEmpty()) return@registerForActivityResult
+
+                if (uris.size > Constant.isFilesAllow) {
+                    Toast.makeText(requireActivity(), "Maximum 10 images allowed", Toast.LENGTH_SHORT).show()
+                }
+
+                val limitedUris = uris.take(Constant.isFilesAllow)
+
+                handleSelectedImages(limitedUris, Constant.IMAGE)
+            }
+
+        singleImageLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickVisualMedia()
+            ) { uri ->
+
+                if (uri != null) {
+                    handleSelectedImages(listOf(uri), Constant.IMAGE)
+                }
+
+            }
+
+        pickVideoLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.PickMultipleVisualMedia(Constant.isVideoAllow)
+            ) { uris ->
+
+                if (uris.isEmpty()) return@registerForActivityResult
+
+                if (uris.size > Constant.isVideoAllow) {
+                    Toast.makeText(requireActivity(), "Only 2 videos allowed", Toast.LENGTH_SHORT).show()
+                    return@registerForActivityResult
+                }
+
+                handleSelectedImages(uris, Constant.VIDEO)
+            }
 
         binding.btnupdateprofile.setOnClickListener(this)
         binding.imgEdit.setOnClickListener(this)
@@ -191,76 +239,87 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         mAdapter = ProfileImagePickingAdapter(requireContext(), Constant.selectedFiles!!, this)
         binding.rcyImages.adapter = mAdapter
         binding.rcyImages.visibility = View.GONE
-
-        albumResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    val selectedUris =
-                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    if (currentEditMode == "profile_photo") {
-                        selectedUris?.firstOrNull()?.let { uri ->
-                            profilePhotoFileItem = FileItem(uri.toString(), FileType.IMAGE)
-                            val defaultProfileRes = R.drawable.default_profile
-                            Glide.with(this).load(uri).placeholder(defaultProfileRes)
-                                .error(defaultProfileRes).into(binding.imgProfile)
-                        }
-                        currentEditMode = ""
-                    } else {
-                        val remaining = MAX_FILES - Constant.selectedFiles.size
-
-                        selectedUris?.take(remaining)?.forEach { uri ->
-                            val mimeType = requireContext().contentResolver.getType(uri)
-                            val path = when (uri.scheme) {
-                                Constant.file_ -> uri.path
-                                else -> getPathFromUri(uri)
-                            }
-
-                            if (path == null) {
-                                Log.w("addPath", "Could not resolve path from URI: $uri")
-                                return@forEach
-                            }
-
-                            val fileName = getFileName(uri).ifEmpty { File(path).name }
-                            val type = when {
-                                mimeType?.startsWith("image/") == true -> FileType.IMAGE
-                                mimeType?.startsWith("video/") == true -> FileType.VIDEO
-                                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
-                                fileName.endsWith(".pdf", true) -> FileType.PDF
-                                fileName.endsWith(".doc", true) || fileName.endsWith(
-                                    ".docx", true
-                                ) -> FileType.DOC
-
-                                fileName.endsWith(".xls", true) || fileName.endsWith(
-                                    ".xlsx", true
-                                ) -> FileType.EXCEL
-
-                                fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                    ".pptx", true
-                                ) -> FileType.PPT
-
-                                fileName.endsWith(".txt", true) -> FileType.TXT
-                                else -> FileType.OTHER
-                            }
-
-                            Constant.selectedFiles.add(FileItem(uri.toString(), type))
-                            Log.d("SelectedFile", "URI: $uri, Type: $type")
-                        }
-
-                        if ((selectedUris?.size ?: 0) > remaining) {
-                            Toast.makeText(
-                                requireContext(),
-                                "${getString(R.string.Only)} $remaining ${getString(R.string.files_added_max)} ${MAX_FILES})",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        mAdapter?.notifyDataSetChanged()
-                    }
-                }
-            }
         return binding.root
     }
 
+    private fun handleSelectedImages(uris: List<Uri>, fileType: String) {
+
+        if (uris.isEmpty()) return
+
+        // ---------------- PROFILE PHOTO MODE ----------------
+        if (currentEditMode == "profile_photo") {
+
+            uris.firstOrNull()?.let { uri ->
+                profilePhotoFileItem = FileItem(uri.toString(), FileType.IMAGE)
+
+                val defaultProfileRes = R.drawable.default_profile
+
+                Glide.with(requireContext())
+                    .load(uri)
+                    .placeholder(defaultProfileRes)
+                    .error(defaultProfileRes)
+                    .into(binding.imgProfile)
+            }
+
+            currentEditMode = ""
+            return
+        }
+
+        // ---------------- NORMAL FILE ADD MODE ----------------
+
+        val remaining = MAX_FILES - Constant.selectedFiles.size
+
+        if (remaining <= 0) {
+            Toast.makeText(
+                requireContext(),
+                "Maximum $MAX_FILES files allowed",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val finalFiles = uris.take(remaining)
+
+        finalFiles.forEach { uri ->
+
+            val mimeType = requireActivity().contentResolver.getType(uri)
+
+            val fileName = getFileName(uri).takeIf { it.isNotEmpty() }
+                ?: uri.lastPathSegment?.substringAfterLast("/")
+                ?: "temp_file_${System.currentTimeMillis()}"
+
+            val type = when {
+                mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                fileName.endsWith(".pdf", true) -> FileType.PDF
+                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
+                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                fileName.endsWith(".txt", true) -> FileType.TXT
+                else -> FileType.OTHER
+            }
+
+            Constant.selectedFiles.add(
+                FileItem(uri.toString(), type)
+            )
+
+            Log.d("SelectedFile", "URI: $uri, Type: $type")
+        }
+
+        // If user selected more than allowed
+        if (uris.size > remaining) {
+            Toast.makeText(
+                requireContext(),
+                "Only $remaining files added (Max $MAX_FILES)",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        mAdapter?.notifyDataSetChanged()
+
+        Log.d("FinalSelectedFiles", "Total: ${Constant.selectedFiles.size}")
+    }
 
     private fun fetchProfileData() {
         appViewModel.isParentprofilelist(isAccessToken!!, requireActivity())
@@ -559,19 +618,32 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
         Log.d("FileComing", isFileType)
-        val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
-        } else {
-            val intent = Intent(requireContext(), AlbumSelectActivity::class.java)
-            intent.putExtra(Constant.isFileType, isFileType)
-            intent.putExtra("isWithOutHotCodeImage", true)
-            albumResultLauncher.launch(intent)
+        }
+        else if(isFileType == Constant.VIDEO){
+            pickVideoLauncher!!.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
+            )
+        }
+        else if(isFileType == Constant.IMAGE) {
+            if (currentEditMode=="profile_photo") {
+                singleImageLauncher.launch(
+                    PickVisualMediaRequest(
+                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                    )
+                )
+            }else{
+                pickImagesLauncher!!.launch(
+                    PickVisualMediaRequest(
+                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                    )
+                )
+            }
+
         }
     }
-
     private fun openSystemDocumentPicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -772,44 +844,28 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
         }
     }
 
-    private fun getPathFromUri(uri: Uri): String? {
+    private fun getFileName(uri: Uri): String {
+        var fileName: String? = null
 
-        if (uri.scheme.equals(Constant.content_, ignoreCase = true)) {
-            val projection = arrayOf(MediaStore.Images.Media.DATA)
-            requireContext().contentResolver.query(uri, projection, null, null, null)
-                ?.use { cursor ->
-                    if (cursor.moveToFirst()) {
-                        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                        return cursor.getString(columnIndex)
+        if (uri.scheme.equals("content", ignoreCase = true)) {
+            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
+
+            requireActivity().contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (columnIndex != -1) {
+                        fileName = cursor.getString(columnIndex)
                     }
                 }
-        }
-
-        if (uri.scheme.equals(Constant.file_, ignoreCase = true)) {
-            return uri.path
-        }
-        return null
-    }
-
-    @SuppressLint("Range")
-    private fun getFileName(uri: Uri): String {
-        var result: String? = null
-        if (uri.scheme == Constant.content_) {
-            val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
             }
         }
-        if (result == null) {
-            result = uri.path
-            val cut = result?.lastIndexOf('/')
-            if (cut != null && cut != -1) {
-                result = result?.substring(cut + 1)
-            }
+
+        if (fileName.isNullOrEmpty()) {
+            fileName = uri.lastPathSegment
+            fileName = fileName?.substringAfterLast("/")
         }
-        return result ?: ""
+
+        return fileName ?: "temp_file_${System.currentTimeMillis()}"
     }
 
     @Throws(IOException::class)
