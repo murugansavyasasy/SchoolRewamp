@@ -602,8 +602,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     )
                     if (isGetDistance <= isStaffLocation[i].distance.toDouble()) {
                         isStaffNearByLocation = true
+                        break
                     }
-                    break
                 }
             }
         } catch (e: NumberFormatException) {
