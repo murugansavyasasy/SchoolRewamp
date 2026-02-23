@@ -229,6 +229,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
             }
         })
+
+        isLoadData()
     }
 
 
@@ -338,6 +340,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     override fun onResume() {
         super.onResume()
 
+    }
+
+    fun isLoadData(){
         mAdapter = AbsenteesMarkAdapter(null, "", this, Constant.isShimmerViewShow, this)
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
@@ -351,7 +356,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             isFullDay.toString(),
             this
         )
-
     }
 
     fun loadStudentAbsenteesList(studentsList: List<GetAttendanceStudentListData>) {
