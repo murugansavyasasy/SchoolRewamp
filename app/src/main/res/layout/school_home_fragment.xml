@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="Madhuri Sharma  hsdbhsdjhshjas"
+                android:text="Madhuri Sharma  "
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />
 
@@ -59,9 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/twenty"
                 android:ellipsize="end"
-                android:text="Madhuri Sharma"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -110,7 +110,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/sixty"
                 android:layout_height="@dimen/sixty"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/sixteen"
                 android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_profile"

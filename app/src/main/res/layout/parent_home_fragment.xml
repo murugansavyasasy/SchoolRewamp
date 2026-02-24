@@ -42,8 +42,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />
 
-
-
         </RelativeLayout>
 
         <TextView
@@ -53,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rytDetails"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty"
             android:ellipsize="end"
             android:text=""
             android:textColor="@android:color/white"
@@ -92,7 +90,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/sixty"
                 android:layout_height="@dimen/sixty"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/sixteen"
                 android:background="@drawable/bg_profile"
                 android:padding="@dimen/two"
