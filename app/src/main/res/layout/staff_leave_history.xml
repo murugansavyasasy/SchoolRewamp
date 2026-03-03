@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbarLayout"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:tabBackground="@color/grey_mild"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/skydark_blue"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/skydark_blue"
+            app:tabTextColor="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@id/tabLayoutStatus"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtVideoMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch"
+            android:layout_marginTop="@dimen/ten">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyLeaveRequestHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:id="@+id/lytList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rcyLeaveRequestHistory"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/nomessage"
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/no_leave_request_message"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="@string/no_list_found"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/rlaCreateLeaveRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblParentToolBar"
+            android:visibility="gone"
+
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:layout_marginBottom="@dimen/twenty"
+                app:cardCornerRadius="@dimen/fifteen">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/ten">
+
+                    <TextView
+                        android:id="@+id/lblHeaderTitle"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="@string/create_leave_request" />
+
+
+                    <LinearLayout
+                        android:id="@+id/rytStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/lblHeaderTitle"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <RelativeLayout
+                            android:id="@+id/rytStartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
+                                app:cardCornerRadius="@dimen/ten">
+
+                                <LinearLayout
+                                    android:id="@+id/lnrStartCalendar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/bg_stroke_rect_black"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/light_orangecolor"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+                                            android:layout_marginTop="@dimen/five"
+                                            android:layout_marginBottom="@dimen/three"
+                                            android:text="@string/from"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+
+                                        <TextView
+                                            android:id="@+id/lblDay"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="12"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                        <TextView
+                                            android:id="@+id/txtStartDate"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="3dp"
+                                            android:text="Fri, Jun 2025"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/twele_sp" />
+
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+
+                        <ImageView
+                            android:layout_width="@dimen/sixteen"
+                            android:layout_height="@dimen/sixteen"
+                            android:layout_weight="1"
+                            android:src="@drawable/exchangearrow"></ImageView>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rytEndDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/hundred"
+                                android:layout_height="@dimen/eighty"
+                                app:cardCornerRadius="@dimen/ten">
+
+                                <LinearLayout
+                                    android:id="@+id/lnrEndCalendar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/bg_stroke_rect_black"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/primary_light"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_horizontal"
+                                            android:layout_marginTop="@dimen/five"
+                                            android:layout_marginBottom="@dimen/three"
+                                            android:text="@string/to"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+
+                                        <TextView
+                                            android:id="@+id/lblEndDay"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="28"
+                                            android:textSize="@dimen/fifteen_sp" />
+
+                                        <TextView
+                                            android:id="@+id/txtEndDate"
+                                            style="@style/CustomTextStylePoppinsBold"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/three"
+                                            android:text="Fri, Jun 2025"
+                                            android:textColor="@color/grey"
+                                            android:textSize="12sp" />
+
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rytEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rytStart"
+                        android:layout_marginTop="@dimen/ten"
+                        android:paddingBottom="@dimen/twenty">
+
+
+                        <TextView
+                            android:id="@+id/lblTotalDays"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/twenty"
+                            android:text="">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblEventDesc"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblTotalDays"
+                            android:layout_marginStart="@dimen/ten"
+                            android:text="@string/reason" />
+
+
+                        <EditText
+                            android:id="@+id/txtDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/hundred"
+                            android:layout_below="@+id/lblEventDesc"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginTop="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:background="@drawable/bg_stroke_rect_black"
+                            android:gravity="start"
+                            android:hint="@string/reason"
+                            android:padding="@dimen/ten"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <TextView
+                            android:id="@+id/lbTextCount"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtDesc"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:text="@string/_0_of_500"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/seventy"
+                            android:layout_height="@dimen/seventy"
+                            android:layout_below="@+id/txtDesc"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginTop="@dimen/fifteen"
+                            android:background="@drawable/rect_light_blue"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/thirty"
+                                android:layout_height="@dimen/thirty"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_plus" />
+
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:id="@+id/btnNext"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_below="@+id/lbTextCount"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginTop="@dimen/thirty"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:background="@drawable/rect_btn_orange"
+                            android:fontFamily="@font/poppins_bold"
+                            android:gravity="center"
+                            android:text="@string/submit"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lbTextCount"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="@dimen/ten"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/eight"
+                            android:paddingBottom="@dimen/eight"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/btncancel"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/twele"
+                                android:background="@drawable/bg_red_radious__all_side_same"
+                                android:padding="@dimen/ten"
+                                android:paddingStart="@dimen/eighteen_sp"
+                                android:paddingEnd="@dimen/eighteen_sp"
+                                android:text="@string/Cancel"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen_sp" />
+
+                            <TextView
+                                android:id="@+id/btnupdate"
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/thirty"
+                                android:background="@drawable/bg_green_radious"
+                                android:padding="@dimen/ten"
+                                android:paddingStart="@dimen/eighteen_sp"
+                                android:paddingEnd="@dimen/eighteen_sp"
+                                android:text="@string/Update"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/thirteen_sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

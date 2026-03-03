@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+    android:orientation="vertical"
+             android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/lnrDayMonthDetails"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblDay"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:text="17"
+                android:textSize="@dimen/eighteen_sp"
+                android:layout_height="wrap_content">
+            </TextView>
+            <TextView
+                android:id="@+id/lblMonth"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:text="FEB"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/twele_sp"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_toEndOf="@+id/lnrDayMonthDetails"
+            android:id="@+id/rlaLeaveDetails"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_toStartOf="@+id/lblLeaveStatus"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/lnrLeaveDetails"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/lblLeaveType"
+                    android:layout_width="wrap_content"
+                    android:text="Sick Leave"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblDate"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_width="wrap_content"
+                    android:text="0 days • Feb 30-31,0000"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/light_gray"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/lblLeaveStatus"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginEnd="@dimen/five"
+                android:background="@drawable/bg_status"
+                android:layout_width="wrap_content"
+                android:text="Pending"
+                android:paddingHorizontal="@dimen/seven"
+                android:paddingVertical="@dimen/seven"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </RelativeLayout>
+</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:background="@color/light_gray_10"
+        android:layout_marginBottom="@dimen/five"
+        android:layout_height="@dimen/one">
+
+    </View>
+
+</LinearLayout>

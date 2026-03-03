@@ -69,6 +69,7 @@ import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
@@ -78,6 +79,7 @@ import com.vs.schoolmessenger.School.PTM.Activity.PTM
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
+import com.vs.schoolmessenger.School.StaffLeaveRequest.StaffLeaveRequest
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
@@ -227,7 +229,24 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     FrequentSchoollyUsedMenuItems = isSchoolDashBoardData!![0].frequently_used
                     originalMenuList.clear()
                     originalMenuList.addAll(isSchoolMenuDetails!!)
+                    //Hardcode from here
+                    //Added the hardcode data
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 999,
+                            name = "Staff Leave Request",
+                            description = "Submit and manage staff leave applications quickly"
+                        )
+                    )
 
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 998,
+                            name = "Approve Staff Leave Request",
+                            description = "Review and approve pending staff leave applications"
+                        )
+                    )
+                    //Hardcode till here
                     filteredMenuList.clear()
                     filteredMenuList.addAll(originalMenuList)
 
@@ -946,6 +965,39 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         CouponDashboardActivity::class.java
+                    }
+                }
+            }
+
+            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
+
+                if (userDetails!!.staff_details.size > 1) {
+                    SchoolList::class.java
+                } else {
+                    if (userDetails!!.staff_role != Constant.isStaffRole) {
+                        ApproveStaffLeaveRequest::class.java
+                    }else{}
+                }
+
+//                if (userDetails!!.staff_role == Constant.isStaffRole) {
+//                    ApproveStaffLeaveRequest::class.java
+//                } else {
+//                    if (userDetails!!.staff_details.size > 1) {
+//                        SchoolList::class.java
+//                    } else {
+//                        ApproveStaffLeaveRequest::class.java
+//                    }
+//                }
+            }
+
+            Constant.M_STAFF_LEAVE_REQUEST -> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    StaffLeaveRequest::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        StaffLeaveRequest::class.java
                     }
                 }
             }

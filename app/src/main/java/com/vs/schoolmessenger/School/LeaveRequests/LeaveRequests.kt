@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LeaveRequestsBinding
@@ -97,6 +98,11 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
+        binding.toolbarLayout.lblSchoolName.setOnClickListener {
+            val intent = Intent(this, ApproveStaffLeaveRequest::class.java)
+            startActivity(intent)
+        }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {

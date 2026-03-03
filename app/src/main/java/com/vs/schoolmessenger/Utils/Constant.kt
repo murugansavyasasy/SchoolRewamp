@@ -188,6 +188,8 @@ object Constant {
     val M_FINANCE = 194
 
     val M_COUPON_PACKET = 40
+    val M_STAFF_LEAVE_REQUEST = 999
+    val M_APPROVE_STAFF_LEAVE_REQUEST = 998
 
     var SELECTED_MENU_ID = 0
 
@@ -545,6 +547,8 @@ object Constant {
     var isSectionName = "isSectionName"
     var isStandardName = "isStandardName"
     var isQuizScreenRole = "isQuizScreenRole"
+    var isStaffName = "isStaffName"
+    var isStaffSubjectName = "isStaffSubjectName"
     var N_A = "N/A"
     var isRSQuizId = "isRSQuizId"
     var one = "1"
@@ -562,6 +566,7 @@ object Constant {
     var isLeaveType = "isLeaveType"
     var isLeaveTypeID = "isLeaveTypeID"
     var isRequestEdit = "isRequestEdit"
+    var isStaffRequestEdit = "isStaffRequestEdit"
     var Select_a_leave_type = "Select a leave type"
     var FROM_DATE = "FROM_DATE"
     var TO_DATE = "TO_DATE"
@@ -1082,6 +1087,38 @@ object Constant {
             else -> outputFormat.format(inputDate)
         }
     }
+
+    fun convertDateTimeFormatDateMonth(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // fallback if parsing fails
+        }
+    }
+
+    //"dd-MM-yyyy" to dd and MMM
+
+    fun getDayAndMonth(input: String): Pair<String, String> {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
+            val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
+
+            val date = inputFormat.parse(input)
+
+            val day = dayFormat.format(date!!)
+            val month = monthFormat.format(date).uppercase(Locale.getDefault())
+
+            Pair(day, month)
+
+        } catch (e: Exception) {
+            Pair("", "")
+        }
+    }
+
 
     //"dd-MM-yyyy" to "dd MMM yyyy"
 

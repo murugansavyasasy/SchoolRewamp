@@ -36,6 +36,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.School.BusTracking.MapsActivity
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -255,6 +256,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     private fun RedirectToWhatsnew() {
         val intent = Intent(requireContext(), WhatsNewActivity::class.java)
+//        val intent = Intent(requireContext(), MapsActivity::class.java)
         startActivity(intent)
     }
 

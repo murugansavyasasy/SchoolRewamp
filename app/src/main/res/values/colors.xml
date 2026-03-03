@@ -5,6 +5,7 @@
     <color name="PrimaryColor_light">#81ADFB</color>
     <color name="PrimaryColor_50">#504085ef</color>
     <color name="PrimaryColor_90">#904085ef</color>
+    <color name="DarkPrimaryColor">#3671f5</color>
     <color name="red_90">#FF7F7F</color>
     <color name="PrimaryColor_80">#804085ef</color>
     <color name="splash_start">#FFFFFF</color>
@@ -82,6 +83,7 @@
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
     <color name="light_gray_2">#888888</color>
+    <color name="light_gray_10">#e3e3e3</color>
     <color name="gray_white">#f2f2f7</color>
     <color name="mild_grey6">#656565</color>
     <color name="mild_grey7">#586171</color>
@@ -140,6 +142,10 @@
     <color name="green">#22b34d</color>
     <color name="light_pale_green_1">#e2fceb</color>
     <color name="dark_green_3">#2f9143</color>
+    <color name="dark_green_4">#35c759</color>
+    <color name="light_green_6">#e5f7e7</color>
+    <color name="dark_orange_6">#ff9b13</color>
+    <color name="light_orange_5">#ffefdf</color>
     <color name="light_green_4">#c8ead1</color>
     <color name="light_gray_3_">#e5e4e9</color>
     <color name="pink">#ed5b96</color>
@@ -223,6 +229,8 @@
     <color name="light_white_4">#EAE6E4</color>
     <color name="amber_yellow">#FFC107</color>
     <color name="light_white_3">#F8F9FA</color>
+    <color name="link_blue_colour">#57c9fb</color>
+
 
     <color name="gradient_top">#B8C9EA</color>
     <color name="gradient_bottom">#D3E0F5</color>

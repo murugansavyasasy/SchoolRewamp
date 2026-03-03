@@ -131,6 +131,10 @@ class SchoolMenuAdapter(
                 Constant.M_UPLOAD_MARKS -> imgMenu.setImageResource(R.drawable.exam_mark_icon)
                 Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
 
+
+                Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_2)
+                Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_school)
+
             }
 
             rlaMenu.setOnClickListener {
