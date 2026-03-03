@@ -293,6 +293,7 @@ dependencies {
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("androidx.core:core-splashscreen:1.2.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
     implementation("org.maplibre.gl:android-sdk:12.3.1")
     implementation("org.maplibre.gl:android-plugin-annotation-v9:3.0.2")

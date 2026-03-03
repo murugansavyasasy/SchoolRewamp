@@ -92,6 +92,8 @@
             </intent-filter>
         </activity>
 
+
+
         <receiver
             android:name=".Utils.MySMSBroadcastReceiver"
             android:exported="true">
@@ -723,10 +725,18 @@
 
         <activity
             android:name=".School.BusTracking.MapsActivity"
+        android:configChanges="uiMode|orientation|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".School.StudentDetails.StudentDetails"
             android:configChanges="uiMode|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
 
         <activity
             android:name=".School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest"

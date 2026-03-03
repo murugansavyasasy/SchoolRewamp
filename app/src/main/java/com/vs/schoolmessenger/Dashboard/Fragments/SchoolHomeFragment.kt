@@ -57,6 +57,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
@@ -69,7 +70,6 @@ import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
-import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
@@ -969,27 +969,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
-
-                if (userDetails!!.staff_details.size > 1) {
-                    SchoolList::class.java
-                } else {
-                    if (userDetails!!.staff_role != Constant.isStaffRole) {
-                        ApproveStaffLeaveRequest::class.java
-                    }else{}
-                }
-
-//                if (userDetails!!.staff_role == Constant.isStaffRole) {
-//                    ApproveStaffLeaveRequest::class.java
-//                } else {
-//                    if (userDetails!!.staff_details.size > 1) {
-//                        SchoolList::class.java
-//                    } else {
-//                        ApproveStaffLeaveRequest::class.java
-//                    }
-//                }
-            }
-
             Constant.M_STAFF_LEAVE_REQUEST -> {
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
                     StaffLeaveRequest::class.java
@@ -1001,6 +980,27 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
+//            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
+//
+//                if (userDetails!!.staff_details.size > 1) {
+//                    SchoolList::class.java
+//                } else {
+//                    if (userDetails!!.staff_role != Constant.isStaffRole) {
+//                        ApproveStaffLeaveRequest::class.java
+//                    }else{}
+//                }
+
+//                if (userDetails!!.staff_role == Constant.isStaffRole) {
+//                    ApproveStaffLeaveRequest::class.java
+//                } else {
+//                    if (userDetails!!.staff_details.size > 1) {
+//                        SchoolList::class.java
+//                    } else {
+//                        ApproveStaffLeaveRequest::class.java
+//                    }
+//                }
+//            }
 
             else -> null
         }
