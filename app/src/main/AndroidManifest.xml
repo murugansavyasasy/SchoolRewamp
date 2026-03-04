@@ -80,11 +80,23 @@
                 android:value="@string/default_notification_channel_id" />
         </provider>
 
+<!--        <activity-->
+<!--            android:name=".Auth.Splash.Splash"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/App.LaunchTheme">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
         <activity
-            android:name=".Auth.Splash.Splash"
+            android:name=".School.StudentDetails.StudentDetails"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/App.LaunchTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -730,8 +742,16 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
+<!--        <activity-->
+<!--            android:name=".School.StudentDetails.StudentDetails"-->
+<!--            android:configChanges="uiMode|orientation|screenSize"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme"-->
+<!--            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />-->
+
+
         <activity
-            android:name=".School.StudentDetails.StudentDetails"
+            android:name=".Auth.Splash.Splash"
             android:configChanges="uiMode|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

@@ -178,7 +178,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+        appViewModel!!.isGetAcademicList?.observe(requireActivity()) { response ->
             response?.data?.let { academicList ->
                 val data = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYearList == data) return@observe

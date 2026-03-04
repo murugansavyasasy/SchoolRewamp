@@ -35,7 +35,8 @@
                 android:id="@+id/conBarChartDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rect_white_solid"                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/bg_rect_white_solid"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
