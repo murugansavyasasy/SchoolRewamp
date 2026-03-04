@@ -981,15 +981,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-//            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
-//
-//                if (userDetails!!.staff_details.size > 1) {
-//                    SchoolList::class.java
-//                } else {
-//                    if (userDetails!!.staff_role != Constant.isStaffRole) {
-//                        ApproveStaffLeaveRequest::class.java
-//                    }else{}
-//                }
+            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
+
+                if (userDetails!!.staff_details.size > 1) {
+                    SchoolList::class.java
+                } else {
+                    if (userDetails!!.staff_role != Constant.isStaffRole) {
+                        ApproveStaffLeaveRequest::class.java
+                    }else{
+                        null
+                    }
+                }
 
 //                if (userDetails!!.staff_role == Constant.isStaffRole) {
 //                    ApproveStaffLeaveRequest::class.java
@@ -1000,7 +1002,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                        ApproveStaffLeaveRequest::class.java
 //                    }
 //                }
-//            }
+            }
 
             else -> null
         }
