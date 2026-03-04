@@ -45,7 +45,7 @@
             app:tabTextColor="@color/black" />
 
         <RelativeLayout
-            android:id="@+id/rytSearch"
+            android:id="@+id/rytSearch1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_below="@id/tabLayoutStatus"
@@ -65,7 +65,7 @@
                 android:src="@drawable/ic_search" />
 
             <EditText
-                android:id="@+id/txtVideoMenu"
+                android:id="@+id/txtVideoMenu1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/imgSearch"

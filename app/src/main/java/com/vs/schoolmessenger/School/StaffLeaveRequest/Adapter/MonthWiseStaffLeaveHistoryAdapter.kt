@@ -94,7 +94,7 @@ class MonthWiseStaffLeaveHistoryAdapter(
                 rvMonthWiseHistory.visibility = View.VISIBLE
                 rvMonthWiseHistory.layoutManager = LinearLayoutManager(context)
                 rvMonthWiseHistory.isNestedScrollingEnabled = false
-                rvMonthWiseHistory.adapter = StaffLeaveRequestAdapter(
+                rvMonthWiseHistory.adapter = StaffLeaveRequestHistoryAdapter(
                     data.details,
                     leaveRequestClickListener,
                     context,

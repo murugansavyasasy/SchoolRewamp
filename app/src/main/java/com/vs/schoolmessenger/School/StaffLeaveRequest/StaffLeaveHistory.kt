@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.databinding.StaffLeaveHistoryBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.core.view.isVisible
 
 class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClickListener,
     StaffLeaveRequestClickListener {
@@ -148,27 +149,26 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         binding.rlaHistory.visibility = View.VISIBLE
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
-            if (binding.rytSearch.visibility == View.VISIBLE) {
-                binding.rytSearch.visibility = View.GONE
-                binding.txtVideoMenu.text.clear()
+            if (binding.rytSearch1.isVisible) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtVideoMenu1.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
             } else {
-                binding.rytSearch.visibility = View.VISIBLE
-                binding.txtVideoMenu.text.clear()
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtVideoMenu1.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
             }
         }
 
         isGetLeaveRequestList()
 
-        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -196,7 +196,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
                 binding.lytList.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.rytSearch.visibility = View.GONE
+                binding.rytSearch1.visibility = View.GONE
             }
         }
 
@@ -249,9 +249,9 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         binding.tabLayoutStatus.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.txtVideoMenu.text.clear()
+                binding.txtVideoMenu1.text.clear()
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.txtVideoMenu.windowToken, 0)
+                imm.hideSoftInputFromWindow(binding.txtVideoMenu1.windowToken, 0)
                 val selectedTitle = tab.text.toString()
                 selectedStatus = tabStatusMap[selectedTitle] ?: Constant.All_
 
@@ -271,7 +271,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
                 if (mAdapter.itemCount == 0) {
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                    binding.rytSearch.visibility = View.GONE
+                    binding.rytSearch1.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                     binding.rcyLeaveRequestHistory.visibility = View.GONE
                 } else {
@@ -533,6 +533,92 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     }
 
 
+    private fun getDummyMonthWiseData(): List<MonthWiseLeaveData> {
+
+        val januaryLeaves = listOf(
+            LeaveData(
+                id = "101",
+                applied_on = "02 Jan 2026",
+                student_name = "Arun Kumar",
+                class_name = "10",
+                section_name = "A",
+                leave_from = "05-01-2026",
+                leave_to = "06-01- 2026",
+                no_of_days = "2",
+                reason = "Student is suffering from high fever and viral infection. Doctor has advised complete bed rest for at least two days to recover properly. Kindly grant leave for the mentioned dates.",
+                status = Constant.waiting_for_approval,
+                updated_on = "03 Jan 2026",
+                from_session = "FN",
+                to_session = "AN",
+                approved_by = "Principal",
+                leave_type = "Sick",
+                leave_type_id = 1
+            ),
+            LeaveData(
+                id = "102",
+                applied_on = "10 Jan 2026",
+                student_name = "Priya Sharma",
+                class_name = "9",
+                section_name = "B",
+                leave_from = "12-01-2026",
+                leave_to = "12-01-2026",
+                no_of_days = "1",
+                reason = "We have an important family function and traditional ceremony at our hometown which requires the student's presence throughout the day. Hence requesting leave for the above mentioned date.",
+                status = Constant.waiting_for_approval,
+                updated_on = "",
+                from_session = "Full Day",
+                to_session = "Full Day",
+                approved_by = "",
+                leave_type = "Casual",
+                leave_type_id = 2
+            )
+        )
+
+        val februaryLeaves = listOf(
+            LeaveData(
+                id = "201",
+                applied_on = "05 Feb 2026",
+                student_name = "Rahul Das",
+                class_name = "8",
+                section_name = "C",
+                leave_from = "07-02-2026",
+                leave_to = "08-02-2026",
+                no_of_days = "2",
+                reason = "The student needs to undergo a scheduled medical treatment and follow-up consultation as prescribed by the doctor. Due to the treatment and recovery time, attending school will not be possible.",
+                status = Constant.rejected,
+                updated_on = "06 Feb 2026",
+                from_session = "FN",
+                to_session = "AN",
+                approved_by = "Vice Principal",
+                leave_type = "Sick",
+                leave_type_id = 3
+            ),
+            LeaveData(
+                id = "202",
+                applied_on = "15 Feb 2026",
+                student_name = "Sneha Reddy",
+                class_name = "7",
+                section_name = "A",
+                leave_from = "18-02-2026",
+                leave_to = "19-02-2026",
+                no_of_days = "2",
+                reason = "The family will be travelling out of station due to personal commitments and unavoidable circumstances. The student will not be able to attend classes during the mentioned dates. Kindly approve the leave request.",
+                status = Constant.waiting_for_approval,
+                updated_on = "",
+                from_session = "Full Day",
+                to_session = "Full Day",
+                approved_by = "",
+                leave_type = "Casual",
+                leave_type_id = 2
+            )
+        )
+
+        return listOf(
+            MonthWiseLeaveData("January 2026", januaryLeaves),
+            MonthWiseLeaveData("February 2026", februaryLeaves)
+        )
+    }
+
     fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): String? {
         val dateObj = dateFormat.parse(dateString)
         return dateObj?.let {
@@ -543,6 +629,8 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
 
     private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
+        binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+        binding.lytList.visibility = View.GONE
         mAdapter = MonthWiseStaffLeaveHistoryAdapter(
             newData, this, this, Constant.isShimmerViewDisable
         )
@@ -556,9 +644,22 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
         binding.rcyLeaveRequestHistory.adapter = mAdapter
-        appViewModel!!.getleaverequest(
-            isAccessToken!!, Constant.STUDENT_, this
-        )
+
+//        appViewModel!!.getleaverequest(
+//            isAccessToken!!, Constant.STUDENT_, this
+//        )
+
+
+        //Hardcoded data
+        val dummyData = getDummyMonthWiseData()
+        binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+        binding.lytList.visibility = View.GONE
+        originalLeaveList = dummyData
+        isLeaveList = dummyData
+        isloadleaverequestData(isLeaveList)
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        //Hardcoded data
+
     }
 
     private fun onLeaveDeletedSuccess(deletedId: String) {
@@ -582,11 +683,11 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
             binding.lytList.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_data_found)
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-            binding.rytSearch.visibility = View.GONE
+            binding.rytSearch1.visibility = View.GONE
 
         } else {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-            binding.rytSearch.visibility = View.VISIBLE
+            binding.rytSearch1.visibility = View.VISIBLE
             binding.lytList.visibility = View.GONE
             binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
         }

@@ -44,7 +44,7 @@
                 android:layout_gravity="center"
                 android:textSize="@dimen/sixteen_sp"
                 style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/white"
+                android:textColor="@color/PrimaryColor"
                 android:paddingHorizontal="@dimen/twenty_five"
                 android:paddingVertical="@dimen/twenty_five"
                 android:layout_height="wrap_content">

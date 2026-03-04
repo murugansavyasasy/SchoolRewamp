@@ -394,6 +394,7 @@
                     </TextView>
 
                     <RelativeLayout
+                        android:id="@+id/rlaEntireCall"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -436,6 +437,7 @@
 
 <!--                    Email-->
                     <RelativeLayout
+                        android:id="@+id/rlaEntireMail"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">

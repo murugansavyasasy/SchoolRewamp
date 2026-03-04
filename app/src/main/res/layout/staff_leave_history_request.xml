@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlaHeader"
     android:layout_width="match_parent"
@@ -68,23 +68,12 @@
                         android:textColor="@color/light_gray"
                         android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
+
                 <TextView
-                    android:id="@+id/lblCallIcon"
-                    android:drawableEnd="@drawable/call_icon_primary"
-                    android:layout_weight="0.25"
-                    android:layout_width="0dp"
-                    android:gravity="end"
-                    android:layout_gravity="center"
-                    android:drawablePadding="@dimen/five"
-                    android:layout_marginEnd="@dimen/five"
-                    android:textColor="@color/link_blue_colour"
-                    android:text="@string/call"
-                    android:layout_height="wrap_content">
-                </TextView>
-                <TextView
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.45"
                     android:layout_width="0dp"
                     android:text="Causal"
+                    android:layout_marginStart="@dimen/five"
                     android:layout_gravity="center"
                     android:paddingHorizontal="@dimen/three"
                     android:paddingVertical="@dimen/two"
@@ -93,6 +82,14 @@
                     android:background="@drawable/bg_light_red_radious"
                     android:layout_height="wrap_content">
                 </TextView>
+                <ImageView
+                    android:layout_weight="0.05"
+                    android:id="@+id/options"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_gravity="center"
+                    android:contentDescription="Options"
+                    android:src="@drawable/threedot" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -276,9 +273,9 @@
 
         </LinearLayout>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_below="@+id/LnrReason"
-            android:id="@+id/cstStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
@@ -317,21 +314,71 @@
                 app:layout_constraintHorizontal_weight="1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
-            android:id="@+id/lblSeeMoreDetails"
-            android:layout_below="@+id/cstStatus"
-            android:layout_width="wrap_content"
-            android:text="@string/see_more_details"
-            android:layout_alignParentEnd="true"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/twele_sp"
-            android:textColor="@color/bpBlue"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:layout_height="wrap_content">
-
-        </TextView>
 
 
     </RelativeLayout>
-</RelativeLayout>
+
+    <!-- Floating Menu -->
+    <RelativeLayout
+        android:id="@+id/relbuttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/fourty"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white_2"
+        android:elevation="@dimen/ten"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/deletebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/three"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/three">
+
+            <ImageView
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/six"
+                android:src="@drawable/cross_delete_icon" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:textColor="@color/red"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/editbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deletebutton"
+            android:layout_margin="@dimen/three"
+            android:layout_marginBottom="@dimen/three"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/three">
+
+            <ImageView
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/six"
+                android:src="@drawable/edit_icon_1" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit"
+                android:textColor="@color/iconBlue"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

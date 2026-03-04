@@ -1090,6 +1090,7 @@
     <string name="email">Email</string>
     <string name="address">Address</string>
     <string name="staff_leave_request">Staff Leave Request</string>
+    <string name="see_more_details"><u>View More Details</u> >></string>
 
 
 </resources>

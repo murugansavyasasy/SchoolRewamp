@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Adapter.PreviewStaffLeaveRequest.StaffLeaveHistory
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveHistory.GetStaffLeaveHistory
+import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PreviewStaffLeaveRequestBinding
@@ -54,6 +55,13 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isGetLeaveRequestList()
+
+        binding.rlaEntireCall.setOnClickListener{
+            Constant.redirectToDialPad(this,"0000000000")
+        }
+        binding.rlaEntireMail.setOnClickListener{
+            Constant.redirectToMail(this,"Hardcode@gamil.com", "", "")
+        }
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
@@ -187,6 +195,8 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
             isAccessToken!!, Constant.STAFF__, this
         )
     }
+
+
 
 
     override fun onBackPressed() {
