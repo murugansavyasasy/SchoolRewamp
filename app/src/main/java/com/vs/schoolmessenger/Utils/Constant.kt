@@ -190,8 +190,7 @@ object Constant {
     val M_COUPON_PACKET = 40
     val M_STAFF_LEAVE_REQUEST = 999
     val M_APPROVE_STAFF_LEAVE_REQUEST = 998
-    val asd = 998
-
+    val M_HOSTEL = 997
     var SELECTED_MENU_ID = 0
 
     var isEmergencyVoiceNoticeBoard: Boolean? = false

@@ -66,6 +66,7 @@ import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
+import com.vs.schoolmessenger.School.Hostel.HostelDashboard
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -246,6 +247,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                             description = "Review and approve pending staff leave applications"
                         )
                     )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 997,
+                            name = "Hostel Dashboard",
+                            description = "Monitor and manage hostel activities and student accommodation"
+                        )
+                    )
+
                     //Hardcode till here
                     filteredMenuList.clear()
                     filteredMenuList.addAll(originalMenuList)
@@ -1002,6 +1011,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                        ApproveStaffLeaveRequest::class.java
 //                    }
 //                }
+            }
+
+            Constant.M_HOSTEL-> {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    HostelDashboard::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        HostelDashboard::class.java
+                    }
+                }
             }
 
             else -> null

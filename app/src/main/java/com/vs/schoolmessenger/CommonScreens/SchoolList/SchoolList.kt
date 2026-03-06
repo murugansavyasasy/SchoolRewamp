@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
+import com.vs.schoolmessenger.School.Hostel.HostelDashboard
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
@@ -144,7 +145,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE || SELECTED_MENU_ID == M_LEAVE_REQUEST || SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_MENU_ID == M_STUDENT_REPORT || SELECTED_MENU_ID == M_LESSON_PLAN || SELECTED_MENU_ID == M_SCHOOL_STRENGTH || SELECTED_MENU_ID == M_ABSENTEES_REPORT || SELECTED_MENU_ID == M_DAILY_COLLECTION || SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == M_FEE_PENDING_REPORT || SELECTED_MENU_ID == M_ATTENDANCE_MARKING || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_PTM || SELECTED_MENU_ID == M_QUIZ_EXAM || SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT || SELECTED_MENU_ID == M_UPLOAD_MARKS || SELECTED_MENU_ID == M_COUPON_PACKET|| SELECTED_MENU_ID == Constant.M_APPROVE_STAFF_LEAVE_REQUEST|| SELECTED_MENU_ID == Constant.M_STAFF_LEAVE_REQUEST) {
+        } else if (SELECTED_MENU_ID == M_MARK_YOUR_ATTENDANCE || SELECTED_MENU_ID == M_LEAVE_REQUEST || SELECTED_MENU_ID == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_MENU_ID == M_STUDENT_REPORT || SELECTED_MENU_ID == M_LESSON_PLAN || SELECTED_MENU_ID == M_SCHOOL_STRENGTH || SELECTED_MENU_ID == M_ABSENTEES_REPORT || SELECTED_MENU_ID == M_DAILY_COLLECTION || SELECTED_MENU_ID == M_INTERACTION_WITH_STUDENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == M_FEE_PENDING_REPORT || SELECTED_MENU_ID == M_ATTENDANCE_MARKING || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_PTM || SELECTED_MENU_ID == M_QUIZ_EXAM || SELECTED_MENU_ID == M_MESSAGES_FROM_MANAGEMENT || SELECTED_MENU_ID == M_UPLOAD_MARKS || SELECTED_MENU_ID == M_COUPON_PACKET|| SELECTED_MENU_ID == Constant.M_APPROVE_STAFF_LEAVE_REQUEST|| SELECTED_MENU_ID == Constant.M_STAFF_LEAVE_REQUEST|| SELECTED_MENU_ID == Constant.M_HOSTEL) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -512,6 +513,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
                 Constant.M_STAFF_LEAVE_REQUEST-> {
                     val intent = Intent(this, StaffLeaveRequest::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }
+                Constant.M_HOSTEL-> {
+                    val intent = Intent(this, HostelDashboard::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }

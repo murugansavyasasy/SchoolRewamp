@@ -80,6 +80,7 @@
     <color name="gray_color">#f2f1f6</color>
     <color name="clr_green">#16C117</color>
     <color name="bpWhite">#ffffff</color>
+    <color name="dark_brown">#762d08</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
     <color name="light_gray_2">#888888</color>
@@ -88,6 +89,7 @@
     <color name="mild_grey6">#656565</color>
     <color name="mild_grey7">#586171</color>
     <color name="mild_grey">#f9fafc</color>
+    <color name="mild_light_yellow">#fff9e6</color>
     <color name="light_purple1">#6467d2</color>
     <color name="very_light_purple1">#1A6467d2</color>
     <color name="light_yellow_color">#F0C743</color>

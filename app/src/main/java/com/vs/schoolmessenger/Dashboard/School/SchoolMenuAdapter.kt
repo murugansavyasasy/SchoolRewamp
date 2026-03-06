@@ -134,6 +134,7 @@ class SchoolMenuAdapter(
 
                 Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_2)
                 Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_school)
+                Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.holidays_icon)
 
             }
 

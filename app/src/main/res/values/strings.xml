@@ -1091,6 +1091,14 @@
     <string name="address">Address</string>
     <string name="staff_leave_request">Staff Leave Request</string>
     <string name="see_more_details"><u>View More Details</u> >></string>
+    <string name="occupied_rooms">Occupied Rooms</string>
+    <string name="beds_occupied">Beds Occupied</string>
+    <string name="pending_issues">Pending Issues</string>
+    <string name="outpass_requests">Outpass Requests</string>
+    <string name="today_s_attendance">Today\'s Attendance</string>
+    <string name="view_history">View History</string>
+    <string name="attendance_required">Attendance Required</string>
+    <string name="occupancy">Occupancy</string>
 
 
 </resources>
