@@ -44,6 +44,7 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
+
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
