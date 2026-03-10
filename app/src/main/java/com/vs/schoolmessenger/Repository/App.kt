@@ -71,6 +71,8 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.Repository.SchoolServices.SchoolServices
+import com.vs.schoolmessenger.Repository.SchoolServices.SchoolServicesTwo
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -157,6 +159,7 @@ import okhttp3.RequestBody
 class App(application: Application) : AndroidViewModel(application) {
 
     var apiSchoolRepositories: SchoolServices = SchoolServices()
+    var apiSchoolRepositoriesTwo: SchoolServicesTwo = SchoolServicesTwo()
 
     var apiParentRepositories: ParentServices = ParentServices()
 

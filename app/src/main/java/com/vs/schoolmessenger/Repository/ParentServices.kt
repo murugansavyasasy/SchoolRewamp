@@ -168,13 +168,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isChildAttendanceReport.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isChildAttendanceReport.postValue(response.body())
-                            }
+                            isChildAttendanceReport.postValue(response.body())
                         }
                     }
                 }
@@ -210,13 +204,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponse.postValue(response.body())
-                            }
+                            isAttachmentResponse.postValue(response.body())
                         }
                     }
                 }
@@ -252,13 +240,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponseArchive.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAttachmentResponseArchive.postValue(response.body())
-                            }
+                            isAttachmentResponseArchive.postValue(response.body())
                         }
                     }
                 }
@@ -290,11 +272,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isLeaveRequestApplyResponse.postValue(response.body())
-                            } else {
-                                isLeaveRequestApplyResponse.postValue(response.body())
-                            }
+                            isLeaveRequestApplyResponse.postValue(response.body())
                         }
                     } else {
                         isLeaveRequestApplyResponse.postValue(null)
@@ -359,13 +337,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isCertificatetypes.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isCertificatetypes.postValue(response.body())
-                            }
+                            isCertificatetypes.postValue(response.body())
                         }
                     }
                 }
@@ -401,13 +373,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isCertificateRequestList.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isCertificateRequestList.postValue(response.body())
-                            }
+                            isCertificateRequestList.postValue(response.body())
                         }
                     } else {
                         isCertificateRequestList.postValue(null)
@@ -446,13 +412,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSendCertificateRequest.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSendCertificateRequest.postValue(response.body())
-                            }
+                            isSendCertificateRequest.postValue(response.body())
                         }
                     } else {
                         isSendCertificateRequest.postValue(null)
@@ -491,13 +451,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isTimeTable.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isTimeTable.postValue(response.body())
-                            }
+                            isTimeTable.postValue(response.body())
                         }
                     } else {
                         isTimeTable.postValue(null)
@@ -535,13 +489,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getdetailsforchat.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getdetailsforchat.postValue(response.body())
-                            }
+                            getdetailsforchat.postValue(response.body())
                         }
                     }
                 }
@@ -577,13 +525,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstudentdetailsforchat.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstudentdetailsforchat.postValue(response.body())
-                            }
+                            getstudentdetailsforchat.postValue(response.body())
                         }
                     }
                 }
@@ -628,13 +570,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstaffanswers.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getstaffanswers.postValue(response.body())
-                            }
+                            getstaffanswers.postValue(response.body())
                         }
                     }
                 }
@@ -663,11 +599,7 @@ class ParentServices {
                     call: Call<QuestionModelResponse?>,
                     response: Response<QuestionModelResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        sendquestion.postValue(response.body())
-                    } else {
-                        sendquestion.postValue(response.body())
-                    }
+                    sendquestion.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<QuestionModelResponse?>, t: Throwable) {
@@ -698,13 +630,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getexams.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getexams.postValue(response.body())
-                            }
+                            getexams.postValue(response.body())
                         }
                     } else {
                         getexams.postValue(null)
@@ -741,13 +667,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getexamslist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getexamslist.postValue(response.body())
-                            }
+                            getexamslist.postValue(response.body())
                         }
                     } else {
                         getexamslist.postValue(null)
@@ -785,13 +705,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getviewmarks.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getviewmarks.postValue(response.body())
-                            }
+                            getviewmarks.postValue(response.body())
                         }
                     } else {
                         getviewmarks.postValue(null)
@@ -826,11 +740,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isleaverequestupdate.postValue(response.body())
-                            } else {
-                                isleaverequestupdate.postValue(response.body())
-                            }
+                            isleaverequestupdate.postValue(response.body())
                         }
                     } else {
                         isleaverequestupdate.postValue(null)
@@ -866,11 +776,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isleaverequestdelete.postValue(response.body())
-                            } else {
-                                isleaverequestdelete.postValue(response.body())
-                            }
+                            isleaverequestdelete.postValue(response.body())
                         }
                     } else {
                         isleaverequestdelete.postValue(null)
@@ -908,13 +814,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getProgressMarks.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getProgressMarks.postValue(response.body())
-                            }
+                            getProgressMarks.postValue(response.body())
                         }
                     } else {
                         getProgressMarks.postValue(null)
@@ -947,9 +847,7 @@ class ParentServices {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
-
                     isUpdateCompleteHomeWork.postValue(response.body())
-
                 }
 
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
@@ -975,13 +873,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isLeaveCategories.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isLeaveCategories.postValue(response.body())
-                            }
+                            isLeaveCategories.postValue(response.body())
                         }
                     } else {
                         isLeaveCategories.postValue(null)
@@ -1018,13 +910,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAssignmentlist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isAssignmentlist.postValue(response.body())
-                            }
+                            isAssignmentlist.postValue(response.body())
                         }
                     } else {
                         isAssignmentlist.postValue(null)
@@ -1057,11 +943,7 @@ class ParentServices {
                     call: Call<AssignmentSubmitResponse?>,
                     response: Response<AssignmentSubmitResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        isSubmitAssignment.postValue(response.body())
-                    } else {
-                        isSubmitAssignment.postValue(response.body())
-                    }
+                    isSubmitAssignment.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<AssignmentSubmitResponse?>, t: Throwable) {
@@ -1089,13 +971,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetStudentStatsData", response.body().toString())
-                                isStudentStats.postValue(response.body())
-                            } else {
-                                Log.d("GetStudentStatsData", response.body().toString())
-                                isStudentStats.postValue(response.body())
-                            }
+                            isStudentStats.postValue(response.body())
                         }
                     } else {
                         isStudentStats.postValue(null)
@@ -1133,13 +1009,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getassignmentmysubmissionlist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getassignmentmysubmissionlist.postValue(response.body())
-                            }
+                            getassignmentmysubmissionlist.postValue(response.body())
                         }
                     }
                 }
@@ -1175,13 +1045,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotBookingStudent.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotBookingStudent.postValue(response.body())
-                            }
+                            isSlotBookingStudent.postValue(response.body())
                         }
                     }
                 }
@@ -1225,13 +1089,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isStudentSlotResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isStudentSlotResponse.postValue(response.body())
-                            }
+                            isStudentSlotResponse.postValue(response.body())
                         }
                     }
                 }
@@ -1265,13 +1123,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotCountResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotCountResponse.postValue(response.body())
-                            }
+                            isSlotCountResponse.postValue(response.body())
                         }
                     }
                 }
@@ -1307,13 +1159,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotCancelByStudent.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotCancelByStudent.postValue(response.body())
-                            }
+                            isSlotCancelByStudent.postValue(response.body())
                         }
                     }
                 }
@@ -1348,13 +1194,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotDetailsHistory.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotDetailsHistory.postValue(response.body())
-                            }
+                            isSlotDetailsHistory.postValue(response.body())
                         }
                     }
                 }
@@ -1388,13 +1228,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSubjectResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSubjectResponse.postValue(response.body())
-                            }
+                            isSubjectResponse.postValue(response.body())
                         }
                     }
                 }
@@ -1431,13 +1265,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetQuizExamListData", response.body().toString())
-                                isQuizExamList.postValue(response.body())
-                            } else {
-                                Log.d("GetQuizExamListData", response.body().toString())
-                                isQuizExamList.postValue(response.body())
-                            }
+                            isQuizExamList.postValue(response.body())
                         }
                     }
                 }
@@ -1473,13 +1301,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetQuizQuestionsData", response.body().toString())
-                                isGetQuestions.postValue(response.body())
-                            } else {
-                                Log.d("GetQuizQuestionsData", response.body().toString())
-                                isGetQuestions.postValue(response.body())
-                            }
+                            isGetQuestions.postValue(response.body())
                         }
                     }
                 }
@@ -1515,13 +1337,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                isSubmitQuiz.postValue(response.body())
-                            } else {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                isSubmitQuiz.postValue(response.body())
-                            }
+                            isSubmitQuiz.postValue(response.body())
                         }
                     }
                 }
@@ -1557,13 +1373,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                isSpentPoints.postValue(response.body())
-                            } else {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                isSpentPoints.postValue(response.body())
-                            }
+                            isSpentPoints.postValue(response.body())
                         }
                     }
                 }
@@ -1599,13 +1409,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("addPointsResponse", response.body().toString())
-                                isAddRewardPoints.postValue(response.body())
-                            } else {
-                                Log.d("addPointsResponse", response.body().toString())
-                                isAddRewardPoints.postValue(response.body())
-                            }
+                            isAddRewardPoints.postValue(response.body())
                         }
                     }
                 }
@@ -1639,13 +1443,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                ispresubmission.postValue(response.body())
-                            } else {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                ispresubmission.postValue(response.body())
-                            }
+                            ispresubmission.postValue(response.body())
                         }
                     }
                 }
@@ -1682,13 +1480,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMySubmissionData", response.body().toString())
-                                isGetMySubmission.postValue(response.body())
-                            } else {
-                                Log.d("GetMySubmissionData", response.body().toString())
-                                isGetMySubmission.postValue(response.body())
-                            }
+                            isGetMySubmission.postValue(response.body())
                         }
                     }
                 }
@@ -1723,13 +1515,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwSkilllist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwSkilllist.postValue(response.body())
-                            }
+                            islsrwSkilllist.postValue(response.body())
                         }
                     }
                 }
@@ -1757,12 +1543,7 @@ class ParentServices {
                     call: Call<LSRWSkillSubmitResponse?>,
                     response: Response<LSRWSkillSubmitResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        islsrwSkillSubmit.postValue(response.body())
-                    } else {
-                        islsrwSkillSubmit.postValue(response.body())
-                    }
-
+                    islsrwSkillSubmit.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -1796,13 +1577,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isGetPauketPoints.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isGetPauketPoints.postValue(response.body())
-                            }
+                            isGetPauketPoints.postValue(response.body())
                         }
                     }
                 }
@@ -1838,13 +1613,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                islsrwmysubmission.postValue(response.body())
-                            } else {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                islsrwmysubmission.postValue(response.body())
-                            }
+                            islsrwmysubmission.postValue(response.body())
                         }
                     }
                 }
@@ -1878,13 +1647,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isParentprofilelist.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isParentprofilelist.postValue(response.body())
-                            }
+                            isParentprofilelist.postValue(response.body())
                         }
                     }
                 }
@@ -1965,13 +1728,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                getmysubmissionedit.postValue(response.body())
-                            } else {
-                                Log.d("SubmitQuizResponse", response.body().toString())
-                                getmysubmissionedit.postValue(response.body())
-                            }
+                            getmysubmissionedit.postValue(response.body())
                         }
                     }
                 }
@@ -2006,13 +1763,7 @@ class ParentServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                ismysubmissiondelete.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                ismysubmissiondelete.postValue(response.body())
-                            }
+                            ismysubmissiondelete.postValue(response.body())
                         }
                     }
                 }
@@ -2028,6 +1779,4 @@ class ParentServices {
 
     val ismysubmissiondeleteLiveData: LiveData<MySubmissionDeleteResponse?>
         get() = ismysubmissiondelete
-
-
 }
