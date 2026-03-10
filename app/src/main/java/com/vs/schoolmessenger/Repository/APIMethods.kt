@@ -218,6 +218,13 @@ object APIMethods {
     const val savemarks = "exam/api/exam/upload-marks"
     const val getMarkDetails = "exam/api/exam/get-mark-details"
 
+    const val staff_leave_request_apply = "comm/api/leave-req-for-staff/apply"
+    const val isstaffleavecategories = "comm/api/leave-req-for-staff/leave-categories"
+    const val isstaffleaverequestupdate = "comm/api/leave-req-for-staff/update"
+    const val isstaffleaverequestapprove = "comm/api/leave-req-for-staff/update-status"
+    const val isstaffleaverequestdelete = "comm/api/leave-req-for-staff/delete"
+    const val getstaffleaverequest = "comm/api/leave-req-for-staff/list"
+
 
 }
 

@@ -76,6 +76,8 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.getStaffLeaveRequestHistory
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestStatusUpdate.StaffLeaveRequestStatusUpdate
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
@@ -143,6 +145,10 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffApplyLeaveRequest.StaffLeaveRequestApplyRespone
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveRequest.StaffLeaveRequestDeleteResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MultipartBody
@@ -352,7 +358,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getexamslist: LiveData<ExamResponse?>? = null
     var getviewmarks: LiveData<ExamMarksResponse?>? = null
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
+    var isstaffleaverequestupdate: LiveData<StaffLeaveUpdateRespone?>? = null
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
+    var isStaffleaverequestdelete: LiveData<StaffLeaveRequestDeleteResponse?>? = null
     var isnoticeboarddelete: LiveData<NoticeBoardDeleteResponse?>? = null
     var isEventDelete: LiveData<EventDeleteResponse?>? = null
     var isLsrwDelete: LiveData<LsrwDeleteResponse?>? = null
@@ -361,6 +369,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
     var getassignmentlist: LiveData<SubmissionResponse?>? = null
     var getLeaveCategories: LiveData<GetLeaveCategoriesData?>? = null
+    var getStaffLeaveCategories: LiveData<GetStaffLeaveCategoriesData?>? = null
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
     var isStudentStats: LiveData<getStudentStats?>? = null
@@ -432,6 +441,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isDeleteQuizQuestion: LiveData<DeleteQuizQuestionResponse?>? = null
     var uploadmarks: LiveData<UploadMarkResponse?>? = null
     var savemarks: LiveData<SaveMarksModel?>? = null
+    var isStaffLeaveApply: LiveData<StaffLeaveRequestApplyRespone?>? = null
+
+    var isstaffleaverequestapprove: LiveData<StaffLeaveRequestStatusUpdate?>? = null
+    var getStaffleaverequesthistory: LiveData<getStaffLeaveRequestHistory?>? = null
 
 
     fun init() {
@@ -509,7 +522,6 @@ class App(application: Application) : AndroidViewModel(application) {
         sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
         isLeaveRequest = apiParentRepositories.leaveRequestLiveData
-        getleaverequest = apiSchoolRepositories.leaverequestLiveData
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
         isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
@@ -616,6 +628,12 @@ class App(application: Application) : AndroidViewModel(application) {
         isDeleteQuizQuestion = apiSchoolRepositories.isDeleteQuizQuestionLiveData
         uploadmarks = apiSchoolRepositories.uploadmarksLiveData
         savemarks = apiSchoolRepositories.savemarksLiveData
+        isStaffLeaveApply = apiSchoolRepositories.isStaffLeaveRequestLiveData
+        getStaffLeaveCategories = apiSchoolRepositories.isStaffLeaveCategoriesLiveData
+        isstaffleaverequestupdate = apiSchoolRepositories.isstaffleaverequestupdateLiveData
+        isstaffleaverequestapprove = apiSchoolRepositories.isStaffleaverequestapproveLiveData
+        getStaffleaverequesthistory = apiSchoolRepositories.isStaffleaverequestHistoryLiveData
+        isStaffleaverequestdelete = apiSchoolRepositories.isStaffleaverequestdeleteLiveData
 
 
     }
@@ -1989,6 +2007,42 @@ class App(application: Application) : AndroidViewModel(application) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.savemarks(isToken, jsonObject)
+    }
+
+    fun isSendStaffLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositories.isStaffLeaveRequestApply(isToken, jsonObject, activity)
+    }
+
+    fun getStaffLeaveCategories(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositories.getStaffLeaveCategories(isToken)
+    }
+
+    fun isstaffleaverequestupdate(isToken: String, request: LeaveRequestUpdate, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositories.isstaffleaverequestupdate(isToken, request, activity)
+    }
+
+    fun isStaffleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositories.isStaffleaverequestapprove(isToken, request, activity)
+    }
+
+    fun getStaffleaverequest(isToken: String, staff_id: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositories.getStaffleaverequest(isToken,staff_id, activity)
+    }
+
+    fun isStaffleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositories.isStaffleaverequestdelete(isToken, request, activity)
     }
 
 }

@@ -14,12 +14,15 @@
 
     <color name="text_primary">#000000</color>
     <color name="purple_200">#FFBB86FC</color>
+    <color name="light_blue_8">#ebf5ff</color>
+    <color name="light_red_8">#fef2f2</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_900">#4fd0ff</color>
     <color name="sky_blue">#4fc3f4</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="lightgray">#D3D3D3</color>
+    <color name="light_green_8">#effcf2</color>
     <color name="light_gray_4">#444</color>
     <color name="light_gray_5">#666666</color>
     <color name="light_red_2">#FF4444</color>
@@ -79,6 +82,8 @@
     <color name="light_sky_blue_color">#bde6fc</color>
     <color name="gray_color">#f2f1f6</color>
     <color name="clr_green">#16C117</color>
+    <color name="dark_blue_3">#3f8adf</color>
+    <color name="light_green_3">#5ac973</color>
     <color name="bpWhite">#ffffff</color>
     <color name="dark_brown">#762d08</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
@@ -185,6 +190,7 @@
     <color name="light_bg_blue">#CFE8F6</color>
     <color name="light_gray_">#747e85</color>
     <color name="light_gray2">#f2f2f2</color>
+    <color name="dark_voilet_2">#6f14d3</color>
 
     <color name="light_gray1">#F5F5F5</color>
     <color name="dark_blue_and_green_">#00c7be</color>

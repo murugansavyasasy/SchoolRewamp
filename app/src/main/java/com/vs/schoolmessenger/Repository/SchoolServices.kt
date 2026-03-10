@@ -37,11 +37,15 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequ
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.getStaffLeaveRequestHistory
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestStatusUpdate.StaffLeaveRequestStatusUpdate
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
@@ -108,6 +112,11 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffApplyLeaveRequest.StaffLeaveRequestApplyRespone
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveRequest.StaffLeaveRequestDeleteResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.getStaffCatorgiesData
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -190,6 +199,7 @@ class SchoolServices {
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
     var getleaverequest: MutableLiveData<LeaveRequestResponse?>
     var isleaverequestapprove: MutableLiveData<LeaveActionResponse?>
+    var isstaffleaverequestapprove: MutableLiveData<StaffLeaveRequestStatusUpdate?>
     var getlpStaffReport: MutableLiveData<AllClassResponse?>
     var getlpViewReport: MutableLiveData<LessonPlanViewSummaryResponse?>
     var getlpeditReport: MutableLiveData<LessonPlanEditResponse?>
@@ -253,6 +263,11 @@ class SchoolServices {
     var isgetDeleteQuizQuestion: MutableLiveData<DeleteQuizQuestionResponse?>
     var uploadmarks: MutableLiveData<UploadMarkResponse?>
     var savemarks: MutableLiveData<SaveMarksModel?>
+    var isStaffLeaveApply: MutableLiveData<StaffLeaveRequestApplyRespone?>
+    var isStaffLeaveCatorgies: MutableLiveData<GetStaffLeaveCategoriesData?>
+    var isStaffleaverequestupdate: MutableLiveData<StaffLeaveUpdateRespone?>
+    var getstaffleaverequesthistory: MutableLiveData<getStaffLeaveRequestHistory?>
+    var isStaffleaverequestdelete: MutableLiveData<StaffLeaveRequestDeleteResponse?>
 
 
     init {
@@ -381,6 +396,12 @@ class SchoolServices {
         isgetDeleteQuizQuestion = MutableLiveData()
         uploadmarks = MutableLiveData()
         savemarks = MutableLiveData()
+        isStaffLeaveApply = MutableLiveData()
+        isStaffLeaveCatorgies = MutableLiveData()
+        isStaffleaverequestupdate = MutableLiveData()
+        isstaffleaverequestapprove = MutableLiveData()
+        getstaffleaverequesthistory = MutableLiveData()
+        isStaffleaverequestdelete = MutableLiveData()
     }
 
     //New Dashboard Api
@@ -4953,6 +4974,236 @@ class SchoolServices {
 
     val savemarksLiveData: LiveData<SaveMarksModel?>
         get() = savemarks
+
+
+    fun isStaffLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.StaffLeaveRequestApply(isToken, jsonObject)
+            ?.enqueue(object : Callback<StaffLeaveRequestApplyRespone?> {
+                override fun onResponse(
+                    call: Call<StaffLeaveRequestApplyRespone?>,
+                    response: Response<StaffLeaveRequestApplyRespone?>
+                ) {
+                    Log.d(
+                        "", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffLeaveApply.postValue(response.body())
+                            } else {
+                                isStaffLeaveApply.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isStaffLeaveApply.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StaffLeaveRequestApplyRespone?>, t: Throwable) {
+                    isStaffLeaveApply.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffLeaveRequestLiveData: LiveData<StaffLeaveRequestApplyRespone?>
+        get() = isStaffLeaveApply
+
+
+
+    fun getStaffLeaveCategories(
+        isToken: String,
+    ) {
+        RestClient.apiInterfaces.getstaffleavecategories(isToken)
+            ?.enqueue(object : Callback<GetStaffLeaveCategoriesData?> {
+                override fun onResponse(
+                    call: Call<GetStaffLeaveCategoriesData?>,
+                    response: Response<GetStaffLeaveCategoriesData?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("getStyaffLeaveCatorigies", response.body().toString())
+                                isStaffLeaveCatorgies.postValue(response.body())
+                            } else {
+                                Log.d("getStyaffLeaveCatorigies", response.body().toString())
+                                isStaffLeaveCatorgies.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isStaffLeaveCatorgies.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetStaffLeaveCategoriesData?>,
+                    t: Throwable
+                ) {
+                    isStaffLeaveCatorgies.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffLeaveCategoriesLiveData: LiveData<GetStaffLeaveCategoriesData?>
+        get() = isStaffLeaveCatorgies
+
+
+
+
+    fun isstaffleaverequestupdate(
+        isToken: String, request: LeaveRequestUpdate, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isstaffleaverequestupdate(isToken, request)
+            ?.enqueue(object : Callback<StaffLeaveUpdateRespone?> {
+                override fun onResponse(
+                    call: Call<StaffLeaveUpdateRespone?>, response: Response<StaffLeaveUpdateRespone?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffleaverequestupdate.postValue(response.body())
+                            } else {
+                                isStaffleaverequestupdate.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isStaffleaverequestupdate.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StaffLeaveUpdateRespone?>,
+                    t: Throwable
+                ) {
+                    isStaffleaverequestupdate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isstaffleaverequestupdateLiveData: LiveData<StaffLeaveUpdateRespone?>
+        get() = isStaffleaverequestupdate
+
+
+
+
+
+    fun isStaffleaverequestapprove(
+        isToken: String, request: LeaveApproveRequest, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isstaffleaverequestapprove(isToken, request)
+            ?.enqueue(object : Callback<StaffLeaveRequestStatusUpdate?> {
+                override fun onResponse(
+                    call: Call<StaffLeaveRequestStatusUpdate?>, response: Response<StaffLeaveRequestStatusUpdate?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isstaffleaverequestapprove.postValue(response.body())
+                            } else {
+                                isstaffleaverequestapprove.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isstaffleaverequestapprove.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StaffLeaveRequestStatusUpdate?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffleaverequestapproveLiveData: LiveData<StaffLeaveRequestStatusUpdate?>
+        get() = isstaffleaverequestapprove
+
+    fun isStaffleaverequestdelete(
+        isToken: String, request: LeaveRequestDelete, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isstaffleaverequestdelete(isToken, request)
+            ?.enqueue(object : Callback<StaffLeaveRequestDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<StaffLeaveRequestDeleteResponse?>, response: Response<StaffLeaveRequestDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffleaverequestdelete.postValue(response.body())
+                            } else {
+                                isStaffleaverequestdelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isStaffleaverequestdelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StaffLeaveRequestDeleteResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffleaverequestdeleteLiveData: LiveData<StaffLeaveRequestDeleteResponse?>
+        get() = isStaffleaverequestdelete
+
+
+    fun getStaffleaverequest(
+        isToken: String, staff_id: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getstaffleaverequest(isToken,staff_id)
+            ?.enqueue(object : Callback<getStaffLeaveRequestHistory?> {
+                override fun onResponse(
+                    call: Call<getStaffLeaveRequestHistory?>, response: Response<getStaffLeaveRequestHistory?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getstaffleaverequesthistory.postValue(response.body())
+                            } else {
+                                getstaffleaverequesthistory.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        getstaffleaverequesthistory.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getStaffLeaveRequestHistory?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffleaverequestHistoryLiveData: LiveData<getStaffLeaveRequestHistory?>
+        get() = getstaffleaverequesthistory
+
+
+
 
 
 }

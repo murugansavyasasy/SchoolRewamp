@@ -40,6 +40,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.core.view.isVisible
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffLeaveData
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffMonthWiseLeaveData
 
 class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClickListener,
     StaffLeaveRequestClickListener {
@@ -58,8 +60,8 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
     private var selectedStatus: String = Constant.All_
-    private var originalLeaveList: List<MonthWiseLeaveData> = emptyList()
-    private var isLeaveList: List<MonthWiseLeaveData> = emptyList()
+    private var originalLeaveList: List<StaffMonthWiseLeaveData> = emptyList()
+    private var isLeaveList: List<StaffMonthWiseLeaveData> = emptyList()
 
     private var msg_id: Int = -1
     private var headerId: String? = null
@@ -179,7 +181,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
 
 
-        appViewModel?.getleaverequest?.observe(this) { response ->
+        appViewModel?.getStaffleaverequesthistory?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 binding.lytList.visibility = View.GONE
@@ -201,11 +203,11 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         }
 
 
-        appViewModel!!.isleaverequestdelete?.observe(this) { response ->
+        appViewModel!!.isStaffleaverequestdelete?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@StaffLeaveHistory)
-                    Log.d("isleaverequestdelete", response.message)
+                    Log.d("isStaffleaverequestdelete", response.message)
                     Constant.showDataValidationNoDashboardRedirect(
                         resources.getString(R.string.success), response.message, this
                     )
@@ -294,7 +296,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         if (msg_id == -1 || headerId.isNullOrEmpty()) return
 
         val targetMonthIndex = isLeaveList.indexOfFirst { month ->
-            month.details.any { it.id == headerId }
+            month.details.any { it.staff_id == headerId }
         }
         if (targetMonthIndex != -1) {
             Log.d("ScrollDebug", "Found month at index $targetMonthIndex")
@@ -369,35 +371,33 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
             statusFilteredList.mapNotNull { monthWiseLeave ->
                 val filteredDetails = monthWiseLeave.details.filter { leave ->
                     val appliedOn = try {
-                        Constant.convertDateTimeFormat(leave.applied_on)
+                        Constant.convertDateTimeFormat(leave.applied_on?:"")
                     } catch (e: Exception) {
                         leave.applied_on
                     }
 
                     val leaveFrom = try {
-                        Constant.convertDateTimeFormat(leave.leave_from)
+                        Constant.convertDateTimeFormat(leave.from_date?:"")
                     } catch (e: Exception) {
-                        leave.leave_from
+                        leave.from_date
                     }
 
                     val leaveTo = try {
-                        Constant.convertDateTimeFormat(leave.leave_to)
+                        Constant.convertDateTimeFormat(leave.to_date?:"")
                     } catch (e: Exception) {
-                        leave.leave_to
+                        leave.to_date
                     }
 
                     val fieldsToSearch = listOf(
-                        leave.student_name.lowercase(),
-                        leave.class_name.lowercase(),
-                        leave.section_name.lowercase(),
-                        appliedOn.lowercase(),
-                        leave.no_of_days.lowercase(),
-                        leaveFrom.lowercase(),
-                        leaveTo.lowercase(),
-                        leave.leave_type.lowercase(),
-                        leave.reason.lowercase(),
-                        leave.from_session.lowercase(),
-                        leave.to_session.lowercase(),
+                        (leave.staff_name ?: "").lowercase(),
+                        (appliedOn ?: "").lowercase(),
+                        (leave.no_of_days.toString() ?: "").lowercase(),
+                        (leaveFrom ?: "").lowercase(),
+                        (leaveTo ?: "").lowercase(),
+                        (leave.leave_type ?: "").lowercase(),
+                        (leave.reason ?: "").lowercase(),
+                        (leave.from_session ?: "").lowercase(),
+                        (leave.to_session ?: "").lowercase(),
                     )
 
                     searchWords.all { word ->
@@ -534,92 +534,6 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     }
 
 
-    private fun getDummyMonthWiseData(): List<MonthWiseLeaveData> {
-
-        val januaryLeaves = listOf(
-            LeaveData(
-                id = "101",
-                applied_on = "02 Jan 2026",
-                student_name = "Arun Kumar",
-                class_name = "10",
-                section_name = "A",
-                leave_from = "05-01-2026",
-                leave_to = "06-01- 2026",
-                no_of_days = "2",
-                reason = "Student is suffering from high fever and viral infection. Doctor has advised complete bed rest for at least two days to recover properly. Kindly grant leave for the mentioned dates.",
-                status = Constant.waiting_for_approval,
-                updated_on = "03 Jan 2026",
-                from_session = "FN",
-                to_session = "AN",
-                approved_by = "Principal",
-                leave_type = "Sick",
-                leave_type_id = 1
-            ),
-            LeaveData(
-                id = "102",
-                applied_on = "10 Jan 2026",
-                student_name = "Priya Sharma",
-                class_name = "9",
-                section_name = "B",
-                leave_from = "12-01-2026",
-                leave_to = "12-01-2026",
-                no_of_days = "1",
-                reason = "We have an important family function and traditional ceremony at our hometown which requires the student's presence throughout the day. Hence requesting leave for the above mentioned date.",
-                status = Constant.waiting_for_approval,
-                updated_on = "",
-                from_session = "Full Day",
-                to_session = "Full Day",
-                approved_by = "",
-                leave_type = "Casual",
-                leave_type_id = 2
-            )
-        )
-
-        val februaryLeaves = listOf(
-            LeaveData(
-                id = "201",
-                applied_on = "05 Feb 2026",
-                student_name = "Rahul Das",
-                class_name = "8",
-                section_name = "C",
-                leave_from = "07-02-2026",
-                leave_to = "08-02-2026",
-                no_of_days = "2",
-                reason = "The student needs to undergo a scheduled medical treatment and follow-up consultation as prescribed by the doctor. Due to the treatment and recovery time, attending school will not be possible.",
-                status = Constant.rejected,
-                updated_on = "06 Feb 2026",
-                from_session = "FN",
-                to_session = "AN",
-                approved_by = "Vice Principal",
-                leave_type = "Sick",
-                leave_type_id = 3
-            ),
-            LeaveData(
-                id = "202",
-                applied_on = "15 Feb 2026",
-                student_name = "Sneha Reddy",
-                class_name = "7",
-                section_name = "A",
-                leave_from = "18-02-2026",
-                leave_to = "19-02-2026",
-                no_of_days = "2",
-                reason = "The family will be travelling out of station due to personal commitments and unavoidable circumstances. The student will not be able to attend classes during the mentioned dates. Kindly approve the leave request.",
-                status = Constant.waiting_for_approval,
-                updated_on = "",
-                from_session = "Full Day",
-                to_session = "Full Day",
-                approved_by = "",
-                leave_type = "Casual",
-                leave_type_id = 2
-            )
-        )
-
-        return listOf(
-            MonthWiseLeaveData("January 2026", januaryLeaves),
-            MonthWiseLeaveData("February 2026", februaryLeaves)
-        )
-    }
-
     fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): String? {
         val dateObj = dateFormat.parse(dateString)
         return dateObj?.let {
@@ -629,7 +543,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     }
 
 
-    private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
+    private fun isloadleaverequestData(newData: List<StaffMonthWiseLeaveData>?) {
         binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
         mAdapter = MonthWiseStaffLeaveHistoryAdapter(
@@ -646,20 +560,10 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
         binding.rcyLeaveRequestHistory.adapter = mAdapter
 
-//        appViewModel!!.getleaverequest(
-//            isAccessToken!!, Constant.STUDENT_, this
-//        )
+        appViewModel!!.getStaffleaverequest(
+            isAccessToken!!,"",this
+        )
 
-
-        //Hardcoded data
-        val dummyData = getDummyMonthWiseData()
-        binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
-        binding.lytList.visibility = View.GONE
-        originalLeaveList = dummyData
-        isLeaveList = dummyData
-        isloadleaverequestData(isLeaveList)
-        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-        //Hardcoded data
 
     }
 
@@ -669,12 +573,12 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
         //  Remove from both lists (original + filtered)
         originalLeaveList = originalLeaveList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
+            val updatedDetails = monthData.details.filterNot { it.staff_id == deletedId }
             if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
         }
 
         isLeaveList = isLeaveList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
+            val updatedDetails = monthData.details.filterNot { it.staff_id == deletedId }
             if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
         }
 
@@ -700,9 +604,9 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     }
 
 
-    override fun onItemDeleteClick(data: LeaveData) {
+    override fun onItemDeleteClick(data: StaffLeaveData) {
         val request = LeaveRequestDelete(
-            id = data.id
+            id = data.staff_id
         )
         Constant.showSendConfirmationDialog(
             this,
@@ -714,19 +618,19 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         ) { confirmed ->
             if (confirmed) {
                 Constant.showLoading(this)
-                isDeletedId = data.id
-                appViewModel?.isleaverequestdelete(isAccessToken!!, request, this)
+                isDeletedId = data.staff_id
+                appViewModel?.isStaffleaverequestdelete(isAccessToken!!, request, this)
             }
         }
     }
 
 
-    override fun onItemEditClick(data: LeaveData) {
+    override fun onItemEditClick(data: StaffLeaveData) {
         val intent = Intent(this, StaffLeaveRequest::class.java)
         intent.putExtra(Constant.isReason, data.reason)
-        intent.putExtra(Constant.isIdValue, data.id)
-        intent.putExtra(Constant.isLeaveTo, data.leave_to)
-        intent.putExtra(Constant.isLeaveFrom, data.leave_from)
+        intent.putExtra(Constant.isIdValue, data.staff_id)
+        intent.putExtra(Constant.isLeaveTo, data.from_date)
+        intent.putExtra(Constant.isLeaveFrom, data.to_date)
         intent.putExtra(Constant.isFromSession, data.from_session)
         intent.putExtra(Constant.isToSession, data.to_session)
         intent.putExtra(Constant.isLeaveType, data.leave_type)

@@ -11,11 +11,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffMonthWiseLeaveData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Listner.StaffLeaveRequestClickListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class MonthWiseStaffLeaveHistoryAdapter(
-    private var itemList: List<MonthWiseLeaveData>?,
+    private var itemList: List<StaffMonthWiseLeaveData>?,
     private val context: Context,
     private val leaveRequestClickListener: StaffLeaveRequestClickListener,
     private var isLoading: Boolean
@@ -24,8 +25,8 @@ class MonthWiseStaffLeaveHistoryAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
-    private var filteredList: List<MonthWiseLeaveData> = fullList
+    var fullList: List<StaffMonthWiseLeaveData> = itemList ?: emptyList()
+    private var filteredList: List<StaffMonthWiseLeaveData> = fullList
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -53,23 +54,23 @@ class MonthWiseStaffLeaveHistoryAdapter(
         }
     }
 
-    fun updateData(newList: List<MonthWiseLeaveData>) {
+    fun updateData(newList: List<StaffMonthWiseLeaveData>) {
         fullList = newList
         filteredList = newList
         notifyDataSetChanged()
     }
 
 
-    fun getCurrentList(): List<MonthWiseLeaveData> {
+    fun getCurrentList(): List<StaffMonthWiseLeaveData> {
         return itemList!!
     }
 
 
     fun removeItemById(id: String) {
         val updatedList = fullList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.id == id }
+            val updatedDetails = monthData.details.filterNot { it.staff_id == id }
             if (updatedDetails.isNotEmpty()) {
-                MonthWiseLeaveData(month = monthData.month, details = updatedDetails)
+                StaffMonthWiseLeaveData(month = monthData.month, details = updatedDetails)
             } else null
         }
         updateData(updatedList)
@@ -83,7 +84,7 @@ class MonthWiseStaffLeaveHistoryAdapter(
             itemView.findViewById(R.id.rvMonthWiseHistory)
 
         fun bind(
-            data: MonthWiseLeaveData,
+            data: StaffMonthWiseLeaveData,
             leaveRequestClickListener: StaffLeaveRequestClickListener
         ) {
             lblMonthName.text = data.month

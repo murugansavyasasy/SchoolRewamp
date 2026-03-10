@@ -81,6 +81,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.isStaffLeaveHistoryData
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
@@ -261,6 +262,7 @@ object Constant {
     var isCompletedHomeworkId: String? = null
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var isStaffLeaveHistoryData: isStaffLeaveHistoryData? = null
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
     var isMarkUploadClassSectionDetails: StandardSection? = null

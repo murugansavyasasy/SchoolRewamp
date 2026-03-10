@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content">
                 </TextView>
                 <TextView
+                    android:id="@+id/lblLeaveStatus"
                     android:layout_weight="0.25"
                     android:layout_width="0dp"
                     android:text="Causal"
@@ -89,8 +90,8 @@
                     android:paddingHorizontal="@dimen/three"
                     android:paddingVertical="@dimen/two"
                     android:gravity="center"
-                    android:textColor="@color/red"
-                    android:background="@drawable/bg_light_red_radious"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_leave_approved"
                     android:layout_height="wrap_content">
                 </TextView>
 

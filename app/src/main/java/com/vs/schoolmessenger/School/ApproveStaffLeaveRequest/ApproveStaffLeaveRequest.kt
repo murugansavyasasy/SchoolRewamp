@@ -24,6 +24,8 @@ import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.LeaveRequests.MonthwiseLeaveAdapter
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Adapter.ApproveStaffLeaveRequest.StaffMonthwiseApproveLeaveAdapter
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffLeaveData
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffMonthWiseLeaveData
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.listner.ApproveStaffLeaveRequestClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -47,7 +49,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
     private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
 
-    private var leaveRequestMonthWiseList: List<MonthWiseLeaveData>? = null
+    private var leaveRequestMonthWiseList: List<StaffMonthWiseLeaveData>? = null
     var isSearching = false
     private var userDetails: UserDetails? = null
     private var msg_id: Int = -1
@@ -185,67 +187,35 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
             override fun afterTextChanged(s: Editable?) {}
         })
 
-//        appViewModel?.getleaverequest?.observe(this) { response ->
-//            Constant.hideLoading(this)
-//            if (response != null) {
-//                if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                    binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-//                    binding.rcyleaverequest.visibility = View.VISIBLE
-//                    binding.nomessage.visibility = View.GONE
-//                    binding.txtNoData.visibility = View.GONE
-//                    leaveRequestMonthWiseList = response.data
-//                    isloadleaverequestData(leaveRequestMonthWiseList)
-//                    if (fromNotification) {
-//                        scrollToMessageId(headerId)
-//                    }
-//
-//                } else {
-//                    binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-//                    binding.tabLayoutStatus.visibility = View.GONE
-//                    binding.rcyleaverequest.visibility = View.GONE
-//                    binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                    binding.nomessage.visibility = View.VISIBLE
-//                    binding.txtNoData.visibility = View.VISIBLE
-//                    binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
-//                }
-//            }
-//        }
-
-        appViewModel?.getleaverequest?.observe(this) {
-
+        appViewModel?.getStaffleaverequesthistory?.observe(this) { response ->
             Constant.hideLoading(this)
+            if (response != null) {
+                if (response?.status == true && !response.data.isNullOrEmpty()) {
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    leaveRequestMonthWiseList = response.data
+                    isloadleaverequestData(leaveRequestMonthWiseList)
+                    if (fromNotification) {
+                        scrollToMessageId(headerId)
+                    }
 
-            // Always load dummy data (Ignore API response completely)
-            val dummyData = getDummyMonthWiseData()
-
-            if (dummyData.isNotEmpty()) {
-
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                binding.rcyleaverequest.visibility = View.VISIBLE
-                binding.nomessage.visibility = View.GONE
-                binding.txtNoData.visibility = View.GONE
-
-                leaveRequestMonthWiseList = dummyData
-                isloadleaverequestData(dummyData)
-
-            } else {
-
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
-                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-                binding.tabLayoutStatus.visibility = View.GONE
-                binding.rcyleaverequest.visibility = View.GONE
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = getString(R.string.no_data_found)
+                } else {
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                    binding.tabLayoutStatus.visibility = View.GONE
+                    binding.rcyleaverequest.visibility = View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
+                }
             }
         }
 
-
-
-        appViewModel!!.isleaverequestapprove?.observe(this) { response ->
+        appViewModel!!.isstaffleaverequestapprove?.observe(this) { response ->
             Constant.hideLoading(this@ApproveStaffLeaveRequest)
 
             if (response != null && response.status) {
@@ -270,94 +240,6 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
         }
 
     }
-
-    private fun getDummyMonthWiseData(): List<MonthWiseLeaveData> {
-
-        val januaryLeaves = listOf(
-            LeaveData(
-                id = "101",
-                applied_on = "02 Jan 2026",
-                student_name = "Arun Kumar",
-                class_name = "10",
-                section_name = "A",
-                leave_from = "05-01-2026",
-                leave_to = "06-01- 2026",
-                no_of_days = "2",
-                reason = "Student is suffering from high fever and viral infection. Doctor has advised complete bed rest for at least two days to recover properly. Kindly grant leave for the mentioned dates.",
-                status = Constant.approved,
-                updated_on = "03 Jan 2026",
-                from_session = "FN",
-                to_session = "AN",
-                approved_by = "Principal",
-                leave_type = "Sick",
-                leave_type_id = 1
-            ),
-            LeaveData(
-                id = "102",
-                applied_on = "10 Jan 2026",
-                student_name = "Priya Sharma",
-                class_name = "9",
-                section_name = "B",
-                leave_from = "12-01-2026",
-                leave_to = "12-01-2026",
-                no_of_days = "1",
-                reason = "We have an important family function and traditional ceremony at our hometown which requires the student's presence throughout the day. Hence requesting leave for the above mentioned date.",
-                status = Constant.waiting_for_approval,
-                updated_on = "",
-                from_session = "Full Day",
-                to_session = "Full Day",
-                approved_by = "",
-                leave_type = "Casual",
-                leave_type_id = 2
-            )
-        )
-
-        val februaryLeaves = listOf(
-            LeaveData(
-                id = "201",
-                applied_on = "05 Feb 2026",
-                student_name = "Rahul Das",
-                class_name = "8",
-                section_name = "C",
-                leave_from = "07-02-2026",
-                leave_to = "08-02-2026",
-                no_of_days = "2",
-                reason = "The student needs to undergo a scheduled medical treatment and follow-up consultation as prescribed by the doctor. Due to the treatment and recovery time, attending school will not be possible.",
-                status = Constant.rejected,
-                updated_on = "06 Feb 2026",
-                from_session = "FN",
-                to_session = "AN",
-                approved_by = "Vice Principal",
-                leave_type = "Sick",
-                leave_type_id = 3
-            ),
-            LeaveData(
-                id = "202",
-                applied_on = "15 Feb 2026",
-                student_name = "Sneha Reddy",
-                class_name = "7",
-                section_name = "A",
-                leave_from = "18-02-2026",
-                leave_to = "19-02-2026",
-                no_of_days = "2",
-                reason = "The family will be travelling out of station due to personal commitments and unavoidable circumstances. The student will not be able to attend classes during the mentioned dates. Kindly approve the leave request.",
-                status = Constant.waiting_for_approval,
-                updated_on = "",
-                from_session = "Full Day",
-                to_session = "Full Day",
-                approved_by = "",
-                leave_type = "Casual",
-                leave_type_id = 2
-            )
-        )
-
-        return listOf(
-            MonthWiseLeaveData("January 2026", januaryLeaves),
-            MonthWiseLeaveData("February 2026", februaryLeaves)
-        )
-    }
-
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -395,19 +277,19 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
     }
 
     override fun onApproveClicked(
-        data: LeaveData,
+        data: StaffLeaveData,
         position: Int,
         isButtonClick: Boolean,
         resultCallback: (Boolean) -> Unit
     ) {
         Log.d("isStatus", isButtonClick.toString())
-        isApproveRejectId = data.id
+        isApproveRejectId = data.staff_id
         var isMessage = ""
         if (isButtonClick) {
-            request = LeaveApproveRequest(id = data.id, is_approve = true)
+            request = LeaveApproveRequest(id = data.staff_id, is_approve = true)
             isMessage = getString(R.string.Are_you_sure_you_want_to_approve_this_request)
         } else {
-            request = LeaveApproveRequest(id = data.id, is_approve = false)
+            request = LeaveApproveRequest(id = data.staff_id, is_approve = false)
             isMessage = getString(R.string.Are_you_sure_you_want_to_reject_this_request)
         }
         Constant.showSendConfirmationDialog(
@@ -421,14 +303,14 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
             if (confirmed) {
                 Constant.showLoading(this)
                 pendingApprovalCallback = resultCallback // store it for later
-                appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
+                appViewModel?.isStaffleaverequestapprove(isAccessToken!!, request, this)
             } else {
                 resultCallback(false) // user cancelled
             }
         }
     }
 
-    override fun onUpdateStatus(leaveData: LeaveData) {
+    override fun onUpdateStatus(leaveData: StaffLeaveData) {
         mAdapter.notifyDataSetChanged()
     }
 
@@ -440,7 +322,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         // find outer month index that contains the headerId
         val targetMonthIndex = mAdapter.filteredList.indexOfFirst { month ->
-            month.details.any { it.id == headerId }
+            month.details.any { it.staff_id == headerId }
         }
         if (targetMonthIndex == -1) {
             Log.d("ScrollDebug", "No month found with headerId: $headerId")
@@ -509,7 +391,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         // find inner index
         val innerPosition =
-            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
+            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.staff_id == headerId }
         if (innerPosition == -1) {
             Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
             return
@@ -555,7 +437,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
     }
 
 
-    private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
+    private fun isloadleaverequestData(newData: List<StaffMonthWiseLeaveData>?) {
 
         if (newData.isNullOrEmpty()) {
             binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
@@ -578,8 +460,8 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
         binding.rcyleaverequest.layoutManager = LinearLayoutManager(this)
         binding.rcyleaverequest.isNestedScrollingEnabled = false
         binding.rcyleaverequest.adapter = mAdapter
-        appViewModel!!.getleaverequest(
-            isAccessToken!!, Constant.STAFF__, this
+        appViewModel!!.getStaffleaverequest(
+            isAccessToken!!, "",this
         )
     }
 

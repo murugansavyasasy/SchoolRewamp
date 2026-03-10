@@ -53,6 +53,7 @@
                 app:cardElevation="@dimen/two">
 
                 <RelativeLayout
+                    android:id="@+id/rlaCurrentLeaveRequest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/ten"

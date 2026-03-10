@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffMonthWiseLeaveData
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.listner.ApproveStaffLeaveRequestClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StaffMonthwiseApproveLeaveAdapter(
-    private var itemList: List<MonthWiseLeaveData>?,
+    private var itemList: List<StaffMonthWiseLeaveData>?,
     private val context: Context,
     private val approveStaffLeaveRequest: ApproveStaffLeaveRequestClickListener,
     private var isLoading: Boolean
@@ -27,8 +28,8 @@ class StaffMonthwiseApproveLeaveAdapter(
     private var currentStatusFilter: String = Constant.All_
 
 
-    var fullList: List<MonthWiseLeaveData> = itemList ?: emptyList()
-    var filteredList: List<MonthWiseLeaveData> = fullList
+    var fullList: List<StaffMonthWiseLeaveData> = itemList ?: emptyList()
+    var filteredList: List<StaffMonthWiseLeaveData> = fullList
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -61,7 +62,7 @@ class StaffMonthwiseApproveLeaveAdapter(
         }
     }
 
-    fun updateData(newList: List<MonthWiseLeaveData>) {
+    fun updateData(newList: List<StaffMonthWiseLeaveData>) {
         fullList = newList
         filteredList = newList
         notifyDataSetChanged()
@@ -88,17 +89,15 @@ class StaffMonthwiseApproveLeaveAdapter(
                         statusFiltered
                     } else {
                         statusFiltered.filter { leave ->
-                            leave.student_name.lowercase().contains(query) ||
-                                    leave.section_name.lowercase().contains(query) ||
-                                    leave.reason.lowercase().contains(query) ||
-                                    leave.no_of_days.lowercase().contains(query) ||
-                                    leave.leave_type.lowercase().contains(query) ||
-                                    leave.class_name.lowercase().contains(query)
+                            (leave.staff_name?:"").lowercase().contains(query) ||
+                                    (leave.reason?:"").lowercase().contains(query) ||
+                                    (leave.no_of_days.toString()?:"").lowercase().contains(query) ||
+                                    (leave.leave_type?:"").lowercase().contains(query)
                         }
                     }
 
                     if (finalFiltered.isNotEmpty()) {
-                        MonthWiseLeaveData(month = monthData.month, details = finalFiltered)
+                        StaffMonthWiseLeaveData(month = monthData.month, details = finalFiltered)
                     } else null
                 }
 
@@ -106,7 +105,7 @@ class StaffMonthwiseApproveLeaveAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<MonthWiseLeaveData> ?: emptyList()
+                filteredList = results?.values as? List<StaffMonthWiseLeaveData> ?: emptyList()
                 approveStaffLeaveRequest.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
@@ -123,7 +122,7 @@ class StaffMonthwiseApproveLeaveAdapter(
 
 
         fun bind(
-            data: MonthWiseLeaveData,
+            data: StaffMonthWiseLeaveData,
             approveStaffLeaveRequest: ApproveStaffLeaveRequestClickListener
         ) {
             lblMonthName.text = data.month

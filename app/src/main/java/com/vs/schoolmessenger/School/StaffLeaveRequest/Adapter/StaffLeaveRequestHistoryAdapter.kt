@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.StaffLeaveRequest.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +13,18 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffLeaveData
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Listner.StaffLeaveRequestClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StaffLeaveRequestHistoryAdapter(
-    private var itemList: List<LeaveData>?,
+    private var itemList: List<StaffLeaveData>?,
     private var listener: StaffLeaveRequestClickListener,
     private val context: Context,
     private var isLoading: Boolean
@@ -28,8 +32,8 @@ class StaffLeaveRequestHistoryAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<LeaveData> = itemList ?: listOf()
-    private var filteredList: List<LeaveData> = fullList
+    private var fullList: List<StaffLeaveData> = itemList ?: listOf()
+    private var filteredList: List<StaffLeaveData> = fullList
     private var expandedPosition = RecyclerView.NO_POSITION
 
 
@@ -74,7 +78,7 @@ class StaffLeaveRequestHistoryAdapter(
         }
     }
 
-    fun updateData(newList: List<LeaveData>) {
+    fun updateData(newList: List<StaffLeaveData>) {
         fullList = newList
         filteredList = newList
         isLoading = false
@@ -94,8 +98,10 @@ class StaffLeaveRequestHistoryAdapter(
         val options: ImageView = itemView.findViewById(R.id.options)
 
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
+        private val ConsStatusButton: ConstraintLayout = itemView.findViewById(R.id.ConsStatusButton)
         private val textLeaveType: TextView = itemView.findViewById(R.id.lblLeaveType)
         private val lbltxtDays: TextView = itemView.findViewById(R.id.lbltxtDays)
+        private val lblLeaveStatus: TextView = itemView.findViewById(R.id.lblLeaveStatus)
         private val relbuttons: RelativeLayout = itemView.findViewById(R.id.relbuttons)
         private val deleteButton: LinearLayout = itemView.findViewById(R.id.deletebutton)
         private val editButton: LinearLayout = itemView.findViewById(R.id.editbutton)
@@ -103,48 +109,62 @@ class StaffLeaveRequestHistoryAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(
-            data: LeaveData,
+            data: StaffLeaveData,
             listener: StaffLeaveRequestClickListener,
             isExpanded: Boolean,
             context: Context,
         ) {
-            textName.text = data.student_name
-            lblLogo.text = Constant.getInitials(data.student_name)
+            textName.text = data.staff_name
+            lblLogo.text = Constant.getInitials(data.staff_name?:"")
 
-            lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.leave_from ?: "")
+            lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
 
-            lblEndDate.text = Constant.convertDateTimeFormatDateMonth(data.leave_to ?: "")
+            lblEndDate.text = Constant.convertDateTimeFormatDateMonth(data.to_date ?: "")
 
-            textNoOfDays.text = data.no_of_days
+            textNoOfDays.text = data.no_of_days.toString()
 
             lbltxtDays.text=
-                if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(
+                if (data.no_of_days.toString() == Constant.one) context.getString(R.string.Day) else context.getString(
                     R.string.days
                 )
 
             textReason.text = data.reason
 
             if (data.status == Constant.rejected) {
-                btnCancel.visibility= View.VISIBLE
-                btnCancel.text=context.getString(R.string.rejected)
-                btnApprove.visibility= View.GONE
+                applyTintedBackground(
+                    lblLeaveStatus,
+                    R.drawable.bg_leave_approved,
+                    R.color.light_red_1
+                )
+                lblLeaveStatus.setTextColor(Color.parseColor("#D32F2F"))
+                lblLeaveStatus.visibility= View.VISIBLE
                 options.visibility = View.GONE
                 relbuttons.visibility = View.GONE
+                lblLeaveStatus.text=context.getString(R.string.rejected)
+                ConsStatusButton.visibility= View.GONE
 
             }
             else if (data.status == Constant.approved) {
+                applyTintedBackground(
+                    lblLeaveStatus,
+                    R.drawable.bg_leave_approved,
+                    R.color.light_green_1
+                )
+                lblLeaveStatus.setTextColor(Color.parseColor("#2E7D32"))
+
+                lblLeaveStatus.visibility= View.VISIBLE
+                lblLeaveStatus.text=context.getString(R.string.approved)
+                ConsStatusButton.visibility= View.GONE
                 btnCancel.visibility= View.GONE
-                btnApprove.visibility= View.VISIBLE
-                btnApprove.text=context.getString(R.string.approved)
                 options.visibility = View.GONE
                 relbuttons.visibility = View.GONE
 
             }
             else if (data.status == Constant.waiting_for_approval) {
+                lblLeaveStatus.visibility= View.INVISIBLE
+                ConsStatusButton.visibility= View.VISIBLE
                 btnApprove.text=context.getString(R.string.approve)
                 btnCancel.text=context.getString(R.string.reject)
-                btnCancel.visibility= View.GONE
-                btnApprove.visibility= View.GONE
             }
 
             if (data.leave_type == "") {
@@ -165,6 +185,14 @@ class StaffLeaveRequestHistoryAdapter(
             }
 
         }
+
+        fun applyTintedBackground(view: View, drawableRes: Int, colorRes: Int) {
+            val context = view.context
+            val bgDrawable = ContextCompat.getDrawable(context, drawableRes)
+            bgDrawable?.setTint(ContextCompat.getColor(context, colorRes))
+            view.background = bgDrawable
+        }
+
 
     }
 

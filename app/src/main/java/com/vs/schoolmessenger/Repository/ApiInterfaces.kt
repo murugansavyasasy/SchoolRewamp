@@ -88,6 +88,8 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.getStaffLeaveRequestHistory
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestStatusUpdate.StaffLeaveRequestStatusUpdate
 import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.AssignmentTargetDetailsResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
@@ -155,6 +157,10 @@ import com.vs.schoolmessenger.School.QuizExam.Model.QuizQuestionsReport.GetQuizQ
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReport
 import com.vs.schoolmessenger.School.QuizExam.Model.QuizSubmissionList.GetQuizSubmissionList
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffApplyLeaveRequest.StaffLeaveRequestApplyRespone
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveRequest.StaffLeaveRequestDeleteResponse
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -671,12 +677,31 @@ interface ApiInterfaces {
         @Query(APIKeyNames.member_type) member_type: String?
     ): Call<LeaveRequestResponse?>
 
+    @GET(APIMethods.getstaffleaverequest)
+    fun getstaffleaverequest(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.staff_id) staff_id: String?
+
+    ): Call<getStaffLeaveRequestHistory?>
+
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isleaverequestapprove)
     fun isleaverequestapprove(
         @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveApproveRequest
     ): Call<LeaveActionResponse?>
 
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isstaffleaverequestapprove)
+    fun isstaffleaverequestapprove(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveApproveRequest
+    ): Call<StaffLeaveRequestStatusUpdate?>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isstaffleaverequestdelete)
+    fun isstaffleaverequestdelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestDelete
+    ): Call<StaffLeaveRequestDeleteResponse?>
 
     @GET(APIMethods.getlpStaffReport)
     fun getlpStaffReport(
@@ -840,6 +865,12 @@ interface ApiInterfaces {
     fun isleaverequestupdate(
         @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestUpdate
     ): Call<LeaveUpdateResponse?>
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isstaffleaverequestupdate)
+    fun isstaffleaverequestupdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestUpdate
+    ): Call<StaffLeaveUpdateRespone?>
 
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isleaverequestdelete)
@@ -1332,5 +1363,16 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject
     ): Call<SaveMarksModel?>
+
+    @POST(APIMethods.staff_leave_request_apply)
+    fun StaffLeaveRequestApply(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
+    ): Call<StaffLeaveRequestApplyRespone>?
+
+
+    @GET(APIMethods.isstaffleavecategories)
+    fun getstaffleavecategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetStaffLeaveCategoriesData?>?
 
 }

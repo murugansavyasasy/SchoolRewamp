@@ -18,10 +18,12 @@ import com.vs.schoolmessenger.Parent.RequestLeave.getCatorgiesData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.getStaffCatorgiesData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New_2
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_new3
 import com.vs.schoolmessenger.databinding.StaffLeaveRequestBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,7 +40,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
     private var fromDate: LocalDate? = null
     private var toDate: LocalDate? = null
 
-    private val leaveCategories = mutableListOf<getCatorgiesData>()
+    private val leaveCategories = mutableListOf<getStaffCatorgiesData>()
 
     var isFromSession = ""
     var isToSession = ""
@@ -100,11 +102,11 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
             }
         })
 
-        appViewModel!!.isleaverequestupdate?.observe(this) { response ->
+        appViewModel!!.isstaffleaverequestupdate?.observe(this) { response ->
             Constant.hideLoading(this@StaffLeaveRequest)
             if (response != null) {
                 if (response.status) {
-                    Log.d("isleaverequestupdate", response.message)
+                    Log.d("isstaffleaverequestupdate", response.message)
                     Constant.showRedirecttoMenu(
                         resources.getString(R.string.success), response.message, this
                     )
@@ -116,7 +118,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
             }
         }
 
-        appViewModel!!.isLeaveRequest?.observe(this) { response ->
+        appViewModel!!.isStaffLeaveApply?.observe(this) { response ->
             Constant.hideLoading(this@StaffLeaveRequest)
             if (response != null) {
                 if (response.status) {
@@ -139,13 +141,13 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
             }
         }
 
-        appViewModel!!.getLeaveCategories?.observe(this) { response ->
+        appViewModel!!.getStaffLeaveCategories?.observe(this) { response ->
             Constant.hideLoading(this@StaffLeaveRequest)
             if (response != null) {
                 if (response.status) {
                     leaveCategories.clear()
                     leaveCategories.add(
-                        getCatorgiesData(
+                        getStaffCatorgiesData(
                             0,
                             Constant.Select_a_leave_type
                         )
@@ -283,7 +285,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                 binding.isLeaveCategories.setSelection(leaveTypeIndex)
                 isLeaveCatoryID = leaveCategories[leaveTypeIndex].id
                 originalLeaveID = leaveCategories[leaveTypeIndex].id
-                isLeaveCategoryType = leaveCategories[leaveTypeIndex].name
+                isLeaveCategoryType = leaveCategories[leaveTypeIndex].leave_name
             }
 
             isFromSession = originalFromSession
@@ -296,7 +298,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
     }
 
     private fun isLeaveCategorySpinner() {
-        val adapter = SpinnerLoadingAdapter_New_2(this, leaveCategories)
+        val adapter = SpinnerLoadingAdapter_new3(this, leaveCategories)
 
         adapter.enableFirstItemAsHint()
 
@@ -304,7 +306,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
         binding.isLeaveCategories.setSelection(0)
 
         // Default selected
-        isLeaveCategoryType = leaveCategories[0].name
+        isLeaveCategoryType = leaveCategories[0].leave_name
         isLeaveCatoryID = leaveCategories[0].id
 
         binding.isLeaveCategories.onItemSelectedListener =
@@ -316,7 +318,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                     adapter.notifyDataSetChanged()
 
                     if (position > 0) {
-                        isLeaveCategoryType = leaveCategories[position].name
+                        isLeaveCategoryType = leaveCategories[position].leave_name
                         isLeaveCatoryID = leaveCategories[position].id
                         validateDateAndSession(showError = true)
                     }
@@ -448,7 +450,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
 
     private fun loadLeaveCategories() {
         Constant.showLoading(this)
-        appViewModel!!.getLeaveCategories(isAccessToken!!, this)
+        appViewModel!!.getStaffLeaveCategories(isAccessToken!!, this)
     }
 
     private fun disableButtons() {
@@ -533,7 +535,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
             t_session = if (isToSession == Constant.First_Half) Constant.firstHalf else Constant.secondHalf,
             leave_type = isLeaveCatoryID
         )
-        appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
+        appViewModel?.isstaffleaverequestupdate(isAccessToken!!, updatedRequest, this)
     }
     private fun hasChangesMade(): Boolean {
 
@@ -592,7 +594,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
 
         Log.d("isApplyLeave", jsonObject.toString())
 
-        appViewModel?.isSendLeaveRequestApply(isAccessToken!!, jsonObject, this)
+        appViewModel?.isSendStaffLeaveRequestApply(isAccessToken!!, jsonObject, this)
     }
 
     private fun formatDate(date: LocalDate): String {

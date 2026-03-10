@@ -92,7 +92,6 @@
             </intent-filter>
         </activity>
 
-
         <receiver
             android:name=".Utils.MySMSBroadcastReceiver"
             android:exported="true">
@@ -763,6 +762,7 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
     </application>
 
 </manifest>

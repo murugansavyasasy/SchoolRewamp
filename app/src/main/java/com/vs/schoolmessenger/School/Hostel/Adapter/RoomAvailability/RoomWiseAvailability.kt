@@ -5,11 +5,13 @@ package com.vs.schoolmessenger.School.Hostel.Adapter.RoomAvailability
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.PreviewStaffLeaveRequest
@@ -91,6 +93,7 @@ class RoomWiseAvailability(
             lblRoomNo.text = data.room_no
 
         }
+
 
 
 

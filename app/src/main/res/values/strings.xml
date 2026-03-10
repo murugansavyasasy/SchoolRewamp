@@ -1099,6 +1099,8 @@
     <string name="view_history">View History</string>
     <string name="attendance_required">Attendance Required</string>
     <string name="occupancy">Occupancy</string>
+    <string name="attendance_history">Attendance History</string>
+    <string name="rooms_marked">Rooms Marked</string>
 
 
 </resources>

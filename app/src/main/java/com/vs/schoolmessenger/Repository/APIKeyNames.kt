@@ -8,6 +8,7 @@ object APIKeyNames {
     const val attd_report = "attd_report"
     const val selected_name = "selected_name"
     const val title = "title"
+    const val no_of_days = "no_of_days"
     const val description = "description"
     const val submission_date = "submission_date"
     const val id = "id"

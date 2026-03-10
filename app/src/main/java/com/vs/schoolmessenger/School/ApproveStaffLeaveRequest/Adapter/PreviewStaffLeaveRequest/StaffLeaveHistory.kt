@@ -10,14 +10,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveHistory.GetStaffLeaveHistory
-import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
-import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffLeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StaffLeaveHistory(
-    private var itemList: List<GetStaffLeaveHistory>?,
+    private var itemList: List<StaffLeaveData>?,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,8 +23,8 @@ class StaffLeaveHistory(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var fullList: List<GetStaffLeaveHistory> = itemList ?: listOf()
-    private var filteredList: List<GetStaffLeaveHistory> = itemList ?: listOf()
+    private var fullList: List<StaffLeaveData> = itemList ?: listOf()
+    private var filteredList: List<StaffLeaveData> = itemList ?: listOf()
 
     init {
         fullList = itemList ?: listOf()
@@ -68,7 +66,7 @@ class StaffLeaveHistory(
     }
 
 
-    fun updateData(newList: List<GetStaffLeaveHistory>) {
+    fun updateData(newList: List<StaffLeaveData>) {
         this.fullList = newList
         notifyDataSetChanged()
     }
@@ -88,14 +86,14 @@ class StaffLeaveHistory(
 
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: GetStaffLeaveHistory, position: Int) {
+        fun bind(data: StaffLeaveData, position: Int) {
 
-           val StartDate=Constant.isFormatDate(data.leave_from ?: "")
-            val EndDate=Constant.isFormatDate(data.leave_to ?: "")
+           val StartDate=Constant.isFormatDate(data.from_date ?: "")
+            val EndDate=Constant.isFormatDate(data.leave_type ?: "")
             val dayOrDays= if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(
                     R.string.days
                 )
-            val (day, month) = Constant.getDayAndMonth(data.applied_on)
+            val (day, month) = Constant.getDayAndMonth(data.applied_on?:"")
             lblDay.text = day
             lblMonth.text = month
 
