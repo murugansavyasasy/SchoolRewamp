@@ -23,8 +23,10 @@
     <color name="black">#FF000000</color>
     <color name="lightgray">#D3D3D3</color>
     <color name="light_green_8">#effcf2</color>
+    <color name="light_blue_10">#f3f6fd</color>
     <color name="light_gray_4">#444</color>
     <color name="light_gray_5">#666666</color>
+    <color name="very_dark_blue_10">#19243a</color>
     <color name="light_red_2">#FF4444</color>
     <color name="green_3">#00AA7F</color>
     <color name="green_56">#0f4d0f</color>

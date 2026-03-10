@@ -1102,6 +1102,8 @@
     <string name="attendance_history">Attendance History</string>
     <string name="rooms_marked">Rooms Marked</string>
     <string name="admin_requests">Admin Requests</string>
+    <string name="submit_new_request">Submit New request</string>
+    <string name="submit_request">Submit Request</string>
 
 
 </resources>

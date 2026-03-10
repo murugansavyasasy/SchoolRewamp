@@ -8,15 +8,12 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistoryAdapter
-
-import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getAttendanceHistoryData
-
+import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdminRequest
+import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
+import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AdminRequestsBinding
-
-
 
 class AdminRequests : BaseActivity<AdminRequestsBinding>(),
     View.OnClickListener {
@@ -26,7 +23,7 @@ class AdminRequests : BaseActivity<AdminRequestsBinding>(),
     }
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
-    lateinit var mAdapter: AttendanceHistoryAdapter
+    lateinit var mAdapter: StatusWiseAdminRequest
 
 
 
@@ -46,7 +43,7 @@ class AdminRequests : BaseActivity<AdminRequestsBinding>(),
             if (response != null) {
                 if (response.status) {
                     // Always load dummy data (Ignore API response completely)
-                    val dummyData = getDummyFloorWiseRoomAvailabilityData()
+                    val dummyData = getDummyLeaveRequestData()
                     if (dummyData.isNotEmpty()) {
                         binding.rcAdminRequest.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.GONE
@@ -81,70 +78,119 @@ class AdminRequests : BaseActivity<AdminRequestsBinding>(),
 
     }
 
-    private fun isLoadAttendanceHistory(newData: List<getAttendanceHistoryData>?) {
-        mAdapter = AttendanceHistoryAdapter(newData, this,Constant.isShimmerViewDisable)
+    private fun isLoadAttendanceHistory(newData: List<StatusWiseAdminRequestData>?) {
+        binding.rcAdminRequest.visibility = View.VISIBLE
+        mAdapter = StatusWiseAdminRequest(
+            newData, this, Constant.isShimmerViewDisable
+        )
         binding.rcAdminRequest.adapter = mAdapter
     }
 
 
     private fun isGetAttendanceHistory() {
 //        Constant.showLoading(this)
-        mAdapter = AttendanceHistoryAdapter(null,this, Constant.isShimmerViewDisable)
+        mAdapter = StatusWiseAdminRequest(
+            null, this, Constant.isShimmerViewDisable
+        )
         binding.rcAdminRequest.layoutManager = LinearLayoutManager(this)
         binding.rcAdminRequest.isNestedScrollingEnabled = false
         binding.rcAdminRequest.adapter = mAdapter
+
 //        appViewModel!!.getleaverequest(
 //            isAccessToken!!, Constant.STAFF__, this
 //        )
 
-        val dummyData = getDummyFloorWiseRoomAvailabilityData()
+        val dummyData = getDummyLeaveRequestData()
         isLoadAttendanceHistory(dummyData)
     }
 
-    private fun getDummyFloorWiseRoomAvailabilityData(): List<getAttendanceHistoryData> {
+    private fun getDummyLeaveRequestData(): List<StatusWiseAdminRequestData> {
 
-        val list = ArrayList<getAttendanceHistoryData>()
+        val leaveList = ArrayList<StatusWiseAdminRequestData>()
 
-        list.add(
-            getAttendanceHistoryData(
-                date = "Tuesday, Mar 3",
-                year = "2026",
-                attendancePercentage = 91,
-                totalStudents = 23,
-                presentStudents = 21,
-                absentStudents = 2,
-                roomsMarked = 6,
-                totalRooms = 8
+        val pending = listOf(
+
+            AdminRequestWiseData(
+                roomNumber = "101",
+                roomTitle = "Room 101",
+                studentName = "Aarav Sharma",
+                issueDescription = "Tap not working in bathroom",
+                dateTime = "Mar 4, 10:30 AM",
+                status = "Pending"
+            ),
+
+            AdminRequestWiseData(
+                roomNumber = "102",
+                roomTitle = "Room 102",
+                studentName = "Rohit",
+                issueDescription = "Tap not working in bathroom",
+                dateTime = "Mar 5, 10:00 AM",
+                status = "Pending"
             )
         )
 
-        list.add(
-            getAttendanceHistoryData(
-                date = "Wednesday, Mar 4",
-                year = "2026",
-                attendancePercentage = 88,
-                totalStudents = 25,
-                presentStudents = 22,
-                absentStudents = 3,
-                roomsMarked = 5,
-                totalRooms = 8
+        val approved = listOf(
+
+            AdminRequestWiseData(
+                roomNumber = "101",
+                roomTitle = "Room 101",
+                studentName = "Aarav Sharma",
+                issueDescription = "Tap not working in bathroom",
+                dateTime = "Apr 4, 10:30 AM",
+                status = "approved"
+            ),
+
+            AdminRequestWiseData(
+                roomNumber = "102",
+                roomTitle = "Room 102",
+                studentName = "Rohit",
+                issueDescription = "Tap not working in bathroom",
+                dateTime = "Apr 5, 10:00 AM",
+                status = "approved"
             )
         )
 
-        list.add(
-            getAttendanceHistoryData(
-                date = "Thursday, Mar 5",
-                year = "2026",
-                attendancePercentage = 95,
-                totalStudents = 20,
-                presentStudents = 19,
-                absentStudents = 1,
-                roomsMarked = 8,
-                totalRooms = 8
+        val rejected = listOf(
+
+            AdminRequestWiseData(
+                roomNumber = "101",
+                roomTitle = "Room 101",
+                studentName = "Sharma",
+                issueDescription = "Need to improve the food quality ",
+                dateTime = "Apr 4, 10:30 AM",
+                status = "rejected"
+            ),
+
+            AdminRequestWiseData(
+                roomNumber = "102",
+                roomTitle = "Room 102",
+                studentName = "Rohit Kohli",
+                issueDescription = "Need to have TV in the mess",
+                dateTime = "Apr 5, 10:00 AM",
+                status = "rejected"
             )
         )
 
-        return list
+        leaveList.add(
+            StatusWiseAdminRequestData(
+                Status = "Pending(2)",
+                StatusWiseData = pending
+            )
+        )
+        leaveList.add(
+            StatusWiseAdminRequestData(
+                Status = "approved(2)",
+                StatusWiseData = approved
+            )
+        )
+        leaveList.add(
+            StatusWiseAdminRequestData(
+                Status = "rejected(2)",
+                StatusWiseData = rejected
+            )
+        )
+
+        return leaveList
     }
 
 
