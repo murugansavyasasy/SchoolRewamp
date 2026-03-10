@@ -578,6 +578,8 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                 APIKeyNames.leave_to,
                 toDate?.format(DateTimeFormatter.ofPattern(Constant.ddMMyyyy)) ?: ""
             )
+            addProperty(APIKeyNames.no_of_days, 0)
+
             addProperty(APIKeyNames.reason, binding.etLeaveReason.text.toString().trim())
             addProperty(
                 APIKeyNames.f_session,

@@ -1101,6 +1101,7 @@
     <string name="occupancy">Occupancy</string>
     <string name="attendance_history">Attendance History</string>
     <string name="rooms_marked">Rooms Marked</string>
+    <string name="admin_requests">Admin Requests</string>
 
 
 </resources>
