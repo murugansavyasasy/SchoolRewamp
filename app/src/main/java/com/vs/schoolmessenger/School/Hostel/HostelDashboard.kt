@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.RoomAvailability.FloorWiseRoomAvailability
 import com.vs.schoolmessenger.School.Hostel.Listner.HostelClickListner
+import com.vs.schoolmessenger.School.Hostel.Model.FragmentType
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAvailabaility.getFloorwiseAvailability
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAvailabaility.getHostellarDetails
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAvailabaility.getRoomAvailability
@@ -42,6 +43,12 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
+        binding.consBedOccupied.setOnClickListener(this)
+        binding.consStudent.setOnClickListener(this)
+        binding.consPending.setOnClickListener(this)
+        binding.consOutPass.setOnClickListener(this)
+        binding.consMessTimeTable.setOnClickListener(this)
+        binding.consCardTodayAttendanceDetails.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -91,6 +98,11 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
         setDrawableBackgroundColor(binding.consOutPass,R.color.dark_blue_color)
 
 
+    }
+
+    private fun openBottomSheet(type: String) {
+        val bottomSheet = BottomSheet.newInstance(type)
+        bottomSheet.show(supportFragmentManager, "BottomSheet")
     }
 
     private fun isLoadRoomAvailability(newData: List<getFloorwiseAvailability>?) {
@@ -239,6 +251,33 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
+
+            R.id.consBedOccupied -> {
+                openBottomSheet(FragmentType.BEDOCCUPIED.toString())
+            }
+
+            R.id.consStudent -> {
+                openBottomSheet(FragmentType.TOTALSTUDENT.toString())
+            }
+
+            R.id.consPending -> {
+                openBottomSheet(FragmentType.PENDINGISSUES.toString())
+            }
+
+            R.id.consOutPass -> {
+                openBottomSheet(FragmentType.OUTPASSREQUESTS.toString())
+            }
+
+            R.id.consMessTimeTable -> {
+                openBottomSheet(FragmentType.MESSTIMETABLE.toString())
+            }
+
+            R.id.cons_cardTodayAttendanceDetails -> {
+                openBottomSheet(FragmentType.ATTENDANCEHISTORYHOSTEL.toString())
+            }
+
+
+
         }
     }
 

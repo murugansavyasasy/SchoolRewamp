@@ -1,52 +1,68 @@
-package com.vs.schoolmessenger.School.Hostel
+package com.vs.schoolmessenger.School.Hostel.Fragement
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistoryAdapter
-
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getAttendanceHistoryData
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HostelAttendanceHistoryBinding
 
+class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
 
-
-class AttendanceHistory : BaseActivity<HostelAttendanceHistoryBinding>(),
-    View.OnClickListener {
-
-    override fun getViewBinding(): HostelAttendanceHistoryBinding {
-        return HostelAttendanceHistoryBinding.inflate(layoutInflater)
-    }
+    private var _binding: HostelAttendanceHistoryBinding? = null
+    private val binding get() = _binding!!
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     lateinit var mAdapter: AttendanceHistoryAdapter
 
-
-
     private var appViewModel: App? = null
 
-    override fun setupViews() {
-        super.setupViews()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        _binding = HostelAttendanceHistoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViews()
+    }
+
+    private fun setupViews() {
+
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
+        isStaffDetails = SharedPreference.getStaffDetails(requireContext())
+        isAccessToken = isStaffDetails?.access_token
 
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
+        binding.imgClose.setOnClickListener(this)
 
-        appViewModel?.getleaverequest?.observe(this) { response ->
+        appViewModel?.getleaverequest?.observe(viewLifecycleOwner) { response ->
+
             if (response != null) {
+
                 if (response.status) {
-                    // Always load dummy data (Ignore API response completely)
+
                     val dummyData = getDummyFloorWiseRoomAvailabilityData()
+
                     if (dummyData.isNotEmpty()) {
+
                         binding.rcRoomAvailability.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
@@ -54,47 +70,47 @@ class AttendanceHistory : BaseActivity<HostelAttendanceHistoryBinding>(),
                         isLoadAttendanceHistory(dummyData)
 
                     } else {
+
                         binding.rcRoomAvailability.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
                     }
+
                 } else {
+
                     binding.rcRoomAvailability.visibility = View.GONE
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
                 }
+
             } else {
+
                 binding.rcRoomAvailability.visibility = View.GONE
                 binding.lblErrorMessage.visibility = View.VISIBLE
                 binding.imgNoDataFound.visibility = View.VISIBLE
-                binding.lblErrorMessage.text = getString(R.string.Something_went_wrong_Please_try_again)
+                binding.lblErrorMessage.text =
+                    getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
+
         isGetAttendanceHistory()
-
-
-
-
-
     }
 
     private fun isLoadAttendanceHistory(newData: List<getAttendanceHistoryData>?) {
-        mAdapter = AttendanceHistoryAdapter(newData, this,Constant.isShimmerViewDisable)
+        mAdapter =
+            AttendanceHistoryAdapter(newData, requireContext(), Constant.isShimmerViewDisable)
         binding.rcRoomAvailability.adapter = mAdapter
     }
 
-
     private fun isGetAttendanceHistory() {
-//        Constant.showLoading(this)
-        mAdapter = AttendanceHistoryAdapter(null,this, Constant.isShimmerViewDisable)
-        binding.rcRoomAvailability.layoutManager = LinearLayoutManager(this)
+
+        mAdapter = AttendanceHistoryAdapter(null, requireContext(), Constant.isShimmerViewDisable)
+
+        binding.rcRoomAvailability.layoutManager = LinearLayoutManager(requireContext())
         binding.rcRoomAvailability.isNestedScrollingEnabled = false
         binding.rcRoomAvailability.adapter = mAdapter
-//        appViewModel!!.getleaverequest(
-//            isAccessToken!!, Constant.STAFF__, this
-//        )
 
         val dummyData = getDummyFloorWiseRoomAvailabilityData()
         isLoadAttendanceHistory(dummyData)
@@ -146,13 +162,17 @@ class AttendanceHistory : BaseActivity<HostelAttendanceHistoryBinding>(),
         return list
     }
 
+    override fun onClick(v: View?) {
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
+        when (v?.id) {
+
+            R.id.imgClose -> {
             }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

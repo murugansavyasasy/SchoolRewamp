@@ -1104,6 +1104,7 @@
     <string name="admin_requests">Admin Requests</string>
     <string name="submit_new_request">Submit New request</string>
     <string name="submit_request">Submit Request</string>
+    <string name="mess_time_table">Mess Time Table</string>
 
 
 </resources>
