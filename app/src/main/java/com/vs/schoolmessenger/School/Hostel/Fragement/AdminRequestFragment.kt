@@ -131,7 +131,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Aarav Sharma",
                 issueDescription = "Tap not working in bathroom",
                 dateTime = "Mar 4, 10:30 AM",
-                status = "Pending"
+                status = Constant.waiting_for_approval
             ),
 
             AdminRequestWiseData(
@@ -140,7 +140,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Rohit",
                 issueDescription = "Tap not working in bathroom",
                 dateTime = "Mar 5, 10:00 AM",
-                status = "Pending"
+                status = Constant.waiting_for_approval
             )
         )
 
@@ -152,7 +152,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Aarav Sharma",
                 issueDescription = "Tap not working in bathroom",
                 dateTime = "Apr 4, 10:30 AM",
-                status = "approved"
+                status = Constant.approved
             ),
 
             AdminRequestWiseData(
@@ -161,7 +161,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Rohit",
                 issueDescription = "Tap not working in bathroom",
                 dateTime = "Apr 5, 10:00 AM",
-                status = "approved"
+                status = Constant.approved
             )
         )
 
@@ -173,7 +173,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Sharma",
                 issueDescription = "Need to improve the food quality ",
                 dateTime = "Apr 4, 10:30 AM",
-                status = "rejected"
+                status = Constant.rejected
             ),
 
             AdminRequestWiseData(
@@ -182,25 +182,25 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
                 studentName = "Rohit Kohli",
                 issueDescription = "Need to have TV in the mess",
                 dateTime = "Apr 5, 10:00 AM",
-                status = "rejected"
+                status = Constant.rejected
             )
         )
 
         leaveList.add(
             StatusWiseAdminRequestData(
-                Status = "Pending(2)",
+                Status = Constant.waiting_for_approval,
                 StatusWiseData = pending
             )
         )
         leaveList.add(
             StatusWiseAdminRequestData(
-                Status = "approved(2)",
+                Status = Constant.approved,
                 StatusWiseData = approved
             )
         )
         leaveList.add(
             StatusWiseAdminRequestData(
-                Status = "rejected(2)",
+                Status = Constant.rejected,
                 StatusWiseData = rejected
             )
         )

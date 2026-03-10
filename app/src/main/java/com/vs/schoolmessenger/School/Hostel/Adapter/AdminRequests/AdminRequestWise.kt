@@ -17,6 +17,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 
@@ -58,7 +59,6 @@ class AdminRequestWise(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            val isExpanded = position == expandedPosition
             holder.bind(filteredList[position], context)
 
         }
@@ -79,6 +79,7 @@ class AdminRequestWise(
         private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
+        private val cardHeader: MaterialCardView = itemView.findViewById(R.id.cardHeader)
 
 
         @SuppressLint("SetTextI18n")
@@ -86,6 +87,7 @@ class AdminRequestWise(
             data: AdminRequestWiseData,
             context: Context,
         ) {
+
             lblFullRoomNo.text = "Room ${data.roomNumber}"
             lblRoomNo.text = data.roomNumber
             lblName.text = data.studentName
@@ -94,18 +96,24 @@ class AdminRequestWise(
             lblDate.text = data.dateTime
 
 
+
             if (data.status == Constant.rejected) {
                 applyTintedBackground(
                     lblRoomNo,
                     R.drawable.rect_bg_light_green_present,
                     R.color.light_red_1
                 )
+                cardHeader.setStrokeColor(
+                    ContextCompat.getColor(itemView.context, R.color.red)
+                )
+
+                cardHeader.setCardBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.light_red)
+                )
+
                 lblRoomNo.setTextColor(Color.parseColor("#D32F2F"))
                 imgStatus.setImageResource(R.drawable.close_red_color)
-                imgStatus.setColorFilter(
-                    ContextCompat.getColor(itemView.context, R.color.red),
-                    PorterDuff.Mode.SRC_IN
-                )
+
 
 
             }
@@ -121,6 +129,13 @@ class AdminRequestWise(
                     ContextCompat.getColor(itemView.context, R.color.green),
                     PorterDuff.Mode.SRC_IN
                 )
+                cardHeader.setStrokeColor(
+                    ContextCompat.getColor(itemView.context, R.color.light_green_1)
+                )
+
+                cardHeader.setCardBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.light_green_bg)
+                )
 
 
             }
@@ -128,15 +143,22 @@ class AdminRequestWise(
                 applyTintedBackground(
                     lblRoomNo,
                     R.drawable.rect_bg_light_green_present,
-                    R.color.light_green_1
+                    R.color.light_bg_orange_6
                 )
-                lblRoomNo.setTextColor(Color.parseColor("#2E7D32"))
+                lblRoomNo.setTextColor(R.color.dark_bg_orange_2)
                 imgStatus.setImageResource(R.drawable.waiting_for_approval)
                 imgStatus.setColorFilter(
                     ContextCompat.getColor(itemView.context, R.color.yellow),
                     PorterDuff.Mode.SRC_IN
                 )
 
+                cardHeader.setStrokeColor(
+                    ContextCompat.getColor(itemView.context, R.color.orange)
+                )
+
+                cardHeader.setCardBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.orange)
+                )
             }
         }
 

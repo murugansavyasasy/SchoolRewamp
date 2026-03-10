@@ -5,17 +5,21 @@ import com.vs.schoolmessenger.School.StaffLeaveRequest.Adapter.StaffLeaveRequest
 
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.StaffMonthWiseLeaveData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Listner.StaffLeaveRequestClickListener
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StatusWiseAdminRequest(
@@ -89,7 +93,45 @@ class StatusWiseAdminRequest(
         fun bind(
             data: StatusWiseAdminRequestData,
         ) {
-            lblStatus.text = data.Status
+            when(data.Status){
+                Constant.waiting_for_approval ->{
+                    lblStatus.text = "Pending (${data.StatusWiseData.size})"
+                }
+                Constant.approved,Constant.rejected ->{
+                    lblStatus.text = "${data.Status} (${data.StatusWiseData.size})"
+                }
+            }
+
+
+
+            if (data.Status == Constant.rejected) {
+                lblStatus.setTextColor(Color.parseColor("#D32F2F"))
+                imgStatus.setImageResource(R.drawable.close_red_color)
+
+
+
+            }
+            else if (data.Status == Constant.approved) {
+
+                lblStatus.setTextColor(Color.parseColor("#2E7D32"))
+                imgStatus.setImageResource(R.drawable.tick_icon_2)
+                imgStatus.setColorFilter(
+                    ContextCompat.getColor(itemView.context, R.color.green),
+                    PorterDuff.Mode.SRC_IN
+                )
+
+
+            }
+            else if (data.Status == Constant.waiting_for_approval) {
+
+                lblStatus.setTextColor(R.color.dark_bg_orange_2)
+                imgStatus.setImageResource(R.drawable.waiting_for_approval)
+                imgStatus.setColorFilter(
+                    ContextCompat.getColor(itemView.context, R.color.yellow),
+                    PorterDuff.Mode.SRC_IN
+                )
+
+            }
 
             if (data.StatusWiseData.isEmpty()) {
                 rcAdminRequestWise.visibility = View.GONE
@@ -103,7 +145,10 @@ class StatusWiseAdminRequest(
                     false
                 )
             }
+
         }
+
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
