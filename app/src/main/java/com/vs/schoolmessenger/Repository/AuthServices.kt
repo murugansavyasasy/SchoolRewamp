@@ -72,13 +72,8 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isCountryList.postValue(response.body())
-                            } else {
-                                isCountryList.postValue(response.body())
-                            }
+                            isCountryList.postValue(response.body())
                         }
-                    } else {
                     }
                 }
 
@@ -107,11 +102,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isVersionCheck.postValue(response.body())
-                            } else {
-                                isVersionCheck.postValue(response.body())
-                            }
+                            isVersionCheck.postValue(response.body())
                         }
                     } else {
                         val errorBodyString = response.errorBody()?.string()
@@ -146,11 +137,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateNotificationCallLog.postValue(response.body())
-                            } else {
-                                isUpdateNotificationCallLog.postValue(response.body())
-                            }
+                            isUpdateNotificationCallLog.postValue(response.body())
                         }
                     } else {
                         val errorBodyString = response.errorBody()?.string()
@@ -185,11 +172,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isValidationUser.postValue(response.body())
-                            } else {
-                                isValidationUser.postValue(response.body())
-                            }
+                            isValidationUser.postValue(response.body())
                         }
                     } else {
                         isValidationUser.postValue(null)
@@ -231,11 +214,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isOtpResponse.postValue(response.body())
-                            } else {
-                                isOtpResponse.postValue(response.body())
-                            }
+                            isOtpResponse.postValue(response.body())
                         }
                     } else {
                         isOtpResponse.postValue(null)
@@ -270,11 +249,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isPasswordChange.postValue(response.body())
-                            } else {
-                                isPasswordChange.postValue(response.body())
-                            }
+                            isPasswordChange.postValue(response.body())
                         }
                     } else {
                         isPasswordChange.postValue(null)
@@ -314,11 +289,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isForgetPassword.postValue(response.body())
-                            } else {
-                                isForgetPassword.postValue(response.body())
-                            }
+                            isForgetPassword.postValue(response.body())
                         }
                     } else {
                         isForgetPassword.postValue(null)
@@ -353,11 +324,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isPasswordReset.postValue(response.body())
-                            } else {
-                                isPasswordReset.postValue(response.body())
-                            }
+                            isPasswordReset.postValue(response.body())
                         }
                     } else {
                         isPasswordReset.postValue(null)
@@ -392,11 +359,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isCreatePassWord.postValue(response.body())
-                            } else {
-                                isCreatePassWord.postValue(response.body())
-                            }
+                            isCreatePassWord.postValue(response.body())
                         }
                     } else {
                         isCreatePassWord.postValue(null)
@@ -432,14 +395,8 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDeviceTokenUpdate.postValue(response.body())
-                            } else {
-                                isDeviceTokenUpdate.postValue(response.body())
-                            }
+                            isDeviceTokenUpdate.postValue(response.body())
                         }
-                    } else {
-
                     }
                 }
 
@@ -468,11 +425,7 @@ class AuthServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isLogout.postValue(response.body())
-                            } else {
-                                isLogout.postValue(response.body())
-                            }
+                            isLogout.postValue(response.body())
                         }
                     } else {
                         isLogout.postValue(null)
@@ -493,9 +446,6 @@ class AuthServices {
                 }
             })
     }
-
     val isLogoutLiveData: LiveData<LogoutResponse?>
         get() = isLogout
-
-
 }

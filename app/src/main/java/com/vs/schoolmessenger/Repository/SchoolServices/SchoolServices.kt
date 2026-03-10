@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Repository
+package com.vs.schoolmessenger.Repository.SchoolServices
 
 import android.app.Activity
 import android.util.Log
@@ -39,6 +39,9 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Repository.ErrorResponse
+import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.Repository.StatusMessageModel
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentList
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -115,7 +118,6 @@ import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffApplyLeaveRequest.StaffLeaveRequestApplyRespone
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffDeleteLeaveRequest.StaffLeaveRequestDeleteResponse
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.GetStaffLeaveCategoriesData
-import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffLeaveListCatorgies.getStaffCatorgiesData
 import com.vs.schoolmessenger.School.StaffLeaveRequest.Model.StaffUpdateLeaveRequest.StaffLeaveUpdateRespone
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.Constant
@@ -167,9 +169,7 @@ class SchoolServices {
     var isNoticeBoardStaffReport: MutableLiveData<NoticeBoardStaffResponse?>
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
     var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
-
     var isDetailedWisePendingReport: MutableLiveData<FeePendingReportResponse?>
-
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
     var isRemoveLocation: MutableLiveData<StatusMessageModel?>
@@ -181,19 +181,13 @@ class SchoolServices {
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReportList: MutableLiveData<StaffAttendanceReportResponse?>
     var isStudentReportList: MutableLiveData<GetStudentReportData?>
-
     var IsGetEventReport: MutableLiveData<EventResponse?>
     var IsGetEventSchoolReport: MutableLiveData<SchoolEventResponse?>
-
     var IsGetHolidayReport: MutableLiveData<HolidayResponse?>
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
     var isStudentAttendanceReportForSchool: MutableLiveData<StudentAttendanceReportDataResponse?>
-
     var getabsenteescountbydate: MutableLiveData<AbsenteesResponse?>
-
     var getabsenteesstudentbydate: MutableLiveData<AbsenteeStudentsResponse?>
-
-
     var sendnotice: MutableLiveData<NoticeBoardSendResponse?>
     var sendevent: MutableLiveData<EventSendResponse?>
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
@@ -358,7 +352,6 @@ class SchoolServices {
         islsrwSkillCreate = MutableLiveData()
         islsrwstats = MutableLiveData()
         islsrwremarkupdate = MutableLiveData()
-
         isPtmSlotCreate = MutableLiveData()
         isPtmSlotResponse = MutableLiveData()
         isBookedSlotResponse = MutableLiveData()
@@ -404,14 +397,13 @@ class SchoolServices {
         isStaffleaverequestdelete = MutableLiveData()
     }
 
-    //New Dashboard Api
     fun isDashBoard(
         isToken: String,
         isMemberType: String,
         isMobileNumber: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isDashBoard(isToken, isMemberType, isMobileNumber)
+        RestClient.Companion.apiInterfaces.isDashBoard(isToken, isMemberType, isMobileNumber)
             ?.enqueue(object : Callback<DashboardResponse?> {
                 override fun onResponse(
                     call: Call<DashboardResponse?>, response: Response<DashboardResponse?>
@@ -422,15 +414,8 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDashBoard.postValue(response.body())
-                            } else {
-                                isDashBoard.postValue(response.body())
-                            }
+                            isDashBoard.postValue(response.body())
                         }
-                    } else {
-
-
                     }
                 }
 
@@ -446,7 +431,7 @@ class SchoolServices {
 
 
     fun isDashBoardCount(isToken: String, isMemberType: String, activity: Activity) {
-        RestClient.apiInterfaces.isDashBoardCount(isToken, isMemberType)
+        RestClient.Companion.apiInterfaces.isDashBoardCount(isToken, isMemberType)
             ?.enqueue(object : Callback<DashboardCountResponse?> {
                 override fun onResponse(
                     call: Call<DashboardCountResponse?>, response: Response<DashboardCountResponse?>
@@ -457,15 +442,8 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDashBoardCount.postValue(response.body())
-                            } else {
-                                isDashBoardCount.postValue(response.body())
-                            }
+                            isDashBoardCount.postValue(response.body())
                         }
-                    } else {
-
-
                     }
                 }
 
@@ -481,7 +459,7 @@ class SchoolServices {
 
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetAds(isToken, isMenuId)
+        RestClient.Companion.apiInterfaces.isGetAds(isToken, isMenuId)
             ?.enqueue(object : Callback<AdsResponse?> {
                 override fun onResponse(
                     call: Call<AdsResponse?>, response: Response<AdsResponse?>
@@ -492,13 +470,8 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetAds.postValue(response.body())
-                            } else {
-                                isGetAds.postValue(response.body())
-                            }
+                            isGetAds.postValue(response.body())
                         }
-                    } else {
                     }
                 }
 
@@ -513,7 +486,7 @@ class SchoolServices {
         get() = isGetAds
 
     fun isGetGlobalVariables(jsonObject: JsonObject, isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetGlobalVariable(jsonObject, isToken)
+        RestClient.Companion.apiInterfaces.isGetGlobalVariable(jsonObject, isToken)
             ?.enqueue(object : Callback<GlobalVariableResponse?> {
                 override fun onResponse(
                     call: Call<GlobalVariableResponse?>, response: Response<GlobalVariableResponse?>
@@ -524,13 +497,8 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetGlobalVariables.postValue(response.body())
-                            } else {
-                                isGetGlobalVariables.postValue(response.body())
-                            }
+                            isGetGlobalVariables.postValue(response.body())
                         }
-                    } else {
                     }
                 }
 
@@ -545,7 +513,7 @@ class SchoolServices {
         get() = isGetGlobalVariables
 
     fun isGetStaffList(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffList(isToken)
+        RestClient.Companion.apiInterfaces.getStaffList(isToken)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -556,11 +524,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetStaffList.postValue(response.body())
-                            } else {
-                                isGetStaffList.postValue(response.body())
-                            }
+                            isGetStaffList.postValue(response.body())
                         }
                     } else {
                         isGetStaffList.postValue(null)
@@ -580,7 +544,7 @@ class SchoolServices {
     fun isGetSubjectList(
         isToken: String, isAcademicYearId: Int, isSection: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getSubjectList(isToken, isSection)
+        RestClient.Companion.apiInterfaces.getSubjectList(isToken, isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -591,11 +555,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetSubjectList.postValue(response.body())
-                            } else {
-                                isGetSubjectList.postValue(response.body())
-                            }
+                            isGetSubjectList.postValue(response.body())
                         }
                     } else {
                         isGetSubjectList.postValue(null)
@@ -614,7 +574,7 @@ class SchoolServices {
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.getStandard(isToken, isAcademicYearId)
+        RestClient.Companion.apiInterfaces.getStandard(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<StandardResponse?> {
                 override fun onResponse(
                     call: Call<StandardResponse?>, response: Response<StandardResponse?>
@@ -625,11 +585,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetStandardSection.postValue(response.body())
-                            } else {
-                                isGetStandardSection.postValue(response.body())
-                            }
+                            isGetStandardSection.postValue(response.body())
                         }
                     } else {
                         isGetStandardSection.postValue(null)
@@ -650,7 +606,7 @@ class SchoolServices {
     fun isGetStudentList(
         isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getStudentList(isToken, isSection, isAcademicYearId)
+        RestClient.Companion.apiInterfaces.getStudentList(isToken, isSection, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -661,11 +617,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetStudentList.postValue(response.body())
-                            } else {
-                                isGetStudentList.postValue(response.body())
-                            }
+                            isGetStudentList.postValue(response.body())
                         }
                     } else {
                         isGetStudentList.postValue(null)
@@ -684,7 +636,7 @@ class SchoolServices {
 
 
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetCommmunicationlist(isToken)
+        RestClient.Companion.apiInterfaces.isGetCommmunicationlist(isToken)
             ?.enqueue(object : Callback<VoiceDataResponse?> {
                 override fun onResponse(
                     call: Call<VoiceDataResponse?>, response: Response<VoiceDataResponse?>
@@ -695,11 +647,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetCommmunicationlist.postValue(response.body())
-                            } else {
-                                isGetCommmunicationlist.postValue(response.body())
-                            }
+                            isGetCommmunicationlist.postValue(response.body())
                         }
                     } else {
                         isGetCommmunicationlist.postValue(null)
@@ -717,7 +665,7 @@ class SchoolServices {
         get() = isGetCommmunicationlist
 
     fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetCommmunicationlistload(isToken)
+        RestClient.Companion.apiInterfaces.isGetCommmunicationlistload(isToken)
             ?.enqueue(object : Callback<VoiceDataResponse?> {
                 override fun onResponse(
                     call: Call<VoiceDataResponse?>, response: Response<VoiceDataResponse?>
@@ -728,11 +676,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetCommmunicationlistload.postValue(response.body())
-                            } else {
-                                isGetCommmunicationlistload.postValue(response.body())
-                            }
+                            isGetCommmunicationlistload.postValue(response.body())
                         }
                     } else {
                         isGetCommmunicationlistload.postValue(null)
@@ -751,7 +695,7 @@ class SchoolServices {
 
 
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.isGroupList(isToken, isAcademicYearId)
+        RestClient.Companion.apiInterfaces.isGroupList(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -762,11 +706,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetGroupList.postValue(response.body())
-                            } else {
-                                isGetGroupList.postValue(response.body())
-                            }
+                            isGetGroupList.postValue(response.body())
                         }
                     } else {
                         isGetGroupList.postValue(null)
@@ -785,7 +725,7 @@ class SchoolServices {
 
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetVoiceHistory(isToken)
+        RestClient.Companion.apiInterfaces.isGetVoiceHistory(isToken)
             ?.enqueue(object : Callback<VoiceDetails?> {
                 override fun onResponse(
                     call: Call<VoiceDetails?>, response: Response<VoiceDetails?>
@@ -796,11 +736,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetVoiceHistory.postValue(response.body())
-                            } else {
-                                isGetVoiceHistory.postValue(response.body())
-                            }
+                            isGetVoiceHistory.postValue(response.body())
                         }
                     } else {
                         isGetVoiceHistory.postValue(null)
@@ -818,7 +754,7 @@ class SchoolServices {
         get() = isGetVoiceHistory
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetTextHistory(isToken)
+        RestClient.Companion.apiInterfaces.isGetTextHistory(isToken)
             ?.enqueue(object : Callback<TextDetailsResponse?> {
                 override fun onResponse(
                     call: Call<TextDetailsResponse?>, response: Response<TextDetailsResponse?>
@@ -829,9 +765,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             response.body()!!.status
-
                             isGetTextHistory.postValue(response.body())
-
                         }
                     } else {
                         isGetTextHistory.postValue(null)
@@ -852,7 +786,7 @@ class SchoolServices {
     fun isGetHomeWorkReport(
         isToken: String, isSection: Int, isAcademicYearId: Int, isdate: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetHomeWorkReport(isToken, isSection, isAcademicYearId, isdate)
+        RestClient.Companion.apiInterfaces.isGetHomeWorkReport(isToken, isSection, isAcademicYearId, isdate)
             ?.enqueue(object : Callback<HomeWorkReportApiResponse?> {
                 override fun onResponse(
                     call: Call<HomeWorkReportApiResponse?>,
@@ -864,11 +798,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetHomeWorkReport.postValue(response.body())
-                            } else {
-                                isGetHomeWorkReport.postValue(response.body())
-                            }
+                            isGetHomeWorkReport.postValue(response.body())
                         }
                     } else {
                         isGetHomeWorkReport.postValue(null)
@@ -888,7 +818,7 @@ class SchoolServices {
     fun isGetAssignmentReport(
         isToken: String, isAcademicYearId: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetAssignmentReport(isToken, isAcademicYearId)
+        RestClient.Companion.apiInterfaces.isGetAssignmentReport(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<AssignmentResponse?> {
                 override fun onResponse(
                     call: Call<AssignmentResponse?>, response: Response<AssignmentResponse?>
@@ -899,11 +829,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetAssignmentReport.postValue(response.body())
-                            } else {
-                                isGetAssignmentReport.postValue(response.body())
-                            }
+                            isGetAssignmentReport.postValue(response.body())
                         }
                     } else {
                         isGetAssignmentReport.postValue(null)
@@ -923,7 +849,7 @@ class SchoolServices {
     fun isEventCategories(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isEventCategories(isToken)
+        RestClient.Companion.apiInterfaces.isEventCategories(isToken)
             ?.enqueue(object : Callback<EventCategoryResponse?> {
                 override fun onResponse(
                     call: Call<EventCategoryResponse?>, response: Response<EventCategoryResponse?>
@@ -934,11 +860,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetEventCategory.postValue(response.body())
-                            } else {
-                                isGetEventCategory.postValue(response.body())
-                            }
+                            isGetEventCategory.postValue(response.body())
                         }
                     } else {
                         isGetEventCategory.postValue(null)
@@ -958,7 +880,7 @@ class SchoolServices {
     fun isDeleteAssignment(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
-        RestClient.apiInterfaces.isAssignmentDelete(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isAssignmentDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<LPDeleteResponse?> {
                 override fun onResponse(
                     call: Call<LPDeleteResponse?>, response: Response<LPDeleteResponse?>
@@ -969,11 +891,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isAssignmentDelete.postValue(response.body())
-                            } else {
-                                isAssignmentDelete.postValue(response.body())
-                            }
+                            isAssignmentDelete.postValue(response.body())
                         }
                     } else {
                         isAssignmentDelete.postValue(null)
@@ -994,7 +912,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isHomeWorkUpdate(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isHomeWorkUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1005,11 +923,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateHomeWork.postValue(response.body())
-                            } else {
-                                isUpdateHomeWork.postValue(response.body())
-                            }
+                            isUpdateHomeWork.postValue(response.body())
                         }
                     } else {
                         isUpdateHomeWork.postValue(null)
@@ -1030,7 +944,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isEventUpdate(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isEventUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1041,11 +955,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateEvent.postValue(response.body())
-                            } else {
-                                isUpdateEvent.postValue(response.body())
-                            }
+                            isUpdateEvent.postValue(response.body())
                         }
                     } else {
                         isUpdateEvent.postValue(null)
@@ -1067,7 +977,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isAttachmentUpdate(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isAttachmentUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1078,11 +988,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateAttachment.postValue(response.body())
-                            } else {
-                                isUpdateAttachment.postValue(response.body())
-                            }
+                            isUpdateAttachment.postValue(response.body())
                         }
                     } else {
                         isUpdateAttachment.postValue(null)
@@ -1104,7 +1010,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isNoticeBoardUpdate(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isNoticeBoardUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1115,11 +1021,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateNoticeBoard.postValue(response.body())
-                            } else {
-                                isUpdateNoticeBoard.postValue(response.body())
-                            }
+                            isUpdateNoticeBoard.postValue(response.body())
                         }
                     } else {
                         isUpdateNoticeBoard.postValue(null)
@@ -1141,7 +1043,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isHomeWorkDelete(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isHomeWorkDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1152,11 +1054,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDeleteHomeWork.postValue(response.body())
-                            } else {
-                                isDeleteHomeWork.postValue(response.body())
-                            }
+                            isDeleteHomeWork.postValue(response.body())
                         }
                     } else {
                         isDeleteHomeWork.postValue(null)
@@ -1177,7 +1075,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.isAttachmentDelete(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isAttachmentDelete(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1188,11 +1086,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDeleteAttachment.postValue(response.body())
-                            } else {
-                                isDeleteAttachment.postValue(response.body())
-                            }
+                            isDeleteAttachment.postValue(response.body())
                         }
                     } else {
                         isDeleteAttachment.postValue(null)
@@ -1213,7 +1107,7 @@ class SchoolServices {
     fun isNoticeBoardReport(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isNoticeBoardReport(isToken)
+        RestClient.Companion.apiInterfaces.isNoticeBoardReport(isToken)
             ?.enqueue(object : Callback<NoticeBoardStaffResponse?> {
                 override fun onResponse(
                     call: Call<NoticeBoardStaffResponse?>,
@@ -1225,11 +1119,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isNoticeBoardReport.postValue(response.body())
-                            } else {
-                                isNoticeBoardReport.postValue(response.body())
-                            }
+                            isNoticeBoardReport.postValue(response.body())
                         }
                     } else {
                         isNoticeBoardReport.postValue(null)
@@ -1250,7 +1140,7 @@ class SchoolServices {
     fun isNoticeBoardStaffReport(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isNoticeBoardStaffReport(isToken)
+        RestClient.Companion.apiInterfaces.isNoticeBoardStaffReport(isToken)
             ?.enqueue(object : Callback<NoticeBoardStaffResponse?> {
                 override fun onResponse(
                     call: Call<NoticeBoardStaffResponse?>,
@@ -1262,11 +1152,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isNoticeBoardStaffReport.postValue(response.body())
-                            } else {
-                                isNoticeBoardStaffReport.postValue(response.body())
-                            }
+                            isNoticeBoardStaffReport.postValue(response.body())
                         }
                     } else {
                         isNoticeBoardStaffReport.postValue(null)
@@ -1287,7 +1173,7 @@ class SchoolServices {
     fun IsGetEventReport(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.IsGetEventReport(isToken)
+        RestClient.Companion.apiInterfaces.IsGetEventReport(isToken)
             ?.enqueue(object : Callback<EventResponse?> {
                 override fun onResponse(
                     call: Call<EventResponse?>, response: Response<EventResponse?>
@@ -1298,11 +1184,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                IsGetEventReport.postValue(response.body())
-                            } else {
-                                IsGetEventReport.postValue(response.body())
-                            }
+                            IsGetEventReport.postValue(response.body())
                         }
                     } else {
                         IsGetEventReport.postValue(null)
@@ -1323,7 +1205,7 @@ class SchoolServices {
     fun IsGetEventSchoolReport(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.IsGetEventSchoolReport(isToken)
+        RestClient.Companion.apiInterfaces.IsGetEventSchoolReport(isToken)
             ?.enqueue(object : Callback<SchoolEventResponse?> {
                 override fun onResponse(
                     call: Call<SchoolEventResponse?>, response: Response<SchoolEventResponse?>
@@ -1334,11 +1216,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                IsGetEventSchoolReport.postValue(response.body())
-                            } else {
-                                IsGetEventSchoolReport.postValue(response.body())
-                            }
+                            IsGetEventSchoolReport.postValue(response.body())
                         }
                     } else {
                         IsGetEventSchoolReport.postValue(null)
@@ -1358,7 +1236,7 @@ class SchoolServices {
     fun IsGetHolidayReport(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.IsGetHolidayReport(isToken)
+        RestClient.Companion.apiInterfaces.IsGetHolidayReport(isToken)
             ?.enqueue(object : Callback<HolidayResponse?> {
                 override fun onResponse(
                     call: Call<HolidayResponse?>, response: Response<HolidayResponse?>
@@ -1369,11 +1247,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                IsGetHolidayReport.postValue(response.body())
-                            } else {
-                                IsGetHolidayReport.postValue(response.body())
-                            }
+                            IsGetHolidayReport.postValue(response.body())
                         }
                     } else {
                         IsGetHolidayReport.postValue(null)
@@ -1399,7 +1273,7 @@ class SchoolServices {
         country_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetDailyCollectionReport(
+        RestClient.Companion.apiInterfaces.isGetDailyCollectionReport(
             isToken,
             istype,
             isfromdate,
@@ -1417,11 +1291,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetDailyCollectionReport.postValue(response.body())
-                            } else {
-                                isGetDailyCollectionReport.postValue(response.body())
-                            }
+                            isGetDailyCollectionReport.postValue(response.body())
                         }
                     } else {
                         isGetDailyCollectionReport.postValue(null)
@@ -1440,7 +1310,7 @@ class SchoolServices {
 
 
     fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.isGetSchoolStrengthReport(isToken, isAcademicYearId)
+        RestClient.Companion.apiInterfaces.isGetSchoolStrengthReport(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<SchoolStrengthResponse?> {
                 override fun onResponse(
                     call: Call<SchoolStrengthResponse?>, response: Response<SchoolStrengthResponse?>
@@ -1451,11 +1321,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetSchoolStrengthReport.postValue(response.body())
-                            } else {
-                                isGetSchoolStrengthReport.postValue(response.body())
-                            }
+                            isGetSchoolStrengthReport.postValue(response.body())
                         }
                     } else {
                         isGetSchoolStrengthReport.postValue(null)
@@ -1479,7 +1345,7 @@ class SchoolServices {
         country_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId, country_id)
+        RestClient.Companion.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
                     call: Call<FeePendingReportResponse?>,
@@ -1491,11 +1357,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDetailedPendingReport.postValue(response.body())
-                            } else {
-                                isDetailedPendingReport.postValue(response.body())
-                            }
+                            isDetailedPendingReport.postValue(response.body())
                         }
                     } else {
                         isDetailedPendingReport.postValue(null)
@@ -1519,7 +1381,7 @@ class SchoolServices {
         country_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id)
+        RestClient.Companion.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId, country_id)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
                     call: Call<FeePendingReportResponse?>,
@@ -1531,11 +1393,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isDetailedWisePendingReport.postValue(response.body())
-                            } else {
-                                isDetailedWisePendingReport.postValue(response.body())
-                            }
+                            isDetailedWisePendingReport.postValue(response.body())
                         }
                     } else {
                         isDetailedWisePendingReport.postValue(null)
@@ -1554,18 +1412,12 @@ class SchoolServices {
 
 
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.isSendText(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isSendText(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
                     call: Call<TextSendResponse?>, response: Response<TextSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        isSendText.postValue(response.body())
-                    } else {
-                        isSendText.postValue(response.body())
-                    }
-
-
+                    isSendText.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -1582,18 +1434,13 @@ class SchoolServices {
 
 
     fun isSendHomeWork(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.isSendHomeWork(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.isSendHomeWork(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(
                     call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        isSendHomeWork.postValue(response.body())
-                    } else {
-                        isSendHomeWork.postValue(response.body())
-                    }
-
+                    isSendHomeWork.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -1609,18 +1456,13 @@ class SchoolServices {
         get() = isSendHomeWork
 
     fun isSendAssignment(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.isAssignmentSend(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.isAssignmentSend(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(
                     call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        isSendAssignment.postValue(response.body())
-                    } else {
-                        isSendAssignment.postValue(response.body())
-                    }
-
+                    isSendAssignment.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -1636,18 +1478,13 @@ class SchoolServices {
         get() = isSendAssignment
 
     fun assignmentUpdate(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.isAssignmentUpdate(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.isAssignmentUpdate(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(
                     call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        isUpdateAssignment.postValue(response.body())
-                    } else {
-                        isUpdateAssignment.postValue(response.body())
-                    }
-
+                    isUpdateAssignment.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -1664,20 +1501,13 @@ class SchoolServices {
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
-//        val request = StatusArchiveModelRequest(isToken, jsonObject)
-
-        RestClient.apiInterfaces.isUpdateStatusArchive(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isUpdateStatusArchive(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusArchiveResponse> {
                 override fun onResponse(
                     call: Call<StatusArchiveResponse>, response: Response<StatusArchiveResponse>
                 ) {
                     Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
-
-                    if (response.code() == 200 && response.body() != null) {
-                        isUpdateStatusArchive.postValue(response.body())
-                    } else {
-                        isUpdateStatusArchive.postValue(response.body())
-                    }
+                    isUpdateStatusArchive.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<StatusArchiveResponse>, t: Throwable) {
@@ -1693,20 +1523,14 @@ class SchoolServices {
 
 
     fun isUpdateStatusCommunication(isToken: String, jsonObject: JsonObject, activity: Activity) {
-//        val request = StatusArchiveModelRequest(isToken, jsonObject)
 
-        RestClient.apiInterfaces.isUpdateStatusCommunication(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isUpdateStatusCommunication(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusArchiveResponse> {
                 override fun onResponse(
                     call: Call<StatusArchiveResponse>, response: Response<StatusArchiveResponse>
                 ) {
                     Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
-
-                    if (response.code() == 200 && response.body() != null) {
-                        isUpdateStatusCommunication.postValue(response.body())
-                    } else {
-                        isUpdateStatusCommunication.postValue(response.body())
-                    }
+                    isUpdateStatusCommunication.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<StatusArchiveResponse>, t: Throwable) {
@@ -1723,8 +1547,8 @@ class SchoolServices {
 
     fun isSendVoice(isToken: String, jsonObject: JsonObject, activity: Activity) {
 
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.isSendVoice(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.isSendVoice(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
                     call: Call<TextSendResponse?>, response: Response<TextSendResponse?>
@@ -1747,7 +1571,7 @@ class SchoolServices {
 
 
     fun isGetAcademicYear(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGetAcademicYear(isToken)
+        RestClient.Companion.apiInterfaces.isGetAcademicYear(isToken)
             ?.enqueue(object : Callback<AcademicYearResponse?> {
                 override fun onResponse(
                     call: Call<AcademicYearResponse?>, response: Response<AcademicYearResponse?>
@@ -1758,11 +1582,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isAcademicYear.postValue(response.body())
-                            } else {
-                                isAcademicYear.postValue(response.body())
-                            }
+                            isAcademicYear.postValue(response.body())
                         }
                     } else {
                         isAcademicYear.postValue(null)
@@ -1780,10 +1600,9 @@ class SchoolServices {
         get() = isAcademicYear
 
 
-    //    //get HomeworkDetails
     fun isHomeWorkDetails(isToken: String, activity: Activity, date: String) {
         Log.d("GetHomeworkData", isToken.toString())
-        RestClient.apiInterfaces.isHomeWorkDetails(isToken, date)
+        RestClient.Companion.apiInterfaces.isHomeWorkDetails(isToken, date)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
                     call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>
@@ -1793,8 +1612,6 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             isHomeWorkDetailsData.postValue(response.body())
-                            Log.d("GetHomeworkDataRespone", response.body().toString())
-
                         }
                     } else {
                         isHomeWorkDetailsData.postValue(null)
@@ -1816,7 +1633,7 @@ class SchoolServices {
     //    //get HomeworkDetails
     fun homework_list_archive(isToken: String, activity: Activity) {
         Log.d("GetHomeworkData", isToken.toString())
-        RestClient.apiInterfaces.homework_list_archive(isToken)
+        RestClient.Companion.apiInterfaces.homework_list_archive(isToken)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
                     call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>
@@ -1826,8 +1643,6 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             isHomeWorkDetailsData.postValue(response.body())
-                            Log.d("GetHomeworkDataRespone", response.body().toString())
-
                         }
                     } else {
                         isHomeWorkDetailsData.postValue(null)
@@ -1847,7 +1662,7 @@ class SchoolServices {
 
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1876,7 +1691,7 @@ class SchoolServices {
 
 
     fun addLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.addGiometricLocation(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.addGiometricLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1887,11 +1702,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isAddLocation.postValue(response.body())
-                            } else {
-                                isAddLocation.postValue(response.body())
-                            }
+                            isAddLocation.postValue(response.body())
                         }
                     } else {
                         isAddLocation.postValue(null)
@@ -1910,7 +1721,7 @@ class SchoolServices {
 
 
     fun removeLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.removeLocation(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.removeLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1922,11 +1733,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isRemoveLocation.postValue(response.body())
-                            } else {
-                                isRemoveLocation.postValue(response.body())
-                            }
+                            isRemoveLocation.postValue(response.body())
                         }
                     } else {
                         isRemoveLocation.postValue(null)
@@ -1945,7 +1752,7 @@ class SchoolServices {
 
 
     fun updateLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.updateLocation(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.updateLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -1957,11 +1764,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isUpdateLocation.postValue(response.body())
-                            } else {
-                                isUpdateLocation.postValue(response.body())
-                            }
+                            isUpdateLocation.postValue(response.body())
                         }
                     } else {
                         isUpdateLocation.postValue(null)
@@ -1980,7 +1783,7 @@ class SchoolServices {
 
 
     fun getStaffLocations(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffLocations(isToken)
+        RestClient.Companion.apiInterfaces.getStaffLocations(isToken)
             ?.enqueue(object : Callback<StaffLocationResponse?> {
                 override fun onResponse(
                     call: Call<StaffLocationResponse?>, response: Response<StaffLocationResponse?>
@@ -1992,11 +1795,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffLocations.postValue(response.body())
-                            } else {
-                                isStaffLocations.postValue(response.body())
-                            }
+                            isStaffLocations.postValue(response.body())
                         }
                     } else {
                         isStaffLocations.postValue(null)
@@ -2016,7 +1815,7 @@ class SchoolServices {
         get() = isStaffLocations
 
     fun getLocationHistory(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getLocationHistory(isToken)
+        RestClient.Companion.apiInterfaces.getLocationHistory(isToken)
             ?.enqueue(object : Callback<LocationHistoryResponse?> {
                 override fun onResponse(
                     call: Call<LocationHistoryResponse?>,
@@ -2029,11 +1828,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isLocationHistory.postValue(response.body())
-                            } else {
-                                isLocationHistory.postValue(response.body())
-                            }
+                            isLocationHistory.postValue(response.body())
                         }
                     } else {
                         isLocationHistory.postValue(null)
@@ -2053,11 +1848,8 @@ class SchoolServices {
         get() = isLocationHistory
 
 
-//    fun getPunchHistory(isToken: String, activity: Activity) {
-//        RestClient.apiInterfaces.getPunchHistory(isToken)
-
     fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate, staff_id)
+        RestClient.Companion.apiInterfaces.getPunchHistory(isToken, isDate, isDate, staff_id)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>, response: Response<PunchHistoryResponse?>
@@ -2067,14 +1859,7 @@ class SchoolServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-//                        if (response.body() != null) {
-                        val status = response.body()!!.status
-                        if (status) {
-                            isPunchHistory.postValue(response.body())
-                        } else {
-                            isPunchHistory.postValue(response.body())
-                        }
-//                        }
+                        isPunchHistory.postValue(response.body())
                     } else {
                         isPunchHistory.postValue(null)
                     }
@@ -2098,7 +1883,7 @@ class SchoolServices {
         isToken: String, attendance_dt: String, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
+        RestClient.Companion.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
@@ -2111,11 +1896,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffAttendanceReport.postValue(response.body())
-                            } else {
-                                isStaffAttendanceReport.postValue(response.body())
-                            }
+                            isStaffAttendanceReport.postValue(response.body())
                         }
                     } else {
                         isStaffAttendanceReport.postValue(null)
@@ -2139,7 +1920,7 @@ class SchoolServices {
     fun getGiometricStaffWiseAttendancereport(
         isToken: String, isCurrentDate: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken, isCurrentDate)
+        RestClient.Companion.apiInterfaces.getStaffWiseAttendanceReport(isToken, isCurrentDate)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
@@ -2152,11 +1933,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffWiseAttendanceReport.postValue(response.body())
-                            } else {
-                                isStaffWiseAttendanceReport.postValue(response.body())
-                            }
+                            isStaffWiseAttendanceReport.postValue(response.body())
                         }
                     } else {
                         isStaffWiseAttendanceReport.postValue(null)
@@ -2178,7 +1955,7 @@ class SchoolServices {
     fun getGiometricStaffWiseAttendancereportStaffList(
         isToken: String, isSelectedDate: String, isStaffId: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(
+        RestClient.Companion.apiInterfaces.getStaffWiseAttendanceReportStaffList(
             isToken, isSelectedDate, isStaffId
         )?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
             override fun onResponse(
@@ -2192,11 +1969,7 @@ class SchoolServices {
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         val status = response.body()!!.status
-                        if (status) {
-                            isStaffWiseAttendanceReportList.postValue(response.body())
-                        } else {
-                            isStaffWiseAttendanceReportList.postValue(response.body())
-                        }
+                        isStaffWiseAttendanceReportList.postValue(response.body())
                     }
                 } else {
                     isStaffWiseAttendanceReportList.postValue(null)
@@ -2223,7 +1996,7 @@ class SchoolServices {
         section_id: Int? = null,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.getStudentReport(isToken, isAcademicYearId, class_id, section_id)
+        RestClient.Companion.apiInterfaces.getStudentReport(isToken, isAcademicYearId, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
                     call: Call<GetStudentReportData?>, response: Response<GetStudentReportData?>
@@ -2235,13 +2008,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                isStudentReportList.postValue(response.body())
-                            } else {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                isStudentReportList.postValue(response.body())
-                            }
+                            isStudentReportList.postValue(response.body())
                         }
                     } else {
                         isStudentReportList.postValue(null)
@@ -2265,7 +2032,7 @@ class SchoolServices {
     fun getabsenteescountbydate(
         isToken: String, month_id: Int, year_id: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getabsenteescountbydate(isToken, month_id, year_id)
+        RestClient.Companion.apiInterfaces.getabsenteescountbydate(isToken, month_id, year_id)
             ?.enqueue(object : Callback<AbsenteesResponse?> {
                 override fun onResponse(
                     call: Call<AbsenteesResponse?>, response: Response<AbsenteesResponse?>
@@ -2277,13 +2044,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                getabsenteescountbydate.postValue(response.body())
-                            } else {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                getabsenteescountbydate.postValue(response.body())
-                            }
+                            getabsenteescountbydate.postValue(response.body())
                         }
                     } else {
                         getabsenteescountbydate.postValue(null)
@@ -2312,7 +2073,7 @@ class SchoolServices {
         activity: Activity
 
     ) {
-        RestClient.apiInterfaces.getabsenteesstudentbydate(
+        RestClient.Companion.apiInterfaces.getabsenteesstudentbydate(
             isToken,
             absent_on,
             standard_id,
@@ -2330,13 +2091,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                getabsenteesstudentbydate.postValue(response.body())
-                            } else {
-                                Log.d("GetStudentReportData", response.body().toString())
-                                getabsenteesstudentbydate.postValue(response.body())
-                            }
+                            getabsenteesstudentbydate.postValue(response.body())
                         }
                     } else {
                         getabsenteesstudentbydate.postValue(null)
@@ -2358,7 +2113,7 @@ class SchoolServices {
 
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.UpdateSendAbsenteeSMS(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.UpdateSendAbsenteeSMS(isToken, jsonObject)
             ?.enqueue(object : Callback<SendAbsenteeSMSResponse?> {
                 override fun onResponse(
                     call: Call<SendAbsenteeSMSResponse?>,
@@ -2370,11 +2125,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isSendAbsenteeSMS.postValue(response.body())
-                            } else {
-                                isSendAbsenteeSMS.postValue(response.body())
-                            }
+                            isSendAbsenteeSMS.postValue(response.body())
                         }
                     } else {
                         isSendAbsenteeSMS.postValue(null)
@@ -2400,7 +2151,7 @@ class SchoolServices {
         class_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(
+        RestClient.Companion.apiInterfaces.isGetStudentAttendanceReportForSchool(
             isToken, section_id, from_date, to_date, class_id
         )?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
             override fun onResponse(
@@ -2414,13 +2165,7 @@ class SchoolServices {
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         val status = response.body()!!.status
-                        if (status) {
-                            Log.d("GetStudentAttendanceReportData", response.body().toString())
-                            isStudentAttendanceReportForSchool.postValue(response.body())
-                        } else {
-                            Log.d("GetStudentAttendanceReportData", response.body().toString())
-                            isStudentAttendanceReportForSchool.postValue(response.body())
-                        }
+                        isStudentAttendanceReportForSchool.postValue(response.body())
                     }
                 }
             }
@@ -2440,19 +2185,14 @@ class SchoolServices {
 
 
     fun sendnotice(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.sendnotice(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.sendnotice(isToken, jsonObject)
             ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
                 override fun onResponse(
                     call: Call<NoticeBoardSendResponse?>,
                     response: Response<NoticeBoardSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        sendnotice.postValue(response.body())
-                    } else {
-                        sendnotice.postValue(response.body())
-                    }
-
+                    sendnotice.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -2469,19 +2209,13 @@ class SchoolServices {
 
 
     fun sendevent(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.sendevent(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.sendevent(isToken, jsonObject)
             ?.enqueue(object : Callback<EventSendResponse?> {
                 override fun onResponse(
                     call: Call<EventSendResponse?>, response: Response<EventSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        sendevent.postValue(response.body())
-                    } else {
-                        sendevent.postValue(response.body())
-                    }
-
-                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                    sendevent.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<EventSendResponse?>, t: Throwable) {
@@ -2497,8 +2231,8 @@ class SchoolServices {
 
 
     fun sendAttachment(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.sendAttachment(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.sendAttachment(isToken, jsonObject)
             ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
                 override fun onResponse(
                     call: Call<NoticeBoardSendResponse?>,
@@ -2528,7 +2262,7 @@ class SchoolServices {
     fun getleaverequest(
         isToken: String, member_type: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getleaverequest(isToken, member_type)
+        RestClient.Companion.apiInterfaces.getleaverequest(isToken, member_type)
             ?.enqueue(object : Callback<LeaveRequestResponse?> {
                 override fun onResponse(
                     call: Call<LeaveRequestResponse?>, response: Response<LeaveRequestResponse?>
@@ -2539,11 +2273,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getleaverequest.postValue(response.body())
-                            } else {
-                                getleaverequest.postValue(response.body())
-                            }
+                            getleaverequest.postValue(response.body())
                         }
                     } else {
                         getleaverequest.postValue(null)
@@ -2564,7 +2294,7 @@ class SchoolServices {
     fun isleaverequestapprove(
         isToken: String, request: LeaveApproveRequest, activity: Activity
     ) {
-        RestClient.apiInterfaces.isleaverequestapprove(isToken, request)
+        RestClient.Companion.apiInterfaces.isleaverequestapprove(isToken, request)
             ?.enqueue(object : Callback<LeaveActionResponse?> {
                 override fun onResponse(
                     call: Call<LeaveActionResponse?>, response: Response<LeaveActionResponse?>
@@ -2575,11 +2305,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isleaverequestapprove.postValue(response.body())
-                            } else {
-                                isleaverequestapprove.postValue(response.body())
-                            }
+                            isleaverequestapprove.postValue(response.body())
                         }
                     } else {
                         isleaverequestapprove.postValue(null)
@@ -2600,7 +2326,7 @@ class SchoolServices {
     fun getlpStaffReport(
         isToken: String, request_type: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getlpStaffReport(isToken, request_type)
+        RestClient.Companion.apiInterfaces.getlpStaffReport(isToken, request_type)
             ?.enqueue(object : Callback<AllClassResponse?> {
                 override fun onResponse(
                     call: Call<AllClassResponse?>, response: Response<AllClassResponse?>
@@ -2611,11 +2337,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getlpStaffReport.postValue(response.body())
-                            } else {
-                                getlpStaffReport.postValue(response.body())
-                            }
+                            getlpStaffReport.postValue(response.body())
                         }
                     } else {
                         getlpStaffReport.postValue(null)
@@ -2636,7 +2358,7 @@ class SchoolServices {
     fun getlpViewReport(
         isToken: String, section_subject_id: String, lesson_plan_status: Int, activity: Activity
     ) {
-        RestClient.apiInterfaces.getlpViewReport(isToken, section_subject_id, lesson_plan_status)
+        RestClient.Companion.apiInterfaces.getlpViewReport(isToken, section_subject_id, lesson_plan_status)
             ?.enqueue(object : Callback<LessonPlanViewSummaryResponse?> {
                 override fun onResponse(
                     call: Call<LessonPlanViewSummaryResponse?>,
@@ -2648,11 +2370,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getlpViewReport.postValue(response.body())
-                            } else {
-                                getlpViewReport.postValue(response.body())
-                            }
+                            getlpViewReport.postValue(response.body())
                         }
                     } else {
                         getlpViewReport.postValue(null)
@@ -2673,7 +2391,7 @@ class SchoolServices {
     fun getlpeditReport(
         isToken: String, particular_id: String, request_type: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getlpeditReport(isToken, particular_id, request_type)
+        RestClient.Companion.apiInterfaces.getlpeditReport(isToken, particular_id, request_type)
             ?.enqueue(object : Callback<LessonPlanEditResponse?> {
                 override fun onResponse(
                     call: Call<LessonPlanEditResponse?>, response: Response<LessonPlanEditResponse?>
@@ -2684,11 +2402,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getlpeditReport.postValue(response.body())
-                            } else {
-                                getlpeditReport.postValue(response.body())
-                            }
+                            getlpeditReport.postValue(response.body())
                         }
                     } else {
                         getlpeditReport.postValue(null)
@@ -2709,7 +2423,7 @@ class SchoolServices {
     fun getlpcreateReport(
         isToken: String, request_type: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getlpcreateReport(isToken, request_type)
+        RestClient.Companion.apiInterfaces.getlpcreateReport(isToken, request_type)
             ?.enqueue(object : Callback<LessonPlanTemplateResponse?> {
                 override fun onResponse(
                     call: Call<LessonPlanTemplateResponse?>,
@@ -2721,11 +2435,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getlpcreateReport.postValue(response.body())
-                            } else {
-                                getlpcreateReport.postValue(response.body())
-                            }
+                            getlpcreateReport.postValue(response.body())
                         }
                     } else {
                         getlpcreateReport.postValue(null)
@@ -2744,7 +2454,7 @@ class SchoolServices {
 
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
-        RestClient.apiInterfaces.isupdatelessonplan(isToken, requestBody)
+        RestClient.Companion.apiInterfaces.isupdatelessonplan(isToken, requestBody)
             ?.enqueue(object : Callback<LessonPlanUpdateResponse?> {
                 override fun onResponse(
                     call: Call<LessonPlanUpdateResponse?>,
@@ -2771,7 +2481,7 @@ class SchoolServices {
 
 
     fun iscreatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
-        RestClient.apiInterfaces.iscreatelessonplan(isToken, requestBody)
+        RestClient.Companion.apiInterfaces.iscreatelessonplan(isToken, requestBody)
             ?.enqueue(object : Callback<LessonPlanCreateResponse?> {
                 override fun onResponse(
                     call: Call<LessonPlanCreateResponse?>,
@@ -2798,7 +2508,7 @@ class SchoolServices {
 
 
     fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
-        RestClient.apiInterfaces.islessonplandelete(isToken, requestBody)
+        RestClient.Companion.apiInterfaces.islessonplandelete(isToken, requestBody)
             ?.enqueue(object : Callback<LPDeleteResponse?> {
                 override fun onResponse(
                     call: Call<LPDeleteResponse?>, response: Response<LPDeleteResponse?>
@@ -2826,7 +2536,7 @@ class SchoolServices {
     fun getcouponmenu(
         parentname: String, apiKey: String
     ) {
-        RestClient.couponApiInterfaces.getcouponmenu(parentname, apiKey)
+        RestClient.Companion.couponApiInterfaces.getcouponmenu(parentname, apiKey)
             ?.enqueue(object : Callback<CouponMenuResponse?> {
                 override fun onResponse(
                     call: Call<CouponMenuResponse?>, response: Response<CouponMenuResponse?>
@@ -2866,7 +2576,7 @@ class SchoolServices {
         val request = CouponSummaryRequest(
             mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getCouponsSummary(parentName, apiKey, request)
+        RestClient.Companion.couponApiInterfaces.getCouponsSummary(parentName, apiKey, request)
             ?.enqueue(object : Callback<CampaignResponse?> {
                 override fun onResponse(
                     call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
@@ -2905,7 +2615,7 @@ class SchoolServices {
         val request = CategorySummaryRequest(
             category_id = category_id, mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getCouponsCategorySummary(parentName, apiKey, request)
+        RestClient.Companion.couponApiInterfaces.getCouponsCategorySummary(parentName, apiKey, request)
             ?.enqueue(object : Callback<CampaignResponse?> {
                 override fun onResponse(
                     call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
@@ -2935,7 +2645,7 @@ class SchoolServices {
         val request = MyCouponSummaryRequest(
             coupon_status = coupon_status, mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getmycoupons(parentName, apiKey, request)
+        RestClient.Companion.couponApiInterfaces.getmycoupons(parentName, apiKey, request)
             ?.enqueue(object : Callback<TicketSummaryResponse?> {
                 override fun onResponse(
                     call: Call<TicketSummaryResponse?>, response: Response<TicketSummaryResponse?>
@@ -2965,7 +2675,7 @@ class SchoolServices {
         val request = CouponDetailsRequest(
             source_link = source_link, mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getCouponDetails(parentName, apiKey, request)
+        RestClient.Companion.couponApiInterfaces.getCouponDetails(parentName, apiKey, request)
             ?.enqueue(object : Callback<ActivateCouponSummaryResponse?> {
                 override fun onResponse(
                     call: Call<ActivateCouponSummaryResponse?>,
@@ -2996,7 +2706,7 @@ class SchoolServices {
         val request = ActivateCouponRequest(
             source_link = source_link, mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.sendactivatecoupon(parentName, apiKey, request)
+        RestClient.Companion.couponApiInterfaces.sendactivatecoupon(parentName, apiKey, request)
             ?.enqueue(object : Callback<ActivateCouponResponse?> {
                 override fun onResponse(
                     call: Call<ActivateCouponResponse?>, response: Response<ActivateCouponResponse?>
@@ -3027,7 +2737,7 @@ class SchoolServices {
         subject_id: String,
         offset: Int
     ) {
-        RestClient.apiInterfaces.getstaffquestions(
+        RestClient.Companion.apiInterfaces.getstaffquestions(
             isToken, is_class_teacher,
             section_id,
             subject_id,
@@ -3043,13 +2753,7 @@ class SchoolServices {
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         val status = response.body()!!.status
-                        if (status) {
-                            Log.d("GetChildAttendanceReportData", response.body().toString())
-                            getstaffquestions.postValue(response.body())
-                        } else {
-                            Log.d("GetChildAttendanceReportData", response.body().toString())
-                            getstaffquestions.postValue(response.body())
-                        }
+                        getstaffquestions.postValue(response.body())
                     }
                 }
             }
@@ -3070,16 +2774,12 @@ class SchoolServices {
     fun sendanswer(
         isToken: String, request: AnswerModelRequest
     ) {
-        RestClient.apiInterfaces.sendanswer(isToken, request)
+        RestClient.Companion.apiInterfaces.sendanswer(isToken, request)
             ?.enqueue(object : Callback<AnswerModelResponse?> {
                 override fun onResponse(
                     call: Call<AnswerModelResponse?>, response: Response<AnswerModelResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        sendanswer.postValue(response.body())
-                    } else {
-                        sendanswer.postValue(response.body())
-                    }
+                    sendanswer.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<AnswerModelResponse?>, t: Throwable) {
@@ -3097,7 +2797,7 @@ class SchoolServices {
     fun isnoticeboarddelete(
         isToken: String, request: JsonObject, activity: Activity
     ) {
-        RestClient.apiInterfaces.isnoticeboarddelete(isToken, request)
+        RestClient.Companion.apiInterfaces.isnoticeboarddelete(isToken, request)
             ?.enqueue(object : Callback<NoticeBoardDeleteResponse?> {
                 override fun onResponse(
                     call: Call<NoticeBoardDeleteResponse?>,
@@ -3109,11 +2809,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isnoticeboarddelete.postValue(response.body())
-                            } else {
-                                isnoticeboarddelete.postValue(response.body())
-                            }
+                            isnoticeboarddelete.postValue(response.body())
                         }
                     } else {
                         isnoticeboarddelete.postValue(null)
@@ -3136,7 +2832,7 @@ class SchoolServices {
     fun isEventDelete(
         isToken: String, request: JsonObject, activity: Activity
     ) {
-        RestClient.apiInterfaces.isEventDelete(isToken, request)
+        RestClient.Companion.apiInterfaces.isEventDelete(isToken, request)
             ?.enqueue(object : Callback<EventDeleteResponse?> {
                 override fun onResponse(
                     call: Call<EventDeleteResponse?>, response: Response<EventDeleteResponse?>
@@ -3147,11 +2843,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isEventDelete.postValue(response.body())
-                            } else {
-                                isEventDelete.postValue(response.body())
-                            }
+                            isEventDelete.postValue(response.body())
                         }
                     } else {
                         isEventDelete.postValue(null)
@@ -3174,7 +2866,7 @@ class SchoolServices {
     fun isLsrwDelete(
         isToken: String, request: JsonObject, activity: Activity
     ) {
-        RestClient.apiInterfaces.isLsrwDelete(isToken, request)
+        RestClient.Companion.apiInterfaces.isLsrwDelete(isToken, request)
             ?.enqueue(object : Callback<LsrwDeleteResponse?> {
                 override fun onResponse(
                     call: Call<LsrwDeleteResponse?>, response: Response<LsrwDeleteResponse?>
@@ -3185,11 +2877,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isLsrwDelete.postValue(response.body())
-                            } else {
-                                isLsrwDelete.postValue(response.body())
-                            }
+                            isLsrwDelete.postValue(response.body())
                         }
                     } else {
                         isLsrwDelete.postValue(null)
@@ -3211,7 +2899,7 @@ class SchoolServices {
     fun getAttachmentReportList(
         isToken: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.attachmentReportList(isToken)
+        RestClient.Companion.apiInterfaces.attachmentReportList(isToken)
             ?.enqueue(object : Callback<AttachmentReportResponse?> {
                 override fun onResponse(
                     call: Call<AttachmentReportResponse?>,
@@ -3222,16 +2910,8 @@ class SchoolServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-//                        if (response.body() != null) {
                         val status = response.body()!!.status
-                        if (status) {
-                            Log.d("GetChildAttendanceReportData", response.body().toString())
-                            isAttachmentResponse.postValue(response.body())
-                        } else {
-                            Log.d("GetChildAttendanceReportData", response.body().toString())
-                            isAttachmentResponse.postValue(response.body())
-                        }
-                        // }
+                        isAttachmentResponse.postValue(response.body())
                     }
                 }
 
@@ -3251,7 +2931,7 @@ class SchoolServices {
     fun getassignmentlist(
         isToken: String, id: String, type: String
     ) {
-        RestClient.apiInterfaces.getassignmentlist(isToken, id, type)
+        RestClient.Companion.apiInterfaces.getassignmentlist(isToken, id, type)
             ?.enqueue(object : Callback<SubmissionResponse?> {
                 override fun onResponse(
                     call: Call<SubmissionResponse?>, response: Response<SubmissionResponse?>
@@ -3263,13 +2943,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getassignmentlist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                getassignmentlist.postValue(response.body())
-                            }
+                            getassignmentlist.postValue(response.body())
                         }
                     }
                 }
@@ -3289,7 +2963,7 @@ class SchoolServices {
     fun isPtmSlotCreating(
         isToken: String, jsonObject: JsonArray
     ) {
-        RestClient.apiInterfaces.isCreateSlots(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isCreateSlots(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -3301,13 +2975,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCreate.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCreate.postValue(response.body())
-                            }
+                            isPtmSlotCreate.postValue(response.body())
                         }
                     }
                 }
@@ -3328,7 +2996,7 @@ class SchoolServices {
     fun isPtmSlotForStaff(
         isToken: String, isEventDate: String
     ) {
-        RestClient.apiInterfaces.isSlotDetailsForStaff(isToken, isEventDate)
+        RestClient.Companion.apiInterfaces.isSlotDetailsForStaff(isToken, isEventDate)
             ?.enqueue(object : Callback<SlotResponse?> {
                 override fun onResponse(
                     call: Call<SlotResponse?>, response: Response<SlotResponse?>
@@ -3340,13 +3008,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotResponse.postValue(response.body())
-                            }
+                            isPtmSlotResponse.postValue(response.body())
                         }
                     }
                 }
@@ -3366,7 +3028,7 @@ class SchoolServices {
     fun isBookedSlot(
         isToken: String, isEventDate: String
     ) {
-        RestClient.apiInterfaces.isBookedSlots(isToken, isEventDate)
+        RestClient.Companion.apiInterfaces.isBookedSlots(isToken, isEventDate)
             ?.enqueue(object : Callback<BookedSlotResponse?> {
                 override fun onResponse(
                     call: Call<BookedSlotResponse?>, response: Response<BookedSlotResponse?>
@@ -3378,13 +3040,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isBookedSlotResponse.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isBookedSlotResponse.postValue(response.body())
-                            }
+                            isBookedSlotResponse.postValue(response.body())
                         }
                     }
                 }
@@ -3404,7 +3060,7 @@ class SchoolServices {
     fun isSlotCancelReOpen(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isSlotCancelAndReOpen(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isSlotCancelAndReOpen(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
@@ -3416,13 +3072,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCancelReOpen.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isPtmSlotCancelReOpen.postValue(response.body())
-                            }
+                            isPtmSlotCancelReOpen.postValue(response.body())
                         }
                     }
                 }
@@ -3442,7 +3092,7 @@ class SchoolServices {
     fun isSlotCancelAndClose(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isSlotCancelAndClose(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isSlotCancelAndClose(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -3494,7 +3144,7 @@ class SchoolServices {
     fun isDatewiseBookedSlots(
         isToken: String, iseventDate: String
     ) {
-        RestClient.apiInterfaces.isDatewiseBookedSlots(isToken, iseventDate)
+        RestClient.Companion.apiInterfaces.isDatewiseBookedSlots(isToken, iseventDate)
             ?.enqueue(object : Callback<SlotBookingResponse?> {
                 override fun onResponse(
                     call: Call<SlotBookingResponse?>, response: Response<SlotBookingResponse?>
@@ -3506,13 +3156,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isDateWiseSlot.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isDateWiseSlot.postValue(response.body())
-                            }
+                            isDateWiseSlot.postValue(response.body())
                         }
                     }
                 }
@@ -3533,7 +3177,7 @@ class SchoolServices {
     fun isSlotValidationForStaff(
         isToken: String, jsonObject: JsonArray
     ) {
-        RestClient.apiInterfaces.isSlotValidationForStaff(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isSlotValidationForStaff(isToken, jsonObject)
             ?.enqueue(object : Callback<SlotValidationResponse?> {
                 override fun onResponse(
                     call: Call<SlotValidationResponse?>, response: Response<SlotValidationResponse?>
@@ -3545,14 +3189,10 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotValidation.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                isSlotValidation.postValue(response.body())
-                            }
+                            isSlotValidation.postValue(response.body())
                         }
+                    }else{
+                        isSlotValidation.postValue(response.body())
                     }
                 }
 
@@ -3572,7 +3212,7 @@ class SchoolServices {
     fun islsrwskillsreport(
         isToken: String
     ) {
-        RestClient.apiInterfaces.islsrwskillsreport(isToken)
+        RestClient.Companion.apiInterfaces.islsrwskillsreport(isToken)
             ?.enqueue(object : Callback<lsrwskillresponse?> {
                 override fun onResponse(
                     call: Call<lsrwskillresponse?>,
@@ -3585,13 +3225,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwskillsreport.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwskillsreport.postValue(response.body())
-                            }
+                            islsrwskillsreport.postValue(response.body())
                         }
                     }
                 }
@@ -3614,7 +3248,7 @@ class SchoolServices {
         isToken: String,
         id: String
     ) {
-        RestClient.apiInterfaces.islsrwStudentlist(isToken, id)
+        RestClient.Companion.apiInterfaces.islsrwStudentlist(isToken, id)
             ?.enqueue(object : Callback<StudentSubmissionLsrwResponse?> {
                 override fun onResponse(
                     call: Call<StudentSubmissionLsrwResponse?>,
@@ -3627,13 +3261,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwStudentlist.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwStudentlist.postValue(response.body())
-                            }
+                            islsrwStudentlist.postValue(response.body())
                         }
                     }
                 }
@@ -3657,7 +3285,7 @@ class SchoolServices {
         month_id: Int,
 
         ) {
-        RestClient.apiInterfaces.islsrwstats(isToken, month_id)
+        RestClient.Companion.apiInterfaces.islsrwstats(isToken, month_id)
             ?.enqueue(object : Callback<AvgSkillResponse?> {
                 override fun onResponse(
                     call: Call<AvgSkillResponse?>,
@@ -3670,13 +3298,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwstats.postValue(response.body())
-                            } else {
-                                Log.d("GetChildAttendanceReportData", response.body().toString())
-                                islsrwstats.postValue(response.body())
-                            }
+                            islsrwstats.postValue(response.body())
                         }
                     }
                 }
@@ -3699,7 +3321,7 @@ class SchoolServices {
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
 
-        RestClient.apiInterfaces.islsrwremarkupdate(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.islsrwremarkupdate(isToken, jsonObject)
             ?.enqueue(object : Callback<LsrwremarkUpdateModel?> {
                 override fun onResponse(
                     call: Call<LsrwremarkUpdateModel?>, response: Response<LsrwremarkUpdateModel?>
@@ -3710,11 +3332,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                islsrwremarkupdate.postValue(response.body())
-                            } else {
-                                islsrwremarkupdate.postValue(response.body())
-                            }
+                            islsrwremarkupdate.postValue(response.body())
                         }
                     } else {
                         islsrwremarkupdate.postValue(null)
@@ -3735,7 +3353,7 @@ class SchoolServices {
     fun isSubmitQuiz(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isCreateQuiz(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isCreateQuiz(isToken, jsonObject)
             ?.enqueue(object : Callback<CreateQuizResponse?> {
                 override fun onResponse(
                     call: Call<CreateQuizResponse?>, response: Response<CreateQuizResponse?>
@@ -3747,13 +3365,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isSubmitQuizData", response.body().toString())
-                                isCreateQuiz.postValue(response.body())
-                            } else {
-                                Log.d("isSubmitQuizData", response.body().toString())
-                                isCreateQuiz.postValue(response.body())
-                            }
+                            isCreateQuiz.postValue(response.body())
                         }
                     }
                 }
@@ -3774,7 +3386,7 @@ class SchoolServices {
     fun isGetQuizExamReport(
         isToken: String, type: String
     ) {
-        RestClient.apiInterfaces.isGetExamQuizReport(isToken, type)
+        RestClient.Companion.apiInterfaces.isGetExamQuizReport(isToken, type)
             ?.enqueue(object : Callback<GetQuizExamReport?> {
                 override fun onResponse(
                     call: Call<GetQuizExamReport?>, response: Response<GetQuizExamReport?>
@@ -3786,13 +3398,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetQuizExamReportData", response.body().toString())
-                                isGetQuizExamReport.postValue(response.body())
-                            } else {
-                                Log.d("GetQuizExamReportData", response.body().toString())
-                                isGetQuizExamReport.postValue(response.body())
-                            }
+                            isGetQuizExamReport.postValue(response.body())
                         }
                     }
                 }
@@ -3813,7 +3419,7 @@ class SchoolServices {
     fun isGetCheckLevel(
         isToken: String, class_id: String, subject_id: String, section_id: String
     ) {
-        RestClient.apiInterfaces.isGetCheckLevel(isToken, class_id, subject_id, section_id)
+        RestClient.Companion.apiInterfaces.isGetCheckLevel(isToken, class_id, subject_id, section_id)
             ?.enqueue(object : Callback<GetCheckLevel?> {
                 override fun onResponse(
                     call: Call<GetCheckLevel?>, response: Response<GetCheckLevel?>
@@ -3825,13 +3431,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetCheckLevelData", response.body().toString())
-                                isGetCheckLevel.postValue(response.body())
-                            } else {
-                                Log.d("GetCheckLevelData", response.body().toString())
-                                isGetCheckLevel.postValue(response.body())
-                            }
+                            isGetCheckLevel.postValue(response.body())
                         }
                     }
                 }
@@ -3850,18 +3450,13 @@ class SchoolServices {
 
 
     fun islsrwSkillCreate(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.islsrwSkillCreate(isToken, jsonObject)
+        RestClient.Companion.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.Companion.apiInterfaces.islsrwSkillCreate(isToken, jsonObject)
             ?.enqueue(object : Callback<LsrwSkillSendResponse?> {
                 override fun onResponse(
                     call: Call<LsrwSkillSendResponse?>, response: Response<LsrwSkillSendResponse?>
                 ) {
-                    if (response.code() == 200 && response.body() != null) {
-                        islsrwSkillCreate.postValue(response.body())
-                    } else {
-                        islsrwSkillCreate.postValue(response.body())
-                    }
-
+                    islsrwSkillCreate.postValue(response.body())
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
@@ -3880,7 +3475,7 @@ class SchoolServices {
     fun isGetQuizQuestionReport(
         isToken: String, class_id: String,
     ) {
-        RestClient.apiInterfaces.isGetQuizQuestionReport(isToken, class_id)
+        RestClient.Companion.apiInterfaces.isGetQuizQuestionReport(isToken, class_id)
             ?.enqueue(object : Callback<GetQuizQuestionReport?> {
                 override fun onResponse(
                     call: Call<GetQuizQuestionReport?>, response: Response<GetQuizQuestionReport?>
@@ -3892,13 +3487,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetQuizQuestionReportData", response.body().toString())
-                                isGetQuizQuestionReport.postValue(response.body())
-                            } else {
-                                Log.d("GetQuizQuestionReportData", response.body().toString())
-                                isGetQuizQuestionReport.postValue(response.body())
-                            }
+                            isGetQuizQuestionReport.postValue(response.body())
                         }
                     }
                 }
@@ -3919,7 +3508,7 @@ class SchoolServices {
     fun isGetQuizSubmissionList(
         isToken: String, id: String,
     ) {
-        RestClient.apiInterfaces.isGetQuizSubmissionList(isToken, id)
+        RestClient.Companion.apiInterfaces.isGetQuizSubmissionList(isToken, id)
             ?.enqueue(object : Callback<GetQuizSubmissionList?> {
                 override fun onResponse(
                     call: Call<GetQuizSubmissionList?>, response: Response<GetQuizSubmissionList?>
@@ -3931,13 +3520,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetQuizSubmissionListData", response.body().toString())
-                                isGetQuizSubmissionList.postValue(response.body())
-                            } else {
-                                Log.d("GetQuizSubmissionListData", response.body().toString())
-                                isGetQuizSubmissionList.postValue(response.body())
-                            }
+                            isGetQuizSubmissionList.postValue(response.body())
                         }
                     }
                 }
@@ -3958,7 +3541,7 @@ class SchoolServices {
     fun isGetPickFromQBank(
         isToken: String, subject_id: String
     ) {
-        RestClient.apiInterfaces.isGetPickFromQBank(isToken, subject_id)
+        RestClient.Companion.apiInterfaces.isGetPickFromQBank(isToken, subject_id)
             ?.enqueue(object : Callback<GetPickFromQBank?> {
                 override fun onResponse(
                     call: Call<GetPickFromQBank?>, response: Response<GetPickFromQBank?>
@@ -3970,13 +3553,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isGetPickFromQBankData", response.body().toString())
-                                isGetPickFromQBank.postValue(response.body())
-                            } else {
-                                Log.d("isGetPickFromQBankData", response.body().toString())
-                                isGetPickFromQBank.postValue(response.body())
-                            }
+                            isGetPickFromQBank.postValue(response.body())
                         }
                     }
                 }
@@ -3997,7 +3574,7 @@ class SchoolServices {
     fun isQuizAddQuestion(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isAddQuestion(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isAddQuestion(isToken, jsonObject)
             ?.enqueue(object : Callback<AddQuestionResponse?> {
                 override fun onResponse(
                     call: Call<AddQuestionResponse?>, response: Response<AddQuestionResponse?>
@@ -4009,13 +3586,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isAddQuestion.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isAddQuestion.postValue(response.body())
-                            }
+                            isAddQuestion.postValue(response.body())
                         }
                     }
                 }
@@ -4036,7 +3607,7 @@ class SchoolServices {
     fun isGetMessageFromStaff(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isGetMessageFromStaff(isToken)
+        RestClient.Companion.apiInterfaces.isGetMessageFromStaff(isToken)
             ?.enqueue(object : Callback<GetMessagesStaff?> {
                 override fun onResponse(
                     call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
@@ -4048,13 +3619,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaff.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaff.postValue(response.body())
-                            }
+                            isGetMessageFromStaff.postValue(response.body())
                         }
                     }
                 }
@@ -4075,7 +3640,7 @@ class SchoolServices {
     fun isGetMessageFromStaffArchive(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isGetMessageFromStaffArchive(isToken)
+        RestClient.Companion.apiInterfaces.isGetMessageFromStaffArchive(isToken)
             ?.enqueue(object : Callback<GetMessagesStaff?> {
                 override fun onResponse(
                     call: Call<GetMessagesStaff?>, response: Response<GetMessagesStaff?>
@@ -4087,13 +3652,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaffArchive.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isGetMessageFromStaffArchive.postValue(response.body())
-                            }
+                            isGetMessageFromStaffArchive.postValue(response.body())
                         }
                     }
                 }
@@ -4114,7 +3673,7 @@ class SchoolServices {
     fun isSchoolprofilelist(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isSchoolprofilelist(isToken)
+        RestClient.Companion.apiInterfaces.isSchoolprofilelist(isToken)
             ?.enqueue(object : Callback<ProfileListResponse?> {
                 override fun onResponse(
                     call: Call<ProfileListResponse?>, response: Response<ProfileListResponse?>
@@ -4126,13 +3685,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isSchoolprofilelist.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                isSchoolprofilelist.postValue(response.body())
-                            }
+                            isSchoolprofilelist.postValue(response.body())
                         }
                     }
                 }
@@ -4154,7 +3707,7 @@ class SchoolServices {
         isToken: String,
         id: Int
     ) {
-        RestClient.apiInterfaces.getchildhomeworkstandard(isToken, id)
+        RestClient.Companion.apiInterfaces.getchildhomeworkstandard(isToken, id)
             ?.enqueue(object : Callback<ChildStandardResponse?> {
                 override fun onResponse(
                     call: Call<ChildStandardResponse?>, response: Response<ChildStandardResponse?>
@@ -4166,13 +3719,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getchildhomeworkstandard.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getchildhomeworkstandard.postValue(response.body())
-                            }
+                            getchildhomeworkstandard.postValue(response.body())
                         }
                     }
                 }
@@ -4195,7 +3742,7 @@ class SchoolServices {
         id: Int,
         target_type: Int
     ) {
-        RestClient.apiInterfaces.getassignmentchildhomework(isToken, id, target_type)
+        RestClient.Companion.apiInterfaces.getassignmentchildhomework(isToken, id, target_type)
             ?.enqueue(object : Callback<AssignmentTargetDetailsResponse?> {
                 override fun onResponse(
                     call: Call<AssignmentTargetDetailsResponse?>,
@@ -4208,13 +3755,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getassignmentchildhomework.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getassignmentchildhomework.postValue(response.body())
-                            }
+                            getassignmentchildhomework.postValue(response.body())
                         }
                     }
                 }
@@ -4237,7 +3778,7 @@ class SchoolServices {
         id: Int,
         target_type: Int
     ) {
-        RestClient.apiInterfaces.getattachmentchildhomework(isToken, id, target_type)
+        RestClient.Companion.apiInterfaces.getattachmentchildhomework(isToken, id, target_type)
             ?.enqueue(object : Callback<AttachmentTargetDetailResponse?> {
                 override fun onResponse(
                     call: Call<AttachmentTargetDetailResponse?>,
@@ -4250,13 +3791,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getattachmentchildhomework.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getattachmentchildhomework.postValue(response.body())
-                            }
+                            getattachmentchildhomework.postValue(response.body())
                         }
                     }
                 }
@@ -4278,7 +3813,7 @@ class SchoolServices {
         isToken: String,
         role_type: String
     ) {
-        RestClient.apiInterfaces.getdashboardnewupdates(isToken, role_type)
+        RestClient.Companion.apiInterfaces.getdashboardnewupdates(isToken, role_type)
             ?.enqueue(object : Callback<WhatsNewUpdateResponse?> {
                 override fun onResponse(
                     call: Call<WhatsNewUpdateResponse?>, response: Response<WhatsNewUpdateResponse?>
@@ -4290,13 +3825,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getdashboardnewupdates.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getdashboardnewupdates.postValue(response.body())
-                            }
+                            getdashboardnewupdates.postValue(response.body())
                         }
                     } else {
                         getdashboardnewupdates.postValue(null)
@@ -4324,7 +3853,7 @@ class SchoolServices {
         isAcademicYearId: String,
         attendance_type: String,
         ) {
-        RestClient.apiInterfaces.getAttendanceStudentList(
+        RestClient.Companion.apiInterfaces.getAttendanceStudentList(
             isToken,
             class_id,
             section_id,
@@ -4344,13 +3873,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getattendanceStudentList.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getattendanceStudentList.postValue(response.body())
-                            }
+                            getattendanceStudentList.postValue(response.body())
                         }
                     }
                 }
@@ -4371,7 +3894,7 @@ class SchoolServices {
     fun isblockstudent(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isblockstudent(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isblockstudent(isToken, jsonObject)
             ?.enqueue(object : Callback<BlockApiResponse?> {
                 override fun onResponse(
                     call: Call<BlockApiResponse?>, response: Response<BlockApiResponse?>
@@ -4383,13 +3906,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isblockstudent.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isblockstudent.postValue(response.body())
-                            }
+                            isblockstudent.postValue(response.body())
                         }
                     }
                 }
@@ -4410,7 +3927,7 @@ class SchoolServices {
     fun isblockstudentlist(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isblockstudentlist(isToken)
+        RestClient.Companion.apiInterfaces.isblockstudentlist(isToken)
             ?.enqueue(object : Callback<BlockedStudentsResponse?> {
                 override fun onResponse(
                     call: Call<BlockedStudentsResponse?>,
@@ -4423,13 +3940,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isblockstudentlist.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isblockstudentlist.postValue(response.body())
-                            }
+                            isblockstudentlist.postValue(response.body())
                         }
                     }
                 }
@@ -4450,7 +3961,7 @@ class SchoolServices {
     fun isfrequentlyasked(
         isToken: String
     ) {
-        RestClient.apiInterfaces.isfrequentlyasked(isToken)
+        RestClient.Companion.apiInterfaces.isfrequentlyasked(isToken)
             ?.enqueue(object : Callback<FrequentlyModelResponse?> {
                 override fun onResponse(
                     call: Call<FrequentlyModelResponse?>,
@@ -4463,13 +3974,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isfrequentlyasked.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isfrequentlyasked.postValue(response.body())
-                            }
+                            isfrequentlyasked.postValue(response.body())
                         }
                     }
                 }
@@ -4491,7 +3996,7 @@ class SchoolServices {
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isdeletenotification(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isdeletenotification(isToken, jsonObject)
             ?.enqueue(object : Callback<DeleteNotificationResponse?> {
                 override fun onResponse(
                     call: Call<DeleteNotificationResponse?>,
@@ -4504,13 +4009,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isdeletenotification.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                isdeletenotification.postValue(response.body())
-                            }
+                            isdeletenotification.postValue(response.body())
                         }
                     }
                 }
@@ -4529,7 +4028,7 @@ class SchoolServices {
 
 
     fun isgetfeature() {
-        RestClient.apiInterfaces.isgetfeature()
+        RestClient.Companion.apiInterfaces.isgetfeature()
             ?.enqueue(object : Callback<GetFeature?> {
                 override fun onResponse(
                     call: Call<GetFeature?>, response: Response<GetFeature?>
@@ -4541,13 +4040,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetFeature", response.body().toString())
-                                isgetfeature.postValue(response.body())
-                            } else {
-                                Log.d("GetFeature", response.body().toString())
-                                isgetfeature.postValue(response.body())
-                            }
+                            isgetfeature.postValue(response.body())
                         }
                     }
                 }
@@ -4569,7 +4062,7 @@ class SchoolServices {
         isToken: String,
         mobile_number: String
     ) {
-        RestClient.apiInterfaces.getreviewlist(isToken, mobile_number)
+        RestClient.Companion.apiInterfaces.getreviewlist(isToken, mobile_number)
             ?.enqueue(object : Callback<ReviewResponse?> {
                 override fun onResponse(
                     call: Call<ReviewResponse?>, response: Response<ReviewResponse?>
@@ -4581,13 +4074,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getreviewlist.postValue(response.body())
-                            } else {
-                                Log.d("GetMessagesStaffData", response.body().toString())
-                                getreviewlist.postValue(response.body())
-                            }
+                            getreviewlist.postValue(response.body())
                         }
                     }
                 }
@@ -4609,7 +4096,7 @@ class SchoolServices {
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.reviewpost(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.reviewpost(isToken, jsonObject)
             ?.enqueue(object : Callback<SubmitReviewResponse?> {
                 override fun onResponse(
                     call: Call<SubmitReviewResponse?>, response: Response<SubmitReviewResponse?>
@@ -4621,13 +4108,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                reviewpost.postValue(response.body())
-                            } else {
-                                Log.d("isAddQuestionData", response.body().toString())
-                                reviewpost.postValue(response.body())
-                            }
+                            reviewpost.postValue(response.body())
                         } else {
                             reviewpost.postValue(null)
                         }
@@ -4655,7 +4136,7 @@ class SchoolServices {
         section_id: String,
         academic_year_id: String
     ) {
-        RestClient.apiInterfaces.getStaffWiseExam(isToken, section_id,academic_year_id)
+        RestClient.Companion.apiInterfaces.getStaffWiseExam(isToken, section_id,academic_year_id)
             ?.enqueue(object : Callback<getStaffWisExam?> {
                 override fun onResponse(
                     call: Call<getStaffWisExam?>,
@@ -4668,13 +4149,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("getStaffWisExam", response.body().toString())
-                                isgetStaffWiseExam.postValue(response.body())
-                            } else {
-                                Log.d("getStaffWisExam", response.body().toString())
-                                isgetStaffWiseExam.postValue(response.body())
-                            }
+                            isgetStaffWiseExam.postValue(response.body())
                         }
                     }
                 }
@@ -4697,7 +4172,7 @@ class SchoolServices {
         exam_id: String,
         section_id:String
         ) {
-        RestClient.apiInterfaces.getSubjectWiseActivities(isToken, exam_id,section_id)
+        RestClient.Companion.apiInterfaces.getSubjectWiseActivities(isToken, exam_id,section_id)
             ?.enqueue(object : Callback<getSubjectWiseACtivities?> {
                 override fun onResponse(
                     call: Call<getSubjectWiseACtivities?>,
@@ -4710,13 +4185,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isgetSubjectWiseActivities", response.body().toString())
-                                isgetSubjectWiseActivities.postValue(response.body())
-                            } else {
-                                Log.d("isgetSubjectWiseActivities", response.body().toString())
-                                isgetSubjectWiseActivities.postValue(response.body())
-                            }
+                            isgetSubjectWiseActivities.postValue(response.body())
                         }
                     }
                 }
@@ -4738,7 +4207,7 @@ class SchoolServices {
         isToken: String,
         jsonObject: JsonObject,
     ) {
-        RestClient.apiInterfaces.getMarkDetails(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.getMarkDetails(isToken, jsonObject)
             ?.enqueue(object : Callback<MarkResponse?> {
                 override fun onResponse(
                     call: Call<MarkResponse?>,
@@ -4751,13 +4220,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("isgetSubjectWiseActivities", response.body().toString())
-                                isGetMarkDetails.postValue(response.body())
-                            } else {
-                                Log.d("isgetSubjectWiseActivities", response.body().toString())
-                                isGetMarkDetails.postValue(response.body())
-                            }
+                            isGetMarkDetails.postValue(response.body())
                         }
                     }
                 }
@@ -4777,7 +4240,7 @@ class SchoolServices {
     fun isDeleteQuiz(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isDeleteQuiz(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isDeleteQuiz(isToken, jsonObject)
             ?.enqueue(object : Callback<DeleteQuizResponse?> {
                 override fun onResponse(
                     call: Call<DeleteQuizResponse?>, response: Response<DeleteQuizResponse?>
@@ -4789,13 +4252,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("DeleteQuizResponse", response.body().toString())
-                                isDeleteQuiz.postValue(response.body())
-                            } else {
-                                Log.d("DeleteQuizResponse", response.body().toString())
-                                isDeleteQuiz.postValue(response.body())
-                            }
+                            isDeleteQuiz.postValue(response.body())
                         }
                     }
                 }
@@ -4816,7 +4273,7 @@ class SchoolServices {
     fun isEditQuiz(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isEditQuiz(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isEditQuiz(isToken, jsonObject)
             ?.enqueue(object : Callback<EditQuizResponse?> {
                 override fun onResponse(
                     call: Call<EditQuizResponse?>, response: Response<EditQuizResponse?>
@@ -4828,13 +4285,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("DeleteQuizResponse", response.body().toString())
-                                isEditQuiz.postValue(response.body())
-                            } else {
-                                Log.d("DeleteQuizResponse", response.body().toString())
-                                isEditQuiz.postValue(response.body())
-                            }
+                            isEditQuiz.postValue(response.body())
                         }
                     }
                 }
@@ -4855,7 +4306,7 @@ class SchoolServices {
     fun isDeleteQuizQuestion(
         isToken: String, jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.isDeleteQuizQuestion(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.isDeleteQuizQuestion(isToken, jsonObject)
             ?.enqueue(object : Callback<DeleteQuizQuestionResponse?> {
                 override fun onResponse(
                     call: Call<DeleteQuizQuestionResponse?>,
@@ -4868,13 +4319,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
-                                isgetDeleteQuizQuestion.postValue(response.body())
-                            } else {
-                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
-                                isgetDeleteQuizQuestion.postValue(response.body())
-                            }
+                            isgetDeleteQuizQuestion.postValue(response.body())
                         }
                     }
                 }
@@ -4893,7 +4338,7 @@ class SchoolServices {
 
 
     fun uploadmarks(part: MultipartBody.Part, activity: Activity) {
-        RestClient.apiInterfaces.uploadmarks(part)
+        RestClient.Companion.apiInterfaces.uploadmarks(part)
             ?.enqueue(object : Callback<UploadMarkResponse?> {
                 override fun onResponse(
                     call: Call<UploadMarkResponse?>, response: Response<UploadMarkResponse?>
@@ -4903,16 +4348,7 @@ class SchoolServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-//                        if (response.body() != null) {
-//                            val status = response.body()!!.status
-//                            if (status) {
-//                                Log.d("UploadMarkResponse", response.body().toString())
                         uploadmarks.postValue(response.body())
-//                            } else {
-//                                Log.d("UploadMarkResponse", response.body().toString())
-//                                uploadmarks.postValue(response.body())
-//                            }
-//                        }
                     } else {
                         Constant.hideLoading(activity)
                         uploadmarks.postValue(null)
@@ -4940,7 +4376,7 @@ class SchoolServices {
         isToken: String,
         jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.savemarks(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.savemarks(isToken, jsonObject)
             ?.enqueue(object : Callback<SaveMarksModel?> {
                 override fun onResponse(
                     call: Call<SaveMarksModel?>, response: Response<SaveMarksModel?>
@@ -4952,13 +4388,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
-                                savemarks.postValue(response.body())
-                            } else {
-                                Log.d("DeleteQuizQuestionResponse", response.body().toString())
-                                savemarks.postValue(response.body())
-                            }
+                            savemarks.postValue(response.body())
                         }
                     }
                 }
@@ -4977,7 +4407,7 @@ class SchoolServices {
 
 
     fun isStaffLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.StaffLeaveRequestApply(isToken, jsonObject)
+        RestClient.Companion.apiInterfaces.StaffLeaveRequestApply(isToken, jsonObject)
             ?.enqueue(object : Callback<StaffLeaveRequestApplyRespone?> {
                 override fun onResponse(
                     call: Call<StaffLeaveRequestApplyRespone?>,
@@ -4989,11 +4419,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffLeaveApply.postValue(response.body())
-                            } else {
-                                isStaffLeaveApply.postValue(response.body())
-                            }
+                            isStaffLeaveApply.postValue(response.body())
                         }
                     } else {
                         isStaffLeaveApply.postValue(null)
@@ -5015,7 +4441,7 @@ class SchoolServices {
     fun getStaffLeaveCategories(
         isToken: String,
     ) {
-        RestClient.apiInterfaces.getstaffleavecategories(isToken)
+        RestClient.Companion.apiInterfaces.getstaffleavecategories(isToken)
             ?.enqueue(object : Callback<GetStaffLeaveCategoriesData?> {
                 override fun onResponse(
                     call: Call<GetStaffLeaveCategoriesData?>,
@@ -5025,13 +4451,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                Log.d("getStyaffLeaveCatorigies", response.body().toString())
-                                isStaffLeaveCatorgies.postValue(response.body())
-                            } else {
-                                Log.d("getStyaffLeaveCatorigies", response.body().toString())
-                                isStaffLeaveCatorgies.postValue(response.body())
-                            }
+                            isStaffLeaveCatorgies.postValue(response.body())
                         }
                     } else {
                         isStaffLeaveCatorgies.postValue(null)
@@ -5057,7 +4477,7 @@ class SchoolServices {
     fun isstaffleaverequestupdate(
         isToken: String, request: LeaveRequestUpdate, activity: Activity
     ) {
-        RestClient.apiInterfaces.isstaffleaverequestupdate(isToken, request)
+        RestClient.Companion.apiInterfaces.isstaffleaverequestupdate(isToken, request)
             ?.enqueue(object : Callback<StaffLeaveUpdateRespone?> {
                 override fun onResponse(
                     call: Call<StaffLeaveUpdateRespone?>, response: Response<StaffLeaveUpdateRespone?>
@@ -5068,11 +4488,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffleaverequestupdate.postValue(response.body())
-                            } else {
-                                isStaffleaverequestupdate.postValue(response.body())
-                            }
+                            isStaffleaverequestupdate.postValue(response.body())
                         }
                     } else {
                         isStaffleaverequestupdate.postValue(null)
@@ -5099,7 +4515,7 @@ class SchoolServices {
     fun isStaffleaverequestapprove(
         isToken: String, request: LeaveApproveRequest, activity: Activity
     ) {
-        RestClient.apiInterfaces.isstaffleaverequestapprove(isToken, request)
+        RestClient.Companion.apiInterfaces.isstaffleaverequestapprove(isToken, request)
             ?.enqueue(object : Callback<StaffLeaveRequestStatusUpdate?> {
                 override fun onResponse(
                     call: Call<StaffLeaveRequestStatusUpdate?>, response: Response<StaffLeaveRequestStatusUpdate?>
@@ -5110,11 +4526,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isstaffleaverequestapprove.postValue(response.body())
-                            } else {
-                                isstaffleaverequestapprove.postValue(response.body())
-                            }
+                            isstaffleaverequestapprove.postValue(response.body())
                         }
                     } else {
                         isstaffleaverequestapprove.postValue(null)
@@ -5134,7 +4546,7 @@ class SchoolServices {
     fun isStaffleaverequestdelete(
         isToken: String, request: LeaveRequestDelete, activity: Activity
     ) {
-        RestClient.apiInterfaces.isstaffleaverequestdelete(isToken, request)
+        RestClient.Companion.apiInterfaces.isstaffleaverequestdelete(isToken, request)
             ?.enqueue(object : Callback<StaffLeaveRequestDeleteResponse?> {
                 override fun onResponse(
                     call: Call<StaffLeaveRequestDeleteResponse?>, response: Response<StaffLeaveRequestDeleteResponse?>
@@ -5145,11 +4557,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isStaffleaverequestdelete.postValue(response.body())
-                            } else {
-                                isStaffleaverequestdelete.postValue(response.body())
-                            }
+                            isStaffleaverequestdelete.postValue(response.body())
                         }
                     } else {
                         isStaffleaverequestdelete.postValue(null)
@@ -5170,7 +4578,7 @@ class SchoolServices {
     fun getStaffleaverequest(
         isToken: String, staff_id: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.getstaffleaverequest(isToken,staff_id)
+        RestClient.Companion.apiInterfaces.getstaffleaverequest(isToken,staff_id)
             ?.enqueue(object : Callback<getStaffLeaveRequestHistory?> {
                 override fun onResponse(
                     call: Call<getStaffLeaveRequestHistory?>, response: Response<getStaffLeaveRequestHistory?>
@@ -5181,11 +4589,7 @@ class SchoolServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                getstaffleaverequesthistory.postValue(response.body())
-                            } else {
-                                getstaffleaverequesthistory.postValue(response.body())
-                            }
+                            getstaffleaverequesthistory.postValue(response.body())
                         }
                     } else {
                         getstaffleaverequesthistory.postValue(null)
@@ -5201,9 +4605,4 @@ class SchoolServices {
 
     val isStaffleaverequestHistoryLiveData: LiveData<getStaffLeaveRequestHistory?>
         get() = getstaffleaverequesthistory
-
-
-
-
-
 }
