@@ -296,6 +296,56 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/ten"
+                android:id="@+id/consMessTimeTable"
+                android:layout_marginStart="@dimen/five"
+                app:layout_constraintTop_toBottomOf="@+id/consPending"
+                app:layout_constraintStart_toEndOf="@+id/consStudent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:padding="@dimen/fifteen"
+                android:background="@drawable/bg_rect_priamry_colur_radius"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgPending1"
+                    android:src="@drawable/waiting_for_approval"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five">
+                </ImageView>
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/ten"
+                    android:textSize="@dimen/twenty_sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/imgPending1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblPendingIssuesCount1"
+                    android:text="02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:textColor="@color/white"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    app:layout_constraintTop_toBottomOf="@+id/lblPendingIssuesCount1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblPendingIssues1"
+                    android:text="@string/mess_time_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:id="@+id/cons_cardTodayAttendanceDetails"

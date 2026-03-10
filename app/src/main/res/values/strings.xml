@@ -1102,6 +1102,7 @@
     <string name="attendance_history">Attendance History</string>
     <string name="rooms_marked">Rooms Marked</string>
     <string name="admin_requests">Admin Requests</string>
+    <string name="mess_time_table">Mess Time Table</string>
 
 
 </resources>
