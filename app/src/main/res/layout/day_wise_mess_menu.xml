@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:strokeWidth="@dimen/one"
+    android:layout_marginTop="@dimen/ten"
+    app:strokeColor="@color/light_gray_10"
+    app:cardCornerRadius="@dimen/ten"
+    app:cardBackgroundColor="@color/white"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/twele"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lblDay"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="December 2023"
+            android:textColor="@color/light_gray"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcMenuDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

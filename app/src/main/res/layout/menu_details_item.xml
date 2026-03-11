@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/five"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        app:layout_constraintHorizontal_weight="0.03"
+        android:id="@+id/lblColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="45"
+        app:layout_constraintDimensionRatio="1:1"
+        android:textColor="@color/white"
+        android:padding="@dimen/three"
+        android:background="@color/green"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/ten"
+        app:layout_constraintEnd_toStartOf="@+id/lblMenuType"
+        app:layout_constraintBottom_toBottomOf="@+id/lblFoodAvailable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lblMenuType">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblMenuType"
+        android:layout_marginEnd="@dimen/ten"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:text="Menu"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/lblColor"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <TextView
+        android:id="@+id/lblFoodAvailable"
+        style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Food"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/twele_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedHeight="true"
+        android:layout_marginTop="@dimen/five"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@+id/lblMenuType"
+        app:layout_constraintStart_toStartOf="@+id/lblMenuType"
+        app:layout_constraintTop_toBottomOf="@+id/lblMenuType"></TextView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

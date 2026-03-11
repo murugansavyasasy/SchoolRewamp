@@ -1106,6 +1106,11 @@
     <string name="submit_request">Submit Request</string>
     <string name="mess_time_table">Mess Time Table</string>
     <string name="new_request">New Request</string>
+    <string name="mess_timetable">Mess Timetable</string>
+    <string name="weekly_menu_schedule">Weekly Menu Schedule</string>
+    <string name="meal_timings">Meal Timings</string>
+    <string name="mark_all_students">Mark All Students</string>
+    <string name="progress">Progress</string>
 
 
 </resources>

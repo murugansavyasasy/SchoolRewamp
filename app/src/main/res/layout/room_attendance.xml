@@ -1,6 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/consHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:background="@color/dark_blue_4"
+        android:paddingVertical="@dimen/twenty"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/five"
+            app:layout_constraintEnd_toStartOf="@+id/imgClose"
+            android:id="@+id/lblRoomNo"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/ten"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/twenty_four_sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="Room 101"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <ImageView
+            android:layout_marginEnd="@dimen/ten"
+            android:id="@+id/imgClose"
+            app:layout_constraintStart_toEndOf="@+id/lblRoomNo"
+            android:src="@drawable/close_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/lblRoomNo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblRoomNo"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty">
+
+        </ImageView>
+
+        <androidx.constraintlayout.widget.Barrier
+            app:barrierDirection="bottom"
+            android:id="@+id/brRoomClose"
+            android:layout_width="wrap_content"
+            app:constraint_referenced_ids="lblRoomNo,imgClose"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.Barrier>
+
+        <TextView
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/brRoomClose"
+            android:id="@+id/lblStudentsBeds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="3 Students 5 Beds"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="@dimen/ten"
+            android:backgroundTint="@color/very_little_blue_7"
+            android:background="@drawable/green_bg_radius"
+            app:layout_constraintTop_toBottomOf="@+id/lblStudentsBeds"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintStart_toStartOf="@id/lblStudentsBeds"
+            app:layout_constraintEnd_toEndOf="@+id/lblStudentsBeds"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblProgress"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:text="@string/progress"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/lblMarkedPercentage"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/brAttendanceDetails" />
+
+            <TextView
+                android:id="@+id/lblMarkedPercentage"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="end"
+                android:text="6/8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lblProgress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.2"
+                app:layout_constraintStart_toEndOf="@+id/lblProgress"
+                app:layout_constraintTop_toTopOf="@+id/lblProgress"></TextView>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/brOccupancyPecentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="lblProgress,lblMarkedPercentage"></androidx.constraintlayout.widget.Barrier>
+
+            <ProgressBar
+                android:id="@+id/proAttendanceProgressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginBottom="@dimen/eight"
+                android:max="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:progressDrawable="@drawable/progress_voilet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/brOccupancyPecentage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/five"
+        android:id="@+id/nested_scrollview"
+        app:layout_constraintBottom_toTopOf="@+id/lblMarkAttendance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consHeader"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:id="@+id/rcRoomAttendance"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/rcRoomAttendance"
+                android:layout_width="@dimen/two_hundred"
+                android:id="@+id/imgNoDataFound"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/two_hundred">
+            </ImageView>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:id="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="nod"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="imgNoDataFound,lblErrorMessage"
+                android:layout_height="wrap_content">
+
+            </androidx.constraintlayout.widget.Group>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lblMarkAttendance"
+        android:minHeight="0dp"
+        android:paddingVertical="@dimen/ten"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginTop="@dimen/five"
+        app:layout_constrainedHeight="true"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constrainedWidth="true"
+        android:layout_marginBottom="@dimen/ten"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="@dimen/fifteen"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/primary_rect_radius"
+        app:layout_constraintTop_toBottomOf="@+id/nested_scrollview"
+        android:text="@string/mark_all_students"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.button.MaterialButton>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

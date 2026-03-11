@@ -150,6 +150,7 @@
 
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
+    <color name="very_little_blue_7">#335fdc</color>
     <color name="very_light_orange_3">#fee4bf</color>
     <color name="very_light_green_3">#d9f5e6</color>
     <color name="very_light_red_3">#fee0e0</color>
@@ -186,6 +187,7 @@
     <color name="light_violet">#E3F1FB</color>
     <color name="dark_blue_1">#007aff</color>
     <color name="dark_blue_color">#0B337F</color>
+    <color name="dark_blue_4">#1d4ed7</color>
 
     <color name="light_green_bg">#D9FBF7</color>
 
