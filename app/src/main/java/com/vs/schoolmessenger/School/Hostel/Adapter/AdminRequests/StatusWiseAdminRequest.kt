@@ -124,10 +124,10 @@ class StatusWiseAdminRequest(
             }
             else if (data.Status == Constant.waiting_for_approval) {
 
-                lblStatus.setTextColor(R.color.dark_bg_orange_2)
+                lblStatus.setTextColor(context.getColor(R.color.dark_orange_3))
                 imgStatus.setImageResource(R.drawable.waiting_for_approval)
                 imgStatus.setColorFilter(
-                    ContextCompat.getColor(itemView.context, R.color.yellow),
+                    ContextCompat.getColor(itemView.context, R.color.dark_orange_3),
                     PorterDuff.Mode.SRC_IN
                 )
 

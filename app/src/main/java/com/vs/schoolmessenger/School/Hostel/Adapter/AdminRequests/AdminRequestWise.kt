@@ -101,17 +101,16 @@ class AdminRequestWise(
                 applyTintedBackground(
                     lblRoomNo,
                     R.drawable.rect_bg_light_green_present,
-                    R.color.light_red_1
+                    R.color.red
                 )
                 cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.red)
+                    ContextCompat.getColor(itemView.context, R.color.light_red_1)
                 )
 
                 cardHeader.setCardBackgroundColor(
                     ContextCompat.getColor(itemView.context, R.color.light_red)
                 )
 
-                lblRoomNo.setTextColor(Color.parseColor("#D32F2F"))
                 imgStatus.setImageResource(R.drawable.close_red_color)
 
 
@@ -121,16 +120,15 @@ class AdminRequestWise(
                 applyTintedBackground(
                     lblRoomNo,
                     R.drawable.rect_bg_light_green_present,
-                    R.color.light_green_1
+                    R.color.green
                 )
-                lblRoomNo.setTextColor(Color.parseColor("#2E7D32"))
                 imgStatus.setImageResource(R.drawable.tick_icon_2)
                 imgStatus.setColorFilter(
                     ContextCompat.getColor(itemView.context, R.color.green),
                     PorterDuff.Mode.SRC_IN
                 )
                 cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_1)
+                    ContextCompat.getColor(itemView.context, R.color.light_green_four)
                 )
 
                 cardHeader.setCardBackgroundColor(
@@ -143,9 +141,8 @@ class AdminRequestWise(
                 applyTintedBackground(
                     lblRoomNo,
                     R.drawable.rect_bg_light_green_present,
-                    R.color.light_bg_orange_6
+                    R.color.dark_orange_3
                 )
-                lblRoomNo.setTextColor(R.color.dark_bg_orange_2)
                 imgStatus.setImageResource(R.drawable.waiting_for_approval)
                 imgStatus.setColorFilter(
                     ContextCompat.getColor(itemView.context, R.color.yellow),
@@ -153,11 +150,11 @@ class AdminRequestWise(
                 )
 
                 cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.orange)
+                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
                 )
 
                 cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.orange)
+                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
                 )
             }
         }
