@@ -53,6 +53,9 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token

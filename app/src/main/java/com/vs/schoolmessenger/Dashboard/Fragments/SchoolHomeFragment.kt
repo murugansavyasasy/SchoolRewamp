@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Hostel.HostelDashboard
+import com.vs.schoolmessenger.School.Hostel.HostelList
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -1018,7 +1019,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     HostelDashboard::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
+                        HostelList::class.java
                     } else {
                         HostelDashboard::class.java
                     }

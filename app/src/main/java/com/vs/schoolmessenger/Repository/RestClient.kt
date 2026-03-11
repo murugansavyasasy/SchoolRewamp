@@ -84,6 +84,13 @@ class RestClient {
             initDefaultRetrofit()
         }
 
+        fun changeLocalUrl(changeLocalUrl: String) {
+            BASE_URL = changeLocalUrl
+            retrofit = null
+            _apiInterfaces = null
+            initDefaultRetrofit()
+        }
+
 
 
         val client: Retrofit

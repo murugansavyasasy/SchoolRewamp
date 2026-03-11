@@ -74,10 +74,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lblNewRequest"
+                android:minHeight="0dp"
+                android:paddingVertical="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/five"
+                app:layout_constrainedHeight="true"
+                android:textSize="@dimen/thirteen_sp"
+                app:layout_constrainedWidth="true"
+                android:layout_marginBottom="@dimen/ten"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/fifteen"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/primary_rect_radius"
+                app:icon="@drawable/ic_plus"
+                app:iconTint="@color/white"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/viewSubmitNewRequestBG"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/new_request"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.button.MaterialButton>
+
             <View
                 android:layout_marginHorizontal="@dimen/fifteen"
                 android:id="@+id/viewSubmitNewRequestBG"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblNewRequest"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="0dp"
@@ -139,7 +166,7 @@
                 android:id="@+id/lblSubmitRequest"
                 android:minHeight="0dp"
                 android:paddingVertical="@dimen/ten"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_marginTop="@dimen/ten"
                 app:layout_constrainedHeight="true"
                 android:textSize="@dimen/thirteen_sp"
@@ -191,10 +218,19 @@
 
             </androidx.constraintlayout.widget.Barrier>
 
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                app:constraint_referenced_ids="viewSubmitNewRequestBG,lblSubmitNewRequest,EdtIssue,lblRoomNo,EdtIssue,lblSubmitRequest,lblCancel"
+                android:id="@+id/groupEntireAdminRequest"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+            </androidx.constraintlayout.widget.Group>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
                 app:layout_constraintTop_toBottomOf="@+id/viewSubmitNewRequestBG"
-                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginHorizontal="@dimen/fifteen"
                 android:id="@+id/rcAdminRequest"
                 android:layout_marginTop="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"

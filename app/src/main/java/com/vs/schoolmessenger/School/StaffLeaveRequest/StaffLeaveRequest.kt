@@ -107,11 +107,11 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
             if (response != null) {
                 if (response.status) {
                     Log.d("isstaffleaverequestupdate", response.message)
-                    Constant.showRedirecttoMenu(
+                    Constant.showRedirecttoStaffMenu(
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showRedirecttoMenu(
+                    Constant.showRedirecttoStaffMenu(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
@@ -130,11 +130,11 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                         addProperty(APIKeyNames.menu_id, Constant.SELECTED_MENU_ID)
                     }
                     appViewModel?.isAddRewardPoints("" ?: "", jsonObject, this)
-                    Constant.showParentDataValidation(
+                    Constant.showDataValidation(
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showParentDataValidation(
+                    Constant.showDataValidation(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }
@@ -156,7 +156,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                     isLeaveCategorySpinner()
                     getIntentValuesIfEditing()
                 } else {
-                    Constant.showParentDataValidation(
+                    Constant.showDataValidation(
                         response.status.toString(), response.message, this
                     )
                 }

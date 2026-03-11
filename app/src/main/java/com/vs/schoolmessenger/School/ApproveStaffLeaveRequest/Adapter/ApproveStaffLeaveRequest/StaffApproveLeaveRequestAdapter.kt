@@ -155,11 +155,12 @@ class StaffApproveLeaveRequestAdapter(
                     R.drawable.bg_leave_approved,
                     R.color.light_yellow_1
                 )
-                lblLeaveStatus.setTextColor(Color.parseColor("#996633"))
+                lblLeaveStatus.setTextColor(context.getColor(R.color.white))
                 lblLeaveStatus.text=context.getString(R.string.pending)
+                cstStatus.visibility= View.VISIBLE
 
-                lblLeaveStatus.visibility= View.GONE
-                cstStatus.visibility= View.GONE
+
+                lblLeaveStatus.visibility= View.VISIBLE
                 btnApprove.text=context.getString(R.string.approve)
                 btnCancel.text=context.getString(R.string.reject)
 

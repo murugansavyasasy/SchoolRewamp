@@ -150,6 +150,10 @@
 
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
+    <color name="very_light_orange_3">#fee4bf</color>
+    <color name="very_light_green_3">#d9f5e6</color>
+    <color name="very_light_red_3">#fee0e0</color>
+
     <color name="light_orange_four">#eee7c7</color>
     <color name="light_green_four">#e8f1e8</color>
     <color name="light_pale_green_1">#e2fceb</color>
@@ -163,6 +167,7 @@
     <color name="pink">#ed5b96</color>
     <color name="purble">#c489d7</color>
     <color name="red">#E43C2F</color>
+    <color name="dark_brown_3">#cf8224</color>
     <color name="light_orange_4">#fffae7</color>
     <color name="mild_red">#F56363</color>
     <color name="clr_red">#FF7575</color>
@@ -191,6 +196,8 @@
     <color name="light_bg_orange_5">#fefce8</color>
     <color name="light_bg_orange_6">#dfaa4b</color>
     <color name="dark_blue_9">#254aba</color>
+    <color name="dark_blue_10">#4730d8</color>
+    <color name="light_blue_11">#6d57e5</color>
 
 
     <color name="light_bg_blue">#CFE8F6</color>

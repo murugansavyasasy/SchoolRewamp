@@ -54,6 +54,9 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
         isAccessToken = isStaffDetails?.access_token
 
         binding.imgClose.setOnClickListener(this)
+        binding.lblCancel.setOnClickListener(this)
+        binding.lblNewRequest.setOnClickListener(this)
+
 
         appViewModel?.getleaverequest?.observe(viewLifecycleOwner) { response ->
 
@@ -211,6 +214,16 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.imgClose -> {
+            }
+
+            R.id.lblCancel->{
+                binding.groupEntireAdminRequest.visibility= View.GONE
+                binding.lblNewRequest.visibility= View.VISIBLE
+            }
+
+            R.id.lblNewRequest->{
+                binding.lblNewRequest.visibility= View.GONE
+                binding.groupEntireAdminRequest.visibility= View.VISIBLE
             }
         }
     }

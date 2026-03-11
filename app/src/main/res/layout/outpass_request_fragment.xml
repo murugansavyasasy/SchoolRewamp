@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/consHeader"
+        android:background="@color/dark_blue_10"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:paddingVertical="@dimen/twenty"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgScreenType"
+            app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
+            android:src="@drawable/waiting_for_approval"
+            android:padding="@dimen/five"
+            android:layout_marginStart="@dimen/ten"
+            app:layout_constraintStart_toStartOf="parent"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/lblOutPassRequest"
+            app:layout_constraintBottom_toBottomOf="@+id/lblOutPassRequest"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty">
+
+        </ImageView>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/five"
+            app:layout_constraintEnd_toStartOf="@+id/imgClose"
+            android:id="@+id/lblOutPassRequest"
+            app:layout_constraintBottom_toTopOf="@+id/lblPendingRequest"
+            app:layout_constraintStart_toEndOf="@+id/imgScreenType"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/five"
+            android:textSize="@dimen/twenty_four_sp"
+            android:textColor="@color/white"
+            app:layout_constrainedWidth="true"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="@string/outpass_requests"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <ImageView
+            android:layout_marginEnd="@dimen/ten"
+            android:id="@+id/imgClose"
+            app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
+            android:src="@drawable/close_icon"
+            android:padding="@dimen/five"
+            android:backgroundTint="@color/light_blue_11"
+            android:background="@drawable/bg_circle_gray"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/lblOutPassRequest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblOutPassRequest"
+            android:id="@+id/lblPendingRequest"
+            app:layout_constraintStart_toStartOf="@+id/imgScreenType"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/thirteen_sp"
+            android:textColor="@color/white"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="3 pending approval "
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consHeader"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="@dimen/fifteen"
+                android:id="@+id/rcOutpassRequest"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/rcAdminRequest"
+                android:layout_width="@dimen/two_hundred"
+                android:id="@+id/imgNoDataFound"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/two_hundred">
+            </ImageView>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:id="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="nod"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

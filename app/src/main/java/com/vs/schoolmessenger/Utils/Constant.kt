@@ -92,6 +92,7 @@ import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSe
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
+import com.vs.schoolmessenger.School.StaffLeaveRequest.StaffLeaveHistory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -651,6 +652,7 @@ object Constant {
     var rightBracket = ")"
     var yyyyMMdd = "yyyyMMdd"
     var quiz_Id = "quiz_Id"
+
     var quiz_Title = "quiz_Title"
     var limitQuestion = "limitQuestion"
     var submittedCount = "submittedCount"
@@ -1599,6 +1601,54 @@ object Constant {
             closePopup()
         }
     }
+    fun showRedirecttoStaffMenu(title: String, message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val intent = Intent(activity, StaffLeaveHistory::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            activity.finish()
+            closePopup()
+        }
+    }
+
 
 
     fun showDataValidationNoDashboardRedirectSubject(title: String, message: String, activity: Activity) {

@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests
+package com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest
 
 
 import android.content.Context
@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.StatusWiseOutpassRequestData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class StatusWiseAdminRequest(
-    private var itemList: List<StatusWiseAdminRequestData>?,
+class StatusWiseOutpassRequest(
+    private var itemList: List<StatusWiseOutpassRequestData>?,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -26,8 +27,8 @@ class StatusWiseAdminRequest(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    var fullList: List<StatusWiseAdminRequestData> = itemList ?: emptyList()
-    private var filteredList: List<StatusWiseAdminRequestData> = fullList
+    var fullList: List<StatusWiseOutpassRequestData> = itemList ?: emptyList()
+    private var filteredList: List<StatusWiseOutpassRequestData> = fullList
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -55,14 +56,14 @@ class StatusWiseAdminRequest(
         }
     }
 
-    fun updateData(newList: List<StatusWiseAdminRequestData>) {
+    fun updateData(newList: List<StatusWiseOutpassRequestData>) {
         fullList = newList
         filteredList = newList
         notifyDataSetChanged()
     }
 
 
-    fun getCurrentList(): List<StatusWiseAdminRequestData> {
+    fun getCurrentList(): List<StatusWiseOutpassRequestData> {
         return itemList!!
     }
 
@@ -71,7 +72,7 @@ class StatusWiseAdminRequest(
         val updatedList = fullList.mapNotNull { monthData ->
             val updatedDetails = monthData.StatusWiseData.filterNot { it.roomNumber == id }
             if (updatedDetails.isNotEmpty()) {
-                StatusWiseAdminRequestData(Status = monthData.Status, StatusWiseData = updatedDetails)
+                StatusWiseOutpassRequestData(Status = monthData.Status, StatusWiseData = updatedDetails)
             } else null
         }
         updateData(updatedList)
@@ -86,7 +87,7 @@ class StatusWiseAdminRequest(
             itemView.findViewById(R.id.rcAdminRequestWise)
 
         fun bind(
-            data: StatusWiseAdminRequestData,
+            data: StatusWiseOutpassRequestData,
         ) {
             when(data.Status){
                 Constant.waiting_for_approval ->{
@@ -134,7 +135,7 @@ class StatusWiseAdminRequest(
                 rcAdminRequestWise.visibility = View.VISIBLE
                 rcAdminRequestWise.layoutManager = LinearLayoutManager(context)
                 rcAdminRequestWise.isNestedScrollingEnabled = false
-                rcAdminRequestWise.adapter = AdminRequestWise(
+                rcAdminRequestWise.adapter = OutpassRequestWise(
                     data.StatusWiseData,
                     context,
                     false
