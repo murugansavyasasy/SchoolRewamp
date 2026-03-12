@@ -68,7 +68,7 @@ class MonthWiseStaffLeaveHistoryAdapter(
 
     fun removeItemById(id: String) {
         val updatedList = fullList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.staff_id == id }
+            val updatedDetails = monthData.details.filterNot { it.id == id }
             if (updatedDetails.isNotEmpty()) {
                 StaffMonthWiseLeaveData(month = monthData.month, details = updatedDetails)
             } else null

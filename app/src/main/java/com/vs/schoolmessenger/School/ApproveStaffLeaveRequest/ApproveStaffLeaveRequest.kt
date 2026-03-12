@@ -283,13 +283,13 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
         resultCallback: (Boolean) -> Unit
     ) {
         Log.d("isStatus", isButtonClick.toString())
-        isApproveRejectId = data.staff_id
+        isApproveRejectId = data.id
         var isMessage = ""
         if (isButtonClick) {
-            request = LeaveApproveRequest(id = data.staff_id, is_approve = true)
+            request = LeaveApproveRequest(id = data.id, is_approve = true)
             isMessage = getString(R.string.Are_you_sure_you_want_to_approve_this_request)
         } else {
-            request = LeaveApproveRequest(id = data.staff_id, is_approve = false)
+            request = LeaveApproveRequest(id = data.id, is_approve = false)
             isMessage = getString(R.string.Are_you_sure_you_want_to_reject_this_request)
         }
         Constant.showSendConfirmationDialog(
@@ -322,7 +322,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         // find outer month index that contains the headerId
         val targetMonthIndex = mAdapter.filteredList.indexOfFirst { month ->
-            month.details.any { it.staff_id == headerId }
+            month.details.any { it.id == headerId }
         }
         if (targetMonthIndex == -1) {
             Log.d("ScrollDebug", "No month found with headerId: $headerId")
@@ -391,7 +391,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         // find inner index
         val innerPosition =
-            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.staff_id == headerId }
+            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
         if (innerPosition == -1) {
             Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
             return

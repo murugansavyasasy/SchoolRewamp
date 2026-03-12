@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -102,7 +103,6 @@ class StaffApproveLeaveRequestAdapter(
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
         private val textLeaveType: TextView = itemView.findViewById(R.id.lblLeaveType)
         private val lbltxtDays: TextView = itemView.findViewById(R.id.lbltxtDays)
-        private val lblCallIcon: TextView = itemView.findViewById(R.id.lblCallIcon)
         private val lblSeeMoreDetails: TextView = itemView.findViewById(R.id.lblSeeMoreDetails)
         private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
         private val cstStatus: ConstraintLayout = itemView.findViewById(R.id.cstStatus)
@@ -153,14 +153,14 @@ class StaffApproveLeaveRequestAdapter(
                 applyTintedBackground(
                     lblLeaveStatus,
                     R.drawable.bg_leave_approved,
-                    R.color.light_yellow_1
+                    R.color.amber_yellow
                 )
                 lblLeaveStatus.setTextColor(context.getColor(R.color.white))
                 lblLeaveStatus.text=context.getString(R.string.pending)
                 cstStatus.visibility= View.VISIBLE
 
 
-                lblLeaveStatus.visibility= View.VISIBLE
+                lblLeaveStatus.visibility= View.GONE
                 btnApprove.text=context.getString(R.string.approve)
                 btnCancel.text=context.getString(R.string.reject)
 
@@ -175,19 +175,20 @@ class StaffApproveLeaveRequestAdapter(
             }
 
 
-            lblCallIcon.setOnClickListener{
-                Constant.redirectToDialPad(context,"0000000000")
-            }
-
 
 
             val openExam = View.OnClickListener {
                 val intent = Intent(context, PreviewStaffLeaveRequest::class.java)
 
                 val isSelectedStaffLeaveHistoryData = isStaffLeaveHistoryData(
-                    id=data.staff_id,
+                    id=data.id,
+                    staff_id=data.staff_id,
                     applied_on=data.applied_on,
                     staff_name=data.staff_name,
+                    email =data.email,
+                    mobile_no =data.mobile_no,
+                    address =data.address,
+                    role =data.role,
                     from_date=data.from_date,
                     to_date=data.to_date,
                     no_of_days=data.no_of_days,

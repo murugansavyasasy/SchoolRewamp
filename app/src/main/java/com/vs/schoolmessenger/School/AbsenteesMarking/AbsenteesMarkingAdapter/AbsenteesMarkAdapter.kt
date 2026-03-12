@@ -9,11 +9,13 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.GetAttendanceDetails.GetAttendanceStudentListData
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
 import com.vs.schoolmessenger.School.AbsenteesMarking.ODCustomSwitch
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
@@ -78,6 +80,11 @@ class AbsenteesMarkAdapter(
         private val lnrOD: LinearLayout = itemView.findViewById(R.id.lnrOD)
         private val switchOD: ODCustomSwitch = itemView.findViewById(R.id.switchOD)
         private val cbLaterComer: CheckBox = itemView.findViewById(R.id.cbLaterComer)
+        private val lnrLeaveDetails: LinearLayout = itemView.findViewById(R.id.lnrLeaveDetails)
+        private val lblLeaveApplied: TextView = itemView.findViewById(R.id.lblLeaveApplied)
+        private val lblFromCal: TextView = itemView.findViewById(R.id.lblFromCal)
+        private val lblToCall: TextView = itemView.findViewById(R.id.lblToCall)
+        private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
 
         fun bind(
             data: GetAttendanceStudentListData,
@@ -89,6 +96,29 @@ class AbsenteesMarkAdapter(
                 lblRollNo.text = data.roll_no
                 lblRollNo.visibility = View.VISIBLE
             } else lblRollNo.visibility = View.GONE
+
+            val isLeaveApplied=data.is_leave_approved
+
+            if (isLeaveApplied){
+                lblReason.text=data.reason
+                lblFromCal.text= Constant.convertToReadableDate1(data.leave_from?:"")
+                lblToCall.text= Constant.convertToReadableDate1(data.leave_to?:"")
+                lblLeaveApplied.visibility= View.VISIBLE
+                lblLeaveApplied.isEnabled=true
+                lnrLeaveDetails.visibility= View.GONE
+
+            }
+            else{
+                lnrLeaveDetails.visibility= View.GONE
+                lblLeaveApplied.visibility= View.GONE
+                lblLeaveApplied.isEnabled=false
+            }
+
+            lblLeaveApplied.setOnClickListener {
+
+                lnrLeaveDetails.visibility =
+                    if (lnrLeaveDetails.isVisible) View.GONE else View.VISIBLE
+            }
 
             if (data.name.isNullOrEmpty()) {
                 lblName.visibility = View.GONE

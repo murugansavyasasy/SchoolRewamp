@@ -90,9 +90,11 @@
     <color name="dark_brown">#762d08</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
+    <color name="very_light_yellow_3">#fffaec</color>
     <color name="light_gray_2">#888888</color>
     <color name="light_gray_10">#e3e3e3</color>
     <color name="gray_white">#f2f2f7</color>
+    <color name="dark_brown_4">#84461b</color>
     <color name="mild_grey6">#656565</color>
     <color name="mild_grey7">#586171</color>
     <color name="mild_grey">#f9fafc</color>

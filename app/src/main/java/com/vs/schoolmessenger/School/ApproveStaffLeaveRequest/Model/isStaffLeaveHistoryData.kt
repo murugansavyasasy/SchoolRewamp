@@ -2,9 +2,14 @@ package com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model
 
 class isStaffLeaveHistoryData(
     val id: String,
+    val staff_id: String,
     val applied_on: String?,
     val staff_name: String?,
     val from_date: String?,
+    val email: String?,
+    val mobile_no: String?,
+    val address: String?,
+    val role: String?,
     val to_date: String?,
     val no_of_days: String?,
     val reason: String?,

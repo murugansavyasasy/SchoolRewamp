@@ -2013,9 +2013,8 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isSendStaffLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
-//        val base_url = SharedPreference.getBaseUrl(activity)
-//        RestClient.changeApiBaseUrl(base_url!!)
-        RestClient.changeLocalUrl("http://192.168.10.211:9002")
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
 
         apiSchoolRepositories.isStaffLeaveRequestApply(isToken, jsonObject, activity)
     }
@@ -2027,33 +2026,29 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isstaffleaverequestupdate(isToken: String, request: LeaveRequestUpdate, activity: Activity) {
-//        val base_url = SharedPreference.getBaseUrl(activity)
-//        RestClient.changeApiBaseUrl(base_url!!)
-        RestClient.changeLocalUrl("http://192.168.10.203:9002/")
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
 
         apiSchoolRepositories.isstaffleaverequestupdate(isToken, request, activity)
     }
 
     fun isStaffleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
-//        val base_url = SharedPreference.getBaseUrl(activity)
-//        RestClient.changeApiBaseUrl(base_url!!)
-        RestClient.changeLocalUrl("http://192.168.10.203:9002/")
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
 
         apiSchoolRepositories.isStaffleaverequestapprove(isToken, request, activity)
     }
 
     fun getStaffleaverequest(isToken: String, staff_id: String, activity: Activity) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-//        RestClient.changeApiBaseUrl(reporting_url!!)
-        RestClient.changeLocalUrl("http://192.168.10.203:9002/")
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
 
         apiSchoolRepositories.getStaffleaverequest(isToken,staff_id, activity)
     }
 
     fun isStaffleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
-//        val base_url = SharedPreference.getBaseUrl(activity)
-//        RestClient.changeApiBaseUrl(base_url!!)
-        RestClient.changeLocalUrl("http://192.168.10.203:9002/")
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isStaffleaverequestdelete(isToken, request, activity)
     }
 

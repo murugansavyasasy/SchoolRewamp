@@ -296,7 +296,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         if (msg_id == -1 || headerId.isNullOrEmpty()) return
 
         val targetMonthIndex = isLeaveList.indexOfFirst { month ->
-            month.details.any { it.staff_id == headerId }
+            month.details.any { it.id == headerId }
         }
         if (targetMonthIndex != -1) {
             Log.d("ScrollDebug", "Found month at index $targetMonthIndex")
@@ -573,12 +573,12 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
         //  Remove from both lists (original + filtered)
         originalLeaveList = originalLeaveList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.staff_id == deletedId }
+            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
             if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
         }
 
         isLeaveList = isLeaveList.mapNotNull { monthData ->
-            val updatedDetails = monthData.details.filterNot { it.staff_id == deletedId }
+            val updatedDetails = monthData.details.filterNot { it.id == deletedId }
             if (updatedDetails.isNotEmpty()) monthData.copy(details = updatedDetails) else null
         }
 
@@ -606,7 +606,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
     override fun onItemDeleteClick(data: StaffLeaveData) {
         val request = LeaveRequestDelete(
-            id = data.staff_id
+            id = data.id
         )
         Constant.showSendConfirmationDialog(
             this,
@@ -618,7 +618,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         ) { confirmed ->
             if (confirmed) {
                 Constant.showLoading(this)
-                isDeletedId = data.staff_id
+                isDeletedId = data.id
                 appViewModel?.isStaffleaverequestdelete(isAccessToken!!, request, this)
             }
         }
@@ -628,9 +628,9 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     override fun onItemEditClick(data: StaffLeaveData) {
         val intent = Intent(this, StaffLeaveRequest::class.java)
         intent.putExtra(Constant.isReason, data.reason)
-        intent.putExtra(Constant.isIdValue, data.staff_id)
-        intent.putExtra(Constant.isLeaveTo, data.from_date)
-        intent.putExtra(Constant.isLeaveFrom, data.to_date)
+        intent.putExtra(Constant.isIdValue, data.id)
+        intent.putExtra(Constant.isLeaveTo, data.to_date)
+        intent.putExtra(Constant.isLeaveFrom, data.from_date)
         intent.putExtra(Constant.isFromSession, data.from_session)
         intent.putExtra(Constant.isToSession, data.to_session)
         intent.putExtra(Constant.isLeaveType, data.leave_type)

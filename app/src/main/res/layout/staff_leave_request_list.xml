@@ -46,7 +46,7 @@
                 android:weightSum="1"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -68,22 +68,10 @@
                         android:textColor="@color/light_gray"
                         android:textSize="@dimen/twele_sp" />
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/lblCallIcon"
-                    android:drawableEnd="@drawable/call_icon_primary"
-                    android:layout_weight="0.25"
-                    android:layout_width="0dp"
-                    android:gravity="end"
-                    android:layout_gravity="center"
-                    android:drawablePadding="@dimen/five"
-                    android:layout_marginEnd="@dimen/five"
-                    android:textColor="@color/link_blue_colour"
-                    android:text="@string/call"
-                    android:layout_height="wrap_content">
-                </TextView>
+
                 <TextView
                     android:id="@+id/lblLeaveStatus"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.3"
                     android:layout_width="0dp"
                     android:text="Causal"
                     android:layout_gravity="center"

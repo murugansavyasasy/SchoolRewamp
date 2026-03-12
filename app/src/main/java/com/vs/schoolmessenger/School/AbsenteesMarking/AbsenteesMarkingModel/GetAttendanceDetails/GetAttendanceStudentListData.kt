@@ -8,4 +8,8 @@ data class GetAttendanceStudentListData(
     var att_type: String,
     var att_status: String,
     var is_edit: String,
+    val is_leave_approved: Boolean,
+    val leave_from: String?,
+    val leave_to: String?,
+    val reason: String?,
 )

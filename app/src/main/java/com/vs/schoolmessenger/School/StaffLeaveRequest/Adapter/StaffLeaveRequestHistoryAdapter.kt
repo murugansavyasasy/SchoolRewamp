@@ -162,7 +162,7 @@ class StaffLeaveRequestHistoryAdapter(
             }
             else if (data.status == Constant.waiting_for_approval) {
                 lblLeaveStatus.visibility= View.INVISIBLE
-                ConsStatusButton.visibility= View.VISIBLE
+                ConsStatusButton.visibility= View.GONE
                 btnApprove.text=context.getString(R.string.approve)
                 btnCancel.text=context.getString(R.string.reject)
             }

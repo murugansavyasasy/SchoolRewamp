@@ -1111,6 +1111,10 @@
     <string name="meal_timings">Meal Timings</string>
     <string name="mark_all_students">Mark All Students</string>
     <string name="progress">Progress</string>
+    <string name="leave_applied">LEAVE APPLIED</string>
+    <string name="from_date_1">🗓️ FROM DATE</string>
+    <string name="to_date_1">🗓️ TO DATE</string>
+    <string name="reason_1">💬 REASON</string>
 
 
 </resources>

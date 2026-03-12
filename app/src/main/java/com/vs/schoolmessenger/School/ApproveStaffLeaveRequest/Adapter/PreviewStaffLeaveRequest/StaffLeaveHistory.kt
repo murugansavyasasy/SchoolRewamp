@@ -89,7 +89,7 @@ class StaffLeaveHistory(
         fun bind(data: StaffLeaveData, position: Int) {
 
            val StartDate=Constant.isFormatDate(data.from_date ?: "")
-            val EndDate=Constant.isFormatDate(data.leave_type ?: "")
+            val EndDate=Constant.isFormatDate(data.to_date ?: "")
             val dayOrDays= if (data.no_of_days == Constant.one) context.getString(R.string.Day) else context.getString(
                     R.string.days
                 )
