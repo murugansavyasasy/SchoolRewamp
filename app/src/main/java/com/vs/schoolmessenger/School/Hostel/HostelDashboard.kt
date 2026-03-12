@@ -256,7 +256,7 @@ class HostelDashboard : BaseActivity<HostelDashboardBinding>(),
             }
 
             R.id.consBedOccupied -> {
-                openBottomSheet(FragmentType.BEDOCCUPIED.toString())
+                openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
             }
 
             R.id.consStudent -> {

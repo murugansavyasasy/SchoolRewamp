@@ -4,10 +4,12 @@ package com.vs.schoolmessenger.School.Hostel.Adapter.RoomAttendance
 
 
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -67,12 +69,92 @@ class RoomAttendanceAdapter(
         private val lblPresent: MaterialButton = itemView.findViewById(R.id.lblPresent)
         private val lblAbsent: MaterialButton = itemView.findViewById(R.id.lblAbsent)
 
+        private val colorList = listOf(
+            R.color.green,
+            R.color.dark_blue_color,
+            R.color.red,
+            R.color.dark_voilet_2,
+            R.color.orange,
+            R.color.yellow,
+            R.color.bpDarker_red,
+            R.color.dark_brown,
+            R.color.pink_color,
+            R.color.dark_green_2,
+            R.color.teacher_clr_grey_dark
+        )
 
         fun bind(data: RoomStudentAttendanceData, position: Int) {
-            lblInitialName.text = Constant.getInitials( data.name)
-            lblStudentDetails.text="Student id :${data.studentId} Parent Mobile No :${data.parentPhone}"
-            lblFullName.text=data.name
 
+            lblInitialName.text = Constant.getInitials(data.name)
+            lblStudentDetails.text =
+                "Student id :${data.studentId} Parent Mobile No :${data.parentPhone}"
+            lblFullName.text = data.name
+
+
+
+
+            val color = if (position < colorList.size) {
+                colorList[position]
+            } else {
+                colorList.random()
+            }
+
+            val drawable = lblInitialName.background as GradientDrawable
+            drawable.setColor(ContextCompat.getColor(context, color))
+            lblInitialName.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+            updateButtonUI(data.status)
+
+            lblPresent.setOnClickListener {
+                data.status = "Present"
+                updateButtonUI("Present")
+            }
+
+            lblAbsent.setOnClickListener {
+                data.status = "Absent"
+                updateButtonUI("Absent")
+            }
+        }
+
+        private fun updateButtonUI(status: String) {
+
+            if (status.equals("Present", true)) {
+
+                lblPresent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.light_green4)
+                lblPresent.setTextColor(ContextCompat.getColor(context, R.color.white))
+                lblPresent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.white)
+
+                lblAbsent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.white)
+                lblAbsent.setTextColor(ContextCompat.getColor(context, R.color.black))
+                lblAbsent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.black)
+
+            } else {
+
+                lblAbsent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.red)
+                lblAbsent.setTextColor(ContextCompat.getColor(context, R.color.white))
+                lblAbsent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.white)
+
+                lblPresent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.white)
+                lblPresent.setTextColor(ContextCompat.getColor(context, R.color.black))
+                lblPresent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.black)
+            }
+
+            // Apply stroke
+            lblPresent.strokeWidth = 2
+            lblPresent.strokeColor =
+                ContextCompat.getColorStateList(context, R.color.light_gray_10)
+
+            lblAbsent.strokeWidth = 2
+            lblAbsent.strokeColor =
+                ContextCompat.getColorStateList(context, R.color.light_gray_10)
         }
 
     }
