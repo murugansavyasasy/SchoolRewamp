@@ -51,6 +51,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     lateinit var mAdapter: FeeReceiptAdapter
 
+    var isProgressLoading=false
+
     private var appViewModel: App? = null
     var isChildId = ""
     var isSchoolID = ""
@@ -135,6 +137,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         mAdapter.showShimmer()
 
         appViewModel!!.isFeeInvoices?.observe(this) { response ->
+            isProgressLoading=false
             Constant.hideLoading(this)
             if (response != null && response.status && response.data.isNotEmpty()) {
                 mAdapter.setData(response.data)
@@ -165,6 +168,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 Log.d("isClickedTap", isClickedTap.toString())
                 if (isClickedTap != 2) {
                     isClickedTap = 2
+                    isProgressLoading=false
                     Constant.hideLoading(this)
                     binding.payWebview.visibility = View.VISIBLE
                     binding.rvReceipts.visibility = View.GONE
@@ -184,6 +188,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 Log.d("isClickedTap", isClickedTap.toString())
                 if (isClickedTap != 1) {
                     isClickedTap = 1
+                    isProgressLoading=false
                     Constant.hideLoading(this)
                     binding.payWebview.visibility = View.GONE
                     binding.rvReceipts.visibility = View.VISIBLE
@@ -205,6 +210,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
             R.id.rytRefresh -> {
                 isClickedTap = 2
+                isProgressLoading=false
                 Constant.hideLoading(this)
                 binding.payWebview.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
@@ -313,7 +319,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
 
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                Constant.showLoading(this@FeeDetails)
+                if (!isProgressLoading){
+                    isProgressLoading=true
+                    Constant.showLoading(this@FeeDetails)
+                }
             }
 
             override fun onReceivedError(
@@ -323,9 +332,11 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 failingUrl: String?
             ) {
                 Constant.hideLoading(this@FeeDetails)
+                isProgressLoading=false
             }
 
             override fun onPageFinished(view: WebView, url: String) {
+                isProgressLoading=false
                 Constant.hideLoading(this@FeeDetails)
                 Log.d("callbackURL", url)
 

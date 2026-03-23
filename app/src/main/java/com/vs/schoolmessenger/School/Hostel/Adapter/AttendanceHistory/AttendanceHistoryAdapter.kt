@@ -12,10 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getAttendanceHistoryData
+import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getRoomData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceHistoryAdapter(
-    private var itemList: List<getAttendanceHistoryData>?,
+    private var itemList: List<getRoomData>?,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -51,13 +52,10 @@ class AttendanceHistoryAdapter(
         return if (isLoading) 20 else itemList?.size ?: 0
     }
 
-    fun updateData(newList: List<getAttendanceHistoryData>) {
+    fun updateData(newList: List<getRoomData>) {
         itemList = newList
         notifyDataSetChanged()
     }
-
-
-
 
 
 
@@ -68,8 +66,8 @@ class AttendanceHistoryAdapter(
         private val consAbsentDetails: ConstraintLayout = itemView.findViewById(R.id.consAbsentDetails)
 
 
-        fun bind(data: getAttendanceHistoryData, position: Int) {
-            lblAttendanceDate.text = data.date
+        fun bind(data: getRoomData, position: Int) {
+//            lblAttendanceDate.text = data.date
             setDrawableBackgroundColor(consTotalStudentDetails,R.color.light_blue_8)
             setDrawableBackgroundColor(consPresentDetails,R.color.light_green_8)
             setDrawableBackgroundColor(consAbsentDetails,R.color.light_red_8)

@@ -55,17 +55,17 @@ class MarksAdapter(
         return MarksViewHolder(view)
     }
 
-
     override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
 
         val student = students[position]
+
         val genderShort = when (student.gender.lowercase()) {
             "male" -> "M"
             "female" -> "F"
             else -> ""
         }
 
-        val lblText = if (genderShort.isNullOrBlank()) {
+        val lblText = if (genderShort.isBlank()) {
             student.name
         } else {
             "${student.name} ($genderShort)"
@@ -73,7 +73,7 @@ class MarksAdapter(
 
         val span = SpannableString(lblText)
 
-        if (!genderShort.isNullOrBlank()) {
+        if (genderShort.isNotBlank()) {
             val start = lblText.indexOf("(")
             span.setSpan(
                 ForegroundColorSpan(Color.RED),
@@ -83,20 +83,15 @@ class MarksAdapter(
             )
         }
 
-
         holder.txtName.text = span
-        if (student.rollNo.isNullOrBlank()) {
-            holder.txtRoll.visibility = View.GONE
-        } else {
-            holder.txtRoll.visibility = View.VISIBLE
-            holder.txtRoll.text = student.rollNo
-        }
-        if (student.admission_no.isNullOrBlank()) {
-            holder.txtAdmissionNo.visibility = View.GONE
-        } else {
-            holder.txtAdmissionNo.visibility = View.VISIBLE
-            holder.txtAdmissionNo.text = student.admission_no
-        }
+
+        holder.txtRoll.visibility =
+            if (student.rollNo.isNullOrBlank()) View.GONE else View.VISIBLE
+        holder.txtRoll.text = student.rollNo
+
+        holder.txtAdmissionNo.visibility =
+            if (student.admission_no.isNullOrBlank()) View.GONE else View.VISIBLE
+        holder.txtAdmissionNo.text = student.admission_no
 
         holder.subjectContainer.removeAllViews()
 
@@ -131,7 +126,9 @@ class MarksAdapter(
                 )
                 gravity = Gravity.CENTER
                 textSize = 14f
+
                 inputType = InputType.TYPE_CLASS_TEXT
+
                 setPadding(10, 10, 10, 4)
                 hint = "--"
 
@@ -158,9 +155,11 @@ class MarksAdapter(
             )
 
             et.addTextChangedListener {
+
                 val input = it.toString().trim()
+
                 student.markTexts[i] = input
-                student.marks[i] = input.toIntOrNull()
+                student.marks[i] = input.toDoubleOrNull()
 
                 validateMark(
                     et,
@@ -177,7 +176,6 @@ class MarksAdapter(
             topRow.addView(icon)
             columnLayout.addView(topRow)
 
-            // was text
             if (
                 isAllowedValue(oldValue) &&
                 isAllowedValue(excelValue) &&
@@ -217,11 +215,10 @@ class MarksAdapter(
                 et.background =
                     ContextCompat.getDrawable(context, R.drawable.rect_btn_grey)
             }
-
-
         }
 
         HorizontalScrollSync.bind(holder.subjectScroll)
+
         holder.setIsRecyclable(false)
         listener.onMarksChanged()
     }
@@ -237,17 +234,16 @@ class MarksAdapter(
         oldValue: String,
         reviewReason: String?
     ) {
-        val trimmed = value.trim()
-        val intValue = trimmed.toIntOrNull()
 
-        // 🔴 1. EXCEL SENTENCE ERROR (TOP PRIORITY)
+        val trimmed = value.trim()
+        val doubleValue = trimmed.toDoubleOrNull()
+
         if (trimmed.isNotEmpty() && !isAllowedValue(trimmed)) {
             showError(et, icon, trimmed)
             return
         }
 
-        // 🔴 2. MAX MARK (AFTER EDIT ALSO CHECK)
-        if (intValue != null && intValue > column.maxMark) {
+        if (doubleValue != null && doubleValue > column.maxMark) {
             showError(
                 et,
                 icon,
@@ -256,17 +252,15 @@ class MarksAdapter(
             return
         }
 
-        // 🔴 3. REVIEW FLAG (ONLY IF VALUE NOT EDITED)
         if (
             !reviewReason.isNullOrEmpty() &&
-            trimmed == oldValue &&           // 👈 KEY FIX
+            trimmed == oldValue &&
             isAllowedValue(trimmed)
         ) {
             showError(et, icon, reviewReason)
             return
         }
 
-        // 🟢 4. DIFFERENCE (GREEN INFO)
         if (
             isAllowedValue(oldValue) &&
             isAllowedValue(trimmed) &&
@@ -284,7 +278,6 @@ class MarksAdapter(
             return
         }
 
-        // ✅ 5. CLEAR EVERYTHING
         clearError(et, icon)
     }
 
@@ -296,6 +289,7 @@ class MarksAdapter(
     }
 
     private fun showError(et: EditText, icon: ImageView, message: String) {
+
         icon.visibility = View.VISIBLE
         icon.layoutParams.width = 22.dp
         icon.setImageResource(R.drawable.info_circle)
@@ -308,11 +302,30 @@ class MarksAdapter(
         }
     }
 
+    private fun showGreenInfo(
+        et: EditText,
+        icon: ImageView,
+        message: String
+    ) {
+
+        icon.visibility = View.VISIBLE
+        icon.layoutParams.width = 22.dp
+        icon.setImageResource(R.drawable.info_circle_green)
+
+        et.background =
+            ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_green)
+
+        icon.setOnClickListener {
+            showWarningPopup(icon, message, true)
+        }
+    }
+
     private fun showWarningPopup(
         anchorView: View,
         message: String,
         isGreen: Boolean
     ) {
+
         val popupView = LayoutInflater.from(anchorView.context)
             .inflate(R.layout.popup_warning, null)
 
@@ -323,19 +336,23 @@ class MarksAdapter(
         txtWarning.text = message
 
         if (isGreen) {
+
             popupRoot.background =
                 ContextCompat.getDrawable(anchorView.context, R.drawable.rect_bg_stroke_green)
 
             imgWarning.setImageResource(R.drawable.info_circle_green)
+
             txtWarning.setTextColor(
                 ContextCompat.getColor(anchorView.context, R.color.green)
             )
 
         } else {
+
             popupRoot.background =
                 ContextCompat.getDrawable(anchorView.context, R.drawable.rect_bg_stroke_red)
 
             imgWarning.setImageResource(R.drawable.info_circle)
+
             txtWarning.setTextColor(
                 ContextCompat.getColor(anchorView.context, R.color.black)
             )
@@ -353,24 +370,8 @@ class MarksAdapter(
         }
     }
 
-    private fun showGreenInfo(
-        et: EditText,
-        icon: ImageView,
-        message: String
-    ) {
-        icon.visibility = View.VISIBLE
-        icon.layoutParams.width = 22.dp
-        icon.setImageResource(R.drawable.info_circle_green)
-        et.background =
-            ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_green)
-
-        icon.setOnClickListener {
-            showWarningPopup(icon, message, true)
-        }
-    }
-
     private fun isAllowedValue(value: String): Boolean {
-        return value.equals("AB", true) || value.toIntOrNull() != null
+        return value.equals("AB", true) || value.toDoubleOrNull() != null
     }
 
     private fun normalize(value: String?): String =

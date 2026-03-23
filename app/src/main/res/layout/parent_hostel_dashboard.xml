@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/hostel_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:background="@color/light_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/light_white"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginVertical="@dimen/fifteen"
+            android:paddingBottom="@dimen/fifty">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardOutpassDetails"
+                android:layout_width="0dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/eight"
+                android:elevation="@dimen/eight"
+                app:strokeWidth="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardMonthlyStats"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:id="@+id/consOutpasslblDetails"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/rcOutpassRequest"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/lblNumberRooms"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:drawableStart="@drawable/clock_icon_2"
+                            android:drawablePadding="@dimen/five"
+                            android:drawableTint="@color/PrimaryColor"
+                            android:text="@string/outpass_request"
+                            android:textSize="@dimen/sixteen_sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constrainedHeight="true"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintEnd_toStartOf="@+id/lblApplyNewOutpassRequest"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/lblApplyNewOutpassRequest"
+                            android:layout_marginHorizontal="@dimen/ten"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="0dp"
+                            android:paddingVertical="@dimen/six"
+                            android:text="@string/new_request"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"
+                            app:icon="@drawable/tick_circle_icon"
+                            app:iconGravity="textStart"
+                            app:iconPadding="4dp"
+                            app:iconTint="@color/white"
+                            app:layout_constrainedHeight="true"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="spread"
+                            app:layout_constraintHorizontal_weight="0.9"
+                            app:layout_constraintStart_toEndOf="@+id/lblNumberRooms"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.google.android.material.button.MaterialButton>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/consOutpasslblDetails"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/frmOutpassDetails"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/light_gray_11"
+                        android:layout_height="1dp">
+
+                    </View>
+
+                    <FrameLayout
+                        android:padding="@dimen/ten"
+                        android:id="@+id/frmOutpassDetails"
+                        android:layout_marginTop="@dimen/ten"
+                        app:layout_constraintBottom_toTopOf="@+id/lblSeeMore"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view0"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcOutpassRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            android:paddingBottom="40dp"/>
+
+                        <!-- Soft Natural Fade -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/bg_bottom_soft_fade"/>
+
+
+                    </FrameLayout>
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblSeeMore"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/frmOutpassDetails"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        android:textSize="@dimen/twele_sp"
+                        android:layout_marginVertical="@dimen/three"
+                        android:layout_marginEnd="@dimen/six"
+                        android:textColor="@color/PrimaryColor"
+                        android:text="@string/see_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMonthlyStats"
+                android:layout_width="0dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeWidth="0dp"
+                android:elevation="@dimen/eight"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/eight"
+                app:layout_constraintBottom_toTopOf="@+id/cardHostelDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintBottom_toTopOf="@+id/view1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:drawableStart="@drawable/calendar_icon_2"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:id="@+id/lblDetailedAttendanceRecords"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:drawablePadding="@dimen/five"
+                        android:text="@string/detailed_attendance_records"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                    <View
+                        android:id="@+id/view1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblDetailedAttendanceRecords"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/lnrAttendanceRecordHeader"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/light_gray_11"
+                        android:layout_height="1dp">
+
+                    </View>
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:id="@+id/lnrEntireAcademicDetails"
+                        android:layout_marginTop="@dimen/ten"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
+                        android:orientation="vertical"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <!-- HEADER -->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:text="Day"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:padding="12dp"
+                                android:textStyle="bold"/>
+
+                            <HorizontalScrollView
+                                android:fillViewport="true"
+                                android:id="@+id/headerScroll"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none">
+
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:id="@+id/headerContainer"
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rcDetailedAttendanceRecords"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clipToPadding="false"
+                                android:paddingBottom="60dp"/>
+
+                            <!-- Soft Natural Fade -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_gravity="bottom"
+                                android:background="@drawable/bg_bottom_soft_fade"/>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgNoDataFound"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/no_data_found"
+                        app:layout_constraintTop_toBottomOf="@+id/lnrEntireAcademicDetails"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        ></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblErrorMessage"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/twenty"
+                        android:gravity="center"
+                        android:text="nod"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
+
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHostelDetails"
+                android:layout_marginTop="@dimen/fifteen"
+                app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
+                android:layout_width="0dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/eight"
+                app:strokeWidth="0dp"
+                android:elevation="@dimen/eight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:drawableStart="@drawable/ic_home"
+                        android:layout_width="0dp"
+
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:id="@+id/lblHostelInformation"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:drawablePadding="@dimen/five"
+                        android:text="@string/hotel_information"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+
+                    <View
+                        android:id="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblHostelInformation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/rcHostelInformation"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/light_gray_11"
+                        android:layout_height="1dp">
+
+                    </View>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/rcHostelInformation"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@+id/view2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="0dp"
-                android:id="@+id/rcRoomAvailability"
+                android:id="@+id/rcHostelAvailablility"
                 android:layout_marginTop="@dimen/ten"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:nestedScrollingEnabled="false"
@@ -55,7 +55,7 @@
             <ImageView
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/ten"
-                app:layout_constraintTop_toBottomOf="@+id/brRoomsDetails"
+                app:layout_constraintTop_toBottomOf="@+id/rcHostelAvailablility"
                 android:layout_width="@dimen/two_hundred"
                 android:id="@+id/imgNoDataFound"
                 android:src="@drawable/no_data_found"

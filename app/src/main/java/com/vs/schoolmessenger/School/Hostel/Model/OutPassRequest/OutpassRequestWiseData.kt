@@ -1,14 +1,17 @@
 package com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest
 
 class OutpassRequestWiseData(
-    val roomNumber: String,
-    val roomTitle: String,
-    val studentName: String,
-    val issueDescription: String,
-    val InDate: String,
-    val OutDate: String,
-    val OutTime: String,
-    val InTime: String,
-    val Destination: String,
-    val status: String
+    val id: String?,
+    val room_no: String?,
+    val student_id: String?,
+    val student_name: String?,
+    val admission_no: String?,
+    val class_name: String?,
+    val section_name: String?,
+    val primary_mobile: String?,
+    val gender: String?,
+    val out_date: String?,
+    val in_date: String?,
+    val reason: String?,
+    val status: String?,
 )

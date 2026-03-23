@@ -1,6 +1,11 @@
 package com.vs.schoolmessenger.Auth.Base
 
 import android.app.Application
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -37,6 +42,26 @@ class MyApp : Application(), LifecycleObserver {
 //            clearAllLocalStorage(this)
 //            restartApp(this)
 //        }
+        createCallChannel()
 
+    }
+
+    private fun createCallChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val channel = NotificationChannel(
+                "call_channel",
+                "Incoming Calls",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+
+            val manager =
+                getSystemService(NotificationManager::class.java)
+
+            manager.createNotificationChannel(channel)
+        }
     }
 }

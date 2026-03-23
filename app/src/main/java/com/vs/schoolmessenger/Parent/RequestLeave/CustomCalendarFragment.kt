@@ -71,7 +71,10 @@ class CustomCalendarFragment : Fragment() {
             calendar = YearMonth.of(it.year, it.month)
         }
 
-        calendarDateListener = activity as? CalendarDateListener
+//        calendarDateListener = activity as? CalendarDateListener
+        calendarDateListener =
+            parentFragment as? CalendarDateListener
+                ?: activity as? CalendarDateListener
     }
 
     override fun onCreateView(

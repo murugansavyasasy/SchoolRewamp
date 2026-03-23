@@ -66,7 +66,6 @@ import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
-import com.vs.schoolmessenger.School.Hostel.HostelDashboard
 import com.vs.schoolmessenger.School.Hostel.HostelList
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
@@ -83,6 +82,7 @@ import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffLeaveRequest.StaffLeaveRequest
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
+import com.vs.schoolmessenger.School.StudentDetails.StudentDetails
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems
@@ -253,6 +253,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                             id = 997,
                             name = "Hostel Dashboard",
                             description = "Monitor and manage hostel activities and student accommodation"
+                        )
+                    )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 996,
+                            name = "Student Details",
+                            description = "Monitor and manage student data"
                         )
                     )
 
@@ -1015,15 +1022,22 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_HOSTEL-> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    HostelDashboard::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        HostelList::class.java
-                    } else {
-                        HostelDashboard::class.java
-                    }
-                }
+
+                HostelList::class.java
+
+//                if (userDetails!!.staff_role == Constant.isStaffRole) {
+//                    HostelDashboard::class.java
+//                } else {
+//                    if (userDetails!!.staff_details.size > 1) {
+//                        HostelList::class.java
+//                    } else {
+//                        HostelDashboard::class.java
+//                    }
+//                }
+            }
+
+            Constant.M_STUDENTDATE-> {
+                StudentDetails::class.java
             }
 
             else -> null

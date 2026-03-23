@@ -70,7 +70,7 @@ class StatusWiseOutpassRequest(
 
     fun removeItemById(id: String) {
         val updatedList = fullList.mapNotNull { monthData ->
-            val updatedDetails = monthData.StatusWiseData.filterNot { it.roomNumber == id }
+            val updatedDetails = monthData.StatusWiseData.filterNot { it.room_no == id }
             if (updatedDetails.isNotEmpty()) {
                 StatusWiseOutpassRequestData(Status = monthData.Status, StatusWiseData = updatedDetails)
             } else null

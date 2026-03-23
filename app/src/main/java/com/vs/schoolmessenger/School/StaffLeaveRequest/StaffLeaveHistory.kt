@@ -554,7 +554,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
     private fun isGetLeaveRequestList() {
         mAdapter = MonthWiseStaffLeaveHistoryAdapter(
-            null, this, this, Constant.isShimmerViewDisable
+            null, this, this, Constant.isShimmerViewShow
         )
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false

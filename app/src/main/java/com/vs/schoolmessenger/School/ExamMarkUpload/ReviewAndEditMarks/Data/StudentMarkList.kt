@@ -6,9 +6,9 @@ data class StudentMarkList(
     val gender: String,
     val rollNo: String,
     val admission_no: String,
-    val marks: MutableList<Int?>,
+    val marks: MutableList<Double?>,
     val markTexts: MutableList<String>,          // extracted / editable
-    val mockMarkTexts: MutableList<String> ,
+    val mockMarkTexts: MutableList<String>,
     val isEditList: MutableList<Boolean>
 )
 

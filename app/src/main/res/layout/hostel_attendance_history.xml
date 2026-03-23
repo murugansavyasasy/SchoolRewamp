@@ -70,9 +70,99 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp">
-            <androidx.recyclerview.widget.RecyclerView
+
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/lblStart"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintBottom_toTopOf="@+id/rytStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintHorizontal_bias="0"
+                android:text="@string/starts_on" />
+
+            <TextView
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblStart"
+                app:layout_constraintTop_toTopOf="@+id/lblStart"
+                app:layout_constraintBottom_toBottomOf="@+id/lblStart"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:id="@+id/lblStar"
+                android:layout_marginStart="@dimen/three"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
+            <LinearLayout
+                app:layout_constraintTop_toBottomOf="@+id/lblStart"
+                android:id="@+id/rytStart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rcRoomAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:background="@drawable/field_background"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/ten"
+                android:paddingVertical="@dimen/eight"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rytStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgCalendar"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_purple_rounded"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/white_calendar_icon">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@+id/imgCalendar"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblDay"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/mild_grey_dark"></TextView>
+
+                        <TextView
+                            android:id="@+id/txtStartDate"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/three"
+                            android:text=""></TextView>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/rytStart"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:id="@+id/rcRoomAvailability"
                 android:layout_marginTop="@dimen/ten"

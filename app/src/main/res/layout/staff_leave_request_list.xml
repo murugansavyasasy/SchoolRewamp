@@ -46,6 +46,7 @@
                 android:weightSum="1"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:layout_marginEnd="@dimen/eight"
                     android:layout_weight="0.7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -8,280 +8,217 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:backgroundTint="@color/white"
         android:elevation="@dimen/eight"
-        android:padding="@dimen/ten"
-        android:radius="@dimen/sixteen"
         app:cardCornerRadius="@dimen/fifteen">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/rate_us"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollIndicators="top|bottom"
-            android:scrollbars="vertical"
-            android:visibility="visible">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/lblClose"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:padding="@dimen/five"
-                    android:src="@drawable/close_red_color1">
-
-                </ImageView>
-
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:padding="@dimen/five"
-                    android:text="@string/lblRateus"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/eighteen_sp"
-                    android:visibility="gone">
-
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/imgFeedBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_marginTop="@dimen/thirty"
-                    android:src="@drawable/rateusicon"
-                    android:visibility="visible"></ImageView>
-
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgFeedBack"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:progressTint="@color/light_yellow"
-                    android:secondaryProgressTint="@color/light_yellow"
-                    android:stepSize="1"
-                    android:visibility="visible" />
+            android:layout_height="wrap_content">
 
 
-                <TextView
-                    android:id="@+id/lblTitle"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ratingBar"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/custom_orange_color"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="visible"></TextView>
-
-
-                <TextView
-                    android:id="@+id/lblhytre"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblTitle"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sixteen_sp"
-                    android:visibility="visible"></TextView>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerCategories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblhytre"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/ten"
-                    android:padding="10dp"
-                    android:visibility="gone" />
-
-
-                <TextView
-                    android:id="@+id/lblMayBeLater"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerCategories"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="@dimen/thirty"
-                    android:background="@drawable/bg_outline_orange"
-                    android:gravity="center"
-                    android:padding="@dimen/eight"
-                    android:text="@string/lblMaybelater"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="visible"></TextView>
-
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/rate_us"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:layout_marginBottom="@dimen/fifteen"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btnsubmit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <LinearLayout
-                    android:id="@+id/lnrRatingContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerCategories"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:padding="@dimen/twenty">
 
-                    <TextView
-                        android:id="@+id/lblContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/fifteen"
-                        android:layout_marginTop="@dimen/five"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:gravity="center"
-                        android:textColor="@color/orange" />
-
-                    <TextView
-                        style="@style/CustomTextStylePoppinsRegular"
+                    <ImageView
+                        android:id="@+id/lblClose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:padding="@dimen/five"
+                        android:src="@drawable/close_red_color1" />
+
+                    <ImageView
+                        android:id="@+id/imgFeedBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hundred"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:src="@drawable/rateusicon" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:progressTint="@color/light_yellow"
+                        android:stepSize="1" />
+
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/eight"
+                        android:textColor="@color/custom_orange_color"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblhytre"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/lblAnyothersuggestions"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:padding="@dimen/ten"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/lblMayBeLater"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_orange"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:padding="@dimen/eight"
+                        android:text="@string/lblMaybelater"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <LinearLayout
+                        android:id="@+id/lnrRatingContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/orange" />
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="@string/lblAnyothersuggestions"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp" />
+
+                        <EditText
+                            android:id="@+id/edtSuggestions"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/one_fifty"
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/bg_edittext"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLength="300"
+                            android:layout_marginBottom="@dimen/twenty"
+                            android:padding="@dimen/eight"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+            <Button
+                android:id="@+id/btnsubmit"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_margin="@dimen/fifteen"
+                android:background="@drawable/rect_btn_orange"
+                android:text="@string/lblSubmit"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/rateus_success"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="20dp">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/thumbs_up"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/done" />
+
+                    <TextView
+                        android:id="@+id/lblThankyou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/lblThankYou"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirty_sp" />
+
+                    <TextView
+                        android:id="@+id/lblSuccessContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="@string/thank_you_message"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp" />
 
-                    <EditText
-                        android:id="@+id/edtSuggestions"
-                        style="@style/CustomTextStylePoppinsRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/one_fifty"
-                        android:layout_marginStart="@dimen/twenty"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/fifteen"
-                        android:background="@drawable/bg_edittext"
-                        android:focusable="true"
-                        android:gravity="top|start"
-                        android:imeOptions="flagNoEnterAction"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:maxLength="300"
-                        android:overScrollMode="always"
-                        android:paddingStart="@dimen/five"
-                        android:paddingTop="@dimen/five"
-                        android:scrollbars="vertical"
-                        android:scrollHorizontally="false"
-                        android:singleLine="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen" />
+                    <TextView
+                        android:id="@+id/btnBackHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:text="@string/Close"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/fifteen_sp" />
 
-
-                    <Button
-                        android:id="@+id/btnsubmit"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty_five"
-                        android:layout_margin="@dimen/fifteen"
-                        android:background="@drawable/rect_btn_orange"
-                        android:text="@string/lblSubmit"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp" />
                 </LinearLayout>
 
+            </androidx.core.widget.NestedScrollView>
 
-            </RelativeLayout>
-
-
-        </androidx.core.widget.NestedScrollView>
-
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/rateus_success"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollIndicators="top|bottom"
-            android:scrollbars="vertical"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:visibility="visible">
-
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/thumbs_up"
-                    android:layout_width="@dimen/two_hundred"
-                    android:layout_height="@dimen/two_hundred"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/hundred"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/done" />
-
-                <TextView
-                    android:id="@+id/lblThankyou"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/thumbs_up"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/lblThankYou"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirty_sp">
-
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/lblSuccessContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblThankyou"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/thank_you_message"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/btnBackHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblSuccessContent"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/thirty"
-                    android:layout_marginTop="@dimen/twenty_five"
-                    android:text="@string/Close"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/fifteen_sp">
-
-                </TextView>
-
-            </RelativeLayout>
-
-
-        </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </FrameLayout>
-
-

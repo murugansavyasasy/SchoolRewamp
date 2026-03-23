@@ -88,6 +88,9 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.SelectedActivityMapping
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.getRoomAvailability
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.isSelectedRoomData
+import com.vs.schoolmessenger.School.Hostel.Model.HostelList.selctedHotelDetails
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
@@ -193,6 +196,8 @@ object Constant {
     val M_STAFF_LEAVE_REQUEST = 999
     val M_APPROVE_STAFF_LEAVE_REQUEST = 998
     val M_HOSTEL = 997
+    val M_STUDENTDATE = 996
+    val M_HOSTEL_PARENT = 995
     var SELECTED_MENU_ID = 0
 
     var isEmergencyVoiceNoticeBoard: Boolean? = false
@@ -256,6 +261,7 @@ object Constant {
     var mediaPlayer: MediaPlayer = MediaPlayer()
 
     var isAcademicYearList: List<AcademicYear>? = null
+    var isSelectedAcademicYear: String?=null
 
     var isSelectedMenuName = ""
     var isSchoolMenuCount = -1
@@ -263,6 +269,8 @@ object Constant {
     var isCompletedHomeworkId: String? = null
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var isSelectedHostelFromHostelListData: selctedHotelDetails? = null
+    var isSelectedHostelRoomData: isSelectedRoomData? = null
     var isStaffLeaveHistoryData: isStaffLeaveHistoryData? = null
     var isLeaveData: LeaveData? = null
     var isCertificateData: CertificateListData? = null
@@ -316,6 +324,9 @@ object Constant {
     var approved = "Approved"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"
+    var paid = "paid"
+    var pending = "pending"
+
 
     // String fields
     var scaleX = "scaleX"
@@ -481,6 +492,7 @@ object Constant {
     var isCommonTitle = ""
     var isCommonDescription = ""
     var assignment_id = "assignment_id"
+    var homework_id = "homework_id"
     var assignmentsubject = "assignmentsubject"
     var title_ = "title"
     var body_ = "body"
@@ -596,6 +608,8 @@ object Constant {
     var Update_Event = "Update Event"
     var type = "type"
     var SUBMITTED = "SUBMITTED"
+    var NotComplete = "Not Complete"
+    var Completed = "Completed"
     var NOTSUBMITTED = "NOTSUBMITTED"
     var submitted_count = "submitted_count"
     var Total_Count = "Total_Count"
@@ -1103,6 +1117,36 @@ object Constant {
         }
     }
 
+
+    fun formatDateTime(input: String?): String {
+        if (input.isNullOrEmpty()) return ""
+
+        return try {
+            val inputFormatWithTime = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+            val inputFormatDateOnly = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+
+            val date = if (input.contains(":")) {
+                // Has time
+                inputFormatWithTime.parse(input)
+            } else {
+                // Only date → set default time 12:00 AM
+                val parsedDate = inputFormatDateOnly.parse(input)
+                val calendar = Calendar.getInstance()
+                calendar.time = parsedDate!!
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.time
+            }
+
+            outputFormat.format(date!!)
+
+        } catch (e: Exception) {
+            input // fallback (safe)
+        }
+    }
+
     //"dd-MM-yyyy" to dd and MMM
 
     fun getDayAndMonth(input: String): Pair<String, String> {
@@ -1407,6 +1451,7 @@ object Constant {
             input
         }
     }
+
 
 
     fun showDataValidation(title: String, message: String, activity: Activity) {

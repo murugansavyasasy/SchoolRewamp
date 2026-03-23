@@ -69,6 +69,7 @@ import com.vs.schoolmessenger.School.Assignment.AssignmentTargetDetails.Assignme
 import com.vs.schoolmessenger.School.Assignment.StudentListFragment
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.ChildStandardAdapter
 import com.vs.schoolmessenger.School.Event.ChildHomeWorkStandard.SchoolNameTarget
+import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListFragment.HomeworkSubmissionListFragment
 import com.vs.schoolmessenger.School.LSRW.Adapter.LSRWImagePickingAdapter
 import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.School.LSRW.LsrwStudentListFragment
@@ -537,6 +538,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
         if (data!!.isMenuType == Constant.M_HOMEWORK) {
             isHomeworkId = data!!.id
+            Log.d("data","DataComing")
+            Log.d("data",isHomeworkId)
             isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
 
             binding.toolbarLayout.lblPostedOn.visibility = View.VISIBLE
@@ -565,6 +568,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
+
+            //Here dynamically changing the layout postions
+            val params1 = binding.fragmentContainer.layoutParams as ConstraintLayout.LayoutParams
+            params1.topToBottom = R.id.lblPostedBy
+            binding.fragmentContainer.layoutParams = params1
+
+
+            binding.fragmentContainer.visibility = View.VISIBLE
+            loadHomeworkSubmissionFragment(
+                HomeworkSubmissionListFragment.newInstance(
+                    isHomeworkId
+                )
+            )
+
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == M_ASSIGNMENT) {
 
 
@@ -1383,6 +1400,10 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
 
     private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+    }
+
+    private fun loadHomeworkSubmissionFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
     }
 

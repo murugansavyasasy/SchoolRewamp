@@ -102,6 +102,14 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.Upload
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
+import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.getHostelDashboard
+import com.vs.schoolmessenger.School.Hostel.Model.HostelList.getHostelList
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockApiResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
@@ -448,6 +456,15 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isstaffleaverequestapprove: LiveData<StaffLeaveRequestStatusUpdate?>? = null
     var getStaffleaverequesthistory: LiveData<getStaffLeaveRequestHistory?>? = null
+    var getHomeworkSubmissionList: LiveData<GetHomeWorkSubmissionList?>? = null
+    var getHostelList: LiveData<getHostelList?>? = null
+    var getHostelDashboardDetails: LiveData<getHostelDashboard?>? = null
+    var getHostelAttendanceSession: LiveData<getHostelAttendanceSession?>? = null
+    var getHostelAttendanceRoomStudentList: LiveData<getHostelStudentRoomAttendance?>? = null
+    var hotelMarkAttendance: LiveData<hostelMarkAttendanceRespone?>? = null
+    var hotelSchoolOutpassRequest: LiveData<getSchoolHostelOutpassRequest?>? = null
+    var hotelSchoolAttendanceReport: LiveData<getSchoolHostelAttendanceReport?>? = null
+
 
 
     fun init() {
@@ -637,6 +654,14 @@ class App(application: Application) : AndroidViewModel(application) {
         isstaffleaverequestapprove = apiSchoolRepositories.isStaffleaverequestapproveLiveData
         getStaffleaverequesthistory = apiSchoolRepositories.isStaffleaverequestHistoryLiveData
         isStaffleaverequestdelete = apiSchoolRepositories.isStaffleaverequestdeleteLiveData
+        getHomeworkSubmissionList = apiSchoolRepositoriesTwo.isHomeworkSubmissionListLiveData
+        getHostelList = apiSchoolRepositoriesTwo.isHostelListLiveData
+        getHostelDashboardDetails = apiSchoolRepositoriesTwo.isHostelDashboardDetailsLiveData
+        getHostelAttendanceSession = apiSchoolRepositoriesTwo.isHostelAttendanceSessionLiveData
+        getHostelAttendanceRoomStudentList = apiSchoolRepositoriesTwo.isHostelAttendanceRoomStudentListLiveData
+        hotelMarkAttendance = apiSchoolRepositoriesTwo.isHotelMarkAttendanceLiveData
+        hotelSchoolOutpassRequest = apiSchoolRepositoriesTwo.isHotelSchoolOutpassRequestLiveData
+        hotelSchoolAttendanceReport = apiSchoolRepositoriesTwo.isHotelSchoolAttendanceReportLiveData
 
 
     }
@@ -2046,10 +2071,66 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getStaffleaverequest(isToken,staff_id, activity)
     }
 
+
     fun isStaffleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositories.isStaffleaverequestdelete(isToken, request, activity)
+    }
+
+    fun isHomeSubmissionList(isToken: String, id: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+
+        apiSchoolRepositoriesTwo.getHomeworkSubmissionList(isToken,id, activity)
+    }
+
+    fun isGetHostelList(isToken: String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getHostelList(isToken, activity)
+    }
+
+    fun isGetHostelDashboardDetails(isToken: String, hostel_id: String, academic_year_id : String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getHostelDashboardDetails(isToken,hostel_id,academic_year_id, activity)
+    }
+
+    fun isGetHostelAttendanceSessionDetails(isToken: String,activity: Activity) {
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.getHostelAttendanceSession(isToken, activity)
+    }
+
+
+    fun isGetHostelAttendanceRoomStudentList(isToken: String, hostel_id : String, room_id: String, academic_year_id :String, date : String, session_type_id : String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getHostelAttendanceRoomStudentList(isToken,hostel_id,room_id,academic_year_id,date,session_type_id, activity)
+    }
+
+    fun hostelMarkAttendance(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.hostelMarkAtttendance(isToken, jsonObject,activity)
+    }
+
+    fun isGetHostelSchoolOutpassRequestList(isToken: String, year_id  : String, month_id : String, hostel_id  :String, academic_year_id  : String, activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getHostelSchoolOutpassRequestList(isToken,hostel_id,year_id,month_id,academic_year_id, activity)
+    }
+
+
+    fun isGetHostelSchoolAttendanceReport(isToken: String, hostel_id : String, date: String, academic_year_id:String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getSchoolHostelAttendanceReport(isToken,hostel_id,date,academic_year_id, activity)
     }
 
 }

@@ -563,7 +563,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isGetSubjectList.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -593,7 +593,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<StandardResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isGetStandardSection.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -625,7 +625,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isGetStudentList.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2281,7 +2281,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LeaveRequestResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getleaverequest.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2313,7 +2313,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LeaveActionResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isleaverequestapprove.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2345,7 +2345,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<AllClassResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getlpStaffReport.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2378,7 +2378,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LessonPlanViewSummaryResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getlpViewReport.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2410,7 +2410,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LessonPlanEditResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getlpeditReport.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2443,7 +2443,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LessonPlanTemplateResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getlpcreateReport.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2469,7 +2469,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LessonPlanUpdateResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isupdatelessonplan.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2496,7 +2496,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LessonPlanCreateResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    iscreatelessonplan.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -2522,7 +2522,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<LPDeleteResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    islessonplandelete.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -4534,7 +4534,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<StaffLeaveRequestStatusUpdate?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isstaffleaverequestapprove.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -4565,7 +4565,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<StaffLeaveRequestDeleteResponse?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    isStaffleaverequestdelete.postValue(null)
                     t.printStackTrace()
                 }
             })
@@ -4597,7 +4597,7 @@ class SchoolServices {
                 }
 
                 override fun onFailure(call: Call<getStaffLeaveRequestHistory?>, t: Throwable) {
-                    isGetAds.postValue(null)
+                    getstaffleaverequesthistory.postValue(null)
                     t.printStackTrace()
                 }
             })

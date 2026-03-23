@@ -1115,6 +1115,28 @@
     <string name="from_date_1">🗓️ FROM DATE</string>
     <string name="to_date_1">🗓️ TO DATE</string>
     <string name="reason_1">💬 REASON</string>
+    <string name="paid">paid</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="capacity">Capacity</string>
+    <string name="hostel_id">Hostel ID</string>
+    <string name="occupancy_est">Occupancy (est.)</string>
+    <string name="room_empty">Room Empty</string>
+    <string name="accept">Accept</string>
+    <string name="outpass_applied">Outpass Applied</string>
+    <string name="hostel_selection">Hostel Selection</string>
+    <string name="choose_your_hostel">Choose your Hostel</string>
+    <string name="hostel_fee_tracking">Hostel Fee Tracking</string>
+    <string name="fee_management">Fee Management</string>
+    <string name="overdue">Overdue</string>
+    <string name="Beds">Beds</string>
+    <string name="Bed">Bed</string>
+    <string name="outpass_request">Outpass Request</string>
+    <string name="detailed_attendance_records">Detailed Attendance Records</string>
+    <string name="hotel_information">Hotel Information</string>
+    <string name="enter_the_reason_for_your_outpass_request">Enter the reason for your outpass request...</string>
+    <string name="where_are_you_going">Where are you going ?</string>
+    <string name="enter_contact_number">Enter contact number</string>
+    <string name="note_your_outpass_request_will_be_sent_to_the_warden_for_approval_you_will_be_notified_once_the_decision_is_made_please_ensure_all_details_are_accurate">Note: Your outpass request will be sent to the warden for approval. You will be notified once the decision is made. Please ensure all details are accurate.</string>
 
 
 </resources>

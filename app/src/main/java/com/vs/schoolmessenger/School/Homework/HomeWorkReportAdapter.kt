@@ -124,7 +124,7 @@ class HomeWorkReportAdapter(
 
 
                 val isHomeWorkData = FilePreview(
-                    id = "",
+                    id = item.id,
                     title = item.title,
                     description = item.description,
                     subjectName = item.subject_name,

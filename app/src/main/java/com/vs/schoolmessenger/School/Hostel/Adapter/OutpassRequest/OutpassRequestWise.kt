@@ -95,14 +95,14 @@ class OutpassRequestWise(
             context: Context,
         ) {
 
-            lblRoomFullNo.text = "Room ${data.roomNumber}"
-            lblFullName.text = data.studentName
-            lblInitialName.text= Constant.getInitials(data.studentName)
+            lblRoomFullNo.text = "Room ${data.room_no}"
+            lblFullName.text = data.student_name
+            lblInitialName.text= Constant.getInitials(data.student_name?:"")
 
-            lblReason.text = data.issueDescription
-            lblInDate.text =  "In : ${data.InDate} at ${data.InTime}"
-            lblOutDate.text = "Out : ${data.OutDate} at ${data.OutTime}"
-            lblDestination.text = data.Destination
+            lblReason.text = data.reason
+            lblInDate.text =  "In : ${data.in_date}"
+            lblOutDate.text = "Out : ${data.out_date}"
+            lblDestination.visibility= View.GONE
 
             lblApprove.setBackgroundTintList(
                 ContextCompat.getColorStateList(context, R.color.light_green4)

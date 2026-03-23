@@ -1,26 +1,27 @@
 package com.vs.schoolmessenger.School.Hostel.Adapter.RoomAttendance
 
 
-
-
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomStudentAttendanceData
+import com.vs.schoolmessenger.School.Hostel.Listner.RoomAttendanceListener
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.RoomStudentAttendanceData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class RoomAttendanceAdapter(
     private var itemList: List<RoomStudentAttendanceData>?,
     private var context: Context,
+    private var listener: RoomAttendanceListener,
     private var isLoading: Boolean
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -60,6 +61,10 @@ class RoomAttendanceAdapter(
         notifyDataSetChanged()
     }
 
+    fun getUpdatedList(): List<RoomStudentAttendanceData> {
+        return itemList?:emptyList()
+    }
+
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,6 +73,11 @@ class RoomAttendanceAdapter(
         private val lblFullName: TextView = itemView.findViewById(R.id.lblFullName)
         private val lblPresent: MaterialButton = itemView.findViewById(R.id.lblPresent)
         private val lblAbsent: MaterialButton = itemView.findViewById(R.id.lblAbsent)
+        private val lblAccept: MaterialButton = itemView.findViewById(R.id.lblAccept)
+        private val lblDecline: MaterialButton = itemView.findViewById(R.id.lblDecline)
+        private val lblOutpassReason: TextView = itemView.findViewById(R.id.lblOutpassReason)
+        private val lblOutpassPermissionTimeDuration: TextView = itemView.findViewById(R.id.lblOutpassPermissionTimeDuration)
+        private val groupsEntireOutPass: Group = itemView.findViewById(R.id.groupsEntireOutPass)
 
         private val colorList = listOf(
             R.color.green,
@@ -87,11 +97,8 @@ class RoomAttendanceAdapter(
 
             lblInitialName.text = Constant.getInitials(data.name)
             lblStudentDetails.text =
-                "Student id :${data.studentId} Parent Mobile No :${data.parentPhone}"
+                "Student id :${data.id} Parent Mobile No :${data.primary_mobile}"
             lblFullName.text = data.name
-
-
-
 
             val color = if (position < colorList.size) {
                 colorList[position]
@@ -108,12 +115,33 @@ class RoomAttendanceAdapter(
             lblPresent.setOnClickListener {
                 data.status = "Present"
                 updateButtonUI("Present")
+                listener.onAttendanceChanged(itemList?:emptyList())
+
             }
 
             lblAbsent.setOnClickListener {
                 data.status = "Absent"
                 updateButtonUI("Absent")
+                listener.onAttendanceChanged(itemList?:emptyList())
             }
+
+            if (data.is_outpass_approved){
+
+                lblAccept.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.light_green4)
+                lblDecline.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.red)
+
+                groupsEntireOutPass.visibility= View.VISIBLE
+                lblOutpassReason.text=data.reason
+                lblOutpassPermissionTimeDuration.text= "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
+                    Constant.formatDateTime(data.out_date)}"
+
+            }
+            else{
+                groupsEntireOutPass.visibility= View.GONE
+            }
+
         }
 
         private fun updateButtonUI(status: String) {
@@ -132,13 +160,29 @@ class RoomAttendanceAdapter(
                 lblAbsent.iconTint =
                     ContextCompat.getColorStateList(context, R.color.black)
 
-            } else {
+            }
+            else if(status.equals("Absent", true)) {
 
                 lblAbsent.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.red)
                 lblAbsent.setTextColor(ContextCompat.getColor(context, R.color.white))
                 lblAbsent.iconTint =
                     ContextCompat.getColorStateList(context, R.color.white)
+
+                lblPresent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.white)
+                lblPresent.setTextColor(ContextCompat.getColor(context, R.color.black))
+                lblPresent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.black)
+
+            }
+
+            else {
+                lblAbsent.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.white)
+                lblAbsent.setTextColor(ContextCompat.getColor(context, R.color.black))
+                lblAbsent.iconTint =
+                    ContextCompat.getColorStateList(context, R.color.black)
 
                 lblPresent.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.white)

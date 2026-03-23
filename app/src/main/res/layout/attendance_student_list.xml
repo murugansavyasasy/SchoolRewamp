@@ -210,7 +210,7 @@
                 android:drawablePadding="@dimen/five"
                 android:paddingVertical="@dimen/five"
                 android:paddingHorizontal="@dimen/fifteen"
-                android:drawableEnd="@drawable/arrowtriangle_down_circle"
+                android:drawableEnd="@drawable/arrow_up_arrow_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

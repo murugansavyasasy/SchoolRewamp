@@ -1,12 +1,309 @@
 package com.vs.schoolmessenger.Repository.SchoolServices
 
+import android.app.Activity
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
+import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.getHostelDashboard
+import com.vs.schoolmessenger.School.Hostel.Model.HostelList.getHostelList
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SchoolServicesTwo {
     var client_auth: RestClient
 
+    var isGetSubmissionList: MutableLiveData<GetHomeWorkSubmissionList?>
+    var isGetHostelList: MutableLiveData<getHostelList?>
+    var isGetHostelDashboardDetails: MutableLiveData<getHostelDashboard?>
+    var isGetHostelAttendanceSession: MutableLiveData<getHostelAttendanceSession?>
+    var isGetHostelAttendanceStudentList: MutableLiveData<getHostelStudentRoomAttendance?>
+    var isHostelMarkAttendance: MutableLiveData<hostelMarkAttendanceRespone?>
+    var isHostelSchoolOutpassRequest: MutableLiveData<getSchoolHostelOutpassRequest?>
+    var isGetSchoolHostelAttendanceReport: MutableLiveData<getSchoolHostelAttendanceReport?>
+
+
     init {
         client_auth = RestClient()
 
+        isGetSubmissionList = MutableLiveData()
+        isGetHostelList = MutableLiveData()
+        isGetHostelDashboardDetails = MutableLiveData()
+        isGetHostelAttendanceSession = MutableLiveData()
+        isGetHostelAttendanceStudentList = MutableLiveData()
+        isHostelMarkAttendance = MutableLiveData()
+        isHostelSchoolOutpassRequest = MutableLiveData()
+        isGetSchoolHostelAttendanceReport = MutableLiveData()
+
     }
+
+    fun getHomeworkSubmissionList(
+        isToken: String, id: String, activity: Activity
+    ) {
+        RestClient.Companion.apiInterfaces.getHomeworkSubmissionList(isToken,id)
+            ?.enqueue(object : Callback<GetHomeWorkSubmissionList?> {
+                override fun onResponse(
+                    call: Call<GetHomeWorkSubmissionList?>, response: Response<GetHomeWorkSubmissionList?>
+                ) {
+                    Log.d(
+                        "GetHomeWorkSubmissionList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetSubmissionList.postValue(response.body())
+                        }
+                    } else {
+                        isGetSubmissionList.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<GetHomeWorkSubmissionList?>, t: Throwable) {
+                    isGetSubmissionList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHomeworkSubmissionListLiveData: LiveData<GetHomeWorkSubmissionList?>
+        get() = isGetSubmissionList
+
+    fun getHostelList(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.Companion.apiInterfaces.getHotelList(isToken)
+            ?.enqueue(object : Callback<getHostelList?> {
+                override fun onResponse(
+                    call: Call<getHostelList?>, response: Response<getHostelList?>
+                ) {
+                    Log.d(
+                        "getHostelList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetHostelList.postValue(response.body())
+                        }
+                    } else {
+                        isGetHostelList.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getHostelList?>, t: Throwable) {
+                    isGetHostelList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHostelListLiveData: LiveData<getHostelList?>
+        get() = isGetHostelList
+
+
+
+    fun getHostelDashboardDetails(
+        isToken: String, hostel_id : String,academic_year_id :String,activity: Activity
+    ) {
+        RestClient.Companion.apiInterfaces.getHostelDasboard(isToken,hostel_id,academic_year_id )
+            ?.enqueue(object : Callback<getHostelDashboard?> {
+                override fun onResponse(
+                    call: Call<getHostelDashboard?>, response: Response<getHostelDashboard?>
+                ) {
+                    Log.d(
+                        "getHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetHostelDashboardDetails.postValue(response.body())
+                        }
+                    } else {
+                        isGetHostelDashboardDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getHostelDashboard?>, t: Throwable) {
+                    isGetHostelDashboardDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHostelDashboardDetailsLiveData: LiveData<getHostelDashboard?>
+        get() = isGetHostelDashboardDetails
+
+
+    fun getHostelAttendanceSession(
+        isToken: String,activity: Activity
+    ) {
+        RestClient.Companion.apiInterfaces.getHostelAttendanceSession(isToken)
+            ?.enqueue(object : Callback<getHostelAttendanceSession?> {
+                override fun onResponse(
+                    call: Call<getHostelAttendanceSession?>, response: Response<getHostelAttendanceSession?>
+                ) {
+                    Log.d(
+                        "getHostelAttendanceSession", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetHostelAttendanceSession.postValue(response.body())
+                        }
+                    } else {
+                        isGetHostelAttendanceSession.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getHostelAttendanceSession?>, t: Throwable) {
+                    isGetHostelAttendanceSession.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHostelAttendanceSessionLiveData: LiveData<getHostelAttendanceSession?>
+        get() = isGetHostelAttendanceSession
+
+
+    fun getHostelAttendanceRoomStudentList(
+        isToken: String,hostel_id : String, room_id: String, academic_year_id :String, date : String,session_type_id:String,activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.getHostelAttendanceRoomStudentList(isToken,hostel_id,room_id,academic_year_id,date,session_type_id)
+            ?.enqueue(object : Callback<getHostelStudentRoomAttendance?> {
+                override fun onResponse(
+                    call: Call<getHostelStudentRoomAttendance?>, response: Response<getHostelStudentRoomAttendance?>
+                ) {
+                    Log.d(
+                        "getHostelStudentRoomAttendance", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetHostelAttendanceStudentList.postValue(response.body())
+                        }
+                    } else {
+                        isGetHostelAttendanceStudentList.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getHostelStudentRoomAttendance?>, t: Throwable) {
+                    isGetHostelAttendanceStudentList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHostelAttendanceRoomStudentListLiveData: LiveData<getHostelStudentRoomAttendance?>
+        get() = isGetHostelAttendanceStudentList
+
+    fun hostelMarkAtttendance(
+        isToken: String,
+        jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.hostelMarkAttendance(isToken,jsonObject)
+            ?.enqueue(object : Callback<hostelMarkAttendanceRespone?> {
+                override fun onResponse(
+                    call: Call<hostelMarkAttendanceRespone?>, response: Response<hostelMarkAttendanceRespone?>
+                ) {
+                    Log.d(
+                        "isHostelMarkAttendance", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isHostelMarkAttendance.postValue(response.body())
+                        }
+                    } else {
+                        isHostelMarkAttendance.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<hostelMarkAttendanceRespone?>, t: Throwable) {
+                    isHostelMarkAttendance.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHotelMarkAttendanceLiveData: LiveData<hostelMarkAttendanceRespone?>
+        get() = isHostelMarkAttendance
+
+
+
+    fun getHostelSchoolOutpassRequestList(
+        isToken: String, year_id  : String, month_id : String, hostel_id  :String, academic_year_id  : String, activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.getHostelSchoolOutpassList(isToken,hostel_id,year_id,month_id,academic_year_id)
+            ?.enqueue(object : Callback<getSchoolHostelOutpassRequest?> {
+                override fun onResponse(
+                    call: Call<getSchoolHostelOutpassRequest?>, response: Response<getSchoolHostelOutpassRequest?>
+                ) {
+                    Log.d(
+                        "getSchoolHostelOutpassRequest", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isHostelSchoolOutpassRequest.postValue(response.body())
+                        }
+                    } else {
+                        isHostelSchoolOutpassRequest.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getSchoolHostelOutpassRequest?>, t: Throwable) {
+                    isHostelSchoolOutpassRequest.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHotelSchoolOutpassRequestLiveData: LiveData<getSchoolHostelOutpassRequest?>
+        get() = isHostelSchoolOutpassRequest
+
+ fun getSchoolHostelAttendanceReport(
+     isToken: String, hostel_id : String, date: String, academic_year_id:String,activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.getHostelSchoolAttendanceReport(isToken,hostel_id,date,academic_year_id)
+            ?.enqueue(object : Callback<getSchoolHostelAttendanceReport?> {
+                override fun onResponse(
+                    call: Call<getSchoolHostelAttendanceReport?>, response: Response<getSchoolHostelAttendanceReport?>
+                ) {
+                    Log.d(
+                        "getSchoolHostelAttendanceReport", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isGetSchoolHostelAttendanceReport.postValue(response.body())
+                        }
+                    } else {
+                        isGetSchoolHostelAttendanceReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getSchoolHostelAttendanceReport?>, t: Throwable) {
+                    isGetSchoolHostelAttendanceReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHotelSchoolAttendanceReportLiveData: LiveData<getSchoolHostelAttendanceReport?>
+        get() = isGetSchoolHostelAttendanceReport
+
+
+
 }

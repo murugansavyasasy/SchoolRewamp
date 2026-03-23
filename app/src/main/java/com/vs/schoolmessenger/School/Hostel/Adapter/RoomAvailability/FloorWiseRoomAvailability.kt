@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Listner.HostelClickListner
-import com.vs.schoolmessenger.School.Hostel.Model.RoomAvailabaility.getFloorwiseAvailability
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.getFloorwiseAvailability
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FloorWiseRoomAvailability(
@@ -74,19 +74,23 @@ class FloorWiseRoomAvailability(
                 val result = fullList.mapNotNull { floor_details ->
 
                     val filteredDetails = if (query.isEmpty()) {
-                        floor_details.details
+                        floor_details.rooms
                     } else {
-                        floor_details.details.filter { room ->
-                            room.room_no.lowercase().contains(query) ||
-                                    room.total_occupancy.lowercase().contains(query) ||
-                                    room.current_occupancy.lowercase().contains(query)
+                        floor_details.rooms.filter { room ->
+                            room.number.lowercase().contains(query) ||
+                                    room.current_occupancy.toString().lowercase().contains(query) ||
+                                    room.max_occupancy.toString().lowercase().contains(query)||
+                                    room.id.lowercase().contains(query)||
+                                    room.total_beds.toString().contains(query)
                         }
                     }
 
                     if (filteredDetails.isNotEmpty()) {
                         getFloorwiseAvailability(
-                            floor = floor_details.floor,
-                            details = filteredDetails
+                            id = floor_details.id,
+                            floor_no = floor_details.floor_no,
+                            floor_name = floor_details.floor_name,
+                            rooms = filteredDetails
                         )
                     } else null
                 }
@@ -122,16 +126,16 @@ class FloorWiseRoomAvailability(
             data: getFloorwiseAvailability,
             hostelClickListner: HostelClickListner
         ) {
-            lblFloorName.text = data.floor
+            lblFloorName.text = data.floor_name
 
-            if (data.details.isEmpty()) {
+            if (data.rooms.isEmpty()) {
                 rcRoomWiseAvailability.visibility = View.GONE
             } else {
                 rcRoomWiseAvailability.visibility = View.VISIBLE
                 rcRoomWiseAvailability.layoutManager = LinearLayoutManager(context)
                 rcRoomWiseAvailability.isNestedScrollingEnabled = false
                 rcRoomWiseAvailability.adapter = RoomWiseAvailability(
-                    data.details,
+                    data.rooms,
                     context,
                     hostelClickListner,
                     false

@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Fragement.AdminRequestFragment
 import com.vs.schoolmessenger.School.Hostel.Fragement.AttendanceHistoryFragment
 import com.vs.schoolmessenger.School.Hostel.Fragement.BedOccupiedFragment
+import com.vs.schoolmessenger.School.Hostel.Fragement.FeeManagementFragment
 import com.vs.schoolmessenger.School.Hostel.Fragement.MessTimeTableFragment
 import com.vs.schoolmessenger.School.Hostel.Fragement.OutPassRequestFragment
 import com.vs.schoolmessenger.School.Hostel.Fragement.RoomAttendanceFragment
@@ -74,6 +75,7 @@ class BottomSheet : BottomSheetDialogFragment() {
         val fragment = when (type) {
 
             FragmentType.BEDOCCUPIED.toString() -> BedOccupiedFragment()
+            FragmentType.FEEMANAGEMENT.toString() -> FeeManagementFragment()
             FragmentType.TOTALSTUDENT.toString() -> TotalStudentFragment()
             FragmentType.PENDINGISSUES.toString() -> AdminRequestFragment()
             FragmentType.OUTPASSREQUESTS.toString() -> OutPassRequestFragment()

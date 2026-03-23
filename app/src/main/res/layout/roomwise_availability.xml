@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/ten"
     android:elevation="@dimen/five"
+    android:id="@+id/cardHeader"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/twenty"
     app:strokeColor="@color/light_gray_10">
@@ -30,29 +31,33 @@
             android:id="@+id/imgPersonStrength"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
+            android:tint="@color/light_gray__1"
             android:src="@drawable/person_2_black_bg"
-            tools:ignore="MissingConstraints"></ImageView>
+            ></ImageView>
 
         <TextView
             android:id="@+id/lblPersonStrength"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12/21"
-            tools:ignore="MissingConstraints"></TextView>
+            android:textColor="@color/light_gray__2"
+            ></TextView>
 
         <ImageView
             android:id="@+id/imgBedCount"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:src="@drawable/book"
-            tools:ignore="MissingConstraints"></ImageView>
+            android:tint="@color/light_gray__1"
+            ></ImageView>
 
         <TextView
+            android:textColor="@color/light_gray__2"
             android:id="@+id/lblBedCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12/21"
-            tools:ignore="MissingConstraints"></TextView>
+            android:text="12"
+           ></TextView>
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowRoomDetails"
@@ -79,8 +84,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/five"
             android:text="@string/occupancy"
-            android:textColor="@color/light_gray"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/light_gray__2"
             app:layout_constraintEnd_toStartOf="@+id/lblOccupancyPercentage"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,14 +113,14 @@
             app:constraint_referenced_ids="lblOccupancy,lblOccupancyPercentage"></androidx.constraintlayout.widget.Barrier>
 
         <ProgressBar
-            android:id="@+id/proAttendanceProgressBar"
+            android:id="@+id/proRoomAvailProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="@dimen/five"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/eight"
             android:max="100"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/progress_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +136,7 @@
             android:textColor="@color/light_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/proAttendanceProgressBar">
+            app:layout_constraintTop_toBottomOf="@+id/proRoomAvailProgressBar">
 
         </TextView>
 
@@ -157,11 +161,32 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:text="• +2 more"
+            app:layout_constraintBottom_toTopOf="@+id/ErrorMsg"
             android:textColor="@color/light_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblSecondName">
 
+        </TextView>
+
+
+        <TextView
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/lblHostellarRemainingCount"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:id="@+id/ErrorMsg"
+            android:text="@string/room_empty"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:background="@drawable/rect_radius_15"
+            android:backgroundTint="@color/light_gray1"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/ten"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/vwDivider"
+            android:layout_height="wrap_content">
         </TextView>
 
         <View
@@ -172,12 +197,11 @@
             android:background="@color/light_gray_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblHostellarRemainingCount">
+            app:layout_constraintTop_toBottomOf="@+id/ErrorMsg">
 
         </View>
 
         <TextView
-
             android:id="@+id/lblMarkAttendance"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="0dp"
@@ -185,7 +209,7 @@
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/five"
             android:text="@string/mark_attendance"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/light_gray__2"
             android:textSize="@dimen/eighteen_sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgArrow"
@@ -198,12 +222,21 @@
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
             android:src="@drawable/right_arrow"
-            android:tint="@color/light_gray_"
+            android:tint="@color/light_gray__1"
             app:layout_constraintBottom_toBottomOf="@+id/lblMarkAttendance"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="0.1"
             app:layout_constraintStart_toEndOf="@+id/lblMarkAttendance"
             app:layout_constraintTop_toTopOf="@+id/lblMarkAttendance"></ImageView>
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/GroupsRoomDetails"
+            app:constraint_referenced_ids="lblOccupancy,lblOccupancyPercentage,proRoomAvailProgressBar,lblFirstName,lblSecondName,lblHostellarRemainingCount,vwDivider,lblMarkAttendance,imgArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.Group>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,7 +95,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        isGetLeaveRequestList()
+//        isGetLeaveRequestList()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
@@ -455,7 +455,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
     private fun isGetLeaveRequestList() {
         Constant.showLoading(this)
         mAdapter = StaffMonthwiseApproveLeaveAdapter(
-            null, this, this, Constant.isShimmerViewDisable
+            null, this, this, Constant.isShimmerViewShow
         )
         binding.rcyleaverequest.layoutManager = LinearLayoutManager(this)
         binding.rcyleaverequest.isNestedScrollingEnabled = false
@@ -463,6 +463,11 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
         appViewModel!!.getStaffleaverequest(
             isAccessToken!!, "",this
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isGetLeaveRequestList()
     }
 
 

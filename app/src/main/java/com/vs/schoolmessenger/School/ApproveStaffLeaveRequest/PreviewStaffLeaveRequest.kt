@@ -191,7 +191,7 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
 
     private fun isGetLeaveRequestList() {
         Constant.showLoading(this)
-        mAdapter = StaffLeaveHistory(null, this, Constant.isShimmerViewDisable)
+        mAdapter = StaffLeaveHistory(null, this, Constant.isShimmerViewShow)
         binding.rcyStaffLeaveHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyStaffLeaveHistory.isNestedScrollingEnabled = false
         binding.rcyStaffLeaveHistory.adapter = mAdapter

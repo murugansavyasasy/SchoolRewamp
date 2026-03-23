@@ -166,7 +166,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     "• ${it.studentName} → ${it.subjectName} → ${it.activityName} → ${it.selected_name} (${it.enteredMark}/${it.maxMark})"
                 }
 
-
                 Constant.errorAlert1(
                     this,
                     getString(R.string.alert),
@@ -192,7 +191,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             showSendConfirmationDialog()
         }
-
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             binding.lytSearch.visibility = View.VISIBLE
         }
@@ -313,9 +311,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             } else null
                         }
 
-                        // =========================
-                        // FINAL DECISION RULE
-                        // =========================
                         val finalMark = when {
 
                             // Excel says: PLEASE MARK PROPERLY
@@ -389,7 +384,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             val markTexts = MutableList(columns.size) { "" }
             val mockTexts = MutableList(columns.size) { "" }
-            val marks = MutableList<Int?>(columns.size) { null }
+            val marks = MutableList<Double?>(columns.size) { null }
             val isEditList = MutableList(columns.size) { true }
 
             apiStudent.marks.orEmpty().forEach { subject ->
@@ -403,7 +398,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                     if (index != -1) {
                         markTexts[index] = activity.mark
-                        marks[index] = activity.mark.toIntOrNull()
+                        marks[index] = activity.mark.toDoubleOrNull()
                         isEditList[index] = activity.is_edit
                     }
                 }
@@ -587,7 +582,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
-            // 🔹 APPLY SORT HERE (your existing sort function)
             applySortUsingSavedFilters()
 
             dialog.dismiss()
@@ -595,14 +589,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         btnClear.setOnClickListener {
 
-            // 1️⃣ Clear saved state
             savedFilters.clear()
 
-            // 2️⃣ Reset UI rows
             container.removeAllViews()
             addFilterRow(container)
 
-            // 3️⃣ Reset list to original
             currentStudentsList.clear()
             currentStudentsList.addAll(originalStudentsList)
             binding.rvMarks.adapter?.notifyDataSetChanged()
@@ -619,7 +610,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         Log.d(TAG_SORT, "----- APPLY SORT START -----")
 
-        // 🔹 Print filters
         savedFilters.forEachIndexed { index, filter ->
             Log.d(
                 TAG_SORT,
@@ -627,7 +617,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             )
         }
 
-        // 🔹 Force Gender first
         val orderedFilters = mutableListOf<FilterState>()
 
         savedFilters.firstOrNull { it.type == "Gender" }?.let {
@@ -637,7 +626,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         orderedFilters.addAll(savedFilters.filter { it.type != "Gender" })
 
-        // 🔹 Print priority order
         orderedFilters.forEachIndexed { index, filter ->
             Log.d(
                 TAG_SORT,
@@ -706,7 +694,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     else -> 0
                 }
 
-                // 🔴 Stop at first difference
                 if (result != 0) return@Comparator result
             }
 
@@ -759,7 +746,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val imgAdd = row.findViewById<ImageView>(R.id.imgAddFilter)
         val lytValueSpinner = row.findViewById<RelativeLayout>(R.id.lytValueSpinner)
 
-        // 🔹 REMOVE ALREADY SELECTED TYPES
         val usedTypes = getSelectedTypes(container)
 
         val typeList = mutableListOf("Select Type")
@@ -777,7 +763,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
         }
 
-        // 🔹 RESTORE STATE
         state?.let {
             val index = typeList.indexOf(it.type)
             if (index >= 0) {
@@ -900,8 +885,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     column.selected_name?.lowercase()?.replace("[^a-z0-9]".toRegex(), "")
                 }"
 
-                /* 🔴 1. REVIEW FLAG (ONLY IF NOT EDITED) */
-                if (trimmed.isNotEmpty() && trimmed == oldValue &&          // ⭐ KEY FIX
+                if (trimmed.isNotEmpty() && trimmed == oldValue &&
                     reviewFlagMap.containsKey(reviewKey)
                 ) {
                     summary.total++
@@ -914,7 +898,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     return@forEachIndexed
                 }
 
-                /* 🔴 2. EXCEL / SYSTEM MESSAGE */
                 if (trimmed.isNotEmpty() && value == null && !trimmed.equals("AB", true)) {
                     summary.total++
                     summary.invalidCount++
@@ -924,7 +907,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     return@forEachIndexed
                 }
 
-                /* 🔴 3. MAX MARK */
                 if (value != null && value > column.maxMark) {
                     summary.total++
                     summary.maxMarkCount++
@@ -943,13 +925,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         val issueSummary = calculateIssueSummary(currentStudentsList, markColumns)
 
-        // 🔹 No issues → hide label
         if (issueSummary.total == 0) {
             binding.lblIssueFound.visibility = View.GONE
             return
         }
 
-        // 🔹 Group adapter error messages
         val reasonCountMap = linkedMapOf<String, Int>()
 
         issueSummary.details.forEach { issue ->
@@ -1062,14 +1042,54 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 
+    private fun getInvalidValueIssues(
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
+    ): List<InvalidMarkIssue> {
+
+        val issues = mutableListOf<InvalidMarkIssue>()
+
+        students.forEach { student ->
+
+            student.markTexts.forEachIndexed { index, rawText ->
+
+                val text = rawText.trim()
+
+                if (text.isEmpty()) return@forEachIndexed
+                if (text.equals("AB", true)) return@forEachIndexed
+
+                if (text.toDoubleOrNull() == null) {
+
+                    val column = columns.getOrNull(index) ?: return@forEachIndexed
+
+                    issues.add(
+                        InvalidMarkIssue(
+                            studentName = student.name,
+                            subjectName = column.subjectName,
+                            selectedname = column.selected_name,
+                            enteredValue = text
+                        )
+                    )
+                }
+            }
+        }
+
+        return issues
+    }
+
     private fun getMaxMarkIssues(
-        students: List<StudentMarkList>, columns: List<MarkColumn>
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
     ): List<MaxMarkIssue> {
+
         val issues = mutableListOf<MaxMarkIssue>()
+
         students.forEach { student ->
             student.markTexts.forEachIndexed { index, rawText ->
-                val value = rawText.toIntOrNull() ?: return@forEachIndexed
+
+                val value = rawText.toDoubleOrNull() ?: return@forEachIndexed
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
+
                 if (value > column.maxMark) {
                     issues.add(
                         MaxMarkIssue(
@@ -1084,34 +1104,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
         }
-        return issues
-    }
 
-    private fun getInvalidValueIssues(
-        students: List<StudentMarkList>, columns: List<MarkColumn>
-    ): List<InvalidMarkIssue> {
-
-        val issues = mutableListOf<InvalidMarkIssue>()
-
-        students.forEach { student ->
-            student.markTexts.forEachIndexed { index, rawText ->
-
-                val text = rawText.trim()
-                if (text.isEmpty()) return@forEachIndexed
-                if (text.equals("AB", true)) return@forEachIndexed
-                if (text.toIntOrNull() == null) {
-                    val column = columns.getOrNull(index) ?: return@forEachIndexed
-                    issues.add(
-                        InvalidMarkIssue(
-                            studentName = student.name,
-                            subjectName = column.subjectName,
-                            selectedname = column.selected_name,
-                            enteredValue = text
-                        )
-                    )
-                }
-            }
-        }
         return issues
     }
 }

@@ -86,9 +86,12 @@ class RateUsDialog(
         ratingBar.onRatingBarChangeListener =
             RatingBar.OnRatingBarChangeListener { _, rating, _ ->
                 ratingValue = rating.toInt()
+
                 if (ratingValue == 0) {
+                    binding.btnsubmit.visibility= View.GONE
                     showMaybeLater()
                 } else {
+                    binding.btnsubmit.visibility= View.VISIBLE
                     showRatingUI()
                     loadRemarkForRating(ratingValue)
                 }
@@ -146,7 +149,10 @@ class RateUsDialog(
     }
 
     private fun showRatingUI() = with(binding) {
+        ->
         imgFeedBack.visibility = View.VISIBLE
+        lblTitle.visibility = View.VISIBLE
+        lblhytre.visibility = View.VISIBLE
         lblMayBeLater.visibility = View.GONE
         lnrRatingContent.visibility = View.VISIBLE
         recyclerCategories.visibility = View.VISIBLE
@@ -154,8 +160,10 @@ class RateUsDialog(
     }
 
     private fun showMaybeLater() = with(binding) {
+        lblTitle.visibility= View.GONE
+        lblhytre.visibility= View.GONE
         imgFeedBack.visibility = View.VISIBLE
-        lblMayBeLater.visibility = View.VISIBLE
+//        lblMayBeLater.visibility = View.VISIBLE
         lnrRatingContent.visibility = View.GONE
         recyclerCategories.visibility = View.GONE
 
@@ -224,6 +232,7 @@ class RateUsDialog(
             if (response != null) {
                 if (response?.status == true) {
                     binding.rateUs.visibility = View.GONE
+                    binding.btnsubmit.visibility= View.GONE
                     binding.rateusSuccess.visibility = View.VISIBLE
 
                 } else {
@@ -246,4 +255,3 @@ class RateUsDialog(
         _binding = null
     }
 }
-

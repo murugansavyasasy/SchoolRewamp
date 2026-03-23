@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
@@ -11,39 +12,93 @@
         android:paddingTop="@dimen/twenty"
         android:paddingBottom="@dimen/fifteen">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rlaHeaderTab"
+            android:paddingBottom="@dimen/five"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Back Button -->
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_width="@dimen/thirty_five"
                 android:layout_height="@dimen/thirty_five"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/fifteen"
-                android:src="@drawable/arrow_left_white">
+                android:src="@drawable/arrow_left_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </ImageView>
+            <!-- Right Side (Call + Spinner) -->
+            <RelativeLayout
+                android:id="@+id/rlaImgSpinnerDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgCall"
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:padding="@dimen/five"
+                    android:backgroundTint="@color/light_blue_9"
+                    android:background="@drawable/caller_bg"
+                    android:src="@drawable/phone_icon_bg" />
+
+                <RelativeLayout
+                    android:layout_marginEnd="@dimen/five"
+                    android:id="@+id/rlaSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/imgCall"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/eight"
+                    android:background="@drawable/bg_white_stroke"
+                    >
+
+                    <Spinner
+                        android:id="@+id/isAcademicSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/isAcademicSpinner"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/three"
+                        android:src="@drawable/ic_drop_down"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <TextView
-                android:layout_toEndOf="@+id/imgBack"
-                android:layout_centerVertical="true"
                 android:id="@+id/lblMenuName"
-                android:layout_marginHorizontal="@dimen/five"
-                android:text="Hostel Dashboard"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_alignParentEnd="true"
-                android:textSize="@dimen/twenty_two_sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_marginEnd="@dimen/three"
+                android:text="Hostel Dasahboard"
                 android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:textSize="@dimen/twenty_two_sp"
+                android:layout_marginTop="@dimen/fifteen"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rlaImgSpinnerDetails"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/imgBack"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
-            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_marginHorizontal="@dimen/ten"
             android:background="@drawable/rect_white_radius_light"
             android:layout_below="@+id/rlaHeaderTab"
@@ -53,29 +108,102 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/lblToday"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+               android:id="@+id/lblInitialName"
+                android:text="N"
+                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/sixteen_sp"
+                android:gravity="center"
+                android:backgroundTint="@color/dark_blue_6"
+                android:background="@drawable/rect_radius_20dp"
+                android:layout_marginStart="@dimen/eight"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="@id/flowGeneralDetails"
+                app:layout_constraintBottom_toBottomOf="@id/flowGeneralDetails"
+                app:layout_constraintEnd_toStartOf="@id/flowGeneralDetails"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp">
+            </TextView>
+
+
+            <TextView
+               android:id="@+id/lblToday"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp"
-                android:layout_marginHorizontal="@dimen/ten"
                 android:text="TODAY"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             </TextView>
             <TextView
+
                 android:id="@+id/lblDate"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginHorizontal="@dimen/ten"
-                android:text="Tuesday,March 03"
+                android:text="Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             </TextView>
 
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+               android:id="@+id/lblClassAndRoomDetails"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp"
+                android:text="Class And Room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblHostelName"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twele_sp"
+                android:text="Hostel Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:layout_width="0dp"
+                app:flow_verticalGap="@dimen/five"
+                android:layout_marginHorizontal="@dimen/eight"
+                app:layout_constraintHorizontal_weight="4"
+                app:flow_maxElementsWrap="1"
+                app:flow_horizontalBias="0"
+                app:flow_verticalStyle="spread"
+                app:layout_constraintTop_toTopOf="parent"
+                app:constraint_referenced_ids="lblToday,lblDate,lblName,lblClassAndRoomDetails,lblHostelName"
+                android:id="@+id/flowGeneralDetails"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblInitialName"
+                android:layout_height="wrap_content">
+
+            </androidx.constraintlayout.helper.widget.Flow>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </RelativeLayout>

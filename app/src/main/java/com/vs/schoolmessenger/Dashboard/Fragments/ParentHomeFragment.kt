@@ -63,6 +63,7 @@ import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.Hostel.ParentHostelDashboard
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
@@ -190,6 +191,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     originalMenuList.clear()
                     originalMenuList.addAll(isParentMenuDetails!!)
+
+                    //Hardcode from here
+                    //Added the hardcode data
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 995,
+                            name = "Hostel parent Portal",
+                            description = "Monitor hostel student activities and  accommodation details"
+                        )
+                    )
+                    //Hardcode from here
+
 
                     filteredMenuList.clear()
                     filteredMenuList.addAll(originalMenuList)
@@ -698,6 +711,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_ONLINE_TEXT_BOOK -> Intent(
                 requireActivity(),
                 Ebooks::class.java
+            )
+
+            Constant.M_HOSTEL_PARENT -> Intent(
+                requireActivity(),
+                ParentHostelDashboard::class.java
             )
 
             else -> null

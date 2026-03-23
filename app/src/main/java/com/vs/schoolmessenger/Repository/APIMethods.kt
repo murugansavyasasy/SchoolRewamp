@@ -226,6 +226,17 @@ object APIMethods {
     const val getstaffleaverequest = "comm/api/leave-req-for-staff/list"
 
 
+    const val gethomeworksubmissionlist = "comm/api/homework/submissions-list"
+
+
+    const val gethostellist = "stud-attd/api/hostel-attendance/hostel-list"
+    const val gethoteldashboard = "stud-attd/api/hostel-attendance/room-details"
+    const val gethotelattendancesession = "stud-attd/api/hostel-attendance/session-types"
+    const val gethotelattendanceroomstudentlist = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
+    const val gethostelschooloutpassrequst= "stud-attd/api/hostel-attendance/outpass-report"
+    const val gethostelschoolattendancereport= "stud-attd/api/hostel-attendance/attendance-report"
+
+
 
 }
 

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/consHeader"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consMenuHeaderDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingVertical="@dimen/twenty"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgScreenType"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:background="@drawable/rect_orange_bg"
+            android:backgroundTint="@color/green"
+            android:padding="@dimen/ten"
+            android:src="@drawable/waiting_for_approval"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/lblFeeTracking"
+            app:layout_constraintEnd_toStartOf="@+id/lblFeeManagement"
+            app:layout_constraintStart_toEndOf="@+id/lblFeeManagement"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/lblFeeManagement"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:text="@string/fee_management"
+            android:textSize="@dimen/twenty_four_sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblFeeTracking"
+            app:layout_constraintEnd_toStartOf="@+id/imgClose"
+            app:layout_constraintStart_toEndOf="@+id/imgScreenType"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/bg_circle_gray"
+            android:backgroundTint="@color/light_gray_10"
+            android:padding="@dimen/eight"
+            android:src="@drawable/close_icon"
+            android:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/lblFeeTracking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lblFeeManagement"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblFeeTracking"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text="@string/hostel_fee_tracking"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="@+id/lblFeeManagement"
+            app:layout_constraintStart_toStartOf="@+id/lblFeeManagement"
+            app:layout_constraintTop_toBottomOf="@+id/lblFeeManagement">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@id/nestedScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consMenuHeaderDetails">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/light_white"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/consPending"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:background="@drawable/bg_rect_priamry_colur_radius"
+                android:backgroundTint="@color/white"
+                android:padding="@dimen/fifteen"
+                android:layout_marginStart="@dimen/ten"
+                app:layout_constraintBottom_toBottomOf="@+id/barMenu"
+                app:layout_constraintEnd_toStartOf="@+id/consCompleted"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/imgPending"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/clock_icon_2"
+                    android:drawablePadding="@dimen/five"
+                    android:drawableTint="@color/dark_orange"
+                    android:text="@string/pending"
+                    app:layout_constraintBottom_toTopOf="@+id/lblPendingAmount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                <TextView
+                    android:id="@+id/lblPendingAmount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="400000"
+                    android:textColor="@color/dark_orange"
+                    android:textSize="@dimen/twenty_sp"
+                    app:layout_constraintBottom_toTopOf="@+id/lblPendingStudents"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgPending"></TextView>
+
+                <TextView
+                    android:id="@+id/lblPendingStudents"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="3 studnets"
+                    android:textColor="@color/light_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblPendingAmount"></TextView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/consCompleted"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:background="@drawable/bg_rect_priamry_colur_radius"
+                android:backgroundTint="@color/white"
+                android:padding="@dimen/fifteen"
+                app:layout_constraintBottom_toBottomOf="@+id/barMenu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/consPending"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/imgCompleted"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/tick_circle_icon"
+                    android:drawablePadding="@dimen/five"
+                    android:text="@string/completed"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toTopOf="@id/lblCompletedAmount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                <TextView
+                    android:id="@+id/lblCompletedAmount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="54000"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/twenty_sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgCompleted"></TextView>
+
+                <TextView
+                    android:id="@+id/lblCompletedStudent"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="4 student"
+                    android:textColor="@color/light_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCompletedAmount"></TextView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="consPending,consCompleted">
+
+            </androidx.constraintlayout.widget.Barrier>
+
+
+            <TextView
+                android:background="@color/white"
+                android:id="@+id/lblPendingTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:paddingVertical="@dimen/ten"
+                android:text="Pending (1)"
+                app:layout_constraintEnd_toStartOf="@+id/lblCompletedTab"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barMenu">
+
+            </TextView>
+
+            <TextView
+                android:background="@color/white"
+                android:id="@+id/lblCompletedTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:paddingVertical="@dimen/ten"
+                android:text="Completed (1)"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblPendingTab"
+                app:layout_constraintTop_toBottomOf="@+id/barMenu">
+
+            </TextView>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/brTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="lblPendingTab,lblCompletedTab">
+
+            </androidx.constraintlayout.widget.Barrier>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcFeePayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toTopOf="@id/imgNoDataFound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/brTab">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/imgNoDataFound"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/no_data_found"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcFeePayment"></ImageView>
+
+            <TextView
+                android:id="@+id/lblErrorMessage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:gravity="center"
+                android:text="nod"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

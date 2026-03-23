@@ -1,117 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/lnrHeader"
-    android:layout_marginTop="@dimen/five"
-    android:orientation="vertical">
+    android:layout_marginBottom="@dimen/ten"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/ten"
+    app:cardElevation="8dp"
+    app:strokeColor="@color/light_gray_10">
 
-    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardHeader"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/ten"
-        app:cardElevation="8dp"
-        app:cardMaxElevation="12dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/ten"
-        app:strokeColor="@color/light_gray_10">
+        android:padding="@dimen/ten">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/lblRoomType"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten"
+            android:background="@drawable/rect_orange_bg"
+            android:src="@drawable/house_icons"
+            app:layout_constraintBottom_toBottomOf="@+id/lblHostelType"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/lblHostelName"
+            app:layout_constraintHorizontal_weight="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblHostelName">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblHostelName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/ten">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Hostel Name"
+            android:textSize="@dimen/seventeen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblRoomType"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
-            <ImageView
-                android:id="@+id/lblRoomNo"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/homeimage"
-                app:layout_constraintBottom_toBottomOf="@+id/lblPlace"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toStartOf="@+id/lblHostelName"
-                app:layout_constraintHorizontal_weight="0.15"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lblHostelName">
+        <TextView
+            android:id="@+id/lblSchoolName"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text="School Name"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/fourteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblReason"
+            app:layout_constraintEnd_toEndOf="@+id/lblHostelName"
+            app:layout_constraintStart_toStartOf="@+id/lblHostelName"
+            app:layout_constraintTop_toBottomOf="@+id/lblHostelName"></TextView>
 
-            </ImageView>
+        <TextView
+            android:id="@+id/lblHostelType"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/five"
+            android:text=""
+            android:background="@drawable/rect_radius_15"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblAddress"
+            app:layout_constraintEnd_toEndOf="@+id/lblSchoolName"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/lblSchoolName"
+            app:layout_constraintTop_toBottomOf="@+id/lblSchoolName"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/five"
+            android:drawableTint="@color/light_gray"
+            android:gravity="center_vertical"
+            android:text="address"
+            android:textColor="@color/light_gray"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblHostelType">
+
+
+        </TextView>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/eight"
+            app:layout_constraintBottom_toTopOf="@+id/lnrCapacityDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblAddress">
+
+        </View>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/eight"
+            android:id="@+id/lnrCapacityDetails"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/lnrHostelDetails"
+            app:layout_constraintStart_toStartOf="@+id/lblAddress"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/lblCataory"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/capacity"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/fourteen_sp"
+                >
 
-                android:id="@+id/lblHostelName"
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblTotalCataory"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="Hostel Name"
-                android:textSize="@dimen/sixteen_sp"
-                app:layout_constrainedHeight="true"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toStartOf="@+id/imgStatus"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/lblRoomNo"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                android:text="50"
+                android:layout_marginTop="@dimen/eight"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/eighteen_sp"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/eight"
+            android:layout_marginStart="@dimen/ten"
+            app:layout_constraintBottom_toTopOf="@+id/lblOccupacy"
+            android:id="@+id/lnrHostelDetails"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/imgNext"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toEndOf="@+id/lnrCapacityDetails"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblHostelID"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hostel_id"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/fourteen_sp"
+                >
+
+            </TextView>
 
             <TextView
-                android:id="@+id/lblSchoolName"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="0dp"
+                android:id="@+id/lblHostelIDNO"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/two"
-                android:text="School Name"
+                android:layout_marginTop="@dimen/eight"
+                android:text="#123"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                app:layout_constrainedHeight="true"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toTopOf="@+id/lblReason"
-                app:layout_constraintEnd_toEndOf="@+id/lblHostelName"
-                app:layout_constraintStart_toStartOf="@+id/lblHostelName"
-                app:layout_constraintTop_toBottomOf="@+id/lblHostelName"></TextView>
+                android:textSize="@dimen/eighteen_sp"
+                >
 
-            <TextView
-                android:id="@+id/lblPlace"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/two"
-                android:text="Place"
-                android:textColor="@color/light_gray"
-                android:textSize="@dimen/thirteen_sp"
-                app:layout_constrainedHeight="true"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/lblSchoolName"
-                app:layout_constraintStart_toStartOf="@+id/lblSchoolName"
-                app:layout_constraintTop_toBottomOf="@+id/lblSchoolName"></TextView>
+            </TextView>
 
-            <ImageView
-
-                android:id="@+id/imgStatus"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/right_arrow"
-                app:layout_constraintBottom_toBottomOf="@+id/lblPlace"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="0.1"
-                app:layout_constraintStart_toEndOf="@+id/lblHostelName"
-                app:layout_constraintTop_toTopOf="@+id/lblHostelName">
-
-            </ImageView>
+        </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginVertical="@dimen/five"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:background="@color/light_gray_10"
-        android:layout_height="@dimen/one">
+        <ImageView
+            android:id="@+id/imgNext"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="@color/gray_white"
+            android:src="@drawable/right_arrow"
+            android:tint="@color/light_gray_"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/lnrHostelDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/barCapHostDetails"
+            app:layout_constraintEnd_toEndOf="@+id/lblAddress"
+            app:layout_constraintTop_toTopOf="@+id/lnrCapacityDetails">
 
-    </View>
+        </ImageView>
 
-</LinearLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barCapHostDetails"
+            android:layout_width="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="lnrCapacityDetails,lnrHostelDetails"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.Barrier>
+
+
+        <TextView
+            android:id="@+id/lblOccupacy"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:text="@string/occupancy_est"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/fourteen_sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/proOccupancyProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barCapHostDetails">
+
+        </TextView>
+
+        <ProgressBar
+            android:id="@+id/proOccupancyProgressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/five"
+            android:layout_marginHorizontal="@dimen/five"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/eight"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/progress_blue"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblOccupacy" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

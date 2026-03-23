@@ -23,12 +23,15 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/light_gray"></TextView>
+            android:textColor="@color/light_gray">
+
+        </TextView>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcAdminRequestWise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="@dimen/ten">
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

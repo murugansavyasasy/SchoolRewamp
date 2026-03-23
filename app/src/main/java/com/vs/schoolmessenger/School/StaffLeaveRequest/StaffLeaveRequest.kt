@@ -134,7 +134,7 @@ class StaffLeaveRequest : BaseActivity<StaffLeaveRequestBinding>(),
                         resources.getString(R.string.success), response.message, this
                     )
                 } else {
-                    Constant.showDataValidation(
+                    Constant.showDataValidationNoDashboardRedirectSubject(
                         resources.getString(R.string.fail), response.message, this
                     )
                 }

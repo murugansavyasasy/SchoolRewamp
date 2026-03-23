@@ -112,6 +112,14 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.Upload
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
+import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
+import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.getHostelDashboard
+import com.vs.schoolmessenger.School.Hostel.Model.HostelList.getHostelList
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.BlockApiResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
@@ -1374,5 +1382,65 @@ interface ApiInterfaces {
     fun getstaffleavecategories(
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetStaffLeaveCategoriesData?>?
+
+    @GET(APIMethods.gethomeworksubmissionlist)
+    fun getHomeworkSubmissionList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String?
+
+    ): Call<GetHomeWorkSubmissionList?>
+
+    @GET(APIMethods.gethostellist)
+    fun getHotelList(
+        @Header(APIKeyNames.Authorization) token: String,
+
+    ): Call<getHostelList?>
+
+    @GET(APIMethods.gethoteldashboard)
+    fun getHostelDasboard(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.hostel_id) hostel_id: String?,
+        @Query(APIKeyNames.academic_year_id ) academic_year_id : String?
+
+    ): Call<getHostelDashboard?>
+
+    @GET(APIMethods.gethotelattendancesession)
+    fun getHostelAttendanceSession(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<getHostelAttendanceSession?>
+
+    @GET(APIMethods.gethotelattendanceroomstudentlist)
+    fun getHostelAttendanceRoomStudentList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.hostel_id) hostel_id: String?,
+        @Query(APIKeyNames.room_id) room_id: String?,
+        @Query(APIKeyNames.academic_year_id ) academic_year_id : String?,
+        @Query(APIKeyNames.date ) date : String?,
+        @Query(APIKeyNames.session_type_id ) session_type_id : String?
+    ): Call<getHostelStudentRoomAttendance?>
+
+
+    @POST(APIMethods.gethostelschooloutpassrequst)
+    fun hostelMarkAttendance(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<hostelMarkAttendanceRespone?>?
+
+    @GET(APIMethods.gethotelattendanceroomstudentlist)
+    fun getHostelSchoolOutpassList(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.year_id ) year_id : String?,
+        @Query(APIKeyNames.month_id ) month_id : String?,
+        @Query(APIKeyNames.hostel_id  ) hostel_id  : String?,
+        @Query(APIKeyNames.academic_year_id  ) academic_year_id  : String?,
+    ): Call<getSchoolHostelOutpassRequest?>
+
+    @GET(APIMethods.gethostelschoolattendancereport)
+    fun getHostelSchoolAttendanceReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.hostel_id) hostel_id  : String?,
+        @Query(APIKeyNames.date) date : String?,
+        @Query(APIKeyNames.academic_year_id) academic_year_id   : String?,
+    ): Call<getSchoolHostelAttendanceReport?>
 
 }
