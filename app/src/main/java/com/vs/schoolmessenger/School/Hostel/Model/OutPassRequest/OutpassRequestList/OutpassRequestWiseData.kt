@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest
+package com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList
 
 class OutpassRequestWiseData(
     val id: String?,

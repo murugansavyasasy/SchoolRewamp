@@ -10,7 +10,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
-        android:background="@color/dark_voilet_2"
+        android:background="@color/dark_blue_15"
         android:paddingVertical="@dimen/twenty"
         android:layout_height="wrap_content">
         <TextView
@@ -36,8 +36,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/lblAttendanceHistory"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/lblAttendanceHistory"
-            android:layout_width="@dimen/fifty"
-            android:layout_height="@dimen/fifty">
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty">
 
         </ImageView>
 
@@ -52,7 +52,7 @@
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginTop="@dimen/eight"
             style="@style/CustomTextStylePoppinsBold"
-            android:text="Last 3 days"
+            android:text="@string/session_based_tracking"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content">
 
@@ -60,6 +60,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.core.widget.NestedScrollView
+        android:background="@color/light_white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,10 +79,11 @@
                 style="@style/CustomTextStylePoppinsBold"
                 app:layout_constraintBottom_toTopOf="@+id/rytStart"
                 android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
                 app:layout_constraintHorizontal_bias="0"
-                android:text="@string/starts_on" />
+                android:text="@string/selected_attendance_history_date" />
 
             <TextView
                 app:layout_constraintHorizontal_bias="0"
@@ -98,6 +100,7 @@
                 android:textColor="@color/red" />
 
             <LinearLayout
+                android:layout_marginHorizontal="@dimen/ten"
                 app:layout_constraintTop_toBottomOf="@+id/lblStart"
                 android:id="@+id/rytStart"
                 app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +109,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/five"
                 android:background="@drawable/field_background"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/ten"
@@ -124,6 +126,7 @@
                         android:layout_height="@dimen/fourty"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:backgroundTint="@color/dark_blue_15"
                         android:background="@drawable/rect_purple_rounded"
                         android:padding="@dimen/ten"
                         android:src="@drawable/white_calendar_icon">
@@ -169,7 +172,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/imgNoDataFound"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="wrap_content">
 

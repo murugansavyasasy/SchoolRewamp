@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.School.Hostel.Listner.RoomAttendanceListener
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.SessionData
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.RoomStudentAttendanceData
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter_New
@@ -43,6 +44,12 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     private var isStaffDetails: StaffDetails? = null
     lateinit var mAdapter: RoomAttendanceAdapter
     private var appViewModel: App? = null
+    lateinit var request: LeaveApproveRequest
+    var isApproveRejectId = ""
+    var isApprovedOrRejectedSuccessful = false
+    private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
+
+
 
     private var sessionList: List<SessionData> = ArrayList()
     private var sessionNames: MutableList<String> = ArrayList()
@@ -81,8 +88,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
         binding.lblRoomNo.text= "Room No ${Constant.isSelectedHostelRoomData?.id ?:"00"}"
 
-//        loadSelectedDateCalendar()
-        //here we are loading the cure
+        //here we are loading the here
         if (isSelectedDate == null) {
             isSelectedDate = LocalDate.now()
             onDateSelected(isSelectedDate.toString(), Constant.FROM_DATE)
@@ -96,6 +102,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     Log.d("hotelMarkAttendance", response.message)
                     Constant.showDataValidation(getString(R.string.success), response.message, requireActivity())
                 } else {
+                    Log.d("hotelMarkAttendance", response.message)
                     Constant.showDataValidationNoDashboardRedirect(getString(R.string.fail), response.message, requireActivity())
                 }
             } else {
@@ -107,7 +114,30 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             }
         }
 
-//        isGetHostelAttendanceSession()
+        appViewModel!!.isstaffleaverequestapprove?.observe(requireActivity()) { response ->
+            Constant.hideLoading(requireActivity())
+
+            if (response != null && response.status) {
+                isApprovedOrRejectedSuccessful = true
+                pendingApprovalCallback?.invoke(true)
+                pendingApprovalCallback = null
+                Constant.showDataValidationNoDashboardRedirect(
+                    getString(R.string.success),
+                    response.message,
+                    requireActivity()
+                )
+            } else {
+                isApprovedOrRejectedSuccessful = false
+                pendingApprovalCallback?.invoke(false)
+                pendingApprovalCallback = null
+                Constant.showDataValidation(
+                    getString(R.string.fail),
+                    response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
+                    requireActivity()
+                )
+            }
+        }
+
         binding.lnrFromDate.setOnClickListener {
             loadSelectedDateCalendar()
         }
@@ -134,6 +164,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
             if (!isAllMarked) {
                 Toast.makeText(requireContext(), "Please make sure all students are marked", Toast.LENGTH_SHORT).show()
+                Log.d("finalList",finalList.toString())
                 return@setOnClickListener
             }
 
@@ -167,7 +198,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     Log.d("FINAL_JSON", finalJson.toString())
 
                     Constant.showLoading(requireActivity())
-                    appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
+//                    appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
                 }
             }
 
@@ -215,8 +246,6 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 binding.lblErrorMessage.text = getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
-
-
 
         appViewModel?.getHostelAttendanceSession?.observe(viewLifecycleOwner) { response ->
             Constant.hideLoading(requireActivity())
@@ -309,156 +338,24 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         binding.rcRoomAttendance.isNestedScrollingEnabled = false
         binding.rcRoomAttendance.adapter = mAdapter
 
-//        val dummyData = getDummyStudentAttendance()
-//        isLoadRoomAttendance(dummyData)
-
         appViewModel!!.isGetHostelAttendanceRoomStudentList(isAccessToken!!,Constant.isSelectedHostelFromHostelListData?.id.toString(),
             Constant.isSelectedHostelRoomData?.id.toString(), Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()?:"",
             Constant.formatToUi2(isSelectedDate.toString()),isSelectedSessionID.toString(), requireActivity())
     }
 
-//    private fun isGetHostelAttendanceSession() {
-//        val dummyData = getDummySessionResponse()
-//        sessionList=dummyData.data
-//        sessionNames.clear()
-//        sessionNames.addAll(sessionList.map { it.name })
-//        isFromSpinner()
-//    }
-
     private fun isGetHostelSession(){
         Constant.showLoading(requireActivity())
         appViewModel!!.isGetHostelAttendanceSessionDetails(isAccessToken!!, requireActivity())
+
+        //need to code review with sathish bro
+        // Here i am just loading the because for Session till i am showing the Shimmer
+        mAdapter = RoomAttendanceAdapter(null, requireContext(),this, Constant.isShimmerViewShow)
+
+        binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
+        binding.rcRoomAttendance.isNestedScrollingEnabled = false
+        binding.rcRoomAttendance.adapter = mAdapter
+
     }
-
-
-//    private fun getDummyStudentAttendance(): List<RoomStudentAttendanceData> {
-//
-//        return listOf(
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16583170",
-//                student_name = "Aarav Sharma",
-//                admission_no = "SS-40",
-//                roll_no = "",
-//                gender = "male",
-//                class_id = "32890",
-//                class_name = "III",
-//                section_id = "91744",
-//                section_name = "A",
-//                primary_mobile = "9876543210",
-//                status = "PRESENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16570557",
-//                student_name = "Diya Patel",
-//                admission_no = "SS-34",
-//                roll_no = "",
-//                gender = "female",
-//                class_id = "32890",
-//                class_name = "III",
-//                section_id = "91744",
-//                section_name = "A",
-//                primary_mobile = "9123456780",
-//                status = "ABSENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16630660",
-//                student_name = "Rohan Kumar",
-//                admission_no = "SS-41",
-//                roll_no = "",
-//                gender = "male",
-//                class_id = "32890",
-//                class_name = "III",
-//                section_id = "91744",
-//                section_name = "A",
-//                primary_mobile = "9988776655",
-//                status = "PRESENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16525594",
-//                student_name = "Ananya Singh",
-//                admission_no = "VS-33",
-//                roll_no = "",
-//                gender = "female",
-//                class_id = "34468",
-//                class_name = "XI",
-//                section_id = "95015",
-//                section_name = "A",
-//                primary_mobile = "9012345678",
-//                status = "ABSENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16525595",
-//                student_name = "Vivaan Gupta",
-//                admission_no = "VS-34",
-//                roll_no = "",
-//                gender = "male",
-//                class_id = "34468",
-//                class_name = "XI",
-//                section_id = "95015",
-//                section_name = "A",
-//                primary_mobile = "9098765432",
-//                status = "PRESENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16525596",
-//                student_name = "Ishaan Verma",
-//                admission_no = "VS-35",
-//                roll_no = "",
-//                gender = "male",
-//                class_id = "34468",
-//                class_name = "XI",
-//                section_id = "95015",
-//                section_name = "A",
-//                primary_mobile = "9876501234",
-//                status = "PRESENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16525597",
-//                student_name = "Meera Nair",
-//                admission_no = "VS-36",
-//                roll_no = "",
-//                gender = "female",
-//                class_id = "34468",
-//                class_name = "XI",
-//                section_id = "95015",
-//                section_name = "A",
-//                primary_mobile = "9123450098",
-//                status = "ABSENT"
-//            ),
-//
-//            RoomStudentAttendanceData(
-//                student_id = "16525598",
-//                student_name = "Aditya Kapoor",
-//                admission_no = "VS-37",
-//                roll_no = "",
-//                gender = "male",
-//                class_id = "34468",
-//                class_name = "XI",
-//                section_id = "95015",
-//                section_name = "A",
-//                primary_mobile = "9988112233",
-//                status = "PRESENT"
-//            )
-//        )
-//    }
-
-//    private fun getDummySessionResponse(): getHostelAttendanceSession {
-//        return getHostelAttendanceSession(
-//            status = true,
-//            message = "Attendance sessions loaded.",
-//            data = listOf(
-//                SessionData(1, "Morning"),
-//                SessionData(2, "Evening")
-//            )
-//        )
-//    }
 
 
     override fun onDestroyView() {
@@ -502,5 +399,40 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
     override fun onAttendanceChanged(list: List<RoomStudentAttendanceData>) {
         UpdateProgressAndCountOfAttendance(list)
+    }
+
+    override fun onApproveClicked(
+        data: RoomStudentAttendanceData,
+        position: Int,
+        isButtonClick: Boolean,
+        resultCallback: (Boolean) -> Unit
+    ) {
+
+        Log.d("isStatus", isButtonClick.toString())
+        isApproveRejectId = data.id
+        var isMessage = ""
+        if (isButtonClick) {
+            request = LeaveApproveRequest(id = data.id, is_approve = true)
+            isMessage = "Are you sure you want to approve this outpass request"
+        } else {
+            request = LeaveApproveRequest(id = data.id, is_approve = false)
+            isMessage = "Are you sure you want to reject this outpass request"
+        }
+        Constant.showSendConfirmationDialog(
+            requireActivity(),
+            getString(R.string.confirmation),
+            getString(R.string.permission_ok),
+            getString(R.string.Cancel),
+            "",
+            isMessage
+        ) { confirmed ->
+            if (confirmed) {
+                Constant.showLoading(requireActivity())
+                pendingApprovalCallback = resultCallback // store it for later
+                appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
+            } else {
+                resultCallback(false) // user cancelled
+            }
+        }
     }
 }

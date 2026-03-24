@@ -322,10 +322,14 @@ object Constant {
     var This_day_is_marked_as_a_holiday = "This day is marked as a holiday."
     var Attendance_has_not_been_taken_yet = "Attendance has not been taken yet."
     var approved = "Approved"
+    var PRESENT = "PRESENT"
+    var ABSENT = "ABSENT"
     var rejected = "Rejected"
     var waiting_for_approval = "Waiting for approval"
     var paid = "paid"
     var pending = "pending"
+    var rejected_ = "rejected"
+    var approval = "approval"
 
 
     // String fields

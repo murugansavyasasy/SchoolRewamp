@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.School.Hostel.Listner.RoomAttendanceListener
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.RoomStudentAttendanceData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import kotlin.text.equals
 
 class RoomAttendanceAdapter(
     private var itemList: List<RoomStudentAttendanceData>?,
@@ -78,6 +79,7 @@ class RoomAttendanceAdapter(
         private val lblOutpassReason: TextView = itemView.findViewById(R.id.lblOutpassReason)
         private val lblOutpassPermissionTimeDuration: TextView = itemView.findViewById(R.id.lblOutpassPermissionTimeDuration)
         private val groupsEntireOutPass: Group = itemView.findViewById(R.id.groupsEntireOutPass)
+        private val lblOutpassStatus: TextView = itemView.findViewById(R.id.lblOutpassStatus)
 
         private val colorList = listOf(
             R.color.green,
@@ -113,35 +115,106 @@ class RoomAttendanceAdapter(
             updateButtonUI(data.status)
 
             lblPresent.setOnClickListener {
-                data.status = "Present"
-                updateButtonUI("Present")
+                data.status = "PRESENT"
+                updateButtonUI("PRESENT")
                 listener.onAttendanceChanged(itemList?:emptyList())
 
             }
 
             lblAbsent.setOnClickListener {
-                data.status = "Absent"
-                updateButtonUI("Absent")
+                data.status = "ABSENT"
+                updateButtonUI("ABSENT")
                 listener.onAttendanceChanged(itemList?:emptyList())
             }
 
-            if (data.is_outpass_approved){
+            when(data.outpass_status){
+                Constant.approved.uppercase() -> {
+                    groupsEntireOutPass.visibility= View.VISIBLE
+                    lblAccept.visibility= View.GONE
+                    lblDecline.visibility= View.GONE
 
-                lblAccept.backgroundTintList =
-                    ContextCompat.getColorStateList(context, R.color.light_green4)
-                lblDecline.backgroundTintList =
-                    ContextCompat.getColorStateList(context, R.color.red)
+                    applyTintedBackground(
+                        lblOutpassStatus,
+                        R.drawable.green_bg_radius,
+                        R.color.very_light_green_3
+                    )
+                    lblOutpassStatus.text=data.status
+                    lblOutpassStatus.setTextColor(context.getColor(R.color.green))
 
-                groupsEntireOutPass.visibility= View.VISIBLE
-                lblOutpassReason.text=data.reason
-                lblOutpassPermissionTimeDuration.text= "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
-                    Constant.formatDateTime(data.out_date)}"
+
+
+                }
+                Constant.rejected_.uppercase()->{
+                    groupsEntireOutPass.visibility= View.VISIBLE
+                    lblAccept.visibility= View.GONE
+                    lblDecline.visibility= View.GONE
+
+                    applyTintedBackground(
+                        lblOutpassStatus,
+                        R.drawable.green_bg_radius,
+                        R.color.very_light_red_3
+                    )
+
+                    lblOutpassStatus.text=data.status
+                    lblOutpassStatus.setTextColor(context.getColor(R.color.red))
+
+
+                }
+
+                Constant.pending.uppercase()->{
+
+                    lblAccept.setOnClickListener {
+                        listener.onApproveClicked(data, position, true) { isApproved ->
+                            if (isApproved) {
+                                data.outpass_status = Constant.rejected_.uppercase()
+                            }
+                        }
+                    }
+
+                    lblDecline.setOnClickListener {
+                        listener.onApproveClicked(data, position, false) { isApproved ->
+                            if (isApproved) {
+                                data.outpass_status = Constant.approved.uppercase()
+                            }
+                        }
+                    }
+
+                    lblAccept.backgroundTintList =
+                        ContextCompat.getColorStateList(context, R.color.light_green4)
+                    lblDecline.backgroundTintList =
+                        ContextCompat.getColorStateList(context, R.color.red)
+
+                    groupsEntireOutPass.visibility= View.VISIBLE
+                    lblAccept.visibility= View.GONE
+                    lblDecline.visibility= View.GONE
+
+                    lblOutpassStatus.text=context.getString(R.string.pending)
+                    lblOutpassStatus.setTextColor(context.getColor(R.color.dark_brown_3))
+                    applyTintedBackground(
+                        lblOutpassStatus,
+                        R.drawable.green_bg_radius,
+                        R.color.very_light_orange_3
+                    )
+
+                    lblOutpassReason.text=data.reason
+                    lblOutpassPermissionTimeDuration.text= "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
+                        Constant.formatDateTime(data.out_date)}"
+                }
+                else -> {
+                    groupsEntireOutPass.visibility= View.GONE
+                }
+
 
             }
-            else{
-                groupsEntireOutPass.visibility= View.GONE
-            }
 
+
+        }
+
+        fun applyTintedBackground(view: View, drawableRes: Int, colorRes: Int) {
+            val context = view.context
+            val bgDrawable = ContextCompat.getDrawable(context, drawableRes)
+            bgDrawable?.setTint(ContextCompat.getColor(context, colorRes))
+            view.background = bgDrawable
         }
 
         private fun updateButtonUI(status: String) {
@@ -200,6 +273,7 @@ class RoomAttendanceAdapter(
             lblAbsent.strokeColor =
                 ContextCompat.getColorStateList(context, R.color.light_gray_10)
         }
+
 
     }
 

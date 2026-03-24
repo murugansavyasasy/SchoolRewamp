@@ -16,6 +16,7 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="light_blue_8">#ebf5ff</color>
     <color name="light_red_8">#fef2f2</color>
+    <color name="light_red_9">#fef3f3</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_900">#4fd0ff</color>
     <color name="sky_blue">#4fc3f4</color>
@@ -23,6 +24,7 @@
     <color name="black">#FF000000</color>
     <color name="lightgray">#D3D3D3</color>
     <color name="light_green_8">#effcf2</color>
+    <color name="light_green_12">#f1fdf4</color>
     <color name="light_blue_10">#f3f6fd</color>
     <color name="light_gray_4">#444</color>
     <color name="light_gray_5">#666666</color>
@@ -146,6 +148,9 @@
     <color name="navi_blue0">#0e4275</color>
     <color name="navi_blue1">#005cc6</color>
     <color name="navi_blue2">#1582ff</color>
+    <color name="light_blue_12">#86a3f4</color>
+    <color name="light_blue_13">#dbeaff</color>
+    <color name="dark_blue_13">#2252e8</color>
 
 
     <color name="sky_blue0">#4eb7f1</color>
@@ -224,6 +229,7 @@
     <color name="light_gray_">#747e85</color>
     <color name="light_gray2">#f2f2f2</color>
     <color name="dark_voilet_2">#6f14d3</color>
+    <color name="dark_blue_15">#165dfc</color>
     <color name="light_blue_6">#6b6ed3</color>
     <color name="light_gray__1">#b5b6ba</color>
     <color name="light_gray__2">#8a8a8a</color>

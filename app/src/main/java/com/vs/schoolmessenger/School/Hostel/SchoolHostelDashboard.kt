@@ -312,16 +312,16 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
 
             R.id.consOutPass -> {
                 openBottomSheet(FragmentType.OUTPASSREQUESTS.toString())
+                Constant.isSelectedAcademicYear=isAcademicYearId.toString()
             }
 
             R.id.consMessTimeTable -> {
                 openBottomSheet(FragmentType.MESSTIMETABLE.toString())
-                Constant.isSelectedAcademicYear=isAcademicYearId.toString()
             }
 
             R.id.cons_cardTodayAttendanceDetails -> {
-
                 openBottomSheet(FragmentType.ATTENDANCEHISTORYHOSTEL.toString())
+                Constant.isSelectedAcademicYear=isAcademicYearId.toString()
             }
 
         }

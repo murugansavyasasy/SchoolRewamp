@@ -1137,6 +1137,12 @@
     <string name="where_are_you_going">Where are you going ?</string>
     <string name="enter_contact_number">Enter contact number</string>
     <string name="note_your_outpass_request_will_be_sent_to_the_warden_for_approval_you_will_be_notified_once_the_decision_is_made_please_ensure_all_details_are_accurate">Note: Your outpass request will be sent to the warden for approval. You will be notified once the decision is made. Please ensure all details are accurate.</string>
+    <string name="view_students">View Students</string>
+    <string name="class_">Class</string>
+    <string name="selected_attendance_history_date">Selected attendance history date</string>
+    <string name="room">Room</string>
+    <string name="hide_students">Hide Students</string>
+    <string name="session_based_tracking">Session-based tracking</string>
 
 
 </resources>

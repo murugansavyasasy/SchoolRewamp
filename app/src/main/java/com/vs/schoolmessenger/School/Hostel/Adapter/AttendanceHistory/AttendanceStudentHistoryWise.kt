@@ -1,41 +1,36 @@
-package com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest
-
+package com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory
 
 
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.PorterDuff
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.LinearLayout
 
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.OutpassRequestWiseData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
+import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getHAStudentData
 
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class OutpassRequestWise(
-    private var itemList: List<OutpassRequestWiseData>,
+class AttendanceStudentHistoryWise(
+    private var itemList: List<getHAStudentData>,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<OutpassRequestWiseData> = itemList ?: listOf()
-    private var filteredList: List<OutpassRequestWiseData> = fullList
+    private var fullList: List<getHAStudentData> = itemList ?: listOf()
+    private var filteredList: List<getHAStudentData> = fullList
 
 
     override fun getItemViewType(position: Int): Int {
@@ -45,11 +40,11 @@ class OutpassRequestWise(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.outpass_request_wise_item)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.hostel_student_attendance_history_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.outpass_request_wise_item, parent, false)
+                .inflate(R.layout.hostel_student_attendance_history_item, parent, false)
             DataViewHolder(view)
         }
     }
@@ -65,7 +60,7 @@ class OutpassRequestWise(
         }
     }
 
-    fun updateData(newList: List<OutpassRequestWiseData>) {
+    fun updateData(newList: List<getHAStudentData>) {
         fullList = newList
         filteredList = newList
         isLoading = false
@@ -74,46 +69,29 @@ class OutpassRequestWise(
 
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val lblRoomFullNo: TextView = itemView.findViewById(R.id.lblRoomFullNo)
         private val lblInitialName: TextView = itemView.findViewById(R.id.lblInitialName)
-        private val lblFullName: TextView = itemView.findViewById(R.id.lblFullName)
-        private val lblDestination: TextView = itemView.findViewById(R.id.lblDestination)
-        private val lblOutDate: TextView = itemView.findViewById(R.id.lblOutDate)
-        private val lblInDate: TextView = itemView.findViewById(R.id.lblInDate)
-        private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
-        private val lblApprove: MaterialButton = itemView.findViewById(R.id.lblApprove)
-        private val lblRejected: MaterialButton = itemView.findViewById(R.id.lblRejected)
-        private val groupApproveReject: Group = itemView.findViewById(R.id.groupApproveReject)
+        private val lblFullName: TextView = itemView.findViewById(R.id.lblFullName)
+        private val lblPrimarymobile: TextView = itemView.findViewById(R.id.lblPrimarymobile)
+        private val lblRoomAndClassDetails: TextView = itemView.findViewById(R.id.lblRoomAndClassDetails)
 
-        private val cardHeader: MaterialCardView = itemView.findViewById(R.id.cardHeader)
+
+        private val cardHeader: ConstraintLayout = itemView.findViewById(R.id.cardHeader)
 
 
         @SuppressLint("SetTextI18n")
         fun bind(
-            data: OutpassRequestWiseData,
+            data: getHAStudentData,
             context: Context,
         ) {
 
-            lblRoomFullNo.text = "Room ${data.room_no}"
+            lblRoomAndClassDetails.text = "${data.admission_no} • ${context.getString(R.string.class_)} ${data.class_name} - ${data.section_name}"
             lblFullName.text = data.student_name
             lblInitialName.text= Constant.getInitials(data.student_name?:"")
 
-            lblReason.text = data.reason
-            lblInDate.text =  "In : ${data.in_date}"
-            lblOutDate.text = "Out : ${data.out_date}"
-            lblDestination.visibility= View.GONE
+            lblPrimarymobile.text = data.primary_mobile
 
-            lblApprove.setBackgroundTintList(
-                ContextCompat.getColorStateList(context, R.color.light_green4)
-            )
-
-            lblRejected.setBackgroundTintList(
-                ContextCompat.getColorStateList(context, R.color.red)
-            )
-
-            if (data.status == Constant.rejected_.uppercase()) {
-                groupApproveReject.visibility= View.GONE
+            if (data.status == Constant.ABSENT) {
 
                 applyTintedBackground(
                     lblInitialName,
@@ -121,9 +99,7 @@ class OutpassRequestWise(
                     R.color.red
                 )
 
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_1)
-                )
+
                 applyTintedBackground(
                     lblStatus,
                     R.drawable.rect_bg_light_green_present,
@@ -133,15 +109,13 @@ class OutpassRequestWise(
                 lblStatus.text=data.status
                 lblStatus.setTextColor(context.getColor(R.color.red))
 
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red)
-                )
+                setDrawableColor(cardHeader, R.color.light_red)
+
 
 
             }
-            else if (data.status == Constant.approved.uppercase()) {
+            else if (data.status == Constant.PRESENT) {
 
-                groupApproveReject.visibility= View.GONE
                 applyTintedBackground(
                     lblInitialName,
                     R.drawable.circle_bg_orange,
@@ -154,45 +128,27 @@ class OutpassRequestWise(
                 )
                 lblStatus.text=data.status
                 lblStatus.setTextColor(context.getColor(R.color.green))
+                setDrawableColor(cardHeader, R.color.white)
 
-
-
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_four)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_bg)
-                )
 
 
             }
-            else if (data.status == Constant.waiting_for_approval.uppercase()) {
-                groupApproveReject.visibility= View.VISIBLE
-
+            else {
                 applyTintedBackground(
                     lblInitialName,
                     R.drawable.circle_bg_orange,
                     R.color.dark_orange_3
                 )
-                lblStatus.text=context.getString(R.string.pending)
+                lblStatus.text=context.getString(R.string.not_taken)
                 lblStatus.setTextColor(context.getColor(R.color.dark_brown_3))
-
-
 
                 applyTintedBackground(
                     lblStatus,
                     R.drawable.rect_bg_light_green_present,
                     R.color.very_light_orange_3
                 )
+                setDrawableColor(cardHeader, R.color.white)
 
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
-                )
             }
         }
 
@@ -203,6 +159,10 @@ class OutpassRequestWise(
             view.background = bgDrawable
         }
 
+        fun setDrawableColor(view: View, colorRes: Int) {
+            val drawable = view.background as? android.graphics.drawable.GradientDrawable
+            drawable?.setColor(ContextCompat.getColor(view.context, colorRes))
+        }
 
     }
 

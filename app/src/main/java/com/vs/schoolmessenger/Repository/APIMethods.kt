@@ -232,9 +232,12 @@ object APIMethods {
     const val gethostellist = "stud-attd/api/hostel-attendance/hostel-list"
     const val gethoteldashboard = "stud-attd/api/hostel-attendance/room-details"
     const val gethotelattendancesession = "stud-attd/api/hostel-attendance/session-types"
+    const val markSchoolHostelAttendance = "stud-attd/api/hostel-attendance/mark-attendance"
     const val gethotelattendanceroomstudentlist = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
     const val gethostelschooloutpassrequst= "stud-attd/api/hostel-attendance/outpass-report"
     const val gethostelschoolattendancereport= "stud-attd/api/hostel-attendance/attendance-report"
+    const val schoolHostelOutpassUpdateStatus = "stud-attd/api/hostel-attendance/update-status"
+
 
 
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.StatusWiseOutpassRequestData
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -62,7 +62,6 @@ class StatusWiseOutpassRequest(
         notifyDataSetChanged()
     }
 
-
     fun getCurrentList(): List<StatusWiseOutpassRequestData> {
         return itemList!!
     }
@@ -70,9 +69,9 @@ class StatusWiseOutpassRequest(
 
     fun removeItemById(id: String) {
         val updatedList = fullList.mapNotNull { monthData ->
-            val updatedDetails = monthData.StatusWiseData.filterNot { it.room_no == id }
+            val updatedDetails = monthData.attd_details.filterNot { it.room_no == id }
             if (updatedDetails.isNotEmpty()) {
-                StatusWiseOutpassRequestData(Status = monthData.Status, StatusWiseData = updatedDetails)
+                StatusWiseOutpassRequestData(status = monthData.status, attd_details = updatedDetails)
             } else null
         }
         updateData(updatedList)
@@ -80,7 +79,6 @@ class StatusWiseOutpassRequest(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
         val rcAdminRequestWise: RecyclerView =
@@ -89,54 +87,43 @@ class StatusWiseOutpassRequest(
         fun bind(
             data: StatusWiseOutpassRequestData,
         ) {
-            when(data.Status){
-                Constant.waiting_for_approval ->{
-                    lblStatus.text = "Pending (${data.StatusWiseData.size})"
+            when(data.status){
+
+                Constant.rejected_ ->{
+                    lblStatus.setTextColor(Color.parseColor("#D32F2F"))
+                    imgStatus.setImageResource(R.drawable.close_red_color)
+                    lblStatus.text = "${context.getString(R.string.rejected)} (${data.attd_details.size})"
                 }
-                Constant.approved,Constant.rejected ->{
-                    lblStatus.text = "${data.Status} (${data.StatusWiseData.size})"
+
+                Constant.approved, ->{
+                    lblStatus.text = "${context.getString(R.string.approved)} (${data.attd_details.size})"
+                    lblStatus.setTextColor(Color.parseColor("#2E7D32"))
+                    imgStatus.setImageResource(R.drawable.tick_icon_2)
+                    imgStatus.setColorFilter(
+                        ContextCompat.getColor(itemView.context, R.color.green),
+                        PorterDuff.Mode.SRC_IN
+                    )
+                }
+
+                else->{
+                    lblStatus.text = "${context.getString(R.string.pending)} (${data.attd_details.size})"
+                    lblStatus.setTextColor(context.getColor(R.color.dark_orange_3))
+                    imgStatus.setImageResource(R.drawable.waiting_for_approval)
+                    imgStatus.setColorFilter(
+                        ContextCompat.getColor(itemView.context, R.color.dark_orange_3),
+                        PorterDuff.Mode.SRC_IN
+                    )
                 }
             }
 
-
-
-            if (data.Status == Constant.rejected) {
-                lblStatus.setTextColor(Color.parseColor("#D32F2F"))
-                imgStatus.setImageResource(R.drawable.close_red_color)
-
-
-
-            }
-            else if (data.Status == Constant.approved) {
-
-                lblStatus.setTextColor(Color.parseColor("#2E7D32"))
-                imgStatus.setImageResource(R.drawable.tick_icon_2)
-                imgStatus.setColorFilter(
-                    ContextCompat.getColor(itemView.context, R.color.green),
-                    PorterDuff.Mode.SRC_IN
-                )
-
-
-            }
-            else if (data.Status == Constant.waiting_for_approval) {
-
-                lblStatus.setTextColor(context.getColor(R.color.dark_orange_3))
-                imgStatus.setImageResource(R.drawable.waiting_for_approval)
-                imgStatus.setColorFilter(
-                    ContextCompat.getColor(itemView.context, R.color.dark_orange_3),
-                    PorterDuff.Mode.SRC_IN
-                )
-
-            }
-
-            if (data.StatusWiseData.isEmpty()) {
+            if (data.attd_details.isEmpty()) {
                 rcAdminRequestWise.visibility = View.GONE
             } else {
                 rcAdminRequestWise.visibility = View.VISIBLE
                 rcAdminRequestWise.layoutManager = LinearLayoutManager(context)
                 rcAdminRequestWise.isNestedScrollingEnabled = false
                 rcAdminRequestWise.adapter = OutpassRequestWise(
-                    data.StatusWiseData,
+                    data.attd_details,
                     context,
                     false
                 )

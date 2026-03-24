@@ -14,12 +14,13 @@ import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdmi
 import com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest.StatusWiseOutpassRequest
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestWiseData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.StatusWiseOutpassRequestData
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.OutpassRequestWiseData
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AdminRequestsBinding
 import com.vs.schoolmessenger.databinding.OutpassRequestFragmentBinding
+import java.util.Calendar
 
 
 class OutPassRequestFragment : Fragment() {
@@ -32,6 +33,8 @@ class OutPassRequestFragment : Fragment() {
     private var appViewModel: App? = null
     private var _binding: OutpassRequestFragmentBinding? = null
     private val binding get() = _binding!!
+    private var currentYear: Int = 0
+    private var currentMonth: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,52 +60,54 @@ class OutPassRequestFragment : Fragment() {
         isStaffDetails = SharedPreference.getStaffDetails(requireContext())
         isAccessToken = isStaffDetails?.access_token
 
+        val calendar = Calendar.getInstance()
+        currentYear = calendar.get(Calendar.YEAR)
+        currentMonth = calendar.get(Calendar.MONTH) + 1
 
 
 
-//        appViewModel?.getleaverequest?.observe(viewLifecycleOwner) { response ->
-//
-//            if (response != null) {
-//
-//                if (response.status) {
-//                    val dummyData = getDummyLeaveRequestData()
-//                    if (dummyData.isNotEmpty()) {
-//
-//                        binding.rcOutpassRequest.visibility = View.VISIBLE
-//                        binding.imgNoDataFound.visibility = View.GONE
-//                        binding.lblErrorMessage.visibility = View.GONE
-//
-//                        isLoadAttendanceHistory(dummyData)
-//
-//                    } else {
-//
-//                        binding.rcOutpassRequest.visibility = View.GONE
-//                        binding.lblErrorMessage.visibility = View.VISIBLE
-//                        binding.imgNoDataFound.visibility = View.VISIBLE
-//                        binding.lblErrorMessage.text = getString(R.string.no_data_found)
-//                    }
-//
-//                } else {
-//
-//                    binding.rcOutpassRequest.visibility = View.GONE
-//                    binding.lblErrorMessage.visibility = View.VISIBLE
-//                    binding.imgNoDataFound.visibility = View.VISIBLE
-//                    binding.lblErrorMessage.text = response.message
-//                }
-//
-//            } else {
-//
-//                binding.rcOutpassRequest.visibility = View.GONE
-//                binding.lblErrorMessage.visibility = View.VISIBLE
-//                binding.imgNoDataFound.visibility = View.VISIBLE
-//                binding.lblErrorMessage.text =
-//                    getString(R.string.Something_went_wrong_Please_try_again)
-//            }
-//        }
+
+        appViewModel?.hotelSchoolOutpassRequest?.observe(viewLifecycleOwner) { response ->
+
+            if (response != null) {
+
+                if (response.status) {
+                    if (response.data.isNotEmpty()) {
+
+                        binding.rcOutpassRequest.visibility = View.VISIBLE
+                        binding.imgNoDataFound.visibility = View.GONE
+                        binding.lblErrorMessage.visibility = View.GONE
+
+                        isLoadAttendanceHistory(response.data)
+
+                    } else {
+
+                        binding.rcOutpassRequest.visibility = View.GONE
+                        binding.lblErrorMessage.visibility = View.VISIBLE
+                        binding.imgNoDataFound.visibility = View.VISIBLE
+                        binding.lblErrorMessage.text = getString(R.string.no_data_found)
+                    }
+
+                } else {
+
+                    binding.rcOutpassRequest.visibility = View.GONE
+                    binding.lblErrorMessage.visibility = View.VISIBLE
+                    binding.imgNoDataFound.visibility = View.VISIBLE
+                    binding.lblErrorMessage.text = response.message
+                }
+
+            } else {
+
+                binding.rcOutpassRequest.visibility = View.GONE
+                binding.lblErrorMessage.visibility = View.VISIBLE
+                binding.imgNoDataFound.visibility = View.VISIBLE
+                binding.lblErrorMessage.text =
+                    getString(R.string.Something_went_wrong_Please_try_again)
+            }
+        }
 
         isGetAttendanceHistory()
     }
-
     private fun isLoadAttendanceHistory(newData: List<StatusWiseOutpassRequestData>?) {
         binding.rcOutpassRequest.visibility = View.VISIBLE
         mAdapter = StatusWiseOutpassRequest(
@@ -118,124 +123,9 @@ class OutPassRequestFragment : Fragment() {
         binding.rcOutpassRequest.layoutManager = LinearLayoutManager(requireActivity())
         binding.rcOutpassRequest.isNestedScrollingEnabled = false
         binding.rcOutpassRequest.adapter = mAdapter
-//        val dummyData = getDummyLeaveRequestData()
-//        isLoadAttendanceHistory(dummyData)
+
+        appViewModel!!.isGetHostelSchoolOutpassRequestList(isAccessToken!!,currentYear.toString(),currentMonth.toString(),Constant.isSelectedHostelFromHostelListData?.id.toString(),Constant.isSelectedAcademicYear?:"",requireActivity())
     }
-
-//    private fun getDummyLeaveRequestData(): List<StatusWiseOutpassRequestData> {
-//
-//        val leaveList = ArrayList<StatusWiseOutpassRequestData>()
-//
-//        val pending = listOf(
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "101",
-//                roomTitle = "Room 101",
-//                studentName = "Aarav Sharma",
-//                issueDescription = "Tap not working in bathroom",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Library",
-//                status = Constant.waiting_for_approval
-//            ),
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "102",
-//                roomTitle = "Room 102",
-//                studentName = "Rohit",
-//                issueDescription = "Tap not working in bathroom",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Mess",
-//                status = Constant.waiting_for_approval
-//            )
-//        )
-//
-//        val approved = listOf(
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "101",
-//                roomTitle = "Room 101",
-//                studentName = "Aarav Sharma",
-//                issueDescription = "Tap not working in bathroom",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Mess",
-//                status = Constant.approved
-//
-//            ),
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "102",
-//                roomTitle = "Room 102",
-//                studentName = "Rohit",
-//                issueDescription = "Tap not working in bathroom",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Mess",
-//                status = Constant.approved
-//            )
-//        )
-//
-//        val rejected = listOf(
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "101",
-//                roomTitle = "Room 101",
-//                studentName = "Sharma",
-//                issueDescription = "Need to improve the food quality ",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Mess",
-//                status = Constant.rejected
-//            ),
-//
-//            OutpassRequestWiseData(
-//                roomNumber = "102",
-//                roomTitle = "Room 102",
-//                studentName = "Rohit Kohli",
-//                issueDescription = "Need to have TV in the mess",
-//                InDate = "Mar 4 2026",
-//                OutDate = "Mar 5 2026",
-//                OutTime = "10:30 AM",
-//                InTime = "10:30 AM",
-//                Destination = "Mess",
-//                status = Constant.rejected
-//            )
-//        )
-//
-//        leaveList.add(
-//            StatusWiseOutpassRequestData(
-//                Status = Constant.waiting_for_approval,
-//                StatusWiseData = pending
-//            )
-//        )
-//        leaveList.add(
-//            StatusWiseOutpassRequestData(
-//                Status = Constant.approved,
-//                StatusWiseData = approved
-//            )
-//        )
-//        leaveList.add(
-//            StatusWiseOutpassRequestData(
-//                Status = Constant.rejected,
-//                StatusWiseData = rejected
-//            )
-//        )
-//
-//        return leaveList
-//    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

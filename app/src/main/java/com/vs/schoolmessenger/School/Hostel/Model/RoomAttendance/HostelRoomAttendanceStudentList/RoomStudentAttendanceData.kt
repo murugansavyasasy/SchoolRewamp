@@ -1,7 +1,4 @@
 package com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList
-
-import android.R
-
 data class RoomStudentAttendanceData(
     val id: String,
     val name: String,
@@ -15,8 +12,8 @@ data class RoomStudentAttendanceData(
     val primary_mobile: String,
     var status: String,
     var outpass_id: String,
-    var is_outpass_approved: Boolean,
     var out_date: String,
     var in_date: String,
     var reason: String,
-)
+    var outpass_status: String,
+    )

@@ -11,9 +11,11 @@ import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHos
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
 import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.getHostelDashboard
 import com.vs.schoolmessenger.School.Hostel.Model.HostelList.getHostelList
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateStatus.schoolHostelOutpassUpdateStatus
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +31,7 @@ class SchoolServicesTwo {
     var isHostelMarkAttendance: MutableLiveData<hostelMarkAttendanceRespone?>
     var isHostelSchoolOutpassRequest: MutableLiveData<getSchoolHostelOutpassRequest?>
     var isGetSchoolHostelAttendanceReport: MutableLiveData<getSchoolHostelAttendanceReport?>
+    var schoolHostelOutpassUpdateStatus: MutableLiveData<schoolHostelOutpassUpdateStatus?>
 
 
     init {
@@ -42,6 +45,7 @@ class SchoolServicesTwo {
         isHostelMarkAttendance = MutableLiveData()
         isHostelSchoolOutpassRequest = MutableLiveData()
         isGetSchoolHostelAttendanceReport = MutableLiveData()
+        schoolHostelOutpassUpdateStatus = MutableLiveData()
 
     }
 
@@ -244,7 +248,7 @@ class SchoolServicesTwo {
         isToken: String, year_id  : String, month_id : String, hostel_id  :String, academic_year_id  : String, activity: Activity
     ) {
 
-        RestClient.Companion.apiInterfaces.getHostelSchoolOutpassList(isToken,hostel_id,year_id,month_id,academic_year_id)
+        RestClient.Companion.apiInterfaces.getHostelSchoolOutpassList(isToken,year_id,month_id,hostel_id,academic_year_id)
             ?.enqueue(object : Callback<getSchoolHostelOutpassRequest?> {
                 override fun onResponse(
                     call: Call<getSchoolHostelOutpassRequest?>, response: Response<getSchoolHostelOutpassRequest?>
@@ -304,6 +308,41 @@ class SchoolServicesTwo {
     val isHotelSchoolAttendanceReportLiveData: LiveData<getSchoolHostelAttendanceReport?>
         get() = isGetSchoolHostelAttendanceReport
 
+
+
+
+    fun schoolHostelOutpassUpdateStatus(
+        isToken: String,
+        isSchoolHostelOutpassStatus: LeaveApproveRequest,activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.isSchoolHostelOutpassUpdateStatus(isToken,isSchoolHostelOutpassStatus)
+            ?.enqueue(object : Callback<schoolHostelOutpassUpdateStatus?> {
+                override fun onResponse(
+                    call: Call<schoolHostelOutpassUpdateStatus?>, response: Response<schoolHostelOutpassUpdateStatus?>
+                ) {
+                    Log.d(
+                        "schoolHostelOutpassUpdateStatus", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            schoolHostelOutpassUpdateStatus.postValue(response.body())
+                        }
+                    } else {
+                        schoolHostelOutpassUpdateStatus.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<schoolHostelOutpassUpdateStatus?>, t: Throwable) {
+                    schoolHostelOutpassUpdateStatus.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSchoolHostelOutpassUpdateStatusLiveData: LiveData<schoolHostelOutpassUpdateStatus?>
+        get() = schoolHostelOutpassUpdateStatus
 
 
 }

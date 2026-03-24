@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistoryAdapter
+import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistorySessionWiseAdapter
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getAttendanceHistoryData
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getRoomData
 import com.vs.schoolmessenger.Utils.Constant
@@ -24,13 +25,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnClickListener {
+class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
 
     private var _binding: HostelAttendanceHistoryBinding? = null
     private val binding get() = _binding!!
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
-    lateinit var mAdapter: AttendanceHistoryAdapter
+    lateinit var mAdapter: AttendanceHistorySessionWiseAdapter
 
     private var selectedDateField: Int = 0
     private var appViewModel: App? = null
@@ -62,12 +63,12 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
         isAccessToken = isStaffDetails?.access_token
 
         binding.imgClose.setOnClickListener(this)
+        binding.rytStart.setOnClickListener(this)
 
         val (_, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
         binding.lblDay.text = dayOfWeek
         binding.txtStartDate.text = fullDate
         lastSelectedDate = Calendar.getInstance()
-
 
 
         appViewModel?.hotelSchoolAttendanceReport?.observe(viewLifecycleOwner) { response ->
@@ -89,7 +90,7 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
                         binding.rcRoomAvailability.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
-                        binding.lblErrorMessage.text = getString(R.string.no_data_found)
+                        binding.lblErrorMessage.text = response.message
                     }
 
                 } else {
@@ -111,17 +112,22 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
         }
 
         isGetAttendanceHistory()
+
     }
 
     private fun isLoadAttendanceHistory(newData: List<getRoomData>?) {
         mAdapter =
-            AttendanceHistoryAdapter(newData, requireContext(), Constant.isShimmerViewDisable)
+            AttendanceHistorySessionWiseAdapter(
+                newData,
+                requireContext(),
+                Constant.isShimmerViewDisable
+            )
         binding.rcRoomAvailability.adapter = mAdapter
     }
 
     private fun isGetAttendanceHistory() {
 
-        mAdapter = AttendanceHistoryAdapter(null, requireContext(), Constant.isShimmerViewShow)
+        mAdapter = AttendanceHistorySessionWiseAdapter(null, requireContext(), Constant.isShimmerViewShow)
 
         binding.rcRoomAvailability.layoutManager = LinearLayoutManager(requireContext())
         binding.rcRoomAvailability.isNestedScrollingEnabled = false
@@ -129,62 +135,7 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
 
         appViewModel!!.isGetHostelSchoolAttendanceReport(isAccessToken!!, Constant.isSelectedHostelFromHostelListData?.id.toString(),Constant.convertDateFormat(binding.txtStartDate.text.toString()),Constant.isSelectedAcademicYear?:"", requireActivity())
 
-//        val dummyData = getDummyFloorWiseRoomAvailabilityData()
-//        isLoadAttendanceHistory(dummyData)
     }
-
-//    private fun getDummyFloorWiseRoomAvailabilityData(): List<getAttendanceHistoryData> {
-//
-//        val list = ArrayList<getAttendanceHistoryData>()
-//
-//        list.add(
-//            getAttendanceHistoryData(
-//                date = "Tuesday, Mar 3",
-//                year = "2026",
-//                attendancePercentage = 91,
-//                totalStudents = 23,
-//                presentStudents = 21,
-//                absentStudents = 2,
-//                roomsMarked = 6,
-//                totalRooms = 8
-//            )
-//        )
-//
-//        list.add(
-//            getAttendanceHistoryData(
-//                date = "Wednesday, Mar 4",
-//                year = "2026",
-//                attendancePercentage = 88,
-//                totalStudents = 25,
-//                presentStudents = 22,
-//                absentStudents = 3,
-//                roomsMarked = 5,
-//                totalRooms = 8
-//            )
-//        )
-//
-//        list.add(
-//            getAttendanceHistoryData(
-//                date = "Thursday, Mar 5",
-//                year = "2026",
-//                attendancePercentage = 95,
-//                totalStudents = 20,
-//                presentStudents = 19,
-//                absentStudents = 1,
-//                roomsMarked = 8,
-//                totalRooms = 8
-//            )
-//        )
-//
-//        return list
-//    }
-
-    override fun onDateSelected(date: String) {
-        when (selectedDateField) {
-            1 -> binding.txtStartDate.text = date
-        }
-    }
-
     fun showDatePicker11(
         context: Context,
         dateFormatType: Boolean,
@@ -199,22 +150,22 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
         val datePickerDialog = DatePickerDialog(
             context,
             { _, selectedYear, selectedMonth, selectedDay ->
+
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
 
-                // Save for next time
                 lastSelectedDate = selectedCalendar
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDate = sdf.format(selectedCalendar.time)
+
                 onDateSelected(formattedDate)
             },
             year, month, day
         )
 
-        // Prevent past dates
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
 
         datePickerDialog.show()
     }
@@ -226,7 +177,7 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
             R.id.imgClose -> {
             }
 
-            R.id.rytStartDate -> {
+            R.id.rytStart -> {
 
                 selectedDateField = 1
                 showDatePicker11(requireActivity(), false) { selectedDate ->
@@ -235,6 +186,7 @@ class AttendanceHistoryFragment : Fragment(), OnDateSelectedListener, View.OnCli
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
+                    isGetAttendanceHistory()
 
                 }
             }

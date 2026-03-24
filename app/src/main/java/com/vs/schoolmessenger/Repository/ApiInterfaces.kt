@@ -117,7 +117,8 @@ import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHos
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
 import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.getHostelDashboard
 import com.vs.schoolmessenger.School.Hostel.Model.HostelList.getHostelList
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.getSchoolHostelOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateStatus.schoolHostelOutpassUpdateStatus
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
@@ -1420,13 +1421,13 @@ interface ApiInterfaces {
     ): Call<getHostelStudentRoomAttendance?>
 
 
-    @POST(APIMethods.gethostelschooloutpassrequst)
+    @POST(APIMethods.markSchoolHostelAttendance)
     fun hostelMarkAttendance(
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonObject: JsonObject,
     ): Call<hostelMarkAttendanceRespone?>?
 
-    @GET(APIMethods.gethotelattendanceroomstudentlist)
+    @GET(APIMethods.gethostelschooloutpassrequst)
     fun getHostelSchoolOutpassList(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.year_id ) year_id : String?,
@@ -1442,5 +1443,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.date) date : String?,
         @Query(APIKeyNames.academic_year_id) academic_year_id   : String?,
     ): Call<getSchoolHostelAttendanceReport?>
+
+
+    @PUT(APIMethods.schoolHostelOutpassUpdateStatus)
+    fun isSchoolHostelOutpassUpdateStatus(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: LeaveApproveRequest,
+    ): Call<schoolHostelOutpassUpdateStatus?>?
 
 }
