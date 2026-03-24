@@ -19,12 +19,18 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 
 class MyApp : Application(), LifecycleObserver {
 
+    companion object {
+        const val CHANNEL_ID = "school_chimes_notification"
+        const val CHANNEL_NAME= "School Notifications"
+    }
+
     override fun onCreate() {
         super.onCreate()
 
         FirebaseApp.initializeApp(this)
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+
 
         val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
 
@@ -51,15 +57,16 @@ class MyApp : Application(), LifecycleObserver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val channel = NotificationChannel(
-                "call_channel",
-                "Incoming Calls",
+                CHANNEL_ID,
+                CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
-            )
-
-            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            ).apply {
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setSound(null, null)
+            }
 
             val manager =
-                getSystemService(NotificationManager::class.java)
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             manager.createNotificationChannel(channel)
         }

@@ -14,15 +14,16 @@ object RingtoneHelper {
     private var ringtone: Ringtone? = null
     private var vibrator: Vibrator? = null
 
-    var isPlaying=false
+    var isPlaying = false
 
     fun start(context: Context) {
 
-        if (isPlaying){
+        if (isPlaying) {
             return
         }
         try {
-            val uri = Uri.parse("android.resource://${context.packageName}/${R.raw.call_notification}")
+            val uri =
+                Uri.parse("android.resource://${context.packageName}/${R.raw.call_notification}")
 
             ringtone = RingtoneManager.getRingtone(context, uri)
             ringtone?.play()
@@ -36,7 +37,7 @@ object RingtoneHelper {
             } else {
                 vibrator?.vibrate(longArrayOf(0, 500, 1000), 0)
             }
-            isPlaying=true
+            isPlaying = true
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -47,6 +48,6 @@ object RingtoneHelper {
         ringtone?.stop()
         ringtone = null
         vibrator?.cancel()
-        isPlaying=false
+        isPlaying = false
     }
 }
