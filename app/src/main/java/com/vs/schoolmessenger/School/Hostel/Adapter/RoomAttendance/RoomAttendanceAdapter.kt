@@ -166,7 +166,7 @@ class RoomAttendanceAdapter(
                     lblAccept.setOnClickListener {
                         listener.onApproveClicked(data, position, true) { isApproved ->
                             if (isApproved) {
-                                data.outpass_status = Constant.rejected_.uppercase()
+                                data.outpass_status = Constant.approved.uppercase()
                             }
                         }
                     }
@@ -174,7 +174,8 @@ class RoomAttendanceAdapter(
                     lblDecline.setOnClickListener {
                         listener.onApproveClicked(data, position, false) { isApproved ->
                             if (isApproved) {
-                                data.outpass_status = Constant.approved.uppercase()
+                                data.outpass_status = Constant.rejected_.uppercase()
+
                             }
                         }
                     }

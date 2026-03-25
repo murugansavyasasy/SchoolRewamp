@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
+import com.vs.schoolmessenger.School.Hostel.Listner.OutpassRequestClickListner
 import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 class StatusWiseOutpassRequest(
     private var itemList: List<StatusWiseOutpassRequestData>?,
     private val context: Context,
+    private val listner: OutpassRequestClickListner,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -52,7 +53,7 @@ class StatusWiseOutpassRequest(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(filteredList[position])
+            holder.bind(filteredList[position],listner)
         }
     }
 
@@ -86,6 +87,7 @@ class StatusWiseOutpassRequest(
 
         fun bind(
             data: StatusWiseOutpassRequestData,
+            listner: OutpassRequestClickListner,
         ) {
             when(data.status){
 
@@ -125,6 +127,7 @@ class StatusWiseOutpassRequest(
                 rcAdminRequestWise.adapter = OutpassRequestWise(
                     data.attd_details,
                     context,
+                    listner,
                     false
                 )
             }

@@ -5,12 +5,10 @@ package com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.PorterDuff
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
@@ -19,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
+import com.vs.schoolmessenger.School.Hostel.Listner.OutpassRequestClickListner
 import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.OutpassRequestWiseData
-import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
 
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -29,6 +26,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 class OutpassRequestWise(
     private var itemList: List<OutpassRequestWiseData>,
     private val context: Context,
+    private val listner: OutpassRequestClickListner,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -60,7 +58,7 @@ class OutpassRequestWise(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            holder.bind(filteredList[position], context)
+            holder.bind(filteredList[position], context,listner)
 
         }
     }
@@ -93,6 +91,7 @@ class OutpassRequestWise(
         fun bind(
             data: OutpassRequestWiseData,
             context: Context,
+            listner: OutpassRequestClickListner,
         ) {
 
             lblRoomFullNo.text = "Room ${data.room_no}"
@@ -179,6 +178,21 @@ class OutpassRequestWise(
                 lblStatus.setTextColor(context.getColor(R.color.dark_brown_3))
 
 
+                lblRejected.setOnClickListener {
+                    listner.onApproveClicked(data, position, true) { isApproved ->
+                        if (isApproved) {
+                            data.status = Constant.rejected_.uppercase()
+                        }
+                    }
+                }
+
+                lblApprove.setOnClickListener {
+                    listner.onApproveClicked(data, position, false) { isApproved ->
+                        if (isApproved) {
+                            data.status = Constant.approved.uppercase()
+                        }
+                    }
+                }
 
                 applyTintedBackground(
                     lblStatus,

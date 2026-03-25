@@ -13,5 +13,5 @@ class OutpassRequestWiseData(
     val out_date: String?,
     val in_date: String?,
     val reason: String?,
-    val status: String?,
+    var status: String?,
 )

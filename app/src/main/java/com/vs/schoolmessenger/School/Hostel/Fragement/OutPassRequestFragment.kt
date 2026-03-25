@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Hostel.Fragement
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,13 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdminRequest
 import com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest.StatusWiseOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.Listner.OutpassRequestClickListner
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
 import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.OutpassRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassRequestList.StatusWiseOutpassRequestData
+import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.RoomStudentAttendanceData
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AdminRequestsBinding
@@ -23,7 +27,7 @@ import com.vs.schoolmessenger.databinding.OutpassRequestFragmentBinding
 import java.util.Calendar
 
 
-class OutPassRequestFragment : Fragment() {
+class OutPassRequestFragment : Fragment(), OutpassRequestClickListner{
 
 
     private var isAccessToken: String? = null
@@ -35,6 +39,11 @@ class OutPassRequestFragment : Fragment() {
     private val binding get() = _binding!!
     private var currentYear: Int = 0
     private var currentMonth: Int = 0
+
+    lateinit var request: LeaveApproveRequest
+    var isApproveRejectId = ""
+    var isApprovedOrRejectedSuccessful = false
+    private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,19 +115,43 @@ class OutPassRequestFragment : Fragment() {
             }
         }
 
+        appViewModel!!.isstaffleaverequestapprove?.observe(requireActivity()) { response ->
+            Constant.hideLoading(requireActivity())
+
+            if (response != null && response.status) {
+                isApprovedOrRejectedSuccessful = true
+                pendingApprovalCallback?.invoke(true)
+                pendingApprovalCallback = null
+                Constant.showDataValidationNoDashboardRedirect(
+                    getString(R.string.success),
+                    response.message,
+                    requireActivity()
+                )
+            } else {
+                isApprovedOrRejectedSuccessful = false
+                pendingApprovalCallback?.invoke(false)
+                pendingApprovalCallback = null
+                Constant.showDataValidation(
+                    getString(R.string.fail),
+                    response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
+                    requireActivity()
+                )
+            }
+        }
+
         isGetAttendanceHistory()
     }
     private fun isLoadAttendanceHistory(newData: List<StatusWiseOutpassRequestData>?) {
         binding.rcOutpassRequest.visibility = View.VISIBLE
         mAdapter = StatusWiseOutpassRequest(
-            newData, requireActivity(), Constant.isShimmerViewDisable
+            newData, requireActivity(),this, Constant.isShimmerViewDisable
         )
         binding.rcOutpassRequest.adapter = mAdapter
     }
 
     private fun isGetAttendanceHistory() {
         mAdapter = StatusWiseOutpassRequest(
-            null, requireActivity(), Constant.isShimmerViewShow
+            null, requireActivity(),this,Constant.isShimmerViewShow
         )
         binding.rcOutpassRequest.layoutManager = LinearLayoutManager(requireActivity())
         binding.rcOutpassRequest.isNestedScrollingEnabled = false
@@ -130,5 +163,40 @@ class OutPassRequestFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onApproveClicked(
+        data: OutpassRequestWiseData,
+        position: Int,
+        isButtonClick: Boolean,
+        resultCallback: (Boolean) -> Unit
+    ) {
+
+        Log.d("isStatus", isButtonClick.toString())
+        isApproveRejectId = data.id.toString()
+        var isMessage = ""
+        if (isButtonClick) {
+            request = LeaveApproveRequest(id = data.id.toString(), is_approve = true)
+            isMessage = "Are you sure you want to approve this outpass request"
+        } else {
+            request = LeaveApproveRequest(id = data.id.toString(), is_approve = false)
+            isMessage = "Are you sure you want to reject this outpass request"
+        }
+        Constant.showSendConfirmationDialog(
+            requireActivity(),
+            getString(R.string.confirmation),
+            getString(R.string.permission_ok),
+            getString(R.string.Cancel),
+            "",
+            isMessage
+        ) { confirmed ->
+            if (confirmed) {
+                Constant.showLoading(requireActivity())
+                pendingApprovalCallback = resultCallback // store it for later
+                appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
+            } else {
+                resultCallback(false) // user cancelled
+            }
+        }
     }
 }
