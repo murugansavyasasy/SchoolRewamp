@@ -133,6 +133,12 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <activity
+            android:name=".FCM.NotificationCallScreen"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
             android:name=".Parent.ExamMarks.ExamMarkResults"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
