@@ -129,6 +129,8 @@
     <color name="violet_color">#5856d6</color>
     <color name="very_light_grey">#E5E5EA</color>
     <color name="light_red">#ffd8d6</color>
+    <color name="dark_brown_9">#d66518</color>
+    <color name="dark_brown_8">#783214</color>
 
 
     <color name="grey">#ACACBA</color>
@@ -194,6 +196,7 @@
     <color name="mild_red">#F56363</color>
     <color name="clr_red">#FF7575</color>
     <color name="dark_blue_11">#3B82F6</color>
+    <color name="light_gray_15">#e6e6e6</color>
 
 
     <color name="mild4">#f4f5f9</color>

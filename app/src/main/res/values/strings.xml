@@ -1143,6 +1143,12 @@
     <string name="room">Room</string>
     <string name="hide_students">Hide Students</string>
     <string name="session_based_tracking">Session-based tracking</string>
+    <string name="gate_pass">Gate Pass</string>
+    <string name="exit_time">Exit Time</string>
+    <string name="hostel">Hostel</string>
+    <string name="purpose_of_visit">Purpose of visit</string>
+    <string name="valid_from">Valid From</string>
+    <string name="approved_active">Approved &amp; Active</string>
 
 
 </resources>

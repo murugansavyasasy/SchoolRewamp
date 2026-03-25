@@ -25,8 +25,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
         android:background="@color/light_white"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,43 +34,557 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/light_white"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginVertical="@dimen/fifteen"
+            android:background="@color/light_white"
             android:paddingBottom="@dimen/fifty">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardGatePass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/eight"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/eight"
+                app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        android:id="@+id/lblGatepass"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/PrimaryColor"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/eight"
+                        android:text="@string/gate_pass"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/consNameDetailsHeader"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/consNameDetailsHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/twele"
+                        android:layout_marginTop="@dimen/ten"
+                        android:paddingBottom="@dimen/ten"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblGatepass">
+
+                        <TextView
+                            android:id="@+id/lblSessionNo"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="@dimen/fourty_five"
+                            android:layout_height="@dimen/fourty_five"
+                            android:layout_marginStart="@dimen/five"
+                            android:background="@drawable/circle_bg"
+                            android:backgroundTint="@color/PrimaryColor"
+                            android:gravity="center"
+                            android:padding="@dimen/six"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sixteen_sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/lblPersonName"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+
+                        <TextView
+                            android:id="@+id/lblPersonName"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:text="Name"
+                            android:textSize="@dimen/eighteen_sp"
+                            app:layout_constraintEnd_toStartOf="@+id/lblExitTime"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toEndOf="@+id/lblSessionNo"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblExitTime"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/five"
+                            android:gravity="end"
+                            android:text="@string/exit_time"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/twele_sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/lblPersonName"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/lblPersonName"
+                            app:layout_constraintTop_toTopOf="@+id/lblPersonName"></TextView>
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/brAttendanceDatePercentDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="lblPersonName,lblExitTime"></androidx.constraintlayout.widget.Barrier>
+
+
+                        <TextView
+                            android:id="@+id/lblStudentRollNumber"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/five"
+                            android:text="123456"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/twele_sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tvExitTime"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toEndOf="@+id/lblSessionNo"
+                            app:layout_constraintTop_toBottomOf="@+id/brAttendanceDatePercentDetails"></TextView>
+
+                        <TextView
+                            android:id="@+id/tvExitTime"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/five"
+                            android:gravity="center"
+                            android:text="00:00PM"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/twenty_sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="0.6"
+                            app:layout_constraintStart_toEndOf="@+id/lblStudentRollNumber"
+                            app:layout_constraintTop_toTopOf="@+id/lblStudentRollNumber"></TextView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+
+                        android:id="@+id/lblHST"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:gravity="center"
+                        android:text="HST"
+                        android:textSize="@dimen/twenty_five_sp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgArrow"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/consNameDetailsHeader">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblHostel"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
+                        android:text="@string/hostel"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toEndOf="@+id/lblHST"
+                        app:layout_constraintStart_toStartOf="@+id/lblHST"
+                        app:layout_constraintTop_toBottomOf="@+id/lblHST">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/imgArrow"
+                        android:layout_width="@dimen/thirty_five"
+                        android:layout_height="@dimen/thirty_five"
+                        android:src="@drawable/ic_right_arrow"
+                        android:tint="@color/light_gray"
+                        app:layout_constraintBottom_toBottomOf="@+id/lblOutpass_"
+                        app:layout_constraintEnd_toStartOf="@+id/lblOUT"
+                        app:layout_constraintStart_toEndOf="@+id/lblHST"
+                        app:layout_constraintTop_toBottomOf="@+id/consNameDetailsHeader">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblOUT"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:gravity="center"
+                        android:text="OUT"
+                        android:textSize="@dimen/twenty_five_sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/imgArrow"
+                        app:layout_constraintTop_toBottomOf="@+id/consNameDetailsHeader">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblOutpass_"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
+                        android:text="@string/outpass"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toEndOf="@+id/lblOUT"
+                        app:layout_constraintStart_toStartOf="@+id/lblOUT"
+                        app:layout_constraintTop_toBottomOf="@+id/lblOUT">
+
+                    </TextView>
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/brOutpass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="lblHostel,lblOutpass_">
+
+                    </androidx.constraintlayout.widget.Barrier>
+
+
+                    <LinearLayout
+                        android:id="@+id/lnrReasons"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@drawable/bg_light_yellow_border"
+                        android:orientation="vertical"
+                        android:padding="@dimen/five"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/brOutpass">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/purpose_of_visit"
+                            android:textAllCaps="true"
+                            android:textColor="@color/dark_brown_3"></TextView>
+
+                        <TextView
+                            android:id="@+id/lblReason"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAllCaps="true"
+                            android:textColor="@color/dark_brown_4"
+                            android:textSize="@dimen/sixteen_sp"></TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/lblRoomId"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="@string/room"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toStartOf="@+id/lblBlock"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lnrReasons">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvRoomId"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/sixteen_sp"
+                        app:layout_constraintEnd_toEndOf="@+id/lblRoomId"
+                        app:layout_constraintStart_toStartOf="@+id/lblRoomId"
+                        app:layout_constraintTop_toBottomOf="@+id/lblRoomId">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblBlock"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:text="@string/block"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/lblRoomId"
+                        app:layout_constraintTop_toBottomOf="@+id/lnrReasons">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvBlockName"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/sixteen_sp"
+                        app:layout_constraintEnd_toEndOf="@+id/lblBlock"
+                        app:layout_constraintStart_toStartOf="@+id/lblBlock"
+                        app:layout_constraintTop_toBottomOf="@+id/lblBlock">
+
+                    </TextView>
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/brRoomBlockDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="tvRoomId,tvBlockName">
+
+                    </androidx.constraintlayout.widget.Barrier>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/consCoupounDesign"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/lblValidFrom"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/brRoomBlockDetails">
+
+                        <ImageView
+                            android:id="@+id/imgStart"
+                            android:layout_width="@dimen/thirty"
+                            android:layout_height="@dimen/thirty"
+                            android:layout_marginStart="-10dp"
+                            android:src="@drawable/ic_circle"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imgEnd"
+                            android:layout_width="@dimen/thirty"
+                            android:layout_height="@dimen/thirty"
+                            android:layout_marginEnd="-10dp"
+                            android:src="@drawable/ic_circle"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtDashLine"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="none"
+                            android:layout_marginHorizontal="@dimen/three"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/imgEnd"
+                            app:layout_constraintStart_toEndOf="@id/imgStart"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/lblValidFrom"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="@string/valid_from"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toStartOf="@+id/tvValidFrom"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/consCoupounDesign">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvValidFrom"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="0.6"
+                        app:layout_constraintStart_toEndOf="@+id/lblValidFrom"
+                        app:layout_constraintTop_toBottomOf="@+id/consCoupounDesign"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblValidTo"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="@string/valid_until"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toStartOf="@+id/tvValidTo"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvValidFrom">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvValidTo"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="0.6"
+                        app:layout_constraintStart_toEndOf="@+id/lblValidTo"
+                        app:layout_constraintTop_toBottomOf="@+id/tvValidFrom"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblAuthorizedBy"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="@string/valid_until"
+                        android:textColor="@color/light_gray"
+                        app:layout_constraintEnd_toStartOf="@+id/tvlblAuthorizedBy"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvValidTo">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvlblAuthorizedBy"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="0.6"
+                        app:layout_constraintStart_toEndOf="@+id/lblAuthorizedBy"
+                        app:layout_constraintTop_toBottomOf="@+id/tvValidTo"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblApproveStatus"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:layout_marginBottom="@dimen/twenty"
+                        android:background="@drawable/bg_light_yellow_border"
+                        android:backgroundTint="@color/light_green_1"
+                        android:drawableStart="@drawable/tick_circle_icon"
+                        android:drawablePadding="@dimen/five"
+                        android:drawableTint="@color/green"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="@dimen/five"
+                        android:text="@string/approved_active"
+                        android:textAllCaps="true"
+                        android:textColor="@color/green"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvlblAuthorizedBy">
+
+                    </TextView>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardOutpassDetails"
                 android:layout_width="0dp"
-                app:cardBackgroundColor="@color/white"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/eight"
+                android:layout_marginTop="@dimen/ten"
                 android:elevation="@dimen/eight"
-                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/eight"
                 app:layout_constraintBottom_toTopOf="@+id/cardMonthlyStats"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/cardGatePass"
+                app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:layout_height="wrap_content">
+                    android:clipToPadding="false">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/consOutpasslblDetails"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:clipChildren="false"
                         android:clipToPadding="false"
-                        android:layout_marginTop="@dimen/fifteen"
                         android:paddingHorizontal="@dimen/ten"
-                        android:id="@+id/consOutpasslblDetails"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/view0"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/rcOutpassRequest"
-                        android:layout_height="wrap_content">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
                         <TextView
                             android:id="@+id/lblNumberRooms"
                             style="@style/CustomTextStylePoppinsBold"
@@ -83,9 +597,9 @@
                             android:drawableTint="@color/PrimaryColor"
                             android:text="@string/outpass_request"
                             android:textSize="@dimen/sixteen_sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constrainedHeight="true"
                             app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/lblApplyNewOutpassRequest"
                             app:layout_constraintHorizontal_weight="1"
                             app:layout_constraintStart_toStartOf="parent"
@@ -93,10 +607,10 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/lblApplyNewOutpassRequest"
-                            android:layout_marginHorizontal="@dimen/ten"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/ten"
                             android:minHeight="0dp"
                             android:paddingVertical="@dimen/six"
                             android:text="@string/new_request"
@@ -121,27 +635,27 @@
 
                     <View
                         android:id="@+id/view0"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/consOutpasslblDetails"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/frmOutpassDetails"
+                        android:layout_height="1dp"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/light_gray_11"
-                        android:layout_height="1dp">
+                        app:layout_constraintBottom_toTopOf="@+id/frmOutpassDetails"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/consOutpasslblDetails">
 
                     </View>
 
                     <FrameLayout
-                        android:padding="@dimen/ten"
                         android:id="@+id/frmOutpassDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
                         android:layout_marginTop="@dimen/ten"
+                        android:padding="@dimen/ten"
                         app:layout_constraintBottom_toTopOf="@+id/lblSeeMore"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view0"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                        app:layout_constraintTop_toBottomOf="@+id/view0">
 
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -149,34 +663,34 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:clipToPadding="false"
-                            android:paddingBottom="40dp"/>
+                            android:paddingBottom="40dp" />
 
                         <!-- Soft Natural Fade -->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/bg_bottom_soft_fade"/>
+                            android:background="@drawable/bg_bottom_soft_fade" />
 
 
                     </FrameLayout>
+
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
                         android:id="@+id/lblSeeMore"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@+id/frmOutpassDetails"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
-                        android:textSize="@dimen/twele_sp"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginVertical="@dimen/three"
                         android:layout_marginEnd="@dimen/six"
-                        android:textColor="@color/PrimaryColor"
                         android:text="@string/see_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/twele_sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/frmOutpassDetails"></TextView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,93 +699,93 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardMonthlyStats"
                 android:layout_width="0dp"
-                app:cardBackgroundColor="@color/white"
-                app:strokeWidth="0dp"
-                android:elevation="@dimen/eight"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:elevation="@dimen/eight"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
                 app:layout_constraintBottom_toTopOf="@+id/cardHostelDetails"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails">
+                app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails"
+                app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:layout_height="wrap_content">
+                    android:clipToPadding="false">
 
                     <TextView
-                        app:layout_constraintBottom_toTopOf="@+id/view1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:drawableStart="@drawable/calendar_icon_2"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="@dimen/fifteen"
-                        android:paddingHorizontal="@dimen/fifteen"
                         android:id="@+id/lblDetailedAttendanceRecords"
                         style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:drawableStart="@drawable/calendar_icon_2"
                         android:drawablePadding="@dimen/five"
-                        android:text="@string/detailed_attendance_records"
                         android:drawableTint="@color/PrimaryColor"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:text="@string/detailed_attendance_records"
+                        app:layout_constraintBottom_toTopOf="@+id/view1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
 
                     <View
                         android:id="@+id/view1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lblDetailedAttendanceRecords"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/lnrAttendanceRecordHeader"
+                        android:layout_height="1dp"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/light_gray_11"
-                        android:layout_height="1dp">
+                        app:layout_constraintBottom_toTopOf="@+id/lnrEntireAcademicDetails"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblDetailedAttendanceRecords">
 
                     </View>
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/fifteen"
                         android:id="@+id/lnrEntireAcademicDetails"
-                        android:layout_marginTop="@dimen/ten"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
-                        android:orientation="vertical"
-                        app:layout_constrainedWidth="true"
-                        app:layout_constrainedHeight="true"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        app:layout_constrainedHeight="true"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view1">
 
                         <!-- HEADER -->
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <TextView
+                                style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
-                                android:text="Day"
-                                style="@style/CustomTextStylePoppinsBold"
                                 android:padding="12dp"
-                                android:textStyle="bold"/>
+                                android:text="Day"
+                                android:textStyle="bold" />
 
                             <HorizontalScrollView
-                                android:fillViewport="true"
                                 android:id="@+id/headerScroll"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fillViewport="true"
                                 android:scrollbars="none">
 
                                 <LinearLayout
-                                    android:gravity="center"
                                     android:id="@+id/headerContainer"
-                                    android:orientation="horizontal"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal" />
                             </HorizontalScrollView>
                         </LinearLayout>
 
@@ -284,14 +798,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:clipToPadding="false"
-                                android:paddingBottom="60dp"/>
+                                android:paddingBottom="60dp" />
 
                             <!-- Soft Natural Fade -->
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
                                 android:layout_gravity="bottom"
-                                android:background="@drawable/bg_bottom_soft_fade"/>
+                                android:background="@drawable/bg_bottom_soft_fade" />
 
                         </FrameLayout>
 
@@ -303,11 +817,10 @@
                         android:layout_height="@dimen/two_hundred"
                         android:layout_marginTop="@dimen/ten"
                         android:src="@drawable/no_data_found"
-                        app:layout_constraintTop_toBottomOf="@+id/lnrEntireAcademicDetails"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        ></ImageView>
+                        app:layout_constraintTop_toBottomOf="@+id/lnrEntireAcademicDetails"></ImageView>
 
                     <TextView
                         android:id="@+id/lblErrorMessage"
@@ -330,83 +843,74 @@
             </com.google.android.material.card.MaterialCardView>
 
 
-
-
-
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHostelDetails"
-                android:layout_marginTop="@dimen/fifteen"
-                app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
                 android:layout_width="0dp"
-                app:cardBackgroundColor="@color/white"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/eight"
-                app:strokeWidth="0dp"
+                android:layout_marginTop="@dimen/fifteen"
                 android:elevation="@dimen/eight"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/eight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
+                app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:layout_height="wrap_content">
+                    android:clipToPadding="false">
 
                     <TextView
-                        app:layout_constraintBottom_toTopOf="@+id/view2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:drawableStart="@drawable/ic_home"
-                        android:layout_width="0dp"
-
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="@dimen/fifteen"
-                        android:paddingHorizontal="@dimen/fifteen"
                         android:id="@+id/lblHostelInformation"
                         style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:drawableStart="@drawable/ic_home"
+
                         android:drawablePadding="@dimen/five"
-                        android:text="@string/hotel_information"
                         android:drawableTint="@color/PrimaryColor"
-                        android:layout_height="wrap_content">
-                    </TextView>
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:text="@string/hotel_information"
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
                     <View
                         android:id="@+id/view2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lblHostelInformation"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_width="0dp"
-                        app:layout_constraintBottom_toTopOf="@+id/rcHostelInformation"
+                        android:layout_height="1dp"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/light_gray_11"
-                        android:layout_height="1dp">
+                        app:layout_constraintBottom_toTopOf="@+id/rcHostelInformation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblHostelInformation">
 
                     </View>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:paddingHorizontal="@dimen/fifteen"
-                        android:layout_marginTop="@dimen/ten"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:id="@+id/rcHostelInformation"
-                        android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        app:layout_constraintTop_toBottomOf="@+id/view2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        />
+                        android:layout_marginTop="@dimen/ten"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

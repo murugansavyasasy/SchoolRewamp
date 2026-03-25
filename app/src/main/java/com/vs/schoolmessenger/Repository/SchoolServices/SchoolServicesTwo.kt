@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
@@ -32,6 +34,8 @@ class SchoolServicesTwo {
     var isHostelSchoolOutpassRequest: MutableLiveData<getSchoolHostelOutpassRequest?>
     var isGetSchoolHostelAttendanceReport: MutableLiveData<getSchoolHostelAttendanceReport?>
     var schoolHostelOutpassUpdateStatus: MutableLiveData<schoolHostelOutpassUpdateStatus?>
+    var getParentHostelDetails: MutableLiveData<getParentHostelDetails?>
+    var getParentHostelDashboard: MutableLiveData<getParentHostelDashboard?>
 
 
     init {
@@ -46,6 +50,8 @@ class SchoolServicesTwo {
         isHostelSchoolOutpassRequest = MutableLiveData()
         isGetSchoolHostelAttendanceReport = MutableLiveData()
         schoolHostelOutpassUpdateStatus = MutableLiveData()
+        getParentHostelDetails = MutableLiveData()
+        getParentHostelDashboard = MutableLiveData()
 
     }
 
@@ -343,6 +349,76 @@ class SchoolServicesTwo {
 
     val isSchoolHostelOutpassUpdateStatusLiveData: LiveData<schoolHostelOutpassUpdateStatus?>
         get() = schoolHostelOutpassUpdateStatus
+
+
+
+
+    fun getParentHostelDetails(
+        isToken: String ,activity: Activity
+    ) {
+
+        RestClient.Companion.apiInterfaces.getParentHostelDetails(isToken)
+            ?.enqueue(object : Callback<getParentHostelDetails?> {
+                override fun onResponse(
+                    call: Call<getParentHostelDetails?>, response: Response<getParentHostelDetails?>
+                ) {
+                    Log.d(
+                        "getParentHostelDetails", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getParentHostelDetails.postValue(response.body())
+                        }
+                    } else {
+                        getParentHostelDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getParentHostelDetails?>, t: Throwable) {
+                    getParentHostelDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isParentHotelDetailsLiveData: LiveData<getParentHostelDetails?>
+        get() = getParentHostelDetails
+
+
+
+    fun isGetParentHostelDashboard(
+        isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,activity: Activity) {
+
+        RestClient.Companion.apiInterfaces.parentHostelDashboard(isToken,hostel_id,year_id,month_id)
+            ?.enqueue(object : Callback<getParentHostelDashboard?> {
+                override fun onResponse(
+                    call: Call<getParentHostelDashboard?>, response: Response<getParentHostelDashboard?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getParentHostelDashboard.postValue(response.body())
+                        }
+                    } else {
+                        getParentHostelDashboard.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<getParentHostelDashboard?>, t: Throwable) {
+                    getParentHostelDashboard.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isParentHotelDashBoardLiveData: LiveData<getParentHostelDashboard?>
+        get() = getParentHostelDashboard
+
+
 
 
 }

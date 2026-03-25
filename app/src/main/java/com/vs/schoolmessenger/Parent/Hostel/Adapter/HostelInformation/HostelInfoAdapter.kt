@@ -16,17 +16,18 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
 
 class HostelInfoAdapter(
-    private var itemList: List<String>?,
+    private var itemList: List<HostelInfo>?,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<String> = itemList ?: listOf()
-    private var filteredList: List<String> = fullList
+    private var fullList: List<HostelInfo> = itemList ?: listOf()
+    private var filteredList: List<HostelInfo> = fullList
 
     override fun getItemViewType(position: Int) = if (isLoading) TYPE_SHIMMER else TYPE_DATA
 
@@ -49,7 +50,7 @@ class HostelInfoAdapter(
         }
     }
 
-    fun updateData(newList: List<String>) {
+    fun updateData(newList: List<HostelInfo>) {
         fullList = newList
         filteredList = newList
         isLoading = false
@@ -60,17 +61,7 @@ class HostelInfoAdapter(
         private val lblKey: TextView = itemView.findViewById(R.id.lblKey)
         private val lblValue: TextView = itemView.findViewById(R.id.lblValue)
 
-        fun bind(info: String) {
-            val splitIndex = info.indexOf(":")
-            if (splitIndex != -1) {
-                val key = info.substring(0, splitIndex).trim()
-                val value = info.substring(splitIndex + 1).trim()
-                lblKey.text = key
-                lblValue.text = value
-            } else {
-                lblKey.text = info
-                lblValue.text = ""
-            }
+        fun bind(info: HostelInfo) {
         }
     }
 
