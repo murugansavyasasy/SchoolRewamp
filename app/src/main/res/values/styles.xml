@@ -15,6 +15,19 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="BoxItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/outline_gray</item>
+    </style>
+
+
+    <style name="BoxItemSelected">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/primary_colour_bg_radius_bg</item>
+    </style>
     <style name="CustomDialogStyle" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowMinWidthMajor">90%</item>

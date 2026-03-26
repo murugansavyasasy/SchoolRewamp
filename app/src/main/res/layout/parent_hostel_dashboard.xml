@@ -22,15 +22,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
+    <TextView
+        android:id="@+id/lblCalendar"
+        android:drawableStart="@drawable/calendar_icon"
+        android:drawableEnd="@drawable/down_arrow_3"
+        android:layout_width="wrap_content"
+        android:text="Calendar"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/ten"
+        android:textColor="@color/white"
+        android:background="@color/PrimaryColor"
+        android:drawablePadding="@dimen/six"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginTop="@dimen/ten"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="@dimen/ten"
+        app:layout_constraintBottom_toTopOf="@+id/nested_scroll"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
     <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="@dimen/ten"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/nested_scroll"
         android:background="@color/light_white"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/lblCalendar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,7 +63,6 @@
             android:layout_marginVertical="@dimen/fifteen"
             android:background="@color/light_white"
             android:paddingBottom="@dimen/fifty">
-
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardGatePass"
@@ -412,11 +435,11 @@
                             android:id="@+id/txtDashLine"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:ellipsize="none"
                             android:layout_marginHorizontal="@dimen/three"
+                            android:ellipsize="none"
                             android:gravity="center"
                             android:maxLines="1"
+                            android:singleLine="true"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/imgEnd"
                             app:layout_constraintStart_toEndOf="@id/imgStart"
@@ -527,7 +550,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/fifteen"
                         android:layout_marginTop="@dimen/twenty"
-                        android:paddingHorizontal="@dimen/ten"
                         android:layout_marginBottom="@dimen/twenty"
                         android:background="@drawable/bg_light_yellow_border"
                         android:backgroundTint="@color/light_green_1"
@@ -535,6 +557,7 @@
                         android:drawablePadding="@dimen/five"
                         android:drawableTint="@color/green"
                         android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/five"
                         android:text="@string/approved_active"
                         android:textAllCaps="true"
@@ -830,8 +853,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/twenty"
                         android:gravity="center"
-                        android:text="@string/no_data_found"
                         android:paddingBottom="@dimen/ten"
+                        android:text="@string/no_data_found"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -938,22 +961,9 @@
                     </TextView>
 
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             <com.google.android.material.card.MaterialCardView
@@ -1051,7 +1061,6 @@
                     </TextView>
 
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
@@ -1083,7 +1092,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgEntireParenthHostelDashboardNoDataFound">
 
             </TextView>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
