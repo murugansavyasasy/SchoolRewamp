@@ -84,7 +84,11 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
             }
         })
 
-        isGetOutpassRequest()
+        val list = intent.getSerializableExtra("OUTPASS_LIST") as? ArrayList<OutpassRequestData> ?: arrayListOf()
+        currentFilteredList=list
+        isLoadOutpassRequest(list)
+
+
 
     }
 
@@ -96,8 +100,8 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
             currentFilteredList.filter { outpass ->
                 val fieldsToSearch = listOf(
                     outpass.reason.lowercase(),
-                    outpass.requestTime.lowercase(),
-                    outpass.fromDateToDate.lowercase(),
+                    outpass.request_time.lowercase(),
+                    outpass.fromdate_todate.lowercase(),
                     outpass.status.lowercase(),
                 )
                 // Check if ALL search words are found in ANY of the fields(feildTosearch List ie name,email...etc)
@@ -141,101 +145,6 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
         binding.rcHostelOutpassRequest.adapter = nAdapter
     }
 
-    private fun isGetOutpassRequest() {
-        nAdapter = OutpassRequestList(null, this, Constant.isShimmerViewShow)
-        binding.rcHostelOutpassRequest.layoutManager = LinearLayoutManager(this)
-        binding.rcHostelOutpassRequest.isNestedScrollingEnabled = true
-        binding.rcHostelOutpassRequest.adapter = nAdapter
-        val dummyData = getDummyOutpassRequestListData()
-        isLoadOutpassRequest(dummyData)
-    }
-
-    private fun getDummyOutpassRequestListData(): List<OutpassRequestData> {
-        val list = ArrayList<OutpassRequestData>()
-
-        list.add(
-            OutpassRequestData(
-                reason = "I am sick",
-                fromDateToDate = "11 Jan 2020 - 13 Jan 2020",
-                requestTime = "11 Jan 2020 at 04:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Family function",
-                fromDateToDate = "14 Jan 2020 - 16 Jan 2020",
-                requestTime = "14 Jan 2020 at 09:30 AM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Medical checkup",
-                fromDateToDate = "17 Jan 2020 - 17 Jan 2020",
-                requestTime = "17 Jan 2020 at 11:00 AM",
-                status = "Rejected"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Personal work",
-                fromDateToDate = "18 Jan 2020 - 19 Jan 2020",
-                requestTime = "18 Jan 2020 at 02:15 PM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Festival leave",
-                fromDateToDate = "20 Jan 2020 - 23 Jan 2020",
-                requestTime = "20 Jan 2020 at 06:45 AM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Emergency",
-                fromDateToDate = "24 Jan 2020 - 25 Jan 2020",
-                requestTime = "24 Jan 2020 at 01:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Vacation",
-                fromDateToDate = "26 Jan 2020 - 28 Jan 2020",
-                requestTime = "26 Jan 2020 at 10:30 AM",
-                status = "Rejected"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Exam preparation",
-                fromDateToDate = "29 Jan 2020 - 31 Jan 2020",
-                requestTime = "29 Jan 2020 at 08:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Marriage function",
-                fromDateToDate = "01 Feb 2020 - 03 Feb 2020",
-                requestTime = "01 Feb 2020 at 05:20 PM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Health issue",
-                fromDateToDate = "04 Feb 2020 - 05 Feb 2020",
-                requestTime = "04 Feb 2020 at 07:10 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-
-        return list
-    }
 
 
     override fun onClick(p0: View?) {

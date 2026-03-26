@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelIn
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.Hostel.Adapter.HotelList.HostelListAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
@@ -39,6 +40,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     private var appViewModel: App? = null
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
+    var outpassRequestList :List<OutpassRequestData>?=emptyList()
     lateinit var oAdapter: HostelInfoAdapter
 
     private var currentYear: Int = 0
@@ -224,6 +226,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             binding.frmOutpassDetails.visibility= View.VISIBLE
 
             if (newData.size > 3) {
+                outpassRequestList=newData
                 binding.lblSeeMore.visibility = View.VISIBLE
             } else {
                 binding.lblSeeMore.visibility = View.GONE
@@ -417,6 +420,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             }
             R.id.lblSeeMore->{
                 val intent = Intent(this, ParentOutpassrequestList::class.java)
+                intent.putExtra("OUTPASS_LIST", ArrayList(outpassRequestList))
                 startActivity(intent)
             }
             R.id.lblApplyNewOutpassRequest->{
