@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.Parent.Hostel
 
+import android.app.Dialog
 import android.content.Intent
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -10,10 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelDetailedAttendance.HostelDetailedAttendanceAdpater
+import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelFeeDetails.HostelFeeDetail
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelInformation.HostelInfoAdapter
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.getHostelDetailedAttendance
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.FeeDetails
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.GatePass
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
@@ -42,6 +47,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     lateinit var nAdapter: OutpassRequestList
     var outpassRequestList: List<OutpassRequestData> = emptyList()
     lateinit var oAdapter: HostelInfoAdapter
+    lateinit var sAdapter: HostelFeeDetail
 
     private var currentYear: Int = 0
     private var currentMonth: Int = 0
@@ -77,6 +83,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSeeMore.setOnClickListener(this)
+        binding.lblCalendar.setOnClickListener(this)
         binding.lblApplyNewOutpassRequest.setOnClickListener(this)
 
         isGetParentHostelDetails()
@@ -112,6 +119,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                     val out_pass_requests=data?.out_pass_requests?:emptyList()
                     val hostel_info=data?.hostel_info?:emptyList()
                     val gate_pass=data?.gate_pass?:emptyList()
+                    val fee_details=data?.fee_details?:emptyList()
 
                     if (data != null) {
                         showEntireParentHostelDashBoardInfo()// here initially  i made all visible check and gone below
@@ -144,6 +152,15 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                         }
                         else{
                             showHostelInfoNoData(getString(R.string.no_data_found))
+                        }
+
+
+                        //Hostel Fee Pending check
+                        if (fee_details.isNotEmpty()){
+                            isLoadPendingFeeCollection(fee_details)
+                        }
+                        else{
+                            showPendingFeeCollectionsNoData(getString(R.string.no_data_found))
                         }
 
                         //Gate Pass Check
@@ -184,6 +201,36 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.lblErrorMessage.visibility = View.GONE
         binding.imgNoDataFound.visibility = View.GONE
     }
+
+
+
+
+    private fun showPendingFeeCollectionsNoData(message: String) {
+        binding.rcPendingFeeCollections.visibility = View.GONE
+        binding.imgPendingFeeCollectionsNoDataFound.visibility = View.VISIBLE
+        binding.lblPendingFeeCollectionsErrorMessage.visibility = View.VISIBLE
+        binding.lblPendingFeeCollectionsErrorMessage.text = message
+    }
+
+    private fun showPendingFeeCollections(){
+        binding.rcPendingFeeCollections.visibility = View.VISIBLE
+        binding.imgPendingFeeCollectionsNoDataFound.visibility = View.GONE
+        binding.lblPendingFeeCollectionsErrorMessage.visibility = View.GONE
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private fun showHostelInfoNoData(message: String) {
@@ -267,6 +314,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         isGetHotelInformation()
         isGetAttendance()
         isGetOutpassRequest()
+        isGetPendingFeeCollection()
     }
 
 
@@ -343,6 +391,49 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.rcHostelInformation.adapter = oAdapter
     }
 
+    private fun isGetPendingFeeCollection()
+    {
+        sAdapter = HostelFeeDetail(this, Constant.isShimmerViewShow)
+        binding.rcPendingFeeCollections.layoutManager = LinearLayoutManager(this)
+        binding.rcPendingFeeCollections.adapter = sAdapter
+    }
+
+    private fun isLoadPendingFeeCollection(data: List<FeeDetails>) {
+
+        if (data.isNotEmpty()) {
+
+            showPendingFeeCollections()
+
+            sAdapter = HostelFeeDetail(
+                this,
+                true
+            )
+
+            binding.rcPendingFeeCollections.layoutManager = LinearLayoutManager(this)
+            binding.rcPendingFeeCollections.adapter = sAdapter
+
+            if (::sAdapter.isInitialized) {
+                sAdapter.updateData(data)
+            }
+
+        } else {
+
+            showPendingFeeCollectionsNoData(getString(R.string.no_data_found))
+        }
+    }
+
+//    private fun isLoadPendingFeeCollection(Data: List<FeeDetails>)
+//    {
+//        if (Data.size>0){
+//            showPendingFeeCollections()
+//            sAdapter = HostelFeeDetail(this, Constant.isShimmerViewDisable)
+//            binding.rcPendingFeeCollections.adapter = sAdapter
+//        }
+//        else{
+//            showPendingFeeCollectionsNoData(getString(R.string.no_data_found))
+//        }
+//
+//    }
 
 
     private fun isGetAttendance() {
@@ -428,7 +519,38 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                 startActivity(intent)
             }
 
+            R.id.lblCalendar->{
+               showCalendarPopup()
+            }
+
+
+
         }
+    }
+
+    private fun showCalendarPopup() {
+
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.calender_popup)
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCancelable(true)
+
+        val margin = resources.getDimensionPixelSize(R.dimen.twenty)
+
+        val params = dialog.window?.attributes
+        params?.width = resources.displayMetrics.widthPixels - (margin * 2)
+        params?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        dialog.window?.attributes = params
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        val btnClose = dialog.findViewById<Button>(R.id.btnClose)
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
 }
