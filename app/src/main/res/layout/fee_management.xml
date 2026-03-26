@@ -10,7 +10,7 @@
         android:id="@+id/consMenuHeaderDetails"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/bg_top_curve"
         android:paddingVertical="@dimen/twenty"
         app:layout_constraintBottom_toTopOf="@+id/nestedScroll"
         app:layout_constraintEnd_toEndOf="parent"

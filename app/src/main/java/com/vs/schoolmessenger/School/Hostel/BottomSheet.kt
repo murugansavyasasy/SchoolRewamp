@@ -70,6 +70,10 @@ class BottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    fun closeSheet() {
+        dismiss()
+    }
+
     private fun loadFragment() {
 
         val fragment = when (type) {

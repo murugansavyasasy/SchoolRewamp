@@ -10,7 +10,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
-        android:background="@color/dark_blue_15"
+        android:background="@drawable/bg_top_curve"
         android:paddingVertical="@dimen/twenty"
         android:layout_height="wrap_content">
         <TextView

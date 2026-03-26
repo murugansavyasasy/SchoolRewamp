@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/consHeader"
-        android:background="@color/white"
+        android:background="@drawable/bg_top_curve"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"

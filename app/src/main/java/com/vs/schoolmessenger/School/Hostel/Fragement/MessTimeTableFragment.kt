@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdminRequest
 import com.vs.schoolmessenger.School.Hostel.Adapter.MenuTimetable.DayWiseMessMenu.DayWiseMessMenu
 import com.vs.schoolmessenger.School.Hostel.Adapter.MenuTimetable.MessTiming
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
 import com.vs.schoolmessenger.School.Hostel.Model.MessTimeTable.MessDayWiseMenu.DayMenuData
@@ -23,7 +24,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MesstimeTableBinding
 
-class MessTimeTableFragment : Fragment() {
+class MessTimeTableFragment : Fragment(),View.OnClickListener {
     private var _binding: MesstimeTableBinding? = null
     private val binding get() = _binding!!
     private var isAccessToken: String? = null
@@ -40,6 +41,7 @@ class MessTimeTableFragment : Fragment() {
     ): View {
 
         _binding = MesstimeTableBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -210,6 +212,16 @@ class MessTimeTableFragment : Fragment() {
         )
 
         return list
+    }
+
+    override fun onClick(v: View?) {
+
+        when (v?.id) {
+
+            R.id.imgClose -> {
+                (parentFragment as? BottomSheet)?.closeSheet()
+            }
+        }
     }
 
     

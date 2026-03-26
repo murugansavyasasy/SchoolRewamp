@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistoryAdapter
 import com.vs.schoolmessenger.School.Hostel.Adapter.AttendanceHistory.AttendanceHistorySessionWiseAdapter
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getAttendanceHistoryData
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getRoomData
 import com.vs.schoolmessenger.Utils.Constant
@@ -45,6 +46,7 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
     ): View {
 
         _binding = HostelAttendanceHistoryBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -175,8 +177,8 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.imgClose -> {
+                (parentFragment as? BottomSheet)?.closeSheet()
             }
-
             R.id.rytStart -> {
 
                 selectedDateField = 1

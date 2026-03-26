@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.RoomAttendance.RoomAttendanceAdapter
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Listner.RoomAttendanceListener
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.SessionData
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
@@ -33,7 +34,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateListener,
-    RoomAttendanceListener {
+    RoomAttendanceListener,View.OnClickListener {
 
     private var _binding: RoomAttendanceBinding? = null
     private val binding get() = _binding!!
@@ -61,6 +62,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     ): View {
 
         _binding = RoomAttendanceBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -432,6 +434,16 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
             } else {
                 resultCallback(false) // user cancelled
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+
+        when (v?.id) {
+
+            R.id.imgClose -> {
+                (parentFragment as? BottomSheet)?.closeSheet()
             }
         }
     }

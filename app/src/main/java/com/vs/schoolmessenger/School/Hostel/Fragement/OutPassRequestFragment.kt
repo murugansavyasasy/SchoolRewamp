@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdminRequest
 import com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest.StatusWiseOutpassRequest
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Listner.OutpassRequestClickListner
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
@@ -27,7 +28,7 @@ import com.vs.schoolmessenger.databinding.OutpassRequestFragmentBinding
 import java.util.Calendar
 
 
-class OutPassRequestFragment : Fragment(), OutpassRequestClickListner{
+class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnClickListener{
 
 
     private var isAccessToken: String? = null
@@ -52,6 +53,7 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner{
     ): View {
 
         _binding = OutpassRequestFragmentBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -196,6 +198,15 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner{
                 appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
             } else {
                 resultCallback(false) // user cancelled
+            }
+        }
+    }
+    override fun onClick(v: View?) {
+
+        when (v?.id) {
+
+            R.id.imgClose -> {
+                (parentFragment as? BottomSheet)?.closeSheet()
             }
         }
     }

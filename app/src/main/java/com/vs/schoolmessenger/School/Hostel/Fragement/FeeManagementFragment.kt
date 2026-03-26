@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.FeeManagement.FeeManagementAdapter
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Model.FeeManagement.FeeManagementData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -36,6 +37,7 @@ class FeeManagementFragment : Fragment(), View.OnClickListener {
     ): View {
 
         _binding = FeeManagementBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -310,6 +312,7 @@ class FeeManagementFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.imgClose -> {
+                (parentFragment as? BottomSheet)?.closeSheet()
             }
         }
     }

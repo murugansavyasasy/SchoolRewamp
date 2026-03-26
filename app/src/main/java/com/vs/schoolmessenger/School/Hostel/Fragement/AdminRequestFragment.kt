@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Adapter.AdminRequests.StatusWiseAdminRequest
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.AdminRequestWiseData
 import com.vs.schoolmessenger.School.Hostel.Model.AdminRequest.StatusWiseAdminRequestData
 import com.vs.schoolmessenger.Utils.Constant
@@ -36,6 +37,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
     ): View {
 
         _binding = AdminRequestsBinding.inflate(inflater, container, false)
+        _binding?.imgClose?.setOnClickListener(this)
         return binding.root
     }
 
@@ -214,6 +216,7 @@ class AdminRequestFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.imgClose -> {
+                    (parentFragment as? BottomSheet)?.closeSheet()
             }
 
             R.id.lblCancel->{
