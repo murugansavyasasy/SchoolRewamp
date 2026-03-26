@@ -25,6 +25,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
+import com.vs.schoolmessenger.Parent.Hostel.Model.applyOutpassResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -101,6 +102,7 @@ class ParentServices {
     var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
     var getmysubmissionedit: MutableLiveData<MySubmissionEditResponse?>
     var ismysubmissiondelete: MutableLiveData<MySubmissionDeleteResponse?>
+    var isApplyHostelOutpass: MutableLiveData<applyOutpassResponse?>
 
     init {
         client_auth = RestClient()
@@ -149,6 +151,7 @@ class ParentServices {
         ispresubmission = MutableLiveData()
         getmysubmissionedit = MutableLiveData()
         ismysubmissiondelete = MutableLiveData()
+        isApplyHostelOutpass = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1779,4 +1782,41 @@ class ParentServices {
 
     val ismysubmissiondeleteLiveData: LiveData<MySubmissionDeleteResponse?>
         get() = ismysubmissiondelete
+
+
+    fun isApplyHostelOutpass(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+        RestClient.apiInterfaces.applyHostelOutpass(isToken, jsonObject)
+            ?.enqueue(object : Callback<applyOutpassResponse?> {
+                override fun onResponse(
+                    call: Call<applyOutpassResponse?>,
+                    response: Response<applyOutpassResponse?>
+                ) {
+                    Log.d(
+                        "applyOutpassResponse",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isApplyHostelOutpass.postValue(response.body())
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<applyOutpassResponse?>, t: Throwable
+                ) {
+                    isApplyHostelOutpass.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isapplyHostelOutpassLiveData: LiveData<applyOutpassResponse?>
+        get() = isApplyHostelOutpass
+
+
+
 }

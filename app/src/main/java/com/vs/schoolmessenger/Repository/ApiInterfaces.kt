@@ -63,6 +63,7 @@ import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
+import com.vs.schoolmessenger.Parent.Hostel.Model.applyOutpassResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -1466,6 +1467,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.year_id ) year_id : Int?,
         @Query(APIKeyNames.month_id ) month_id   : Int?,
     ): Call<getParentHostelDashboard?>
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.applyHostelPass)
+    fun applyHostelOutpass(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<applyOutpassResponse?>
 
 
 }

@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
+import com.vs.schoolmessenger.Parent.Hostel.Model.applyOutpassResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -470,6 +471,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var schoolHostelOutpassUpdateStatus: LiveData<schoolHostelOutpassUpdateStatus?>? = null
     var parentHotelDetails: LiveData<getParentHostelDetails?>? = null
     var parentHotelDashBoard: LiveData<getParentHostelDashboard?>? = null
+    var applyHostelOutpass: LiveData<applyOutpassResponse?>? = null
 
 
 
@@ -671,6 +673,7 @@ class App(application: Application) : AndroidViewModel(application) {
         schoolHostelOutpassUpdateStatus = apiSchoolRepositoriesTwo.isSchoolHostelOutpassUpdateStatusLiveData
         parentHotelDetails = apiSchoolRepositoriesTwo.isParentHotelDetailsLiveData
         parentHotelDashBoard = apiSchoolRepositoriesTwo.isParentHotelDashBoardLiveData
+        applyHostelOutpass = apiParentRepositories.isapplyHostelOutpassLiveData
 
     }
 
@@ -2163,6 +2166,17 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isGetParentHostelDashboard(isToken,hostel_id,year_id,month_id,activity)
     }
+
+
+    fun applyHostelOutpass(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiParentRepositories.isApplyHostelOutpass(isToken, jsonObject,activity)
+    }
+
 
 
 }

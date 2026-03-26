@@ -108,6 +108,8 @@
     <color name="light_gray_2">#888888</color>
     <color name="light_gray_10">#e3e3e3</color>
     <color name="light_gray_11">#eaeaea</color>
+    <color name="light_gray_16">#f2f2f5</color>
+    <color name="light_blue_15">#bed8f9</color>
     <color name="gray_white">#f2f2f7</color>
     <color name="dark_brown_4">#84461b</color>
     <color name="mild_grey6">#656565</color>

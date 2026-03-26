@@ -1152,6 +1152,8 @@
     <string name="authorized_by">Authorized By</string>
     <string name="my_attendance">My Attendance</string>
     <string name="pending_hostel_fees">Pending Hostel Fees</string>
+    <string name="request_details">Request Details</string>
+    <string name="enter_reason_2">Enter reason...</string>
 
 
 </resources>

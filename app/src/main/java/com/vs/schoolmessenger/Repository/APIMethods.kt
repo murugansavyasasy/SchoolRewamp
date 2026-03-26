@@ -240,8 +240,7 @@ object APIMethods {
     const val schoolHostelOutpassUpdateStatus = "stud-attd/api/hostel-attendance/update-status"
     const val parentHostelDashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
 
-
-
+    const val applyHostelPass = "stud-attd/api/hostel-attendance/apply-outpass"
 
 }
 
