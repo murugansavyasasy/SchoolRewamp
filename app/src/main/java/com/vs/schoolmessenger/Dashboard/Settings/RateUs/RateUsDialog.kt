@@ -234,6 +234,7 @@ class RateUsDialog(
                     binding.rateUs.visibility = View.GONE
                     binding.btnsubmit.visibility= View.GONE
                     binding.rateusSuccess.visibility = View.VISIBLE
+                    binding.btnsubmit.visibility= View.GONE
 
                 } else {
                     dismiss()

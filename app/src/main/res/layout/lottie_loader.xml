@@ -16,12 +16,15 @@
         app:cardElevation="@dimen/eight">
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loaderAnimation"
             android:layout_width="@dimen/one_fifty"
             android:layout_height="@dimen/one_fifty"
             android:layout_gravity="center"
             android:visibility="visible"
-            app:lottie_autoPlay="true"
+            android:hardwareAccelerated="true"
+            app:lottie_autoPlay="false"
             app:lottie_loop="true"
+            app:lottie_cacheComposition="true"
             app:lottie_rawRes="@raw/loader" />
     </androidx.cardview.widget.CardView>
 

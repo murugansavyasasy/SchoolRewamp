@@ -79,10 +79,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.ActivitySplashBinding
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
@@ -99,6 +97,10 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     private lateinit var txtEmpowering: View
     private lateinit var txtSchoolCount: View
     private lateinit var txtConnecting: View
+
+    private var isPermissionDialogShown = false
+
+    private var isUpdateDialogShown = false
 
     private val confettiColors = listOf(
         Color.parseColor("#FF6B9D"), Color.parseColor("#4ECDC4"), Color.parseColor("#FFD93D"),
@@ -167,7 +169,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         binding.bigCard.alpha = 0f
         llBottomText.alpha = 0f
         underline.alpha = 0f
-        startVideoStyleAnimation()
+        binding.root.post {
+            startVideoStyleAnimation()
+        }
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
@@ -175,50 +179,58 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
         connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        // Define the callback
+
         networkCallback = object : ConnectivityManager.NetworkCallback() {
+
             override fun onAvailable(network: Network) {
                 runOnUiThread {
+
                     if (noInternetalertDialog != null && noInternetalertDialog!!.isShowing) {
                         noInternetalertDialog!!.dismiss()
                     }
-                    Log.d("goToNext", "goToNext1")
+
+                    Log.d("Network", "Internet available")
+
+//                    if (!isPermissionDialogShown) {
+//                        goToNext()
+//                    }
+
+                    val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+                    Log.d("fromNotification", fromNotification.toString())
+
+                    if (fromNotification) {
+                        handleNotificationIntent(intent)
+                    } else {
+                        askNotificationPermission()
+                    }
                 }
             }
 
             override fun onLost(network: Network) {
                 runOnUiThread {
+                    isNoInterNet()
                 }
             }
         }
 
-        notificationPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                Log.d("goToNext", "goToNext2")
+        notificationPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+
+                if (!isPermissionDialogShown) return@registerForActivityResult
+
+                isPermissionDialogShown = false
+
+                if (isGranted) {
+                    Log.d("PermissionResult", "User clicked ALLOW")
+                } else {
+                    Log.d("PermissionResult", "User clicked DENY")
+                }
 
                 goToNext()
-                Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
-            } else {
-                Log.d("goToNext", "goToNext3")
-
-                goToNext()
-                Log.d(
-                    "PermissionResult",
-                    "❌ User clicked DENY or DISMISSED the notification permission dialog"
-                )
             }
-        }
 
-        val fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-        Log.d("fromNotification", fromNotification.toString())
 
-        if (fromNotification) {
-            handleNotificationIntent(intent)
-        } else {
-            askNotificationPermission()
-        }
+
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
         val appSignatureHelper = AppSignatureHelper(this)
@@ -260,6 +272,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                             val intent = Intent(this@Splash, OTP::class.java)
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
+                            finish()
                         } else {
                             SharedPreference.setLoggedIn(this, true)
                             SharedPreference.putMobileNumberPassWord(
@@ -270,6 +283,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Splash, PrioritySelection::class.java)
                                 startActivity(intent)
+                                finish()
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
 
@@ -277,6 +291,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                                     val intent =
                                         Intent(this@Splash, PrioritySelection::class.java)
                                     startActivity(intent)
+                                    finish()
                                 } else {
                                     val intent = Intent(
                                         this@Splash,
@@ -287,6 +302,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                                         Constant.user_data!![0].user_details.staff_details[0]
                                     )
                                     startActivity(intent)
+                                    finish()
                                 }
 
                             } else if (Constant.user_data!![0].user_details.is_parent) {
@@ -294,6 +310,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@Splash, PrioritySelection::class.java)
                                     startActivity(intent)
+                                    finish()
                                 } else {
 
                                     val intent = Intent(
@@ -305,6 +322,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                                         Constant.user_data!![0].user_details.child_details[0]
                                     )
                                     startActivity(intent)
+                                    finish()
                                 }
                             }
                         }
@@ -313,16 +331,19 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                         Constant.pageType = Constant.SplashScreen
                         Constant.isPasswordCreation = true
                         startActivity(intent)
+                        finish()
                     }
                 } else {
                     val intent = Intent(this@Splash, Login::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
 
         authViewModel!!.isVersionCheck?.observe(this) { response ->
             if (response != null) {
+                Constant.hideLoading(this@Splash)
                 val status = response.status
                 response.message
                 if (status) {
@@ -332,10 +353,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     SharedPreference.putCountryId(this, Constant.country_details!!.id)
                     SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                     SharedPreference.putReportingUrl(this, Constant.country_details!!.reporting_url)
-
                     val isRateUs = response.data[0].is_rate_as
                     val isMobileNumber = SharedPreference.getMobileNumber(this)
-
+                    Log.d("isRateUs",isRateUs.toString())
                     if (isRateUs && isMobileNumber!!.isNotEmpty()) {
                         val dialog = RateUsDialog(
                             fromScreen = Constant.SplashScreen__,
@@ -371,19 +391,34 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun playBubbleAnimation() {
+
         val container = binding.confettiContainer
+
         val centerX = container.width / 2f
         val centerY = container.height / 2f
-        val bubbleCount = 30
-        val bubbleDuration = 1000L
-        val bubbleDelay = 25L
+
+        val bubbleCount = 12
+        val bubbleDuration = 900L
+        val bubbleDelay = 40L
 
         repeat(bubbleCount) { i ->
+
             val isLastBubble = i == bubbleCount - 1
+
             container.postDelayed({
-                createBubble(container, centerX, centerY, bubbleDuration, isLastBubble)
+
+                createBubble(
+                    container,
+                    centerX,
+                    centerY,
+                    bubbleDuration,
+                    isLastBubble
+                )
+
             }, i * bubbleDelay)
+
         }
+
     }
 
     private fun createBubble(
@@ -418,7 +453,9 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 if (isLastBubble) {
                     startWaveAnimation()
                     container.visibility = View.GONE
-                    startAllSplashAnimations()
+                    binding.root.post {
+                        startAllSplashAnimations()
+                    }
 
                 }
             }
@@ -1064,7 +1101,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 (menu_id == Constant.M_MESSAGES_FROM_MANAGEMENT && receiverType == Constant.Student__) -> {
                     val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
                     SharedPreference.putChildDetails(this, matchedChild!!)
-                    
+
                     val detailIntent = Intent(this, MessageFromManagement::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
@@ -1096,47 +1133,56 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun askNotificationPermission() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED
+
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
             ) {
-                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            } else {
-                Log.d("goToNext", "goToNext4")
 
                 goToNext()
+
+            } else {
+
+                isPermissionDialogShown = true
+                notificationPermissionLauncher.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+
             }
+
         } else {
-            Log.d("goToNext", "goToNext5")
 
             goToNext()
+
         }
     }
-
-
     private fun isInterNetChecking() {
         lifecycleScope.launch {
-            delay(4000) // 2-second delay
-            withContext(Dispatchers.Main) {
-                if (Constant.isInternetAvailable(this@Splash)) {
-                    val countryId = SharedPreference.getCountryId(this@Splash)
-                    Log.d("countryId", countryId.toString())
-                    if (countryId != 0) {
-                        isVersionCheck()
-                    } else {
-                        val isIntroductionSkip = SharedPreference.getIntroductionSkip(this@Splash)
-                        if (isIntroductionSkip!!) {
-                            startActivity(Intent(this@Splash, CountryScreen::class.java))
-                            finish()
-                        } else {
-                            startActivity(Intent(this@Splash, Introduction::class.java))
-                            finish()
-                        }
-                    }
+            delay(2500)
+            if (Constant.isInternetAvailable(this@Splash)) {
+
+                val countryId = SharedPreference.getCountryId(this@Splash)
+                if (countryId != 0) {
+                    isVersionCheck()
                 } else {
-                    Log.e("Network Error", "No Internet Connection")
-                    isNoInterNet()
+
+                    val isIntroductionSkip = SharedPreference.getIntroductionSkip(this@Splash)
+
+                    if (isIntroductionSkip) {
+                        startActivity(Intent(this@Splash, CountryScreen::class.java))
+                        finish()
+                    } else {
+                        startActivity(Intent(this@Splash, Introduction::class.java))
+                        finish()
+                    }
+
                 }
+
+            } else {
+                isNoInterNet()
             }
         }
     }
@@ -1154,6 +1200,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 } else {
                     val intent = Intent(this@Splash, Login::class.java)
                     startActivity(intent)
+                    finish()
                 }
             } else {
                 if (SharedPreference.isLoggedIn(this)) {
@@ -1161,6 +1208,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                 } else {
                     val intent = Intent(this@Splash, Login::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
         } else {
@@ -1168,9 +1216,11 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
             if (isLogout!!) {
                 val intent = Intent(this@Splash, Login::class.java)
                 startActivity(intent)
+                finish()
             } else {
                 val intent = Intent(this@Splash, MobileNumber::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }
@@ -1187,21 +1237,42 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun isValidateUser() {
-        Constant.showLoading(this@Splash)
-        val jsonObject = JsonObject()
-        val isSecureId = Constant.getAndroidSecureId(this@Splash)
-        val isMobileNumber = SharedPreference.getMobileNumber(this)
-        val isPassWord = SharedPreference.getPassWord(this)
-        jsonObject.addProperty(APIKeyNames.Req_mobile_number, isMobileNumber)
-        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
-        jsonObject.addProperty(APIKeyNames.Req_password, isPassWord)
-        Log.d("jsonObject", jsonObject.toString())
-        authViewModel!!.isValidateUser(jsonObject, this)
+
+        lifecycleScope.launch {
+
+            Constant.showLoading(this@Splash)
+
+            val jsonObject = JsonObject()
+
+            jsonObject.addProperty(APIKeyNames.Req_mobile_number,
+                SharedPreference.getMobileNumber(this@Splash))
+
+            jsonObject.addProperty(APIKeyNames.Req_device_type,
+                Constant.isDeviceType)
+
+            jsonObject.addProperty(APIKeyNames.Req_secure_id,
+                Constant.getAndroidSecureId(this@Splash))
+
+            jsonObject.addProperty(APIKeyNames.Req_password,
+                SharedPreference.getPassWord(this@Splash))
+
+            authViewModel!!.isValidateUser(jsonObject, this@Splash)
+
+        }
+
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        binding.dot1.animate().cancel()
+        binding.dot2.animate().cancel()
+        binding.dot3.animate().cancel()
+
+    }
 
     private fun isVersionCheck() {
+        Constant.showLoading(this@Splash)
         val isMobileNumber = SharedPreference.getMobileNumber(this)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
@@ -1219,24 +1290,37 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     private fun isShowUpdateAvailable(versionData: List<VersionData>) {
+
+        // Prevent dialog from showing again
+        if (isUpdateDialogShown) {
+            return
+        }
+
+        isUpdateDialogShown = true
+
         val dialogView = layoutInflater.inflate(R.layout.update_available_popup, null)
-        val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
-            .setCancelable(false) // Prevent dismissing by clicking outside
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
 
         val alertDialog = dialogBuilder.create()
-        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent) // Remove default background
+
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         alertDialog.show()
 
         val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
         val btnLater = dialogView.findViewById<TextView>(R.id.btnLater)
         val lblTitle = dialogView.findViewById<TextView>(R.id.lblTitle)
         val lblContent = dialogView.findViewById<TextView>(R.id.lblContent)
-        lblTitle.setText(versionData[0].toaster_title)
 
-        if (!versionData[0].new_version_updates.equals("")) {
+        lblTitle.text = versionData[0].toaster_title
+
+        if (!versionData[0].new_version_updates.isNullOrEmpty()) {
             val list = versionData[0].new_version_updates.split("~")
             val finalText = list.joinToString("\n") { "• $it" }
-            lblContent.setText(finalText)
+            lblContent.text = finalText
         }
 
         if (versionData[0].force_update) {
@@ -1248,15 +1332,15 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         }
 
         btnUpdateButton.setOnClickListener {
-            alertDialog.dismiss() // Close popup
-            //startInAppUpdate()
+            isUpdateDialogShown=false
+            alertDialog.dismiss()
             openPlayStore(versionData)
         }
 
         btnLater.setOnClickListener {
-            alertDialog.dismiss() // Close popup
+            isUpdateDialogShown=false
+            alertDialog.dismiss()
             autoLoginFlowCheck(isVersionData!!)
-
         }
     }
 
@@ -1328,13 +1412,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
     }
 
     fun goToNext() {
-//        if (isDeveloperModeEnabled(this)) {
-//            showSecurityAlert(this)
-//        } else {
-        isInterNetChecking()
-        // }
+
+        if (!isFinishing) {
+            isInterNetChecking()
+        }
 
     }
+
 
 
     fun isNoInterNet() {

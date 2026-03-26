@@ -84,7 +84,13 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     }
 
     private fun loadCountry(countryList: List<Country>) {
+        Constant.hideLoading(this)
         val updatedList = countryList.toMutableList()
+        if (updatedList.isNotEmpty()){
+            binding.rytSearch.visibility= View.VISIBLE
+        }else{
+            binding.rytSearch.visibility= View.GONE
+        }
         updatedList.add(3, Country(0, "", 0, 0, "", "", "", ""))
         mAdapter = CountryListAdapter(this, updatedList, this) { selectedCountry ->
             isCountrySelected = true
@@ -97,6 +103,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     }
 
     private fun isCountry() {
+        Constant.showLoading(this)
         authViewModel!!.isCountryList()
     }
 
