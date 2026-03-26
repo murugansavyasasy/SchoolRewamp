@@ -137,11 +137,13 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
 
 
     private fun isLoadOutpassRequest(newData: List<OutpassRequestData>) {
+        ShowData()
         currentFilteredList=newData
         binding.rcHostelOutpassRequest.visibility = View.VISIBLE
         nAdapter = OutpassRequestList(
             newData,this, Constant.isShimmerViewDisable
         )
+        binding.rcHostelOutpassRequest.layoutManager = LinearLayoutManager(this)
         binding.rcHostelOutpassRequest.adapter = nAdapter
     }
 

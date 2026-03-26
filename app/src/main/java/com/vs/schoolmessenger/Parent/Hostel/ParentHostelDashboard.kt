@@ -40,7 +40,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     private var appViewModel: App? = null
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
-    var outpassRequestList :List<OutpassRequestData>?=emptyList()
+    var outpassRequestList: List<OutpassRequestData> = emptyList()
     lateinit var oAdapter: HostelInfoAdapter
 
     private var currentYear: Int = 0
