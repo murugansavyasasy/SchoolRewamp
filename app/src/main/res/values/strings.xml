@@ -1150,6 +1150,7 @@
     <string name="valid_from">Valid From</string>
     <string name="approved_active">Approved &amp; Active</string>
     <string name="authorized_by">Authorized By</string>
+    <string name="my_attendance">My Attendance</string>
 
 
 </resources>

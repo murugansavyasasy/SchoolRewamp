@@ -61,7 +61,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/eight"
-                android:text="@string/Reports"
+                android:text="@string/my_attendance"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
