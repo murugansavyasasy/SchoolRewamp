@@ -705,7 +705,7 @@
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
-                app:layout_constraintBottom_toTopOf="@+id/cardHostelDetails"
+                app:layout_constraintBottom_toTopOf="@+id/cardFeeDetails"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails"
@@ -846,6 +846,117 @@
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardFeeDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:elevation="@dimen/eight"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/eight"
+                app:layout_constraintBottom_toTopOf="@+id/cardHostelDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        android:id="@+id/lblPendingHotelFeesInformation"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:drawableStart="@drawable/ic_home"
+                        android:drawablePadding="@dimen/five"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:text="@string/pending_hostel_fees"
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                    <View
+                        android:id="@+id/view5"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/light_gray_11"
+                        app:layout_constraintBottom_toTopOf="@+id/rcPendingFeeCollections"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblPendingHotelFeesInformation">
+
+                    </View>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcPendingFeeCollections"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/ten"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        app:layout_constraintBottom_toTopOf="@+id/imgPendingFeeCollectionsNoDataFound"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+                    <ImageView
+                        android:id="@+id/imgPendingFeeCollectionsNoDataFound"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/no_data_found"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/lblPendingFeeCollectionsErrorMessage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rcHostelInformation"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblPendingFeeCollectionsErrorMessage"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/twenty"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="@string/no_data_found"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imgPendingFeeCollectionsNoDataFound">
+
+                    </TextView>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHostelDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -856,7 +967,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/imgEntireParenthHostelDashboardNoDataFound"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
+                app:layout_constraintTop_toBottomOf="@+id/cardFeeDetails"
                 app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

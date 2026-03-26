@@ -1151,6 +1151,7 @@
     <string name="approved_active">Approved &amp; Active</string>
     <string name="authorized_by">Authorized By</string>
     <string name="my_attendance">My Attendance</string>
+    <string name="pending_hostel_fees">Pending Hostel Fees</string>
 
 
 </resources>

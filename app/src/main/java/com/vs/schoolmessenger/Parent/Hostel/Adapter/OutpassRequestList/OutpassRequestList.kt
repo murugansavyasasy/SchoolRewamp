@@ -82,8 +82,8 @@ class OutpassRequestList(
 
 
             lblReason.text = data.reason
-            lblRequestOn.text = data.request_time
-            lblLeaveDurationDays.text = "${Constant.convertToReadableDateformat(from)} - ${Constant.convertToReadableDateformat(to)}"
+            lblRequestOn.text ="${context.getString(R.string.requested_on)} : ${Constant.convertDateFormatType2(data.request_time)}"
+            lblLeaveDurationDays.text = "${Constant.convertDateFormatType2(from)} - ${Constant.convertDateFormatType2(to)}"
 
             if (data.status == Constant.rejected.uppercase()) {
 
