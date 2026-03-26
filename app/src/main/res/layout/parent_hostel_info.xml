@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/hostel_id"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/hostel_name"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/hostel_type"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/no_of_floors"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/no_of_rooms"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/warden_type"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/max_capacity"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/warden_name"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/institute_name"
+        layout="@layout/item_hostel_info" />
+
+    <include
+        android:id="@+id/institute_address"
+        layout="@layout/item_hostel_info" />
+
+
+</LinearLayout>

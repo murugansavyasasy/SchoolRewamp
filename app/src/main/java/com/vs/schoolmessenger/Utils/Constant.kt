@@ -2093,6 +2093,15 @@ object Constant {
         }
     }
 
+    fun getOnlyTime(dateTime: String): String {
+        return try {
+            val parts = dateTime.trim().split(" ")
+            "${parts[1]} ${parts[2]}"
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
     fun convertDateFormatType3(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)

@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelInformation.HostelInfo
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.getHostelDetailedAttendance
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.GatePass
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
 import com.vs.schoolmessenger.R
@@ -24,6 +25,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 
 import com.vs.schoolmessenger.databinding.ParentHostelDashboardBinding
+import java.util.Calendar
 
 
 class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
@@ -38,6 +40,9 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
     lateinit var oAdapter: HostelInfoAdapter
+
+    private var currentYear: Int = 0
+    private var currentMonth: Int = 0
 
 
 
@@ -62,6 +67,10 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+        val calendar = Calendar.getInstance()
+        currentYear = calendar.get(Calendar.YEAR)
+        currentMonth = calendar.get(Calendar.MONTH) + 1
+
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -70,15 +79,13 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
         isGetParentHostelDetails()
 
-        setSingleLineDashes(binding.txtDashLine)
-
 
 
         appViewModel?.parentHotelDetails?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
-                        isGetAttendance()
+                        isGetHostelDashBoardDetails(response.data.firstOrNull()?.hostel_id?:"")
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
 
@@ -143,17 +150,19 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                             isLoadHotelInformation(hostel_info)
                         }
                         else{
-
+                            showHostelInfoNoData(getString(R.string.no_data_found))
                         }
 
                         if (gate_pass.isNotEmpty()){
-                            binding.cardGatePass.visibility=View.GONE
+                            setSingleLineDashes(binding.txtDashLine)
+                            isLoadGatePass(gate_pass)
                         }
                         else{
                             binding.cardGatePass.visibility=View.GONE
                         }
 
-                    } else {
+                    }
+                    else {
 
                     }
 
@@ -179,6 +188,20 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.rcDetailedAttendanceRecords.visibility = View.VISIBLE
         binding.lblErrorMessage.visibility = View.GONE
         binding.imgNoDataFound.visibility = View.GONE
+    }
+
+
+    private fun showHostelInfoNoData(message: String) {
+        binding.rcHostelInformation.visibility = View.GONE
+        binding.lblErrorMessage.visibility = View.VISIBLE
+        binding.lblHostelInfoErrorMessage.visibility = View.VISIBLE
+        binding.lblErrorMessage.text = message
+    }
+
+    private fun showHostelInfo(){
+        binding.rcHostelInformation.visibility = View.VISIBLE
+        binding.imgHostelInfoNoDataFound.visibility = View.GONE
+        binding.lblHostelInfoErrorMessage.visibility = View.GONE
     }
 
     private fun isLoadOutpassRequest(newData: List<OutpassRequestData>) {
@@ -222,9 +245,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     }
 
 
-
-
-
     private fun isGetParentHostelDetails() {
         Constant.showLoading(this)
         appViewModel!!.isGetParentHostelDetails(isAccessToken!!, this)
@@ -234,10 +254,51 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         isGetOutpassRequest()
     }
 
+
+    private fun isGetHostelDashBoardDetails(hostel_id : String,) {
+        Constant.showLoading(this)
+        appViewModel!!.isGetParentHostelDashboard(isAccessToken!!,hostel_id.toIntOrNull()?:0,currentYear,currentMonth,this)
+    }
+
     private fun isLoadHotelInformation(Data: List<HostelInfo>)
     {
-        oAdapter = HostelInfoAdapter(Data, this, Constant.isShimmerViewDisable)
-        binding.rcHostelInformation.adapter = oAdapter
+        if (Data.size>0){
+            showHostelInfo()
+            oAdapter = HostelInfoAdapter(Data, this, Constant.isShimmerViewDisable)
+            binding.rcHostelInformation.adapter = oAdapter
+        }
+        else{
+            showHostelInfoNoData(getString(R.string.no_data_found))
+        }
+    }
+
+
+    private fun isLoadGatePass(Data: List<GatePass>)
+    {
+        if (Data.size>0){
+
+            val data=Data.firstOrNull()
+            binding.cardGatePass.visibility=View.VISIBLE
+            binding.lblReason.text=data?.reason?:""
+            binding.tvRoomId.text=data?.room_no?:""
+            binding.lblPersonName.text=data?.profile?:""
+            binding.lblSessionNo.text= Constant.getInitials(data?.profile?:"")
+            binding.lblStudentRollNumber.text= data?.admission_no?:""
+
+            val input = data?.fromdate_todate?:" - "
+            val parts = input.split(" - ")
+            val from = parts.getOrNull(0)?.trim() ?: ""
+            val to = parts.getOrNull(1)?.trim() ?: ""
+
+            binding.tvExitTime.text= Constant.getOnlyTime(data?.request_time?:"")
+            binding.tvValidFrom.text= Constant.convertDateFormatType2(from)
+            binding.tvValidTo.text= Constant.convertDateFormatType2(to)
+            binding.tvBlockName.text=data?.floor_no?:""
+
+        }
+        else{
+            binding.cardGatePass.visibility=View.GONE
+        }
     }
 
     fun setSingleLineDashes(textView: TextView) {

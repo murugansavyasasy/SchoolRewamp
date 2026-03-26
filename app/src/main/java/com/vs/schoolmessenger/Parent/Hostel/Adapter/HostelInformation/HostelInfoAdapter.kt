@@ -58,10 +58,47 @@ class HostelInfoAdapter(
     }
 
     class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
-        private val lblKey: TextView = itemView.findViewById(R.id.lblKey)
-        private val lblValue: TextView = itemView.findViewById(R.id.lblValue)
+
 
         fun bind(info: HostelInfo) {
+
+            bindRow(itemView.findViewById(R.id.hostel_id),
+                "Hostel ID", info.hostel_id)
+
+            bindRow(itemView.findViewById(R.id.hostel_name),
+                "Hostel Name", info.hostel_name)
+
+            bindRow(itemView.findViewById(R.id.hostel_type),
+                "Hostel Type", info.hostel_type)
+
+            bindRow(itemView.findViewById(R.id.no_of_floors),
+                "No of Floors", info.no_of_floors.toString())
+
+            bindRow(itemView.findViewById(R.id.no_of_rooms),
+                "No of Rooms", info.no_of_rooms.toString())
+
+            bindRow(itemView.findViewById(R.id.warden_type),
+                "Warden Type", info.warden_type)
+
+            bindRow(itemView.findViewById(R.id.max_capacity),
+                "Max Capacity", info.max_capacity.toString())
+
+            bindRow(itemView.findViewById(R.id.warden_name),
+                "Warden Name", info.warden_name.joinToString(", "))
+
+            bindRow(itemView.findViewById(R.id.institute_name),
+                "Institute Name", info.institute_name)
+
+            bindRow(itemView.findViewById(R.id.institute_address),
+                "Institute Address", info.institute_address)
+        }
+
+        private fun bindRow(view: View, key: String, value: String) {
+            val lblKey = view.findViewById<TextView>(R.id.lblKey)
+            val lblValue = view.findViewById<TextView>(R.id.lblValue)
+
+            lblKey.text = key
+            lblValue.text = value
         }
     }
 

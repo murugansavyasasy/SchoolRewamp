@@ -1149,6 +1149,7 @@
     <string name="purpose_of_visit">Purpose of visit</string>
     <string name="valid_from">Valid From</string>
     <string name="approved_active">Approved &amp; Active</string>
+    <string name="authorized_by">Authorized By</string>
 
 
 </resources>
