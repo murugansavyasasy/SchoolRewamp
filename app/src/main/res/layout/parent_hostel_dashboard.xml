@@ -46,6 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/eight"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
                 app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
@@ -829,7 +830,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/twenty"
                         android:gravity="center"
-                        android:text="nod"
+                        android:text="@string/no_data_found"
+                        android:paddingBottom="@dimen/ten"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -851,7 +853,7 @@
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/imgEntireParenthHostelDashboardNoDataFound"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardMonthlyStats"
@@ -915,6 +917,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:src="@drawable/no_data_found"
                         android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/lblHostelInfoErrorMessage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/rcHostelInformation"></ImageView>
@@ -926,7 +929,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/twenty"
                         android:gravity="center"
-                        android:text="nod"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="@string/no_data_found"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -940,6 +944,35 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/imgEntireParenthHostelDashboardNoDataFound"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/no_data_found"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/lblEntireParenthHostelDashboardErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardHostelDetails"></ImageView>
+
+            <TextView
+                android:id="@+id/lblEntireParenthHostelDashboardErrorMessage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:gravity="center"
+                android:text="@string/no_data_found"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgEntireParenthHostelDashboardNoDataFound">
+
+            </TextView>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

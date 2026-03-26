@@ -82,38 +82,26 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
 
         appViewModel?.parentHotelDetails?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
                         isGetHostelDashBoardDetails(response.data.firstOrNull()?.hostel_id?:"")
-                        binding.imgNoDataFound.visibility = View.GONE
-                        binding.lblErrorMessage.visibility = View.GONE
-
                     }
                     else {
-                        binding.lblErrorMessage.visibility = View.VISIBLE
-                        binding.imgNoDataFound.visibility = View.VISIBLE
-                        binding.lblErrorMessage.text = getString(R.string.no_data_found)
+                        showEntireParentHostelDashBoardNoData(getString(R.string.no_data_found))
                     }
-
                 } else {
-
-                    binding.lblErrorMessage.visibility = View.VISIBLE
-                    binding.imgNoDataFound.visibility = View.VISIBLE
-                    binding.lblErrorMessage.text = response.message
+                    showEntireParentHostelDashBoardNoData(response.message)
                 }
-
-            } else {
-
-                binding.lblErrorMessage.visibility = View.VISIBLE
-                binding.imgNoDataFound.visibility = View.VISIBLE
-                binding.lblErrorMessage.text =
-                    getString(R.string.Something_went_wrong_Please_try_again)
+            }
+            else {
+                showEntireParentHostelDashBoardNoData(getString(R.string.something_went_wrong_please_try_again_later))
             }
         }
 
         appViewModel?.parentHotelDashBoard?.observe(this) { response ->
-
+            Constant.hideLoading(this)
             if (response != null) {
 
                 if (response.status) {
@@ -123,8 +111,10 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                     val hostel_info=data?.hostel_info?:emptyList()
                     val gate_pass=data?.gate_pass?:emptyList()
 
-                    if (data != null)
-                    {
+                    if (data != null) {
+                        showEntireParentHostelDashBoardInfo()// here initially  i made all visible check and gone below
+
+                        //Entire Attendance
                         if (attendance_details_data.isNotEmpty()){
                             //  Setup Header
                             setupHeader(attendance_details_data.firstOrNull()?.sessions?:emptyList())
@@ -136,9 +126,9 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                             showEntireAttendanceNoData(getString(R.string.no_data_found))
                         }
 
+                            //Outpass Check
                         if (out_pass_requests.isNotEmpty()){
                             isLoadOutpassRequest(out_pass_requests)
-
                         }
                         else{
                             binding.lblSeeMore.visibility=View.GONE
@@ -146,6 +136,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                             binding.frmOutpassDetails.visibility= View.GONE
                         }
 
+                        //Hostel check
                         if (hostel_info.isNotEmpty()){
                             isLoadHotelInformation(hostel_info)
                         }
@@ -153,6 +144,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                             showHostelInfoNoData(getString(R.string.no_data_found))
                         }
 
+                        //Gate Pass Check
                         if (gate_pass.isNotEmpty()){
                             setSingleLineDashes(binding.txtDashLine)
                             isLoadGatePass(gate_pass)
@@ -163,15 +155,16 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
                     }
                     else {
-
+                        showEntireParentHostelDashBoardNoData(getString(R.string.no_data_found))
                     }
 
-                } else {
-                    showEntireAttendanceNoData(response.message)
+                }
+                else {
+                    showEntireParentHostelDashBoardNoData(response.message)
                 }
 
             } else {
-                showEntireAttendanceNoData(getString(R.string.Something_went_wrong_Please_try_again))
+                showEntireParentHostelDashBoardNoData(getString(R.string.Something_went_wrong_Please_try_again))
             }
         }
 
@@ -179,13 +172,13 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
 
     private fun showEntireAttendanceNoData(message: String) {
-        binding.rcDetailedAttendanceRecords.visibility = View.GONE
+        binding.lnrEntireAcademicDetails.visibility = View.GONE
         binding.lblErrorMessage.visibility = View.VISIBLE
         binding.imgNoDataFound.visibility = View.VISIBLE
         binding.lblErrorMessage.text = message
     }
     private fun showEntireAttendanceDetails() {
-        binding.rcDetailedAttendanceRecords.visibility = View.VISIBLE
+        binding.lnrEntireAcademicDetails.visibility = View.VISIBLE
         binding.lblErrorMessage.visibility = View.GONE
         binding.imgNoDataFound.visibility = View.GONE
     }
@@ -193,15 +186,34 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
     private fun showHostelInfoNoData(message: String) {
         binding.rcHostelInformation.visibility = View.GONE
-        binding.lblErrorMessage.visibility = View.VISIBLE
+        binding.imgHostelInfoNoDataFound.visibility = View.VISIBLE
         binding.lblHostelInfoErrorMessage.visibility = View.VISIBLE
-        binding.lblErrorMessage.text = message
+        binding.lblHostelInfoErrorMessage.text = message
     }
 
     private fun showHostelInfo(){
         binding.rcHostelInformation.visibility = View.VISIBLE
         binding.imgHostelInfoNoDataFound.visibility = View.GONE
         binding.lblHostelInfoErrorMessage.visibility = View.GONE
+    }
+
+    private fun showEntireParentHostelDashBoardNoData(message: String) {
+        binding.cardHostelDetails.visibility = View.GONE
+        binding.cardMonthlyStats.visibility = View.GONE
+        binding.cardOutpassDetails.visibility = View.GONE
+        binding.cardGatePass.visibility = View.GONE
+        binding.imgEntireParenthHostelDashboardNoDataFound.visibility = View.VISIBLE
+        binding.lblEntireParenthHostelDashboardErrorMessage.visibility = View.VISIBLE
+        binding.lblEntireParenthHostelDashboardErrorMessage.text = message
+    }
+
+    private fun showEntireParentHostelDashBoardInfo(){
+        binding.cardHostelDetails.visibility = View.VISIBLE
+        binding.cardMonthlyStats.visibility = View.VISIBLE
+        binding.cardOutpassDetails.visibility = View.VISIBLE
+        binding.cardGatePass.visibility = View.VISIBLE
+        binding.imgEntireParenthHostelDashboardNoDataFound.visibility = View.GONE
+        binding.lblEntireParenthHostelDashboardErrorMessage.visibility = View.GONE
     }
 
     private fun isLoadOutpassRequest(newData: List<OutpassRequestData>) {
