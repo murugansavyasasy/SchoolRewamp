@@ -75,11 +75,17 @@ class OutpassRequestList(
             context: Context,
         ) {
 
-            lblReason.text = data.reason
-            lblRequestOn.text = data.reason
-            lblLeaveDurationDays.text = data.requestTime
+            val input = data?.fromdate_todate?:" - "
+            val parts = input.split(" - ")
+            val from = parts.getOrNull(0)?.trim() ?: ""
+            val to = parts.getOrNull(1)?.trim() ?: ""
 
-            if (data.status == Constant.rejected) {
+
+            lblReason.text = data.reason
+            lblRequestOn.text = data.request_time
+            lblLeaveDurationDays.text = "${Constant.convertToReadableDateformat(from)} - ${Constant.convertToReadableDateformat(to)}"
+
+            if (data.status == Constant.rejected.uppercase()) {
 
                 applyTintedBackground(
                     lblStatus,
@@ -91,7 +97,7 @@ class OutpassRequestList(
                 lblStatus.setTextColor(context.getColor(R.color.red))
 
             }
-            else if (data.status == Constant.approved) {
+            else if (data.status == Constant.approved.uppercase()) {
 
                 applyTintedBackground(
                     lblStatus,
@@ -101,12 +107,10 @@ class OutpassRequestList(
                 lblStatus.text=data.status
                 lblStatus.setTextColor(context.getColor(R.color.green))
 
-
-
             }
-            else if (data.status == Constant.waiting_for_approval) {
+            else if (data.status == Constant.pending.uppercase()) {
 
-                lblStatus.text=context.getString(R.string.pending)
+                lblStatus.text=data.status.uppercase()
                 lblStatus.setTextColor(context.getColor(R.color.dark_brown_3))
 
 
