@@ -49,6 +49,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -466,6 +468,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var hotelSchoolOutpassRequest: LiveData<getSchoolHostelOutpassRequest?>? = null
     var hotelSchoolAttendanceReport: LiveData<getSchoolHostelAttendanceReport?>? = null
     var schoolHostelOutpassUpdateStatus: LiveData<schoolHostelOutpassUpdateStatus?>? = null
+    var parentHotelDetails: LiveData<getParentHostelDetails?>? = null
+    var parentHotelDashBoard: LiveData<getParentHostelDashboard?>? = null
 
 
 
@@ -665,7 +669,8 @@ class App(application: Application) : AndroidViewModel(application) {
         hotelSchoolOutpassRequest = apiSchoolRepositoriesTwo.isHotelSchoolOutpassRequestLiveData
         hotelSchoolAttendanceReport = apiSchoolRepositoriesTwo.isHotelSchoolAttendanceReportLiveData
         schoolHostelOutpassUpdateStatus = apiSchoolRepositoriesTwo.isSchoolHostelOutpassUpdateStatusLiveData
-
+        parentHotelDetails = apiSchoolRepositoriesTwo.isParentHotelDetailsLiveData
+        parentHotelDashBoard = apiSchoolRepositoriesTwo.isParentHotelDashBoardLiveData
 
     }
 
@@ -2144,6 +2149,21 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.schoolHostelOutpassUpdateStatus(isToken, isSchoolHostelOutpassStatus,activity)
     }
+
+
+    fun isGetParentHostelDetails(isToken: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getParentHostelDetails(isToken, activity)
+    }
+
+
+    fun isGetParentHostelDashboard(isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isGetParentHostelDashboard(isToken,hostel_id,year_id,month_id,activity)
+    }
+
 
 }
 

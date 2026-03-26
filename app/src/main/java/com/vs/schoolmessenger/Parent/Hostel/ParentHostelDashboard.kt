@@ -5,24 +5,27 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelDetailedAttendance.HostelDetailedAttendanceAdpater
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelInformation.HostelInfoAdapter
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
-import com.vs.schoolmessenger.Parent.Hostel.Model.DetailedAttendanceRecords.DayAttendance
-import com.vs.schoolmessenger.Parent.Hostel.Model.DetailedAttendanceRecords.getHostelDetailedAttendance
-import com.vs.schoolmessenger.Parent.Hostel.Model.OutpassRequestList.OutpassRequestData
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.getHostelDetailedAttendance
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.GatePass
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Hostel.Model.HostelList.selctedHotelDetails
-import com.vs.schoolmessenger.School.Hostel.SchoolHostelDashboard
+import com.vs.schoolmessenger.School.Hostel.Adapter.HotelList.HostelListAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
 import com.vs.schoolmessenger.Utils.SharedPreference
 
 import com.vs.schoolmessenger.databinding.ParentHostelDashboardBinding
+import java.util.Calendar
 
 
 class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
@@ -37,6 +40,9 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
     lateinit var oAdapter: HostelInfoAdapter
+
+    private var currentYear: Int = 0
+    private var currentMonth: Int = 0
 
 
 
@@ -61,84 +67,174 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+        val calendar = Calendar.getInstance()
+        currentYear = calendar.get(Calendar.YEAR)
+        currentMonth = calendar.get(Calendar.MONTH) + 1
+
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSeeMore.setOnClickListener(this)
         binding.lblApplyNewOutpassRequest.setOnClickListener(this)
 
-        isGetOutpassRequest()
-
-//        appViewModel?.isLeaveRequest?.observe(this) { response ->
-//
-//            if (response != null) {
-//
-//                if (response.status) {
-//
-//                    if (response.data != null && response.data.days.isNotEmpty()) {
-//
-//                        binding.recyclerMain.visibility = View.VISIBLE
-//                        binding.lblErrorMessage.visibility = View.GONE
-//                        binding.imgNoDataFound.visibility = View.GONE
-//
-//                        //  Setup Header
-//                        setupHeader(response.data.sessions)
-//
-//                        //  Load Data
-//                        isLoadAttendance(response.data.days)
-//
-//                    } else {
-//                        showNoData(getString(R.string.no_data_found))
-//                    }
-//
-//                } else {
-//                    showNoData(response.message)
-//                }
-//
-//            } else {
-//                showNoData(getString(R.string.Something_went_wrong_Please_try_again))
-//            }
-//        }
+        isGetParentHostelDetails()
 
 
-//        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-//        binding.toolbarLayout.lblStudentSection.text =
-//            isChildDetails.standard_name + " - " + isChildDetails.section_name
 
-        isGetAttendance()
-        isGetHotelInformation()
+        appViewModel?.parentHotelDetails?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    if (response.data.isNotEmpty()) {
+                        isGetHostelDashBoardDetails(response.data.firstOrNull()?.hostel_id?:"")
+                        binding.imgNoDataFound.visibility = View.GONE
+                        binding.lblErrorMessage.visibility = View.GONE
+
+                    }
+                    else {
+                        binding.lblErrorMessage.visibility = View.VISIBLE
+                        binding.imgNoDataFound.visibility = View.VISIBLE
+                        binding.lblErrorMessage.text = getString(R.string.no_data_found)
+                    }
+
+                } else {
+
+                    binding.lblErrorMessage.visibility = View.VISIBLE
+                    binding.imgNoDataFound.visibility = View.VISIBLE
+                    binding.lblErrorMessage.text = response.message
+                }
+
+            } else {
+
+                binding.lblErrorMessage.visibility = View.VISIBLE
+                binding.imgNoDataFound.visibility = View.VISIBLE
+                binding.lblErrorMessage.text =
+                    getString(R.string.Something_went_wrong_Please_try_again)
+            }
+        }
+
+        appViewModel?.parentHotelDashBoard?.observe(this) { response ->
+
+            if (response != null) {
+
+                if (response.status) {
+                    val data=response.data.getOrNull(0)
+                    val attendance_details_data=data?.attendance_details?:emptyList()
+                    val out_pass_requests=data?.out_pass_requests?:emptyList()
+                    val hostel_info=data?.hostel_info?:emptyList()
+                    val gate_pass=data?.gate_pass?:emptyList()
+
+                    if (data != null)
+                    {
+                        if (attendance_details_data.isNotEmpty()){
+                            //  Setup Header
+                            setupHeader(attendance_details_data.firstOrNull()?.sessions?:emptyList())
+                            //  Load Data
+                            isLoadAttendance(attendance_details_data.firstOrNull()?.days?:emptyList())
+                        }
+
+                        else{
+                            showEntireAttendanceNoData(getString(R.string.no_data_found))
+                        }
+
+                        if (out_pass_requests.isNotEmpty()){
+                            isLoadOutpassRequest(out_pass_requests)
+
+                        }
+                        else{
+                            binding.lblSeeMore.visibility=View.GONE
+                            binding.view0.visibility=View.GONE
+                            binding.frmOutpassDetails.visibility= View.GONE
+                        }
+
+                        if (hostel_info.isNotEmpty()){
+                            isLoadHotelInformation(hostel_info)
+                        }
+                        else{
+                            showHostelInfoNoData(getString(R.string.no_data_found))
+                        }
+
+                        if (gate_pass.isNotEmpty()){
+                            setSingleLineDashes(binding.txtDashLine)
+                            isLoadGatePass(gate_pass)
+                        }
+                        else{
+                            binding.cardGatePass.visibility=View.GONE
+                        }
+
+                    }
+                    else {
+
+                    }
+
+                } else {
+                    showEntireAttendanceNoData(response.message)
+                }
+
+            } else {
+                showEntireAttendanceNoData(getString(R.string.Something_went_wrong_Please_try_again))
+            }
+        }
 
     }
 
 
-//    private fun showNoData(message: String) {
-//        binding.rcDetailedAttendanceRecords.visibility = View.GONE
-//        binding.lblErrorMessage.visibility = View.VISIBLE
-//        binding.imgNoDataFound.visibility = View.VISIBLE
-//        binding.lblErrorMessage.text = message
-//    }
+    private fun showEntireAttendanceNoData(message: String) {
+        binding.rcDetailedAttendanceRecords.visibility = View.GONE
+        binding.lblErrorMessage.visibility = View.VISIBLE
+        binding.imgNoDataFound.visibility = View.VISIBLE
+        binding.lblErrorMessage.text = message
+    }
+    private fun showEntireAttendanceDetails() {
+        binding.rcDetailedAttendanceRecords.visibility = View.VISIBLE
+        binding.lblErrorMessage.visibility = View.GONE
+        binding.imgNoDataFound.visibility = View.GONE
+    }
+
+
+    private fun showHostelInfoNoData(message: String) {
+        binding.rcHostelInformation.visibility = View.GONE
+        binding.lblErrorMessage.visibility = View.VISIBLE
+        binding.lblHostelInfoErrorMessage.visibility = View.VISIBLE
+        binding.lblErrorMessage.text = message
+    }
+
+    private fun showHostelInfo(){
+        binding.rcHostelInformation.visibility = View.VISIBLE
+        binding.imgHostelInfoNoDataFound.visibility = View.GONE
+        binding.lblHostelInfoErrorMessage.visibility = View.GONE
+    }
 
     private fun isLoadOutpassRequest(newData: List<OutpassRequestData>) {
+        if (newData.size>0){
 
-        if (newData.size > 3) {
-            binding.lblSeeMore.visibility = View.VISIBLE
-        } else {
-            binding.lblSeeMore.visibility = View.GONE
+            binding.rcOutpassRequest.visibility = View.VISIBLE
+            binding.view0.visibility = View.VISIBLE
+            binding.frmOutpassDetails.visibility= View.VISIBLE
+
+            if (newData.size > 3) {
+                binding.lblSeeMore.visibility = View.VISIBLE
+            } else {
+                binding.lblSeeMore.visibility = View.GONE
+            }
+
+            // Show only first 3 items if size > 3
+            val displayList = if (newData.size > 3) { newData.take(3) }
+            else { newData }
+
+
+            nAdapter = OutpassRequestList(
+                displayList,
+                this,
+                Constant.isShimmerViewDisable
+            )
+
+            binding.rcOutpassRequest.adapter = nAdapter
         }
-
-        // Show only first 3 items if size > 3
-        val displayList = if (newData.size > 3) { newData.take(3) }
-        else { newData }
-
-        binding.rcOutpassRequest.visibility = View.VISIBLE
-
-        nAdapter = OutpassRequestList(
-            displayList,
-            this,
-            Constant.isShimmerViewDisable
-        )
-
-        binding.rcOutpassRequest.adapter = nAdapter
+        else{
+            binding.lblSeeMore.visibility=View.GONE
+            binding.view0.visibility=View.GONE
+            binding.frmOutpassDetails.visibility= View.GONE
+        }
     }
 
     private fun isGetOutpassRequest() {
@@ -146,27 +242,82 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.rcOutpassRequest.layoutManager = LinearLayoutManager(this)
         binding.rcOutpassRequest.isNestedScrollingEnabled = true
         binding.rcOutpassRequest.adapter = nAdapter
-        val dummyData = getDummyOutpassRequestListData()
-        isLoadOutpassRequest(dummyData)
     }
 
 
+    private fun isGetParentHostelDetails() {
+        Constant.showLoading(this)
+        appViewModel!!.isGetParentHostelDetails(isAccessToken!!, this)
 
-
-    private fun getDummyHostelInfoList(): List<String> {
-        return listOf(
-            "Warden Name: Saranraj",
-            "Address: 3/18 Kaver Street",
-            "Contact: 9876543210",
-            "Capacity: 50 Beds",
-            "Mess Timing: 07:00 AM - 09:00 PM"
-        )
+        isGetHotelInformation()
+        isGetAttendance()
+        isGetOutpassRequest()
     }
 
-    private fun isLoadHotelInformation(Data: List<String>)
+
+    private fun isGetHostelDashBoardDetails(hostel_id : String,) {
+        Constant.showLoading(this)
+        appViewModel!!.isGetParentHostelDashboard(isAccessToken!!,hostel_id.toIntOrNull()?:0,currentYear,currentMonth,this)
+    }
+
+    private fun isLoadHotelInformation(Data: List<HostelInfo>)
     {
-        oAdapter = HostelInfoAdapter(Data, this, Constant.isShimmerViewDisable)
-        binding.rcHostelInformation.adapter = oAdapter
+        if (Data.size>0){
+            showHostelInfo()
+            oAdapter = HostelInfoAdapter(Data, this, Constant.isShimmerViewDisable)
+            binding.rcHostelInformation.adapter = oAdapter
+        }
+        else{
+            showHostelInfoNoData(getString(R.string.no_data_found))
+        }
+    }
+
+
+    private fun isLoadGatePass(Data: List<GatePass>)
+    {
+        if (Data.size>0){
+
+            val data=Data.firstOrNull()
+            binding.cardGatePass.visibility=View.VISIBLE
+            binding.lblReason.text=data?.reason?:""
+            binding.tvRoomId.text=data?.room_no?:""
+            binding.lblPersonName.text=data?.profile?:""
+            binding.lblSessionNo.text= Constant.getInitials(data?.profile?:"")
+            binding.lblStudentRollNumber.text= data?.admission_no?:""
+
+            val input = data?.fromdate_todate?:" - "
+            val parts = input.split(" - ")
+            val from = parts.getOrNull(0)?.trim() ?: ""
+            val to = parts.getOrNull(1)?.trim() ?: ""
+
+            binding.tvExitTime.text= Constant.getOnlyTime(data?.request_time?:"")
+            binding.tvValidFrom.text= Constant.convertDateFormatType2(from)
+            binding.tvValidTo.text= Constant.convertDateFormatType2(to)
+            binding.tvBlockName.text=data?.floor_no?:""
+
+        }
+        else{
+            binding.cardGatePass.visibility=View.GONE
+        }
+    }
+
+    fun setSingleLineDashes(textView: TextView) {
+
+        textView.post {
+
+            val totalWidth = textView.width
+            val dash = "— "
+            val dashWidth = textView.paint.measureText(dash)
+            val count = (totalWidth / dashWidth).toInt()
+            val builder = StringBuilder()
+            for (i in 0 until count) {
+                builder.append(dash)
+            }
+            textView.text = builder.toString()
+            textView.setTextColor(
+                ContextCompat.getColor(textView.context, R.color.light_gray_15)
+            )
+        }
     }
 
 
@@ -175,9 +326,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         oAdapter = HostelInfoAdapter(null, this, Constant.isShimmerViewShow)
         binding.rcHostelInformation.layoutManager = LinearLayoutManager(this)
         binding.rcHostelInformation.adapter = oAdapter
-
-        val dummyData=getDummyHostelInfoList()
-        isLoadHotelInformation(dummyData)
     }
 
 
@@ -194,176 +342,59 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.rcDetailedAttendanceRecords.layoutManager = LinearLayoutManager(this)
         binding.rcDetailedAttendanceRecords.adapter = mAdapter
 
-        // 🔥 Header scroll sync
+        //Header scroll sync
         binding.headerScroll.viewTreeObserver.addOnScrollChangedListener {
             mAdapter.syncScroll(binding.headerScroll.scrollX)
         }
 
-        val dummyData = getDummyApiResponse()
-
-        setupHeader(dummyData.sessions)
-        isLoadAttendance(dummyData.days)
     }
 
     private fun isLoadAttendance(list: List<DayAttendance>) {
+        if (list.size>0){
+            showEntireAttendanceDetails()
+            mAdapter = HostelDetailedAttendanceAdpater(
+                list,
+                this,
+                false,
+                binding.headerScroll
+            )
 
-        mAdapter = HostelDetailedAttendanceAdpater(
-            list,
-            this,
-            false,
-            binding.headerScroll
-        )
-
-        binding.rcDetailedAttendanceRecords.layoutManager = LinearLayoutManager(this)
-        binding.rcDetailedAttendanceRecords.adapter = mAdapter
+            binding.rcDetailedAttendanceRecords.layoutManager = LinearLayoutManager(this)
+            binding.rcDetailedAttendanceRecords.adapter = mAdapter
+        }
+        else{
+            showEntireAttendanceNoData(getString(R.string.no_data_found))
+        }
     }
 
     private fun setupHeader(sessions: List<String>) {
+        if (sessions.size>0){
+            showEntireAttendanceDetails()
 
-        val columnWidth = AttendanceUIConfig.columnWidth(this)
-        val paddingH = AttendanceUIConfig.paddingH(this)
-        val paddingV = AttendanceUIConfig.paddingV(this)
+            val columnWidth = AttendanceUIConfig.columnWidth(this)
+            val paddingH = AttendanceUIConfig.paddingH(this)
+            val paddingV = AttendanceUIConfig.paddingV(this)
 
-        binding.headerContainer.removeAllViews()
+            binding.headerContainer.removeAllViews()
 
-        sessions.forEach {
+            sessions.forEach {
 
-            val tv = TextView(this)
-            tv.layoutParams = LinearLayout.LayoutParams(
-                columnWidth,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            tv.setPadding(paddingH, paddingV, paddingH, paddingV)
-            tv.text = it
-            tv.gravity = Gravity.CENTER
-            tv.setTextAppearance(this, R.style.CustomTextStylePoppinsBold)
-
-            binding.headerContainer.addView(tv)
-        }
-    }
-
-    private fun getDummyOutpassRequestListData(): List<OutpassRequestData> {
-        val list = ArrayList<OutpassRequestData>()
-
-        list.add(
-            OutpassRequestData(
-                reason = "I am sick",
-                fromDateToDate = "11 Jan 2020 - 13 Jan 2020",
-                requestTime = "11 Jan 2020 at 04:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Family function",
-                fromDateToDate = "14 Jan 2020 - 16 Jan 2020",
-                requestTime = "14 Jan 2020 at 09:30 AM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Medical checkup",
-                fromDateToDate = "17 Jan 2020 - 17 Jan 2020",
-                requestTime = "17 Jan 2020 at 11:00 AM",
-                status = "Rejected"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Personal work",
-                fromDateToDate = "18 Jan 2020 - 19 Jan 2020",
-                requestTime = "18 Jan 2020 at 02:15 PM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Festival leave",
-                fromDateToDate = "20 Jan 2020 - 23 Jan 2020",
-                requestTime = "20 Jan 2020 at 06:45 AM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Emergency",
-                fromDateToDate = "24 Jan 2020 - 25 Jan 2020",
-                requestTime = "24 Jan 2020 at 01:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Vacation",
-                fromDateToDate = "26 Jan 2020 - 28 Jan 2020",
-                requestTime = "26 Jan 2020 at 10:30 AM",
-                status = "Rejected"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Exam preparation",
-                fromDateToDate = "29 Jan 2020 - 31 Jan 2020",
-                requestTime = "29 Jan 2020 at 08:00 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Marriage function",
-                fromDateToDate = "01 Feb 2020 - 03 Feb 2020",
-                requestTime = "01 Feb 2020 at 05:20 PM",
-                status = "Approved"
-            )
-        )
-        list.add(
-            OutpassRequestData(
-                reason = "Health issue",
-                fromDateToDate = "04 Feb 2020 - 05 Feb 2020",
-                requestTime = "04 Feb 2020 at 07:10 AM",
-                status = Constant.waiting_for_approval
-            )
-        )
-
-        return list
-    }
-    fun getDummyApiResponse(): getHostelDetailedAttendance {
-
-        val sessions = listOf(
-            "1st Hour",
-            "Morining Attendance",
-            "3st Hour",
-            "4st Hour",
-            "Morining Attendance",
-            "Morining Attendance",
-            "7st Hour",
-            "8st Hour",
-            "9st Hour"
-        )
-
-        val statusOptions = listOf("Present", "Absent", "Not Taken")
-
-        val days = ArrayList<DayAttendance>()
-
-        for (i in 1..30) {
-
-            val status = sessions.map {
-                statusOptions.random()
-            }
-
-            days.add(
-                DayAttendance(
-                    dayLabel = "Day $i",
-                    status = status
+                val tv = TextView(this)
+                tv.layoutParams = LinearLayout.LayoutParams(
+                    columnWidth,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-            )
-        }
+                tv.setPadding(paddingH, paddingV, paddingH, paddingV)
+                tv.text = it
+                tv.gravity = Gravity.CENTER
+                tv.setTextAppearance(this, R.style.CustomTextStylePoppinsBold)
 
-        return getHostelDetailedAttendance(
-            sessions = sessions,
-            days = days
-        )
+                binding.headerContainer.addView(tv)
+            }
+        }
+        else{
+            showEntireAttendanceNoData(getString(R.string.no_data_found))
+        }
     }
 
 

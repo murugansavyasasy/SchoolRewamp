@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Hostel.Model.OutpassRequestList
+package com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard
 
 class OutpassRequestData (
     val reason: String,

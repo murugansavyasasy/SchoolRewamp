@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.Hostel.AttendanceUIConfig
-import com.vs.schoolmessenger.Parent.Hostel.Model.DetailedAttendanceRecords.DayAttendance
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -79,7 +79,7 @@ class HostelDetailedAttendanceAdpater(
 
         fun bind(data: DayAttendance) {
 
-            txtDay.text = data.dayLabel
+            txtDay.text = data.date_label
             container.removeAllViews()
 
             data.status.forEach { status ->

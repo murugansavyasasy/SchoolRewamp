@@ -96,6 +96,7 @@
 
             <RelativeLayout
                 android:id="@+id/rytSearch"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty"
                 android:layout_marginHorizontal="@dimen/ten"

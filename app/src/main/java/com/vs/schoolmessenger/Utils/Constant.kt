@@ -52,6 +52,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.gson.JsonObject
@@ -119,7 +120,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 208
+    var isVersionId = 209
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
@@ -2093,6 +2094,15 @@ object Constant {
         }
     }
 
+    fun getOnlyTime(dateTime: String): String {
+        return try {
+            val parts = dateTime.trim().split(" ")
+            "${parts[1]} ${parts[2]}"
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
     fun convertDateFormatType3(inputDateStr: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
@@ -2279,10 +2289,20 @@ object Constant {
     }
 
     fun showLoading(context: Activity) {
+
         val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        if (rootView.findViewById<View>(R.id.loader_root) != null) return
+
         val loaderView =
             LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+
         rootView.addView(loaderView)
+
+        val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
+
+        lottie.post {
+            lottie.playAnimation()
+        }
     }
 
     fun showLoadingDisableScreen(context: Activity) {

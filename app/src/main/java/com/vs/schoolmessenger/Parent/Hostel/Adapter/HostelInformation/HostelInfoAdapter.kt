@@ -16,17 +16,18 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
 
 class HostelInfoAdapter(
-    private var itemList: List<String>?,
+    private var itemList: List<HostelInfo>?,
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<String> = itemList ?: listOf()
-    private var filteredList: List<String> = fullList
+    private var fullList: List<HostelInfo> = itemList ?: listOf()
+    private var filteredList: List<HostelInfo> = fullList
 
     override fun getItemViewType(position: Int) = if (isLoading) TYPE_SHIMMER else TYPE_DATA
 
@@ -49,7 +50,7 @@ class HostelInfoAdapter(
         }
     }
 
-    fun updateData(newList: List<String>) {
+    fun updateData(newList: List<HostelInfo>) {
         fullList = newList
         filteredList = newList
         isLoading = false
@@ -57,20 +58,47 @@ class HostelInfoAdapter(
     }
 
     class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
-        private val lblKey: TextView = itemView.findViewById(R.id.lblKey)
-        private val lblValue: TextView = itemView.findViewById(R.id.lblValue)
 
-        fun bind(info: String) {
-            val splitIndex = info.indexOf(":")
-            if (splitIndex != -1) {
-                val key = info.substring(0, splitIndex).trim()
-                val value = info.substring(splitIndex + 1).trim()
-                lblKey.text = key
-                lblValue.text = value
-            } else {
-                lblKey.text = info
-                lblValue.text = ""
-            }
+
+        fun bind(info: HostelInfo) {
+
+            bindRow(itemView.findViewById(R.id.hostel_id),
+                "Hostel ID", info.hostel_id)
+
+            bindRow(itemView.findViewById(R.id.hostel_name),
+                "Hostel Name", info.hostel_name)
+
+            bindRow(itemView.findViewById(R.id.hostel_type),
+                "Hostel Type", info.hostel_type)
+
+            bindRow(itemView.findViewById(R.id.no_of_floors),
+                "No of Floors", info.no_of_floors.toString())
+
+            bindRow(itemView.findViewById(R.id.no_of_rooms),
+                "No of Rooms", info.no_of_rooms.toString())
+
+            bindRow(itemView.findViewById(R.id.warden_type),
+                "Warden Type", info.warden_type)
+
+            bindRow(itemView.findViewById(R.id.max_capacity),
+                "Max Capacity", info.max_capacity.toString())
+
+            bindRow(itemView.findViewById(R.id.warden_name),
+                "Warden Name", info.warden_name.joinToString(", "))
+
+            bindRow(itemView.findViewById(R.id.institute_name),
+                "Institute Name", info.institute_name)
+
+            bindRow(itemView.findViewById(R.id.institute_address),
+                "Institute Address", info.institute_address)
+        }
+
+        private fun bindRow(view: View, key: String, value: String) {
+            val lblKey = view.findViewById<TextView>(R.id.lblKey)
+            val lblValue = view.findViewById<TextView>(R.id.lblValue)
+
+            lblKey.text = key
+            lblValue.text = value
         }
     }
 
