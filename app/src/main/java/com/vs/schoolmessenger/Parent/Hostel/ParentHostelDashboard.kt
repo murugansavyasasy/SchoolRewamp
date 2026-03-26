@@ -422,20 +422,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         }
     }
 
-//    private fun isLoadPendingFeeCollection(Data: List<FeeDetails>)
-//    {
-//        if (Data.size>0){
-//            showPendingFeeCollections()
-//            sAdapter = HostelFeeDetail(this, Constant.isShimmerViewDisable)
-//            binding.rcPendingFeeCollections.adapter = sAdapter
-//        }
-//        else{
-//            showPendingFeeCollectionsNoData(getString(R.string.no_data_found))
-//        }
-//
-//    }
-
-
     private fun isGetAttendance() {
 
         mAdapter = HostelDetailedAttendanceAdpater(
