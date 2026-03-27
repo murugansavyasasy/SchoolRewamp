@@ -57,6 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:text="2024"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/year2"
         app:layout_constraintTop_toBottomOf="@id/txtSelectYear"
@@ -76,7 +77,7 @@
 
     <TextView
         android:id="@+id/year3"
-        style="@style/BoxItemSelected"
+        style="@style/BoxItem"
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:text="2026"
@@ -92,6 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:text="2027"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/year3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/year1"
@@ -104,7 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/year1"
+        app:layout_constraintTop_toBottomOf="@id/year2"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/fifteen"/>
 
@@ -133,7 +135,7 @@
 
     <TextView
         android:id="@+id/mar"
-        style="@style/BoxItemSelected"
+        style="@style/BoxItem"
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:text="March"
