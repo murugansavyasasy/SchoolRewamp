@@ -1,11 +1,14 @@
 package com.vs.schoolmessenger.Parent.Hostel
 
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 
 import com.vs.schoolmessenger.R
@@ -35,7 +38,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
     private var txtToTime: String? = null
 
     //CONTROL PAST TIME
-    private var allowPastTime = false   // true = allow past, false = block
+    private var allowPastTime = true  // true = allow past, false = block
 
     // TIME GAP (minutes)
     private var timeGapMinutes = 60
@@ -78,12 +81,107 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
         binding.selectedFromTime.setOnClickListener(this)
         binding.selectedToTime.setOnClickListener(this)
+        binding.lblSubmitRequest.setOnClickListener(this)
 
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
+        appViewModel!!.applyHostelOutpass?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response.status) {
+                    Log.d("applyHostelOutpass", response.message)
+                    Constant.showParentDataValidation(getString(R.string.success), response.message,this)
+                } else {
+                    Log.d("applyHostelOutpass", response.message)
+                    Constant.showDataValidationNoDashboardRedirect(getString(R.string.fail), response.message,this)
+                }
+            } else {
+                Constant.showDataValidationNoDashboardRedirect(
+                    getString(R.string.fail),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
+            }
+        }
+
+        binding.lblSubmitRequest.setOnClickListener {
+
+            // VALIDATION
+            if (txtStartDate.isNullOrEmpty()) {
+                Toast.makeText(this, "Please select From Date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (txtEndDate.isNullOrEmpty()) {
+                Toast.makeText(this, "Please select To Date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (txtFromTime.isNullOrEmpty()) {
+                Toast.makeText(this, "Please select From Time", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (txtToTime.isNullOrEmpty()) {
+                Toast.makeText(this, "Please select To Time", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (binding.edtReason.text.toString().trim().isEmpty()) {
+                Toast.makeText(this, "Please enter reason", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (binding.edtContactNumber.text.toString().trim().isEmpty()) {
+                Toast.makeText(this, "Please enter contact number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // FORMAT DATE + TIME (dd-MM-yyyy hh:mm a)
+            val apiDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+            val inputDateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+
+            val fromDateTime = inputDateFormat.parse("$txtStartDate $txtFromTime")
+            val toDateTime = inputDateFormat.parse("$txtEndDate $txtToTime")
+
+            val outDate = apiDateFormat.format(fromDateTime!!)
+            val inDate = apiDateFormat.format(toDateTime!!)
+
+            Constant.showSendConfirmationDialog(
+                this,
+                getString(R.string.confirmation),
+                getString(R.string.permission_ok),
+                getString(R.string.Cancel),
+                "",
+                "Are you sure want to apply outpass?"
+            ) { confirmed ->
+
+                if (confirmed) {
+
+                    val finalJson = JsonObject().apply {
+                        addProperty("hostel_id", "0")
+                        addProperty("room_id","0")
+                        addProperty("out_date", outDate)
+                        addProperty("in_date", inDate)
+                        addProperty("emergency_contact", binding.edtContactNumber.text.toString().trim())
+                        addProperty("reason", binding.edtReason.text.toString().trim())
+                    }
+
+                    Log.d("FINAL_JSON", finalJson.toString())
+
+                    Constant.showLoading(this)
+
+//                    appViewModel?.applyHostelOutpass(
+//                        isAccessToken ?: "",
+//                        finalJson,
+//                        this
+//                    )
+                }
+            }
+        }
 
     }
 
@@ -356,17 +454,48 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                 }
 
                 val now = getCurrentCal()
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+                val fromDate = sdf.parse(txtStartDate ?: "") ?: Date()
+                val toDate = sdf.parse(txtEndDate ?: "") ?: Date()
+
+                val isSameDay = sdf.format(fromDate) == sdf.format(toDate)
 
                 val picker = android.app.TimePickerDialog(
                     this,
                     { _, hour, minute ->
 
-                        val selected = Calendar.getInstance()
-                        selected.set(Calendar.HOUR_OF_DAY, hour)
-                        selected.set(Calendar.MINUTE, minute)
+                        val selectedCal = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hour)
+                            set(Calendar.MINUTE, minute)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                        }
 
-                        txtToTime = formatTime(selected)
+                        //  ALWAYS enforce for same day
+                        if (isSameDay) {
+
+                            val fromCal = parseTime(txtFromTime!!)
+
+                            val baseCal = Calendar.getInstance()
+
+                            selectedCal.set(Calendar.YEAR, baseCal.get(Calendar.YEAR))
+                            selectedCal.set(Calendar.MONTH, baseCal.get(Calendar.MONTH))
+                            selectedCal.set(Calendar.DAY_OF_MONTH, baseCal.get(Calendar.DAY_OF_MONTH))
+
+                            fromCal.set(Calendar.YEAR, baseCal.get(Calendar.YEAR))
+                            fromCal.set(Calendar.MONTH, baseCal.get(Calendar.MONTH))
+                            fromCal.set(Calendar.DAY_OF_MONTH, baseCal.get(Calendar.DAY_OF_MONTH))
+
+                            if (selectedCal.time.before(fromCal.time)) {
+                                Toast.makeText(this, "To time cannot be before From time", Toast.LENGTH_SHORT).show()
+                                return@TimePickerDialog
+                            }
+                        }
+
+                        txtToTime = formatTime(selectedCal)
                         binding.selectedToTime.text = txtToTime
+
                     },
                     now.get(Calendar.HOUR_OF_DAY),
                     now.get(Calendar.MINUTE),
