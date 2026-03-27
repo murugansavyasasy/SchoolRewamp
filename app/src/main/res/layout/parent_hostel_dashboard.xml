@@ -27,7 +27,7 @@
         android:drawableStart="@drawable/calendar_icon"
         android:drawableEnd="@drawable/down_arrow_3"
         android:layout_width="wrap_content"
-        android:text="Calendar"
+        android:text=""
         android:paddingHorizontal="@dimen/ten"
         android:paddingVertical="@dimen/ten"
         android:textColor="@color/white"

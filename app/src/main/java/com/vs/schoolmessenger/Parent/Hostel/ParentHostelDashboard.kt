@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Hostel
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +44,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     }
 
     private var isAccessToken: String? = null
+    var isSelectedMonth=""
     private var appViewModel: App? = null
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
@@ -79,6 +82,15 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         currentYear = calendar.get(Calendar.YEAR)
         currentMonth = calendar.get(Calendar.MONTH) + 1
 
+        val monthNames = listOf(
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        )
+        val monthName = monthNames[currentMonth - 1]
+
+        binding.lblCalendar.text = "$monthName $currentYear"
+
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -87,8 +99,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.lblApplyNewOutpassRequest.setOnClickListener(this)
 
         isGetParentHostelDetails()
-
-
 
         appViewModel?.parentHotelDetails?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -189,7 +199,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
     }
 
-
     private fun showEntireAttendanceNoData(message: String) {
         binding.lnrEntireAcademicDetails.visibility = View.GONE
         binding.lblErrorMessage.visibility = View.VISIBLE
@@ -201,9 +210,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.lblErrorMessage.visibility = View.GONE
         binding.imgNoDataFound.visibility = View.GONE
     }
-
-
-
 
     private fun showPendingFeeCollectionsNoData(message: String) {
         binding.rcPendingFeeCollections.visibility = View.GONE
@@ -217,21 +223,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.imgPendingFeeCollectionsNoDataFound.visibility = View.GONE
         binding.lblPendingFeeCollectionsErrorMessage.visibility = View.GONE
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private fun showHostelInfoNoData(message: String) {
         binding.rcHostelInformation.visibility = View.GONE
@@ -489,7 +480,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         }
     }
 
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
@@ -508,9 +498,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             R.id.lblCalendar->{
                showCalendarPopup()
             }
-
-
-
         }
     }
 
@@ -523,16 +510,83 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         dialog.setCancelable(true)
 
         val margin = resources.getDimensionPixelSize(R.dimen.twenty)
-
         val params = dialog.window?.attributes
         params?.width = resources.displayMetrics.widthPixels - (margin * 2)
         params?.height = ViewGroup.LayoutParams.WRAP_CONTENT
-
         dialog.window?.attributes = params
         dialog.window?.setGravity(Gravity.CENTER)
 
-        val btnClose = dialog.findViewById<Button>(R.id.btnClose)
-        btnClose.setOnClickListener {
+        val year2 = dialog.findViewById<TextView>(R.id.year2)
+        val year3 = dialog.findViewById<TextView>(R.id.year3)
+
+
+        year2.text = (currentYear - 1).toString()
+        year3.text = currentYear.toString()
+
+        var selectedYear = currentYear
+
+        val yearViews = listOf(year2, year3)
+        val months = mapOf(
+            R.id.jan to 1, R.id.feb to 2, R.id.mar to 3,
+            R.id.apr to 4, R.id.may to 5, R.id.jun to 6,
+            R.id.jul to 7, R.id.aug to 8, R.id.sep to 9,
+            R.id.oct to 10, R.id.nov to 11, R.id.dec to 12
+        )
+
+        val monthNames = listOf(
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        )
+
+        var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+
+        val monthViews = months.keys.map { dialog.findViewById<TextView>(it) }
+
+        fun selectItem(selectedView: TextView, allViews: List<TextView>) {
+
+            allViews.forEach {
+                it.background = ContextCompat.getDrawable(this, R.drawable.bg_box)
+                it.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+            }
+
+            selectedView.background =
+                ContextCompat.getDrawable(this, R.drawable.primary_colour_bg_radius_bg)
+            selectedView.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+        }
+
+        yearViews.forEach { view ->
+            view.setOnClickListener {
+                selectItem(view, yearViews)
+                selectedYear = view.text.toString().toInt()
+            }
+        }
+
+        monthViews.forEach { view ->
+            view.setOnClickListener {
+                selectItem(view, monthViews)
+                selectedMonth = months[view.id] ?: 1
+            }
+        }
+
+        year3.post { selectItem(year3, yearViews) }
+        monthViews[selectedMonth - 1].post {
+            selectItem(monthViews[selectedMonth - 1], monthViews)
+        }
+
+        dialog.findViewById<Button>(R.id.btnClose).setOnClickListener {
+
+            val monthName = monthNames[selectedMonth - 1]
+
+            Log.d("CALENDAR", "Year: $selectedYear Month: $selectedMonth ($monthName)")
+
+            currentMonth = selectedMonth
+            currentYear = selectedYear
+
+            binding.lblCalendar.text = "$monthName $selectedYear"
+
+            isGetParentHostelDetails()
+
             dialog.dismiss()
         }
 
