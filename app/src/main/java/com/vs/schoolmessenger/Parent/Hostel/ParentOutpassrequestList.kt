@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetailsData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -37,24 +39,21 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-        binding.toolbarLayout.lblInitialName.visibility = View.VISIBLE
-        binding.toolbarLayout.imgCall.visibility = View.VISIBLE
-        binding.toolbarLayout.lblClassAndRoomDetails.visibility = View.VISIBLE
-        binding.toolbarLayout.lblHostelName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblName.visibility = View.VISIBLE
-
-        binding.toolbarLayout.lblToday.visibility = View.GONE
-        binding.toolbarLayout.lblDate.visibility = View.GONE
+        binding.toolbarLayout.consStudentDetails.visibility = View.GONE
+        binding.toolbarLayout.imgCall.visibility = View.GONE
+        binding.toolbarLayout.rlaSpinner.visibility = View.GONE
+        binding.toolbarLayout.lblMenuName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblMenuName.text= getString(R.string.outpass_report)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-        binding.imgSearchIcon.setOnClickListener {
+        binding.toolbarLayout.imgSearchIcon.setOnClickListener {
             if (binding.rytSearch.isVisible) {
                 binding.rytSearch.visibility = View.GONE
                 binding.txtSearch.text.clear()
@@ -84,10 +83,18 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
             }
         })
 
+
         val list = intent.getSerializableExtra("OUTPASS_LIST") as? ArrayList<OutpassRequestData> ?: arrayListOf()
         currentFilteredList=list
-        isLoadOutpassRequest(list)
 
+        if (list.size>0){
+            binding.toolbarLayout.imgSearchIcon.visibility= View.VISIBLE
+        }
+        else{
+            binding.toolbarLayout.imgSearchIcon.visibility= View.GONE
+
+        }
+        isLoadOutpassRequest(list)
 
 
     }

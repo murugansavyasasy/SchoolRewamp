@@ -24,14 +24,16 @@
 
     <TextView
         android:id="@+id/lblCalendar"
-        android:drawableStart="@drawable/calendar_icon"
+        android:drawableStart="@drawable/calendar_icon_2"
         android:drawableEnd="@drawable/down_arrow_3"
         android:layout_width="wrap_content"
         android:text=""
         android:paddingHorizontal="@dimen/ten"
         android:paddingVertical="@dimen/ten"
         android:textColor="@color/white"
-        android:background="@color/PrimaryColor"
+        android:backgroundTint="@color/PrimaryColor"
+        android:background="@drawable/rect_radius_15"
+        android:drawableTint="@color/white"
         android:drawablePadding="@dimen/six"
         app:layout_constraintHorizontal_bias="0"
         android:layout_marginTop="@dimen/ten"
@@ -72,7 +74,7 @@
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
-                app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
+                app:layout_constraintBottom_toTopOf="@+id/cardTodayAttendance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -191,7 +193,7 @@
 
                         <TextView
                             android:id="@+id/tvExitTime"
-                            style="@style/CustomTextStylePoppinsRegular"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/five"
@@ -242,8 +244,10 @@
                     </TextView>
 
                     <ImageView
+                        app:layout_constraintHorizontal_weight="1.5"
+
                         android:id="@+id/imgArrow"
-                        android:layout_width="@dimen/thirty_five"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/thirty_five"
                         android:src="@drawable/ic_right_arrow"
                         android:tint="@color/light_gray"
@@ -309,10 +313,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/brOutpass">
 
                         <TextView
-                            style="@style/CustomTextStylePoppinsBold"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/purpose_of_visit"
+                            android:textSize="@dimen/twele_sp"
                             android:textAllCaps="true"
                             android:textColor="@color/dark_brown_3"></TextView>
 
@@ -324,7 +329,7 @@
                             android:text=""
                             android:textAllCaps="true"
                             android:textColor="@color/dark_brown_4"
-                            android:textSize="@dimen/sixteen_sp"></TextView>
+                            android:textSize="@dimen/fourteen_sp"></TextView>
 
                     </LinearLayout>
 
@@ -404,6 +409,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/consCoupounDesign"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@+id/lblValidFrom"
@@ -453,7 +459,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/fifteen"
-                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/five"
                         android:text="@string/valid_from"
                         android:textColor="@color/light_gray"
@@ -575,6 +581,76 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardTodayAttendance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:elevation="@dimen/eight"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/eight"
+                app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardGatePass"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        android:id="@+id/lblTodayAttendance"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:drawableStart="@drawable/time_icon"
+                        android:drawablePadding="@dimen/five"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:text="@string/today_attendance"
+                        app:layout_constraintBottom_toTopOf="@+id/view7"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </TextView>
+
+                    <View
+                        android:id="@+id/view7"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/light_gray_11"
+                        app:layout_constraintBottom_toTopOf="@+id/rcTodayAttendance"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblTodayAttendance">
+
+                    </View>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcTodayAttendance"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/ten"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view7" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardOutpassDetails"
@@ -587,7 +663,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cardMonthlyStats"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardGatePass"
+                app:layout_constraintTop_toBottomOf="@+id/cardTodayAttendance"
                 app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -784,12 +860,18 @@
                         app:layout_constraintTop_toBottomOf="@+id/view1">
 
                         <!-- HEADER -->
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:background="@drawable/bg_custom_top_radius"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <TextView
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/div1"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:id="@+id/lblExactDay"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
@@ -797,9 +879,26 @@
                                 android:text="Day"
                                 android:textStyle="bold" />
 
+                            <View
+                                android:id="@+id/div1"
+                                app:layout_constraintStart_toEndOf="@+id/lblExactDay"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/headerScroll"
+                                android:background="#E5E5EA"
+                                android:layout_width="1dp"
+                                android:layout_height="0dp">
+
+                            </View>
+
                             <HorizontalScrollView
+                                app:layout_constraintStart_toEndOf="@+id/div1"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 android:id="@+id/headerScroll"
-                                android:layout_width="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:fillViewport="true"
                                 android:scrollbars="none">
@@ -811,16 +910,16 @@
                                     android:gravity="center"
                                     android:orientation="horizontal" />
                             </HorizontalScrollView>
-                        </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="200dp">
-
                             <androidx.recyclerview.widget.RecyclerView
+                                android:background="@drawable/bg_custom_bottom_radius"
                                 android:id="@+id/rcDetailedAttendanceRecords"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="195dp"
                                 android:clipToPadding="false"
                                 android:paddingBottom="60dp" />
 
@@ -941,7 +1040,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/lblPendingFeeCollectionsErrorMessage"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rcHostelInformation"></ImageView>
+                        app:layout_constraintTop_toBottomOf="@+id/rcPendingFeeCollections"></ImageView>
 
                     <TextView
                         android:id="@+id/lblPendingFeeCollectionsErrorMessage"

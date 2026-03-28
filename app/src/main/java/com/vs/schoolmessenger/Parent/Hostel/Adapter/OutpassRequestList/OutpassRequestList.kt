@@ -87,40 +87,29 @@ class OutpassRequestList(
 
             if (data.status == Constant.rejected.uppercase()) {
 
-                applyTintedBackground(
-                    lblStatus,
-                    R.drawable.rect_bg_light_green_present,
-                    R.color.very_light_red_3
-                )
-
-                lblStatus.text=data.status
-                lblStatus.setTextColor(context.getColor(R.color.red))
+                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_red_rejected)
+                lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
+                lblStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
 
             }
             else if (data.status == Constant.approved.uppercase()) {
 
-                applyTintedBackground(
-                    lblStatus,
-                    R.drawable.rect_bg_light_green_present,
-                    R.color.very_light_green_3
-                )
-                lblStatus.text=data.status
-                lblStatus.setTextColor(context.getColor(R.color.green))
+                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_green_approved)
+                lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
+                lblStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
 
             }
             else if (data.status == Constant.pending.uppercase()) {
 
-                lblStatus.text=data.status.uppercase()
-                lblStatus.setTextColor(context.getColor(R.color.dark_brown_3))
+                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_orange_pending)
+                lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
+                lblStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_brown_3))
+            }
+            else{
 
-
-
-                applyTintedBackground(
-                    lblStatus,
-                    R.drawable.rect_bg_light_green_present,
-                    R.color.very_light_orange_3
-                )
-
+                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_orange_pending)
+                lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
+                lblStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_brown_3))
             }
         }
 

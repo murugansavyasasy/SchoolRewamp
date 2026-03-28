@@ -58,7 +58,6 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
         }
 
 
-
         binding.lblLeaveType.text= Constant.isStaffLeaveHistoryData?.leave_type ?: ""
         binding.lblDays.text= Constant.isStaffLeaveHistoryData?.no_of_days ?: ""
         binding.lblStartDate.text= Constant.convertDateTimeFormatDateMonth(Constant.isStaffLeaveHistoryData?.from_date ?: "")

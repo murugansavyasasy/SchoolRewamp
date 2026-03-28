@@ -88,7 +88,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         binding.lblRoomNo.text = "$count ${if (count == 1) "${getString(R.string.student)}" else "${getString(R.string.students)}"}" +" • "+
                 "$bedCount ${if (bedCount == 1) "${getString(R.string.Bed)}" else "${getString(R.string.Beds)}"}"
 
-        binding.lblRoomNo.text= "Room No ${Constant.isSelectedHostelRoomData?.id ?:"00"}"
+        binding.lblRoomNo.text= "Room ${Constant.isSelectedHostelRoomData?.number ?:"00"}"
 
         //here we are loading the here
         if (isSelectedDate == null) {
@@ -116,7 +116,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             }
         }
 
-        appViewModel!!.isstaffleaverequestapprove?.observe(requireActivity()) { response ->
+        appViewModel!!.schoolHostelOutpassUpdateStatus?.observe(requireActivity()) { response ->
             Constant.hideLoading(requireActivity())
 
             if (response != null && response.status) {
@@ -200,7 +200,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     Log.d("FINAL_JSON", finalJson.toString())
 
                     Constant.showLoading(requireActivity())
-//                    appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
+                    appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
                 }
             }
 
@@ -411,14 +411,14 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     ) {
 
         Log.d("isStatus", isButtonClick.toString())
-        isApproveRejectId = data.id
+        isApproveRejectId = data.outpass_id
         var isMessage = ""
         if (isButtonClick) {
-            request = LeaveApproveRequest(id = data.id, is_approve = true)
-            isMessage = "Are you sure you want to approve this outpass request"
+            request = LeaveApproveRequest(id = data.outpass_id, is_approve = true)
+            isMessage = getString(R.string.are_you_sure_you_want_to_approve_this_outpass_request)
         } else {
-            request = LeaveApproveRequest(id = data.id, is_approve = false)
-            isMessage = "Are you sure you want to reject this outpass request"
+            request = LeaveApproveRequest(id = data.outpass_id, is_approve = false)
+            isMessage = getString(R.string.are_you_sure_you_want_to_reject_this_outpass_request)
         }
         Constant.showSendConfirmationDialog(
             requireActivity(),

@@ -7,6 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/consHeader"
+        android:backgroundTint="@color/purple_201"
         android:background="@drawable/bg_top_curve"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
             app:layout_constraintStart_toEndOf="@+id/imgScreenType"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/five"
-            android:textSize="@dimen/twenty_four_sp"
+            android:textSize="@dimen/twenty_sp"
             android:textColor="@color/white"
             app:layout_constrainedWidth="true"
             style="@style/CustomTextStylePoppinsBold"
@@ -49,7 +50,7 @@
 
         </TextView>
         <ImageView
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
             android:id="@+id/imgClose"
             app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
             android:src="@drawable/close_icon"
@@ -60,8 +61,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/lblOutPassRequest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty">
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty">
 
         </ImageView>
 
@@ -74,7 +75,7 @@
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/white"
             style="@style/CustomTextStylePoppinsBold"
-            android:text="3 pending approval "
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content">
 

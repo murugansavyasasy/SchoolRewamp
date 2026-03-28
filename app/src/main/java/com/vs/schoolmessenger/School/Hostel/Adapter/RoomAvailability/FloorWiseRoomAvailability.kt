@@ -103,9 +103,6 @@ class FloorWiseRoomAvailability(
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
                 filteredList = results?.values as? List<getFloorwiseAvailability> ?: emptyList()
-
-                hostelClickListner.onSearchResultEmpty(filteredList.isEmpty())
-
                 notifyDataSetChanged()
             }
         }

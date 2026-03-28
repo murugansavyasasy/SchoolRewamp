@@ -1154,6 +1154,14 @@
     <string name="pending_hostel_fees">Pending Hostel Fees</string>
     <string name="request_details">Request Details</string>
     <string name="enter_reason_2">Enter reason...</string>
+    <string name="new_outpass_request">New OutPass Request</string>
+    <string name="outpass_report">Outpass Report</string>
+    <string name="are_you_sure_want_to_apply_outpass">Are you sure want to apply outpass?</string>
+    <string name="room_no">Room no</string>
+    <string name="today_attendance">Today Attendance</string>
+    <string name="pending_approval">Pending Approval</string>
+    <string name="are_you_sure_you_want_to_approve_this_outpass_request">Are you sure you want to approve this outpass request</string>
+    <string name="are_you_sure_you_want_to_reject_this_outpass_request">Are you sure you want to reject this outpass request</string>
 
 
 </resources>

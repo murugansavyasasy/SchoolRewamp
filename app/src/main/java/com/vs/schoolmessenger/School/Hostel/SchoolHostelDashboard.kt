@@ -61,6 +61,8 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         binding.toolbarLayout.lblClassAndRoomDetails.visibility= View.GONE
         binding.toolbarLayout.lblHostelName.visibility= View.GONE
         binding.toolbarLayout.lblName.visibility= View.GONE
+        binding.toolbarLayout.imgSearchIcon.visibility= View.GONE
+
 
         binding.toolbarLayout.lblToday.visibility= View.VISIBLE
         binding.toolbarLayout.lblDate.visibility= View.VISIBLE
@@ -70,17 +72,12 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
             .format(DateTimeFormatter.ofPattern("EEEE,MMMM dd"))
 
         binding.toolbarLayout.lblDate.text=currentDate
-
-
-
         binding.toolbarLayout.imgCall.visibility= View.GONE
 
-        binding.consBedOccupied.setOnClickListener(this)
-        binding.consStudent.setOnClickListener(this)
-        binding.consPending.setOnClickListener(this)
-        binding.consOutPass.setOnClickListener(this)
-        binding.consMessTimeTable.setOnClickListener(this)
-        binding.consCardTodayAttendanceDetails.setOnClickListener(this)
+
+        binding.consOutpassRequests.setOnClickListener(this)
+        binding.consTotalStudent.setOnClickListener(this)
+        binding.cardAttendanceRequired.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -104,7 +101,13 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         appViewModel?.getHostelDashboardDetails?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+
                     val data=response.data.getOrNull(0)?.floors?:emptyList()
+                    val stats=response.data.getOrNull(0)?.stats
+
+                    binding.lblTotalStudentCount.text=stats?.total_students?:""
+                    binding.lblOutpassRequestCount.text=stats?.outpass_requests?:""
+
                     if (data.isNotEmpty()) {
                         binding.rcRoomAvailability.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.GONE
@@ -131,13 +134,8 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
             }
         }
 
-
-        setDrawableBackgroundColor(binding.consHome,R.color.PrimaryColor)
-        setDrawableBackgroundColor(binding.consStudent,R.color.green_3)
-        setDrawableBackgroundColor(binding.consBedOccupied,R.color.purple_200)
-        setDrawableBackgroundColor(binding.consPending,R.color.light_red_2)
-        setDrawableBackgroundColor(binding.consOutPass,R.color.dark_blue_color)
-
+        setDrawableBackgroundColor(binding.consTotalStudent,R.color.green_3)
+        setDrawableBackgroundColor(binding.consOutpassRequests,R.color.purple_201)
 
     }
     private fun openBottomSheet(type: String) {
@@ -163,8 +161,6 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
             isAccessToken!!, Constant.isSelectedHostelFromHostelListData?.id.toString(),isAcademicYearId.toString(), this
         )
 
-//        val dummyData = getDummyHostelDashboard()
-//        isLoadRoomAvailability(dummyData.data.getOrNull(0)?.floors)
     }
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
@@ -193,150 +189,43 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
 
 
 
-
-//    private fun getDummyHostelDashboard(): getHostelDashboard {
-//
-//        return getHostelDashboard(
-//            status = true,
-//            message = "Room details retrieved successfully.",
-//            data = listOf(
-//
-//                getHostelDashboardData(
-//                    stats = getHotelStats(
-//                        total_students = "13",
-//                        outpassRequests = "0"
-//                    ),
-//
-//                    floors = listOf(
-//
-//                        getFloorwiseAvailability(
-//                            id = "603",
-//                            floor_no = "1",
-//                            floor_name = "Floor 1",
-//                            rooms = listOf(
-//
-//                                getRoomAvailability(
-//                                    id = "1135",
-//                                    number = "Room 1 ",
-//                                    currentOccupancy = 3,
-//                                    maxOccupancy = 4,
-//                                    totalBeds = 4,
-//                                    students = listOf("Ramesh2026", "Raja", "+1 more")
-//                                ),
-//
-//                                getRoomAvailability(
-//                                    id = "1136",
-//                                    number = "Room 2 ",
-//                                    currentOccupancy = 1,
-//                                    maxOccupancy = 2,
-//                                    totalBeds = 2,
-//                                    students = listOf("ABC")
-//                                )
-//                            )
-//                        ),
-//
-//                        getFloorwiseAvailability(
-//                            id = "604",
-//                            floor_no = "2",
-//                            floor_name = "Floor 2",
-//                            rooms = listOf(
-//
-//                                getRoomAvailability(
-//                                    id = "1137",
-//                                    number = "Room 3 ",
-//                                    currentOccupancy = 5,
-//                                    maxOccupancy = 5,
-//                                    totalBeds = 5,
-//                                    students = listOf("Ramesh M", "Aavesh", "+3 more")
-//                                )
-//                            )
-//                        ),
-//                        getFloorwiseAvailability(
-//                            id = "605",
-//                            floor_no = "4",
-//                            floor_name = "Floor 4",
-//                            rooms = listOf(
-//
-//                                getRoomAvailability(
-//                                    id = "1144",
-//                                    number = "Room 12",
-//                                    currentOccupancy = 0,
-//                                    maxOccupancy = 2,
-//                                    totalBeds = 2,
-//                                    students = emptyList()
-//                                )
-//                            )
-//                        ),
-//
-//                        getFloorwiseAvailability(
-//                            id = "607",
-//                            floor_no = "5",
-//                            floor_name = "Floor 5",
-//                            rooms = listOf(
-//
-//                                getRoomAvailability(
-//                                    id = "1144",
-//                                    number = "Room 10 ",
-//                                    currentOccupancy = 1,
-//                                    maxOccupancy = 2,
-//                                    totalBeds = 2,
-//                                    students = listOf("Aishwariya G")
-//                                )
-//                            )
-//                        )
-//
-//                    )
-//                )
-//            )
-//        )
-//    }
-
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
 
-            R.id.consBedOccupied -> {
-                openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
-            }
-
-            R.id.consStudent -> {
-                openBottomSheet(FragmentType.FEEMANAGEMENT.toString())
-            }
-
-            R.id.consPending -> {
-                openBottomSheet(FragmentType.PENDINGISSUES.toString())
-            }
-
-            R.id.consOutPass -> {
+            R.id.consOutpassRequests -> {
                 openBottomSheet(FragmentType.OUTPASSREQUESTS.toString())
                 Constant.isSelectedAcademicYear=isAcademicYearId.toString()
             }
-
-            R.id.consMessTimeTable -> {
-                openBottomSheet(FragmentType.MESSTIMETABLE.toString())
-            }
-
-            R.id.cons_cardTodayAttendanceDetails -> {
+            R.id.cardAttendanceRequired -> {
                 openBottomSheet(FragmentType.ATTENDANCEHISTORYHOSTEL.toString())
                 Constant.isSelectedAcademicYear=isAcademicYearId.toString()
             }
+
+
+            //            R.id.consStudent -> {
+//                openBottomSheet(FragmentType.FEEMANAGEMENT.toString())
+//            }
+
+//            R.id.consBedOccupied -> {
+//                openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
+//            }
+
+//            R.id.consPending -> {
+//                openBottomSheet(FragmentType.PENDINGISSUES.toString())
+//            }
+
+//            R.id.consMessTimeTable -> {
+//                openBottomSheet(FragmentType.MESSTIMETABLE.toString())
+//            }
+
 
         }
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.lblErrorMessage.visibility = View.VISIBLE
-            binding.imgNoDataFound.visibility = View.VISIBLE
-            binding.rcRoomAvailability.visibility = View.GONE
-        } else {
-            binding.lblErrorMessage.visibility = View.GONE
-            binding.imgNoDataFound.visibility = View.GONE
-            binding.rcRoomAvailability.visibility = View.VISIBLE
-        }
     }
 
     override fun onHostelClick(data: getHostelListData) {

@@ -101,8 +101,6 @@
             android:gravity="center"
             android:layout_marginEnd="@dimen/ten"
             style="@style/CustomTextStylePoppinsBold"
-            android:backgroundTint="@color/orange"
-            android:background="@drawable/green_bg_radius"
             android:paddingVertical="@dimen/five"
             android:textColor="@color/white"
             app:layout_constraintHorizontal_weight="0.45"
@@ -123,6 +121,7 @@
             app:layout_constraintStart_toStartOf="@+id/viewOutpassAppliedBg"
             app:layout_constraintTop_toBottomOf="@+id/lblOutpassStatus"
             android:layout_width="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/lblOutpassPermissionTimeDuration"
             android:text="------------"
             style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@color/dark_gray__1"
@@ -138,7 +137,9 @@
             app:layout_constraintStart_toStartOf="@+id/viewOutpassAppliedBg"
             app:layout_constraintTop_toBottomOf="@+id/lblOutpassReason"
             android:layout_width="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/lblAccept"
             android:text="----------"
+            app:layout_goneMarginBottom="@dimen/ten"
             android:layout_marginTop="@dimen/eight"
             android:id="@+id/lblOutpassPermissionTimeDuration"
             android:layout_height="wrap_content">
@@ -195,7 +196,7 @@
             app:iconGravity="textStart"
             app:iconPadding="4dp"
             app:layout_constraintTop_toBottomOf="@+id/lblOutpassPermissionTimeDuration"
-            android:text="@string/absent"
+            android:text="@string/decline"
             android:layout_height="wrap_content">
 
         </com.google.android.material.button.MaterialButton>
@@ -203,7 +204,7 @@
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupsEntireOutPass"
             android:layout_width="wrap_content"
-            app:constraint_referenced_ids="viewOutpassAppliedBg,lblOutpassApplied,lblOutpassStatus,lblOutpassReason,lblOutpassPermissionTimeDuration,lblAccept,lblDecline"
+            app:constraint_referenced_ids="viewOutpassAppliedBg,lblOutpassApplied,lblOutpassStatus,lblOutpassReason,lblOutpassPermissionTimeDuration"
             android:layout_height="wrap_content">
 
         </androidx.constraintlayout.widget.Group>

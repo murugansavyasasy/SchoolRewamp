@@ -63,11 +63,6 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
     private var originalLeaveList: List<StaffMonthWiseLeaveData> = emptyList()
     private var isLeaveList: List<StaffMonthWiseLeaveData> = emptyList()
 
-    private var msg_id: Int = -1
-    private var headerId: String? = null
-    private var receiverId: String? = null
-    private var menu_name: String? = null
-    private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
 
@@ -80,37 +75,13 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         )
 
         userDetails = SharedPreference.getUserDetails(this)
-        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
-
-        if (fromNotification) {
-            Constant.isParentChoose = true
-            msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra(Constant.header_id)
-            receiverId = intent.getStringExtra(Constant.receiverid)
-            menu_name = intent.getStringExtra(Constant.menu_name)
-
-            Log.d(
-                "NoticeBoard_EXTRAS",
-                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
-            )
-
-            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this, matchedChild!!)
-            Constant.isSelectedMenuName = menu_name!!
-        }
-
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblParentToolBar.text = "Staff Leave history"
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
-
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
-
-
-
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
@@ -188,10 +159,6 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
                 originalLeaveList = response.data
                 isLeaveList = response.data
                 isloadleaverequestData(isLeaveList)
-                Log.d("Message Id Value Indication", msg_id.toString())
-                if (fromNotification) {
-                    scrollToMessageId(headerId)
-                }
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
@@ -291,62 +258,6 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
 
     }
 
-
-    private fun scrollToMessageId(headerId: String?) {
-        if (msg_id == -1 || headerId.isNullOrEmpty()) return
-
-        val targetMonthIndex = isLeaveList.indexOfFirst { month ->
-            month.details.any { it.id == headerId }
-        }
-        if (targetMonthIndex != -1) {
-            Log.d("ScrollDebug", "Found month at index $targetMonthIndex")
-            binding.rcyLeaveRequestHistory.smoothScrollToPosition(targetMonthIndex)
-            binding.rcyLeaveRequestHistory.post {
-                val outerAdapter =
-                    binding.rcyLeaveRequestHistory.adapter as? MonthWiseLeaveHistoryAdapter
-                val monthData = outerAdapter?.fullList?.getOrNull(targetMonthIndex)
-                if (monthData != null) {
-                    val outerVH = binding.rcyLeaveRequestHistory.findViewHolderForAdapterPosition(
-                        targetMonthIndex
-                    ) as? MonthWiseLeaveHistoryAdapter.DataViewHolder
-                    val innerRV = outerVH?.rvMonthWiseHistory
-                    if (innerRV != null) {
-                        val innerPosition = monthData.details.indexOfFirst { it.id == headerId }
-                        if (innerPosition != -1) {
-                            Log.d("ScrollDebug", "Scrolling inner to $innerPosition")
-                            innerRV.smoothScrollToPosition(innerPosition)
-                            innerRV.post {
-                                val innerVH =
-                                    innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
-                                innerVH?.itemView?.let { itemView ->
-                                    val originalBackground = itemView.background
-                                    itemView.setBackgroundColor(
-                                        resources.getColor(
-                                            R.color.light_yellow_5,
-                                            null
-                                        )
-                                    )
-                                    Handler(Looper.getMainLooper()).postDelayed({
-                                        itemView.background = originalBackground
-                                    }, Constant.TIME_OUT)
-                                }
-                            }
-                        } else {
-                            Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
-                        }
-                    } else {
-                        Log.d("ScrollDebug", "Inner RV not found for month index $targetMonthIndex")
-                    }
-                } else {
-                    Log.d("ScrollDebug", "Month data not found for index $targetMonthIndex")
-                }
-            }
-        } else {
-            Log.d("ScrollDebug", "No month found with headerId: $headerId")
-        }
-    }
-
-
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
 
@@ -371,19 +282,19 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
             statusFilteredList.mapNotNull { monthWiseLeave ->
                 val filteredDetails = monthWiseLeave.details.filter { leave ->
                     val appliedOn = try {
-                        Constant.convertDateTimeFormat(leave.applied_on?:"")
+                        Constant.convertDateTimeFormat(leave.applied_on ?: "")
                     } catch (e: Exception) {
                         leave.applied_on
                     }
 
                     val leaveFrom = try {
-                        Constant.convertDateTimeFormat(leave.from_date?:"")
+                        Constant.convertDateTimeFormat(leave.from_date ?: "")
                     } catch (e: Exception) {
                         leave.from_date
                     }
 
                     val leaveTo = try {
-                        Constant.convertDateTimeFormat(leave.to_date?:"")
+                        Constant.convertDateTimeFormat(leave.to_date ?: "")
                     } catch (e: Exception) {
                         leave.to_date
                     }
@@ -561,7 +472,7 @@ class StaffLeaveHistory : BaseActivity<StaffLeaveHistoryBinding>(), View.OnClick
         binding.rcyLeaveRequestHistory.adapter = mAdapter
 
         appViewModel!!.getStaffleaverequest(
-            isAccessToken!!,"",this
+            isAccessToken!!, "", this
         )
 
 
