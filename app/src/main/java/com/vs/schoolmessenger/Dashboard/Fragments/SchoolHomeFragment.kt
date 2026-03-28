@@ -60,6 +60,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Attachment.Attachment
+import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaff
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -904,12 +905,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    StaffWiseAttendanceReport::class.java
+                    AttendanceReportFromStaff::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        StaffWiseAttendanceReport::class.java
+                        AttendanceReportFromStaff::class.java
                     }
                 }
             }

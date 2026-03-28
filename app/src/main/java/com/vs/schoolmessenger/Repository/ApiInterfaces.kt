@@ -98,6 +98,7 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
+import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -508,6 +509,12 @@ interface ApiInterfaces {
             APIKeyNames.attendance_month
         ) attendance_month: String?, @Query(APIKeyNames.staff_id) isStaffId: Int?
     ): Call<StaffAttendanceReportResponse?>?
+
+    @GET(APIMethods.giometric_principal_attendance_staff_report)
+    fun giometricPrincipalAttendanceStaffReport(
+        @Header(APIKeyNames.Authorization) token: String, @Query("from_date") from_date: String?, @Query("to_date") to_date: String?,@Query("is_all") isAll: Boolean?, @Query(APIKeyNames.staff_id) isStaffId: String?
+    ): Call<AttendanceReportFromStaffDataClass?>?
+
 
     @GET(APIMethods.punch_history)
     fun getPunchHistory(
