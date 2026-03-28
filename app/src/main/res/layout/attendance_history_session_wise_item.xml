@@ -18,7 +18,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:drawablePadding="@dimen/five"
             android:gravity="center_vertical"
-            android:drawableStart="@drawable/ic_home"
+            android:drawableStart="@drawable/house_icon_2"
             android:layout_height="wrap_content">
         </TextView>
         <TextView

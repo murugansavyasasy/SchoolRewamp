@@ -29,10 +29,10 @@
 
         <ImageView
             android:id="@+id/imgPersonStrength"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
             android:tint="@color/light_gray__1"
-            android:src="@drawable/person_2_black_bg"
+            android:src="@drawable/three_person_icon"
             ></ImageView>
 
         <TextView
@@ -45,9 +45,9 @@
 
         <ImageView
             android:id="@+id/imgBedCount"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:src="@drawable/book"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/bed_icon"
             android:tint="@color/light_gray__1"
             ></ImageView>
 
@@ -210,7 +210,7 @@
             android:layout_marginEnd="@dimen/five"
             android:text="@string/mark_attendance"
             android:textColor="@color/light_gray__2"
-            android:textSize="@dimen/eighteen_sp"
+            android:textSize="@dimen/sixteen_sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgArrow"
             app:layout_constraintHorizontal_weight="1"

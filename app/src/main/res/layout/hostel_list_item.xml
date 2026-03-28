@@ -4,15 +4,18 @@
     android:id="@+id/cardHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/ten"
+    android:layout_marginBottom="@dimen/five"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/ten"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
     app:cardElevation="8dp"
     app:strokeColor="@color/light_gray_10">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:padding="@dimen/ten">
 
         <ImageView
@@ -55,10 +58,10 @@
             android:layout_marginTop="@dimen/five"
             android:text="School Name"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/fourteen_sp"
+            android:textSize="@dimen/twele_sp"
             app:layout_constrainedHeight="true"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@+id/lblReason"
+            app:layout_constraintBottom_toTopOf="@+id/lblHostelType"
             app:layout_constraintEnd_toEndOf="@+id/lblHostelName"
             app:layout_constraintStart_toStartOf="@+id/lblHostelName"
             app:layout_constraintTop_toBottomOf="@+id/lblHostelName"></TextView>
@@ -96,6 +99,7 @@
             android:drawableTint="@color/light_gray"
             android:gravity="center_vertical"
             android:text="address"
+            android:textSize="@dimen/twele_sp"
             android:textColor="@color/light_gray"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/capacity"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/fourteen_sp"
+                android:textSize="@dimen/twele_sp"
                 >
 
             </TextView>
@@ -145,7 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="50"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="@dimen/five"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/eighteen_sp"
                 >
@@ -172,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hostel_id"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/fourteen_sp"
+                android:textSize="@dimen/twele_sp"
                 >
 
             </TextView>
@@ -182,7 +186,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="@dimen/five"
                 android:text="#123"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/eighteen_sp"

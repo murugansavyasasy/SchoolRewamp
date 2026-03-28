@@ -85,10 +85,10 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
         val count = Constant.isSelectedHostelRoomData?.current_occupancy ?: 0
         val bedCount = Constant.isSelectedHostelRoomData?.total_beds ?: 0
-        binding.lblRoomNo.text = "$count ${if (count == 1) "${getString(R.string.student)}" else "${getString(R.string.students)}"}" +" • "+
+        binding.lblStudentsBeds.text = "$count ${if (count == 1) "${getString(R.string.student)}" else "${getString(R.string.students)}"}" +" • "+
                 "$bedCount ${if (bedCount == 1) "${getString(R.string.Bed)}" else "${getString(R.string.Beds)}"}"
 
-        binding.lblRoomNo.text= "Room ${Constant.isSelectedHostelRoomData?.number ?:"00"}"
+        binding.lblRoomNo.text= "${Constant.isSelectedHostelRoomData?.number ?:"00"}"
 
         //here we are loading the here
         if (isSelectedDate == null) {
