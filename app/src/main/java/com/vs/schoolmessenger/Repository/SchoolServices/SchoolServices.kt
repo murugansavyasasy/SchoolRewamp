@@ -54,6 +54,7 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
+import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -180,6 +181,7 @@ class SchoolServices {
     var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReportList: MutableLiveData<StaffAttendanceReportResponse?>
+    var isStaffWiseAttendanceReportListData: MutableLiveData<AttendanceReportFromStaffDataClass?>
     var isStudentReportList: MutableLiveData<GetStudentReportData?>
     var IsGetEventReport: MutableLiveData<EventResponse?>
     var IsGetEventSchoolReport: MutableLiveData<SchoolEventResponse?>
@@ -313,6 +315,7 @@ class SchoolServices {
         isStaffAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReportList = MutableLiveData()
+        isStaffWiseAttendanceReportListData = MutableLiveData()
         isStudentReportList = MutableLiveData()
         IsGetEventReport = MutableLiveData()
         IsGetEventSchoolReport = MutableLiveData()
@@ -1987,6 +1990,44 @@ class SchoolServices {
 
     val isGiometricStaffWiseAttendanceReportLiveDataList: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReportList
+
+
+    fun getGiometricStaffWiseAttendancereport(
+        isToken: String, isFromDate: String, isToDate: String, isAll: Boolean,  isStaffId: String, activity: Activity
+    ) {
+        RestClient.Companion.apiInterfaces.giometricPrincipalAttendanceStaffReport(
+            isToken, isFromDate,isToDate,isAll, isStaffId
+        )?.enqueue(object : Callback<AttendanceReportFromStaffDataClass?> {
+            override fun onResponse(
+                call: Call<AttendanceReportFromStaffDataClass?>,
+                response: Response<AttendanceReportFromStaffDataClass?>
+            ) {
+                Log.d(
+                    "staffwise_attendance_report",
+                    response.code().toString() + " - " + response.toString()
+                )
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        val status = response.body()!!.status
+                        isStaffWiseAttendanceReportListData.postValue(response.body())
+                    }
+                } else {
+                    isStaffWiseAttendanceReportListData.postValue(null)
+                }
+            }
+
+            override fun onFailure(
+                call: Call<AttendanceReportFromStaffDataClass?>, t: Throwable
+            ) {
+                isStaffWiseAttendanceReportListData.postValue(null)
+                t.printStackTrace()
+            }
+        })
+    }
+
+    val isGioStaffAttendanceReportLiveData: LiveData<AttendanceReportFromStaffDataClass?>
+        get() = isStaffWiseAttendanceReportListData
+
 
 
     fun getStudentReportList(

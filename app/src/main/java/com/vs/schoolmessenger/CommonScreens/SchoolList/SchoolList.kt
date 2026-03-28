@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveRequest
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
+import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaff
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
@@ -465,7 +466,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
 
                 M_STAFF_WISE_ATTENDANCE_REPORT -> {
-                    val intent = Intent(this, StaffWiseAttendanceReport::class.java)
+                    val intent = Intent(this, AttendanceReportFromStaff::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }

@@ -88,6 +88,7 @@ import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
+import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -315,6 +316,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStaffAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
     var isStaffWiseAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
     var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
+    var isGioStaffWiseAttendanceReportList: LiveData<AttendanceReportFromStaffDataClass?>? = null
 
     var isStudentReportList: LiveData<GetStudentReportData?>? = null
         private set
@@ -529,8 +531,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isStaffAttendanceReport = apiSchoolRepositories.isGiometricStaffAttendanceReportLiveData
         isStaffWiseAttendanceReport =
             apiSchoolRepositories.isGiometricStaffWiseAttendanceReportLiveData
-        isStaffWiseAttendanceReportList =
-            apiSchoolRepositories.isGiometricStaffWiseAttendanceReportLiveDataList
+        isStaffWiseAttendanceReportList = apiSchoolRepositories.isGiometricStaffWiseAttendanceReportLiveDataList
+        isGioStaffWiseAttendanceReportList = apiSchoolRepositories.isGioStaffAttendanceReportLiveData
         isStudentReportList = apiSchoolRepositories.isStudentReportLiveData
         isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
@@ -1012,6 +1014,16 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.getGiometricStaffWiseAttendancereportStaffList(
             isToken, isSelectedDate, isStaffId, activity
+        )
+    }
+
+    fun getGioMetricAttendanceReport(
+        isToken: String, isFromDate: String, isToDate: String, isAll: Boolean,  isStaffId: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
+            isToken, isFromDate,isToDate,isAll, isStaffId, activity
         )
     }
 
