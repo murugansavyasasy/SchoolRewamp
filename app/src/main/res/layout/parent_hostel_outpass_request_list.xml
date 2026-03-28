@@ -36,52 +36,15 @@
             android:paddingBottom="@dimen/fifty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rytSearch"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/consBasicMenuDetails"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/lblMenuName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:text="Outpass Requests"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/five"
-                    android:textSize="@dimen/sixteen_sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintEnd_toStartOf="@+id/imgSearchIcon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                </TextView>
-                <ImageView
-                    app:layout_constraintHorizontal_weight="0.3"
-                    android:id="@+id/imgSearchIcon"
-                    android:layout_marginEnd="@dimen/ten"
-                    app:layout_constraintStart_toEndOf="@+id/lblMenuName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="@dimen/twenty"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/search_icon"
-                    android:layout_height="@dimen/twenty">
-                </ImageView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rytSearch"
                 android:visibility="gone"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/rcHostelOutpassRequest"
-                app:layout_constraintTop_toBottomOf="@+id/consBasicMenuDetails"
                 android:layout_height="@dimen/thirty_five"
                 android:background="@drawable/rect_grey"
                 >

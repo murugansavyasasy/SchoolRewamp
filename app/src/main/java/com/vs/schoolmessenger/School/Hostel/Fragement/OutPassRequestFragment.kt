@@ -89,6 +89,12 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
 
+                        val pendingCount = response.data
+                            ?.flatMap { it.attd_details ?: emptyList() }   // merge all lists
+                            ?.count { it.status.equals("PENDING", ignoreCase = true) } ?: 0
+
+                        binding.lblPendingRequest.text = "$pendingCount ${getString(R.string.pending_approval)}"
+
                         isLoadAttendanceHistory(response.data)
 
                     } else {
@@ -97,6 +103,9 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
+
+                        binding.lblPendingRequest.text = "0 ${getString(R.string.pending_approval)}"
+
                     }
 
                 } else {
@@ -105,6 +114,9 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
+                    binding.lblPendingRequest.text = "- ${getString(R.string.pending_approval)}"
+
+
                 }
 
             } else {
@@ -114,10 +126,12 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                 binding.imgNoDataFound.visibility = View.VISIBLE
                 binding.lblErrorMessage.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
+                binding.lblPendingRequest.text = "- ${getString(R.string.pending_approval)}"
+
             }
         }
 
-        appViewModel!!.isstaffleaverequestapprove?.observe(requireActivity()) { response ->
+        appViewModel!!.schoolHostelOutpassUpdateStatus?.observe(requireActivity()) { response ->
             Constant.hideLoading(requireActivity())
 
             if (response != null && response.status) {
@@ -129,6 +143,8 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                     response.message,
                     requireActivity()
                 )
+                isGetAttendanceHistory()
+
             } else {
                 isApprovedOrRejectedSuccessful = false
                 pendingApprovalCallback?.invoke(false)
@@ -179,10 +195,10 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
         var isMessage = ""
         if (isButtonClick) {
             request = LeaveApproveRequest(id = data.id.toString(), is_approve = true)
-            isMessage = "Are you sure you want to approve this outpass request"
+            isMessage = getString(R.string.are_you_sure_you_want_to_approve_this_outpass_request)
         } else {
             request = LeaveApproveRequest(id = data.id.toString(), is_approve = false)
-            isMessage = "Are you sure you want to reject this outpass request"
+            isMessage = getString(R.string.are_you_sure_you_want_to_reject_this_outpass_request)
         }
         Constant.showSendConfirmationDialog(
             requireActivity(),

@@ -1476,7 +1476,7 @@ interface ApiInterfaces {
     ): Call<getParentHostelDashboard?>
 
     @Headers("Content-Type: application/json")
-    @PUT(APIMethods.applyHostelPass)
+    @POST(APIMethods.applyHostelPass)
     fun applyHostelOutpass(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<applyOutpassResponse?>

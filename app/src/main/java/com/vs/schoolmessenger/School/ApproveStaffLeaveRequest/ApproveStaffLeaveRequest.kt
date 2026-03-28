@@ -52,12 +52,6 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
     private var leaveRequestMonthWiseList: List<StaffMonthWiseLeaveData>? = null
     var isSearching = false
     private var userDetails: UserDetails? = null
-    private var msg_id: Int = -1
-    private var headerId: String? = null
-    private var instituteId: String? = null
-    private var receiverId: String? = null
-    private var menu_name: String? = null
-    private var fromNotification: Boolean = false
 
 
     override fun setupViews() {
@@ -73,25 +67,7 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
 
         userDetails = SharedPreference.getUserDetails(this)
 
-        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
-        if (fromNotification) {
-            Constant.isParentChoose = false
-            msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra(Constant.header_id)
-            instituteId = intent.getStringExtra(Constant.institute_id)
-            receiverId = intent.getStringExtra(Constant.receiverid)
-            menu_name = intent.getStringExtra(Constant.menu_name)
-
-            Log.d(
-                "NoticeBoard_EXTRAS",
-                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
-            )
-
-            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
-            SharedPreference.putStaffDetails(this, matchedChild!!)
-            Constant.isSelectedMenuName = menu_name!!
-        }
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -198,9 +174,6 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
                     binding.txtNoData.visibility = View.GONE
                     leaveRequestMonthWiseList = response.data
                     isloadleaverequestData(leaveRequestMonthWiseList)
-                    if (fromNotification) {
-                        scrollToMessageId(headerId)
-                    }
 
                 } else {
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
@@ -313,129 +286,6 @@ class ApproveStaffLeaveRequest : BaseActivity<ApproveStaffLeaveRequestBinding>()
     override fun onUpdateStatus(leaveData: StaffLeaveData) {
         mAdapter.notifyDataSetChanged()
     }
-
-
-
-
-    private fun scrollToMessageId(headerId: String?) {
-        if (msg_id == -1 || headerId.isNullOrEmpty()) return
-
-        // find outer month index that contains the headerId
-        val targetMonthIndex = mAdapter.filteredList.indexOfFirst { month ->
-            month.details.any { it.id == headerId }
-        }
-        if (targetMonthIndex == -1) {
-            Log.d("ScrollDebug", "No month found with headerId: $headerId")
-            return
-        }
-
-        // ensure this runs on UI thread after any pending layout
-        binding.rcyleaverequest.post {
-            // Use instant scroll to make sure the ViewHolder is created (smoothScroll is async)
-            binding.rcyleaverequest.scrollToPosition(targetMonthIndex)
-
-            // Listen for scrolling/layout changes so we know when the outer item is actually visible
-            val outerListener = object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                    val lm = rv.layoutManager as? LinearLayoutManager ?: return
-                    val first = lm.findFirstVisibleItemPosition()
-                    val last = lm.findLastVisibleItemPosition()
-
-                    if (targetMonthIndex in first..last) {
-                        // Target outer month is visible — we can stop listening
-                        rv.removeOnScrollListener(this)
-
-                        // Try to get the outer ViewHolder
-                        val outerVH =
-                            rv.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthwiseLeaveAdapter.DataViewHolder
-
-                        if (outerVH == null) {
-                            // fallback: post again shortly to allow layout to settle
-                            rv.post {
-                                performInnerScrollAndHighlight(targetMonthIndex, headerId)
-                            }
-                        } else {
-                            performInnerScrollAndHighlight(targetMonthIndex, headerId)
-                        }
-                    }
-                }
-            }
-
-            // Add listener and also call listener logic once in case already visible
-            binding.rcyleaverequest.addOnScrollListener(outerListener)
-            // Immediately try in case the item is already visible
-            outerListener.onScrolled(binding.rcyleaverequest, 0, 0)
-        }
-    }
-
-    /**
-     * Helper that scrolls inner RV to the item with headerId and highlights it.
-     * Uses a tiny retry if inner ViewHolder is not yet attached.
-     */
-    private fun performInnerScrollAndHighlight(targetMonthIndex: Int, headerId: String?) {
-        val outerVH =
-            binding.rcyleaverequest.findViewHolderForAdapterPosition(targetMonthIndex) as? MonthwiseLeaveAdapter.DataViewHolder
-        val innerRV = outerVH?.rvMonthWiseHistory
-
-        if (innerRV == null) {
-            Log.d(
-                "ScrollDebug",
-                "Inner RV not found for month index $targetMonthIndex — retrying shortly"
-            )
-            // small retry to give RecyclerView time to layout the inner recycler
-            binding.rcyleaverequest.postDelayed({
-                performInnerScrollAndHighlight(targetMonthIndex, headerId)
-            }, 100)
-            return
-        }
-
-        // find inner index
-        val innerPosition =
-            mAdapter.filteredList[targetMonthIndex].details.indexOfFirst { it.id == headerId }
-        if (innerPosition == -1) {
-            Log.d("ScrollDebug", "No inner position found for headerId: $headerId")
-            return
-        }
-
-        // scroll inner RV to the target item (instant)
-        innerRV.scrollToPosition(innerPosition)
-
-        // highlight when the inner view holder is available; add small retry loop
-        innerRV.post {
-            // Try to grab the inner view holder (may be null immediately)
-            val innerVH =
-                innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
-
-            if (innerVH == null) {
-                // retry once more after a tiny delay
-                innerRV.postDelayed({
-                    val retryInnerVH =
-                        innerRV.findViewHolderForAdapterPosition(innerPosition) as? LeaveRequestAdapter.DataViewHolder
-                    retryInnerVH?.itemView?.let { itemView ->
-                        highlightItemView(itemView)
-                    } ?: Log.d(
-                        "ScrollDebug",
-                        "Inner VH still null after retry for pos $innerPosition"
-                    )
-                }, 100)
-            } else {
-                innerVH.itemView?.let { itemView ->
-                    highlightItemView(itemView)
-                }
-            }
-        }
-    }
-
-    private fun highlightItemView(itemView: View) {
-        val originalBackground = itemView.background
-        itemView.setBackgroundColor(
-            resources.getColor(R.color.light_yellow_5, null)
-        )
-        Handler(Looper.getMainLooper()).postDelayed({
-            itemView.background = originalBackground
-        }, Constant.TIME_OUT)
-    }
-
 
     private fun isloadleaverequestData(newData: List<StaffMonthWiseLeaveData>?) {
 

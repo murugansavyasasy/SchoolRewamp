@@ -1,29 +1,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="wrap_content"
-    >
-    <LinearLayout
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_height="wrap_content">
         <!-- DAY (FIXED) -->
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/div2"
             style="@style/CustomTextStylePoppinsBold"
             android:id="@+id/txtDay"
             android:layout_width="@dimen/eighty"
             android:layout_height="wrap_content"
             android:padding="12dp" />
+        <View
+            android:id="@+id/div2"
+            android:background="#E5E5EA"
+            app:layout_constraintStart_toEndOf="@+id/txtDay"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rowScroll"
+            app:layout_constraintBottom_toBottomOf="@+id/txtDay"
+            android:layout_width="1dp"
+            android:layout_height="0dp">
+
+        </View>
 
         <!-- SCROLLABLE ROW -->
         <HorizontalScrollView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/div2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/rowScroll"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scrollbars="none">
 
             <LinearLayout
+                android:gravity="center"
                 android:id="@+id/containerSessions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,7 +51,7 @@
 
         </HorizontalScrollView>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:layout_width="match_parent"

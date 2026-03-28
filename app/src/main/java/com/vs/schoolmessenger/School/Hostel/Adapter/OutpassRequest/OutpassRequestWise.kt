@@ -120,8 +120,12 @@ class OutpassRequestWise(
                     R.color.red
                 )
 
+                cardHeader.setCardBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.light_red_14)
+                )
+
                 cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_1)
+                    ContextCompat.getColor(itemView.context, R.color.light_red_15)
                 )
                 applyTintedBackground(
                     lblStatus,
@@ -129,12 +133,10 @@ class OutpassRequestWise(
                     R.color.very_light_red_3
                 )
 
-                lblStatus.text=data.status
+                lblStatus.text=context.getString(R.string.rejected)
                 lblStatus.setTextColor(context.getColor(R.color.red))
 
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red)
-                )
+
 
 
             }
@@ -151,22 +153,23 @@ class OutpassRequestWise(
                     R.drawable.rect_bg_light_green_present,
                     R.color.very_light_green_3
                 )
-                lblStatus.text=data.status
+                lblStatus.text=context.getString(R.string.approved)
                 lblStatus.setTextColor(context.getColor(R.color.green))
 
 
 
                 cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_four)
+                    ContextCompat.getColor(itemView.context, R.color.light_green_13)
                 )
 
                 cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_bg)
+                    ContextCompat.getColor(itemView.context, R.color.light_green_11)
                 )
 
 
             }
-            else if (data.status == Constant.waiting_for_approval.uppercase()) {
+            else if (data.status == Constant.pending.uppercase()) {
+
                 groupApproveReject.visibility= View.VISIBLE
 
                 applyTintedBackground(
@@ -179,7 +182,7 @@ class OutpassRequestWise(
 
 
                 lblRejected.setOnClickListener {
-                    listner.onApproveClicked(data, position, true) { isApproved ->
+                    listner.onApproveClicked(data, position, false) { isApproved ->
                         if (isApproved) {
                             data.status = Constant.rejected_.uppercase()
                         }
@@ -187,7 +190,7 @@ class OutpassRequestWise(
                 }
 
                 lblApprove.setOnClickListener {
-                    listner.onApproveClicked(data, position, false) { isApproved ->
+                    listner.onApproveClicked(data, position, true) { isApproved ->
                         if (isApproved) {
                             data.status = Constant.approved.uppercase()
                         }

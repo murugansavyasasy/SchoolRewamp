@@ -97,7 +97,7 @@ class StatusWiseOutpassRequest(
                     lblStatus.text = "${context.getString(R.string.rejected)} (${data.attd_details.size})"
                 }
 
-                Constant.approved, ->{
+                Constant.approved, Constant.approval ->{
                     lblStatus.text = "${context.getString(R.string.approved)} (${data.attd_details.size})"
                     lblStatus.setTextColor(Color.parseColor("#2E7D32"))
                     imgStatus.setImageResource(R.drawable.tick_icon_2)
@@ -108,7 +108,7 @@ class StatusWiseOutpassRequest(
                 }
 
                 else->{
-                    lblStatus.text = "${context.getString(R.string.pending)} (${data.attd_details.size})"
+                    lblStatus.text = "${context.getString(R.string.pending_approval)} (${data.attd_details.size})"
                     lblStatus.setTextColor(context.getColor(R.color.dark_orange_3))
                     imgStatus.setImageResource(R.drawable.waiting_for_approval)
                     imgStatus.setColorFilter(

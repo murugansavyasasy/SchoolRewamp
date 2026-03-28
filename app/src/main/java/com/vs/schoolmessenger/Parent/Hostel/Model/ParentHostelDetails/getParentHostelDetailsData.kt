@@ -1,6 +1,9 @@
 package com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails
 
-class getParentHostelDetailsData (
+import java.io.Serializable
+
+
+data class getParentHostelDetailsData (
     val room_allocation_id: String,
     val hostel_id: String,
     val hostel_name: String,
@@ -24,4 +27,4 @@ class getParentHostelDetailsData (
     val warden_name: List<String>,
     val institute_name: String,
     val institute_address: String
-)
+): Serializable

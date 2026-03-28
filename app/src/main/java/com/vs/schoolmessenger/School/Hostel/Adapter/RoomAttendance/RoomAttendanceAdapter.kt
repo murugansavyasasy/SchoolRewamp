@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.Hostel.Adapter.RoomAttendance
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,9 +64,8 @@ class RoomAttendanceAdapter(
     }
 
     fun getUpdatedList(): List<RoomStudentAttendanceData> {
-        return itemList?:emptyList()
+        return itemList ?: emptyList()
     }
-
 
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -77,7 +77,8 @@ class RoomAttendanceAdapter(
         private val lblAccept: MaterialButton = itemView.findViewById(R.id.lblAccept)
         private val lblDecline: MaterialButton = itemView.findViewById(R.id.lblDecline)
         private val lblOutpassReason: TextView = itemView.findViewById(R.id.lblOutpassReason)
-        private val lblOutpassPermissionTimeDuration: TextView = itemView.findViewById(R.id.lblOutpassPermissionTimeDuration)
+        private val lblOutpassPermissionTimeDuration: TextView =
+            itemView.findViewById(R.id.lblOutpassPermissionTimeDuration)
         private val groupsEntireOutPass: Group = itemView.findViewById(R.id.groupsEntireOutPass)
         private val lblOutpassStatus: TextView = itemView.findViewById(R.id.lblOutpassStatus)
 
@@ -108,6 +109,16 @@ class RoomAttendanceAdapter(
                 colorList.random()
             }
 
+            lblDecline.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
+            lblDecline.setTextColor(ContextCompat.getColor(context, R.color.white))
+            lblDecline.iconTint = ContextCompat.getColorStateList(context, R.color.white)
+
+
+            lblAccept.backgroundTintList =
+                ContextCompat.getColorStateList(context, R.color.light_green4)
+            lblAccept.setTextColor(ContextCompat.getColor(context, R.color.white))
+            lblAccept.iconTint = ContextCompat.getColorStateList(context, R.color.white)
+
             val drawable = lblInitialName.background as GradientDrawable
             drawable.setColor(ContextCompat.getColor(context, color))
             lblInitialName.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -117,96 +128,285 @@ class RoomAttendanceAdapter(
             lblPresent.setOnClickListener {
                 data.status = "PRESENT"
                 updateButtonUI("PRESENT")
-                listener.onAttendanceChanged(itemList?:emptyList())
+                listener.onAttendanceChanged(itemList ?: emptyList())
 
             }
 
             lblAbsent.setOnClickListener {
                 data.status = "ABSENT"
                 updateButtonUI("ABSENT")
-                listener.onAttendanceChanged(itemList?:emptyList())
+                listener.onAttendanceChanged(itemList ?: emptyList())
             }
 
-            when(data.outpass_status){
-                Constant.approved.uppercase() -> {
-                    groupsEntireOutPass.visibility= View.VISIBLE
-                    lblAccept.visibility= View.GONE
-                    lblDecline.visibility= View.GONE
-
-                    applyTintedBackground(
-                        lblOutpassStatus,
-                        R.drawable.green_bg_radius,
-                        R.color.very_light_green_3
-                    )
-                    lblOutpassStatus.text=data.status
-                    lblOutpassStatus.setTextColor(context.getColor(R.color.green))
+            val hasOutpassData =
+                !data.outpass_id.isNullOrEmpty() ||
+                        !data.out_date.isNullOrEmpty() ||
+                        !data.in_date.isNullOrEmpty() ||
+                        !data.reason.isNullOrEmpty() ||
+                        !data.outpasss_status.isNullOrEmpty()
 
 
 
-                }
-                Constant.rejected_.uppercase()->{
-                    groupsEntireOutPass.visibility= View.VISIBLE
-                    lblAccept.visibility= View.GONE
-                    lblDecline.visibility= View.GONE
+            if (hasOutpassData) {
 
-                    applyTintedBackground(
-                        lblOutpassStatus,
-                        R.drawable.green_bg_radius,
-                        R.color.very_light_red_3
-                    )
+                groupsEntireOutPass.visibility = View.VISIBLE
 
-                    lblOutpassStatus.text=data.status
-                    lblOutpassStatus.setTextColor(context.getColor(R.color.red))
+                when (data.outpasss_status?.uppercase()) {
 
+                    Constant.approved.uppercase() -> {
+                        Log.d("isComig,","isApprove")
 
-                }
+                        lblAccept.visibility = View.GONE
+                        lblDecline.visibility = View.GONE
 
-                Constant.pending.uppercase()->{
-
-                    lblAccept.setOnClickListener {
-                        listener.onApproveClicked(data, position, true) { isApproved ->
-                            if (isApproved) {
-                                data.outpass_status = Constant.approved.uppercase()
-                            }
-                        }
+                        lblOutpassStatus.background = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.rect_bg_light_green_approved
+                        )
+                        lblOutpassStatus.text = "Approved"
+                        lblOutpassStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.green
+                            )
+                        )
                     }
 
-                    lblDecline.setOnClickListener {
-                        listener.onApproveClicked(data, position, false) { isApproved ->
-                            if (isApproved) {
-                                data.outpass_status = Constant.rejected_.uppercase()
+                    Constant.rejected_.uppercase() -> {
 
-                            }
-                        }
+                        Log.d("isComig,","isRejected")
+
+                        lblAccept.visibility = View.GONE
+                        lblDecline.visibility = View.GONE
+
+                        lblOutpassStatus.background = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.rect_bg_light_red_rejected
+                        )
+                        lblOutpassStatus.text = "Rejected"
+                        lblOutpassStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
                     }
 
-                    lblAccept.backgroundTintList =
-                        ContextCompat.getColorStateList(context, R.color.light_green4)
-                    lblDecline.backgroundTintList =
-                        ContextCompat.getColorStateList(context, R.color.red)
+                    else -> {
 
-                    groupsEntireOutPass.visibility= View.VISIBLE
-                    lblAccept.visibility= View.GONE
-                    lblDecline.visibility= View.GONE
+                        Log.d("isComig,","isPending")
 
-                    lblOutpassStatus.text=context.getString(R.string.pending)
-                    lblOutpassStatus.setTextColor(context.getColor(R.color.dark_brown_3))
-                    applyTintedBackground(
-                        lblOutpassStatus,
-                        R.drawable.green_bg_radius,
-                        R.color.very_light_orange_3
-                    )
+                        //  Pending case
+                        lblAccept.visibility = View.VISIBLE
+                        lblDecline.visibility = View.VISIBLE
 
-                    lblOutpassReason.text=data.reason
-                    lblOutpassPermissionTimeDuration.text= "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
-                        Constant.formatDateTime(data.out_date)}"
+                        lblOutpassStatus.background = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.rect_bg_light_orange_pending
+                        )
+                        lblOutpassStatus.text = "Pending"
+                        lblOutpassStatus.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.dark_brown_3
+                            )
+                        )
+
+
+                        lblAccept.setOnClickListener {
+                            listener.onApproveClicked(data, position, true) { isApproved ->
+                                if (isApproved) {
+                                    data.outpasss_status = Constant.approved.uppercase()
+                                    notifyItemChanged(position)
+                                }
+                            }
+                        }
+
+                        lblDecline.setOnClickListener {
+                            listener.onApproveClicked(data, position, false) { isApproved ->
+                                if (isApproved) {
+                                    data.outpasss_status = Constant.rejected_.uppercase()
+                                    notifyItemChanged(position)
+                                }
+                            }
+                        }
+
+                    }
                 }
-                else -> {
-                    groupsEntireOutPass.visibility= View.GONE
-                }
 
 
+                //  Set common data
+                lblOutpassReason.text = data.reason
+
+                lblOutpassPermissionTimeDuration.text =
+                    "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
+                        Constant.formatDateTime(
+                            data.out_date
+                        )
+                    }"
+
+            } else {
+
+                // No outpass data → hide everything
+                groupsEntireOutPass.visibility = View.GONE
+                lblAccept.visibility = View.GONE
+                lblDecline.visibility = View.GONE
             }
+
+//            if (data.outpass_id != "") {
+//                groupsEntireOutPass.visibility = View.GONE
+//                when (data.outpass_status) {
+//
+//                    Constant.approved.uppercase() -> {
+//                        groupsEntireOutPass.visibility = View.VISIBLE
+//                        lblAccept.visibility = View.GONE
+//                        lblDecline.visibility = View.GONE
+//
+//                        lblOutpassStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_green_approved)
+//                        lblOutpassStatus.text = data.outpass_status.lowercase().replaceFirstChar { it.uppercase() }
+//                        lblOutpassStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
+//                    }
+//
+//                    Constant.rejected_.uppercase() -> {
+//                        groupsEntireOutPass.visibility = View.VISIBLE
+//                        lblAccept.visibility = View.GONE
+//                        lblDecline.visibility = View.GONE
+//
+//
+//
+//                        lblOutpassStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_red_rejected)
+//                        lblOutpassStatus.text = data.outpass_status.lowercase().replaceFirstChar { it.uppercase() }
+//                        lblOutpassStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
+//
+//                    }
+//
+//                    else -> {
+//                        groupsEntireOutPass.visibility = View.GONE
+//                    }
+//                }
+//
+//            }
+//            else {
+//
+//                lblDecline.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
+//                lblDecline.setTextColor(ContextCompat.getColor(context, R.color.white))
+//                lblDecline.iconTint = ContextCompat.getColorStateList(context, R.color.white)
+//
+//
+//                lblAccept.backgroundTintList = ContextCompat.getColorStateList(context, R.color.light_green4)
+//                lblAccept.setTextColor(ContextCompat.getColor(context, R.color.white))
+//                lblAccept.iconTint = ContextCompat.getColorStateList(context, R.color.white)
+//
+//
+//                lblAccept.setOnClickListener {
+//                    listener.onApproveClicked(data, position, true) { isApproved ->
+//                        if (isApproved) {
+//                            data.outpass_status = Constant.approved.uppercase()
+//                            notifyItemChanged(position)
+//                        }
+//                    }
+//                }
+//
+//                lblDecline.setOnClickListener {
+//                    listener.onApproveClicked(data, position, false) { isApproved ->
+//                        if (isApproved) {
+//                            data.outpass_status = Constant.rejected_.uppercase()
+//                            notifyItemChanged(position)
+//                        }
+//                    }
+//                }
+//
+//                groupsEntireOutPass.visibility = View.VISIBLE
+//                lblAccept.visibility = View.GONE
+//                lblDecline.visibility = View.GONE
+//
+//                lblOutpassStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_orange_pending)
+//                lblOutpassStatus.text = context.getString(R.string.pending)
+//                lblOutpassStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_brown_3))
+//
+//                lblOutpassReason.text = data.reason
+//                lblOutpassPermissionTimeDuration.text =
+//                    "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
+//                        Constant.formatDateTime(data.out_date)
+//                    }"
+//
+//            }
+
+//            when(data.outpass_status){
+//                Constant.approved.uppercase() -> {
+//                    groupsEntireOutPass.visibility= View.VISIBLE
+//                    lblAccept.visibility= View.GONE
+//                    lblDecline.visibility= View.GONE
+//
+//                    applyTintedBackground(
+//                        lblOutpassStatus,
+//                        R.drawable.green_bg_radius,
+//                        R.color.very_light_green_3
+//                    )
+//                    lblOutpassStatus.text=data.status
+//                    lblOutpassStatus.setTextColor(context.getColor(R.color.green))
+//
+//
+//
+//                }
+//                Constant.rejected_.uppercase()->{
+//                    groupsEntireOutPass.visibility= View.VISIBLE
+//                    lblAccept.visibility= View.GONE
+//                    lblDecline.visibility= View.GONE
+//
+//                    applyTintedBackground(
+//                        lblOutpassStatus,
+//                        R.drawable.green_bg_radius,
+//                        R.color.very_light_red_3
+//                    )
+//
+//                    lblOutpassStatus.text=data.status
+//                    lblOutpassStatus.setTextColor(context.getColor(R.color.red))
+//
+//
+//                }
+//
+//                Constant.pending.uppercase()->{
+//
+//                    lblAccept.setOnClickListener {
+//                        listener.onApproveClicked(data, position, true) { isApproved ->
+//                            if (isApproved) {
+//                                data.outpass_status = Constant.approved.uppercase()
+//                            }
+//                        }
+//                    }
+//
+//                    lblDecline.setOnClickListener {
+//                        listener.onApproveClicked(data, position, false) { isApproved ->
+//                            if (isApproved) {
+//                                data.outpass_status = Constant.rejected_.uppercase()
+//
+//                            }
+//                        }
+//                    }
+//
+//                    lblAccept.backgroundTintList =
+//                        ContextCompat.getColorStateList(context, R.color.light_green4)
+//                    lblDecline.backgroundTintList =
+//                        ContextCompat.getColorStateList(context, R.color.red)
+//
+//                    groupsEntireOutPass.visibility= View.VISIBLE
+//                    lblAccept.visibility= View.GONE
+//                    lblDecline.visibility= View.GONE
+//
+//                    lblOutpassStatus.text=context.getString(R.string.pending)
+//                    lblOutpassStatus.setTextColor(context.getColor(R.color.dark_brown_3))
+//                    applyTintedBackground(
+//                        lblOutpassStatus,
+//                        R.drawable.green_bg_radius,
+//                        R.color.very_light_orange_3
+//                    )
+//
+//                    lblOutpassReason.text=data.reason
+//                    lblOutpassPermissionTimeDuration.text= "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
+//                        Constant.formatDateTime(data.out_date)}"
+//                }
+//                else -> {
+//                    groupsEntireOutPass.visibility= View.GONE
+//                }
+//
+//
+//            }
 
 
         }
@@ -234,8 +434,7 @@ class RoomAttendanceAdapter(
                 lblAbsent.iconTint =
                     ContextCompat.getColorStateList(context, R.color.black)
 
-            }
-            else if(status.equals("Absent", true)) {
+            } else if (status.equals("Absent", true)) {
 
                 lblAbsent.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.red)
@@ -249,9 +448,7 @@ class RoomAttendanceAdapter(
                 lblPresent.iconTint =
                     ContextCompat.getColorStateList(context, R.color.black)
 
-            }
-
-            else {
+            } else {
                 lblAbsent.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.white)
                 lblAbsent.setTextColor(ContextCompat.getColor(context, R.color.black))

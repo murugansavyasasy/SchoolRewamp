@@ -35,7 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblMenuName"
+                app:layout_constraintEnd_toStartOf="@+id/img_search_Icon"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -77,6 +78,20 @@
                 </RelativeLayout>
 
             </RelativeLayout>
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/img_search_Icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/search_icon"
+                android:tint="@color/white"
+                app:layout_constraintVertical_bias="1.0"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five">
+
+            </ImageView>
 
             <TextView
                 android:id="@+id/lblMenuName"

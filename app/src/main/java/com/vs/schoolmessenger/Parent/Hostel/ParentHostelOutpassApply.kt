@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetailsData
 
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -42,6 +43,8 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
     // TIME GAP (minutes)
     private var timeGapMinutes = 60
+    private var isParentHostelDetails: List<getParentHostelDetailsData> = listOf()
+
 
 
 
@@ -52,17 +55,18 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
             statusBarBgView = binding.statusBarBackground
         )
 
-//        val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
-//        val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
 
         binding.lblSubmitRequest.setBackgroundTintList(
             ContextCompat.getColorStateList(this, R.color.PrimaryColor)
         )
 
-        binding.toolbarLayout.consStudentDetails.visibility = View.VISIBLE
+        binding.toolbarLayout.consStudentDetails.visibility = View.GONE
         binding.toolbarLayout.imgCall.visibility = View.GONE
         binding.toolbarLayout.rlaSpinner.visibility = View.GONE
-        binding.toolbarLayout.lblMenuName.visibility = View.GONE
+        binding.toolbarLayout.lblMenuName.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchIcon.visibility= View.GONE
+
+        binding.toolbarLayout.lblMenuName.text= getString(R.string.new_outpass_request)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -71,6 +75,9 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
         binding.lblToDate.setOnClickListener(this)
         binding.selectedFromDate.setOnClickListener(this)
         binding.selectedToDate.setOnClickListener(this)
+
+        val isHostelDetails = intent.getSerializableExtra("PARENT_HOSTEL_LIST") as? ArrayList<getParentHostelDetailsData> ?: arrayListOf()
+        isParentHostelDetails=isHostelDetails
 
         val (_, dayOfWeek, fullDate, _) = Constant.getCurrentDateInfo2()
         txtStartDate = fullDate
@@ -156,14 +163,14 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                 getString(R.string.permission_ok),
                 getString(R.string.Cancel),
                 "",
-                "Are you sure want to apply outpass?"
+                getString(R.string.are_you_sure_want_to_apply_outpass)
             ) { confirmed ->
 
                 if (confirmed) {
 
                     val finalJson = JsonObject().apply {
-                        addProperty("hostel_id", "0")
-                        addProperty("room_id","0")
+                        addProperty("hostel_id", isParentHostelDetails.firstOrNull()?.hostel_id?:"")
+                        addProperty("room_id",isParentHostelDetails.firstOrNull()?.room_id?:"")
                         addProperty("out_date", outDate)
                         addProperty("in_date", inDate)
                         addProperty("emergency_contact", binding.edtContactNumber.text.toString().trim())
@@ -174,11 +181,11 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
                     Constant.showLoading(this)
 
-//                    appViewModel?.applyHostelOutpass(
-//                        isAccessToken ?: "",
-//                        finalJson,
-//                        this
-//                    )
+                    appViewModel?.applyHostelOutpass(
+                        isAccessToken ?: "",
+                        finalJson,
+                        this
+                    )
                 }
             }
         }
@@ -394,29 +401,33 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
             R.id.selectedFromTime -> {
 
-                val now = getCurrentCal()
-
                 val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
                 val selectedDate = sdf.parse(txtStartDate ?: "") ?: Date()
                 val today = sdf.parse(sdf.format(Date())) ?: Date()
 
-                //  IF allowPastTime = false → block past date
                 if (!allowPastTime && selectedDate.before(today)) {
                     Toast.makeText(this, "Cannot select time for past date", Toast.LENGTH_SHORT).show()
                     return
+                }
+
+                //  USE PREVIOUS TIME OR CURRENT TIME
+                val defaultCal = if (!txtFromTime.isNullOrEmpty()) {
+                    parseTime(txtFromTime!!)
+                } else {
+                    getCurrentCal()
                 }
 
                 val picker = android.app.TimePickerDialog(
                     this,
                     { _, hour, minute ->
 
-                        val selectedCal = Calendar.getInstance()
-
-                        selectedCal.set(Calendar.HOUR_OF_DAY, hour)
-                        selectedCal.set(Calendar.MINUTE, minute)
-                        selectedCal.set(Calendar.SECOND, 0)
-                        selectedCal.set(Calendar.MILLISECOND, 0)
+                        val selectedCal = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hour)
+                            set(Calendar.MINUTE, minute)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                        }
 
                         if (!allowPastTime && selectedDate == today) {
 
@@ -424,9 +435,9 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
                             selectedCal.set(Calendar.YEAR, nowCal.get(Calendar.YEAR))
                             selectedCal.set(Calendar.MONTH, nowCal.get(Calendar.MONTH))
-                            selectedCal.set(Calendar.DAY_OF_MONTH, nowCal.get(Calendar.DAY_OF_MONTH)) // ✅ FIX
+                            selectedCal.set(Calendar.DAY_OF_MONTH, nowCal.get(Calendar.DAY_OF_MONTH))
 
-                            if (selectedCal.time.before(now.time)) {
+                            if (selectedCal.time.before(nowCal.time)) {
                                 Toast.makeText(this, "Past time not allowed", Toast.LENGTH_SHORT).show()
                                 return@TimePickerDialog
                             }
@@ -438,8 +449,8 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                         updateToTime()
 
                     },
-                    now.get(Calendar.HOUR_OF_DAY),
-                    now.get(Calendar.MINUTE),
+                    defaultCal.get(Calendar.HOUR_OF_DAY),
+                    defaultCal.get(Calendar.MINUTE),
                     false
                 )
 
@@ -453,13 +464,19 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                     return
                 }
 
-                val now = getCurrentCal()
                 val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
                 val fromDate = sdf.parse(txtStartDate ?: "") ?: Date()
                 val toDate = sdf.parse(txtEndDate ?: "") ?: Date()
 
                 val isSameDay = sdf.format(fromDate) == sdf.format(toDate)
+
+                //  USE PREVIOUS TIME OR CURRENT
+                val defaultCal = if (!txtToTime.isNullOrEmpty()) {
+                    parseTime(txtToTime!!)
+                } else {
+                    getCurrentCal()
+                }
 
                 val picker = android.app.TimePickerDialog(
                     this,
@@ -472,7 +489,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                             set(Calendar.MILLISECOND, 0)
                         }
 
-                        //  ALWAYS enforce for same day
+                        // ALWAYS enforce for same day
                         if (isSameDay) {
 
                             val fromCal = parseTime(txtFromTime!!)
@@ -497,8 +514,8 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                         binding.selectedToTime.text = txtToTime
 
                     },
-                    now.get(Calendar.HOUR_OF_DAY),
-                    now.get(Calendar.MINUTE),
+                    defaultCal.get(Calendar.HOUR_OF_DAY),
+                    defaultCal.get(Calendar.MINUTE),
                     false
                 )
 

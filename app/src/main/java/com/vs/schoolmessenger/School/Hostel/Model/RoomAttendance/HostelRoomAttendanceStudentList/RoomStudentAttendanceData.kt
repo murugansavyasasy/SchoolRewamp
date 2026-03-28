@@ -15,5 +15,5 @@ data class RoomStudentAttendanceData(
     var out_date: String,
     var in_date: String,
     var reason: String,
-    var outpass_status: String,
+    var outpasss_status: String,
     )

@@ -14,16 +14,19 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelDetailedAttendance.HostelDetailedAttendanceAdpater
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelFeeDetails.HostelFeeDetail
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelInformation.HostelInfoAdapter
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
+import com.vs.schoolmessenger.Parent.Hostel.Adapter.TodayAttendance.TodayAttendanceAdapter
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.getHostelDetailedAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.FeeDetails
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.GatePass
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.HostelInfo
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
+import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetailsData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
@@ -44,16 +47,19 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     }
 
     private var isAccessToken: String? = null
-    var isSelectedMonth=""
     private var appViewModel: App? = null
     private lateinit var mAdapter: HostelDetailedAttendanceAdpater
     lateinit var nAdapter: OutpassRequestList
     var outpassRequestList: List<OutpassRequestData> = emptyList()
     lateinit var oAdapter: HostelInfoAdapter
+    lateinit var pAdapter: TodayAttendanceAdapter
     lateinit var sAdapter: HostelFeeDetail
+    var parentHostelDetails :List<getParentHostelDetailsData>?= emptyList()
+
 
     private var currentYear: Int = 0
     private var currentMonth: Int = 0
+    private var isChildDetails: ChildDetails? = null
 
 
 
@@ -66,10 +72,12 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
 
         binding.toolbarLayout.lblInitialName.visibility = View.VISIBLE
-        binding.toolbarLayout.imgCall.visibility = View.VISIBLE
+        binding.toolbarLayout.imgCall.visibility = View.GONE
         binding.toolbarLayout.lblClassAndRoomDetails.visibility = View.VISIBLE
         binding.toolbarLayout.lblHostelName.visibility = View.VISIBLE
         binding.toolbarLayout.lblName.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchIcon.visibility= View.GONE
+
 
         binding.toolbarLayout.lblToday.visibility = View.GONE
         binding.toolbarLayout.lblDate.visibility = View.GONE
@@ -91,12 +99,19 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
         binding.lblCalendar.text = "$monthName $currentYear"
 
-        val isChildDetails = SharedPreference.getChildDetails(this)
+        isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSeeMore.setOnClickListener(this)
         binding.lblCalendar.setOnClickListener(this)
         binding.lblApplyNewOutpassRequest.setOnClickListener(this)
+
+        binding.toolbarLayout.lblName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblInitialName.text = Constant.getInitials(isChildDetails?.name ?: "")
+        binding.toolbarLayout.lblClassAndRoomDetails.text =
+            "${ isChildDetails?.standard_name} - ${isChildDetails?.section_name} "
+
+        binding.toolbarLayout.lblHostelName.text = parentHostelDetails?.firstOrNull()?.hostel_name
 
         isGetParentHostelDetails()
 
@@ -105,7 +120,15 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
+                        parentHostelDetails=response.data
                         isGetHostelDashBoardDetails(response.data.firstOrNull()?.hostel_id?:"")
+
+
+                        binding.toolbarLayout.lblClassAndRoomDetails.text =
+                            "${ isChildDetails?.standard_name} - ${isChildDetails?.section_name} , ${parentHostelDetails?.firstOrNull()?.floor_name} - ${getString(R.string.room_no)} : ${parentHostelDetails?.firstOrNull()?.room_no}"
+
+                        binding.toolbarLayout.lblHostelName.text = parentHostelDetails?.firstOrNull()?.hostel_name
+
                     }
                     else {
                         showEntireParentHostelDashBoardNoData(getString(R.string.no_data_found))
@@ -130,6 +153,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                     val hostel_info=data?.hostel_info?:emptyList()
                     val gate_pass=data?.gate_pass?:emptyList()
                     val fee_details=data?.fee_details?:emptyList()
+                    val today_attendance=data?.today_attendance?:emptyList()
 
                     if (data != null) {
                         showEntireParentHostelDashBoardInfo()// here initially  i made all visible check and gone below
@@ -164,6 +188,14 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                             showHostelInfoNoData(getString(R.string.no_data_found))
                         }
 
+
+                        //Today Attendance Check
+                        if (today_attendance.isNotEmpty()){
+                            isLoadTodayAttendance(today_attendance)
+                        }
+                        else{
+                            binding.cardTodayAttendance.visibility=View.GONE
+                        }
 
                         //Hostel Fee Pending check
                         if (fee_details.isNotEmpty()){
@@ -239,16 +271,20 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
     private fun showEntireParentHostelDashBoardNoData(message: String) {
         binding.cardHostelDetails.visibility = View.GONE
+        binding.cardFeeDetails.visibility = View.GONE
         binding.cardMonthlyStats.visibility = View.GONE
         binding.cardOutpassDetails.visibility = View.GONE
         binding.cardGatePass.visibility = View.GONE
+        binding.cardTodayAttendance.visibility=View.GONE
         binding.imgEntireParenthHostelDashboardNoDataFound.visibility = View.VISIBLE
         binding.lblEntireParenthHostelDashboardErrorMessage.visibility = View.VISIBLE
         binding.lblEntireParenthHostelDashboardErrorMessage.text = message
     }
 
     private fun showEntireParentHostelDashBoardInfo(){
+        binding.cardTodayAttendance.visibility=View.VISIBLE
         binding.cardHostelDetails.visibility = View.VISIBLE
+        binding.cardFeeDetails.visibility = View.VISIBLE
         binding.cardMonthlyStats.visibility = View.VISIBLE
         binding.cardOutpassDetails.visibility = View.VISIBLE
         binding.cardGatePass.visibility = View.VISIBLE
@@ -305,6 +341,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         isGetHotelInformation()
         isGetAttendance()
         isGetOutpassRequest()
+        isGetTodayAttendance()
         isGetPendingFeeCollection()
     }
 
@@ -335,8 +372,8 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             binding.cardGatePass.visibility=View.VISIBLE
             binding.lblReason.text=data?.reason?:""
             binding.tvRoomId.text=data?.room_no?:""
-            binding.lblPersonName.text=data?.profile?:""
-            binding.lblSessionNo.text= Constant.getInitials(data?.profile?:"")
+            binding.lblPersonName.text=isChildDetails?.name ?: ""
+            binding.lblSessionNo.text= Constant.getInitials(isChildDetails?.name ?: "")
             binding.lblStudentRollNumber.text= data?.admission_no?:""
 
             val input = data?.fromdate_todate?:" - "
@@ -348,6 +385,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             binding.tvValidFrom.text= Constant.convertDateFormatType2(from)
             binding.tvValidTo.text= Constant.convertDateFormatType2(to)
             binding.tvBlockName.text=data?.floor_no?:""
+            binding.tvlblAuthorizedBy.text=data?.action_by?:""
 
         }
         else{
@@ -382,11 +420,39 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         binding.rcHostelInformation.adapter = oAdapter
     }
 
+    private fun isGetTodayAttendance()
+    {
+        pAdapter = TodayAttendanceAdapter(null, this, Constant.isShimmerViewShow)
+        binding.rcTodayAttendance.layoutManager = LinearLayoutManager(this)
+        binding.rcTodayAttendance.adapter = pAdapter
+    }
+
     private fun isGetPendingFeeCollection()
     {
         sAdapter = HostelFeeDetail(this, Constant.isShimmerViewShow)
         binding.rcPendingFeeCollections.layoutManager = LinearLayoutManager(this)
         binding.rcPendingFeeCollections.adapter = sAdapter
+    }
+
+
+    private fun isLoadTodayAttendance(data: List<String>) {
+
+        if (data.size>0){
+
+            binding.cardTodayAttendance.visibility=View.VISIBLE
+            pAdapter = TodayAttendanceAdapter(
+                data,
+                this,
+                false,
+            )
+            binding.rcTodayAttendance.layoutManager = LinearLayoutManager(this)
+            binding.rcTodayAttendance.adapter = pAdapter
+
+        }
+        else{
+            binding.cardTodayAttendance.visibility=View.GONE
+        }
+
     }
 
     private fun isLoadPendingFeeCollection(data: List<FeeDetails>) {
@@ -492,6 +558,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             }
             R.id.lblApplyNewOutpassRequest->{
                 val intent = Intent(this, ParentHostelOutpassApply::class.java)
+                intent.putExtra("PARENT_HOSTEL_LIST", ArrayList(parentHostelDetails))
                 startActivity(intent)
             }
 
