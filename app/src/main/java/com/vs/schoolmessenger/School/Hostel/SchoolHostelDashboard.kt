@@ -114,24 +114,45 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
                     binding.lblOutpassRequestCount.text=stats?.outpass_requests?:""
 
                     if (data.isNotEmpty()) {
-                        binding.rcRoomAvailability.visibility = View.VISIBLE
+                        binding.cardAttendanceRequired.visibility= View.VISIBLE
+                        binding.rcRoomAvailability.visibility= View.VISIBLE
+                        binding.consOutpassRequests.visibility= View.VISIBLE
+                        binding.consTotalStudent.visibility= View.VISIBLE
+
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
                         isLoadRoomAvailability(data)
 
                     } else {
-                        binding.rcRoomAvailability.visibility = View.GONE
+                        binding.cardAttendanceRequired.visibility= View.GONE
+                        binding.rcRoomAvailability.visibility= View.GONE
+                        binding.consOutpassRequests.visibility= View.GONE
+                        binding.consTotalStudent.visibility= View.GONE
+
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
                     }
                 } else {
-                    binding.rcRoomAvailability.visibility = View.GONE
+
+                    binding.cardAttendanceRequired.visibility= View.GONE
+                    binding.rcRoomAvailability.visibility= View.GONE
+                    binding.consOutpassRequests.visibility= View.GONE
+                    binding.consTotalStudent.visibility= View.GONE
+
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
                 }
             } else {
+
+                binding.cardAttendanceRequired.visibility= View.GONE
+                binding.rcRoomAvailability.visibility= View.GONE
+                binding.consOutpassRequests.visibility= View.GONE
+                binding.consTotalStudent.visibility= View.GONE
+
+                binding.cardAttendanceRequired.visibility= View.GONE
+
                 binding.rcRoomAvailability.visibility = View.GONE
                 binding.lblErrorMessage.visibility = View.VISIBLE
                 binding.imgNoDataFound.visibility = View.VISIBLE

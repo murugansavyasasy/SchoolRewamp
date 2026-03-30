@@ -93,14 +93,14 @@ class StatusWiseOutpassRequest(
 
                 Constant.rejected_ ->{
                     lblStatus.setTextColor(Color.parseColor("#D32F2F"))
-                    imgStatus.setImageResource(R.drawable.close_red_color)
+                    imgStatus.setImageResource(R.drawable.red_close_icon_)
                     lblStatus.text = "${context.getString(R.string.rejected)} (${data.attd_details.size})"
                 }
 
                 Constant.approved, Constant.approval ->{
                     lblStatus.text = "${context.getString(R.string.approved)} (${data.attd_details.size})"
                     lblStatus.setTextColor(Color.parseColor("#2E7D32"))
-                    imgStatus.setImageResource(R.drawable.tick_icon_2)
+                    imgStatus.setImageResource(R.drawable.tick_icon_5)
                     imgStatus.setColorFilter(
                         ContextCompat.getColor(itemView.context, R.color.green),
                         PorterDuff.Mode.SRC_IN
@@ -110,7 +110,7 @@ class StatusWiseOutpassRequest(
                 else->{
                     lblStatus.text = "${context.getString(R.string.pending_approval)} (${data.attd_details.size})"
                     lblStatus.setTextColor(context.getColor(R.color.dark_orange_3))
-                    imgStatus.setImageResource(R.drawable.waiting_for_approval)
+                    imgStatus.setImageResource(R.drawable.clock_icon_3)
                     imgStatus.setColorFilter(
                         ContextCompat.getColor(itemView.context, R.color.dark_orange_3),
                         PorterDuff.Mode.SRC_IN

@@ -55,7 +55,7 @@
             app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
             android:src="@drawable/close_icon"
             android:padding="@dimen/five"
-            android:backgroundTint="@color/dark_brown_3"
+            android:backgroundTint="#e19033"
             android:background="@drawable/bg_circle_gray"
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/lblOutPassRequest"

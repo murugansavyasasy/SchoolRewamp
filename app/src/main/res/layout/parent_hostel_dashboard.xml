@@ -31,7 +31,7 @@
         android:paddingVertical="@dimen/six"
         android:textColor="@color/white"
         android:backgroundTint="@color/PrimaryColor"
-        android:background="@drawable/rect_radius_15"
+        android:background="@drawable/rect_radius_blue_3"
         android:drawableTint="@color/white"
         android:drawablePadding="@dimen/six"
         app:layout_constraintHorizontal_bias="0"
@@ -91,7 +91,7 @@
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
-                app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
+                app:layout_constraintBottom_toTopOf="@+id/cardFeeDetails"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardGatePass"
@@ -153,12 +153,11 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardOutpassDetails"
+                android:id="@+id/cardFeeDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
@@ -174,119 +173,78 @@
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/consOutpasslblDetails"
+                    <TextView
+                        android:id="@+id/lblPendingHotelFeesInformation"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/fifteen"
-                        android:clipChildren="false"
-                        android:clipToPadding="false"
-                        android:paddingHorizontal="@dimen/ten"
-                        app:layout_constraintBottom_toTopOf="@+id/view0"
+                        android:drawableStart="@drawable/indianrupeesign_bank_building"
+                        android:drawablePadding="@dimen/five"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/fifteen"
+                        android:text="@string/pending_hostel_fees"
+                        app:layout_constraintBottom_toTopOf="@+id/view5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/lblNumberRooms"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_marginEnd="@dimen/five"
-                            android:drawableStart="@drawable/text_document"
-                            android:drawablePadding="@dimen/five"
-                            android:drawableTint="@color/PrimaryColor"
-                            android:text="@string/outpass_request"
-                            android:textSize="@dimen/sixteen_sp"
-                            app:layout_constrainedHeight="true"
-                            app:layout_constrainedWidth="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/lblApplyNewOutpassRequest"
-                            app:layout_constraintHorizontal_weight="1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"></TextView>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/lblApplyNewOutpassRequest"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/three"
-                            android:minHeight="0dp"
-                            android:paddingVertical="@dimen/three"
-                            android:text="@string/new_request"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/eleven_sp"
-                            app:icon="@drawable/ic_plus"
-                            app:iconGravity="textStart"
-                            app:iconPadding="4dp"
-                            app:iconTint="@color/white"
-                            app:layout_constrainedHeight="true"
-                            app:layout_constrainedWidth="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_chainStyle="spread"
-                            app:layout_constraintHorizontal_weight="0.9"
-                            app:layout_constraintStart_toEndOf="@+id/lblNumberRooms"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </com.google.android.material.button.MaterialButton>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
 
                     <View
-                        android:id="@+id/view0"
+                        android:id="@+id/view5"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/light_gray_11"
-                        app:layout_constraintBottom_toTopOf="@+id/frmOutpassDetails"
+                        app:layout_constraintBottom_toTopOf="@+id/rcPendingFeeCollections"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/consOutpasslblDetails">
+                        app:layout_constraintTop_toBottomOf="@+id/lblPendingHotelFeesInformation">
 
                     </View>
 
-                    <FrameLayout
-                        android:id="@+id/frmOutpassDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcPendingFeeCollections"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="@dimen/ten"
-                        android:padding="@dimen/ten"
-                        app:layout_constraintBottom_toTopOf="@+id/lblSeeMore"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="@dimen/five"
+                        app:layout_constraintBottom_toTopOf="@+id/imgPendingFeeCollectionsNoDataFound"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view0">
+                        app:layout_constraintTop_toBottomOf="@+id/view5" />
 
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rcOutpassRequest"
-                            android:layout_width="match_parent"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never"
-                            android:layout_height="match_parent"
-                            android:clipToPadding="false"
-                             />
-
-                    </FrameLayout>
+                    <ImageView
+                        android:id="@+id/imgPendingFeeCollectionsNoDataFound"
+                        android:layout_width="@dimen/two_hundred"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/no_data_found"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/lblPendingFeeCollectionsErrorMessage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rcPendingFeeCollections"></ImageView>
 
                     <TextView
-                        android:id="@+id/lblSeeMore"
+                        android:id="@+id/lblPendingFeeCollectionsErrorMessage"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/three"
-                        android:layout_marginEnd="@dimen/six"
-                        android:text="@string/see_more"
-                        android:textColor="@color/PrimaryColor"
-                        android:textSize="@dimen/twele_sp"
+                        android:layout_marginHorizontal="@dimen/twenty"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="@string/no_data_found"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/frmOutpassDetails"></TextView>
+                        app:layout_constraintTop_toBottomOf="@+id/imgPendingFeeCollectionsNoDataFound">
+
+                    </TextView>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -300,10 +258,10 @@
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
-                app:layout_constraintBottom_toTopOf="@+id/cardFeeDetails"
+                app:layout_constraintBottom_toTopOf="@+id/cardOutpassDetails"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails"
+                app:layout_constraintTop_toBottomOf="@+id/cardFeeDetails"
                 app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -463,11 +421,13 @@
             </com.google.android.material.card.MaterialCardView>
 
 
+
+
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFeeDetails"
+                android:id="@+id/cardOutpassDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 android:elevation="@dimen/eight"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/eight"
@@ -483,82 +443,126 @@
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
-                    <TextView
-                        android:id="@+id/lblPendingHotelFeesInformation"
-                        style="@style/CustomTextStylePoppinsBold"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/consOutpasslblDetails"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/fifteen"
-                        android:drawableStart="@drawable/indianrupeesign_bank_building"
-                        android:drawablePadding="@dimen/five"
-                        android:drawableTint="@color/PrimaryColor"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="@dimen/fifteen"
-                        android:text="@string/pending_hostel_fees"
-                        app:layout_constraintBottom_toTopOf="@+id/view5"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/ten"
+                        app:layout_constraintBottom_toTopOf="@+id/view0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"></TextView>
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/lblNumberRooms"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/five"
+                            android:drawableStart="@drawable/text_document"
+                            android:drawablePadding="@dimen/five"
+                            android:drawableTint="@color/PrimaryColor"
+                            android:text="@string/outpass_request"
+                            android:textSize="@dimen/sixteen_sp"
+                            app:layout_constrainedHeight="true"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/lblApplyNewOutpassRequest"
+                            app:layout_constraintHorizontal_weight="1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/lblApplyNewOutpassRequest"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/three"
+                            android:minHeight="0dp"
+                            android:paddingVertical="@dimen/three"
+                            app:cornerRadius="5dp"
+                            android:text="@string/new_request"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/eleven_sp"
+                            app:icon="@drawable/ic_plus"
+                            app:iconGravity="textStart"
+                            app:iconPadding="4dp"
+                            app:iconTint="@color/white"
+                            app:layout_constrainedHeight="true"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="spread"
+                            app:layout_constraintHorizontal_weight="0.9"
+                            app:layout_constraintStart_toEndOf="@+id/lblNumberRooms"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </com.google.android.material.button.MaterialButton>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
-                        android:id="@+id/view5"
+                        android:id="@+id/view0"
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@color/light_gray_11"
-                        app:layout_constraintBottom_toTopOf="@+id/rcPendingFeeCollections"
+                        app:layout_constraintBottom_toTopOf="@+id/frmOutpassDetails"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lblPendingHotelFeesInformation">
+                        app:layout_constraintTop_toBottomOf="@+id/consOutpasslblDetails">
 
                     </View>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcPendingFeeCollections"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                    <FrameLayout
+                        android:id="@+id/frmOutpassDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        android:paddingHorizontal="@dimen/five"
-                        app:layout_constraintBottom_toTopOf="@+id/imgPendingFeeCollectionsNoDataFound"
+                        android:padding="@dimen/ten"
+                        app:layout_constraintBottom_toTopOf="@+id/lblSeeMore"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view5" />
+                        app:layout_constraintTop_toBottomOf="@+id/view0">
 
-                    <ImageView
-                        android:id="@+id/imgPendingFeeCollectionsNoDataFound"
-                        android:layout_width="@dimen/two_hundred"
-                        android:layout_height="@dimen/two_hundred"
-                        android:layout_marginTop="@dimen/ten"
-                        android:src="@drawable/no_data_found"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toTopOf="@+id/lblPendingFeeCollectionsErrorMessage"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rcPendingFeeCollections"></ImageView>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcOutpassRequest"
+                            android:layout_width="match_parent"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                             />
+
+                    </FrameLayout>
 
                     <TextView
-                        android:id="@+id/lblPendingFeeCollectionsErrorMessage"
+                        android:id="@+id/lblSeeMore"
                         style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/twenty"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/ten"
-                        android:text="@string/no_data_found"
+                        android:layout_marginVertical="@dimen/three"
+                        android:layout_marginEnd="@dimen/six"
+                        android:text="@string/see_more"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/twele_sp"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imgPendingFeeCollectionsNoDataFound">
-
-                    </TextView>
-
+                        app:layout_constraintTop_toBottomOf="@+id/frmOutpassDetails"></TextView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+
 
 
             <com.google.android.material.card.MaterialCardView
@@ -572,7 +576,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/imgEntireParenthHostelDashboardNoDataFound"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardFeeDetails"
+                app:layout_constraintTop_toBottomOf="@+id/cardOutpassDetails"
                 app:strokeWidth="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

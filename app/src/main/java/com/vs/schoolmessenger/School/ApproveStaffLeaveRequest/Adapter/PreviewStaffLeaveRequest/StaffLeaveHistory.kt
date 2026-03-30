@@ -81,6 +81,7 @@ class StaffLeaveHistory(
         private val lblMonth: TextView = itemView.findViewById(R.id.lblMonth)
         private val lblLeaveType: TextView = itemView.findViewById(R.id.lblLeaveType)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val lblNoOfDays: TextView = itemView.findViewById(R.id.lblNoOfDays)
         private val lblLeaveStatus: TextView = itemView.findViewById(R.id.lblLeaveStatus)
 
 
@@ -96,8 +97,8 @@ class StaffLeaveHistory(
             val (day, month) = Constant.getDayAndMonth(data.applied_on?:"")
             lblDay.text = day
             lblMonth.text = month
-
-            lblDate.text="${data.no_of_days} ${dayOrDays} • ${StartDate} - ${EndDate}"
+            lblNoOfDays.text="${data.no_of_days} ${dayOrDays} "
+            lblDate.text="${StartDate} - ${EndDate}"
 
             val bgDrawable = lblLeaveStatus.background as GradientDrawable
 
