@@ -114,6 +114,7 @@
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five">
                 </ImageView>
+
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_marginTop="@dimen/ten"
@@ -292,6 +293,7 @@
                 app:cardBackgroundColor="@color/mild_light_yellow"
                 app:cardCornerRadius="@dimen/twenty"
                 android:layout_height="wrap_content">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:padding="@dimen/ten"

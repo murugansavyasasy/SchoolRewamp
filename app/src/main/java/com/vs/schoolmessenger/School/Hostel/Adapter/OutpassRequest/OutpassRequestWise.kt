@@ -94,11 +94,11 @@ class OutpassRequestWise(
             listner: OutpassRequestClickListner,
         ) {
 
-            lblRoomFullNo.text = "Room ${data.room_no}"
+            lblRoomFullNo.text = "Room no : ${data.room_no}"
             lblFullName.text = data.student_name
             lblInitialName.text= Constant.getInitials(data.student_name?:"")
 
-            lblReason.text = data.reason
+            lblReason.text = "Reason : ${data.reason}"
             lblInDate.text =  "In : ${data.in_date}"
             lblOutDate.text = "Out : ${data.out_date}"
             lblDestination.visibility= View.GONE

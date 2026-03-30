@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/hostel_toolbar"
@@ -252,7 +251,7 @@
                     <FrameLayout
                         android:id="@+id/frmOutpassDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
                         android:padding="@dimen/ten"
                         app:layout_constraintBottom_toTopOf="@+id/lblSeeMore"
@@ -264,17 +263,11 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcOutpassRequest"
                             android:layout_width="match_parent"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never"
                             android:layout_height="match_parent"
                             android:clipToPadding="false"
-                            android:paddingBottom="40dp" />
-
-                        <!-- Soft Natural Fade -->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:background="@drawable/bg_bottom_soft_fade" />
-
+                             />
 
                     </FrameLayout>
 

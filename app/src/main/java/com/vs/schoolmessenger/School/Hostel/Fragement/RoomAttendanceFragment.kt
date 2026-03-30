@@ -420,13 +420,13 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
     fun UpdateProgressAndCountOfAttendance(list: List<RoomStudentAttendanceData>) {
         val total = list.size
-        val presentCount = list.count { it.status.equals("Present", true) }
+        val absentCount = list.count { it.status.equals("Absent", true) }
 
-        binding.lblMarkedPercentage.text = "$presentCount/$total"
+        binding.lblMarkedPercentage.text = "$absentCount/$total"
 
 
         val percentage = if (total > 0) {
-            (presentCount * 100) / total
+            (absentCount * 100) / total
         } else 0
 
         binding.proAttendanceProgressBar.progress = percentage

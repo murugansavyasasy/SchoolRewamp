@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/five"
-                android:text="@string/progress"
+                android:text="@string/absent_progress"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/lblMarkedPercentage"
                 app:layout_constraintHorizontal_weight="1"

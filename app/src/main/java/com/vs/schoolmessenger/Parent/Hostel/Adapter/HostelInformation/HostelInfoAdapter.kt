@@ -61,16 +61,19 @@ class HostelInfoAdapter(
 
         fun bind(info: HostelInfo) {
 
-            setRow(R.id.hostel_id, "Hostel ID", info.hostel_id)
+            setRow(R.id.institute_name, "Institute", info.institute_name)
+
             setRow(R.id.hostel_name, "Hostel Name", info.hostel_name)
-            setRow(R.id.hostel_type, "Hostel Type", info.hostel_type)
-            setRow(R.id.no_of_floors, "No of Floors", info.no_of_floors.toString())
-            setRow(R.id.no_of_rooms, "No of Rooms", info.no_of_rooms.toString())
+            setRow(R.id.hostel_type, "Type", info.hostel_type)
+            val student=if(info.max_capacity==1){context.getString(R.string.student)} else{context.getString(R.string.students)}
+            val floor=if(info.no_of_floors==1){"Floor"} else{"Floors"}
+            val room=if(info.no_of_rooms==1){"Room"} else{"Rooms"}
+            setRow(R.id.max_capacity, "Capacity", "${info.max_capacity} ${student}")
+            setRow(R.id.no_of_floors, "Layout", "${info.no_of_floors} ${floor}, ${info.no_of_rooms} ${room}" )
+            val warden_count = if (info.warden_name.size==1){"Warden"} else{"Wardens"}
+            setRow(R.id.warden_name, warden_count, info.warden_name.joinToString(", "))
             setRow(R.id.warden_type, "Warden Type", info.warden_type)
-            setRow(R.id.max_capacity, "Max Capacity", info.max_capacity.toString())
-            setRow(R.id.warden_name, "Warden Name", info.warden_name.joinToString(", "))
-            setRow(R.id.institute_name, "Institute Name", info.institute_name)
-            setRow(R.id.institute_address, "Institute Address", info.institute_address)
+            setRow(R.id.institute_address, "Address", info.institute_address)
 
         }
 
