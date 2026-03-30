@@ -33,6 +33,7 @@ data class AttendanceDetailDataClass(
     val name: String,
     val designation: String,
     val role: String,
+    val date: String,
     val attendance_type: Map<String, String>, // FD -> Present/Absent
     val in_time: String,
     val out_time: String,

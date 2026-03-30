@@ -18,7 +18,7 @@
             android:layout_height="@dimen/fifty"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/bg_blue_radious">
+            android:background="@drawable/bg_btn_blue">
 
             <TextView
                 android:id="@+id/tvDay"

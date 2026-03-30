@@ -1,6 +1,15 @@
 package com.vs.schoolmessenger.School.AttendanceReportFromStaff
 
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +17,7 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,19 +25,19 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
-import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendancereportFromStaffBinding
-import com.vs.schoolmessenger.databinding.StaffAttendanceReportBinding
+import java.util.Calendar
 
 class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,OnAttendanceHistoryClickListener {
 
     override fun getViewBinding(): AttendancereportFromStaffBinding {
         return AttendancereportFromStaffBinding.inflate(layoutInflater)
@@ -46,6 +56,13 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private var lblDate: TextView? = null
     private var lblSchoolName: TextView? = null
     private var lblDesignation: TextView? = null
+    private var fromDateMillis: Long = 0L
+    private var toDateMillis: Long = 0L
+
+    var isFromDate=""
+    var isToDFate=""
+
+    var isAllStaff = true
 
 
     override fun setupViews() {
@@ -53,9 +70,10 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         isToolBarPrimarySchool(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
+        binding.linearLayout3.setOnClickListener(this)
+        binding.linearLayout4.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -65,6 +83,16 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+
+        val calendar = Calendar.getInstance()
+        fromDateMillis = calendar.timeInMillis
+        toDateMillis = calendar.timeInMillis
+
+        binding.fromDate2.text = Constant.getCurrentDate()
+        binding.fromDate3.text = Constant.getCurrentDate()
+
+        isFromDate = binding.fromDate2.text.toString()
+        isToDFate = binding.fromDate3.text.toString()
 
         isGetStaffList()
 
@@ -77,9 +105,10 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
                 val overall = response.data[0].overall_stat
 
-                binding.tvPresent.text = "${overall.present}\nPresent"
-                binding.tvAbsent.text = "${overall.absent}\nAbsent"
-                binding.tvNotMarked.text = "${overall.not_marked}\nNot Marked"
+
+                setCountText(binding.tvPresent, overall.present, "Present")
+                setCountText(binding.tvAbsent, overall.absent, "Absent")
+                setCountText(binding.tvNotMarked, overall.not_marked, "Not Marked")
 
                 val finalList = ArrayList<Pair<String, DateAttendanceDataClass>>()
 
@@ -92,6 +121,9 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
                 isLoadData(finalList)
 
             } else {
+                setCountText(binding.tvPresent, 0, "Present")
+                setCountText(binding.tvAbsent, 0,"Absent")
+                setCountText(binding.tvNotMarked, 0, "Not Marked")
                 binding.recycleAttendanceReportsToday.visibility = View.GONE
                 binding.lytNoRecordFound.visibility = View.VISIBLE
                 binding.lblNoRecords.text = response?.message ?: getString(R.string.no_data_found)
@@ -126,11 +158,48 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         }
     }
 
+    private fun setCountText(textView: TextView, count: Int, label: String) {
+
+        val countText = count.toString()
+        val fullText = "$countText\n$label"
+
+        val spannable = SpannableString(fullText)
+
+        spannable.setSpan(
+            AbsoluteSizeSpan(20, true),
+            0,
+            countText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            countText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
+            AbsoluteSizeSpan(12, true), // smaller size
+            countText.length + 1,
+            fullText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
+            ForegroundColorSpan(Color.BLACK),
+            countText.length + 1,
+            fullText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        textView.text = spannable
+    }
 
     private fun isLoadData(list: List<Pair<String, DateAttendanceDataClass>>) {
 
         val adapter = AttendanceReportFromStaffAdapter(
-            list, this, false
+            list, this, false,this
         )
 
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
@@ -182,12 +251,8 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
                     adapter.notifyDataSetChanged()
 
                     val selectedItem = staffList[position]
-
-
-                    var isAllStaff = true
-
                     if (position == 0) {
-                        isStaffId = ""
+                        isStaffId = "0"
                         isAllStaff = true
                     } else {
                         isStaffId = selectedItem.id.toString()
@@ -202,8 +267,79 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.linear_layout3 -> {
+                openFromDatePicker()
+            }
 
+            R.id.linear_layout4 -> {
+                openToDatePicker()
+            }
         }
+    }
+
+    private fun openFromDatePicker() {
+        val calendar = Calendar.getInstance()
+
+        val datePicker = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(year, month, dayOfMonth)
+
+                fromDateMillis = selectedCal.timeInMillis
+
+                val formattedDate = String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year)
+
+                binding.fromDate2.text = formattedDate
+                isFromDate = formattedDate
+
+                if (toDateMillis < fromDateMillis) {
+                    toDateMillis = fromDateMillis
+                    binding.fromDate3.text = formattedDate
+                    isToDFate = formattedDate
+                }
+
+                getStaffAttendanceReport(isAllStaff, isStaffId)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePicker.show()
+    }
+
+
+    private fun openToDatePicker() {
+
+        val calendar = Calendar.getInstance()
+
+        val datePicker = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+
+                val selectedCal = Calendar.getInstance()
+                selectedCal.set(year, month, dayOfMonth)
+
+                toDateMillis = selectedCal.timeInMillis
+
+                val formattedDate = String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year)
+
+                binding.fromDate3.text = formattedDate
+                isToDFate = formattedDate
+
+                getStaffAttendanceReport(isAllStaff, isStaffId)
+
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePicker.datePicker.minDate = fromDateMillis
+
+        datePicker.show()
     }
 
     private fun isGetStaffList() {
@@ -218,19 +354,18 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         binding.lytNoRecordFound.visibility = View.GONE
         binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
         isAttendanceReportFromStaffAdapter =
-            AttendanceReportFromStaffAdapter(null, this, Constant.isShimmerViewShow)
+            AttendanceReportFromStaffAdapter(null, this, Constant.isShimmerViewShow,this)
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
         binding.recycleAttendanceReportsToday.adapter = isAttendanceReportFromStaffAdapter
 
         isAccessToken?.let {
             appViewModel?.getGioMetricAttendanceReport(
-                it, "01-01-2025", "28-03-2026", isAllStaff, isStaffId!!, this
+                it, isFromDate, isToDFate, isAllStaff, isStaffId!!, this
             )
         }
     }
 
-    private fun isLocationHistory(data: StaffAttendanceReportData) {
-        Log.d("isComing", "isComing")
+    private fun isLocationHistory(data: AttendanceDetailDataClass) {
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
 
@@ -271,7 +406,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         }
     }
 
-    private fun isPunchHistory(data: StaffAttendanceReportData) {
+    private fun isPunchHistory(data: AttendanceDetailDataClass) {
         isAccessToken?.let {
             appViewModel?.getPunchHistory(it, data.date, data.staff_id, this)
         }
@@ -280,5 +415,10 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private fun dpToPx(dp: Int): Int {
         val density = resources.displayMetrics.density
         return (dp * density).toInt()
+    }
+
+    override fun onAttendanceClick(data: AttendanceDetailDataClass) {
+
+        isLocationHistory(data)
     }
 }

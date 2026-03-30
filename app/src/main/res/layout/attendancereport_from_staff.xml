@@ -41,8 +41,7 @@
                     android:layout_height="wrap_content"
                     android:weightSum="1"
                     android:layout_below="@+id/toolbarLayout"
-                    android:layout_marginTop="@dimen/five"
-                    >
+                    android:layout_marginTop="@dimen/five">
 
 
                     <LinearLayout
@@ -81,7 +80,7 @@
                                 android:layout_marginEnd="@dimen/ten"
                                 android:layout_marginBottom="@dimen/five"
                                 android:gravity="center"
-                                android:text="DD/MM/YYYY" />
+                                android:text="DD-MM-YYYY" />
 
 
                             <ImageView
@@ -134,7 +133,7 @@
                                 android:layout_marginEnd="@dimen/ten"
                                 android:layout_marginBottom="@dimen/five"
                                 android:gravity="center"
-                                android:text="Feb 13,2025" />
+                                android:text="DD-MM-YYYY" />
 
 
                             <ImageView
@@ -217,7 +216,7 @@
                             android:layout_weight="1"
                             android:layout_marginStart="@dimen/five"
                             android:gravity="center"
-                            android:text="0\nPresent"
+                            android:textColor="@color/green"                            android:text="0\nPresent"
                             android:padding="@dimen/ten"
                             android:background="@drawable/bg_light_green"/>
 
@@ -229,6 +228,7 @@
                             android:layout_marginStart="8dp"
                             android:gravity="center"
                             android:text="0\nAbsent"
+                            android:textColor="@color/red"
                             android:layout_marginBottom="@dimen/five"
                             android:padding="@dimen/ten"
                             android:background="@drawable/rect_bg_light_red_absent"/>
@@ -244,6 +244,7 @@
                             android:layout_marginEnd="@dimen/five"
                             android:text="0\nNot Marked"
                             android:padding="@dimen/ten"
+                            android:textColor="@color/orange"
                             android:background="@drawable/bg_light_orange1"/>
                     </LinearLayout>
 
@@ -278,10 +279,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
