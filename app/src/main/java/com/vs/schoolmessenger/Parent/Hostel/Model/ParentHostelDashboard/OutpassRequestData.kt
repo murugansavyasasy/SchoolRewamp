@@ -7,5 +7,6 @@ data class OutpassRequestData (
     val reason: String,
     val fromdate_todate: String,
     val request_time: String,
-    val status: String
+    val status: String,
+    val action_by: String?=null,
 ): Serializable

@@ -1,15 +1,20 @@
 package com.vs.schoolmessenger.Parent.Hostel
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +25,7 @@ import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelFeeDetails.HostelFeeDe
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelInformation.HostelInfoAdapter
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.TodayAttendance.TodayAttendanceAdapter
+import com.vs.schoolmessenger.Parent.Hostel.Listner.gatePassClickListner
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.DayAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.DetailedAttendanceRecords.getHostelDetailedAttendance
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.FeeDetails
@@ -30,6 +36,7 @@ import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentH
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
+import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.StaffLeaveRequestHistory.getStaffLeaveRequestHistory
 import com.vs.schoolmessenger.School.Hostel.Adapter.HotelList.HostelListAdapter
 import com.vs.schoolmessenger.Utils.Constant
 
@@ -40,7 +47,7 @@ import java.util.Calendar
 
 
 class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, gatePassClickListner{
 
     override fun getViewBinding(): ParentHostelDashboardBinding {
         return ParentHostelDashboardBinding.inflate(layoutInflater)
@@ -55,6 +62,8 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     lateinit var pAdapter: TodayAttendanceAdapter
     lateinit var sAdapter: HostelFeeDetail
     var parentHostelDetails :List<getParentHostelDetailsData>?= emptyList()
+    private var isDialogShowing = false
+
 
 
     private var currentYear: Int = 0
@@ -70,6 +79,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
+        binding.toolbarLayout.lblMenuName.text=Constant.isSelectedMenuName
 
         binding.toolbarLayout.lblInitialName.visibility = View.VISIBLE
         binding.toolbarLayout.imgCall.visibility = View.GONE
@@ -207,7 +217,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
                         //Gate Pass Check
                         if (gate_pass.isNotEmpty()){
-                            setSingleLineDashes(binding.txtDashLine)
+                            setSingleLineDashes(binding.hostelGatePass.txtDashLine)
                             isLoadGatePass(gate_pass)
                         }
                         else{
@@ -314,6 +324,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             nAdapter = OutpassRequestList(
                 displayList,
                 this,
+                this,
                 Constant.isShimmerViewDisable
             )
 
@@ -327,7 +338,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
     }
 
     private fun isGetOutpassRequest() {
-        nAdapter = OutpassRequestList(null, this, Constant.isShimmerViewShow)
+        nAdapter = OutpassRequestList(null, this,this,Constant.isShimmerViewShow)
         binding.rcOutpassRequest.layoutManager = LinearLayoutManager(this)
         binding.rcOutpassRequest.isNestedScrollingEnabled = true
         binding.rcOutpassRequest.adapter = nAdapter
@@ -370,22 +381,22 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
             val data=Data.firstOrNull()
             binding.cardGatePass.visibility=View.VISIBLE
-            binding.lblReason.text=data?.reason?:""
-            binding.tvRoomId.text=data?.room_no?:""
-            binding.lblPersonName.text=isChildDetails?.name ?: ""
-            binding.lblSessionNo.text= Constant.getInitials(isChildDetails?.name ?: "")
-            binding.lblStudentRollNumber.text= data?.admission_no?:""
+            binding.hostelGatePass.lblReason.text=data?.reason?:""
+            binding.hostelGatePass.tvRoomId.text=data?.room_no?:""
+            binding.hostelGatePass.lblPersonName.text=isChildDetails?.name ?: ""
+            binding.hostelGatePass.lblSessionNo.text= Constant.getInitials(isChildDetails?.name ?: "")
+            binding.hostelGatePass.lblStudentRollNumber.text= data?.admission_no?:""
 
             val input = data?.fromdate_todate?:" - "
             val parts = input.split(" - ")
             val from = parts.getOrNull(0)?.trim() ?: ""
             val to = parts.getOrNull(1)?.trim() ?: ""
 
-            binding.tvExitTime.text= Constant.getOnlyTime(data?.request_time?:"")
-            binding.tvValidFrom.text= Constant.convertDateFormatType2(from)
-            binding.tvValidTo.text= Constant.convertDateFormatType2(to)
-            binding.tvBlockName.text=data?.floor_no?:""
-            binding.tvlblAuthorizedBy.text=data?.action_by?:""
+            binding.hostelGatePass.tvExitTime.text= Constant.getOnlyTime(data?.request_time?:"")
+            binding.hostelGatePass.tvValidFrom.text= Constant.convertDateFormatType2(from)
+            binding.hostelGatePass.tvValidTo.text= Constant.convertDateFormatType2(to)
+            binding.hostelGatePass.tvBlockName.text=data?.floor_no?:""
+            binding.hostelGatePass.tvlblAuthorizedBy.text=data?.action_by?:""
 
         }
         else{
@@ -554,6 +565,8 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             R.id.lblSeeMore->{
                 val intent = Intent(this, ParentOutpassrequestList::class.java)
                 intent.putExtra("OUTPASS_LIST", ArrayList(outpassRequestList))
+                intent.putExtra("PARENT_HOSTEL_LIST", ArrayList(parentHostelDetails))
+
                 startActivity(intent)
             }
             R.id.lblApplyNewOutpassRequest->{
@@ -586,13 +599,13 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         val year2 = dialog.findViewById<TextView>(R.id.year2)
         val year3 = dialog.findViewById<TextView>(R.id.year3)
 
-
         year2.text = (currentYear - 1).toString()
         year3.text = currentYear.toString()
 
         var selectedYear = currentYear
 
         val yearViews = listOf(year2, year3)
+
         val months = mapOf(
             R.id.jan to 1, R.id.feb to 2, R.id.mar to 3,
             R.id.apr to 4, R.id.may to 5, R.id.jun to 6,
@@ -611,7 +624,6 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         val monthViews = months.keys.map { dialog.findViewById<TextView>(it) }
 
         fun selectItem(selectedView: TextView, allViews: List<TextView>) {
-
             allViews.forEach {
                 it.background = ContextCompat.getDrawable(this, R.drawable.bg_box)
                 it.setTextColor(ContextCompat.getColor(this, android.R.color.black))
@@ -622,10 +634,28 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             selectedView.setTextColor(ContextCompat.getColor(this, android.R.color.white))
         }
 
+        fun updateMonthVisibility(selectedYear: Int) {
+
+            val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+
+            monthViews.forEachIndexed { index, textView ->
+                val monthNumber = index + 1
+
+                if (selectedYear == currentYear) {
+                    textView.visibility =
+                        if (monthNumber <= currentMonth) View.VISIBLE else View.GONE
+                } else {
+                    textView.visibility = View.VISIBLE
+                }
+            }
+        }
+
         yearViews.forEach { view ->
             view.setOnClickListener {
                 selectItem(view, yearViews)
                 selectedYear = view.text.toString().toInt()
+
+                updateMonthVisibility(selectedYear)
             }
         }
 
@@ -636,7 +666,11 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             }
         }
 
-        year3.post { selectItem(year3, yearViews) }
+        year3.post {
+            selectItem(year3, yearViews)
+            updateMonthVisibility(currentYear)
+        }
+
         monthViews[selectedMonth - 1].post {
             selectItem(monthViews[selectedMonth - 1], monthViews)
         }
@@ -644,20 +678,82 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         dialog.findViewById<Button>(R.id.btnClose).setOnClickListener {
 
             val monthName = monthNames[selectedMonth - 1]
-
             Log.d("CALENDAR", "Year: $selectedYear Month: $selectedMonth ($monthName)")
-
             currentMonth = selectedMonth
             currentYear = selectedYear
-
             binding.lblCalendar.text = "$monthName $selectedYear"
-
             isGetParentHostelDetails()
-
             dialog.dismiss()
         }
-
         dialog.show()
+    }
+
+
+    fun showGatepassDialog(
+        activity: Activity,
+        gatePass: OutpassRequestData
+    ) {
+
+        if (isDialogShowing || activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing = true
+
+        val dialogView =
+            LayoutInflater.from(activity).inflate(R.layout.parent_hostel_gate_pass, null)
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.setCanceledOnTouchOutside(true)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        alertDialog.show()
+
+        val gatePassLayout = dialogView.findViewById<View>(R.id.hostel_gate_pass)
+
+        val lblSessionNo = gatePassLayout.findViewById<TextView>(R.id.lblSessionNo)
+        val lblPersonName = gatePassLayout.findViewById<TextView>(R.id.lblPersonName)
+        val lblStudentRollNumber = gatePassLayout.findViewById<TextView>(R.id.lblStudentRollNumber)
+        val tvExitTime = gatePassLayout.findViewById<TextView>(R.id.tvExitTime)
+        val lblReason = gatePassLayout.findViewById<TextView>(R.id.lblReason)
+        val tvRoomId = gatePassLayout.findViewById<TextView>(R.id.tvRoomId)
+        val tvBlockName = gatePassLayout.findViewById<TextView>(R.id.tvBlockName)
+        val tvValidFrom = gatePassLayout.findViewById<TextView>(R.id.tvValidFrom)
+        val tvValidTo = gatePassLayout.findViewById<TextView>(R.id.tvValidTo)
+        val tvAuthorizedBy = gatePassLayout.findViewById<TextView>(R.id.tvlblAuthorizedBy)
+
+        val input = gatePass.fromdate_todate ?: " - "
+        val parts = input.split(" - ")
+        val from = parts.getOrNull(0)?.trim() ?: ""
+        val to = parts.getOrNull(1)?.trim() ?: ""
+
+        lblSessionNo.text = Constant.getInitials(parentHostelDetails?.firstOrNull()?.student_name ?: "")
+        lblPersonName.text = parentHostelDetails?.firstOrNull()?.student_name ?: ""
+        lblStudentRollNumber.text = parentHostelDetails?.firstOrNull()?.admission_no ?: ""
+        tvExitTime.text = Constant.getOnlyTime(gatePass?.request_time?:"")
+        lblReason.text = gatePass.reason ?: ""
+        tvRoomId.text = parentHostelDetails?.firstOrNull()?.room_id ?: ""
+        tvValidFrom.text = Constant.convertDateFormatType2(from)
+        tvValidTo.text = Constant.convertDateFormatType2(to)
+        tvAuthorizedBy.text = gatePass.action_by ?: ""
+        tvBlockName.text = parentHostelDetails?.firstOrNull()?.floor_name ?: ""
+
+        alertDialog.setOnDismissListener {
+            isDialogShowing = false
+        }
+
+        gatePassLayout.setOnClickListener {
+            alertDialog.dismiss()
+            isDialogShowing = false
+
+        }
+
+    }
+
+
+    override fun onGatePassClick(data: OutpassRequestData) {
+        showGatepassDialog(this,data)
     }
 
 }

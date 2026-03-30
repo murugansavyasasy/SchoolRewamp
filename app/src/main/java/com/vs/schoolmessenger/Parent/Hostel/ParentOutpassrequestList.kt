@@ -1,33 +1,42 @@
 package com.vs.schoolmessenger.Parent.Hostel
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Hostel.Adapter.OutpassRequestList.OutpassRequestList
+import com.vs.schoolmessenger.Parent.Hostel.Listner.gatePassClickListner
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
-import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetailsData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHostelOutpassRequestListBinding
 
 class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, gatePassClickListner {
 
     override fun getViewBinding(): ParentHostelOutpassRequestListBinding {
         return ParentHostelOutpassRequestListBinding.inflate(layoutInflater)
     }
     private var appViewModel: App? = null
     lateinit var nAdapter: OutpassRequestList
+    private var isDialogShowing = false
+
     private var currentFilteredList: List<OutpassRequestData> = listOf()
+    private var isParentHostelDetails: List<getParentHostelDetailsData> = listOf()
+
 
 
 
@@ -82,6 +91,10 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
 
         val list = intent.getSerializableExtra("OUTPASS_LIST") as? ArrayList<OutpassRequestData> ?: arrayListOf()
         currentFilteredList=list
+
+
+        val isHostelDetails = intent.getSerializableExtra("PARENT_HOSTEL_LIST") as? ArrayList<getParentHostelDetailsData> ?: arrayListOf()
+        isParentHostelDetails=isHostelDetails
 
         if (list.size>0){
             binding.toolbarLayout.imgSearchIcon.visibility= View.VISIBLE
@@ -144,12 +157,75 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
         currentFilteredList=newData
         binding.rcHostelOutpassRequest.visibility = View.VISIBLE
         nAdapter = OutpassRequestList(
-            newData,this, Constant.isShimmerViewDisable
+            newData,this,this, Constant.isShimmerViewDisable
         )
         binding.rcHostelOutpassRequest.layoutManager = LinearLayoutManager(this)
         binding.rcHostelOutpassRequest.adapter = nAdapter
     }
 
+    fun showGatepassDialog(
+        activity: Activity,
+        gatePass: OutpassRequestData
+    ) {
+
+        if (isDialogShowing || activity.isFinishing || activity.isDestroyed) return
+        isDialogShowing = true
+
+        val dialogView =
+            LayoutInflater.from(activity).inflate(R.layout.parent_hostel_gate_pass, null)
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.setCanceledOnTouchOutside(true)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        alertDialog.show()
+
+        val gatePassLayout = dialogView.findViewById<View>(R.id.hostel_gate_pass)
+
+        val lblSessionNo = gatePassLayout.findViewById<TextView>(R.id.lblSessionNo)
+        val lblPersonName = gatePassLayout.findViewById<TextView>(R.id.lblPersonName)
+        val lblStudentRollNumber = gatePassLayout.findViewById<TextView>(R.id.lblStudentRollNumber)
+        val tvExitTime = gatePassLayout.findViewById<TextView>(R.id.tvExitTime)
+        val lblReason = gatePassLayout.findViewById<TextView>(R.id.lblReason)
+        val tvRoomId = gatePassLayout.findViewById<TextView>(R.id.tvRoomId)
+        val tvBlockName = gatePassLayout.findViewById<TextView>(R.id.tvBlockName)
+        val tvValidFrom = gatePassLayout.findViewById<TextView>(R.id.tvValidFrom)
+        val tvValidTo = gatePassLayout.findViewById<TextView>(R.id.tvValidTo)
+        val tvAuthorizedBy = gatePassLayout.findViewById<TextView>(R.id.tvlblAuthorizedBy)
+
+
+        val input = gatePass?.fromdate_todate?:" - "
+        val parts = input.split(" - ")
+        val from = parts.getOrNull(0)?.trim() ?: ""
+        val to = parts.getOrNull(1)?.trim() ?: ""
+
+        lblSessionNo.text = Constant.getInitials( isParentHostelDetails.firstOrNull()?.student_name?:"")
+        lblPersonName.text = isParentHostelDetails.firstOrNull()?.student_name?:""
+        lblStudentRollNumber.text = isParentHostelDetails.firstOrNull()?.admission_no?:""
+        tvExitTime.text =Constant.getOnlyTime(from)
+        lblReason.text = gatePass.reason
+        tvRoomId.text =isParentHostelDetails.firstOrNull()?.room_id?:""
+        tvValidFrom.text =  Constant.convertDateFormatType2(from)
+        tvValidTo.text = Constant.convertDateFormatType2(to)
+        tvAuthorizedBy.text = gatePass.action_by?:""
+        tvBlockName.text=isParentHostelDetails.firstOrNull()?.floor_name?:""
+
+        dialogView.setOnClickListener {
+            alertDialog.dismiss()
+            isDialogShowing = false
+        }
+
+        gatePassLayout.setOnClickListener {
+            alertDialog.dismiss()
+            isDialogShowing = false
+
+        }
+
+    }
 
 
     override fun onClick(p0: View?) {
@@ -159,5 +235,9 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
             }
 
         }
+    }
+
+    override fun onGatePassClick(data: OutpassRequestData) {
+        showGatepassDialog(this,data)
     }
 }

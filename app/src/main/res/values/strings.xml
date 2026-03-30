@@ -1164,6 +1164,7 @@
     <string name="are_you_sure_you_want_to_reject_this_outpass_request">Are you sure you want to reject this outpass request</string>
     <string name="hostel_available">Hostel Available</string>
     <string name="hostels_available">Hostels Available</string>
+    <string name="see_gatepass">See GatePass >></string>
 
 
 </resources>
