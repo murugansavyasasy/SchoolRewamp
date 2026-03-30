@@ -73,6 +73,7 @@
             app:layout_constraintStart_toStartOf="@+id/imgScreenType"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="@dimen/thirteen_sp"
+            android:layout_marginEnd="@dimen/ten"
             android:textColor="@color/white"
             style="@style/CustomTextStylePoppinsBold"
             android:text=""

@@ -72,6 +72,8 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
         binding.txtStartDate.text = fullDate
         lastSelectedDate = Calendar.getInstance()
 
+        binding.lblHostelName.text= Constant.isHostelName?:""
+
 
         appViewModel?.hotelSchoolAttendanceReport?.observe(viewLifecycleOwner) { response ->
 

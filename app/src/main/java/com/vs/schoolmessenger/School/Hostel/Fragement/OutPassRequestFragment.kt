@@ -75,6 +75,9 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
         currentYear = calendar.get(Calendar.YEAR)
         currentMonth = calendar.get(Calendar.MONTH) + 1
 
+        binding.lblPendingRequest.text = Constant.isHostelName?:""
+
+
 
 
 
@@ -89,12 +92,6 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
 
-                        val pendingCount = response.data
-                            ?.flatMap { it.attd_details ?: emptyList() }   // merge all lists
-                            ?.count { it.status.equals("PENDING", ignoreCase = true) } ?: 0
-
-                        binding.lblPendingRequest.text = "$pendingCount ${getString(R.string.pending_approval)}"
-
                         isLoadAttendanceHistory(response.data)
 
                     } else {
@@ -104,7 +101,6 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
 
-                        binding.lblPendingRequest.text = "0 ${getString(R.string.pending_approval)}"
 
                     }
 
@@ -114,7 +110,6 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
-                    binding.lblPendingRequest.text = "- ${getString(R.string.pending_approval)}"
 
 
                 }
@@ -126,7 +121,6 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                 binding.imgNoDataFound.visibility = View.VISIBLE
                 binding.lblErrorMessage.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
-                binding.lblPendingRequest.text = "- ${getString(R.string.pending_approval)}"
 
             }
         }

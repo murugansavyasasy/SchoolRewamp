@@ -203,10 +203,13 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
             R.id.consOutpassRequests -> {
                 openBottomSheet(FragmentType.OUTPASSREQUESTS.toString())
                 Constant.isSelectedAcademicYear=isAcademicYearId.toString()
+                Constant.isHostelName=Constant.isSelectedHostelFromHostelListData?.name?:""
+
             }
             R.id.cardAttendanceRequired -> {
                 openBottomSheet(FragmentType.ATTENDANCEHISTORYHOSTEL.toString())
                 Constant.isSelectedAcademicYear=isAcademicYearId.toString()
+                Constant.isHostelName=Constant.isSelectedHostelFromHostelListData?.name?:""
             }
 
 
@@ -248,6 +251,8 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         )
         //We are Saving all the data in Constant as List Here
         Constant.isSelectedHostelRoomData = saveSelectedHostelRoomData
+        Constant.isHostelName=Constant.isSelectedHostelFromHostelListData?.name?:""
+
 
         openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
 
