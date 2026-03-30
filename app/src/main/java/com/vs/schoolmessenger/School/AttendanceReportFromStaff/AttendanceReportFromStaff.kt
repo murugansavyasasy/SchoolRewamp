@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
@@ -93,6 +94,38 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
         isFromDate = binding.fromDate2.text.toString()
         isToDFate = binding.fromDate3.text.toString()
+
+
+        val text = getString(R.string.fromdatewithman)
+        val spannable = SpannableString(text)
+        spannable.setSpan(
+            ForegroundColorSpan(Color.RED),
+            text.length - 1,
+            text.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.fromDate.text = spannable
+
+
+        val text1 = getString(R.string.todatewithman)
+        val spannable1 = SpannableString(text1)
+        spannable1.setSpan(
+            ForegroundColorSpan(Color.RED),
+            text1.length - 1,
+            text1.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.fromDate1.text = spannable1
+
+        val text2 = getString(R.string.select_staff_with_man)
+        val spannable2 = SpannableString(text2)
+        spannable2.setSpan(
+            ForegroundColorSpan(Color.RED),
+            text2.length - 1,
+            text2.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.lblSelectStaff.text = spannable2
 
         isGetStaffList()
 

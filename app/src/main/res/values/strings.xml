@@ -1165,6 +1165,9 @@
     <string name="hostel_available">Hostel Available</string>
     <string name="hostels_available">Hostels Available</string>
     <string name="see_gatepass">See GatePass >></string>
+    <string name="fromdatewithman">From Date *</string>
+    <string name="todatewithman">To Date *</string>
+    <string name="select_staff_with_man">Select Staff *</string>
 
 
 </resources>

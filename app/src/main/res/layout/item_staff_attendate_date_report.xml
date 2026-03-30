@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/five"
         android:layout_marginTop="@dimen/three"
-        android:background="@drawable/light_blue_radius_bg">
+        android:background="@drawable/bg_light_blue_10">
 
         <LinearLayout
             android:layout_width="@dimen/fifty"

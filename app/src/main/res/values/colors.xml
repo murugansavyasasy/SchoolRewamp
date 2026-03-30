@@ -308,6 +308,9 @@
     <color name="notification_title_color">#000000</color>
     <color name="notification_body_color">#6E6E6E</color>
     <color name="light_orange_1">#F7C6BC</color>
+    <color name="light_green_10">#E8FCEA</color>
+    <color name="light_red_10">#F7E3DF</color>
+    <color name="light_orange_10">#FFF2D9</color>
 
 
 </resources>
