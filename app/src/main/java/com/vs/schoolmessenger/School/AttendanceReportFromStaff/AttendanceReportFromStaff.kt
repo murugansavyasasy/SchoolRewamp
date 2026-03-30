@@ -35,10 +35,12 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanc
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendancereportFromStaffBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>(),
-    View.OnClickListener,OnAttendanceHistoryClickListener {
+    View.OnClickListener, OnAttendanceHistoryClickListener {
 
     override fun getViewBinding(): AttendancereportFromStaffBinding {
         return AttendancereportFromStaffBinding.inflate(layoutInflater)
@@ -57,14 +59,17 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private var lblDate: TextView? = null
     private var lblSchoolName: TextView? = null
     private var lblDesignation: TextView? = null
-    private var fromDateMillis: Long = 0L
-    private var toDateMillis: Long = 0L
-
-    var isFromDate=""
-    var isToDFate=""
 
     var isAllStaff = true
 
+    private var fromDateMillis: Long = 0L
+    private var toDateMillis: Long = 0L
+
+    private var isFromDate: String = ""
+    private var isToDFate: String = ""
+
+    private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun setupViews() {
         super.setupViews()
@@ -88,12 +93,14 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         val calendar = Calendar.getInstance()
         fromDateMillis = calendar.timeInMillis
         toDateMillis = calendar.timeInMillis
-
-        binding.fromDate2.text = Constant.getCurrentDate()
-        binding.fromDate3.text = Constant.getCurrentDate()
-
-        isFromDate = binding.fromDate2.text.toString()
-        isToDFate = binding.fromDate3.text.toString()
+        val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+        val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val displayDate = displayFormat.format(calendar.time)
+        val apiDate = apiFormat.format(calendar.time)
+        binding.fromDate2.text = displayDate
+        binding.fromDate3.text = displayDate
+        isFromDate = apiDate
+        isToDFate = apiDate
 
 
         val text = getString(R.string.fromdatewithman)
@@ -134,7 +141,11 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
             if (response != null && response.status) {
 
                 binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-                binding.rytSummery.visibility = View.VISIBLE
+                if (isAllStaff) {
+                    binding.rytSummery.visibility = View.VISIBLE
+                } else {
+                    binding.rytSummery.visibility = View.GONE
+                }
                 binding.lytNoRecordFound.visibility = View.GONE
 
                 val overall = response.data[0].overall_stat
@@ -231,7 +242,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private fun isLoadData(list: List<Pair<String, DateAttendanceDataClass>>) {
 
         val adapter = AttendanceReportFromStaffAdapter(
-            list, this, false,this,isAllStaff
+            list, this, false, this, isAllStaff
         )
 
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
@@ -310,6 +321,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     }
 
     private fun openFromDatePicker() {
+
         val calendar = Calendar.getInstance()
 
         val datePicker = DatePickerDialog(
@@ -321,15 +333,17 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
                 fromDateMillis = selectedCal.timeInMillis
 
-                val formattedDate = String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year)
+                val apiDate = apiFormat.format(selectedCal.time)
+                isFromDate = apiDate
 
-                binding.fromDate2.text = formattedDate
-                isFromDate = formattedDate
+                val displayDate = displayFormat.format(selectedCal.time)
+                binding.fromDate2.text = displayDate
 
+                // Auto adjust TO date if needed
                 if (toDateMillis < fromDateMillis) {
                     toDateMillis = fromDateMillis
-                    binding.fromDate3.text = formattedDate
-                    isToDFate = formattedDate
+                    binding.fromDate3.text = displayDate
+                    isToDFate = apiDate
                 }
 
                 getStaffAttendanceReport(isAllStaff, isStaffId)
@@ -341,7 +355,6 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
         datePicker.show()
     }
-
 
     private fun openToDatePicker() {
 
@@ -356,13 +369,13 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
                 toDateMillis = selectedCal.timeInMillis
 
-                val formattedDate = String.format("%02d-%02d-%04d", dayOfMonth, month + 1, year)
+                val apiDate = apiFormat.format(selectedCal.time)
+                isToDFate = apiDate
 
-                binding.fromDate3.text = formattedDate
-                isToDFate = formattedDate
+                val displayDate = displayFormat.format(selectedCal.time)
+                binding.fromDate3.text = displayDate
 
                 getStaffAttendanceReport(isAllStaff, isStaffId)
-
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -373,7 +386,6 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
         datePicker.show()
     }
-
     private fun isGetStaffList() {
         appViewModel!!.isGetStaffList(
             isAccessToken!!, this
@@ -386,7 +398,13 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         binding.lytNoRecordFound.visibility = View.GONE
         binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
         isAttendanceReportFromStaffAdapter =
-            AttendanceReportFromStaffAdapter(null, this, Constant.isShimmerViewShow,this,isAllStaff)
+            AttendanceReportFromStaffAdapter(
+                null,
+                this,
+                Constant.isShimmerViewShow,
+                this,
+                isAllStaff
+            )
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
         binding.recycleAttendanceReportsToday.adapter = isAttendanceReportFromStaffAdapter
 

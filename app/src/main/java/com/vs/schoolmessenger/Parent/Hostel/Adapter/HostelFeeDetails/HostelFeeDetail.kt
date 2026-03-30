@@ -78,7 +78,7 @@ class HostelFeeDetail(
                 val room = item.hostel_details.room_no
                 val bed = item.hostel_details.bed_no
 
-                val text = "Hostel: $hostel | Room: $room | Bed: $bed"
+                val text = "Hostel: $hostel  Room: $room  Bed: $bed"
                 val spannable = SpannableString(text)
                 spannable.setSpan(
                     ForegroundColorSpan(Color.GRAY),
@@ -113,18 +113,18 @@ class HostelFeeDetail(
                     txtStatus.setTextColor(
                         ContextCompat.getColor(context, R.color.orange)
                     )
-                    txtStatus.setBackgroundResource(R.drawable.bg_outline_orange)
+                    txtStatus.setBackgroundResource(R.drawable.bg_outline_orange_11)
                     btnPay.visibility= View.VISIBLE
                 } else {
                     txtStatus.setTextColor(
                         ContextCompat.getColor(context, R.color.green)
                     )
-                    txtStatus.setBackgroundResource(R.drawable.bg_outline_green)
+                    txtStatus.setBackgroundResource(R.drawable.bg_outline_green_11)
                     btnPay.visibility= View.GONE
                 }
 
                 btnPay.text =
-                    "Pay ${formatAmount(item.summary.pending_amount)} Now"
+                    "Pay Now ${formatAmount(item.summary.pending_amount)}"
 
                 btnPay.setOnClickListener {
                     val intent = Intent(context, com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails::class.java)
