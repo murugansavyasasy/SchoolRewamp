@@ -18,6 +18,7 @@
     <color name="light_blue_8">#ebf5ff</color>
     <color name="light_red_8">#fef2f2</color>
     <color name="light_red_9">#fef3f3</color>
+    <color name="light_red_19">#fcf6f7</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_900">#4fd0ff</color>
     <color name="sky_blue">#4fc3f4</color>
@@ -106,6 +107,7 @@
     <color name="dark_brown">#762d08</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
+    <color name="very_gray_white_1">#f3f4f6</color>
     <color name="very_light_yellow_3">#fffaec</color>
     <color name="light_gray_2">#888888</color>
     <color name="light_gray_10">#e3e3e3</color>

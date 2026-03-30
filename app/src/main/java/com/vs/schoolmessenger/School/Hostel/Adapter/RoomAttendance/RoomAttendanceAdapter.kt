@@ -100,7 +100,7 @@ class RoomAttendanceAdapter(
 
             lblInitialName.text = Constant.getInitials(data.name)
             lblStudentDetails.text =
-                "Student id :${data.id} Parent Mobile No :${data.primary_mobile}"
+                "Student id : ${data.id} • Parent Mobile No : ${data.primary_mobile}"
             lblFullName.text = data.name
 
             val color = if (position < colorList.size) {

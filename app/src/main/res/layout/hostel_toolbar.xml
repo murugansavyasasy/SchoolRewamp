@@ -144,6 +144,18 @@
                 android:layout_height="0dp">
             </TextView>
 
+            <TextView
+                android:id="@+id/lblSchoolNameHostelName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp"
+                android:text="schoolHostelName"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
 
             <TextView
                android:id="@+id/lblToday"
@@ -160,7 +172,7 @@
                 android:id="@+id/lblDate"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/twele_sp"
                 android:text="Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -210,7 +222,7 @@
                 app:flow_horizontalBias="0"
                 app:flow_verticalStyle="spread"
                 app:layout_constraintTop_toTopOf="parent"
-                app:constraint_referenced_ids="lblToday,lblDate,lblName,lblClassAndRoomDetails,lblHostelName"
+                app:constraint_referenced_ids="lblSchoolNameHostelName,lblToday,lblDate,lblName,lblClassAndRoomDetails,lblHostelName"
                 android:id="@+id/flowGeneralDetails"
                 app:flow_wrapMode="chain"
                 app:layout_constraintEnd_toEndOf="parent"

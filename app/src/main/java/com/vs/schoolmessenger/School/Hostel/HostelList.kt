@@ -44,7 +44,6 @@ class HostelList : BaseActivity<HostelListBinding>(),
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-
         binding.toolbarLayout.rlaSpinner.visibility = View.GONE
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
@@ -60,12 +59,17 @@ class HostelList : BaseActivity<HostelListBinding>(),
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
                         isLoadHostelList(response.data)
+                        val count=response.data.size
+                        val hostel=if(count==1){getString(R.string.hostel_available)} else{getString(R.string.hostels_available)}
+                        binding.lblAvailableHostel.text="${count} ${hostel}"
+
 
                     } else {
                         binding.rcHostelAvailablility.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
+                        binding.lblAvailableHostel.text=""
                     }
 
                 } else {
@@ -74,6 +78,7 @@ class HostelList : BaseActivity<HostelListBinding>(),
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
+                    binding.lblAvailableHostel.text=""
                 }
 
             } else {
@@ -83,6 +88,7 @@ class HostelList : BaseActivity<HostelListBinding>(),
                 binding.imgNoDataFound.visibility = View.VISIBLE
                 binding.lblErrorMessage.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
+                binding.lblAvailableHostel.text=""
             }
         }
 
@@ -105,77 +111,8 @@ class HostelList : BaseActivity<HostelListBinding>(),
         binding.rcHostelAvailablility.adapter = mAdapter
 
         appViewModel!!.isGetHostelList(isAccessToken!!, this)
-//        val dummyData = getDummyHostelListData()
-//        isLoadHostelList(dummyData)
 
     }
-
-//    private fun getDummyHostelListData(): List<getHostelListData> {
-//
-//        val list = ArrayList<getHostelListData>()
-//
-//        list.add(
-//            getHostelListData(
-//                id = "1",
-//                name = "Boys Hostel Block A",
-//                institute_id = "101",
-//                institute_name = "St. Mary's Higher Secondary School",
-//                type = "male",
-//                max_capacity = "200",
-//                address = "Anna Nagar, Chennai"
-//            )
-//        )
-//
-//        list.add(
-//            getHostelListData(
-//                id = "2",
-//                name = "Girls Hostel Block B",
-//                institute_id = "101",
-//                institute_name = "St. Mary's Higher Secondary School",
-//                type = "female",
-//                max_capacity = "180",
-//                address = "T Nagar, Chennai"
-//            )
-//        )
-//
-//        list.add(
-//            getHostelListData(
-//                id = "3",
-//                name = "Junior Boys Hostel",
-//                institute_id = "102",
-//                institute_name = "St. Joseph Matriculation School",
-//                type = "male",
-//                max_capacity = "120",
-//                address = "RS Puram, Coimbatore"
-//            )
-//        )
-//
-//        list.add(
-//            getHostelListData(
-//                id = "4",
-//                name = "Senior Girls Hostel",
-//                institute_id = "102",
-//                institute_name = "St. Joseph Matriculation School",
-//                type = "female",
-//                max_capacity = "150",
-//                address = "KK Nagar, Madurai"
-//            )
-//        )
-//
-//        list.add(
-//            getHostelListData(
-//                id = "5",
-//                name = "Engineering Students Hostel",
-//                institute_id = "103",
-//                institute_name = "ABC Engineering College",
-//                type = "male",
-//                max_capacity = "300",
-//                address = "Omalur Road, Salem"
-//            )
-//        )
-//
-//        return list
-//    }
 
 
     override fun onClick(p0: View?) {

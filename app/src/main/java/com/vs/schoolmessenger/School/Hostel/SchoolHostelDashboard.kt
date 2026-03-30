@@ -62,6 +62,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         binding.toolbarLayout.lblHostelName.visibility= View.GONE
         binding.toolbarLayout.lblName.visibility= View.GONE
         binding.toolbarLayout.imgSearchIcon.visibility= View.GONE
+        binding.toolbarLayout.lblSchoolNameHostelName.visibility= View.VISIBLE
 
 
         binding.toolbarLayout.lblToday.visibility= View.VISIBLE
@@ -73,6 +74,8 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
 
         binding.toolbarLayout.lblDate.text=currentDate
         binding.toolbarLayout.imgCall.visibility= View.GONE
+
+        binding.toolbarLayout.lblSchoolNameHostelName.text=Constant.isSelectedHostelFromHostelListData?.name?:""
 
 
         binding.consOutpassRequests.setOnClickListener(this)
@@ -91,6 +94,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
 
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
+
         if (!isAcademicYear.isNullOrEmpty()) {
             isValidAcademicYear =
                 isAcademicYear!!.any { it.current_academic_year }

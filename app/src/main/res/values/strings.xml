@@ -1162,6 +1162,8 @@
     <string name="pending_approval">Pending Approval</string>
     <string name="are_you_sure_you_want_to_approve_this_outpass_request">Are you sure you want to approve this outpass request</string>
     <string name="are_you_sure_you_want_to_reject_this_outpass_request">Are you sure you want to reject this outpass request</string>
+    <string name="hostel_available">Hostel Available</string>
+    <string name="hostels_available">Hostels Available</string>
 
 
 </resources>

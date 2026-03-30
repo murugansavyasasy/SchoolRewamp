@@ -32,10 +32,10 @@
 
         <ImageView
             android:id="@+id/imgClose"
-            android:padding="@dimen/five"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginEnd="@dimen/fifteen"
+            android:padding="@dimen/five"
             android:src="@drawable/close_icon"
             app:layout_constraintBottom_toBottomOf="@+id/lblRoomNo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:text="3 Students 5 Beds"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/green_bg_radius"
             android:backgroundTint="@color/very_little_blue_7"
-            android:padding="@dimen/ten"
+            android:padding="@dimen/five"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/lblStudentsBeds"
             app:layout_constraintStart_toStartOf="@id/lblStudentsBeds"
@@ -147,256 +147,282 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/consHeader">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
-        <TextView
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginHorizontal="@dimen/ten"
-            android:id="@+id/lblSelectDate"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/select_date"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/lnrDateDetails"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblSelectDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/select_date"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toTopOf="@+id/lnrDateDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </TextView>
-    <LinearLayout
-        android:layout_marginTop="@dimen/ten"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblSelectDate"
-        android:id="@+id/lnrDateDetails"
-        app:layout_constraintBottom_toTopOf="@+id/activityMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/ten">
+            </TextView>
 
-        <!-- Icon -->
-        <LinearLayout
-            android:id="@+id/lnrFromDateImg"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty"
-            android:layout_marginEnd="@dimen/twele"
-            android:background="@drawable/background_radius_button"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:background="@drawable/field_background"
+                android:id="@+id/lnrDateDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/ten"
+                android:layout_marginHorizontal="@dimen/ten"
+                app:layout_constraintBottom_toTopOf="@+id/activityMain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblSelectDate">
+
+                <!-- Icon -->
+                <LinearLayout
+                    android:id="@+id/lnrFromDateImg"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginEnd="@dimen/twele"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/from_icon" />
+                </LinearLayout>
+
+                <!-- Date & Session Layout -->
+                <LinearLayout
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- From Date -->
+                    <LinearLayout
+                        android:id="@+id/lnrFromDate"
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.55"
+                        android:orientation="vertical"
+                        android:paddingEnd="@dimen/eight">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_date"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                        <TextView
+                            android:id="@+id/tvSelectedDate"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/down_arrow_3"
+                            android:drawablePadding="@dimen/five"
+                            android:text=""
+                            android:textColor="@color/light_gray_2"
+                            android:textSize="@dimen/twele_sp" />
+
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="@dimen/one"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray4" />
+
+                    <!-- Session Spinner -->
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.455"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/eight">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/session"
+                            android:textColor="@color/light_gray_2"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                        <Spinner
+                            android:id="@+id/isFromSession"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activityMain"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/sixteen"
+                android:paddingBottom="@dimen/sixteen"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/divder2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnrDateDetails">
+
+                <TextView
+                    android:id="@+id/lblSelect"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:gravity="center"
+                    android:text="Select Date"
+                    android:textSize="@dimen/sixteen_sp">
+
+                </TextView>
+
+                <FrameLayout
+                    android:id="@+id/calendarFromFragmentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/fifteen"
+                    android:paddingEnd="@dimen/fifteen" />
+
+                <TextView
+                    android:id="@+id/FromDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:background="@drawable/button_radius_bg"
+                    android:paddingStart="@dimen/ten"
+                    android:paddingTop="@dimen/five"
+                    android:paddingEnd="@dimen/ten"
+                    android:paddingBottom="@dimen/five"
+                    android:text="@string/done"
+                    android:textColor="@color/white"
+                    android:visibility="gone">
+
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="@dimen/five"
+                android:id="@+id/divder2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activityMain"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/five"
+                android:background="@color/light_gray_11"
+                app:layout_constraintBottom_toTopOf="@+id/lblStudenttList"
+                android:layout_height="1dp">
+
+            </View>
+
+            <TextView
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/Students_List"
+                android:textAllCaps="true"
+                android:layout_marginHorizontal="@dimen/ten"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divder2"
+                android:id="@+id/lblStudenttList"
+                app:layout_constraintBottom_toTopOf="@+id/rcRoomAttendance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcRoomAttendance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblStudenttList">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <ImageView
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:scaleType="centerInside"
-                android:src="@drawable/from_icon" />
-        </LinearLayout>
+                android:id="@+id/imgNoDataFound"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcRoomAttendance"></ImageView>
 
-        <!-- Date & Session Layout -->
-        <LinearLayout
-            android:layout_width="@dimen/zero"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <!-- From Date -->
-            <LinearLayout
-                android:id="@+id/lnrFromDate"
-                android:layout_width="@dimen/zero"
+            <TextView
+                android:id="@+id/lblErrorMessage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.55"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/eight">
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:gravity="center"
+                android:text="nod"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/fourteen_sp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/select_date"
-                  />
+            </TextView>
 
-                <TextView
-                    android:id="@+id/tvSelectedDate"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="@dimen/twele_sp"
-                    android:drawableEnd="@drawable/down_arrow_3"
-                    android:drawablePadding="@dimen/five"
-                    android:textColor="@color/light_gray_2"
-                    />
-
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="@dimen/one"
-                android:layout_height="match_parent"
-                android:background="@color/gray4" />
-
-            <!-- Session Spinner -->
-            <LinearLayout
-                android:layout_width="@dimen/zero"
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.455"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/eight">
+                android:visibility="gone"
+                app:constraint_referenced_ids="imgNoDataFound,lblErrorMessage">
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/session"
-                    android:textColor="@color/light_gray_2"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <Spinner
-                    android:id="@+id/isFromSession"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:spinnerMode="dropdown" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        app:layout_constraintBottom_toTopOf="@+id/rcRoomAttendance"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lnrDateDetails"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/activityMain"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/sixteen"
-        android:paddingBottom="@dimen/sixteen"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/lblSelect"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:gravity="center"
-            android:text="Select Date"
-            android:textSize="@dimen/sixteen_sp">
-
-        </TextView>
-
-        <FrameLayout
-            android:id="@+id/calendarFromFragmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/fifteen"
-            android:paddingEnd="@dimen/fifteen" />
-
-        <TextView
-            android:id="@+id/FromDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/button_radius_bg"
-            android:paddingStart="@dimen/ten"
-            android:paddingTop="@dimen/five"
-            android:paddingEnd="@dimen/ten"
-            android:paddingBottom="@dimen/five"
-            android:text="@string/done"
-            android:textColor="@color/white"
-            android:visibility="gone">
-
-        </TextView>
-    </LinearLayout>
+            </androidx.constraintlayout.widget.Group>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/activityMain"
-        android:id="@+id/rcRoomAttendance"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <ImageView
-        android:id="@+id/imgNoDataFound"
-        android:layout_width="@dimen/two_hundred"
-        android:layout_height="@dimen/two_hundred"
-        android:layout_marginTop="@dimen/ten"
-        android:src="@drawable/no_data_found"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcRoomAttendance"></ImageView>
-
-    <TextView
-        android:id="@+id/lblErrorMessage"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/twenty"
-        android:gravity="center"
-        android:text="nod"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
-
-    </TextView>
-
-    <androidx.constraintlayout.widget.Group
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="imgNoDataFound,lblErrorMessage">
-
-    </androidx.constraintlayout.widget.Group>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
 
-<com.google.android.material.button.MaterialButton
-style="@style/CustomTextStylePoppinsBold"
-android:background="@drawable/primary_rect_radius"
-android:id="@+id/lblMarkAttendance"
-android:layout_height="wrap_content"
-android:layout_marginBottom="@dimen/ten"
-android:layout_marginHorizontal="@dimen/fifteen"
-android:layout_marginTop="@dimen/five"
-android:layout_width="0dp"
-android:minHeight="0dp"
-android:paddingVertical="@dimen/ten"
-android:text="@string/mark_all_students"
-android:textColor="@color/white"
-android:textSize="@dimen/thirteen_sp"
-app:layout_constrainedHeight="true"
-app:layout_constrainedWidth="true"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/nested_scrollview">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lblMarkAttendance"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fifteen"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/primary_rect_radius"
+        android:minHeight="0dp"
+        android:paddingVertical="@dimen/ten"
+        android:text="@string/mark_attendance"
+        android:textColor="@color/white"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nested_scrollview">
 
-</com.google.android.material.button.MaterialButton>
+    </com.google.android.material.button.MaterialButton>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

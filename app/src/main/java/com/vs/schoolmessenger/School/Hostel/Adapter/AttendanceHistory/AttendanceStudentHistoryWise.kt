@@ -109,7 +109,7 @@ class AttendanceStudentHistoryWise(
                 lblStatus.text=data.status
                 lblStatus.setTextColor(context.getColor(R.color.red))
 
-                setDrawableColor(cardHeader, R.color.light_red)
+                setDrawableColor(cardHeader, R.color.light_red_19)
 
 
 

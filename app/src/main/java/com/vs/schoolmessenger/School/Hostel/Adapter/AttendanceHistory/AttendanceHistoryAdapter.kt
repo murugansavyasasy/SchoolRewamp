@@ -124,7 +124,7 @@ class AttendanceHistoryAdapter(
             }
 
             lblViewStudents.setBackgroundTintList(
-                ContextCompat.getColorStateList(context, R.color.white)
+                ContextCompat.getColorStateList(context, R.color.very_gray_white_1)
             )
 
             lblViewStudents.setOnClickListener {
