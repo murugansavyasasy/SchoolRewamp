@@ -48,6 +48,7 @@
                         android:layout_weight="0.5"
                         android:id="@+id/linear_layout2"
                         android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/fifteen"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:orientation="vertical">
@@ -58,7 +59,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
-                            android:text="@string/FromDate" />
+                            android:text="@string/fromdatewithman" />
 
                         <LinearLayout
                             android:id="@+id/linear_layout3"
@@ -111,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
-                            android:text="@string/ToDate" />
+                            android:text="@string/todatewithman" />
 
                         <LinearLayout
                             android:id="@+id/linear_layout5"
@@ -154,10 +155,12 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/lblSelectStaff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Staff"
+                    android:text="@string/select_staff_with_man"
                     android:textStyle="bold"
+                    android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="10dp"/>
 
                 <RelativeLayout
@@ -204,6 +207,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/ten"
                         android:layout_below="@+id/lblOverAll"
                         android:layout_marginTop="15dp"
                         android:weightSum="3">
@@ -218,7 +222,7 @@
                             android:gravity="center"
                             android:textColor="@color/green"                            android:text="0\nPresent"
                             android:padding="@dimen/ten"
-                            android:background="@drawable/bg_light_green"/>
+                            android:background="@drawable/bg_light_green_1"/>
 
                         <TextView
                             android:id="@+id/tvAbsent"
@@ -231,7 +235,7 @@
                             android:textColor="@color/red"
                             android:layout_marginBottom="@dimen/five"
                             android:padding="@dimen/ten"
-                            android:background="@drawable/rect_bg_light_red_absent"/>
+                            android:background="@drawable/bg_light_red_10"/>
 
                         <TextView
                             android:id="@+id/tvNotMarked"
@@ -245,7 +249,7 @@
                             android:text="0\nNot Marked"
                             android:padding="@dimen/ten"
                             android:textColor="@color/orange"
-                            android:background="@drawable/bg_light_orange1"/>
+                            android:background="@drawable/bg_light_orange_10"/>
                     </LinearLayout>
 
 
