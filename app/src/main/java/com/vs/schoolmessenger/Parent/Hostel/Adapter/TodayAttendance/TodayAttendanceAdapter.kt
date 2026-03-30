@@ -72,7 +72,7 @@ class TodayAttendanceAdapter(
                     txtStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
                     txtStatus.background = ContextCompat.getDrawable(context, R.drawable.bg_status_present)
 
-                    imgStatus.setImageResource(R.drawable.present_icon)
+                    imgStatus.setImageResource(R.drawable.present_icon_3)
                 }
 
                 status.equals("Absent", true) -> {
@@ -80,7 +80,7 @@ class TodayAttendanceAdapter(
                     txtStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
                     txtStatus.background = ContextCompat.getDrawable(context, R.drawable.bg_status_absent)
 
-                    imgStatus.setImageResource(R.drawable.close_red_color1)
+                    imgStatus.setImageResource(R.drawable.absent_icon_3)
                 }
 
                 status.equals("Not taken", true) || status.equals("Not Marked", true) -> {
@@ -88,7 +88,7 @@ class TodayAttendanceAdapter(
                     txtStatus.setTextColor(ContextCompat.getColor(context, R.color.light_gray))
                     txtStatus.background = ContextCompat.getDrawable(context, R.drawable.bg_status_not_marked)
 
-                    imgStatus.setImageResource(R.drawable.questionmark_circle)
+                    imgStatus.setImageResource(R.drawable.not_taken_icon_2)
                 }
 
                 else -> {

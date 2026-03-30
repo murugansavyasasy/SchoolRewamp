@@ -10,14 +10,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.Hostel.Listner.gatePassClickListner
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.OutpassRequestData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Hostel.Listner.OutpassRequestClickListner
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class OutpassRequestList(
     private var itemList: List<OutpassRequestData>?,
     private val context: Context,
+    private val listner: gatePassClickListner,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,7 +52,7 @@ class OutpassRequestList(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            holder.bind(filteredList[position], context)
+            holder.bind(filteredList[position], context,listner)
 
         }
     }
@@ -67,12 +70,14 @@ class OutpassRequestList(
         private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
         private val lblLeaveDurationDays: TextView = itemView.findViewById(R.id.lblLeaveDurationDays)
+        private val lblSeeGatepass: TextView = itemView.findViewById(R.id.lblSeeGatepass)
 
 
         @SuppressLint("SetTextI18n")
         fun bind(
             data: OutpassRequestData,
             context: Context,
+            listner: gatePassClickListner
         ) {
 
             val input = data?.fromdate_todate?:" - "
@@ -86,27 +91,30 @@ class OutpassRequestList(
             lblLeaveDurationDays.text = "${Constant.convertDateFormatType2(from)} - ${Constant.convertDateFormatType2(to)}"
 
             if (data.status == Constant.rejected.uppercase()) {
-
+                lblSeeGatepass.visibility= View.GONE
                 lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_red_rejected)
                 lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
                 lblStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
 
             }
             else if (data.status == Constant.approved.uppercase()) {
-
+                lblSeeGatepass.visibility= View.VISIBLE
+                lblSeeGatepass.setOnClickListener {
+                    listner.onGatePassClick(data)
+                }
                 lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_green_approved)
                 lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
                 lblStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
 
             }
             else if (data.status == Constant.pending.uppercase()) {
-
+                lblSeeGatepass.visibility= View.GONE
                 lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_orange_pending)
                 lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
                 lblStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_brown_3))
             }
             else{
-
+                lblSeeGatepass.visibility= View.GONE
                 lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_light_orange_pending)
                 lblStatus.text =  data.status.lowercase().replaceFirstChar { it.uppercase() }
                 lblStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_brown_3))

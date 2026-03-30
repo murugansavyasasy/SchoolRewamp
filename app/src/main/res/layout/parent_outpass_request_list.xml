@@ -83,10 +83,27 @@
         android:text="Requested :00 Feb 0000"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/fourteen_sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/lblSeeGatepass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view1">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblSeeGatepass"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        app:layout_constraintHorizontal_bias="1"
+        android:text="@string/see_gatepass"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="@dimen/twele_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblRequestOn">
 
     </TextView>
 
