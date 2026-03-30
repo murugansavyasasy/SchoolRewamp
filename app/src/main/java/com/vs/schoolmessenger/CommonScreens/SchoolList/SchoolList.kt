@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
+import com.vs.schoolmessenger.School.Hostel.HostelList
 import com.vs.schoolmessenger.School.Hostel.SchoolHostelDashboard
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LSRW.LsrwMain
@@ -518,7 +519,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     startActivity(intent)
                 }
                 Constant.M_HOSTEL-> {
-                    val intent = Intent(this, SchoolHostelDashboard::class.java)
+                    val intent = Intent(this, HostelList::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }

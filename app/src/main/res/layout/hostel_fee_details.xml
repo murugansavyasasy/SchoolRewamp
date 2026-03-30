@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/fifteen"
-    android:background="#EEEEEE">
+    android:padding="@dimen/five"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/outline_gray"
-        android:padding="@dimen/fifteen"
+        android:background="@drawable/outline_gray_card"
+        android:padding="@dimen/ten"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -22,8 +22,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text=""
-            android:textStyle="bold"
-            android:textSize="@dimen/eighteen_sp"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:textSize="@dimen/fifteen_sp"
             android:textColor="#000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/txtStatus"
@@ -33,12 +33,12 @@
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PENDING"
-            android:textColor="#E65100"
-            android:textStyle="bold"
-            android:paddingHorizontal="@dimen/ten"
-            android:paddingVertical="@dimen/five"
-            android:background="@drawable/green_bg_radius"
+            android:text=""
+            android:textSize="@dimen/thirteen_sp"
+            android:textColor="@color/orange"
+            android:paddingHorizontal="@dimen/five"
+            android:paddingVertical="@dimen/three"
+            android:background="@drawable/bg_outline_orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtTitle"/>
 
@@ -47,6 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Monthly Fees"
+            android:visibility="gone"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:textColor="#666"
             android:textSize="@dimen/fifteen_sp"
             app:layout_constraintTop_toBottomOf="@id/txtTitle"
@@ -57,14 +59,24 @@
             android:id="@+id/txtInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Hostel: Hostel A    Room: 205    Bed: B1"
-            android:padding="@dimen/ten"
-            android:background="#E0E0E0"
+            android:text=""
+            android:padding="@dimen/seven"
             android:textColor="#333"
+            style="@style/CustomTextStylePoppinsMedium1"
             app:layout_constraintTop_toBottomOf="@id/txtSubtitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/twele"/>
+            android:layout_marginTop="@dimen/ten"/>
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/one"
+            android:background="#DDDDDD"
+            app:layout_constraintTop_toBottomOf="@id/txtInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/five"/>
 
         <TextView
             android:id="@+id/txtTotalLabel"
@@ -73,46 +85,42 @@
             android:text="Total Amount"
             android:textSize="@dimen/fifteen"
             android:textColor="#555"
-            app:layout_constraintTop_toBottomOf="@id/txtInfo"
+            style="@style/CustomTextStylePoppinsMedium1"
+            app:layout_constraintTop_toBottomOf="@id/viewLine"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/fifteen"/>
+            android:layout_marginTop="@dimen/ten"/>
 
         <TextView
             android:id="@+id/txtTotalValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₹8,500"
+            android:text=""
+            style="@style/CustomTextStylePoppinsBold1"
             android:textStyle="bold"
             android:textSize="@dimen/fifteen"
             android:textColor="#000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtTotalLabel"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/one"
-            android:background="#DDDDDD"
-            app:layout_constraintTop_toBottomOf="@id/txtTotalLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/eight"/>
 
         <TextView
             android:id="@+id/txtPaidLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Paid Amount"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:textSize="@dimen/fifteen_sp"
             android:textColor="#555"
             app:layout_constraintTop_toBottomOf="@id/txtTotalLabel"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/fifteen"/>
+            android:layout_marginTop="@dimen/ten"/>
 
         <TextView
             android:id="@+id/txtPaidValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₹0"
+            android:text=""
+            style="@style/CustomTextStylePoppinsBold1"
             android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
             android:textColor="#2E7D32"
@@ -133,8 +141,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pending Amount"
-            android:textStyle="bold"
-            android:textSize="@dimen/eighteen_sp"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:textSize="@dimen/fifteen_sp"
             android:textColor="#000"
             app:layout_constraintTop_toBottomOf="@id/txtPaidLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,9 +152,10 @@
             android:id="@+id/txtPendingValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₹8,500"
+            android:text=""
+            style="@style/CustomTextStylePoppinsBold1"
             android:textStyle="bold"
-            android:textSize="@dimen/twenty_sp"
+            android:textSize="@dimen/fifteen_sp"
             android:textColor="#D32F2F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtPendingLabel"/>
@@ -157,9 +166,9 @@
             android:layout_height="wrap_content"
             android:text="Pay ₹8,500 Now"
             android:textAllCaps="false"
+            style="@style/CustomTextStylePoppinsBold1"
             android:textColor="@android:color/white"
-            android:layout_marginTop="@dimen/fifteen"
-            app:cornerRadius="@dimen/twele"
+            android:layout_marginTop="@dimen/ten"
             app:icon="@android:drawable/ic_menu_send"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/eight"
