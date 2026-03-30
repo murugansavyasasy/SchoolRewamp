@@ -92,7 +92,7 @@
                                 android:layout_marginStart="@dimen/three"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:gravity="center"
-                                android:src="@drawable/calender_icon_color"
+                                android:src="@drawable/down_arrow_3"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="normal" />
@@ -145,7 +145,7 @@
                                 android:layout_marginStart="@dimen/three"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:gravity="center"
-                                android:src="@drawable/calender_icon_color"
+                                android:src="@drawable/down_arrow_3"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="normal" />
@@ -185,6 +185,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rytSummery"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/ten"
                     android:background="@drawable/rect_white_gray_stoke_radius"

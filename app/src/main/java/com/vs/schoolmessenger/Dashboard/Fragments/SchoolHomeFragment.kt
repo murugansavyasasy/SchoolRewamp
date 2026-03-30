@@ -1002,25 +1002,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
 
-                if (userDetails!!.staff_details.size > 1) {
-                    SchoolList::class.java
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    ApproveStaffLeaveRequest::class.java
                 } else {
-                    if (userDetails!!.staff_role != Constant.isStaffRole) {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
                         ApproveStaffLeaveRequest::class.java
-                    }else{
-                        null
                     }
                 }
-
-//                if (userDetails!!.staff_role == Constant.isStaffRole) {
-//                    ApproveStaffLeaveRequest::class.java
-//                } else {
-//                    if (userDetails!!.staff_details.size > 1) {
-//                        SchoolList::class.java
-//                    } else {
-//                        ApproveStaffLeaveRequest::class.java
-//                    }
-//                }
             }
 
             Constant.M_HOSTEL-> {
