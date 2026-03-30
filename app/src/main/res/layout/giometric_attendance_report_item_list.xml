@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="03"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp" />
 
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Wed"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
 

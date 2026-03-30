@@ -16,7 +16,8 @@ import java.util.Locale
 class AttendanceReportFromStaffAdapter(
     private var itemList: List<Pair<String, DateAttendanceDataClass>>?,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private val listener: OnAttendanceHistoryClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -34,7 +35,7 @@ class AttendanceReportFromStaffAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_staff_attendate_date_report, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view)
         }
     }
 
@@ -50,8 +51,7 @@ class AttendanceReportFromStaffAdapter(
         return if (isLoading) 10 else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(data: Pair<String, DateAttendanceDataClass>) {
 
@@ -64,7 +64,6 @@ class AttendanceReportFromStaffAdapter(
             val tvSummary = itemView.findViewById<TextView>(R.id.tvSummary)
             val recyclerChild = itemView.findViewById<RecyclerView>(R.id.recyclerChild)
 
-            // DATE FORMAT
             val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
@@ -80,8 +79,11 @@ class AttendanceReportFromStaffAdapter(
 
             tvSummary.text =
                 "Present: ${value.stat.present} • Absent: ${value.stat.absent} • Not Marked: ${value.stat.not_marked}"
+
             recyclerChild.layoutManager = LinearLayoutManager(context)
-            recyclerChild.adapter = AttendanceChildAdapter(value.attd_details)
+
+            recyclerChild.adapter =
+                AttendanceChildAdapter(value.attd_details, listener)
         }
     }
 }

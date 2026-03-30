@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 
 class AttendanceChildAdapter(
-    private val list: List<AttendanceDetailDataClass>
+    private val list: List<AttendanceDetailDataClass>,
+    private val listener: OnAttendanceHistoryClickListener
 ) : RecyclerView.Adapter<AttendanceChildAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,6 +20,8 @@ class AttendanceChildAdapter(
 
         val lnrAbsent: LinearLayout = itemView.findViewById(R.id.lnrAbsent)
         val lnrPresent: LinearLayout = itemView.findViewById(R.id.lnrPresent)
+        val lnrParentCard: LinearLayout = itemView.findViewById(R.id.lnrParentCard)
+        val lnrDate: LinearLayout = itemView.findViewById(R.id.lnrDate)
 
         val lblAbsentKey: TextView = itemView.findViewById(R.id.lblAbsentKey)
         val lblAbsentValue: TextView = itemView.findViewById(R.id.lblAbsentValue)
@@ -46,6 +49,8 @@ class AttendanceChildAdapter(
         holder.lblName.text = item.name
         holder.lblRole.text = item.role
 
+        holder.lnrDate.visibility= View.GONE
+
         holder.lblCheckInTime.text = item.in_time
         holder.lblCheckOutTime.text = item.out_time
         holder.lblHours.text = item.working_hours + " hrs"
@@ -55,13 +60,19 @@ class AttendanceChildAdapter(
         val value = entry?.value ?: ""
 
         if (value.equals("Present", true)) {
+
             holder.lnrPresent.visibility = View.VISIBLE
             holder.lnrAbsent.visibility = View.GONE
 
             holder.lblPresentKey.text = key
             holder.lblPresentValue.text = value
 
+            holder.lnrParentCard.setOnClickListener {
+                listener.onAttendanceClick(item)
+            }
+
         } else {
+
             holder.lnrPresent.visibility = View.GONE
             holder.lnrAbsent.visibility = View.VISIBLE
 
