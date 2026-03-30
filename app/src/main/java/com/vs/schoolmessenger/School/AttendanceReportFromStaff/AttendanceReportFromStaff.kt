@@ -199,7 +199,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private fun isLoadData(list: List<Pair<String, DateAttendanceDataClass>>) {
 
         val adapter = AttendanceReportFromStaffAdapter(
-            list, this, false,this
+            list, this, false,this,isAllStaff
         )
 
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
@@ -354,7 +354,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         binding.lytNoRecordFound.visibility = View.GONE
         binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
         isAttendanceReportFromStaffAdapter =
-            AttendanceReportFromStaffAdapter(null, this, Constant.isShimmerViewShow,this)
+            AttendanceReportFromStaffAdapter(null, this, Constant.isShimmerViewShow,this,isAllStaff)
         binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
         binding.recycleAttendanceReportsToday.adapter = isAttendanceReportFromStaffAdapter
 
