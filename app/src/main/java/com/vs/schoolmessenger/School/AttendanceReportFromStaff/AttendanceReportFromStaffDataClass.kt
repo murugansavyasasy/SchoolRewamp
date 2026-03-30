@@ -8,7 +8,7 @@ data class AttendanceReportFromStaffDataClass(
 
 data class AttendanceStaffDataClass(
     val overall_stat: OverallStatDataClass,
-    val all_attd: Map<String, DateAttendanceDataClass> // KEY = "28-02-2025"
+    val all_attd: Map<String, DateAttendanceDataClass>
 )
 
 data class OverallStatDataClass(
@@ -34,7 +34,7 @@ data class AttendanceDetailDataClass(
     val designation: String,
     val role: String,
     val date: String,
-    val attendance_type: Map<String, String>, // FD -> Present/Absent
+    val attendance_type: Map<String, String>,
     val in_time: String,
     val out_time: String,
     val working_hours: String

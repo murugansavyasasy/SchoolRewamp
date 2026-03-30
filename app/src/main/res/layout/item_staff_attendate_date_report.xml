@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -58,6 +59,7 @@
                 android:id="@+id/tvSummary"
                 android:text=""
                 android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"
                 android:textColor="#777777"
                 android:layout_marginTop="@dimen/five"
                 android:layout_width="wrap_content"

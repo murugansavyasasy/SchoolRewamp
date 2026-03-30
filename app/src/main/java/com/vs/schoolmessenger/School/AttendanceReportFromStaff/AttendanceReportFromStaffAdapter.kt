@@ -17,7 +17,8 @@ class AttendanceReportFromStaffAdapter(
     private var itemList: List<Pair<String, DateAttendanceDataClass>>?,
     private var context: Context,
     private var isLoading: Boolean,
-    private val listener: OnAttendanceHistoryClickListener
+    private val listener: OnAttendanceHistoryClickListener,
+    private val isAllStaff: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -75,6 +76,12 @@ class AttendanceReportFromStaffAdapter(
                 tvDay.text = dayFormat.format(parsedDate)
                 tvWeek.text = weekFormat.format(parsedDate)
                 tvFullDate.text = outputFormat.format(parsedDate)
+            }
+
+            if(isAllStaff){
+                tvSummary.visibility= View.VISIBLE
+            }else{
+                tvSummary.visibility= View.GONE
             }
 
             tvSummary.text =
