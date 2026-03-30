@@ -33,12 +33,14 @@
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="@dimen/thirteen_sp"
+            android:text="PENDING"
+            android:textSize="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold1"
+            android:paddingTop="@dimen/three"
+            android:paddingBottom="@dimen/three"
+            android:paddingHorizontal="@dimen/fifteen"
             android:textColor="@color/orange"
-            android:paddingHorizontal="@dimen/five"
-            android:paddingVertical="@dimen/three"
-            android:background="@drawable/bg_outline_orange"
+            android:background="@drawable/bg_outline_orange_11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtTitle"/>
 
@@ -123,7 +125,7 @@
             style="@style/CustomTextStylePoppinsBold1"
             android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
-            android:textColor="#2E7D32"
+            android:textColor="@color/light_green4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtPaidLabel"/>
 
@@ -142,11 +144,11 @@
             android:layout_height="wrap_content"
             android:text="Pending Amount"
             style="@style/CustomTextStylePoppinsBold1"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/eighteen_sp"
             android:textColor="#000"
             app:layout_constraintTop_toBottomOf="@id/txtPaidLabel"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/fifteen_sp"/>
+            android:layout_marginTop="@dimen/twenty"/>
 
         <TextView
             android:id="@+id/txtPendingValue"
@@ -155,7 +157,7 @@
             android:text=""
             style="@style/CustomTextStylePoppinsBold1"
             android:textStyle="bold"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/eighteen_sp"
             android:textColor="#D32F2F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/txtPendingLabel"/>
@@ -164,12 +166,11 @@
             android:id="@+id/btnPay"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Pay ₹8,500 Now"
+            android:text=""
             android:textAllCaps="false"
             style="@style/CustomTextStylePoppinsBold1"
             android:textColor="@android:color/white"
             android:layout_marginTop="@dimen/ten"
-            app:icon="@android:drawable/ic_menu_send"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/eight"
             app:layout_constraintTop_toBottomOf="@id/txtPendingLabel"
