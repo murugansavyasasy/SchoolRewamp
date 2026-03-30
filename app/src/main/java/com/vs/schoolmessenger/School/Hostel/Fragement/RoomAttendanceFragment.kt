@@ -98,7 +98,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
 
         appViewModel!!.hotelMarkAttendance?.observe(requireActivity()) { response ->
-            Constant.hideLoading(requireActivity())
+            Constant.hideLoading(requireView())
             if (response != null) {
                 if (response.status) {
                     Log.d("hotelMarkAttendance", response.message)
@@ -117,7 +117,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         }
 
         appViewModel!!.schoolHostelOutpassUpdateStatus?.observe(requireActivity()) { response ->
-            Constant.hideLoading(requireActivity())
+            Constant.hideLoading(requireView())
 
             if (response != null && response.status) {
                 isApprovedOrRejectedSuccessful = true
@@ -199,7 +199,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
                     Log.d("FINAL_JSON", finalJson.toString())
 
-                    Constant.showLoading(requireActivity())
+                    Constant.showLoading(requireView())
                     appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
                 }
             }
@@ -250,7 +250,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         }
 
         appViewModel?.getHostelAttendanceSession?.observe(viewLifecycleOwner) { response ->
-            Constant.hideLoading(requireActivity())
+            Constant.hideLoading(requireView())
 
             sessionList = if (response != null && response.status && !response.data.isNullOrEmpty())
             {
@@ -346,7 +346,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     }
 
     private fun isGetHostelSession(){
-        Constant.showLoading(requireActivity())
+        Constant.showLoading(requireView())
         appViewModel!!.isGetHostelAttendanceSessionDetails(isAccessToken!!, requireActivity())
 
         //need to code review with sathish bro
@@ -429,7 +429,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             isMessage
         ) { confirmed ->
             if (confirmed) {
-                Constant.showLoading(requireActivity())
+                Constant.showLoading(requireView())
                 pendingApprovalCallback = resultCallback // store it for later
                 appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
             } else {

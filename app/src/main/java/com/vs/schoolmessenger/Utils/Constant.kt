@@ -51,6 +51,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
@@ -2282,28 +2283,68 @@ object Constant {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    fun hideLoading(context: Activity) {
-        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
-        val loader = rootView.findViewById<View>(R.id.loader_root)
-        loader?.let { rootView.removeView(it) }
-    }
+    fun hideLoading(any: Any) {
 
-    fun showLoading(context: Activity) {
+        val rootView: ViewGroup? = when (any) {
+            is Activity -> any.findViewById(android.R.id.content)
+            is Fragment -> any.view as? ViewGroup
+            is View -> any as? ViewGroup
+            else -> null
+        }
 
-        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
-        if (rootView.findViewById<View>(R.id.loader_root) != null) return
-
-        val loaderView =
-            LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
-
-        rootView.addView(loaderView)
-
-        val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
-
-        lottie.post {
-            lottie.playAnimation()
+        rootView?.let {
+            val loader = it.findViewById<View>(R.id.loader_root)
+            loader?.let { view -> it.removeView(view) }
         }
     }
+
+//    fun hideLoading(context: Activity) {
+//        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+//        val loader = rootView.findViewById<View>(R.id.loader_root)
+//        loader?.let { rootView.removeView(it) }
+//    }
+
+    fun showLoading(any: Any) {
+
+        val rootView: ViewGroup? = when (any) {
+            is Activity -> any.findViewById(android.R.id.content)
+            is Fragment -> any.view as? ViewGroup
+            is View -> any as? ViewGroup
+            else -> null
+        }
+
+        rootView?.let {
+            if (it.findViewById<View>(R.id.loader_root) != null) return
+
+            val loaderView = LayoutInflater.from(it.context)
+                .inflate(R.layout.lottie_loader, it, false)
+
+            it.addView(loaderView)
+
+            val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
+
+            lottie.post {
+                lottie.playAnimation()
+            }
+        }
+    }
+
+//    fun showLoading(context: Activity) {
+//
+//        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+//        if (rootView.findViewById<View>(R.id.loader_root) != null) return
+//
+//        val loaderView =
+//            LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+//
+//        rootView.addView(loaderView)
+//
+//        val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
+//
+//        lottie.post {
+//            lottie.playAnimation()
+//        }
+//    }
 
     fun showLoadingDisableScreen(context: Activity) {
         val rootView = context.findViewById<ViewGroup>(android.R.id.content)
