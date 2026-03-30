@@ -90,6 +90,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.SelectedActivityMapping
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
+import com.vs.schoolmessenger.School.Hostel.BottomSheet
 import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.getRoomAvailability
 import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.isSelectedRoomData
 import com.vs.schoolmessenger.School.Hostel.Model.HostelList.selctedHotelDetails
@@ -1761,6 +1762,79 @@ object Constant {
     }
 
 
+    fun showDataValidationNoDashboardRedirectAny(
+        title: String,
+        message: String,
+        viewGroup: ViewGroup
+    ) {
+        val context = viewGroup.context
+        val inflater = LayoutInflater.from(context)
+
+        val popupView = inflater.inflate(R.layout.success_popup, viewGroup, false)
+
+        val messageText = popupView.findViewById<TextView>(R.id.alertMessage)
+        val titleText = popupView.findViewById<TextView>(R.id.alertTitle)
+        val okButton = popupView.findViewById<TextView>(R.id.btnOk)
+
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = viewGroup
+
+        val dimView = View(context).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            context.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        val container = FrameLayout(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+
+        container.addView(dimView)
+        container.addView(popupView, popupLayoutParams)
+
+        rootView.addView(container)
+
+        val closePopup = {
+            rootView.removeView(container)
+
+            (viewGroup.context as? FragmentActivity)?.supportFragmentManager
+                ?.fragments
+                ?.forEach { fragment ->
+                    if (fragment is BottomSheet) {
+                        fragment.closeSheet()
+                    }
+                }
+        }
+
+        okButton.setOnClickListener {
+            closePopup()
+
+        }
+    }
+
+
 
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
@@ -2284,7 +2358,7 @@ object Constant {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    fun hideLoading(any: Any) {
+    fun hideLoadingAny(any: Any) {
 
         val rootView: ViewGroup? = when (any) {
             is Activity -> any.findViewById(android.R.id.content)
@@ -2299,13 +2373,13 @@ object Constant {
         }
     }
 
-//    fun hideLoading(context: Activity) {
-//        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
-//        val loader = rootView.findViewById<View>(R.id.loader_root)
-//        loader?.let { rootView.removeView(it) }
-//    }
+    fun hideLoading(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        val loader = rootView.findViewById<View>(R.id.loader_root)
+        loader?.let { rootView.removeView(it) }
+    }
 
-    fun showLoading(any: Any) {
+    fun showLoadingAny(any: Any) {
 
         val rootView: ViewGroup? = when (any) {
             is Activity -> any.findViewById(android.R.id.content)
@@ -2330,22 +2404,22 @@ object Constant {
         }
     }
 
-//    fun showLoading(context: Activity) {
-//
-//        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
-//        if (rootView.findViewById<View>(R.id.loader_root) != null) return
-//
-//        val loaderView =
-//            LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
-//
-//        rootView.addView(loaderView)
-//
-//        val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
-//
-//        lottie.post {
-//            lottie.playAnimation()
-//        }
-//    }
+    fun showLoading(context: Activity) {
+
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        if (rootView.findViewById<View>(R.id.loader_root) != null) return
+
+        val loaderView =
+            LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+
+        rootView.addView(loaderView)
+
+        val lottie = loaderView.findViewById<LottieAnimationView>(R.id.loaderAnimation)
+
+        lottie.post {
+            lottie.playAnimation()
+        }
+    }
 
     fun showLoadingDisableScreen(context: Activity) {
         val rootView = context.findViewById<ViewGroup>(android.R.id.content)

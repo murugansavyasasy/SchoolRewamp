@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="@dimen/five"
+    android:layout_marginBottom="@dimen/ten"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/twenty"
     app:strokeColor="@color/light_gray_10">
@@ -144,7 +145,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/total_students"
+                android:text="@string/total"
                 android:gravity="center"
                 android:drawablePadding="@dimen/five"
                 android:drawableTint="@color/dark_blue_3"

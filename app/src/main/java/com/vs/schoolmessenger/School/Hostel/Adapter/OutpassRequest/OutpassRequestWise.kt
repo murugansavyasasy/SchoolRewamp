@@ -113,6 +113,8 @@ class OutpassRequestWise(
 
             if (data.status == Constant.rejected_.uppercase()) {
                 groupApproveReject.visibility= View.GONE
+                lblOutDate.visibility=View.GONE
+                lblInDate.visibility=View.GONE
 
                 applyTintedBackground(
                     lblInitialName,
@@ -143,6 +145,8 @@ class OutpassRequestWise(
             else if (data.status == Constant.approved.uppercase()) {
 
                 groupApproveReject.visibility= View.GONE
+                lblOutDate.visibility=View.GONE
+                lblInDate.visibility=View.GONE
                 applyTintedBackground(
                     lblInitialName,
                     R.drawable.circle_bg_orange,
@@ -171,6 +175,8 @@ class OutpassRequestWise(
             else if (data.status == Constant.pending.uppercase()) {
 
                 groupApproveReject.visibility= View.VISIBLE
+                lblOutDate.visibility=View.VISIBLE
+                lblInDate.visibility=View.VISIBLE
 
                 applyTintedBackground(
                     lblInitialName,

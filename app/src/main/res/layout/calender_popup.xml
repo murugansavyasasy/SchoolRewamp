@@ -7,39 +7,6 @@
     android:background="@drawable/bg_white_curve_radius"
     android:padding="@dimen/fifteen">
 
-    <ImageView
-        android:id="@+id/btnPrev"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty"
-        android:src="@drawable/left_arrow"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/txtMonthYear"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="March 2026"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:src="@drawable/left_arrow"
-        android:visibility="gone"
-        android:textColor="@android:color/white"
-        android:background="@drawable/primary_colour_bg_radius_bg"
-        app:layout_constraintStart_toEndOf="@id/btnPrev"
-        app:layout_constraintEnd_toStartOf="@id/btnNext"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginHorizontal="@dimen/eight"/>
-
-    <ImageView
-        android:id="@+id/btnNext"
-        android:layout_width="@dimen/fourty"
-        android:layout_height="@dimen/fourty"
-        android:src="@drawable/right_arrow"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/txtSelectYear"
@@ -47,58 +14,38 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/txtMonthYear"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/fifteen"/>
 
-    <TextView
-        android:id="@+id/year1"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="2024"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/year2"
-        app:layout_constraintTop_toBottomOf="@id/txtSelectYear"
-        app:layout_constraintHorizontal_weight="1"/>
+    <LinearLayout
+        android:id="@+id/lnrYearSelect"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSelectYear"
+        android:weightSum="2"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/year2"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="2025"
-        app:layout_constraintStart_toEndOf="@id/year1"
-        app:layout_constraintEnd_toStartOf="@id/year3"
-        app:layout_constraintTop_toTopOf="@id/year1"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+        <TextView
+            android:id="@+id/year2"
+            style="@style/BoxItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fourty"
+            android:text="2025"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/eight"
+            />
 
-    <TextView
-        android:id="@+id/year3"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="2026"
-        app:layout_constraintStart_toEndOf="@id/year2"
-        app:layout_constraintEnd_toStartOf="@id/year4"
-        app:layout_constraintTop_toTopOf="@id/year1"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+        <TextView
+            android:id="@+id/year3"
+            style="@style/BoxItem"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="@dimen/fourty"
+            android:text="2026"
+            android:layout_marginStart="@dimen/eight"
+          />
 
-    <TextView
-        android:id="@+id/year4"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="2027"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@id/year3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/year1"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/txtSelectMonth"
@@ -106,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/year2"
+        app:layout_constraintTop_toBottomOf="@id/lnrYearSelect"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/fifteen"/>
 

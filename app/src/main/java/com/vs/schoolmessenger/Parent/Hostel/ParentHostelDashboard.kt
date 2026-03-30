@@ -145,13 +145,19 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                     }
                     else {
                         showEntireParentHostelDashBoardNoData(getString(R.string.no_data_found))
+                        Constant.showParentDataValidation(getString(R.string.Oops),getString(R.string.no_data_found),this)
+
                     }
                 } else {
                     showEntireParentHostelDashBoardNoData(response.message)
+                    Constant.showParentDataValidation(getString(R.string.Oops),response.message,this)
+
                 }
             }
             else {
                 showEntireParentHostelDashBoardNoData(getString(R.string.something_went_wrong_please_try_again_later))
+                Constant.showParentDataValidation(getString(R.string.Oops),getString(R.string.Something_went_wrong_Please_try_again),this)
+
             }
         }
 
@@ -235,10 +241,12 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                 }
                 else {
                     showEntireParentHostelDashBoardNoData(response.message)
+
                 }
 
             } else {
                 showEntireParentHostelDashBoardNoData(getString(R.string.Something_went_wrong_Please_try_again))
+
             }
         }
 

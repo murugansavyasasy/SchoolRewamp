@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/imgScreenType"
             app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
-            android:src="@drawable/waiting_for_approval"
+            android:src="@drawable/outpass_icon"
             android:padding="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             app:layout_constraintStart_toStartOf="parent"

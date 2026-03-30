@@ -130,8 +130,8 @@
                         android:layout_centerVertical="true"
                         android:backgroundTint="@color/dark_blue_15"
                         android:background="@drawable/rect_purple_rounded"
-                        android:padding="@dimen/ten"
-                        android:src="@drawable/white_calendar_icon">
+                        android:padding="@dimen/five"
+                        android:src="@drawable/calendar_icon_6">
 
                     </ImageView>
 
