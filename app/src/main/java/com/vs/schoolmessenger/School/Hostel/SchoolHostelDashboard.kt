@@ -140,7 +140,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         }
 
         setDrawableBackgroundColor(binding.consTotalStudent,R.color.green_3)
-        setDrawableBackgroundColor(binding.consOutpassRequests,R.color.purple_201)
+        setDrawableBackgroundColor(binding.consOutpassRequests,R.color.dark_brown_3)
 
     }
     private fun openBottomSheet(type: String) {

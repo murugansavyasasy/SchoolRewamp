@@ -79,8 +79,6 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
 
 
 
-
-
         appViewModel?.hotelSchoolOutpassRequest?.observe(viewLifecycleOwner) { response ->
 
             if (response != null) {

@@ -67,6 +67,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
 
     private var currentYear: Int = 0
+    private var hostel_id: String?=null
     private var currentMonth: Int = 0
     private var isChildDetails: ChildDetails? = null
 
@@ -131,7 +132,9 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
                         parentHostelDetails=response.data
-                        isGetHostelDashBoardDetails(response.data.firstOrNull()?.hostel_id?:"")
+                        hostel_id=response.data.firstOrNull()?.hostel_id?:""
+
+                        isGetHostelDashBoardDetails(hostel_id.toString())
 
 
                         binding.toolbarLayout.lblClassAndRoomDetails.text =
@@ -682,7 +685,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             currentMonth = selectedMonth
             currentYear = selectedYear
             binding.lblCalendar.text = "$monthName $selectedYear"
-            isGetParentHostelDetails()
+            isGetHostelDashBoardDetails(hostel_id.toString())
             dialog.dismiss()
         }
         dialog.show()

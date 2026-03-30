@@ -123,9 +123,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/lblOutpassRequestCount"
                     android:text="-"
-                    android:layout_width="match_parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgGoOutPass"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content">
                 </TextView>
+
+                <ImageView
+                    app:layout_constraintTop_toTopOf="@+id/lblOutpassRequestCount"
+                    android:id="@+id/imgGoOutPass"
+                    app:layout_constraintStart_toEndOf="@+id/lblOutpassRequestCount"
+                    android:layout_width="@dimen/twenty"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="@dimen/twenty">
+
+                </ImageView>
+
                 <TextView
                     android:textColor="@color/white"
                     style="@style/CustomTextStylePoppinsRegular"
@@ -133,7 +147,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/lblOutpassRequests"
                     android:text="@string/outpass_requests"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgGoOutPass"
                     android:layout_height="wrap_content">
                 </TextView>
 
@@ -309,6 +324,7 @@
                         android:textSize="@dimen/twenty_sp"
                         android:layout_height="wrap_content">
                     </TextView>
+
 
                     <TextView
                         android:layout_marginTop="@dimen/five"

@@ -39,7 +39,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
     private var txtToTime: String? = null
 
     //CONTROL PAST TIME
-    private var allowPastTime = true  // true = allow past, false = block
+    private var allowPastTime = false  // true = allow past, false = block
 
     // TIME GAP (minutes)
     private var timeGapMinutes = 60
@@ -307,7 +307,6 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                 val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                 val defaultCal = Calendar.getInstance()
 
-                // Use previously selected date if available
                 if (!txtStartDate.isNullOrEmpty()) {
                     try {
                         defaultCal.time = sdf.parse(txtStartDate!!) ?: Date()
@@ -316,12 +315,16 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                     }
                 }
 
-                //  Min Date = 1 year before today
+                //  Min Date = Today (No past allowed)
                 val minCal = Calendar.getInstance()
-                minCal.add(Calendar.YEAR, -1)
+                minCal.set(Calendar.HOUR_OF_DAY, 0)
+                minCal.set(Calendar.MINUTE, 0)
+                minCal.set(Calendar.SECOND, 0)
+                minCal.set(Calendar.MILLISECOND, 0)
+
                 val minDate = minCal.timeInMillis
 
-                // Max Date = No restriction (future allowed)
+                // Max Date = No restriction
                 val maxDate = Long.MAX_VALUE
 
                 Constant.DatePicker(
@@ -338,7 +341,6 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                     val startDate = sdf.parse(txtStartDate!!) ?: Date()
                     val today = Calendar.getInstance().time
 
-                    //  End Date = Today OR Start Date (if start > today)
                     txtEndDate = if (startDate.after(today)) {
                         sdf.format(startDate)
                     } else {
