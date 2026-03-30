@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/three"
                 android:layout_marginEnd="@dimen/three"
-                android:text="Hostel Dasahboard"
+                android:text="Dashboard"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_two_sp"
                 android:layout_marginTop="@dimen/fifteen"

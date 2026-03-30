@@ -76,6 +76,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         binding.toolbarLayout.imgCall.visibility= View.GONE
 
         binding.toolbarLayout.lblSchoolNameHostelName.text=Constant.isSelectedHostelFromHostelListData?.name?:""
+        binding.toolbarLayout.lblMenuName.text=Constant.isSelectedMenuName
 
 
         binding.consOutpassRequests.setOnClickListener(this)
