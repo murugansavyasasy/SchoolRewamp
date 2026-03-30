@@ -245,11 +245,10 @@
 
                     <ImageView
                         app:layout_constraintHorizontal_weight="1.5"
-
                         android:id="@+id/imgArrow"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/thirty_five"
-                        android:src="@drawable/ic_right_arrow"
+                        android:layout_height="@dimen/twenty"
+                        android:src="@drawable/right_arrow_icon_3"
                         android:tint="@color/light_gray"
                         app:layout_constraintBottom_toBottomOf="@+id/lblOutpass_"
                         app:layout_constraintEnd_toStartOf="@+id/lblOUT"
@@ -559,7 +558,7 @@
                         android:layout_marginBottom="@dimen/twenty"
                         android:background="@drawable/bg_light_yellow_border"
                         android:backgroundTint="@color/light_green_1"
-                        android:drawableStart="@drawable/tick_circle_icon"
+                        android:drawableStart="@drawable/tick_icon_5"
                         android:drawablePadding="@dimen/five"
                         android:drawableTint="@color/green"
                         android:gravity="center_vertical"
