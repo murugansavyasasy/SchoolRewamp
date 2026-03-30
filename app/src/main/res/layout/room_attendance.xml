@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/five"
-            android:text="Room 101"
+            android:text="Room"
             android:textColor="@color/white"
             android:textSize="@dimen/twenty_four_sp"
             app:layout_constraintEnd_toStartOf="@+id/imgClose"
@@ -68,6 +68,22 @@
 
         </TextView>
 
+        <TextView
+            android:id="@+id/lblHostelName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblStudentsBeds">
+
+        </TextView>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/lblStudentsBeds"
             app:layout_constraintStart_toStartOf="@id/lblStudentsBeds"
-            app:layout_constraintTop_toBottomOf="@+id/lblStudentsBeds">
+            app:layout_constraintTop_toBottomOf="@+id/lblHostelName">
 
             <TextView
                 android:id="@+id/lblProgress"

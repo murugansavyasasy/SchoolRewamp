@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="0dp"
             app:layout_constraintTop_toBottomOf="@+id/lblAttendanceHistory"
-            android:id="@+id/lblNoOfDays"
+            android:id="@+id/lblHostelName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/white"
@@ -54,7 +54,7 @@
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginTop="@dimen/eight"
             style="@style/CustomTextStylePoppinsBold"
-            android:text="@string/session_based_tracking"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content">
 

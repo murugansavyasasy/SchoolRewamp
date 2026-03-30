@@ -81,6 +81,9 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         isStaffDetails = SharedPreference.getStaffDetails(requireContext())
         isAccessToken = isStaffDetails?.access_token
 
+
+        binding.lblHostelName.text= Constant.isHostelName?:""
+
         Log.d("isSelectedAcademicYear",Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()?:"")
 
         val count = Constant.isSelectedHostelRoomData?.current_occupancy ?: 0

@@ -263,6 +263,7 @@ object Constant {
 
     var isAcademicYearList: List<AcademicYear>? = null
     var isSelectedAcademicYear: String?=null
+    var isHostelName: String?=null
 
     var isSelectedMenuName = ""
     var isSchoolMenuCount = -1

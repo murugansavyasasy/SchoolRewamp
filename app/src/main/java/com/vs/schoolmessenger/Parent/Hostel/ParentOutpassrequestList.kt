@@ -25,7 +25,6 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
     override fun getViewBinding(): ParentHostelOutpassRequestListBinding {
         return ParentHostelOutpassRequestListBinding.inflate(layoutInflater)
     }
-    private var isAccessToken: String? = null
     private var appViewModel: App? = null
     lateinit var nAdapter: OutpassRequestList
     private var currentFilteredList: List<OutpassRequestData> = listOf()
@@ -47,9 +46,6 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
-
-        val isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = isChildDetails?.access_token
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
