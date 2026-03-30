@@ -134,6 +134,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
             if (response != null && response.status) {
 
                 binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                binding.rytSummery.visibility = View.VISIBLE
                 binding.lytNoRecordFound.visibility = View.GONE
 
                 val overall = response.data[0].overall_stat
@@ -154,10 +155,8 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
                 isLoadData(finalList)
 
             } else {
-                setCountText(binding.tvPresent, 0, "Present")
-                setCountText(binding.tvAbsent, 0,"Absent")
-                setCountText(binding.tvNotMarked, 0, "Not Marked")
                 binding.recycleAttendanceReportsToday.visibility = View.GONE
+                binding.rytSummery.visibility = View.GONE
                 binding.lytNoRecordFound.visibility = View.VISIBLE
                 binding.lblNoRecords.text = response?.message ?: getString(R.string.no_data_found)
             }
