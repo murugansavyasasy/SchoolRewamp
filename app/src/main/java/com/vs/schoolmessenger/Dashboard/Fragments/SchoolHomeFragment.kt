@@ -99,6 +99,7 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.jvm.java
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
@@ -1024,22 +1025,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_HOSTEL-> {
 
-                HostelList::class.java
-
-//                if (userDetails!!.staff_role == Constant.isStaffRole) {
-//                    HostelDashboard::class.java
-//                } else {
-//                    if (userDetails!!.staff_details.size > 1) {
-//                        HostelList::class.java
-//                    } else {
-//                        HostelDashboard::class.java
-//                    }
-//                }
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    HostelList::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        HostelList::class.java
+                    }
+                }
             }
 
-            Constant.M_STUDENTDATE-> {
-                StudentDetails::class.java
-            }
+//            Constant.M_STUDENTDATE-> {
+//                StudentDetails::class.java
+//            }
 
             else -> null
         }

@@ -1,13 +1,20 @@
 package com.vs.schoolmessenger.Parent.Hostel.Adapter.HostelFeeDetails
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.FeeDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.databinding.HostelFeeDetailsBinding
 import java.text.NumberFormat
@@ -67,8 +74,34 @@ class HostelFeeDetail(
 
                 txtTitle.text = item.fee_name
 
-                txtInfo.text =
-                    "Hostel: ${item.hostel_details.hostel_name} | Room: ${item.hostel_details.room_no} | Bed: ${item.hostel_details.bed_no}"
+                val hostel = item.hostel_details.hostel_name
+                val room = item.hostel_details.room_no
+                val bed = item.hostel_details.bed_no
+
+                val text = "Hostel: $hostel | Room: $room | Bed: $bed"
+                val spannable = SpannableString(text)
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GRAY),
+                    0,
+                    "Hostel:".length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                val roomLabelStart = text.indexOf("Room:")
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GRAY),
+                    roomLabelStart,
+                    roomLabelStart + "Room:".length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                val bedLabelStart = text.indexOf("Bed:")
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GRAY),
+                    bedLabelStart,
+                    bedLabelStart + "Bed:".length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                txtInfo.text = spannable
 
                 txtTotalValue.text = formatAmount(item.summary.total_amount)
                 txtPaidValue.text = formatAmount(item.summary.paid_amount)
@@ -80,16 +113,23 @@ class HostelFeeDetail(
                     txtStatus.setTextColor(
                         ContextCompat.getColor(context, R.color.orange)
                     )
-                    txtStatus.setBackgroundResource(R.drawable.circle_background)
+                    txtStatus.setBackgroundResource(R.drawable.bg_outline_orange)
+                    btnPay.visibility= View.VISIBLE
                 } else {
                     txtStatus.setTextColor(
                         ContextCompat.getColor(context, R.color.green)
                     )
-                    txtStatus.setBackgroundResource(R.drawable.circle_background)
+                    txtStatus.setBackgroundResource(R.drawable.bg_outline_green)
+                    btnPay.visibility= View.GONE
                 }
 
                 btnPay.text =
                     "Pay ${formatAmount(item.summary.pending_amount)} Now"
+
+                btnPay.setOnClickListener {
+                    val intent = Intent(context, com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails::class.java)
+                    context.startActivity(intent)
+                }
             }
         }
     }

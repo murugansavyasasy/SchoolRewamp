@@ -1024,7 +1024,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
-                        android:paddingHorizontal="@dimen/fifteen"
+                        android:paddingHorizontal="@dimen/five"
                         app:layout_constraintBottom_toTopOf="@+id/imgPendingFeeCollectionsNoDataFound"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
