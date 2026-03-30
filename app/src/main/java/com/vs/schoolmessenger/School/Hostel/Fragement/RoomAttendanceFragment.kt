@@ -34,7 +34,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateListener,
-    RoomAttendanceListener,View.OnClickListener {
+    RoomAttendanceListener, View.OnClickListener {
 
     private var _binding: RoomAttendanceBinding? = null
     private val binding get() = _binding!!
@@ -49,9 +49,6 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     var isApproveRejectId = ""
     var isApprovedOrRejectedSuccessful = false
     private var pendingApprovalCallback: ((Boolean) -> Unit)? = null
-
-
-
     private var sessionList: List<SessionData> = ArrayList()
     private var sessionNames: MutableList<String> = ArrayList()
 
@@ -82,16 +79,20 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         isAccessToken = isStaffDetails?.access_token
 
 
-        binding.lblHostelName.text= Constant.isHostelName?:""
+        binding.lblHostelName.text = Constant.isHostelName ?: ""
 
-        Log.d("isSelectedAcademicYear",Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()?:"")
+        Log.d(
+            "isSelectedAcademicYear",
+            Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString() ?: ""
+        )
 
         val count = Constant.isSelectedHostelRoomData?.current_occupancy ?: 0
         val bedCount = Constant.isSelectedHostelRoomData?.total_beds ?: 0
-        binding.lblStudentsBeds.text = "$count ${if (count == 1) "${getString(R.string.student)}" else "${getString(R.string.students)}"}" +" • "+
-                "$bedCount ${if (bedCount == 1) "${getString(R.string.Bed)}" else "${getString(R.string.Beds)}"}"
+        binding.lblStudentsBeds.text =
+            "$count ${if (count == 1) "${getString(R.string.student)}" else "${getString(R.string.students)}"}" + " • " +
+                    "$bedCount ${if (bedCount == 1) "${getString(R.string.Bed)}" else "${getString(R.string.Beds)}"}"
 
-        binding.lblRoomNo.text= "${Constant.isSelectedHostelRoomData?.number ?:"00"}"
+        binding.lblRoomNo.text = "${Constant.isSelectedHostelRoomData?.number ?: "00"}"
 
         //here we are loading the here
         if (isSelectedDate == null) {
@@ -101,44 +102,52 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
 
         appViewModel!!.hotelMarkAttendance?.observe(requireActivity()) { response ->
-            Constant.hideLoading(requireView())
+            Constant.hideLoadingAny(requireView())
             if (response != null) {
                 if (response.status) {
                     Log.d("hotelMarkAttendance", response.message)
-                    Constant.showDataValidation(getString(R.string.success), response.message, requireActivity())
+                    Constant.showDataValidationNoDashboardRedirectAny(
+                        getString(R.string.success),
+                        response.message,
+                        requireView() as ViewGroup
+                    )
                 } else {
                     Log.d("hotelMarkAttendance", response.message)
-                    Constant.showDataValidationNoDashboardRedirect(getString(R.string.fail), response.message, requireActivity())
+                    Constant.showDataValidationNoDashboardRedirectAny(
+                        getString(R.string.fail),
+                        response.message,
+                        requireView() as ViewGroup
+                    )
                 }
             } else {
-                Constant.showDataValidationNoDashboardRedirect(
+                Constant.showDataValidationNoDashboardRedirectAny(
                     getString(R.string.fail),
                     getString(R.string.something_went_wrong_please_try_again_later),
-                    requireActivity()
+                    requireView() as ViewGroup
                 )
             }
         }
 
         appViewModel!!.schoolHostelOutpassUpdateStatus?.observe(requireActivity()) { response ->
-            Constant.hideLoading(requireView())
+            Constant.hideLoadingAny(requireView())
 
             if (response != null && response.status) {
                 isApprovedOrRejectedSuccessful = true
                 pendingApprovalCallback?.invoke(true)
                 pendingApprovalCallback = null
-                Constant.showDataValidationNoDashboardRedirect(
+                Constant.showDataValidationNoDashboardRedirectAny(
                     getString(R.string.success),
                     response.message,
-                    requireActivity()
+                    requireView() as ViewGroup
                 )
             } else {
                 isApprovedOrRejectedSuccessful = false
                 pendingApprovalCallback?.invoke(false)
                 pendingApprovalCallback = null
-                Constant.showDataValidation(
+                Constant.showDataValidationNoDashboardRedirectAny(
                     getString(R.string.fail),
                     response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
-                    requireActivity()
+                    requireView() as ViewGroup
                 )
             }
         }
@@ -168,8 +177,12 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             }
 
             if (!isAllMarked) {
-                Toast.makeText(requireContext(), "Please make sure all students are marked", Toast.LENGTH_SHORT).show()
-                Log.d("finalList",finalList.toString())
+                Toast.makeText(
+                    requireContext(),
+                    "Please make sure all students are marked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.d("finalList", finalList.toString())
                 return@setOnClickListener
             }
 
@@ -192,21 +205,34 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     }
 
                     val finalJson = JsonObject().apply {
-                        addProperty("hostel_id", Constant.isSelectedHostelFromHostelListData?.id.toString())
+                        addProperty(
+                            "hostel_id",
+                            Constant.isSelectedHostelFromHostelListData?.id.toString()
+                        )
                         addProperty("session_type_id", isSelectedSessionID)
-                        addProperty("attendance_date", Constant.formatToUi2(isSelectedDate.toString()))
-                        addProperty("room_id",Constant.isSelectedHostelRoomData?.id?:"0")
-                        addProperty("academic_year_id", Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()?:"")
+                        addProperty(
+                            "attendance_date",
+                            Constant.formatToUi2(isSelectedDate.toString())
+                        )
+                        addProperty("room_id", Constant.isSelectedHostelRoomData?.id ?: "0")
+                        addProperty(
+                            "academic_year_id",
+                            Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()
+                                ?: ""
+                        )
                         add("student_details", studentArray)
                     }
 
                     Log.d("FINAL_JSON", finalJson.toString())
 
-                    Constant.showLoading(requireView())
-                    appViewModel?.hostelMarkAttendance(isAccessToken!!,finalJson, requireActivity())
+                    Constant.showLoadingAny(requireView())
+                    appViewModel?.hostelMarkAttendance(
+                        isAccessToken!!,
+                        finalJson,
+                        requireActivity()
+                    )
                 }
             }
-
         }
 
         appViewModel?.getHostelAttendanceRoomStudentList?.observe(viewLifecycleOwner) { response ->
@@ -217,19 +243,17 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                         binding.rcRoomAttendance.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
-                        val data=response.data
+                        val data = response.data
                         isLoadRoomAttendance(data as List<RoomStudentAttendanceData>)
-                        binding.lblMarkAttendance.alpha=1f
-                        binding.lblMarkAttendance.isEnabled=true
-                    }
-                    else
-                    {
+                        binding.lblMarkAttendance.alpha = 1f
+                        binding.lblMarkAttendance.isEnabled = true
+                    } else {
                         binding.rcRoomAttendance.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
-                        binding.lblErrorMessage.text =response.message
-                        binding.lblMarkAttendance.alpha=0.4f
-                        binding.lblMarkAttendance.isEnabled=false
+                        binding.lblErrorMessage.text = response.message
+                        binding.lblMarkAttendance.alpha = 0.4f
+                        binding.lblMarkAttendance.isEnabled = false
                     }
 
                 } else {
@@ -237,8 +261,8 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
-                    binding.lblMarkAttendance.alpha=0.4f
-                    binding.lblMarkAttendance.isEnabled=false
+                    binding.lblMarkAttendance.alpha = 0.4f
+                    binding.lblMarkAttendance.isEnabled = false
                 }
 
             } else {
@@ -246,22 +270,22 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 binding.rcRoomAttendance.visibility = View.GONE
                 binding.lblErrorMessage.visibility = View.VISIBLE
                 binding.imgNoDataFound.visibility = View.VISIBLE
-                binding.lblMarkAttendance.alpha=0.4f
-                binding.lblMarkAttendance.isEnabled=false
-                binding.lblErrorMessage.text = getString(R.string.Something_went_wrong_Please_try_again)
+                binding.lblMarkAttendance.alpha = 0.4f
+                binding.lblMarkAttendance.isEnabled = false
+                binding.lblErrorMessage.text =
+                    getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
 
         appViewModel?.getHostelAttendanceSession?.observe(viewLifecycleOwner) { response ->
-            Constant.hideLoading(requireView())
+            Constant.hideLoadingAny(requireView())
 
-            sessionList = if (response != null && response.status && !response.data.isNullOrEmpty())
-            {
-                response.data
-            }
-            else {
-                listOf(SessionData(-1, "Please select a session"))
-            }
+            sessionList =
+                if (response != null && response.status && !response.data.isNullOrEmpty()) {
+                    response.data
+                } else {
+                    listOf(SessionData(-1, "Please select a session"))
+                }
             sessionNames.clear()
             sessionNames.addAll(sessionList.map { it.name })
 
@@ -307,7 +331,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
 
     private fun loadSelectedDateCalendar() {
         val today = LocalDate.now()
-        val minFromDate =  today.minusYears(1)
+        val minFromDate = today.minusYears(1)
         val maxFromDate = today
 
 
@@ -331,30 +355,36 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     private fun isLoadRoomAttendance(newData: List<RoomStudentAttendanceData>) {
         UpdateProgressAndCountOfAttendance(newData)
         mAdapter =
-            RoomAttendanceAdapter(newData, requireContext(),this, Constant.isShimmerViewDisable)
+            RoomAttendanceAdapter(newData, requireContext(), this, Constant.isShimmerViewDisable)
         binding.rcRoomAttendance.adapter = mAdapter
     }
 
     private fun isGetRoomAttendance() {
 
-        mAdapter = RoomAttendanceAdapter(null, requireContext(),this, Constant.isShimmerViewShow)
+        mAdapter = RoomAttendanceAdapter(null, requireContext(), this, Constant.isShimmerViewShow)
 
         binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
         binding.rcRoomAttendance.isNestedScrollingEnabled = false
         binding.rcRoomAttendance.adapter = mAdapter
 
-        appViewModel!!.isGetHostelAttendanceRoomStudentList(isAccessToken!!,Constant.isSelectedHostelFromHostelListData?.id.toString(),
-            Constant.isSelectedHostelRoomData?.id.toString(), Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString()?:"",
-            Constant.formatToUi2(isSelectedDate.toString()),isSelectedSessionID.toString(), requireActivity())
+        appViewModel!!.isGetHostelAttendanceRoomStudentList(
+            isAccessToken!!,
+            Constant.isSelectedHostelFromHostelListData?.id.toString(),
+            Constant.isSelectedHostelRoomData?.id.toString(),
+            Constant.isSelectedHostelRoomData?.isSelectedAcademicYear?.toString() ?: "",
+            Constant.formatToUi2(isSelectedDate.toString()),
+            isSelectedSessionID.toString(),
+            requireActivity()
+        )
     }
 
-    private fun isGetHostelSession(){
-        Constant.showLoading(requireView())
+    private fun isGetHostelSession() {
+        Constant.showLoadingAny(requireView())
         appViewModel!!.isGetHostelAttendanceSessionDetails(isAccessToken!!, requireActivity())
 
         //need to code review with sathish bro
         // Here i am just loading the because for Session till i am showing the Shimmer
-        mAdapter = RoomAttendanceAdapter(null, requireContext(),this, Constant.isShimmerViewShow)
+        mAdapter = RoomAttendanceAdapter(null, requireContext(), this, Constant.isShimmerViewShow)
 
         binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
         binding.rcRoomAttendance.isNestedScrollingEnabled = false
@@ -380,15 +410,15 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         when (tag) {
             Constant.FROM_DATE -> {
                 isSelectedDate = selected
-                Log.d("isSelectedDate",isSelectedDate.toString())
+                Log.d("isSelectedDate", isSelectedDate.toString())
 
                 binding.tvSelectedDate.text = formatDate(selected)
-                Log.d("SelectedDate",formatDate(selected))
+                Log.d("SelectedDate", formatDate(selected))
             }
         }
     }
 
-    fun UpdateProgressAndCountOfAttendance(list: List<RoomStudentAttendanceData>){
+    fun UpdateProgressAndCountOfAttendance(list: List<RoomStudentAttendanceData>) {
         val total = list.size
         val presentCount = list.count { it.status.equals("Present", true) }
 
@@ -432,9 +462,13 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             isMessage
         ) { confirmed ->
             if (confirmed) {
-                Constant.showLoading(requireView())
+                Constant.showLoadingAny(requireView())
                 pendingApprovalCallback = resultCallback // store it for later
-                appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
+                appViewModel?.schoolHostelOutpassUpdateStatus(
+                    isAccessToken!!,
+                    request,
+                    requireActivity()
+                )
             } else {
                 resultCallback(false) // user cancelled
             }

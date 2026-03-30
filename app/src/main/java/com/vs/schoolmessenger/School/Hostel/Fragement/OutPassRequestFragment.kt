@@ -30,11 +30,9 @@ import java.util.Calendar
 
 class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnClickListener{
 
-
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     lateinit var mAdapter: StatusWiseOutpassRequest
-
     private var appViewModel: App? = null
     private var _binding: OutpassRequestFragmentBinding? = null
     private val binding get() = _binding!!
@@ -121,12 +119,11 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                 binding.imgNoDataFound.visibility = View.VISIBLE
                 binding.lblErrorMessage.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
-
             }
         }
 
         appViewModel!!.schoolHostelOutpassUpdateStatus?.observe(requireActivity()) { response ->
-            Constant.hideLoading(requireActivity())
+            Constant.hideLoadingAny(requireView())
 
             if (response != null && response.status) {
                 isApprovedOrRejectedSuccessful = true
@@ -203,7 +200,7 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
             isMessage
         ) { confirmed ->
             if (confirmed) {
-                Constant.showLoading(requireActivity())
+                Constant.showLoadingAny(requireView())
                 pendingApprovalCallback = resultCallback // store it for later
                 appViewModel?.schoolHostelOutpassUpdateStatus(isAccessToken!!, request, requireActivity())
             } else {
