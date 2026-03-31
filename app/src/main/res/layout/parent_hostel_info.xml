@@ -3,8 +3,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
+
     <include
-        android:id="@+id/hostel_id"
+        android:id="@+id/institute_name"
         layout="@layout/item_hostel_info" />
 
     <include
@@ -20,7 +22,7 @@
         layout="@layout/item_hostel_info" />
 
     <include
-        android:id="@+id/no_of_rooms"
+        android:id="@+id/warden_name"
         layout="@layout/item_hostel_info" />
 
     <include
@@ -29,14 +31,6 @@
 
     <include
         android:id="@+id/max_capacity"
-        layout="@layout/item_hostel_info" />
-
-    <include
-        android:id="@+id/warden_name"
-        layout="@layout/item_hostel_info" />
-
-    <include
-        android:id="@+id/institute_name"
         layout="@layout/item_hostel_info" />
 
     <include

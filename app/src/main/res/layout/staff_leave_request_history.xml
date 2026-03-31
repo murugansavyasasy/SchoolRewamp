@@ -58,6 +58,17 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/lblNoOfDays"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_width="wrap_content"
+                    android:text="0 days"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textColor="@color/light_gray"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
                     android:id="@+id/lblDate"
                     android:layout_marginTop="@dimen/three"
                     android:layout_width="wrap_content"

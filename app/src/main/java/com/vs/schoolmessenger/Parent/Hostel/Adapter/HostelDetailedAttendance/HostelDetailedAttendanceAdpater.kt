@@ -93,12 +93,18 @@ class HostelDetailedAttendanceAdpater(
                 parent.setPadding(paddingH, paddingV, paddingH, paddingV)
 
                 val img = ImageView(context)
-                img.layoutParams = LinearLayout.LayoutParams(imageSize, imageSize)
+
+                val size = when (status) {
+                    "Not Taken" -> (imageSize * 0.4).toInt()
+                    else -> imageSize
+                }
+
+                img.layoutParams = LinearLayout.LayoutParams(size, size)
 
                 when (status) {
                     "Present" -> img.setImageResource(R.drawable.present_icon_3)
                     "Absent" -> img.setImageResource(R.drawable.absent_icon_3)
-                    "Not Taken" -> img.setImageResource(R.drawable.not_taken_icon_2)
+                    "Not Taken" -> img.setImageResource(R.drawable.not_taken_4)
                 }
 
                 parent.addView(img)

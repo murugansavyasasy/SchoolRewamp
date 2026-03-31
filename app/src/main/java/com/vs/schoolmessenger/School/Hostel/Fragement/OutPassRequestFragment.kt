@@ -127,10 +127,11 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                 isApprovedOrRejectedSuccessful = true
                 pendingApprovalCallback?.invoke(true)
                 pendingApprovalCallback = null
-                Constant.showDataValidationNoDashboardRedirect(
+
+                Constant.showDataValidationNoDashboardRedirect1Any(
                     getString(R.string.success),
                     response.message,
-                    requireActivity()
+                    requireView() as ViewGroup
                 )
                 isGetAttendanceHistory()
 
@@ -138,10 +139,10 @@ class OutPassRequestFragment : Fragment(), OutpassRequestClickListner,View.OnCli
                 isApprovedOrRejectedSuccessful = false
                 pendingApprovalCallback?.invoke(false)
                 pendingApprovalCallback = null
-                Constant.showDataValidation(
-                    getString(R.string.fail),
+                Constant.showDataValidationNoDashboardRedirect1Any(
+                    getString(R.string.success),
                     response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
-                    requireActivity()
+                    requireView() as ViewGroup
                 )
             }
         }

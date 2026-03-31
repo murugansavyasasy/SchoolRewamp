@@ -1168,6 +1168,7 @@
     <string name="fromdatewithman">From Date *</string>
     <string name="todatewithman">To Date *</string>
     <string name="select_staff_with_man">Select Staff *</string>
+    <string name="absent_progress">Absent progress</string>
 
 
 </resources>

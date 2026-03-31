@@ -1836,6 +1836,81 @@ object Constant {
     }
 
 
+    fun showDataValidationNoDashboardRedirect1Any(
+        title: String,
+        message: String,
+        viewGroup: ViewGroup
+    ) {
+        val context = viewGroup.context
+        val inflater = LayoutInflater.from(context)
+
+        val popupView = inflater.inflate(R.layout.success_popup, viewGroup, false)
+
+        val messageText = popupView.findViewById<TextView>(R.id.alertMessage)
+        val titleText = popupView.findViewById<TextView>(R.id.alertTitle)
+        val okButton = popupView.findViewById<TextView>(R.id.btnOk)
+
+        titleText.text = title
+        messageText.text = message
+
+        val rootView = viewGroup
+
+        // 🔹 Dim background
+        val dimView = View(context).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        // 🔹 Margin for popup
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            context.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        // 🔹 Container
+        val container = FrameLayout(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+
+        container.addView(dimView)
+        container.addView(popupView, popupLayoutParams)
+
+        rootView.addView(container)
+
+        // Close popup (ONLY removes popup, nothing else)
+        val closePopup = {
+            if (rootView.indexOfChild(container) != -1) {
+                rootView.removeView(container)
+            }
+        }
+
+        // OK button click
+        okButton.setOnClickListener {
+            closePopup()
+        }
+
+        // 🔹 Click outside to close
+        dimView.setOnClickListener {
+            closePopup()
+        }
+    }
+
 
     fun showDataValidationNoDashboardRedirect(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)

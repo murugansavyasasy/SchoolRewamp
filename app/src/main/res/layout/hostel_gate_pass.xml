@@ -72,7 +72,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/five"
                 android:text="Name"
-                android:textSize="@dimen/eighteen_sp"
+                android:textSize="@dimen/sixteen_sp"
                 app:layout_constraintEnd_toStartOf="@+id/lblExitTime"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/lblSessionNo"
@@ -122,7 +122,7 @@
 
             <TextView
                 android:id="@+id/tvExitTime"
-                style="@style/CustomTextStylePoppinsBold"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/five"
@@ -485,8 +485,7 @@
             android:layout_marginHorizontal="@dimen/fifteen"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginBottom="@dimen/twenty"
-            android:background="@drawable/bg_light_yellow_border"
-            android:backgroundTint="@color/light_green_1"
+            android:background="@drawable/green_rect_radius"
             android:drawableStart="@drawable/tick_icon_5"
             android:drawablePadding="@dimen/five"
             android:drawableTint="@color/green"
