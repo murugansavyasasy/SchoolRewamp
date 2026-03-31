@@ -28,5 +28,19 @@
     "icon": "ic_vaggiswari_logo",
     "terms_url": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/"
 
+  },
+  {
+    "id": "SRISUDHADHONE",
+    "school_id": "7415",
+    "name": "Sri Sudha Dhone",
+    "package_suffix": "com.srisudhadhone.schools",
+    "color": "#f27968",
+    "start_color": "#FFFFFF",
+    "center_color": "#f27968",
+    "end_color": "#e8a59b",
+    "light_sky_blue_color": "#e8a59b",
+    "dark_blue_color": "#f27968",
+    "icon": "ic_vaggiswari_logo",
+    "terms_url": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/"
   }
 ]
