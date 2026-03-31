@@ -196,7 +196,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Added the hardcode data
                     originalMenuList.add(
                         MenuDetail(
-                            id = 995,
+                            id = 202,
                             name = "Hostel parent Portal",
                             description = "Monitor hostel student activities and  accommodation details"
                         )
@@ -713,7 +713,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 Ebooks::class.java
             )
 
-            Constant.M_HOSTEL_PARENT -> Intent(
+            Constant.M_HOSTEL -> Intent(
                 requireActivity(),
                 ParentHostelDashboard::class.java
             )

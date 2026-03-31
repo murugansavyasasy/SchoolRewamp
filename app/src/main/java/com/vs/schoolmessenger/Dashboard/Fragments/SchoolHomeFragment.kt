@@ -237,7 +237,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Added the hardcode data
                     originalMenuList.add(
                         MenuDetail(
-                            id = 999,
+                            id = 203,
                             name = "Staff Leave Request",
                             description = "Submit and manage staff leave applications quickly"
                         )
@@ -245,25 +245,25 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     originalMenuList.add(
                         MenuDetail(
-                            id = 998,
+                            id = 204,
                             name = "Approve Staff Leave Request",
                             description = "Review and approve pending staff leave applications"
                         )
                     )
                     originalMenuList.add(
                         MenuDetail(
-                            id = 997,
+                            id = 202,
                             name = "Hostel Dashboard",
                             description = "Monitor and manage hostel activities and student accommodation"
                         )
                     )
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 996,
-                            name = "Student Details",
-                            description = "Monitor and manage student data"
-                        )
-                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 996,
+//                            name = "Student Details",
+//                            description = "Monitor and manage student data"
+//                        )
+//                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()

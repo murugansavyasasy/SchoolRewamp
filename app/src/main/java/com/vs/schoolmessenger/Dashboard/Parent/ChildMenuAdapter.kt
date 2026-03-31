@@ -129,6 +129,7 @@ class ChildMenuAdapter(
                 Constant.M_ONLINE_TEXT_BOOK -> imgMenu.setImageResource(R.drawable.book)
                 Constant.M_QUIZ_EXAM -> imgMenu.setImageResource(R.drawable.quiz_icon)
                 Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
+<<<<<<< HEAD
 
 
                 Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.staff_apply_leave)
@@ -138,6 +139,9 @@ class ChildMenuAdapter(
 
 
 
+=======
+                Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.holidays_icon)
+>>>>>>> fb1bd91814fb59bab586055f3cf4efc4f14112eb
             }
 
             rlaMenu.setOnClickListener {
