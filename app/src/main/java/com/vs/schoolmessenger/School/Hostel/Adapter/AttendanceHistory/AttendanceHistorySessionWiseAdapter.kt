@@ -82,7 +82,8 @@ class AttendanceHistorySessionWiseAdapter(
 
             lblRoomNumber.text= "${context.getString(R.string.room)} ${data.room_id}"
 //            val count=if(data.sessions.size==1)"Session" else "Sessions"
-            lblNoOfSessions.text="${data.sessions.size} Session"
+//            lblNoOfSessions.text="${data.sessions.size} Session"
+            lblNoOfSessions.visibility= View.GONE
 
 
 

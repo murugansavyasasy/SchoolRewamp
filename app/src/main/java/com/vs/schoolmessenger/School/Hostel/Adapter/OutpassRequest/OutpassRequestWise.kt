@@ -122,13 +122,13 @@ class OutpassRequestWise(
                     R.color.red
                 )
 
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_14)
-                )
-
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_15)
-                )
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_red_14)
+//                )
+//
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_red_15)
+//                )
                 applyTintedBackground(
                     lblStatus,
                     R.drawable.rect_bg_light_green_present,
@@ -162,13 +162,13 @@ class OutpassRequestWise(
 
 
 
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_13)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_11)
-                )
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_green_13)
+//                )
+//
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_green_11)
+//                )
 
 
             }
@@ -209,13 +209,13 @@ class OutpassRequestWise(
                     R.color.very_light_orange_3
                 )
 
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
-                )
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
+//                )
+//
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
+//                )
             }
         }
 
