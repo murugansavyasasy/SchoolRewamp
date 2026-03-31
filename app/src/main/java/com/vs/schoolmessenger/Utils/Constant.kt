@@ -123,6 +123,7 @@ object Constant {
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
     var isVersionId = 209
+
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false

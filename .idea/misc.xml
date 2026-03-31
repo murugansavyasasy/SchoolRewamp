@@ -3,6 +3,7 @@
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="androidx.annotation.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
+    <option name="myOrdered" value="true" />
     <option name="myNullables">
       <value>
         <list size="15">
@@ -54,7 +55,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.14670410156250002" />
+        <option name="scale" value="0.19060546875" />
       </ProjectState>
     </option>
   </component>
