@@ -118,6 +118,12 @@ class AutoScrollAdapterWithDots(
                 Constant.M_ONLINE_TEXT_BOOK -> itemImage.setImageResource(R.drawable.book)
                 Constant.M_QUIZ_EXAM -> itemImage.setImageResource(R.drawable.quiz_icon)
                 Constant.M_COUPON_PACKET -> itemImage.setImageResource(R.drawable.ic_rewards)
+
+
+
+                Constant.M_STAFF_LEAVE_REQUEST -> itemImage.setImageResource(R.drawable.staff_apply_leave)
+                Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> itemImage.setImageResource(R.drawable.approve_staff_leave)
+                Constant.M_HOSTEL -> itemImage.setImageResource(R.drawable.hotel_attendance)
             }
 
             try {

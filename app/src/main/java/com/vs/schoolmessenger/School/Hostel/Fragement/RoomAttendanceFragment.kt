@@ -135,7 +135,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 isApprovedOrRejectedSuccessful = true
                 pendingApprovalCallback?.invoke(true)
                 pendingApprovalCallback = null
-                Constant.showDataValidationNoDashboardRedirectAny(
+                Constant.showDataValidationNoDashboardRedirect1Any(
                     getString(R.string.success),
                     response.message,
                     requireView() as ViewGroup
@@ -144,7 +144,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 isApprovedOrRejectedSuccessful = false
                 pendingApprovalCallback?.invoke(false)
                 pendingApprovalCallback = null
-                Constant.showDataValidationNoDashboardRedirectAny(
+                Constant.showDataValidationNoDashboardRedirect1Any(
                     getString(R.string.fail),
                     response?.message ?: getString(R.string.Something_went_wrong_Please_try_again),
                     requireView() as ViewGroup

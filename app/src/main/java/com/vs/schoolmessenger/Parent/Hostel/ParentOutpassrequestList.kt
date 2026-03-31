@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -127,6 +128,7 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
                     }
                 }
             }
+
         }
 
         if (filteredList.isNotEmpty()) {
@@ -195,6 +197,7 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
         val tvBlockName = gatePassLayout.findViewById<TextView>(R.id.tvBlockName)
         val tvValidFrom = gatePassLayout.findViewById<TextView>(R.id.tvValidFrom)
         val tvValidTo = gatePassLayout.findViewById<TextView>(R.id.tvValidTo)
+        val txtDashLine = gatePassLayout.findViewById<TextView>(R.id.txtDashLine)
         val tvAuthorizedBy = gatePassLayout.findViewById<TextView>(R.id.tvlblAuthorizedBy)
 
 
@@ -214,6 +217,9 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
         tvAuthorizedBy.text = gatePass.action_by?:""
         tvBlockName.text=isParentHostelDetails.firstOrNull()?.floor_name?:""
 
+        setSingleLineDashes(txtDashLine)
+
+
         dialogView.setOnClickListener {
             alertDialog.dismiss()
             isDialogShowing = false
@@ -227,6 +233,24 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
 
     }
 
+    fun setSingleLineDashes(textView: TextView) {
+
+        textView.post {
+
+            val totalWidth = textView.width
+            val dash = "— "
+            val dashWidth = textView.paint.measureText(dash)
+            val count = (totalWidth / dashWidth).toInt()
+            val builder = StringBuilder()
+            for (i in 0 until count) {
+                builder.append(dash)
+            }
+            textView.text = builder.toString()
+            textView.setTextColor(
+                ContextCompat.getColor(textView.context, R.color.light_gray_15)
+            )
+        }
+    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

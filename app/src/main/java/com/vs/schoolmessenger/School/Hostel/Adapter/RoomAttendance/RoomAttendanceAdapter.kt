@@ -77,10 +77,14 @@ class RoomAttendanceAdapter(
         private val lblAccept: MaterialButton = itemView.findViewById(R.id.lblAccept)
         private val lblDecline: MaterialButton = itemView.findViewById(R.id.lblDecline)
         private val lblOutpassReason: TextView = itemView.findViewById(R.id.lblOutpassReason)
-        private val lblOutpassPermissionTimeDuration: TextView =
-            itemView.findViewById(R.id.lblOutpassPermissionTimeDuration)
+        private val lblOutpassPermissionFromTimeDuration: TextView =
+            itemView.findViewById(R.id.lblOutpassPermissionFromTimeDuration)
+
+        private val lblOutpassPermissionToTimeDuration: TextView =
+            itemView.findViewById(R.id.lblOutpassPermissionToTimeDuration)
         private val groupsEntireOutPass: Group = itemView.findViewById(R.id.groupsEntireOutPass)
         private val lblOutpassStatus: TextView = itemView.findViewById(R.id.lblOutpassStatus)
+        private val lblParentMobile: TextView = itemView.findViewById(R.id.lblParentMobile)
 
         private val colorList = listOf(
             R.color.green,
@@ -100,8 +104,9 @@ class RoomAttendanceAdapter(
 
             lblInitialName.text = Constant.getInitials(data.name)
             lblStudentDetails.text =
-                "Student id : ${data.id} • Parent Mobile No : ${data.primary_mobile}"
+                "Student id : ${data.id}"
             lblFullName.text = data.name
+            lblParentMobile.text ="Parent Mobile No : ${data.primary_mobile}"
 
             val color = if (position < colorList.size) {
                 colorList[position]
@@ -231,11 +236,13 @@ class RoomAttendanceAdapter(
 
 
                 //  Set common data
-                lblOutpassReason.text = data.reason
+                lblOutpassReason.text = "Reason : ${data.reason}"
 
-                lblOutpassPermissionTimeDuration.text =
-                    "In Date : ${Constant.formatDateTime(data.in_date)} - Out Date : ${
-                        Constant.formatDateTime(
+                lblOutpassPermissionFromTimeDuration.text =
+                    "In Date : ${Constant.convertDateTimeFormat2(data.in_date)}"
+                lblOutpassPermissionToTimeDuration.text =
+                    "Out Date : ${
+                        Constant.convertDateTimeFormat2(
                             data.out_date
                         )
                     }"

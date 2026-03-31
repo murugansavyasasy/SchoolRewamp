@@ -131,7 +131,9 @@ class ChildMenuAdapter(
                 Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
 
 
-                Constant.M_HOSTEL_PARENT -> imgMenu.setImageResource(R.drawable.holidays_icon)
+                Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.staff_apply_leave)
+                Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.approve_staff_leave)
+                Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.hotel_attendance)
 
 
 

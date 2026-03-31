@@ -1840,6 +1840,7 @@ object Constant {
         message: String,
         viewGroup: ViewGroup
     ) {
+
         val context = viewGroup.context
         val inflater = LayoutInflater.from(context)
 
@@ -1854,7 +1855,7 @@ object Constant {
 
         val rootView = viewGroup
 
-        // 🔹 Dim background
+        // Dim background
         val dimView = View(context).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
             layoutParams = ViewGroup.LayoutParams(
@@ -1864,7 +1865,6 @@ object Constant {
             isClickable = true
         }
 
-        // 🔹 Margin for popup
         val marginInPx = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             20f,
@@ -1879,7 +1879,6 @@ object Constant {
             setMargins(marginInPx, 0, marginInPx, 0)
         }
 
-        // 🔹 Container
         val container = FrameLayout(context).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -1892,19 +1891,18 @@ object Constant {
 
         rootView.addView(container)
 
-        // Close popup (ONLY removes popup, nothing else)
-        val closePopup = {
-            if (rootView.indexOfChild(container) != -1) {
+        // Only remove popup container
+        fun closePopup() {
+            if (container.parent != null) {
                 rootView.removeView(container)
             }
         }
 
-        // OK button click
         okButton.setOnClickListener {
             closePopup()
         }
 
-        // 🔹 Click outside to close
+        // Click outside popup
         dimView.setOnClickListener {
             closePopup()
         }

@@ -132,9 +132,9 @@ class SchoolMenuAdapter(
                 Constant.M_COUPON_PACKET -> imgMenu.setImageResource(R.drawable.ic_rewards)
 
 
-                Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_2)
-                Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.leave_request_icon_school)
-                Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.holidays_icon)
+                Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.staff_apply_leave)
+                Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.approve_staff_leave)
+                Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.hotel_attendance)
                 Constant.M_STUDENTDATE -> imgMenu.setImageResource(R.drawable.student_report)
 
             }

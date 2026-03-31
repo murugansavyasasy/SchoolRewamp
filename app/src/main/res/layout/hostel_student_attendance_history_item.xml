@@ -84,10 +84,10 @@
 
         <TextView
 
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/twele_sp"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:textSize="@dimen/ten_sp"
             android:id="@+id/lblStatus"
-            android:paddingVertical="@dimen/five"
+            android:paddingVertical="@dimen/three"
             android:paddingHorizontal="@dimen/five"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/lblFullName"

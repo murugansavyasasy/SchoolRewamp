@@ -727,6 +727,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         val lblPersonName = gatePassLayout.findViewById<TextView>(R.id.lblPersonName)
         val lblStudentRollNumber = gatePassLayout.findViewById<TextView>(R.id.lblStudentRollNumber)
         val tvExitTime = gatePassLayout.findViewById<TextView>(R.id.tvExitTime)
+        val txtDashLine = gatePassLayout.findViewById<TextView>(R.id.txtDashLine)
         val lblReason = gatePassLayout.findViewById<TextView>(R.id.lblReason)
         val tvRoomId = gatePassLayout.findViewById<TextView>(R.id.tvRoomId)
         val tvBlockName = gatePassLayout.findViewById<TextView>(R.id.tvBlockName)
@@ -750,6 +751,8 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         tvAuthorizedBy.text = gatePass.action_by ?: ""
         tvBlockName.text = parentHostelDetails?.firstOrNull()?.floor_name ?: ""
 
+        setSingleLineDashes(txtDashLine)
+
         alertDialog.setOnDismissListener {
             isDialogShowing = false
         }
@@ -759,6 +762,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             isDialogShowing = false
 
         }
+
 
     }
 
