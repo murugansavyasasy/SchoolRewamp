@@ -298,5 +298,4 @@ dependencies {
     implementation("org.maplibre.gl:android-plugin-annotation-v9:3.0.2")
     implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 
-
 }

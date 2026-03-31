@@ -25,10 +25,8 @@ class HostelFeeDetail(
     private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var fullList: List<FeeDetails> = emptyList()
 
     override fun getItemViewType(position: Int) =
@@ -114,20 +112,24 @@ class HostelFeeDetail(
                         ContextCompat.getColor(context, R.color.orange)
                     )
                     txtStatus.setBackgroundResource(R.drawable.bg_outline_orange_11)
-                    btnPay.visibility= View.VISIBLE
+                    btnPay.visibility = View.VISIBLE
                 } else {
                     txtStatus.setTextColor(
                         ContextCompat.getColor(context, R.color.green)
                     )
                     txtStatus.setBackgroundResource(R.drawable.bg_outline_green_11)
-                    btnPay.visibility= View.GONE
+                    btnPay.visibility = View.GONE
                 }
 
                 btnPay.text =
                     "Pay Now ${formatAmount(item.summary.pending_amount)}"
 
                 btnPay.setOnClickListener {
-                    val intent = Intent(context, com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails::class.java)
+                    val intent = Intent(
+                        context,
+                        com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails::class.java
+                    )
+                    Constant.isSelectedMenuName = "Fees"
                     context.startActivity(intent)
                 }
             }
