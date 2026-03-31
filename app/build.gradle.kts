@@ -147,6 +147,13 @@ android {
                 val light_sky_blue_color = school["light_sky_blue_color"].toString()
                 val iconName = school["icon"].toString()
 
+                val empowering = school["empowering"].toString()
+                val _3000_schools = school["_3000_schools"].toString()
+                val welcome_splash_message = school["welcome_splash_message"].toString()
+                val welcome_to_school_chimes = school["welcome_to_school_chimes"].toString()
+
+
+
                 val flavorResDir = File(srcDir, "$ID/res")
                 val drawableDir = File(flavorResDir, "drawable")
                 val valuesDir = File(flavorResDir, "values")
@@ -176,6 +183,10 @@ android {
                 |<?xml version="1.0" encoding="utf-8"?>
                 |<resources>
                 |    <string name="app_name">$schoolName</string>
+                |    <string name="empowering">$empowering</string>
+                |    <string name="_3000_schools">$_3000_schools</string>
+                |    <string name="welcome_splash_message">$welcome_splash_message</string>
+                |    <string name="welcome_to_school_chimes">$welcome_to_school_chimes</string>
                 |</resources>
                 """.trimMargin()
                 )
