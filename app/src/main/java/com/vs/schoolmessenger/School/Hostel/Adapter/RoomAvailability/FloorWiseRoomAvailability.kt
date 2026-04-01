@@ -118,6 +118,7 @@ class FloorWiseRoomAvailability(
         val rcRoomWiseAvailability: RecyclerView =
             itemView.findViewById(R.id.rcRoomWiseAvailability)
 
+        private var roomAdapter: RoomWiseAvailability? = null
 
         fun bind(
             data: getFloorwiseAvailability,
@@ -129,14 +130,23 @@ class FloorWiseRoomAvailability(
                 rcRoomWiseAvailability.visibility = View.GONE
             } else {
                 rcRoomWiseAvailability.visibility = View.VISIBLE
-                rcRoomWiseAvailability.layoutManager = LinearLayoutManager(context)
-                rcRoomWiseAvailability.isNestedScrollingEnabled = false
-                rcRoomWiseAvailability.adapter = RoomWiseAvailability(
-                    data.rooms,
-                    context,
-                    hostelClickListner,
-                    false
-                )
+
+                if (rcRoomWiseAvailability.layoutManager == null) {
+                    rcRoomWiseAvailability.layoutManager = LinearLayoutManager(context)
+                    rcRoomWiseAvailability.isNestedScrollingEnabled = false
+                }
+
+                if (roomAdapter == null) {
+                    roomAdapter = RoomWiseAvailability(
+                        data.rooms,
+                        context,
+                        hostelClickListner,
+                        false
+                    )
+                    rcRoomWiseAvailability.adapter = roomAdapter
+                } else {
+                    roomAdapter?.updateData(data.rooms)
+                }
             }
         }
 

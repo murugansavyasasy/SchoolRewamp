@@ -403,7 +403,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
             val from = parts.getOrNull(0)?.trim() ?: ""
             val to = parts.getOrNull(1)?.trim() ?: ""
 
-            binding.hostelGatePass.tvExitTime.text= Constant.getOnlyTime(data?.request_time?:"")
+            binding.hostelGatePass.tvExitTime.text= Constant.getOnlyTime(from)
             binding.hostelGatePass.tvValidFrom.text= Constant.convertDateFormatType2(from)
             binding.hostelGatePass.tvValidTo.text= Constant.convertDateFormatType2(to)
             binding.hostelGatePass.tvBlockName.text=data?.floor_no?:""
@@ -743,7 +743,7 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
         lblSessionNo.text = Constant.getInitials(parentHostelDetails?.firstOrNull()?.student_name ?: "")
         lblPersonName.text = parentHostelDetails?.firstOrNull()?.student_name ?: ""
         lblStudentRollNumber.text = parentHostelDetails?.firstOrNull()?.admission_no ?: ""
-        tvExitTime.text = Constant.getOnlyTime(gatePass?.request_time?:"")
+        tvExitTime.text = Constant.getOnlyTime(from)
         lblReason.text = gatePass.reason ?: ""
         tvRoomId.text = parentHostelDetails?.firstOrNull()?.room_id ?: ""
         tvValidFrom.text = Constant.convertDateFormatType2(from)

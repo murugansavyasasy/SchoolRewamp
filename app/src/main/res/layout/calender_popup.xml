@@ -1,212 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_white_curve_radius"
     android:padding="@dimen/fifteen">
 
-
     <TextView
         android:id="@+id/txtSelectYear"
-        android:text="Select Year"
         android:layout_width="0dp"
         android:layout_height="@dimen/fourty"
+        android:layout_marginTop="@dimen/fifteen"
+        android:text="Select Year"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/fifteen"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/lnrYearSelect"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSelectYear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:weightSum="2"
-        android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtSelectYear">
 
         <TextView
             android:id="@+id/year2"
             style="@style/BoxItem"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/fourty"
-            android:text="2025"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/eight"
-            />
+            android:text="2025" />
 
         <TextView
             android:id="@+id/year3"
             style="@style/BoxItem"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="@dimen/fourty"
-            android:text="2026"
             android:layout_marginStart="@dimen/eight"
-          />
-
+            android:layout_weight="1"
+            android:text="2026" />
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/txtSelectMonth"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/fourty"
+        android:layout_marginTop="@dimen/fifteen"
         android:text="Select Month"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/lnrYearSelect"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/fifteen"/>
+        app:layout_constraintTop_toBottomOf="@id/lnrYearSelect" />
 
-    <TextView
-        android:id="@+id/jan"
-        style="@style/BoxItem"
+    <LinearLayout
+        android:id="@+id/monthContainer"
         android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="January"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/feb"
-        app:layout_constraintTop_toBottomOf="@id/txtSelectMonth"
-        app:layout_constraintHorizontal_weight="1"/>
-
-    <TextView
-        android:id="@+id/feb"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="February"
-        app:layout_constraintStart_toEndOf="@id/jan"
-        app:layout_constraintEnd_toStartOf="@id/mar"
-        app:layout_constraintTop_toTopOf="@id/jan"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
-
-    <TextView
-        android:id="@+id/mar"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="March"
-        app:layout_constraintStart_toEndOf="@id/feb"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/jan"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
-
-    <TextView
-        android:id="@+id/apr"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="April"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/may"
-        app:layout_constraintTop_toBottomOf="@id/jan"
-        android:layout_marginTop="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+        app:layout_constraintTop_toBottomOf="@id/txtSelectMonth">
 
-    <TextView
-        android:id="@+id/may"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="May"
-        app:layout_constraintStart_toEndOf="@id/apr"
-        app:layout_constraintEnd_toStartOf="@id/jun"
-        app:layout_constraintTop_toTopOf="@id/apr"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3">
 
-    <TextView
-        android:id="@+id/jun"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="June"
-        app:layout_constraintStart_toEndOf="@id/may"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/apr"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/jan"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_weight="1"
+                android:text="January" />
 
-    <TextView
-        android:id="@+id/jul"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="July"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/aug"
-        app:layout_constraintTop_toBottomOf="@id/apr"
-        android:layout_marginTop="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/feb"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="February" />
 
-    <TextView
-        android:id="@+id/aug"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="August"
-        app:layout_constraintStart_toEndOf="@id/jul"
-        app:layout_constraintEnd_toStartOf="@id/sep"
-        app:layout_constraintTop_toTopOf="@id/jul"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/mar"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="March" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/sep"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="September"
-        app:layout_constraintStart_toEndOf="@id/aug"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/jul"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:weightSum="3">
 
-    <TextView
-        android:id="@+id/oct"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="October"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/nov"
-        app:layout_constraintTop_toBottomOf="@id/jul"
-        android:layout_marginTop="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/apr"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_weight="1"
+                android:text="April" />
 
-    <TextView
-        android:id="@+id/nov"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="November"
-        app:layout_constraintStart_toEndOf="@id/oct"
-        app:layout_constraintEnd_toStartOf="@id/dec"
-        app:layout_constraintTop_toTopOf="@id/oct"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/may"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="May" />
 
-    <TextView
-        android:id="@+id/dec"
-        style="@style/BoxItem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fourty"
-        android:text="December"
-        app:layout_constraintStart_toEndOf="@id/nov"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/oct"
-        android:layout_marginStart="@dimen/eight"
-        app:layout_constraintHorizontal_weight="1"/>
+            <TextView
+                android:id="@+id/jun"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="June" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/jul"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_weight="1"
+                android:text="July" />
+
+            <TextView
+                android:id="@+id/aug"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="August" />
+
+            <TextView
+                android:id="@+id/sep"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="September" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/oct"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_weight="1"
+                android:text="October" />
+
+            <TextView
+                android:id="@+id/nov"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="November" />
+
+            <TextView
+                android:id="@+id/dec"
+                style="@style/BoxItem"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_weight="1"
+                android:text="December" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifteen"
         android:text="Close"
-        app:layout_constraintTop_toBottomOf="@id/oct"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/fifteen"/>
+        app:layout_constraintTop_toBottomOf="@id/monthContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

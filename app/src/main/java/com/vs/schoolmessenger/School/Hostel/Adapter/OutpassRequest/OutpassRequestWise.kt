@@ -99,7 +99,7 @@ class OutpassRequestWise(
             lblInitialName.text= Constant.getInitials(data.student_name?:"")
 
             lblReason.text = "Reason : ${data.reason}"
-            lblInDate.text =  "In : ${data.in_date}"
+            lblInDate.text =  "Return : ${data.in_date}"
             lblOutDate.text = "Out : ${data.out_date}"
             lblDestination.visibility= View.GONE
 
@@ -120,14 +120,6 @@ class OutpassRequestWise(
                     lblInitialName,
                     R.drawable.circle_bg_orange,
                     R.color.red
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_14)
-                )
-
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_red_15)
                 )
                 applyTintedBackground(
                     lblStatus,
@@ -159,17 +151,6 @@ class OutpassRequestWise(
                 )
                 lblStatus.text=context.getString(R.string.approved)
                 lblStatus.setTextColor(context.getColor(R.color.green))
-
-
-
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_13)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_green_11)
-                )
-
 
             }
             else if (data.status == Constant.pending.uppercase()) {
@@ -207,14 +188,6 @@ class OutpassRequestWise(
                     lblStatus,
                     R.drawable.rect_bg_light_green_present,
                     R.color.very_light_orange_3
-                )
-
-                cardHeader.setStrokeColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
-                )
-
-                cardHeader.setCardBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
                 )
             }
         }

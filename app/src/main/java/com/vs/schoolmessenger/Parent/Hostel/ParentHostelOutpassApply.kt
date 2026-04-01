@@ -1,8 +1,14 @@
 package com.vs.schoolmessenger.Parent.Hostel
 
 
+import android.content.Context
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 
@@ -76,6 +82,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
         binding.selectedFromDate.setOnClickListener(this)
         binding.selectedToDate.setOnClickListener(this)
 
+
         val isHostelDetails = intent.getSerializableExtra("PARENT_HOSTEL_LIST") as? ArrayList<getParentHostelDetailsData> ?: arrayListOf()
         isParentHostelDetails=isHostelDetails
 
@@ -113,6 +120,13 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                 )
             }
         }
+
+        binding.lblOutpassReason.setRequiredLabel("Reason for Outpass *")
+        binding.lblFromDate.setRequiredLabel("From Date *")
+        binding.lblToDate.setRequiredLabel("To Date *")
+        binding.lblFromTime.setRequiredLabel("From Time *")
+        binding.lblToTime.setRequiredLabel("To Time *")
+        binding.lblEmergerncyContact.setRequiredLabel("Emergency Contact Number *")
 
         binding.lblSubmitRequest.setOnClickListener {
 
@@ -192,6 +206,27 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
     }
 
+    fun TextView.setRequiredLabel(text: String) {
+        val spannable = SpannableString(text)
+
+        if (text.endsWith("*")) {
+            spannable.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.holo_red_dark)),
+                text.length - 1,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            spannable.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, android.R.color.black)),
+                0,
+                text.length - 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        this.text = spannable
+    }
 
     override fun onDateSelected(date: String) {
         when (selectedDateField) {

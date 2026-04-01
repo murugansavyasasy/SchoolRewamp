@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.School.Hostel.Adapter.RoomAvailability
 
-
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
@@ -16,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Hostel.Listner.HostelClickListner
+import com.vs.schoolmessenger.School.Hostel.Model.FragmentType
 import com.vs.schoolmessenger.School.Hostel.Model.HostelDashboard.RoomAvailabaility.getRoomAvailability
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import kotlin.math.log
@@ -79,20 +78,16 @@ class RoomWiseAvailability(
     }
 
     class DataViewHolder(
-        itemView: View, private val context: Context, private val hostelClickListner: HostelClickListner
+        itemView: View,
+        private val context: Context,
+        private val hostelClickListner: HostelClickListner
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val lblRoomNo: TextView = itemView.findViewById(R.id.lblRoomNo)
-        private val GroupsRoomDetails: Group = itemView.findViewById(R.id.GroupsRoomDetails)
-        private val ErrorMsg: TextView = itemView.findViewById(R.id.ErrorMsg)
-        private val lblFirstName: TextView = itemView.findViewById(R.id.lblFirstName)
-        private val lblSecondName: TextView = itemView.findViewById(R.id.lblSecondName)
-        private val lblPersonStrength: TextView = itemView.findViewById(R.id.lblPersonStrength)
         private val lblBedCount: TextView = itemView.findViewById(R.id.lblBedCount)
-        private val lblHostellarRemainingCount: TextView = itemView.findViewById(R.id.lblHostellarRemainingCount)
-        private val lblOccupancyPercentage: TextView = itemView.findViewById(R.id.lblOccupancyPercentage)
-        private val proRoomAvailProgressBar: ProgressBar = itemView.findViewById(R.id.proRoomAvailProgressBar)
         private val cardHeader: MaterialCardView = itemView.findViewById(R.id.cardHeader)
+        private val lblPersonStrength: TextView = itemView.findViewById(R.id.lblPersonStrength)
+
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: getRoomAvailability, position: Int) {
@@ -100,80 +95,12 @@ class RoomWiseAvailability(
             lblRoomNo.text = data.number
             lblBedCount.text = data.total_beds.toString()
 
-            val current = data.current_occupancy
-            val max = data.max_occupancy
+            lblPersonStrength.text = "${data.current_occupancy} / ${data.max_occupancy}"
 
-            val percentage = if (max > 0) {
-                ((current.toFloat() / max.toFloat()) * 100)
-                    .roundToInt()
-                    .coerceAtMost(100)
-            } else {
-                0
+            cardHeader.setOnClickListener {
+                hostelClickListner.onRoomClick(data)
             }
-
-            lblOccupancyPercentage.text = "$percentage%"
-            Log.d("percentage",percentage.toString())
-            proRoomAvailProgressBar.progress = percentage
-            lblPersonStrength.text = "$current / $max"
-
-            if (percentage == 100) {
-                proRoomAvailProgressBar.progressDrawable =
-                    ContextCompat.getDrawable(context, R.drawable.progress_red)
-            } else {
-                proRoomAvailProgressBar.progressDrawable =
-                    ContextCompat.getDrawable(context, R.drawable.progress_blue)
-            }
-
-
-
-            if (data.students.isEmpty()){
-                GroupsRoomDetails.visibility=View.GONE
-                ErrorMsg.visibility=View.VISIBLE
-            }else{
-                cardHeader.setOnClickListener {
-                    hostelClickListner.onRoomClick(data)
-                }
-                GroupsRoomDetails.visibility=View.VISIBLE
-                ErrorMsg.visibility=View.GONE
-            }
-
-            // Reset visibility first so accordingly we can make it visible it and control UI
-            lblFirstName.visibility = View.GONE
-            lblSecondName.visibility = View.GONE
-            lblHostellarRemainingCount.visibility = View.GONE
-
-            when (data.students.size) {
-
-                1 -> {
-                    lblFirstName.visibility = View.VISIBLE
-                    lblFirstName.text = "• ${data.students[0]}"
-                }
-
-                2 -> {
-                    lblFirstName.visibility = View.VISIBLE
-                    lblSecondName.visibility = View.VISIBLE
-
-                    lblFirstName.text = "• ${data.students[0]}"
-                    lblSecondName.text = "• ${data.students[1]}"
-                }
-
-                3 -> {
-                    lblFirstName.visibility = View.VISIBLE
-                    lblSecondName.visibility = View.VISIBLE
-                    lblHostellarRemainingCount.visibility = View.VISIBLE
-
-                    lblFirstName.text = "• ${data.students[0]}"
-                    lblSecondName.text = "• ${data.students[1]}"
-                    lblHostellarRemainingCount.text = "• ${data.students[2]}" // "+2 more"
-                }
-            }
-
         }
-
-
-
-
-
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
