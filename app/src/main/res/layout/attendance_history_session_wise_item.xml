@@ -28,6 +28,7 @@
             android:layout_marginStart="@dimen/ten"
             android:background="@drawable/rect_radius_15"
             android:id="@+id/lblNoOfSessions"
+            android:visibility="gone"
             android:backgroundTint="@color/light_blue_13"
             android:textColor="@color/dark_blue_13"
             android:paddingVertical="@dimen/three"

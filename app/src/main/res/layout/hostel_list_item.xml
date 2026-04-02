@@ -159,6 +159,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/eight"
             android:layout_marginStart="@dimen/ten"
             app:layout_constraintBottom_toTopOf="@+id/lblOccupacy"

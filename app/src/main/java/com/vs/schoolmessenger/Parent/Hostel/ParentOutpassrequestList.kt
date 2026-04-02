@@ -200,37 +200,35 @@ class ParentOutpassrequestList : BaseActivity<ParentHostelOutpassRequestListBind
         val txtDashLine = gatePassLayout.findViewById<TextView>(R.id.txtDashLine)
         val tvAuthorizedBy = gatePassLayout.findViewById<TextView>(R.id.tvlblAuthorizedBy)
 
-
-        val input = gatePass?.fromdate_todate?:" - "
+        val input = gatePass.fromdate_todate ?: " - "
         val parts = input.split(" - ")
         val from = parts.getOrNull(0)?.trim() ?: ""
         val to = parts.getOrNull(1)?.trim() ?: ""
 
-        lblSessionNo.text = Constant.getInitials( isParentHostelDetails.firstOrNull()?.student_name?:"")
-        lblPersonName.text = isParentHostelDetails.firstOrNull()?.student_name?:""
-        lblStudentRollNumber.text = isParentHostelDetails.firstOrNull()?.admission_no?:""
-        tvExitTime.text =Constant.getOnlyTime(from)
-        lblReason.text = gatePass.reason
-        tvRoomId.text =isParentHostelDetails.firstOrNull()?.room_id?:""
-        tvValidFrom.text =  Constant.convertDateFormatType2(from)
+        lblSessionNo.text = Constant.getInitials(isParentHostelDetails.firstOrNull()?.student_name ?: "")
+        lblPersonName.text = isParentHostelDetails.firstOrNull()?.student_name ?: ""
+        lblStudentRollNumber.text = isParentHostelDetails.firstOrNull()?.admission_no ?: ""
+        tvExitTime.text = Constant.getOnlyTime(from)
+        lblReason.text = gatePass.reason ?: ""
+        tvRoomId.text = isParentHostelDetails.firstOrNull()?.room_id ?: ""
+        tvValidFrom.text = Constant.convertDateFormatType2(from)
         tvValidTo.text = Constant.convertDateFormatType2(to)
-        tvAuthorizedBy.text = gatePass.action_by?:""
-        tvBlockName.text=isParentHostelDetails.firstOrNull()?.floor_name?:""
+        tvAuthorizedBy.text = gatePass.action_by ?: ""
+        tvBlockName.text = isParentHostelDetails.firstOrNull()?.floor_name ?: ""
 
         setSingleLineDashes(txtDashLine)
 
+        alertDialog.setOnDismissListener {
+            isDialogShowing = false
+        }
 
         dialogView.setOnClickListener {
             alertDialog.dismiss()
-            isDialogShowing = false
         }
 
         gatePassLayout.setOnClickListener {
             alertDialog.dismiss()
-            isDialogShowing = false
-
         }
-
     }
 
     fun setSingleLineDashes(textView: TextView) {

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Hostel
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,7 +76,6 @@ class BottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun loadFragment() {
-
         val fragment = when (type) {
 
             FragmentType.BEDOCCUPIED.toString() -> BedOccupiedFragment()
@@ -92,6 +92,6 @@ class BottomSheet : BottomSheetDialogFragment() {
 
         childFragmentManager.beginTransaction()
             .replace(R.id.bottomFragmentContainer, fragment)
-            .commit()
+            .commitNowAllowingStateLoss()
     }
 }

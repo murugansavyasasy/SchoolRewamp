@@ -68,6 +68,10 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
+
+        binding.root.post {
+            isGetHostelSession()
+        }
     }
 
     private fun setupViews() {
@@ -236,10 +240,10 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         }
 
         appViewModel?.getHostelAttendanceRoomStudentList?.observe(viewLifecycleOwner) { response ->
+            Constant.hideLoadingAny(requireView())
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
-
                         binding.rcRoomAttendance.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
@@ -247,6 +251,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                         isLoadRoomAttendance(data as List<RoomStudentAttendanceData>)
                         binding.lblMarkAttendance.alpha = 1f
                         binding.lblMarkAttendance.isEnabled = true
+
                     } else {
                         binding.rcRoomAttendance.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.VISIBLE
@@ -254,6 +259,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                         binding.lblErrorMessage.text = response.message
                         binding.lblMarkAttendance.alpha = 0.4f
                         binding.lblMarkAttendance.isEnabled = false
+
                     }
 
                 } else {
@@ -263,6 +269,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                     binding.lblErrorMessage.text = response.message
                     binding.lblMarkAttendance.alpha = 0.4f
                     binding.lblMarkAttendance.isEnabled = false
+
                 }
 
             } else {
@@ -274,12 +281,11 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
                 binding.lblMarkAttendance.isEnabled = false
                 binding.lblErrorMessage.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
+
             }
         }
 
         appViewModel?.getHostelAttendanceSession?.observe(viewLifecycleOwner) { response ->
-            Constant.hideLoadingAny(requireView())
-
             sessionList =
                 if (response != null && response.status && !response.data.isNullOrEmpty()) {
                     response.data
@@ -290,10 +296,8 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             sessionNames.addAll(sessionList.map { it.name })
 
             isFromSpinner()
+            Constant.hideLoadingAny(requireView())
         }
-
-        isGetHostelSession()
-
 
     }
 
@@ -360,6 +364,7 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     }
 
     private fun isGetRoomAttendance() {
+        Constant.showLoadingAny(requireView())
 
         mAdapter = RoomAttendanceAdapter(null, requireContext(), this, Constant.isShimmerViewShow)
 
@@ -381,15 +386,6 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
     private fun isGetHostelSession() {
         Constant.showLoadingAny(requireView())
         appViewModel!!.isGetHostelAttendanceSessionDetails(isAccessToken!!, requireActivity())
-
-        //need to code review with sathish bro
-        // Here i am just loading the because for Session till i am showing the Shimmer
-        mAdapter = RoomAttendanceAdapter(null, requireContext(), this, Constant.isShimmerViewShow)
-
-        binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
-        binding.rcRoomAttendance.isNestedScrollingEnabled = false
-        binding.rcRoomAttendance.adapter = mAdapter
-
     }
 
 

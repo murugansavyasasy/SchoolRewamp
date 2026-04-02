@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/consHeader"
-        android:backgroundTint="#165dfc"
+        android:backgroundTint="@color/PrimaryColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
@@ -36,7 +36,7 @@
             android:padding="@dimen/five"
             app:layout_constraintStart_toEndOf="@+id/lblAttendanceHistory"
             android:src="@drawable/close_icon"
-            android:backgroundTint="#4b7efd"
+            android:backgroundTint="#4b70dc"
             android:background="@drawable/circle_bg"
             app:layout_constraintBottom_toBottomOf="@+id/lblAttendanceHistory"
             app:layout_constraintEnd_toEndOf="parent"

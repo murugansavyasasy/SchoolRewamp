@@ -103,8 +103,7 @@ class RoomAttendanceAdapter(
         fun bind(data: RoomStudentAttendanceData, position: Int) {
 
             lblInitialName.text = Constant.getInitials(data.name)
-            lblStudentDetails.text =
-                "Student id : ${data.id}"
+            lblStudentDetails.text = "Class : "  + data.class_name + " - " + data.section_name
             lblFullName.text = data.name
             lblParentMobile.text ="Parent Mobile No : ${data.primary_mobile}"
 

@@ -118,7 +118,6 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
                         binding.rcRoomAvailability.visibility= View.VISIBLE
                         binding.consOutpassRequests.visibility= View.VISIBLE
                         binding.consTotalStudent.visibility= View.VISIBLE
-
                         binding.imgNoDataFound.visibility = View.GONE
                         binding.lblErrorMessage.visibility = View.GONE
                         isLoadRoomAvailability(data)
@@ -128,7 +127,6 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
                         binding.rcRoomAvailability.visibility= View.GONE
                         binding.consOutpassRequests.visibility= View.GONE
                         binding.consTotalStudent.visibility= View.GONE
-
                         binding.lblErrorMessage.visibility = View.VISIBLE
                         binding.imgNoDataFound.visibility = View.VISIBLE
                         binding.lblErrorMessage.text = getString(R.string.no_data_found)
@@ -139,7 +137,6 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
                     binding.rcRoomAvailability.visibility= View.GONE
                     binding.consOutpassRequests.visibility= View.GONE
                     binding.consTotalStudent.visibility= View.GONE
-
                     binding.lblErrorMessage.visibility = View.VISIBLE
                     binding.imgNoDataFound.visibility = View.VISIBLE
                     binding.lblErrorMessage.text = response.message
@@ -150,9 +147,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
                 binding.rcRoomAvailability.visibility= View.GONE
                 binding.consOutpassRequests.visibility= View.GONE
                 binding.consTotalStudent.visibility= View.GONE
-
                 binding.cardAttendanceRequired.visibility= View.GONE
-
                 binding.rcRoomAvailability.visibility = View.GONE
                 binding.lblErrorMessage.visibility = View.VISIBLE
                 binding.imgNoDataFound.visibility = View.VISIBLE
@@ -161,7 +156,7 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
         }
 
         setDrawableBackgroundColor(binding.consTotalStudent,R.color.green_3)
-        setDrawableBackgroundColor(binding.consOutpassRequests,R.color.dark_brown_3)
+        setDrawableBackgroundColor(binding.consOutpassRequests,R.color.PrimaryColor)
 
     }
     private fun openBottomSheet(type: String) {
@@ -261,21 +256,20 @@ class SchoolHostelDashboard : BaseActivity<HostelDashboardBinding>(),
     }
 
     override fun onRoomClick(data: getRoomAvailability) {
+
         val saveSelectedHostelRoomData = isSelectedRoomData(
             id=data.id,
             number=data.number,
             current_occupancy=data.current_occupancy,
             max_occupancy=data.max_occupancy,
             total_beds=data.total_beds,
-            students=data.students,
             isSelectedAcademicYear=isAcademicYearId,
         )
+        openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
+
         //We are Saving all the data in Constant as List Here
         Constant.isSelectedHostelRoomData = saveSelectedHostelRoomData
         Constant.isHostelName=Constant.isSelectedHostelFromHostelListData?.name?:""
-
-
-        openBottomSheet(FragmentType.ROOMATTENDANCE.toString())
 
     }
 }

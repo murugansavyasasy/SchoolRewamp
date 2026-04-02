@@ -54,6 +54,9 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
+        binding.root.post {
+            isGetAttendanceHistory()
+        }
     }
 
     private fun setupViews() {
@@ -76,7 +79,7 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
 
 
         appViewModel?.hotelSchoolAttendanceReport?.observe(viewLifecycleOwner) { response ->
-
+            Constant.hideLoadingAny(requireView())
             if (response != null) {
 
                 if (response.status) {
@@ -115,8 +118,6 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        isGetAttendanceHistory()
-
     }
 
     private fun isLoadAttendanceHistory(newData: List<getRoomData>?) {
@@ -126,17 +127,14 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
                 requireContext(),
                 Constant.isShimmerViewDisable
             )
-        binding.rcRoomAvailability.adapter = mAdapter
-    }
-
-    private fun isGetAttendanceHistory() {
-
-        mAdapter = AttendanceHistorySessionWiseAdapter(null, requireContext(), Constant.isShimmerViewShow)
-
         binding.rcRoomAvailability.layoutManager = LinearLayoutManager(requireContext())
         binding.rcRoomAvailability.isNestedScrollingEnabled = false
         binding.rcRoomAvailability.adapter = mAdapter
 
+    }
+
+    private fun isGetAttendanceHistory() {
+        Constant.showLoadingAny(requireView())
         appViewModel!!.isGetHostelSchoolAttendanceReport(isAccessToken!!, Constant.isSelectedHostelFromHostelListData?.id.toString(),Constant.convertDateFormat(binding.txtStartDate.text.toString()),Constant.isSelectedAcademicYear?:"", requireActivity())
 
     }
