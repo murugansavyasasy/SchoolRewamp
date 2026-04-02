@@ -71,7 +71,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        // Prevent recreation crash
+        //    Prevent recreation crash
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
