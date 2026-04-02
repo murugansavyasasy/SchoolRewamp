@@ -235,28 +235,28 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     originalMenuList.addAll(isSchoolMenuDetails!!)
                     //Hardcode from here
                     //Added the hardcode data
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 203,
-                            name = "Staff Leave Request",
-                            description = "Submit and manage staff leave applications quickly"
-                        )
-                    )
-
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 204,
-                            name = "Approve Staff Leave Request",
-                            description = "Review and approve pending staff leave applications"
-                        )
-                    )
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 202,
-                            name = "Hostel Dashboard",
-                            description = "Monitor and manage hostel activities and student accommodation"
-                        )
-                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 203,
+//                            name = "Staff Leave Request",
+//                            description = "Submit and manage staff leave applications quickly"
+//                        )
+//                    )
+//
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 204,
+//                            name = "Approve Staff Leave Request",
+//                            description = "Review and approve pending staff leave applications"
+//                        )
+//                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 202,
+//                            name = "Hostel Dashboard",
+//                            description = "Monitor and manage hostel activities and student accommodation"
+//                        )
+//                    )
 //                    originalMenuList.add(
 //                        MenuDetail(
 //                            id = 996,

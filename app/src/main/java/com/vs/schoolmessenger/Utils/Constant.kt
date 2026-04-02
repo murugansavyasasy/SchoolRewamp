@@ -122,7 +122,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 209
+    var isVersionId = 210
 
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
@@ -195,16 +195,12 @@ object Constant {
     val M_SCHEDULE_EXAM_TEST = 38
     val M_ATTACHMENTS = 39
     val M_FINANCE = 194
-
     val M_COUPON_PACKET = 40
     val M_STAFF_LEAVE_REQUEST = 203
     val M_APPROVE_STAFF_LEAVE_REQUEST = 204
     val M_HOSTEL = 202
-
-    val M_STUDENTDATE = 996
-//    val M_HOSTEL_PARENT = 995
+//    val M_STUDENTDATE = 996
     var SELECTED_MENU_ID = 0
-
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null
 

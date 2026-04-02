@@ -51,13 +51,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/five"
-        android:text="00 Feb 0000 - 00 Feb 0000"
+        android:text="00 000 0000"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblLeaveDurationToDays"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consReasonAndStatus">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblLeaveDurationToDays"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:text="00 00 0000"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/fourteen_sp"
         app:layout_constraintBottom_toTopOf="@+id/view1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/consReasonAndStatus">
+        app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationDays">
 
     </TextView>
 
@@ -71,7 +87,7 @@
         app:layout_constraintBottom_toTopOf="@+id/lblRequestOn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationDays"></View>
+        app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationToDays"></View>
 
 
     <TextView

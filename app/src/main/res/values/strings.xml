@@ -1131,7 +1131,7 @@
     <string name="Beds">Beds</string>
     <string name="Bed">Bed</string>
     <string name="outpass_request">Outpass Request</string>
-    <string name="detailed_attendance_records">Detailed Attendance Records</string>
+    <string name="detailed_attendance_records">Detailed Attendance Reports</string>
     <string name="hotel_information">Hotel Information</string>
     <string name="enter_the_reason_for_your_outpass_request">Enter the reason for your outpass request...</string>
     <string name="where_are_you_going">Where are you going ?</string>
@@ -1154,7 +1154,7 @@
     <string name="pending_hostel_fees">Pending Hostel Fees</string>
     <string name="request_details">Request Details</string>
     <string name="enter_reason_2">Enter reason...</string>
-    <string name="new_outpass_request">New OutPass Request</string>
+    <string name="new_outpass_request">New Outpass Request</string>
     <string name="outpass_report">Outpass Report</string>
     <string name="are_you_sure_want_to_apply_outpass">Are you sure want to apply outpass?</string>
     <string name="room_no">Room no</string>

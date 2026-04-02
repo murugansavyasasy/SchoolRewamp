@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/statusBarBackground"
@@ -28,43 +28,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginVertical="@dimen/fifteen"
-            android:paddingBottom="@dimen/fifty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingBottom="@dimen/fifty">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rytSearch"
-                android:visibility="gone"
                 android:layout_width="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rcHostelOutpassRequest"
                 android:layout_height="@dimen/thirty_five"
                 android:background="@drawable/rect_grey"
-                >
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/rcHostelOutpassRequest"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imgSearch"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/txtSearch"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/ic_search" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgSearch"
                     android:id="@+id/txtSearch"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -76,47 +71,52 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgSearch"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layout_constraintTop_toBottomOf="@+id/rytSearch"
-                android:layout_width="0dp"
-                app:layout_constraintVertical_bias="0"
                 android:id="@+id/rcHostelOutpassRequest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
                 app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="wrap_content">
+                app:layout_constraintTop_toBottomOf="@+id/rytSearch"
+                app:layout_constraintVertical_bias="0">
 
             </androidx.recyclerview.widget.RecyclerView>
+
             <ImageView
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/ten"
-                app:layout_constraintTop_toBottomOf="@+id/rcHostelOutpassRequest"
-                android:layout_width="@dimen/two_hundred"
                 android:id="@+id/imgNoDataFound"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/ten"
                 android:src="@drawable/no_data_found"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="@dimen/two_hundred">
-            </ImageView>
-            <TextView
                 android:visibility="gone"
-                android:layout_width="0dp"
-                android:id="@+id/lblErrorMessage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcHostelOutpassRequest"></ImageView>
+
+            <TextView
+                android:id="@+id/lblErrorMessage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/twenty"
                 android:gravity="center"
                 android:text="nod"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_marginHorizontal="@dimen/twenty"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
-                android:layout_height="wrap_content">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
 
             </TextView>
 
@@ -124,9 +124,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

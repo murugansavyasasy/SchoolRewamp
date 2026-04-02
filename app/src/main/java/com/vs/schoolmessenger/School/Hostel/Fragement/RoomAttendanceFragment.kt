@@ -160,6 +160,10 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
             loadSelectedDateCalendar()
         }
 
+        binding.lnrSection.setOnClickListener {
+            binding.isFromSession.performClick()
+        }
+
         binding.FromDone.setOnClickListener {
             binding.calendarFromFragmentContainer.visibility = View.GONE
             binding.FromDone.visibility = View.GONE
@@ -360,17 +364,14 @@ class RoomAttendanceFragment : Fragment(), CustomCalendarFragment.CalendarDateLi
         UpdateProgressAndCountOfAttendance(newData)
         mAdapter =
             RoomAttendanceAdapter(newData, requireContext(), this, Constant.isShimmerViewDisable)
+        binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
+        binding.rcRoomAttendance.isNestedScrollingEnabled = false
+
         binding.rcRoomAttendance.adapter = mAdapter
     }
 
     private fun isGetRoomAttendance() {
         Constant.showLoadingAny(requireView())
-
-        mAdapter = RoomAttendanceAdapter(null, requireContext(), this, Constant.isShimmerViewShow)
-
-        binding.rcRoomAttendance.layoutManager = LinearLayoutManager(requireContext())
-        binding.rcRoomAttendance.isNestedScrollingEnabled = false
-        binding.rcRoomAttendance.adapter = mAdapter
 
         appViewModel!!.isGetHostelAttendanceRoomStudentList(
             isAccessToken!!,
