@@ -70,6 +70,7 @@ class OutpassRequestList(
         private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
         private val lblLeaveDurationDays: TextView = itemView.findViewById(R.id.lblLeaveDurationDays)
+        private val lblLeaveDurationToDays: TextView = itemView.findViewById(R.id.lblLeaveDurationToDays)
         private val lblSeeGatepass: TextView = itemView.findViewById(R.id.lblSeeGatepass)
 
 
@@ -88,7 +89,8 @@ class OutpassRequestList(
 
             lblReason.text = data.reason
             lblRequestOn.text ="${context.getString(R.string.requested_on)} : ${Constant.convertDateFormatType2(data.request_time)}"
-            lblLeaveDurationDays.text = "${Constant.convertDateFormatType2(from)} - ${Constant.convertDateFormatType2(to)}"
+            lblLeaveDurationDays.text = "Out : ${Constant.convertDateFormatType2(from)}"
+            lblLeaveDurationToDays.text = "Return : ${Constant.convertDateFormatType2(to)}"
 
             if (data.status == Constant.rejected.uppercase()) {
                 lblSeeGatepass.visibility= View.GONE

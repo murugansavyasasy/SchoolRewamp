@@ -505,10 +505,11 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             return
         }
         super.onBackPressed()
-        val intent = Intent(this, ParentDashboard::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
+//        super.onBackPressed()
+//        val intent = Intent(this, ParentDashboard::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//        startActivity(intent)
+//        finish()
     }
 
     override fun onDestroy() {

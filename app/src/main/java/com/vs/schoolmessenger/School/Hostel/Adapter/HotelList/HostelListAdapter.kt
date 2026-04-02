@@ -86,7 +86,7 @@ class HostelListAdapter(
 
             when (data.type.lowercase()) {
 
-                "female" -> {
+                "female","girls" -> {
 
                     lblRoomType.backgroundTintList =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_pink_1))
@@ -102,7 +102,7 @@ class HostelListAdapter(
                     )
                 }
 
-                "male" -> {
+                "male","boys" -> {
 
                     lblRoomType.backgroundTintList =
                         ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_very_blue_1))

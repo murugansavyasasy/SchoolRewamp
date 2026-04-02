@@ -194,13 +194,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //Hardcode from here
                     //Added the hardcode data
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 202,
-                            name = "Hostel parent Portal",
-                            description = "Monitor hostel student activities and  accommodation details"
-                        )
-                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 202,
+//                            name = "Hostel parent Portal",
+//                            description = "Monitor hostel student activities and  accommodation details"
+//                        )
+//                    )
                     //Hardcode from here
 
 
