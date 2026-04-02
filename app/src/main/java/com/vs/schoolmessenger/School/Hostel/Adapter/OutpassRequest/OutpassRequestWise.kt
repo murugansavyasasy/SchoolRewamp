@@ -121,6 +121,17 @@ class OutpassRequestWise(
                     R.drawable.circle_bg_orange,
                     R.color.red
                 )
+<<<<<<< HEAD
+=======
+
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_red_14)
+//                )
+//
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_red_15)
+//                )
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
                 applyTintedBackground(
                     lblStatus,
                     R.drawable.rect_bg_light_green_present,
@@ -152,6 +163,20 @@ class OutpassRequestWise(
                 lblStatus.text=context.getString(R.string.approved)
                 lblStatus.setTextColor(context.getColor(R.color.green))
 
+<<<<<<< HEAD
+=======
+
+
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_green_13)
+//                )
+//
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_green_11)
+//                )
+
+
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
             }
             else if (data.status == Constant.pending.uppercase()) {
 
@@ -189,6 +214,17 @@ class OutpassRequestWise(
                     R.drawable.rect_bg_light_green_present,
                     R.color.very_light_orange_3
                 )
+<<<<<<< HEAD
+=======
+
+//                cardHeader.setStrokeColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_orange_four)
+//                )
+//
+//                cardHeader.setCardBackgroundColor(
+//                    ContextCompat.getColor(itemView.context, R.color.light_orange_4)
+//                )
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
             }
         }
 

@@ -101,6 +101,11 @@ class RoomWiseAvailability(
                 hostelClickListner.onRoomClick(data)
             }
         }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -6,6 +6,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/consHeader"
+<<<<<<< HEAD
+=======
+        android:backgroundTint="#1d4ed7"
+        android:background="@drawable/bg_top_curve"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_top_curve"
@@ -52,9 +59,16 @@
 
         <ImageView
             android:id="@+id/imgClose"
+<<<<<<< HEAD
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginEnd="@dimen/fifteen"
+=======
+            app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
+            android:src="@drawable/close_icon"
+            android:padding="@dimen/five"
+            android:backgroundTint="#4b70dc"
+>>>>>>> 2e10951ffbb5fb834ecb49ff2a25363a13089328
             android:background="@drawable/bg_circle_gray"
             android:backgroundTint="#4b70dc"
             android:padding="@dimen/five"
