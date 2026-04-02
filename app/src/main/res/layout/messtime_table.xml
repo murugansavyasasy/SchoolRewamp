@@ -160,7 +160,7 @@
             <ImageView
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/ten"
-                app:layout_constraintTop_toBottomOf="@+id/rcAdminRequest"
+                app:layout_constraintTop_toBottomOf="@+id/rcMessDayWiseMenu"
                 android:layout_width="@dimen/two_hundred"
                 android:id="@+id/imgNoDataFound"
                 android:src="@drawable/no_data_found"
