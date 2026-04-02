@@ -1,8 +1,5 @@
 package com.vs.schoolmessenger.School.Hostel.Adapter.OutpassRequest
 
-
-
-
 import android.annotation.SuppressLint
 import android.content.Context
 
@@ -151,7 +148,6 @@ class OutpassRequestWise(
                 )
                 lblStatus.text=context.getString(R.string.approved)
                 lblStatus.setTextColor(context.getColor(R.color.green))
-
             }
             else if (data.status == Constant.pending.uppercase()) {
 

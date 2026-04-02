@@ -82,8 +82,7 @@ class AttendanceHistorySessionWiseAdapter(
 
             lblRoomNumber.text= "${context.getString(R.string.room)} ${data.room_no}"
             lblNoOfSessions.text="${data.sessions.size} Session"
-
-
+            lblNoOfSessions.visibility= View.GONE
 
             if (data.sessions.isEmpty()) {
                 rcSessionWiseAttendanceHistory.visibility = View.GONE

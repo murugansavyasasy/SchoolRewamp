@@ -57,7 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-           ></TextView>
+            ></TextView>
+
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flowRoomDetails"

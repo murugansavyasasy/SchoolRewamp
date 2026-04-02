@@ -158,7 +158,6 @@ class RoomAttendanceAdapter(
                 when (data.outpasss_status?.uppercase()) {
 
                     Constant.approved.uppercase() -> {
-                        Log.d("isComig,","isApprove")
 
                         lblAccept.visibility = View.GONE
                         lblDecline.visibility = View.GONE
@@ -178,7 +177,6 @@ class RoomAttendanceAdapter(
 
                     Constant.rejected_.uppercase() -> {
 
-                        Log.d("isComig,","isRejected")
 
                         lblAccept.visibility = View.GONE
                         lblDecline.visibility = View.GONE
@@ -192,8 +190,6 @@ class RoomAttendanceAdapter(
                     }
 
                     else -> {
-
-                        Log.d("isComig,","isPending")
 
                         //  Pending case
                         lblAccept.visibility = View.VISIBLE

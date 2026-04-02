@@ -29,7 +29,6 @@ class RoomWiseAvailability(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var fullList: List<getRoomAvailability> = itemList ?: listOf()
     private var filteredList: List<getRoomAvailability> = itemList ?: listOf()
 
@@ -53,8 +52,6 @@ class RoomWiseAvailability(
                     .inflate(R.layout.roomwise_availability, parent, false)
             DataViewHolder(view, context, hostelClickListner)
         }
-
-
     }
 
 
