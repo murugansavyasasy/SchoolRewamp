@@ -145,6 +145,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
 
         // 🚀 Android 12+ instant splash
         installSplashScreen()
+        //changes by santhosh
 
         super.onCreate(savedInstanceState)
     }
