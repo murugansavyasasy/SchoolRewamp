@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Auth.Splash
 import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -314,16 +315,26 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                                     finish()
                                 } else {
 
-                                    val intent = Intent(
-                                        this@Splash,
-                                        com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                    )
-                                    SharedPreference.putChildDetails(
-                                        this,
-                                        Constant.user_data!![0].user_details.child_details[0]
-                                    )
-                                    startActivity(intent)
-                                    finish()
+                                    if(!Constant.user_data!![0].user_details.child_details!![0].is_not_allow) {
+
+                                        val intent = Intent(
+                                            this@Splash,
+                                            com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                        )
+                                        SharedPreference.putChildDetails(
+                                            this,
+                                            Constant.user_data!![0].user_details.child_details[0]
+                                        )
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    else{
+                                        Constant.showDataValidationNoDashboardRedirect(
+                                            "Info",
+                                            Constant.user_data!![0].user_details.child_details!![0].display_message,
+                                        this
+                                        )
+                                    }
                                 }
                             }
                         }

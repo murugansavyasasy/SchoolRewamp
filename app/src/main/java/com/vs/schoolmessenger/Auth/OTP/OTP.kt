@@ -111,15 +111,26 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
                                     val intent = Intent(this@OTP, PrioritySelection::class.java)
                                     startActivity(intent)
                                 } else {
-                                    val intent = Intent(
-                                        this@OTP,
-                                        com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                    )
-                                    SharedPreference.putChildDetails(
-                                        this,
-                                        Constant.user_data!![0].user_details.child_details[0]
-                                    )
-                                    startActivity(intent)
+
+                                    if(!Constant.user_data!![0].user_details.child_details!![0].is_not_allow) {
+                                        val intent = Intent(
+                                            this@OTP,
+                                            com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                        )
+                                        SharedPreference.putChildDetails(
+                                            this,
+                                            Constant.user_data!![0].user_details.child_details[0]
+                                        )
+                                        startActivity(intent)
+                                    }
+                                    else{
+                                        Constant.showDataValidationNoDashboardRedirect(
+                                            "Info",
+                                            Constant.user_data!![0].user_details.child_details!![0].display_message,
+                                            this
+                                        )
+                                    }
+
                                 }
                             }
                         }
