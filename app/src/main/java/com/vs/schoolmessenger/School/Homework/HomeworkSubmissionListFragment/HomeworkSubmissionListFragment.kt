@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListFragment
 
 
-
-
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -28,7 +26,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeworkSubmissionListFragmentBinding
 
-class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener, AssignmentStudentListClickListener {
+class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener,
+    AssignmentStudentListClickListener {
 
     private var _binding: HomeworkSubmissionListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -175,8 +174,8 @@ class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener, Assignm
             binding.txtNoData.visibility = if (hasData) View.GONE else View.VISIBLE
         }
 
-        appViewModel?.isHomeSubmissionList(isAccessToken!!, homeworkId!!, requireActivity())
-        Log.d("isHomeworkID","HomeWorkSubmissionList-Selected:${homeworkId.toString()}")
+        appViewModel?.isHomeSubmissionList(isAccessToken!!, homeworkId ?: "0", requireActivity())
+        Log.d("isHomeworkID", "HomeWorkSubmissionList-Selected:${homeworkId.toString()}")
     }
 
     override fun onClick(v: View?) {
@@ -206,7 +205,7 @@ class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener, Assignm
             arguments = Bundle().apply {
                 putString(Constant.homework_id, homeworkId)
             }
-            Log.d("FragmenthomeworkId",homeworkId)
+            Log.d("FragmenthomeworkId", homeworkId)
         }
     }
 

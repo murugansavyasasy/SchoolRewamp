@@ -117,8 +117,6 @@ class HomeworkSubmissionListAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val statusLabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
-        private val submittedLabel: TextView = itemView.findViewById(R.id.submittedLabel)
-        private val submittedDate: TextView = itemView.findViewById(R.id.submittedDate)
         private val cancelImage: ImageView = itemView.findViewById(R.id.cancelimage)
         private val statusButton: LinearLayout = itemView.findViewById(R.id.statusButton)
         private val avatarText: TextView = itemView.findViewById(R.id.avatarText)
@@ -126,24 +124,14 @@ class HomeworkSubmissionListAdapter(
 
         fun bind(data: GetHomeworkSubmissionListData, position: Int) {
 
-
-
-
-
-            if (data.status == Constant.NotComplete) {
-                submittedLabel.visibility= View.GONE
-                submittedDate.visibility= View.GONE
-            } else {
-                submittedLabel.visibility= View.VISIBLE
-                submittedDate.visibility= View.VISIBLE
-                submittedLabel.text = "${data.status} : "
-                submittedDate.text =
-                    Constant.convertSubmittedDateAssignment(data.completed_on?:"")
-            }
-
             lblStudentName.text = data.name
             avatarText.text = data.name?.firstOrNull()?.uppercase()?.toString() ?: "-"
-            sectionlabel.text ="${context.getString(R.string.roll_no)} : ${data.roll_no}"
+            if (data.roll_no.isEmpty() || data.roll_no.equals("")){
+                sectionlabel.visibility= View.GONE
+            }else{
+                sectionlabel.visibility= View.VISIBLE
+                sectionlabel.text ="${context.getString(R.string.roll_no)} : ${data.roll_no}"
+            }
             statusLabel.text = data.status
 
 
