@@ -27,6 +27,7 @@ data class ChildDetails(
     val whatsapp_number: String,
     val class_teacher: String,
     val academic_year_id: String,
-    val academic_year_name: String
+    val academic_year_name: String,
+    val is_not_allow: Boolean,
 
 )

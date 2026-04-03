@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Combination
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isParentDashBoardData
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemNewBinding
 
@@ -64,8 +66,16 @@ class StudentDetailAdapter(
         holder.binding.rlaStudent.setPadding(10, 10, 10, 10)
 
         holder.binding.rlaStudent.setOnClickListener {
-            isParentDashBoardData = null
-            listener.onItemClick(item)
+            if (!item.is_not_allow) {
+                isParentDashBoardData = null
+                listener.onItemClick(item)
+            } else {
+                Constant.showDataValidationNoDashboardRedirect(
+                    "Info",
+                    item.display_message,
+                    context as Activity
+                )
+            }
         }
 
         holder.binding.lblRegisterNumber.text =

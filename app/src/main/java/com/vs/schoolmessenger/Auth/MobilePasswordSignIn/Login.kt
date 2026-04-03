@@ -149,15 +149,25 @@ class Login : BaseActivity<LoginNewBinding>(), View.OnClickListener,
                                         startActivity(intent)
                                     } else {
 
-                                        val intent = Intent(
-                                            this@Login,
-                                            com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                        )
-                                        SharedPreference.putChildDetails(
-                                            this,
-                                            Constant.user_data!![0].user_details.child_details[0]
-                                        )
-                                        startActivity(intent)
+
+                                        if(!Constant.user_data!![0].user_details.child_details!![0].is_not_allow) {
+                                            val intent = Intent(
+                                                this@Login,
+                                                com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                            )
+                                            SharedPreference.putChildDetails(
+                                                this,
+                                                Constant.user_data!![0].user_details.child_details[0]
+                                            )
+                                            startActivity(intent)
+                                        }
+                                        else{
+                                            Constant.showDataValidationNoDashboardRedirect(
+                                                "Info",
+                                                Constant.user_data!![0].user_details.child_details!![0].display_message,
+                                                this
+                                            )
+                                        }
                                     }
 
                                 }
