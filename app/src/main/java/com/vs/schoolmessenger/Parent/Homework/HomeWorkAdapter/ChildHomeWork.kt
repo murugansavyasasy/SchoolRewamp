@@ -568,20 +568,20 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
                 binding.lblPostedBy.visibility = View.VISIBLE
                 binding.lblPostedBy.text = "${getString(R.string.posted_by)} : " + data!!.sentBy
             }
+            if (!Constant.isParentChoose) {
+                //Here dynamically changing the layout postions
+                val params1 =
+                    binding.fragmentContainer.layoutParams as ConstraintLayout.LayoutParams
+                params1.topToBottom = R.id.lblPostedBy
+                binding.fragmentContainer.layoutParams = params1
 
-            //Here dynamically changing the layout postions
-            val params1 = binding.fragmentContainer.layoutParams as ConstraintLayout.LayoutParams
-            params1.topToBottom = R.id.lblPostedBy
-            binding.fragmentContainer.layoutParams = params1
-
-
-            binding.fragmentContainer.visibility = View.VISIBLE
-            loadHomeworkSubmissionFragment(
-                HomeworkSubmissionListFragment.newInstance(
-                    isHomeworkId
+                binding.fragmentContainer.visibility = View.VISIBLE
+                loadHomeworkSubmissionFragment(
+                    HomeworkSubmissionListFragment.newInstance(
+                        isHomeworkId
+                    )
                 )
-            )
-
+            }
         } else if (data!!.isMenuType == Constant.M_NOTICEBOARD || data!!.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data!!.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS || data!!.isMenuType == Constant.M_ATTACHMENTS || data!!.isMenuType == M_ASSIGNMENT) {
 
 
