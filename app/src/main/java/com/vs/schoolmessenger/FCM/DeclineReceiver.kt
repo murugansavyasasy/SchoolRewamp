@@ -46,7 +46,7 @@ class DeclineReceiver : BroadcastReceiver() {
                     addProperty("duration", 0)
                     addProperty("ei1", data?.get("ei5"))
                     addProperty("ei2", data?.get("url"))
-                    addProperty("ei3", data?.get("ei3"))
+                    addProperty("ei3"   , data?.get("ei3"))
                     addProperty("ei4", "Android")
                     addProperty("ei5", data?.get("ei5"))
                     addProperty("start_time", currentTime)
@@ -87,7 +87,6 @@ class DeclineReceiver : BroadcastReceiver() {
             } catch (e: Exception) {
                 Log.e("DECLINE_API", "Error: ${e.message}")
             } finally {
-                pendingResult.finish()
             }
         }
     }

@@ -323,7 +323,7 @@ class IncomingCallActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                 isUpdateCallApi=false
                 endCall()
             }
-        }, 60000)
+        }, 10000)
     }
     private fun stopAutoCutTimer() {
         autoCutHandler.removeCallbacksAndMessages(null)
