@@ -30,6 +30,7 @@ object CallNotificationHelper {
             ).apply {
                 description = "Call Notifications"
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setBypassDnd(true)
             }
             manager.createNotificationChannel(channel)
         }
