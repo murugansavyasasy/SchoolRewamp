@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
               
-    <color name="PrimaryColor">#f62b37</color>
+    <color name="PrimaryColor">#7F1A37</color>
     <color name="splash_start">#FFFFFF</color>
     <color name="splash_center">#bb9395</color>
     <color name="splash_end">#a1454b</color>
