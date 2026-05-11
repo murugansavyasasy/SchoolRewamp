@@ -808,6 +808,11 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Parent.BusTracking.LiveBusTracking"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

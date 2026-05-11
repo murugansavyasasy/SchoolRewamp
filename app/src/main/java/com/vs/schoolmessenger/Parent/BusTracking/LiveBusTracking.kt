@@ -1,35 +1,27 @@
 package com.vs.schoolmessenger.Parent.BusTracking
 
-
-
-import android.content.Intent
 import android.view.View
+import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Adapter.BusListAdapter
-import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Hostel.Model.HostelList.selctedHotelDetails
-import com.vs.schoolmessenger.School.Hostel.SchoolHostelDashboard
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.BusListActivityBinding
+import com.vs.schoolmessenger.databinding.LiveBusTrackingBinding
 
 
-class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, BusClickListner{
+class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(), View.OnClickListener{
 
-    override fun getViewBinding(): BusListActivityBinding {
-        return BusListActivityBinding.inflate(layoutInflater)
+    override fun getViewBinding(): LiveBusTrackingBinding {
+        return LiveBusTrackingBinding.inflate(layoutInflater)
     }
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     lateinit var mAdapter: BusListAdapter
-
-
     var userDetails: UserDetails? = null
 
 
@@ -49,77 +41,73 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.lblHeaderTitle.text= Constant.isSelectedMenuName
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
-        appViewModel?.isGetBusList?.observe(this) { response ->
+        appViewModel?.isGetLiveBusData?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
                 if (response.status) {
                     if (response.data.isNotEmpty()) {
-
-                        binding.rvBusList.visibility = View.VISIBLE
                         binding.lytList.visibility = View.GONE
-                        isLoadBusList(response.data)
+                        binding.WVLiveBus.visibility = View.VISIBLE
+                        val trackingUrl = response.data[0].tracking_url
+                        binding.WVLiveBus.webViewClient = WebViewClient()
+                        binding.WVLiveBus.settings.javaScriptEnabled = true
+                        binding.WVLiveBus.settings.domStorageEnabled = true
+                        binding.WVLiveBus.settings.loadWithOverviewMode = true
+                        binding.WVLiveBus.settings.useWideViewPort = true
+                        binding.WVLiveBus.loadUrl(trackingUrl)
 
-
-
-                    } else {
-                        binding.rvBusList.visibility = View.GONE
+                    }
+                    else {
+                        binding.WVLiveBus.visibility = View.GONE
                         binding.lytList.visibility = View.VISIBLE
                         binding.txtNoData.text = getString(R.string.no_data_found)
                     }
 
                 } else {
-
-                    binding.rvBusList.visibility = View.GONE
+                    binding.WVLiveBus.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                     binding.txtNoData.text = response.message
                 }
 
             } else {
 
-                binding.rvBusList.visibility = View.GONE
+                binding.WVLiveBus.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
                 binding.txtNoData.text =
                     getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
+        isLiveBus()
 
     }
 
-    private fun isLoadBusList(newData: List<BusListData>?) {
-        mAdapter =
-            BusListAdapter(newData,this,this, Constant.isShimmerViewDisable)
-        binding.rvBusList.adapter = mAdapter
-    }
-
-    private fun isGetBusList() {
-        mAdapter = BusListAdapter(null,this, this, Constant.isShimmerViewShow)
-
-        binding.rvBusList.layoutManager = LinearLayoutManager(this)
-        binding.rvBusList.isNestedScrollingEnabled = false
-        binding.rvBusList.adapter = mAdapter
-
-        appViewModel!!.isGetBusList(isAccessToken!!, this)
-
+    private fun isLiveBus() {
+        Constant.showLoading(this)
+        appViewModel!!.isLiveBus(isAccessToken!!, this)
     }
 
     override fun onClick(p0: View?) {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        isGetBusList()
+    override fun onPause() {
+        binding.WVLiveBus.onPause()
+        binding.WVLiveBus.pauseTimers()
+        super.onPause()
     }
 
-    override fun OnBusClick(data: BusListData) {
-        val intent = Intent(this, LiveBusTracking::class.java)
-        startActivity(intent)
+    override fun onResume() {
+        super.onResume()
+
+        binding.WVLiveBus.onResume()
+        binding.WVLiveBus.resumeTimers()
+        isLiveBus()
     }
 
 }

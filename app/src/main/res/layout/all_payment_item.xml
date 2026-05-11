@@ -231,14 +231,14 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:src="@drawable/tick_icon_5"
-                    android:tint="@color/PrimaryColor" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:text="Payment Completed"
-                    android:textColor="@color/PrimaryColor"
+                    android:textColor="@color/green"
                     android:textSize="@dimen/eighteen_sp"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -30,6 +30,8 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -478,6 +480,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var applyHostelOutpass: LiveData<applyOutpassResponse?>? = null
     var isOnlinePaymentResponse: LiveData<OnlinePaymentResponse?>? = null
     var isPaymentStatusResponse: LiveData<PaymentStatusResponse?>? = null
+    var isGetBusList: LiveData<getBusList?>? = null
+    var isGetLiveBusData: LiveData<getLiveBus?>? = null
 
 
 
@@ -682,6 +686,8 @@ class App(application: Application) : AndroidViewModel(application) {
         applyHostelOutpass = apiParentRepositories.isapplyHostelOutpassLiveData
         isOnlinePaymentResponse = apiParentRepositories.isOnlinePaymentResponseLiveData
         isPaymentStatusResponse = apiParentRepositories.isPaymentStatusResponseLiveData
+        isGetBusList = apiParentRepositories.isBusListLiveData
+        isGetLiveBusData = apiParentRepositories.isLiveBusLiveData
 
     }
 
@@ -2212,6 +2218,22 @@ class App(application: Application) : AndroidViewModel(application) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.isPaymentStatus(isToken, jsonObject,activity)
+    }
+
+    fun isGetBusList(
+        isToken: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiParentRepositories.isBusList(isToken,activity)
+    }
+
+    fun isLiveBus(
+        isToken: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiParentRepositories.isLiveBus(isToken,activity)
     }
 }
 

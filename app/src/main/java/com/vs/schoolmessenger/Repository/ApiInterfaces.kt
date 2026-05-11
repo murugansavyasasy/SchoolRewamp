@@ -36,6 +36,8 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -1499,6 +1501,17 @@ interface ApiInterfaces {
     ): Call<PaymentStatusResponse?>
 
 
+    @GET(APIMethods.GetStudentRoute)
+
+    fun isGetBusList(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<getBusList?>
+
+    @GET(APIMethods.LiveBusData)
+
+    fun isLiveBus(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<getLiveBus?>
 
 
 

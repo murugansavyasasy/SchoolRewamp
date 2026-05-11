@@ -15,6 +15,8 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAssignmentsResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPointsResponse
@@ -107,6 +109,8 @@ class ParentServices {
     var isApplyHostelOutpass: MutableLiveData<applyOutpassResponse?>
     var isOnlinePaymentResponse: MutableLiveData<OnlinePaymentResponse?>
     var isPaymentStatusResponse: MutableLiveData<PaymentStatusResponse?>
+    var isGetBusList: MutableLiveData<getBusList?>
+    var isLiveBusData: MutableLiveData<getLiveBus?>
 
     init {
         client_auth = RestClient()
@@ -158,6 +162,8 @@ class ParentServices {
         isApplyHostelOutpass = MutableLiveData()
         isOnlinePaymentResponse = MutableLiveData()
         isPaymentStatusResponse = MutableLiveData()
+        isGetBusList = MutableLiveData()
+        isLiveBusData = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1891,5 +1897,72 @@ class ParentServices {
 
     val isPaymentStatusResponseLiveData: LiveData<PaymentStatusResponse?>
         get() = isPaymentStatusResponse
+
+
+    fun isBusList(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetBusList(isToken)
+            ?.enqueue(object : Callback<getBusList?> {
+                override fun onResponse(
+                    call: Call<getBusList?>,
+                    response: Response<getBusList?>
+                ) {
+                    Log.d(
+                        "getBusList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+                    val status = response.body()!!.status
+                    isGetBusList.postValue(response.body())
+//                        }
+//                    }
+                }
+
+                override fun onFailure(
+                    call: Call<getBusList?>, t: Throwable
+                ) {
+                    isGetBusList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isBusListLiveData: LiveData<getBusList?>
+        get() = isGetBusList
+
+    fun isLiveBus(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isLiveBus(isToken)
+            ?.enqueue(object : Callback<getLiveBus?> {
+                override fun onResponse(
+                    call: Call<getLiveBus?>,
+                    response: Response<getLiveBus?>
+                ) {
+                    Log.d(
+                        "getLiveBus",
+                        response.code().toString() + " - " + response.toString()
+                    )
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+                    val status = response.body()!!.status
+                    isLiveBusData.postValue(response.body())
+//                        }
+//                    }
+                }
+
+                override fun onFailure(
+                    call: Call<getLiveBus?>, t: Throwable
+                ) {
+                    isLiveBusData.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isLiveBusLiveData: LiveData<getLiveBus?>
+        get() = isLiveBusData
 
 }

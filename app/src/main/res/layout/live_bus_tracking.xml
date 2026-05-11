@@ -29,48 +29,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/headerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/twenty"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblHeaderTitle"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp" />
-
-            <TextView
-                android:id="@+id/lblSubHeaderTitle"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Track route in real time"
-                android:textSize="@dimen/eighteen_sp" />
-        </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBusList"
+        <WebView
+            android:id="@+id/WVLiveBus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/headerview"
+            android:layout_below="@+id/toolbarLayout"
             android:padding="@dimen/fifteen"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/ten"
             android:clipToPadding="false"
-            android:fadeScrollbars="false"
             android:paddingHorizontal="@dimen/five"
-            android:scrollbars="none"
             android:visibility="visible" />
 
 
@@ -78,7 +48,7 @@
             android:id="@+id/lytList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rvBusList"
+            android:layout_below="@+id/WVLiveBus"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">

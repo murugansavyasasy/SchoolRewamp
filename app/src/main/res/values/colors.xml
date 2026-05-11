@@ -16,6 +16,9 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_201">#6155F5</color>
     <color name="light_blue_8">#ebf5ff</color>
+    <color name="light_voilet_2">#f5ebff</color>
+    <color name="dark_voilet_4">#aa3cff</color>
+    <color name="light_blue_14">#f5f8ff</color>
     <color name="light_red_8">#fef2f2</color>
     <color name="light_red_9">#fef3f3</color>
     <color name="light_red_19">#fcf6f7</color>
