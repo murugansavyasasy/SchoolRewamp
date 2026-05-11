@@ -81,14 +81,14 @@ class BusListAdapter(
             lblCurrentStop.text=data.stop_name
             lblPickUpTime.text=data.tentative_pickup_time
             lblDropTime.text=data.tentative_drop_time
-            lblBusNo.text=data.vehicle_no
+//            lblBusNo.text=data.vehicle_no
+            lblBusRouteNumber.text=data.vehicle_no
 
 
             lnrTrackLive.setOnClickListener {
                 listener.OnBusClick(data)
             }
         }
-
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

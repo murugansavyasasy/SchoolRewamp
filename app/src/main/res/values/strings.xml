@@ -1169,7 +1169,7 @@
     <string name="todatewithman">To Date *</string>
     <string name="select_staff_with_man">Select Staff *</string>
     <string name="absent_progress">Absent progress</string>
-    <string name="all_transaction">All Transaction</string>
+    <string name="all_transaction">All Transactions</string>
     <string name="pickup">PICKUP</string>
     <string name="drop">Drop</string>
     <string name="track_live">Track Live</string>
