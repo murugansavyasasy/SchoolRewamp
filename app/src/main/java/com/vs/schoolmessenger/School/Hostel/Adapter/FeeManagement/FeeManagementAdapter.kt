@@ -128,8 +128,6 @@ class FeeManagementAdapter(
                     ContextCompat.getColor(itemView.context, R.color.light_yellow__1)
                 )
             }
-
-
         }
 
 

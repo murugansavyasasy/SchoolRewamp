@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.Attendance
+import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
@@ -72,6 +73,7 @@ import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.BusTracking.MapsActivity
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentParentlyUsedMenuItems
 import com.vs.schoolmessenger.Utils.Constant.isParentAdItem
@@ -201,6 +203,23 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                            description = "Monitor hostel student activities and  accommodation details"
 //                        )
 //                    )
+
+
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 999,
+                            name = "Bus tracking",
+                            description = "Monitor and manage student data"
+                        )
+                    )
+
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 9999,
+                            name = "Live Bus tracking",
+                            description = "Monitor and manage Live bus data"
+                        )
+                    )
                     //Hardcode from here
 
 
@@ -718,6 +737,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 ParentHostelDashboard::class.java
             )
+
+            Constant.M_BUS_TRACKING -> Intent(
+                requireActivity(),
+                MapsActivity::class.java
+            )
+            Constant.M_LIVE_BUS_TRACKING -> Intent(
+                requireActivity(),
+                BusList::class.java
+            )
+
+
+
 
             else -> null
         }

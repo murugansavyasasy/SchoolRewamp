@@ -243,6 +243,8 @@ object APIMethods {
     const val parentHostelDashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
 
     const val applyHostelPass = "stud-attd/api/hostel-attendance/apply-outpass"
+    const val isOnlinePaymentResponse = "dashboard/api/reconcile/online-payment-details-for-student"
+    const val isPaymentUpdate = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
 
 }
 

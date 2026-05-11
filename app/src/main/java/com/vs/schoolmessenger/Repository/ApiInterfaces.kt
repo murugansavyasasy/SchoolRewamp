@@ -60,6 +60,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
@@ -1480,6 +1482,24 @@ interface ApiInterfaces {
     fun applyHostelOutpass(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<applyOutpassResponse?>
+
+
+    @GET(APIMethods.isOnlinePaymentResponse)
+
+    fun isOnlinePaymentResponse(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("country_id") country_id: String,
+    ): Call<OnlinePaymentResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(APIMethods.isPaymentUpdate)
+    fun isPaymentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<PaymentStatusResponse?>
+
+
+
 
 
 }

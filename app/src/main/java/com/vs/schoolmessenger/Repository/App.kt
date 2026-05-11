@@ -48,6 +48,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksRes
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
@@ -474,6 +476,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var parentHotelDetails: LiveData<getParentHostelDetails?>? = null
     var parentHotelDashBoard: LiveData<getParentHostelDashboard?>? = null
     var applyHostelOutpass: LiveData<applyOutpassResponse?>? = null
+    var isOnlinePaymentResponse: LiveData<OnlinePaymentResponse?>? = null
+    var isPaymentStatusResponse: LiveData<PaymentStatusResponse?>? = null
 
 
 
@@ -676,6 +680,8 @@ class App(application: Application) : AndroidViewModel(application) {
         parentHotelDetails = apiSchoolRepositoriesTwo.isParentHotelDetailsLiveData
         parentHotelDashBoard = apiSchoolRepositoriesTwo.isParentHotelDashBoardLiveData
         applyHostelOutpass = apiParentRepositories.isapplyHostelOutpassLiveData
+        isOnlinePaymentResponse = apiParentRepositories.isOnlinePaymentResponseLiveData
+        isPaymentStatusResponse = apiParentRepositories.isPaymentStatusResponseLiveData
 
     }
 
@@ -2190,7 +2196,23 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
+    fun isOnlinePayment(
+        isToken: String,
+        activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiParentRepositories.isAllPayment(isToken,activity)
+    }
 
+    fun isPaymentStatus(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiParentRepositories.isPaymentStatus(isToken, jsonObject,activity)
+    }
 }
 
 

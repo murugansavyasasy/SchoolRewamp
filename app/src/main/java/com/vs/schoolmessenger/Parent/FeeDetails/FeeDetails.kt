@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -48,6 +49,9 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
+
+    private lateinit var onlinePaymentAdapter: OnlinePaymentAdapter
+    private var paymentList = ArrayList<OnlinePaymentData>()
 
     lateinit var mAdapter: FeeReceiptAdapter
 
@@ -74,6 +78,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         binding.btnReceipt.setOnClickListener(this)
+        binding.btnAllTrance.setOnClickListener(this)
         binding.rytRefresh.setOnClickListener(this)
 
         isChildDetails = SharedPreference.getChildDetails(this)
@@ -159,6 +164,47 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             }
         }
 
+        appViewModel!!.isOnlinePaymentResponse?.observe(this) { response ->
+
+            Constant.hideLoading(this)
+
+            if (response != null &&
+                response.status &&
+                response.data.isNotEmpty()
+            ) {
+                paymentList.clear()
+
+                onlinePaymentAdapter = OnlinePaymentAdapter(
+                    paymentList
+                ) { item, position ->
+
+                    Log.d("RefreshClick", "ID : ${item.id}")
+                    Log.d("RefreshClick", "Order ID : ${item.order_id}")
+                    Constant.showLoading(this)
+                    val jsonObject = JsonObject()
+                    jsonObject.addProperty("id", item.id)
+
+                    appViewModel?.isPaymentStatus(
+                        isAccessToken!!,
+                        jsonObject,
+                        this
+                    )
+                }
+                binding.rvReceipts.layoutManager =
+                    LinearLayoutManager(this)
+
+                binding.rvReceipts.adapter =
+                    onlinePaymentAdapter
+
+                binding.rvReceipts.visibility = View.VISIBLE
+                onlinePaymentAdapter.updateList(response.data)
+            }
+        }
+
+        appViewModel!!.isPaymentStatusResponse?.observe(this) { response ->
+                Log.d("isResponse",response.toString())
+                appViewModel?.isOnlinePayment(isAccessToken!!, this)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -177,8 +223,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     binding.rytSearch1.visibility = View.GONE
                     binding.linePayment.setBackgroundResource(R.color.PrimaryColor)
                     binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
+                    binding.lineTrance.setBackgroundResource(R.color.athens_gray)
                     binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
                     binding.btnReceipt.setTextColor(Color.BLACK)
+                    binding.btnAllTrance.setTextColor(Color.BLACK)
                     loadPaymentPage(binding.payWebview)
                     reloadPaymentPage()
                 }
@@ -196,8 +244,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
 
                     binding.linePayment.setBackgroundResource(R.color.athens_gray)
+                    binding.lineTrance.setBackgroundResource(R.color.athens_gray)
                     binding.lineReceipt.setBackgroundResource(R.color.PrimaryColor)
                     binding.btnPayment.setTextColor(Color.BLACK)
+                    binding.btnAllTrance.setTextColor(Color.BLACK)
                     binding.btnReceipt.setTextColor(Color.parseColor("#0D47A1"))
 
                     loadFeeReceipts()
@@ -207,6 +257,29 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     Log.d("FeeDetails_Token", "Fetching invoices with token: $isAccessToken")
                 }
             }
+
+            R.id.btnAllTrance -> {
+                Log.d("isClickedTap", isClickedTap.toString())
+                if (isClickedTap != 3) {
+                    isClickedTap = 3
+                    isProgressLoading=false
+                    Constant.hideLoading(this)
+                    binding.payWebview.visibility = View.GONE
+                    binding.rvReceipts.visibility = View.GONE
+                    binding.rytRefresh.visibility = View.GONE
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+
+                    binding.linePayment.setBackgroundResource(R.color.athens_gray)
+                    binding.lineTrance.setBackgroundResource(R.color.PrimaryColor)
+                    binding.lineReceipt.setBackgroundResource(R.color.athens_gray)
+                    binding.btnPayment.setTextColor(Color.BLACK)
+                    binding.btnReceipt.setTextColor(Color.BLACK)
+                    binding.btnAllTrance.setTextColor(Color.parseColor("#0D47A1"))
+                    appViewModel?.isOnlinePayment(isAccessToken!!, this)
+                    Constant.showLoading(this)
+                }
+            }
+
 
             R.id.rytRefresh -> {
                 isClickedTap = 2

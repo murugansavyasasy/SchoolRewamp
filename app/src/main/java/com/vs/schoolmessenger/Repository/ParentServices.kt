@@ -25,6 +25,8 @@ import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
 import com.vs.schoolmessenger.Parent.Hostel.Model.applyOutpassResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -103,6 +105,8 @@ class ParentServices {
     var getmysubmissionedit: MutableLiveData<MySubmissionEditResponse?>
     var ismysubmissiondelete: MutableLiveData<MySubmissionDeleteResponse?>
     var isApplyHostelOutpass: MutableLiveData<applyOutpassResponse?>
+    var isOnlinePaymentResponse: MutableLiveData<OnlinePaymentResponse?>
+    var isPaymentStatusResponse: MutableLiveData<PaymentStatusResponse?>
 
     init {
         client_auth = RestClient()
@@ -152,6 +156,8 @@ class ParentServices {
         getmysubmissionedit = MutableLiveData()
         ismysubmissiondelete = MutableLiveData()
         isApplyHostelOutpass = MutableLiveData()
+        isOnlinePaymentResponse = MutableLiveData()
+        isPaymentStatusResponse = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1818,5 +1824,72 @@ class ParentServices {
         get() = isApplyHostelOutpass
 
 
+
+    fun isAllPayment(isToken: String, activity: Activity) {
+       val country_id = SharedPreference.getCountryId(activity)?.toString()
+        RestClient.apiInterfaces.isOnlinePaymentResponse(isToken,country_id!!)
+            ?.enqueue(object : Callback<OnlinePaymentResponse?> {
+                override fun onResponse(
+                    call: Call<OnlinePaymentResponse?>,
+                    response: Response<OnlinePaymentResponse?>
+                ) {
+                    Log.d(
+                        "SubmitQuizResponse Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isOnlinePaymentResponse.postValue(response.body())
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<OnlinePaymentResponse?>,
+                    t: Throwable
+                ) {
+                    isOnlinePaymentResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isOnlinePaymentResponseLiveData: LiveData<OnlinePaymentResponse?>
+        get() = isOnlinePaymentResponse
+
+
+    fun isPaymentStatus(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isPaymentUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<PaymentStatusResponse?> {
+                override fun onResponse(
+                    call: Call<PaymentStatusResponse?>,
+                    response: Response<PaymentStatusResponse?>
+                ) {
+                    Log.d(
+                        "applyOutpassResponse",
+                        response.code().toString() + " - " + response.toString()
+                    )
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isPaymentStatusResponse.postValue(response.body())
+//                        }
+//                    }
+                }
+
+                override fun onFailure(
+                    call: Call<PaymentStatusResponse?>, t: Throwable
+                ) {
+                    isPaymentStatusResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPaymentStatusResponseLiveData: LiveData<PaymentStatusResponse?>
+        get() = isPaymentStatusResponse
 
 }

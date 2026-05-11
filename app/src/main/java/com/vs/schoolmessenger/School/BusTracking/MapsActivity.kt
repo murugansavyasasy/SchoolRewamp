@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.BusTracking
 
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -11,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.vs.schoolmessenger.databinding.ActivityMapBinding
 import android.graphics.Color
 import android.os.*
+import android.widget.Toast
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.BusTracking.Model.BusStop
 
@@ -34,8 +35,10 @@ import org.maplibre.android.style.layers.PropertyFactory.lineWidth
 import org.maplibre.android.style.sources.GeoJsonSource
 import org.maplibre.geojson.LineString
 import org.maplibre.geojson.Point
+import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -45,10 +48,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // Demo stops (same as iOS)
     private val stops = listOf(
         BusStop("1", "Stop 1", "09:00", 13.0418, 80.2341, true, true),
-        BusStop("2","Stop 2","09:05",13.0350,80.2360),
-        BusStop("3","Stop 3","09:10",13.0280,80.2300),
-        BusStop("4","Stop 4","09:15",13.0109,80.2120),
-        BusStop("5","Stop 5","09:20",12.9941,80.1709)
+        BusStop("2", "Stop 2", "09:05", 13.0350, 80.2360),
+        BusStop("3", "Stop 3", "09:10", 13.0280, 80.2300),
+        BusStop("4", "Stop 4", "09:15", 13.0109, 80.2120),
+        BusStop("5", "Stop 5", "09:20", 12.9941, 80.1709)
     )
 
     private val roadCoords = mutableListOf<Point>()
@@ -58,9 +61,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var busIndex = 0
 
     private val handler = Handler(Looper.getMainLooper())
-
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,17 +72,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-        val bottomSheet = findViewById<LinearLayout>(R.id.bottomSheet)
-
-
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.apply {
-            state = BottomSheetBehavior.STATE_COLLAPSED
-            isFitToContents = true
-            skipCollapsed = false
-            isDraggable = true
-            expandedOffset = 0
-        }
     }
 
     override fun onMapReady(mapLibre: MapLibreMap) {
@@ -98,7 +87,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             addStopPins()
             fetchRoute()
         }
-
     }
 
     // -----------------------
@@ -125,37 +113,80 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val path = stops.joinToString(";") {
             "${it.lng},${it.lat}"
         }
-        Log.d("path",path)
 
         val url =
             "https://router.project-osrm.org/route/v1/driving/$path?overview=full&geometries=geojson"
 
-        Log.d("url",url)
-
         thread {
+            try {
 
-            val json = JSONObject(URL(url).readText())
+                val connection = URL(url).openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+                connection.connectTimeout = 15000
+                connection.readTimeout = 15000
 
-            val coords = json.getJSONArray("routes")
-                .getJSONObject(0)
-                .getJSONObject("geometry")
-                .getJSONArray("coordinates")
 
-            for (i in 0 until coords.length()) {
-                val c = coords.getJSONArray(i)
-                roadCoords.add(
-                    Point.fromLngLat(c.getDouble(0), c.getDouble(1))
-                )
-            }
 
-            runOnUiThread {
-                setupRouteLayers()
-                fitToRoute()
-                startBusAnimation()
+
+                val responseCode = connection.responseCode
+
+                val stream = if (responseCode == HttpURLConnection.HTTP_OK) {
+                    connection.inputStream
+                } else {
+                    connection.errorStream
+                }
+
+
+                val response = stream.bufferedReader().use { it.readText() }
+
+                Log.d("OSRM", "Code: $responseCode")
+                Log.d("OSRM", "Response: $response")
+                Log.d("FINAL_URL", connection.url.toString())
+
+
+
+                if (responseCode != HttpURLConnection.HTTP_OK) return@thread
+
+                val json = JSONObject(response)
+
+                // 🚨 IMPORTANT CHECK
+                if (json.getString("code") != "Ok") {
+                    Log.e("OSRM", "Route error: ${json.getString("code")}")
+                    return@thread
+                }
+
+                val coords = json.getJSONArray("routes")
+                    .getJSONObject(0)
+                    .getJSONObject("geometry")
+                    .getJSONArray("coordinates")
+
+                roadCoords.clear()
+
+                for (i in 0 until coords.length()) {
+                    val c = coords.getJSONArray(i)
+                    roadCoords.add(
+                        Point.fromLngLat(c.getDouble(0), c.getDouble(1))
+                    )
+//                    Log.d("Error",roadCoords.toString())
+                }
+
+                runOnUiThread {
+                    setupRouteLayers()
+                    fitToRoute()
+                    startBusAnimation()
+                    Toast.makeText(this,"Gotach", Toast.LENGTH_SHORT).show()
+                    Log.d("Error","SUCCESS")
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this,e.toString(), Toast.LENGTH_SHORT).show()
+                Log.d("Error",e.toString())
+                Log.d("Error","FAILED")
             }
         }
     }
-
 
     private fun fitToRoute() {
         if (roadCoords.isEmpty()) return
@@ -203,7 +234,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         style.addLayer(
-            LineLayer("remaining-layer","remaining-src")
+            LineLayer("remaining-layer", "remaining-src")
                 .withProperties(
                     lineColor(Color.GREEN),
                     lineWidth(6f)
@@ -283,10 +314,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // Lifecycle
     // -----------------------
 
-    override fun onStart(){ super.onStart(); mapView.onStart() }
-    override fun onResume(){ super.onResume(); mapView.onResume() }
-    override fun onPause(){ super.onPause(); mapView.onPause() }
-    override fun onStop(){ super.onStop(); mapView.onStop() }
-    override fun onDestroy(){ super.onDestroy(); mapView.onDestroy() }
-    override fun onLowMemory(){ super.onLowMemory(); mapView.onLowMemory() }
+    override fun onStart() {
+        super.onStart(); mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume(); mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause(); mapView.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop(); mapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy(); mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory(); mapView.onLowMemory()
+    }
 }
