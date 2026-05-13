@@ -1880,7 +1880,7 @@ class ParentServices {
                     )
 //                    if (response.code() == 200) {
 //                        if (response.body() != null) {
-                            val status = response.body()!!.status
+                        //    val status = response.body()!!.status
                             isPaymentStatusResponse.postValue(response.body())
 //                        }
 //                    }
@@ -1914,7 +1914,7 @@ class ParentServices {
                     )
 //                    if (response.code() == 200) {
 //                        if (response.body() != null) {
-                    val status = response.body()!!.status
+//                    val status = response.body()!!.status
                     isGetBusList.postValue(response.body())
 //                        }
 //                    }
@@ -1947,7 +1947,7 @@ class ParentServices {
                     )
 //                    if (response.code() == 200) {
 //                        if (response.body() != null) {
-                    val status = response.body()!!.status
+//                    val status = response.body()!!.status
                     isLiveBusData.postValue(response.body())
 //                        }
 //                    }
