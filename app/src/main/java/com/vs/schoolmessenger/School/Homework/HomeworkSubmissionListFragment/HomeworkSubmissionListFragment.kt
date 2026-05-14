@@ -126,14 +126,14 @@ class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener,
 
     private fun showSubmitted() {
         val filteredList = allStudentsList.filter {
-            it.status.equals(Constant.SUBMITTED, ignoreCase = true)
+            it.status.equals(Constant.Completed, ignoreCase = true)
         }
         HSLAdapter.updateData(filteredList)
     }
 
     private fun showPending() {
         val filteredList = allStudentsList.filter {
-            it.status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
+            it.status.equals(Constant.NotComplete, ignoreCase = true)
         }
         HSLAdapter.updateData(filteredList)
     }
@@ -142,10 +142,10 @@ class HomeworkSubmissionListFragment : Fragment(), View.OnClickListener,
     private fun updateTabTitles() {
         val allCount = allStudentsList.size
         val submittedCount = allStudentsList.count {
-            it.status.equals(Constant.SUBMITTED, ignoreCase = true)
+            it.status.equals(Constant.Completed, ignoreCase = true)
         }
         val pendingCount = allStudentsList.count {
-            it.status.equals(Constant.NOTSUBMITTED, ignoreCase = true)
+            it.status.equals(Constant.NotComplete, ignoreCase = true)
         }
 
         binding.tabLayout.getTabAt(0)?.text = "${getString(R.string.All_Students)} ($allCount)"

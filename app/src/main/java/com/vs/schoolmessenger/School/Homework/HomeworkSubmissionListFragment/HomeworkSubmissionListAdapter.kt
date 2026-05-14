@@ -138,11 +138,13 @@ class HomeworkSubmissionListAdapter(
 
             if (data.status == Constant.Completed) {
                 statusText.text = context.getString(R.string.completed)
+                cancelImage.setImageDrawable(null)
                 cancelImage.setBackgroundResource(R.drawable.correcticonsvg)
                 statusText.setTextColor(ContextCompat.getColor(context, R.color.clr_green))
                 statusButton.setBackgroundResource(R.drawable.completed_button_bg)
             } else {
                 statusText.text = context.getString(R.string.pending)
+                cancelImage.setImageDrawable(null)
                 cancelImage.setBackgroundResource(R.drawable.downloadsvgformat)
                 statusText.setTextColor("#9e6e40".toColorInt())
                 statusButton.setBackgroundResource(R.drawable.pending_button_bg)
