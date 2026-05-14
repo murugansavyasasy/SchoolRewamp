@@ -49,11 +49,11 @@ class AssignmentStudentListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.assignment_student_list)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.submitted_studentlist_detail)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.assignment_student_list, parent, false)
+                .inflate(R.layout.submitted_studentlist_detail, parent, false)
             DataViewHolder(view, context, listener, createdDate, title, assignmentSubject)
         }
     }
