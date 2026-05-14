@@ -16,7 +16,6 @@
     "_3000_schools": "",
     "welcome_splash_message": "",
     "welcome_to_school_chimes": ""
-
   },
   {
     "id": "VAGGISVARI",
@@ -35,8 +34,6 @@
     "_3000_schools": "",
     "welcome_splash_message": "WELCOME TO VAGGISVARI VIDYALAYA SALEM",
     "welcome_to_school_chimes": "WELCOME TO VAGGISVARI VIDYALAYA SALEM"
-
-
   },
   {
     "id": "SRISUDHADHONE",
@@ -58,7 +55,7 @@
   },
   {
     "id": "SRIKALAIVANI",
-    "school_id": "9999",
+    "school_id": "6748",
     "name": "SRI KALAIVANI VIDHYALAYA",
     "package_suffix": "com.srikalaivani.schools",
     "color": "#7F1A37",
