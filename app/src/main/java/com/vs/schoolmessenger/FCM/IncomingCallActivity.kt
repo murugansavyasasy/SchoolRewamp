@@ -60,6 +60,13 @@ class IncomingCallActivity : AppCompatActivity(), CoroutineScope by MainScope() 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+                    WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON or
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        )
+
         enableLockScreen()
 
         isIncomingCallData = intent.getSerializableExtra("DATA") as? HashMap<String, String>
@@ -323,7 +330,7 @@ class IncomingCallActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                 isUpdateCallApi=false
                 endCall()
             }
-        }, 60000)
+        }, 10000)
     }
     private fun stopAutoCutTimer() {
         autoCutHandler.removeCallbacksAndMessages(null)

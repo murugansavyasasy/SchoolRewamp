@@ -378,7 +378,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLocationHistory(data: StaffAttendanceReportData) {
-        Log.d("isComing", "isComing")
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
 

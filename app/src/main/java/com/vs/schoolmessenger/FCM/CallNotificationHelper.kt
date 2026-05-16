@@ -10,8 +10,6 @@ import androidx.core.app.NotificationCompat
 import com.vs.schoolmessenger.Auth.Base.MyApp
 import com.vs.schoolmessenger.R
 
-
-
 object CallNotificationHelper {
 
     fun buildIncomingNotification(
@@ -19,6 +17,23 @@ object CallNotificationHelper {
         data: HashMap<String, String>,
         notificationId: Int
     ): Notification {
+
+        val channelId = "CALL_CHANNEL"
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val channel = android.app.NotificationChannel(
+                channelId,
+                "Incoming Calls",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Call Notifications"
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setBypassDnd(true)
+            }
+            manager.createNotificationChannel(channel)
+        }
 
         val remoteViews = RemoteViews(context.packageName, R.layout.notification_call)
 
@@ -31,6 +46,13 @@ object CallNotificationHelper {
         val contentPendingIntent = PendingIntent.getActivity(
             context,
             notificationId,
+            openIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val fullScreenPendingIntent = PendingIntent.getActivity(
+            context,
+            notificationId + 100,
             openIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -77,7 +99,7 @@ object CallNotificationHelper {
         remoteViews.setOnClickPendingIntent(R.id.btnAccept, acceptPendingIntent)
         remoteViews.setOnClickPendingIntent(R.id.btnDecline, declinePendingIntent)
 
-        return NotificationCompat.Builder(context, MyApp.CHANNEL_ID)
+        return NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.sym_call_incoming)
             .setCustomContentView(remoteViews)
             .setCustomBigContentView(remoteViews)
@@ -85,10 +107,12 @@ object CallNotificationHelper {
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setFullScreenIntent(fullScreenPendingIntent, true)
             .setContentIntent(contentPendingIntent)
-            .setFullScreenIntent(contentPendingIntent, true)
             .setDeleteIntent(deletePendingIntent)
-            .setAutoCancel(true)
+            .setOngoing(true)
+            .setAutoCancel(false)
+
             .build()
     }
 
