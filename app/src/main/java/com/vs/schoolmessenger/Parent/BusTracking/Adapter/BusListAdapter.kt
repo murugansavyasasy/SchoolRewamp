@@ -74,15 +74,15 @@ class BusListAdapter(
 
         fun bind(data: BusListData, position: Int) {
 
-            lblPlace.text=data.route_name
-            lblRouteNo.text=data.route_id
-            lblBusRouteNumber.text=data.route_id
+            lblPlace.text=data.route_name?:""
+            lblRouteNo.text=data.route_id?:""
+            lblBusRouteNumber.text=data.route_id?:""
 
-            lblCurrentStop.text=data.stop_name
-            lblPickUpTime.text=data.tentative_pickup_time
-            lblDropTime.text=data.tentative_drop_time
-//            lblBusNo.text=data.vehicle_no
-            lblBusRouteNumber.text=data.vehicle_no
+            lblCurrentStop.text=data.stop_name?:""
+            lblPickUpTime.text=data.tentative_pickup_time?:""
+            lblDropTime.text=data.tentative_drop_time?:""
+//            lblBusNo.text=data.vehicle_no?:""
+            lblBusRouteNumber.text=data.vehicle_no?:""
 
 
             lnrTrackLive.setOnClickListener {

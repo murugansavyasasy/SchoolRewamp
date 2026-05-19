@@ -46,7 +46,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             onBackPressed()
         }
 
-        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no
+        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no?:""
         binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply {
@@ -73,7 +73,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                         binding.lytList.visibility = View.GONE
                         binding.WVLiveBus.visibility = View.VISIBLE
 
-                        val trackingUrl = response.data[0].tracking_url
+                        val trackingUrl = response.data[0].tracking_url?:""
 
                         setupWebView(trackingUrl)
 
