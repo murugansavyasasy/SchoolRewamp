@@ -213,13 +213,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                        )
 //                    )
 //
-//                    originalMenuList.add(
-//                        MenuDetail(
-//                            id = 9999,
-//                            name = "Live Bus tracking",
-//                            description = "Monitor and manage Live bus data"
-//                        )
-//                    )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 9999,
+                            name = "Live Bus tracking",
+                            description = "Monitor and manage Live bus data"
+                        )
+                    )
                     //Hardcode from here
 
 
