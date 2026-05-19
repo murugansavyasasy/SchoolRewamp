@@ -212,15 +212,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                            description = "Monitor and manage student data"
 //                        )
 //                    )
-//
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 9999,
-                            name = "Live Bus tracking",
-                            description = "Monitor and manage Live bus data"
-                        )
-                    )
-                    //Hardcode from here
 
 
                     filteredMenuList.clear()
@@ -738,10 +729,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 ParentHostelDashboard::class.java
             )
 
-            Constant.M_BUS_TRACKING -> Intent(
-                requireActivity(),
-                MapsActivity::class.java
-            )
+//            Constant.M_BUS_TRACKING -> Intent(
+//                requireActivity(),
+//                MapsActivity::class.java
+//            )
             Constant.M_LIVE_BUS_TRACKING -> Intent(
                 requireActivity(),
                 BusList::class.java
