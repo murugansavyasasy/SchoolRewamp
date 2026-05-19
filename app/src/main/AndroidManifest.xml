@@ -121,16 +121,16 @@
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAZ5wb8hjNzcJv1roqNb09QFchIiELVSK4" />
-
         <activity
             android:name=".FCM.IncomingCallActivity"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAZ5wb8hjNzcJv1roqNb09QFchIiELVSK4" />
 
         <activity
             android:name=".FCM.NotificationCallScreen"
