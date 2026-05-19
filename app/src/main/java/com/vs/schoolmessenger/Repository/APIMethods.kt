@@ -245,8 +245,10 @@ object APIMethods {
     const val applyHostelPass = "stud-attd/api/hostel-attendance/apply-outpass"
     const val isOnlinePaymentResponse = "dashboard/api/reconcile/online-payment-details-for-student"
     const val isPaymentUpdate = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
-    const val GetStudentRoute ="admin/api/transport/get-student-route-list"
-    const val LiveBusData ="admin/api/transport/get-vehicle-live-tracking-details "
+//    const val GetStudentRoute ="admin/api/transport/get-student-route-list"
+//    const val LiveBusData ="admin/api/transport/get-vehicle-live-tracking-details "
+    const val GetStudentRoute ="transport/api/get-student-route-list"
+    const val LiveBusData ="transport/api/get-vehicle-live-tracking-details"
 
 }
 
