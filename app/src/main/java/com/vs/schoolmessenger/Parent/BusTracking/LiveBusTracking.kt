@@ -1,14 +1,25 @@
 package com.vs.schoolmessenger.Parent.BusTracking
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.LocationManager
+import android.net.Uri
+import android.provider.Settings
 import android.view.View
+import android.webkit.GeolocationPermissions
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -23,9 +34,30 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         return LiveBusTrackingBinding.inflate(layoutInflater)
     }
 
+    private var isApiCalled = false
+    private var isSettingsOpened = false
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    var userDetails: UserDetails? = null
+
+    private val locationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+                    permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+
+            if (granted) {
+                proceedAfterPermission()
+            } else {
+                val permanentlyDenied = !shouldShowRequestPermissionRationale(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                if (permanentlyDenied) {
+                    showPermissionSettingsDialog()
+                } else {
+                    showRetryPermissionDialog()
+                }
+            }
+        }
 
     override fun setupViews() {
         super.setupViews()
@@ -35,127 +67,177 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-        userDetails = SharedPreference.getUserDetails(this)
-
         val busData = intent.getParcelableExtra<BusListData>("bus_data")
-
         val childDetails = SharedPreference.getChildDetails(this)
+
         isAccessToken = childDetails?.access_token
 
-        binding.toolbarLayout.imgBack.setOnClickListener {
-            onBackPressed()
-        }
-
-        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no?:""
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no ?: ""
         binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
 
-        appViewModel = ViewModelProvider(this)[App::class.java].apply {
-            init()
-        }
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
         observeLiveBusResponse()
 
-        isLiveBus()
+        checkAndRequestLocation()
     }
 
+    private fun checkAndRequestLocation() {
+        if (!hasLocationPermission()) {
+            requestLocationPermission()
+        } else {
+            proceedAfterPermission()
+        }
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestLocationPermission() {
+        locationPermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+    private fun proceedAfterPermission() {
+        if (!isLocationEnabled()) {
+            showGpsEnableDialog()
+            return
+        }
+
+        if (!isApiCalled) {
+            isApiCalled = true
+            isLiveBus()
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+
+    private fun showGpsEnableDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Enable Location")
+            .setMessage("Location services must be enabled to track the bus.\n\nPlease turn on Location now.")
+            .setCancelable(false)
+            .setPositiveButton("Enable Location") { _, _ ->
+                isSettingsOpened = true
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
+            .show()
+    }
+
+    private fun showRetryPermissionDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage("Location permission is required for live bus tracking.")
+            .setCancelable(false)
+            .setPositiveButton("Enable Location") { _, _ ->
+                requestLocationPermission()
+            }
+            .show()
+    }
+
+    private fun showPermissionSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage(
+                "Location permission is permanently denied.\n\n" +
+                        "Allow Location access."
+            )
+            .setCancelable(false)
+            .setPositiveButton("Open Settings") { _, _ ->
+                isSettingsOpened = true
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", packageName, null)
+                startActivity(intent)
+            }
+            .show()
+    }
+
+
     private fun observeLiveBusResponse() {
-
         appViewModel?.isGetLiveBusData?.observe(this) { response ->
-
             Constant.hideLoading(this)
 
-            if (response != null) {
-
-                if (response.status) {
-
-                    if (response.data.isNotEmpty()) {
-
-                        binding.lytList.visibility = View.GONE
-                        binding.WVLiveBus.visibility = View.VISIBLE
-
-                        val trackingUrl = response.data[0].tracking_url?:""
-
-                        setupWebView(trackingUrl)
-
-                    } else {
-
-                        binding.WVLiveBus.visibility = View.GONE
-                        binding.lytList.visibility = View.VISIBLE
-                        binding.txtNoData.text = getString(R.string.no_data_found)
-                    }
-
-                } else {
-
-                    binding.WVLiveBus.visibility = View.GONE
-                    binding.lytList.visibility = View.VISIBLE
-                    binding.txtNoData.text = response.message
-                }
-
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.lytList.visibility = View.GONE
+                binding.WVLiveBus.visibility = View.VISIBLE
+                setupWebView(response.data[0].tracking_url ?: "")
             } else {
-
                 binding.WVLiveBus.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
-                binding.txtNoData.text =
-                    getString(R.string.Something_went_wrong_Please_try_again)
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
     }
 
     private fun setupWebView(trackingUrl: String) {
+        binding.WVLiveBus.apply {
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
+            settings.builtInZoomControls = false
+            settings.displayZoomControls = false
+            settings.setGeolocationEnabled(true)
+        }
 
-        binding.WVLiveBus.settings.javaScriptEnabled = true
-        binding.WVLiveBus.settings.domStorageEnabled = true
-        binding.WVLiveBus.settings.loadWithOverviewMode = true
-        binding.WVLiveBus.settings.useWideViewPort = true
-        binding.WVLiveBus.settings.builtInZoomControls = false
-        binding.WVLiveBus.settings.displayZoomControls = false
+        binding.WVLiveBus.webChromeClient = object : WebChromeClient() {
+            override fun onGeolocationPermissionsShowPrompt(origin: String?, callback: GeolocationPermissions.Callback?) {
+                callback?.invoke(origin, true, false)
+            }
+        }
 
         binding.WVLiveBus.webViewClient = object : WebViewClient() {
-
-            override fun onPageStarted(
-                view: WebView?,
-                url: String?,
-                favicon: Bitmap?
-            ) {
-                super.onPageStarted(view, url, favicon)
-
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 Constant.showLoading(this@LiveBusTracking)
             }
 
-            override fun onPageFinished(
-                view: WebView?,
-                url: String?
-            ) {
-                super.onPageFinished(view, url)
+            override fun onPageFinished(view: WebView?, url: String?) {
                 Constant.hideLoading(this@LiveBusTracking)
             }
 
-            override fun onReceivedError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
-            ) {
-                super.onReceivedError(view, request, error)
-
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 Constant.hideLoading(this@LiveBusTracking)
-
-                binding.WVLiveBus.visibility = View.GONE
-                binding.lytList.visibility = View.VISIBLE
-                binding.txtNoData.text =
-                    getString(R.string.Something_went_wrong_Please_try_again)
+                showWebViewError()
             }
         }
 
         binding.WVLiveBus.loadUrl(trackingUrl)
     }
 
-    private fun isLiveBus() {
-        Constant.showLoading(this)
-        appViewModel!!.isLiveBus(isAccessToken!!, this)
+    private fun showWebViewError() {
+        binding.WVLiveBus.visibility = View.GONE
+        binding.lytList.visibility = View.VISIBLE
+        binding.txtNoData.text = getString(R.string.Something_went_wrong_Please_try_again)
     }
 
-    override fun onClick(v: View?) {
+    private fun isLiveBus() {
+        Constant.showLoading(this)
+        appViewModel?.isLiveBus(isAccessToken!!, this)
+    }
 
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.WVLiveBus.onResume()
+        binding.WVLiveBus.resumeTimers()
+
+        if (isSettingsOpened) {
+            isSettingsOpened = false
+            checkAndRequestLocation()
+        }
     }
 
     override fun onPause() {
@@ -164,17 +246,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         super.onPause()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        binding.WVLiveBus.onResume()
-        binding.WVLiveBus.resumeTimers()
-
-        isLiveBus()
-    }
-
     override fun onDestroy() {
-
         binding.WVLiveBus.apply {
             clearHistory()
             clearCache(true)
@@ -183,7 +255,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             removeAllViews()
             destroy()
         }
-
         super.onDestroy()
     }
+
+    override fun onClick(v: View?) {}
 }
