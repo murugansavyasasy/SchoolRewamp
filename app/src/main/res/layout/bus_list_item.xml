@@ -24,13 +24,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="@dimen/fifty"
+                android:layout_width="@dimen/thirty_five"
                 android:src="@drawable/bus_icon"
                 android:tint="@color/white"
                 android:padding="@dimen/ten"
                 android:backgroundTint="@color/PrimaryColor"
                 android:background="@drawable/rect_bg_light_green_radius"
-                android:layout_height="@dimen/fifty">
+                android:layout_height="@dimen/thirty_five">
             </ImageView>
 
             <LinearLayout
@@ -92,13 +92,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="@dimen/thirty_five"
+                android:layout_width="@dimen/thirty"
                 android:src="@drawable/map_icon_5"
                 android:tint="@color/white"
                 android:padding="@dimen/six"
                 android:backgroundTint="@color/PrimaryColor"
                 android:background="@drawable/circle_bg"
-                android:layout_height="@dimen/thirty_five">
+                android:layout_height="@dimen/thirty">
             </ImageView>
 
             <LinearLayout
@@ -110,7 +110,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="Current Stop"
+                    android:text="Your Stop"
                     android:textColor="@color/PrimaryColor"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_height="wrap_content">
@@ -130,10 +130,10 @@
 
             <ImageView
                 android:layout_marginStart="@dimen/five"
-                android:layout_width="@dimen/thirty"
+                android:layout_width="@dimen/twenty_five"
                 android:src="@drawable/location_fill_icon"
                 android:tint="@color/PrimaryColor"
-                android:layout_height="@dimen/thirty">
+                android:layout_height="@dimen/twenty_five">
             </ImageView>
 
 
@@ -272,7 +272,7 @@
             android:backgroundTint="@color/PrimaryColor"
             android:layout_marginTop="@dimen/ten"
             android:gravity="center"
-            android:padding="@dimen/fifteen"
+            android:padding="@dimen/ten"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/lnrTrackLive"

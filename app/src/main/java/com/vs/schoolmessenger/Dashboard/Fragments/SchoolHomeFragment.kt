@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.Parent.EBooks.Ebooks
 import com.vs.schoolmessenger.R
@@ -242,6 +243,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                            description = "Monitor and manage student data"
 //                        )
 //                    )
+
+                                        originalMenuList.add(
+                        MenuDetail(
+                            id = 205,
+                            name = "Bus Live Tracking",
+                            description = "Monitor and manage student data"
+                        )
+                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()
@@ -1000,6 +1009,19 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         HostelList::class.java
+                    }
+                }
+            }
+
+            Constant.M_LIVE_BUS_TRACKING-> {
+
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    BusList::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        BusList::class.java
                     }
                 }
             }

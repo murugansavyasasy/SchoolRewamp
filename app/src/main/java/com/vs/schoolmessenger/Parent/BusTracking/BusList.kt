@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.Parent.BusTracking
 
-
-
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -18,8 +16,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.BusListActivityBinding
 
-
-class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, BusClickListner{
+class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, BusClickListner {
 
     override fun getViewBinding(): BusListActivityBinding {
         return BusListActivityBinding.inflate(layoutInflater)
@@ -28,31 +25,33 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     lateinit var mAdapter: BusListAdapter
-
-
-    var userDetails: UserDetails? = null
-
+    var isToolBarTitle = ""
+    var isToolBarDescription = ""
 
     override fun setupViews() {
         super.setupViews()
 
         isToolBarPrimaryParent(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
-        userDetails = SharedPreference.getUserDetails(this)
-
-
-        val childDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = childDetails?.access_token
+        if (Constant.isParentChoose) {
+            val childDetails = SharedPreference.getChildDetails(this)
+            isAccessToken = childDetails?.access_token
+            isToolBarTitle = childDetails?.name.toString()
+            isToolBarDescription = childDetails?.standard_name + " - " + childDetails?.section_name
+        } else {
+            val isStaffDetails = SharedPreference.getStaffDetails(this)
+            isAccessToken = isStaffDetails?.access_token
+            isToolBarTitle = Constant.isSelectedMenuName
+            isToolBarDescription = isStaffDetails?.school_name.toString()
+        }
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.lblHeaderTitle.text= Constant.isSelectedMenuName
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
-        binding.toolbarLayout.lblStudentSection.text =
-            childDetails?.standard_name + " - " + childDetails?.section_name
+        binding.toolbarLayout.lblStudentName.text = isToolBarTitle
+//        binding.lblHeaderTitle.text= Constant.isSelectedMenuName
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblStudentSection.text = isToolBarDescription
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
 
@@ -64,41 +63,32 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
                         binding.rvBusList.visibility = View.VISIBLE
                         binding.lytList.visibility = View.GONE
                         isLoadBusList(response.data)
-
-
-
                     } else {
                         binding.rvBusList.visibility = View.GONE
                         binding.lytList.visibility = View.VISIBLE
                         binding.txtNoData.text = getString(R.string.no_data_found)
                     }
-
                 } else {
 
                     binding.rvBusList.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                     binding.txtNoData.text = response.message
                 }
-
             } else {
-
                 binding.rvBusList.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
-                binding.txtNoData.text =
-                    getString(R.string.Something_went_wrong_Please_try_again)
+                binding.txtNoData.text = getString(R.string.Something_went_wrong_Please_try_again)
             }
         }
-
     }
 
     private fun isLoadBusList(newData: List<BusListData>?) {
-        mAdapter =
-            BusListAdapter(newData,this,this, Constant.isShimmerViewDisable)
+        mAdapter = BusListAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rvBusList.adapter = mAdapter
     }
 
     private fun isGetBusList() {
-        mAdapter = BusListAdapter(null,this, this, Constant.isShimmerViewShow)
+        mAdapter = BusListAdapter(null, this, this, Constant.isShimmerViewShow)
 
         binding.rvBusList.layoutManager = LinearLayoutManager(this)
         binding.rvBusList.isNestedScrollingEnabled = false

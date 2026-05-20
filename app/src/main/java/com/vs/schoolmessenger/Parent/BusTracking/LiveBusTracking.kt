@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -41,11 +40,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
-
     private var isApiCalled = false
     var userDetails: UserDetails? = null
     private var isSettingsOpened = false
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
@@ -75,17 +72,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-//        val busData = intent.getParcelableExtra<BusListData>("bus_data")
-        val childDetails = SharedPreference.getChildDetails(this)
-
-        isAccessToken = childDetails?.access_token
-
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-//        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no ?: ""
-//        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
-
-        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+          userDetails= SharedPreference.getUserDetails(this)
 
         if (fromNotification) {
             Constant.isParentChoose = true
@@ -93,17 +80,28 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             headerId = intent.getStringExtra(Constant.header_id)
             receiverId = intent.getStringExtra(Constant.receiverid)
             menu_name = intent.getStringExtra(Constant.menu_name)
+            Constant.isSelectedMenuName=menu_name.toString()
             Log.d(
                 "NoticeBoard_EXTRAS",
                 "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
             )
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
-            Constant.isSelectedMenuName = menu_name!!
+
         }
 
-        observeLiveBusResponse()
+        if (Constant.isParentChoose){
+            val childDetails = SharedPreference.getChildDetails(this)
+            isAccessToken = childDetails?.access_token
+        }else{
+            val isStaffDetails = SharedPreference.getStaffDetails(this)
+            isAccessToken = isStaffDetails?.access_token
+        }
+        binding.toolbarLayout.lblStudentName.text=Constant.isSelectedMenuName
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+        observeLiveBusResponse()
         checkAndRequestLocation()
     }
 
