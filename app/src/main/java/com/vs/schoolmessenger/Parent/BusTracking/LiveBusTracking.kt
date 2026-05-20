@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.BusTracking
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -27,6 +28,13 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
 
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
     override fun setupViews() {
         super.setupViews()
 
@@ -34,6 +42,21 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
 
         userDetails = SharedPreference.getUserDetails(this)
 
@@ -46,7 +69,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             onBackPressed()
         }
 
-        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no?:""
+
+        binding.toolbarLayout.lblStudentName.visibility=View.GONE
         binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply {
@@ -54,8 +78,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
 
         observeLiveBusResponse()
-
-        isLiveBus()
     }
 
     private fun observeLiveBusResponse() {
@@ -72,7 +94,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
                         binding.lytList.visibility = View.GONE
                         binding.WVLiveBus.visibility = View.VISIBLE
-
+                        binding.toolbarLayout.lblStudentSection.text = response.data[0].thing_id?:""
                         val trackingUrl = response.data[0].tracking_url?:""
 
                         setupWebView(trackingUrl)
