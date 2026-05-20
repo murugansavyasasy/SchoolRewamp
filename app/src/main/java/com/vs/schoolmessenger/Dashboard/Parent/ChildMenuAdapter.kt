@@ -132,7 +132,7 @@ class ChildMenuAdapter(
                 Constant.M_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.staff_apply_leave)
                 Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.approve_staff_leave)
                 Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.hotel_attendance)
-                Constant.M_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.ic_bus_green)
+//                Constant.M_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.ic_bus_green)
                 Constant.M_LIVE_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.ic_bus_green)
             }
 

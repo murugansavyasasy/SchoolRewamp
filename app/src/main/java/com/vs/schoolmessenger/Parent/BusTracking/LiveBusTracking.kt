@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.location.LocationManager
 import android.net.Uri
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -34,7 +36,14 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         return LiveBusTrackingBinding.inflate(layoutInflater)
     }
 
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
     private var isApiCalled = false
+    var userDetails: UserDetails? = null
     private var isSettingsOpened = false
 
     private var isAccessToken: String? = null
@@ -67,16 +76,31 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-        val busData = intent.getParcelableExtra<BusListData>("bus_data")
+//        val busData = intent.getParcelableExtra<BusListData>("bus_data")
         val childDetails = SharedPreference.getChildDetails(this)
 
         isAccessToken = childDetails?.access_token
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no ?: ""
-        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+//        binding.toolbarLayout.lblStudentSection.text = busData?.vehicle_no ?: ""
+//        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
 
         observeLiveBusResponse()
 
@@ -172,6 +196,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.lytList.visibility = View.GONE
                 binding.WVLiveBus.visibility = View.VISIBLE
+                binding.toolbarLayout.lblStudentSection.text =response.data[0].thing_id ?: ""
                 setupWebView(response.data[0].tracking_url ?: "")
             } else {
                 binding.WVLiveBus.visibility = View.GONE

@@ -194,6 +194,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/drop"
+                    android:textAllCaps="true"
                     android:textColor="@color/dark_voilet_4"
                     android:drawablePadding="@dimen/five"
                     android:drawableTint="@color/dark_voilet_4"
