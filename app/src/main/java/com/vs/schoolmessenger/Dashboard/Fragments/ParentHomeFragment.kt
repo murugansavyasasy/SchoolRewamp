@@ -143,7 +143,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.init()
 
         getGlobalVariables(access_token)
-        appViewModel!!.isGlobalVariables?.observe(requireActivity()) { response ->
+        appViewModel!!.isGlobalVariables?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 response.status
                 response.message
@@ -174,7 +174,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             (activity as? ParentDashboard)?.openDrawer()
         }
 
-        appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
+        appViewModel!!.isDashBoardData?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
@@ -237,7 +237,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
+        appViewModel!!.isDashBoardCountData?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val safeActivity = activity ?: return@observe
 
@@ -256,7 +256,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
+        appViewModel!!.isGetAds?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val status = response.status
                 response.message

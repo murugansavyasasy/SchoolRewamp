@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
@@ -52,8 +53,28 @@ class SchoolMenuAdapter(
     }
 
     fun updateList(newList: List<MenuDetail>) {
+        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize() = itemList?.size ?: 0
+            override fun getNewListSize() = newList.size
+            override fun areItemsTheSame(old: Int, new: Int) =
+                itemList?.get(old)?.id == newList[new].id
+            override fun areContentsTheSame(old: Int, new: Int) =
+                itemList?.get(old) == newList[new]
+        })
         itemList = newList
+        diff.dispatchUpdatesTo(this)
+    }
+
+    fun updateCountList(newCountList: ArrayList<MenuCountDetail>?) {
+        itemCountList = newCountList
         notifyDataSetChanged()
+    }
+
+    fun updateLoading(loading: Boolean) {
+        if (isLoading != loading) {
+            isLoading = loading
+            notifyDataSetChanged()
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

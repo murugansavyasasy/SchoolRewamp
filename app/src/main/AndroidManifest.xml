@@ -399,38 +399,38 @@
         <activity
             android:name=".Dashboard.Settings.RateUs.RatingSuccess"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Dashboard.Settings.Faq.Faq"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".Parent.Homework.HomeWork"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.LessonPlan.LessonPlanEdit.LessonPlanEditActivity"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Dashboard.School.SchoolDashboard"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Utils.VimeoVideoPlay"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
@@ -695,63 +695,63 @@
         <activity
             android:name=".Parent.Homework.HomeWorkAdapter.ChildHomeWork"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.PTM.Activity.StaffSlotDetails"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.PTM.Activity.CreateSlots"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Assignment.AssignmentReport"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Homework.HomeworkReport"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.NoticeBoard.NoticeBoardReport"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Event.EventReport"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".School.Attachment.AttachmentReport"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".School.BusTracking.MapsActivity"
         android:configChanges="uiMode|orientation|screenSize"
-        android:screenOrientation="portrait"
+        
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".School.StudentDetails.StudentDetails"
             android:configChanges="uiMode|orientation|screenSize"
-            android:screenOrientation="portrait"
+            
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 

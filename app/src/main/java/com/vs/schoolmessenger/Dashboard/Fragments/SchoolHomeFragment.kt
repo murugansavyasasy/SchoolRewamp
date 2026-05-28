@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -123,6 +124,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var originalMenuList = ArrayList<MenuDetail>()
     private var filteredMenuList = ArrayList<MenuDetail>()
 
+    private val menuRouteMap: Map<Int, () -> Class<*>?> by lazy { buildMenuRouteMap() }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -147,6 +149,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             if (staffDetails!!.school_logo != "") {
                 Glide.with(this)
                     .load(staffDetails!!.school_logo)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.school_sample)
                     .error(R.drawable.school_sample)
                     .into(binding.profileImage)
             }
@@ -173,7 +177,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
         getGlobalVariables(access_token)
-        appViewModel!!.isGlobalVariables?.observe(requireActivity()) { response ->
+        appViewModel!!.isGlobalVariables?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 response.status
                 response.message
@@ -183,7 +187,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isGetAcademicList?.observe(requireActivity()) { response ->
+        appViewModel!!.isGetAcademicList?.observe(viewLifecycleOwner) { response ->
             response?.data?.let { academicList ->
                 val data = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYearList == data) return@observe
@@ -210,7 +214,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             (activity as? SchoolDashboard)?.openDrawer()
         }
 
-        appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
+        appViewModel!!.isDashBoardData?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
@@ -268,7 +272,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isDashBoardCountData?.observe(requireActivity()) { response ->
+        appViewModel!!.isDashBoardCountData?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val safeActivity = activity ?: return@observe
                 Constant.hideLoadingEnable(safeActivity)
@@ -285,7 +289,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
+        appViewModel!!.isGetAds?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val status = response.status
                 response.message
@@ -627,20 +631,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
     }
 
-    private fun isLoadData() {
-        val safeActivity = activity ?: return
-
-        isMenuAdapter = SchoolMenuAdapter(
-            safeActivity,
-            this,
-            filteredMenuList,
-            isSchoolMenuCountDetails,
-            Constant.isShimmerViewDisable
-        )
-
-        val gridLayoutManager = GridLayoutManager(safeActivity, 2)
+    private fun initRecyclerView() {
+        val gridLayoutManager = GridLayoutManager(requireContext(),2)
         binding.gridRecyclerView.layoutManager = gridLayoutManager
+        binding.gridRecyclerView.setHasFixedSize(true)
+        isMenuAdapter = SchoolMenuAdapter (
+            requireContext(), this, filteredMenuList,isSchoolMenuCountDetails,true
+        )
         binding.gridRecyclerView.adapter = isMenuAdapter
+    }
+
+    private fun isLoadData() {
+        val shimmer = isSchoolDashBoardData == null
+        isMenuAdapter?.apply {
+            updateLoading(shimmer)
+            updateList(filteredMenuList)
+            updateCountList(isSchoolMenuCountDetails)
+        } ?: run { initRecyclerView() }
     }
 
     override fun onClick(p0: View?) {
@@ -712,328 +719,84 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         Constant.stopDelay()
     }
 
+
+    private fun buildMenuRouteMap() : Map<Int, () -> Class<*>> {
+
+        val isStaff = userDetails?.staff_role == Constant.isStaffRole
+        val isMultiSchool = (userDetails?.staff_details?.size ?: 0) > 1
+        fun staffOrList(cls: Class<*>) : Class<*> =
+            if (isStaff || !isMultiSchool) cls else SchoolList :: class.java
+        return  mapOf (
+            Constant.M_COMMUNICATION to { CommunicationSchool::class.java},
+
+            Constant.M_ASSIGNMENT to { staffOrList(AssignmentCreate::class.java) },
+
+            Constant.M_HOMEWORK to { staffOrList(HomeWorkCreate::class.java) },
+
+            Constant.M_QUIZ_EXAM to { staffOrList(ExamQuiz::class.java) },
+
+            Constant.M_ATTENDANCE_MARKING to { staffOrList(AttendanceMark::class.java) },
+
+            Constant.M_ABSENTEES_REPORT to { staffOrList(AbsenteesReport::class.java) },
+
+            Constant.M_SCHOOL_STRENGTH to { staffOrList(SchoolStrength::class.java) },
+
+            Constant.M_NOTICEBOARD to {
+                if (isStaff) NoticeBoardReport::class.java else CreateNoticeBoard::class.java
+            },
+
+            Constant.M_SCHOOL_CLASS_EVENTS to { staffOrList(CreateEvent::class.java) },
+
+            Constant.M_MESSAGES_FROM_MANAGEMENT to { MessageFromManagement::class.java },
+
+            Constant.M_INTERACTION_WITH_STUDENT to { staffOrList(InteractionWithStudent::class.java) },
+
+            Constant.M_DAILY_COLLECTION to { staffOrList(DailyCollection::class.java) },
+
+            Constant.M_STUDENT_REPORT to { staffOrList(StudentReport::class.java) },
+
+            Constant.M_LESSON_PLAN to { staffOrList(LessonPlan::class.java) },
+
+            Constant.M_FEE_PENDING_REPORT to { staffOrList(FeePendingReport::class.java) },
+
+            Constant.M_MARK_YOUR_ATTENDANCE to { staffOrList(MarkYourAttendance::class.java) },
+
+            Constant.M_STAFF_WISE_ATTENDANCE_REPORT to { staffOrList(AttendanceReportFromStaff::class.java) },
+
+            Constant.M_PTM to { staffOrList(PTM::class.java) },
+
+            Constant.M_ATTACHMENTS to { Attachment::class.java },
+
+            Constant.M_LEAVE_REQUEST to { staffOrList(LeaveRequests::class.java) },
+
+            Constant.M_VERY_IMPORTANT_INFO to { ImportantInfo::class.java },
+
+            Constant.M_ONLINE_TEXT_BOOK to { Ebooks::class.java },
+
+            Constant.M_FEEDBACK to { ImportantInfo::class.java },
+
+            Constant.M_SCHOOL_NEEDS to { SchoolNeeds::class.java },
+
+            Constant.M_LSRW to { staffOrList(LsrwMain::class.java) },
+
+            Constant.M_UPLOAD_MARKS to { staffOrList(ClassList::class.java) },
+
+            Constant.M_COUPON_PACKET to { staffOrList(CouponDashboardActivity::class.java) },
+
+            Constant.M_STAFF_LEAVE_REQUEST to { staffOrList(StaffLeaveRequest::class.java) },
+
+            Constant.M_APPROVE_STAFF_LEAVE_REQUEST to { staffOrList(ApproveStaffLeaveRequest::class.java) },
+
+            Constant.M_HOSTEL to { staffOrList(HostelList::class.java) },
+
+            Constant.M_LIVE_BUS_TRACKING to { staffOrList(BusList::class.java) }
+        )
+
+
+    }
+
     override fun onClick(data: MenuDetail) {
-
-        val activityClass = when (data.id) {
-            Constant.M_COMMUNICATION -> CommunicationSchool::class.java
-            Constant.M_ASSIGNMENT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    AssignmentCreate::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        AssignmentCreate::class.java
-                    }
-                }
-            }
-
-            Constant.M_HOMEWORK -> {
-
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    HomeWorkCreate::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        HomeWorkCreate::class.java
-                    }
-                }
-            }
-
-            Constant.M_QUIZ_EXAM -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    ExamQuiz::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        ExamQuiz::class.java
-                    }
-                }
-            }
-
-            Constant.M_ATTENDANCE_MARKING -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    AttendanceMark::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        AttendanceMark::class.java
-                    }
-                }
-            }
-
-            Constant.M_ABSENTEES_REPORT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    AbsenteesReport::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        AbsenteesReport::class.java
-                    }
-                }
-            }
-
-            Constant.M_SCHOOL_STRENGTH -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    SchoolStrength::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        SchoolStrength::class.java
-                    }
-                }
-            }
-
-            Constant.M_NOTICEBOARD -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    NoticeBoardReport::class.java
-                } else {
-                    CreateNoticeBoard::class.java
-                }
-            }
-
-            Constant.M_SCHOOL_CLASS_EVENTS -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    CreateEvent::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        CreateEvent::class.java
-                    }
-                }
-            }
-
-            Constant.M_MESSAGES_FROM_MANAGEMENT -> {
-                MessageFromManagement::class.java
-            }
-
-            Constant.M_INTERACTION_WITH_STUDENT -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    InteractionWithStudent::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        InteractionWithStudent::class.java
-                    }
-                }
-            }
-
-
-            Constant.M_DAILY_COLLECTION -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    DailyCollection::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        DailyCollection::class.java
-                    }
-                }
-            }
-
-            Constant.M_STUDENT_REPORT -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    StudentReport::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        StudentReport::class.java
-                    }
-                }
-            }
-
-            Constant.M_LESSON_PLAN -> {
-
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    LessonPlan::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        LessonPlan::class.java
-                    }
-                }
-            }
-
-            Constant.M_FEE_PENDING_REPORT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    //go to fee pending report
-                    FeePendingReport::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        //go to fee pending report
-                        FeePendingReport::class.java
-                    }
-                }
-            }
-
-            Constant.M_MARK_YOUR_ATTENDANCE -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    //go to geometric mark attendance page
-                    MarkYourAttendance::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        //go to geometric mark attendance page
-                        MarkYourAttendance::class.java
-                    }
-                }
-            }
-
-            Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    AttendanceReportFromStaff::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        AttendanceReportFromStaff::class.java
-                    }
-                }
-            }
-
-            Constant.M_PTM -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    //go to ptm page
-                    PTM::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        //go to ptm page
-                        PTM::class.java
-                    }
-                }
-            }
-
-            Constant.M_ATTACHMENTS -> {
-                Attachment::class.java
-            }
-
-            Constant.M_LEAVE_REQUEST -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    LeaveRequests::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        LeaveRequests::class.java
-                    }
-                }
-            }
-
-            Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
-            Constant.M_ONLINE_TEXT_BOOK -> Ebooks::class.java
-
-            Constant.M_FEEDBACK -> ImportantInfo::class.java
-            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
-
-            Constant.M_LSRW -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    LsrwMain::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        LsrwMain::class.java
-                    }
-                }
-            }
-
-            Constant.M_UPLOAD_MARKS -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    ClassList::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        ClassList::class.java
-                    }
-                }
-            }
-
-            Constant.M_COUPON_PACKET -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    CouponDashboardActivity::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        CouponDashboardActivity::class.java
-                    }
-                }
-            }
-
-            Constant.M_STAFF_LEAVE_REQUEST -> {
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    StaffLeaveRequest::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        StaffLeaveRequest::class.java
-                    }
-                }
-            }
-
-            Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> {
-
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    ApproveStaffLeaveRequest::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        ApproveStaffLeaveRequest::class.java
-                    }
-                }
-            }
-
-            Constant.M_HOSTEL-> {
-
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    HostelList::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        HostelList::class.java
-                    }
-                }
-            }
-
-            Constant.M_LIVE_BUS_TRACKING-> {
-
-                if (userDetails!!.staff_role == Constant.isStaffRole) {
-                    BusList::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-                        BusList::class.java
-                    }
-                }
-            }
-
-//            Constant.M_STUDENTDATE-> {
-//                StudentDetails::class.java
-//            }
-
-            else -> null
-        }
-        activityClass?.let {
-            startActivity(Intent(requireActivity(), it))
-        }
+        val activityClass = menuRouteMap[data.id]?.invoke() ?: return
+        startActivity(Intent(requireActivity(),activityClass))
     }
 }
