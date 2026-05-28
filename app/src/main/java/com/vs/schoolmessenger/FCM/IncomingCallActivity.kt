@@ -1,9 +1,14 @@
 package com.vs.schoolmessenger.FCM
 
-import android.app.*
+import android.app.KeyguardManager
+import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioManager
-import android.os.*
+import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -12,53 +17,173 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ActivityIncomingCallBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class IncomingCallActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+class IncomingCallActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityIncomingCallBinding
-    private lateinit var audioManager: AudioManager
-    private var isUserResponse: String? = "NO"
-    private var isStartTime: String? = null
-    private var isEndTime: String? = null
-    private var player: ExoPlayer? = null
-    private var timerJob: Job? = null
-    private var callAccepted = false
-    private var callRejected = false
-    private var isCallHandled = false
-    private var downX = 0f
-    private var isSpeakerEnabled = false
-    private val autoCutHandler = Handler(Looper.getMainLooper())
-    private var authViewModel: Auth? = null
-    private var notificationId = 1001
-    private var welcomeUrl: String? = null
-    private var mainUrl: String? = null
-    private var isTotalDurationListened = 0L
-    private var totalDuration = 0L
-    private var isIncomingCallData: HashMap<String, String>? = null
-    var welcomeDuration = 0L
-    var isUpdateCallApi=false
 
+    private var player: ExoPlayer? = null
+
+    private lateinit var audioManager: AudioManager
+
+    private var notificationId = 1001
+
+    private var timerJob: Job? = null
+
+    private var isSpeakerEnabled = false
+
+    private var welcomeUrl: String? = null
+
+    private var mainUrl: String? = null
+
+    private var totalDuration = 0L
+
+    private var isTotalDurationListened = 0L
+
+    private var welcomeDuration = 0L
+
+    private var downX = 0f
+
+    private var authViewModel: Auth? = null
+
+    private var isIncomingCallData: HashMap<String, String>? = null
+
+    private var isUserResponse: String? = "NO"
+
+    private var isStartTime: String? = null
+
+    private var isEndTime: String? = null
+
+    private var isPaused = false
+
+    private val closeReceiver =
+        object : BroadcastReceiver() {
+
+            override fun onReceive(
+                context: Context?,
+                intent: Intent?
+            ) {
+
+                try {
+
+                    RingtoneHelper.stop()
+
+                    player?.stop()
+
+                    player?.release()
+
+                    player = null
+
+                    finish()
+
+                    finishAffinity()
+
+                    finishAndRemoveTask()
+
+                } catch (e: Exception) {
+
+                    Log.e(
+                        "CALL_ACTIVITY",
+                        "CLOSE ERROR = ${e.message}"
+                    )
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
-        binding = ActivityIncomingCallBinding.inflate(layoutInflater)
+        binding =
+            ActivityIncomingCallBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
-        authViewModel = ViewModelProvider(this)[Auth::class.java]
+        wakeScreen()
+
+        LocalBroadcastManager
+            .getInstance(this)
+            .registerReceiver(
+                closeReceiver,
+                IntentFilter(
+                    CallConstants.ACTION_CLOSE_CALL
+                )
+            )
+
+        audioManager =
+            getSystemService(AUDIO_SERVICE) as AudioManager
+
+        authViewModel =
+            ViewModelProvider(this)[Auth::class.java]
+
         authViewModel!!.init()
+
+        isIncomingCallData =
+            intent.getSerializableExtra("DATA")
+                    as? HashMap<String, String>
+
+        welcomeUrl =
+            isIncomingCallData?.get("welcome")
+
+        mainUrl =
+            isIncomingCallData?.get("url")
+
+        notificationId =
+            intent.getIntExtra(
+                "NOTIFICATION_ID",
+                1001
+            )
+
+        val manager =
+            getSystemService(
+                NOTIFICATION_SERVICE
+            ) as NotificationManager
+
+        manager.cancel(notificationId)
+
+        setupClicks()
+
+        val autoAccept =
+            intent.getBooleanExtra(
+                "AUTO_ACCEPT",
+                false
+            )
+
+        if (autoAccept) {
+
+            acceptCall()
+        }
+
+        handleBusyState()
+    }
+
+    private fun wakeScreen() {
+
+        if (Build.VERSION.SDK_INT >=
+            Build.VERSION_CODES.O_MR1
+        ) {
+
+            setShowWhenLocked(true)
+
+            setTurnScreenOn(true)
+        }
 
         window.addFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
@@ -67,395 +192,637 @@ class IncomingCallActivity : AppCompatActivity(), CoroutineScope by MainScope() 
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
 
-        enableLockScreen()
+        val keyguardManager =
+            getSystemService(
+                KEYGUARD_SERVICE
+            ) as KeyguardManager
 
-        isIncomingCallData = intent.getSerializableExtra("DATA") as? HashMap<String, String>
+        if (Build.VERSION.SDK_INT >=
+            Build.VERSION_CODES.O
+        ) {
 
-        welcomeUrl = isIncomingCallData?.get("welcome")
-        mainUrl = isIncomingCallData?.get("url")
-        notificationId = intent.getIntExtra("NOTIFICATION_ID", 1001)
-
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.cancel(notificationId)
-
-        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
-        val autoPlay = intent.getBooleanExtra("AUTO_PLAY", false)
-
-        if (autoPlay) {
-            if (isUserBusy()) {
-                showBusyMessage()
-                return
-            }
-            acceptCall()
+            keyguardManager.requestDismissKeyguard(
+                this,
+                null
+            )
         }
-
-        authViewModel!!.isUpdateNotificationCallLog?.observe(this) { response ->
-            if (response != null) {
-                response.status
-                response.message
-                finish()
-            }
-        }
-
-        startAutoCutTimer()
-        setupClicks()
     }
 
-    private fun isUpdateNotificationCall() {
+    private fun isUserBusy(): Boolean {
 
-         var isStaffDetails: StaffDetails? = null
-         isStaffDetails = SharedPreference.getStaffDetails(this)
-         val isAccessToken = isStaffDetails!!.access_token
-
-        if (isStartTime.equals("") || isStartTime==null) {
-            isStartTime = getAcceptTime()
-        }
-        isEndTime=getAcceptTime()
-
-        val isMobileNumber: String? = SharedPreference.getMobileNumber(this)
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("url", isIncomingCallData!!["url"])
-        jsonObject.addProperty("duration", isTotalDurationListened / 1000)
-        jsonObject.addProperty("ei1", isIncomingCallData!!["ei5"])
-        jsonObject.addProperty("ei2", isIncomingCallData!!["url"])
-        jsonObject.addProperty("ei3", isAccessToken)
-        jsonObject.addProperty("ei4", "Android")
-        jsonObject.addProperty("ei5", isIncomingCallData!!["ei5"])
-        jsonObject.addProperty("start_time", isStartTime)
-        jsonObject.addProperty("end_time", isEndTime)
-        jsonObject.addProperty("retry_count", isIncomingCallData!!["retry_count"])
-        jsonObject.addProperty("phone", isMobileNumber)
-        jsonObject.addProperty("receiver_id", isIncomingCallData!!["receiver_id"])
-        jsonObject.addProperty("circular_id", isIncomingCallData!!["circular_id"])
-        jsonObject.addProperty("diallist_id", isIncomingCallData!!["ei5"])
-        jsonObject.addProperty("call_status", isUserResponse)
-        Log.d("jsonObjectReq", jsonObject.toString())
-        authViewModel!!.isUpdateNotificationCalllog(jsonObject, this)
+        return audioManager.mode ==
+                AudioManager.MODE_IN_CALL ||
+                audioManager.mode ==
+                AudioManager.MODE_IN_COMMUNICATION
     }
 
-    private fun getAcceptTime(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        return sdf.format(Date())
+    private fun handleBusyState() {
+
+        if (isUserBusy()) {
+
+            RingtoneHelper.stop()
+
+            binding.btnAnswer.alpha = 0.5f
+
+            binding.btnAnswer.isEnabled = false
+
+            binding.btnReject.isEnabled = true
+
+            Toast.makeText(
+                this,
+                "User is busy now",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun setupClicks() {
 
         binding.btnAnswer.setOnTouchListener(answerSwipe)
+
         binding.btnReject.setOnTouchListener(rejectSwipe)
 
+        // END CALL
         binding.btnEndCall.setOnClickListener {
-            callRejected = true
-            isCallHandled = true
-            isUpdateCallApi=true
-                endCall()
+
+            isEndTime = getAcceptTime()
+
+            isUserResponse = "DISCONNECTED"
+
+            stopEverything()
+
+            isUpdateNotificationCall()
+
+            finishAndRemoveTask()
         }
 
+        // SPEAKER
         binding.btnSpeaker.setOnClickListener {
+
             toggleSpeaker()
         }
 
+        // PLAY PAUSE
         binding.btnPlayPause.setOnClickListener {
-            player?.let {
-                if (it.isPlaying) {
-                    it.pause()
-                    binding.btnPlayPause.setImageResource(R.drawable.video_play)
-                } else {
-                    it.play()
-                    binding.btnPlayPause.setImageResource(R.drawable.pause_icon_2)
-                }
-            }
+
+            togglePlayPause()
         }
 
+        // FORWARD
         binding.btnForward.setOnClickListener {
-            player?.seekTo((player?.currentPosition ?: 0) + 5000)
+
+            seekForward()
         }
 
+        // BACKWARD
         binding.btnBackward.setOnClickListener {
-            val pos = (player?.currentPosition ?: 0) - 5000
-            player?.seekTo(if (pos < 0) 0 else pos)
+
+            seekBackward()
         }
     }
 
-    private val answerSwipe = View.OnTouchListener { v, event ->
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                downX = event.rawX
-                true
-            }
+    private val answerSwipe =
+        View.OnTouchListener { v, event ->
 
-            MotionEvent.ACTION_MOVE -> {
-                val move = event.rawX - downX
-                if (move > 0) v.translationX = move
-                true
-            }
+            when (event.action) {
 
-            MotionEvent.ACTION_UP -> {
-                val move = event.rawX - downX
+                MotionEvent.ACTION_DOWN -> {
 
-                if (move > 300) {
+                    downX = event.rawX
 
-                    if (isUserBusy()) {
-                        showBusyMessage()
+                    true
+                }
 
-                    } else {
+                MotionEvent.ACTION_MOVE -> {
+
+                    val move = event.rawX - downX
+
+                    if (move > 0) {
+
+                        v.translationX = move
+                    }
+
+                    true
+                }
+
+                MotionEvent.ACTION_UP -> {
+
+                    val move = event.rawX - downX
+
+                    if (move > 250) {
+
+                        if (isUserBusy()) {
+
+                            Toast.makeText(
+                                this,
+                                "User is busy now",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            RingtoneHelper.stop()
+
+                            v.animate()
+                                .translationX(0f)
+                                .setDuration(200)
+                                .start()
+
+                            return@OnTouchListener true
+                        }
+
                         acceptCall()
                     }
+
+                    v.animate()
+                        .translationX(0f)
+                        .setDuration(200)
+                        .start()
+
+                    true
                 }
 
-                v.animate().translationX(0f).setDuration(200).start()
-                true
+                else -> false
             }
-
-            else -> false
         }
-    }
 
-    private val rejectSwipe = View.OnTouchListener { v, event ->
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                downX = event.rawX
-                true
-            }
+    private val rejectSwipe =
+        View.OnTouchListener { v, event ->
 
-            MotionEvent.ACTION_MOVE -> {
-                val move = event.rawX - downX
-                if (move < 0) v.translationX = move
-                true
-            }
+            when (event.action) {
 
-            MotionEvent.ACTION_UP -> {
-                val move = event.rawX - downX
+                MotionEvent.ACTION_DOWN -> {
 
-                if (move < -300) {
-                    callRejected = true
-                    isUpdateCallApi=true
-                    endCall()
+                    downX = event.rawX
+
+                    true
                 }
 
-                v.animate().translationX(0f).setDuration(200).start()
-                true
-            }
+                MotionEvent.ACTION_MOVE -> {
 
-            else -> false
+                    val move = event.rawX - downX
+
+                    if (move < 0) {
+
+                        v.translationX = move
+                    }
+
+                    true
+                }
+
+                MotionEvent.ACTION_UP -> {
+
+                    val move = event.rawX - downX
+
+                    if (move < -250) {
+
+                        isUserResponse = "DECLINED"
+
+                        isStartTime = getAcceptTime()
+
+                        isEndTime = getAcceptTime()
+
+                        isTotalDurationListened = 0L
+
+                        isUpdateNotificationCall()
+
+                        CallStateManager.markHandled(
+                            this,
+                            notificationId
+                        )
+
+                        stopEverything()
+
+                        finishAndRemoveTask()
+                    }
+
+                    v.animate()
+                        .translationX(0f)
+                        .setDuration(200)
+                        .start()
+
+                    true
+                }
+
+                else -> false
+            }
         }
-    }
 
     private fun acceptCall() {
 
+        CallStateManager.markHandled(
+            this,
+            notificationId
+        )
+
+        isUserResponse = "ANSWERED"
+
         isStartTime = getAcceptTime()
-        isUserResponse = "OG"
 
         RingtoneHelper.stop()
-        isCallHandled = true
-        callAccepted = true
-
-        CallStateManager.markHandled(this, notificationId)
-        stopAutoCutTimer()
 
         binding.answerContainer.visibility = View.GONE
+
         binding.rejectContainer.visibility = View.GONE
+
         binding.callControls.visibility = View.VISIBLE
-        binding.tvDuration.visibility = View.VISIBLE
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            val welcomeDur = welcomeUrl?.let { getAudioDuration(it) } ?: 0L
-            val mainDur = mainUrl?.let { getAudioDuration(it) } ?: 0L
-
-            welcomeDuration = welcomeDur
-            totalDuration = welcomeDur + mainDur
-
-            withContext(Dispatchers.Main) {
-                startAudio()
-                startTimer()
-            }
-        }
-    }
-
-    private fun endCall() {
-        player?.let { exo ->
-
-            val currentPos = exo.currentPosition
-            val currentIndex = exo.currentMediaItemIndex
-
-            isTotalDurationListened = when (currentIndex) {
-                0 -> currentPos
-                1 -> welcomeDuration + currentPos
-                else -> currentPos
-            }
-
-            Log.d("FINAL_DURATION", "Sending duration: $isTotalDurationListened")
-        }
-
-        RingtoneHelper.stop()
-        stopAutoCutTimer()
-        timerJob?.cancel()
-        player?.release()
-        player = null
-
-        isCallHandled = true
-
-        CallStateManager.markHandled(this, notificationId)
-
-        if (isUpdateCallApi) {
-            isUpdateNotificationCall()
-        }
-
-        finishAndRemoveTask()
-    }
-
-    private fun getAudioDuration(url: String): Long {
-        return try {
-            val retriever = android.media.MediaMetadataRetriever()
-            retriever.setDataSource(url, HashMap())
-            val durationStr =
-                retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION)
-            retriever.release()
-            durationStr?.toLong() ?: 0L
-        } catch (e: Exception) {
-            0L
-        }
-    }
-
-    private fun startAutoCutTimer() {
-        autoCutHandler.postDelayed({
-
-            if (!isCallHandled) {
-                Log.d("MISSED_DEBUG", "Timer triggered")
-
-                CallNotificationHelper.showMissedNotification(
-                    this,
-                    isIncomingCallData!!,
-                    notificationId
-                )
-                isUpdateCallApi=false
-                endCall()
-            }
-        }, 10000)
-    }
-    private fun stopAutoCutTimer() {
-        autoCutHandler.removeCallbacksAndMessages(null)
+        startAudio()
     }
 
     private fun startAudio() {
 
         player?.release()
 
-        player = ExoPlayer.Builder(this).build()
+        player =
+            ExoPlayer.Builder(this)
+                .build()
 
-        val mediaItems = mutableListOf<MediaItem>()
+        // DEFAULT 50% VOLUME
+        player?.volume = 0.5f
+
+        val mediaItems =
+            mutableListOf<MediaItem>()
+
         if (!welcomeUrl.isNullOrEmpty()) {
-            mediaItems.add(MediaItem.fromUri(welcomeUrl!!))
+
+            mediaItems.add(
+                MediaItem.fromUri(welcomeUrl!!)
+            )
         }
 
         if (!mainUrl.isNullOrEmpty()) {
-            mediaItems.add(MediaItem.fromUri(mainUrl!!))
+
+            mediaItems.add(
+                MediaItem.fromUri(mainUrl!!)
+            )
         }
+
         if (mediaItems.isEmpty()) {
+
             return
         }
 
         player?.setMediaItems(mediaItems)
+
         player?.prepare()
-        player?.play()
 
-        player?.addListener(object : com.google.android.exoplayer2.Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
+        player?.addListener(
+            object : Player.Listener {
 
-                if (state == com.google.android.exoplayer2.Player.STATE_READY) {
-                    Log.d("AUDIO_DEBUG", "Player READY")
-                }
+                override fun onPlaybackStateChanged(
+                    state: Int
+                ) {
 
-                if (state == com.google.android.exoplayer2.Player.STATE_ENDED) {
-                    Log.d("AUDIO_DEBUG", "Playback completed")
-                    isUpdateCallApi=true
-                    endCall()
-                }
-            }
-        })
-    }
-    private fun startTimer() {
-        timerJob = launch {
-            while (isActive) {
+                    if (state == Player.STATE_READY) {
 
-                player?.let { exo ->
+                        totalDuration =
+                            player?.duration ?: 0L
 
-                    val currentPos = exo.currentPosition
-                    val currentIndex = exo.currentMediaItemIndex
-
-                    val totalPlayed = when (currentIndex) {
-                        0 -> currentPos
-                        1 -> welcomeDuration + currentPos
-                        else -> currentPos
+                        binding.tvDuration.text =
+                            "00:00 / ${
+                                formatTime(totalDuration)
+                            }"
                     }
 
-                    binding.tvDuration.text =
-                        "${formatTime(totalPlayed)} / ${formatTime(totalDuration)}"
+                    if (state == Player.STATE_ENDED) {
 
-                    isTotalDurationListened = totalPlayed
+                        isEndTime = getAcceptTime()
+
+                        isUserResponse = "COMPLETED"
+
+                        stopEverything()
+
+                        isUpdateNotificationCall()
+
+                        finishAndRemoveTask()
+                    }
                 }
+            }
+        )
 
-                delay(500)
+        player?.play()
+
+        startTimer()
+    }
+
+    private fun startTimer() {
+
+        binding.tvDuration.visibility =
+            View.VISIBLE
+
+        timerJob =
+            lifecycleScope.launch {
+
+                while (isActive) {
+
+                    player?.let { exo ->
+
+                        val currentPos =
+                            exo.currentPosition
+
+                        isTotalDurationListened =
+                            currentPos
+
+                        binding.tvDuration.text =
+                            "${formatTime(currentPos)} / ${
+                                formatTime(totalDuration)
+                            }"
+                    }
+
+                    delay(500)
+                }
+            }
+    }
+
+    private fun togglePlayPause() {
+
+        player?.let { exo ->
+
+            if (exo.isPlaying) {
+
+                exo.pause()
+
+                isPaused = true
+
+                binding.btnPlayPause.setImageResource(
+                    R.drawable.play_icon_2
+                )
+
+            } else {
+
+                exo.play()
+
+                isPaused = false
+
+                binding.btnPlayPause.setImageResource(
+                    R.drawable.pause_icon_2
+                )
             }
         }
     }
 
-    private fun formatTime(ms: Long): String {
-        val totalSeconds = ms / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return String.format("%02d:%02d", minutes, seconds)
+    private fun seekForward() {
+
+        player?.let { exo ->
+
+            val newPosition =
+                exo.currentPosition + 5000
+
+            if (newPosition < exo.duration) {
+
+                exo.seekTo(newPosition)
+
+            } else {
+
+                exo.seekTo(exo.duration)
+            }
+
+            updateDurationLabel()
+        }
     }
 
-    private fun toggleSpeaker() {
-        isSpeakerEnabled = !isSpeakerEnabled
-        audioManager.isSpeakerphoneOn = isSpeakerEnabled
+    private fun seekBackward() {
 
-        val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        val volume = if (isSpeakerEnabled) maxVolume else maxVolume / 2
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0)
+        player?.let { exo ->
 
-        binding.btnSpeaker.setImageResource(
-            if (isSpeakerEnabled) R.drawable.ic_speaker_on
-            else R.drawable.ic_speaker_off
+            val newPosition =
+                exo.currentPosition - 5000
+
+            if (newPosition > 0) {
+
+                exo.seekTo(newPosition)
+
+            } else {
+
+                exo.seekTo(0)
+            }
+
+            updateDurationLabel()
+        }
+    }
+
+    private fun updateDurationLabel() {
+
+        player?.let { exo ->
+
+            binding.tvDuration.text =
+                "${formatTime(exo.currentPosition)} / ${
+                    formatTime(totalDuration)
+                }"
+        }
+    }
+
+    private fun stopEverything() {
+
+        player?.let { exo ->
+
+            isTotalDurationListened =
+                exo.currentPosition
+
+            Log.d(
+                "FINAL_DURATION",
+                "Sending duration: $isTotalDurationListened"
+            )
+        }
+
+        RingtoneHelper.stop()
+
+        timerJob?.cancel()
+
+        player?.release()
+
+        player = null
+
+        stopService(
+            Intent(
+                this,
+                CallForegroundService::class.java
+            )
         )
     }
 
-    private fun enableLockScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            setShowWhenLocked(true)
-            setTurnScreenOn(true)
+    private fun toggleSpeaker() {
+
+        isSpeakerEnabled =
+            !isSpeakerEnabled
+
+        audioManager.isSpeakerphoneOn =
+            isSpeakerEnabled
+
+        if (isSpeakerEnabled) {
+
+            // 100%
+            player?.volume = 1.0f
+
+            binding.btnSpeaker.setImageResource(
+                R.drawable.ic_speaker_on
+            )
+
         } else {
-            window.addFlags(
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+
+            // 50%
+            player?.volume = 0.5f
+
+            binding.btnSpeaker.setImageResource(
+                R.drawable.ic_speaker_off
             )
         }
     }
 
-    private fun isUserBusy(): Boolean {
-        return audioManager.mode == AudioManager.MODE_IN_CALL ||
-                audioManager.mode == AudioManager.MODE_IN_COMMUNICATION
-    }
+    private fun formatTime(ms: Long): String {
 
-    private fun showBusyMessage() {
-        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        val totalSeconds = ms / 1000
 
-        if (keyguardManager.isKeyguardLocked) {
-            binding.tvBusyMessage.visibility = View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.tvBusyMessage.visibility = View.GONE
-            }, 2000)
-        } else {
-            Toast.makeText(
-                this,
-                "You are currently on another call.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        val minutes = totalSeconds / 60
+
+        val seconds = totalSeconds % 60
+
+        return String.format(
+            "%02d:%02d",
+            minutes,
+            seconds
+        )
     }
 
     override fun onDestroy() {
+
         super.onDestroy()
-        cancel()
+
+        try {
+
+            LocalBroadcastManager
+                .getInstance(this)
+                .unregisterReceiver(closeReceiver)
+
+        } catch (_: Exception) {
+        }
+
+        RingtoneHelper.stop()
+
+        player?.release()
+
+        player = null
+    }
+
+    private fun isUpdateNotificationCall() {
+
+        var isStaffDetails: StaffDetails? =
+            null
+
+        isStaffDetails =
+            SharedPreference.getStaffDetails(this)
+
+        val isAccessToken =
+            isStaffDetails!!.access_token
+
+        if (isStartTime.equals("") ||
+            isStartTime == null
+        ) {
+
+            isStartTime = getAcceptTime()
+        }
+
+        isEndTime = getAcceptTime()
+
+        val isMobileNumber: String? =
+            SharedPreference.getMobileNumber(this)
+
+        val jsonObject = JsonObject()
+
+        jsonObject.addProperty(
+            "url",
+            isIncomingCallData!!["url"]
+        )
+
+        jsonObject.addProperty(
+            "duration",
+            isTotalDurationListened / 1000
+        )
+
+        jsonObject.addProperty(
+            "ei1",
+            isIncomingCallData!!["ei5"]
+        )
+
+        jsonObject.addProperty(
+            "ei2",
+            isIncomingCallData!!["url"]
+        )
+
+        jsonObject.addProperty(
+            "ei3",
+            isAccessToken
+        )
+
+        jsonObject.addProperty(
+            "ei4",
+            "Android"
+        )
+
+        jsonObject.addProperty(
+            "ei5",
+            isIncomingCallData!!["ei5"]
+        )
+
+        jsonObject.addProperty(
+            "start_time",
+            isStartTime
+        )
+
+        jsonObject.addProperty(
+            "end_time",
+            isEndTime
+        )
+
+        jsonObject.addProperty(
+            "retry_count",
+            isIncomingCallData!!["retry_count"]
+        )
+
+        jsonObject.addProperty(
+            "phone",
+            isMobileNumber
+        )
+
+        jsonObject.addProperty(
+            "receiver_id",
+            isIncomingCallData!!["receiver_id"]
+        )
+
+        jsonObject.addProperty(
+            "circular_id",
+            isIncomingCallData!!["circular_id"]
+        )
+
+        jsonObject.addProperty(
+            "diallist_id",
+            isIncomingCallData!!["ei5"]
+        )
+
+        jsonObject.addProperty(
+            "call_status",
+            isUserResponse
+        )
+
+        Log.d(
+            "jsonObjectReq",
+            jsonObject.toString()
+        )
+
+        authViewModel!!
+            .isUpdateNotificationCalllog(
+                jsonObject,
+                this
+            )
+    }
+
+    private fun getAcceptTime(): String {
+
+        val sdf =
+            SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault()
+            )
+
+        return sdf.format(Date())
     }
 }

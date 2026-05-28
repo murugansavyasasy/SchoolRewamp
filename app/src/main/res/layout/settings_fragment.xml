@@ -677,6 +677,51 @@
                     </ImageView>
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/lnrFullScreenPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrwhatsnew"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_features">
+
+                    </ImageView>
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="Enable Full Screen Notification Permission"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+
             </RelativeLayout>
 
 

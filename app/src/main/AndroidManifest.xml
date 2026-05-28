@@ -54,6 +54,10 @@
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL"/>-->
 
     <application
         android:name=".Auth.Base.MyApp"
@@ -94,11 +98,43 @@
             </intent-filter>
         </activity>
 
+<!--        ============-->
+        <service
+            android:name=".FCM.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".FCM.AcceptReceiver"
+            android:exported="false"/>
+
+        <service
+            android:name=".FCM.CallForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"/>
+
+        <receiver
+            android:name=".FCM.DeclineReceiver"
+            android:exported="false"/>
+
         <receiver
             android:name=".FCM.NotificationDismissReceiver"
             android:exported="false"/>
 
-        <receiver android:name=".FCM.DeclineReceiver"/>
+        <activity
+            android:name=".FCM.IncomingCallActivity"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+
+<!--        ===============-->
 
         <receiver
             android:name=".Utils.MySMSBroadcastReceiver"
@@ -113,24 +149,9 @@
             android:name=".Utils.NotificationDismissService"
             android:exported="false" />
 
-        <service
-            android:name=".FCM.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAZ5wb8hjNzcJv1roqNb09QFchIiELVSK4" />
-
-        <activity
-            android:name=".FCM.IncomingCallActivity"
-            android:showWhenLocked="true"
-            android:turnScreenOn="true"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <activity
             android:name=".FCM.NotificationCallScreen"

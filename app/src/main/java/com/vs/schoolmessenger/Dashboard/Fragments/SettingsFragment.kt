@@ -33,6 +33,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.Dashboard.Settings.WhatsNew.WhatsNewActivity
+import com.vs.schoolmessenger.FCM.DevicePermissionHelper
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
@@ -96,6 +97,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrAboutTheApp.setOnClickListener(this)
         binding.lnrHowToUseApp.setOnClickListener(this)
         binding.lnrwhatsnew.setOnClickListener(this)
+        binding.lnrFullScreenPermission.setOnClickListener(this)
         val pInfo = requireContext().packageManager
             .getPackageInfo(requireActivity().packageName, 0)
 
@@ -248,6 +250,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             R.id.lnrwhatsnew -> {
                 RedirectToWhatsnew()
+            }
+            R.id.lnrFullScreenPermission -> {
+                DevicePermissionHelper.showPermissionDialog(requireActivity())
             }
         }
     }
