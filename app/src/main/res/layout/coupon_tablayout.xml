@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lnrTab"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fourty"
+    android:layout_below="@+id/linearlayout"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="@dimen/five"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/rect_btn_grey"
+    android:orientation="horizontal"
+    android:padding="@dimen/one"
+    android:weightSum="2">
+
+
+    <TextView
+        android:id="@+id/alltext"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        android:layout_weight="0.5"
+        android:background="@drawable/green_radious"
+        android:gravity="center"
+        android:text="@string/all"
+        android:textColor="@color/bpWhite">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/activetext"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/active"
+        android:textColor="@color/white"></TextView>
+
+    <TextView
+        android:id="@+id/expiredtext"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/expired"
+        android:textColor="@color/white"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/redeemedtext"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/one"
+        android:layout_marginTop="@dimen/one"
+        android:layout_marginEnd="@dimen/one"
+        android:layout_marginBottom="@dimen/one"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/redeemed"
+        android:textColor="@color/white">
+
+    </TextView>
+
+</LinearLayout>

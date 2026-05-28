@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white_light_radious"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/twenty_four">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/two_hundred"
+        android:layout_marginBottom="@dimen/sixteen"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_internet_connection" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/twenty_five"
+        android:gravity="center"
+        android:text="@string/no_internet_connection"
+        android:textSize="@dimen/fifteen_sp" />
+
+    <RelativeLayout
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty"
+        android:layout_below="@+id/rytPassword"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        card_view:cardCornerRadius="@dimen/ten"
+        card_view:cardElevation="@dimen/five">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_btn_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/permission_ok"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</LinearLayout>

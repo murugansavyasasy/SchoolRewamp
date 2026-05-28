@@ -1,0 +1,126 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lnrEntireHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_bottom_radius"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:layout_marginEnd="@dimen/ten"
+        android:paddingVertical="@dimen/ten"
+        android:paddingStart="12dp">
+
+        <ImageView
+            android:id="@+id/imgCheck"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/circle_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/five"
+            android:layout_toEndOf="@+id/imgCheck">
+
+            <TextView
+                android:id="@+id/subjectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/lblClear"
+                android:text="Mathematics"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/lblClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="@dimen/five"
+                android:paddingVertical="@dimen/three"
+                android:src="@drawable/close_icon_red_custom"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrFlexContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/spinnerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten"
+            android:background="@drawable/field_background"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/five"
+            android:visibility="gone">
+
+            <Spinner
+                android:id="@+id/isSpinnerColumn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/spinnerimg"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/spinnerimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/three"
+                android:src="@drawable/ic_drop_down"
+                app:tint="@color/black" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/lblHint"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:paddingHorizontal="@dimen/fifteen"
+            android:paddingBottom="@dimen/five"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone"
+
+            ></TextView>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:background="@color/AthensGray"
+        android:paddingVertical="@dimen/twenty">
+
+    </View>
+
+
+</LinearLayout>

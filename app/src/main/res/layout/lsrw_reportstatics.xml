@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
+
+
+    <Spinner
+        android:id="@+id/spinnerDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarLayout"
+        android:layout_margin="@dimen/sixteen"
+        android:background="@drawable/spinner_background"
+        android:padding="@dimen/twele"
+        android:spinnerMode="dropdown"
+        android:visibility="gone" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/spinnerDropdown"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sixteen">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclsrwheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/monthly_label"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/monthly_report"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/monthly_reportcardview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/eight"
+                        android:elevation="@dimen/four"
+                        app:cardCornerRadius="@dimen/three"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/eight">
+
+                            <TextView
+                                android:id="@+id/weeklyreport_label"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/weekly_report"
+                                android:textColor="@color/black" />
+
+                            <FrameLayout
+                                android:layout_width="@dimen/three_fifty"
+                                android:layout_height="250dp"
+                                android:layout_marginTop="@dimen/eight"
+                                android:clipToOutline="true">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvWeekly"
+                                    android:layout_width="@dimen/three_fifty"
+                                    android:layout_height="250dp"
+                                    android:nestedScrollingEnabled="false"
+                                    android:overScrollMode="never"
+                                    android:visibility="visible" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/topperformance_cardview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/eight"
+                        android:elevation="@dimen/four"
+                        app:cardCornerRadius="@dimen/three"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/eight">
+
+                            <TextView
+                                android:id="@+id/topperformance_label"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Top Performance"
+                                android:textColor="@color/black" />
+
+                            <FrameLayout
+                                android:layout_width="@dimen/three_fifty"
+                                android:layout_height="250dp"
+                                android:layout_marginTop="@dimen/eight"
+                                android:clipToOutline="true">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvTopPerformance"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:nestedScrollingEnabled="true"
+                                    android:overScrollMode="never"
+                                    android:scrollbars="vertical" />
+                            </FrameLayout>
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:id="@+id/students_label"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/tasks"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcstudents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/eight"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:visibility="visible" />
+
+
+            <LinearLayout
+                android:id="@+id/lytNoDataFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/noDataImage"
+                    android:layout_width="@dimen/two_hundred"
+                    android:layout_height="@dimen/two_hundred"
+                    android:src="@drawable/nofilefoundsvg" />
+
+                <TextView
+                    android:id="@+id/noDataFound"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="@dimen/fifteen_sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

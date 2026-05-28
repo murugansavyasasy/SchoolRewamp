@@ -1,135 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mild4">
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/customBottomNav" />
+    android:background="@color/bpWhite">
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_above="@+id/customBottomNav"
-        android:background="@color/grey">
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </View>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/mild4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
-    <LinearLayout
-        android:id="@+id/customBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/light_blue_color"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mild4">
 
-        <!-- Home Icon -->
-        <LinearLayout
-            android:id="@+id/nav_home"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/eight">
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/customBottomNav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/icon_home"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/thirty"
-                android:paddingTop="@dimen/three"
-                android:paddingBottom="@dimen/three"
-                android:src="@drawable/ic_home" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/point_five"
+                android:background="@color/grey"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_container" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/customBottomNav"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/lblHome"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
-        </LinearLayout>
+                android:background="@color/light_blue_color"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Search Icon -->
-        <LinearLayout
-            android:id="@+id/nav_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/eight">
+                <LinearLayout
+                    android:id="@+id/nav_home"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/eight">
 
-            <ImageView
-                android:id="@+id/icon_help"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/thirty"
-                android:paddingTop="@dimen/three"
-                android:paddingBottom="@dimen/three"
-                android:src="@drawable/ic_help" />
+                    <ImageView
+                        android:id="@+id/icon_home"
+                        android:layout_width="@dimen/sixty"
+                        android:layout_height="@dimen/thirty"
+                        android:paddingTop="@dimen/three"
+                        android:paddingBottom="@dimen/three"
+                        android:src="@drawable/ic_home" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lblHelp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/lblHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblHome"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/nav_settings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/eight">
+                <LinearLayout
+                    android:id="@+id/nav_help"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/eight">
 
-            <ImageView
-                android:id="@+id/icon_settings"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/thirty"
-                android:paddingTop="@dimen/three"
-                android:paddingBottom="@dimen/three"
-                android:src="@drawable/ic_settings" />
+                    <ImageView
+                        android:id="@+id/icon_help"
+                        android:layout_width="@dimen/sixty"
+                        android:layout_height="@dimen/thirty"
+                        android:padding="@dimen/seven"
+                        android:paddingTop="@dimen/three"
+                        android:paddingBottom="@dimen/three"
+                        android:src="@drawable/calendar_icon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/permission_settings"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/lblHelp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/HoliDay"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/nav_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/eight">
 
-        <!-- Profile Icon -->
-        <LinearLayout
-            android:id="@+id/nav_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/eight">
+                    <ImageView
+                        android:id="@+id/icon_settings"
+                        android:layout_width="@dimen/sixty"
+                        android:layout_height="@dimen/thirty"
+                        android:paddingTop="@dimen/three"
+                        android:paddingBottom="@dimen/three"
+                        android:src="@drawable/gear" />
 
-            <ImageView
-                android:id="@+id/icon_profile"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/thirty"
-                android:paddingTop="@dimen/three"
-                android:paddingBottom="@dimen/three"
-                android:src="@drawable/ic_account" />
+                    <TextView
+                        android:id="@+id/lblSettings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/permission_settings"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lblProfile"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
-        </LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/nav_profile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/eight">
 
-</RelativeLayout>
+                    <ImageView
+                        android:id="@+id/icon_profile"
+                        android:layout_width="@dimen/sixty"
+                        android:layout_height="@dimen/thirty"
+                        android:paddingTop="@dimen/three"
+                        android:paddingBottom="@dimen/three"
+                        android:src="@drawable/person_circle" />
+
+                    <TextView
+                        android:id="@+id/lblProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblProfile"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/nav_drawer_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

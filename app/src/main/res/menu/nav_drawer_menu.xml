@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboard_view"
+        android:icon="@drawable/ic_home"
+        android:title="@string/lblHome" />
+    <item
+        android:id="@+id/view_profile"
+        android:icon="@drawable/person_circle"
+        android:title="@string/lblProfile" />
+    <item
+        android:id="@+id/setting_click"
+        android:icon="@drawable/gear"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/help_click"
+        android:icon="@drawable/questionmark_circle"
+        android:title="@string/lblHelp"
+        android:visible="false" />
+    <item
+        android:id="@+id/role_click"
+        android:icon="@drawable/arrow_squarepath"
+        android:title="@string/switch_login" />
+
+    <item
+        android:id="@+id/log_out"
+        android:icon="@drawable/logout"
+        android:title="@string/logout" />
+</menu>

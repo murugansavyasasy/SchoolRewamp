@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/fifteen">
+
+    <TextView
+        android:id="@+id/textViewItem"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/five"
+        android:paddingVertical="@dimen/fifteen"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+    <ImageView
+        android:id="@+id/imageTick"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_check_mark"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/point_five"
+        android:layout_below="@id/textViewItem"
+        android:background="@color/grey_mild" />
+</RelativeLayout>

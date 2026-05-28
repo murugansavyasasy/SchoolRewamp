@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/PrimaryColor"
+    android:orientation="vertical"
+    android:padding="@dimen/sixteen">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/default_profile"
+        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+
+    <TextView
+        android:id="@+id/username"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/twenty_sp" />
+
+
+    <TextView
+        android:id="@+id/lblSchoolName"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/fifteen_sp" />
+
+    <TextView
+        android:id="@+id/lblRole"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/fifteen_sp" />
+
+</LinearLayout>

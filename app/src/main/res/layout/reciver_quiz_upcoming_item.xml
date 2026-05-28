@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lnrEntireQuiz"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_bg"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/ten"
+    android:paddingEnd="@dimen/ten"
+    android:paddingBottom="@dimen/fifteen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_five_dp_radius">
+
+        <ImageView
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:src="@drawable/quiz_book"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minus_ten"
+        android:background="@drawable/rect_five_dp_radius"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/ten">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:gravity="start"
+            android:text="@string/online_quiz"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblQuizDescription"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities "
+            android:textColor="@color/white"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minus_five"
+        android:background="@drawable/rect_radius_five_white"
+        android:orientation="vertical"
+        android:padding="@dimen/ten">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- First Column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:text="@string/subject"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.05"
+                        android:text=":"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        android:id="@+id/lblSubject"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.495"
+                        android:text="Tamil"
+                        android:textColor="@color/iconBlue"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:text="@string/level"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.05"
+                        android:text=":"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        android:id="@+id/lblLevel"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.495"
+                        android:text="1"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/one"
+                android:layout_height="match_parent"
+                android:background="@color/gray4">
+
+            </View>
+
+            <!-- Second Column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/max_marks"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.05"
+                        android:text=":" />
+
+                    <TextView
+                        android:id="@+id/lblMaxMarks"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.495"
+                        android:text="50"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/question"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.05"
+                        android:text=":"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        android:id="@+id/lblQuestion"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.495"
+                        android:text="10"
+                        android:textSize="@dimen/twele_sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginTop="@dimen/three"
+            android:background="@color/gray4">
+
+        </View>
+
+        <TextView
+            android:id="@+id/lblCreatedOn"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text="Created Date : 13 Jul 2002"
+            android:textColor="@color/mild_grey_dark"></TextView>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five">
+
+            <TextView
+                android:id="@+id/lblPostedby"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/lblPlayNow"
+                android:text="Posted by : saranraj"
+                android:textColor="@color/mild_grey_dark"></TextView>
+
+            <TextView
+                android:id="@+id/lblPlayNow"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/rect_radius_five_white"
+                android:backgroundTint="@color/PrimaryColor"
+                android:drawableStart="@drawable/play_icon_3"
+                android:drawableTint="@color/white"
+                android:gravity="center"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/three"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/three"
+                android:text="@string/play_now"
+                android:textColor="@color/white"></TextView>
+
+            <ImageView
+                android:id="@+id/lblnext"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow_right_circle"
+                android:visibility="gone"
+                app:tint="@color/PrimaryColor">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

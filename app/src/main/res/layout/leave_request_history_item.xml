@@ -1,0 +1,228 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/eight">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/eight"
+        android:background="@drawable/card_outline_border"
+        android:padding="@dimen/one">
+
+        <!-- Main Card Content -->
+        <RelativeLayout
+            android:id="@+id/rytCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:elevation="@dimen/two"
+            android:padding="@dimen/eight">
+
+            <!-- Circle -->
+            <LinearLayout
+                android:id="@+id/lnrDateCircle"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/twele"
+                android:background="@drawable/bg_light_blue_circle"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textFirstLetter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp" />
+            </LinearLayout>
+
+            <!-- Main Details -->
+            <LinearLayout
+                android:id="@+id/lnrDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/thirteen"
+                android:layout_toEndOf="@+id/lnrDateCircle"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alex Smith"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="gone" />
+
+                <!-- Header Row -->
+                <RelativeLayout
+                    android:id="@+id/rytHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textNoOfDays"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/six"
+                        android:layout_toStartOf="@+id/lnrStatus"
+                        android:text="3 Days Application"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <LinearLayout
+                        android:id="@+id/lnrStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/btnApprove"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_leave_approved"
+                            android:paddingHorizontal="@dimen/twenty_five"
+                            android:paddingVertical="@dimen/six"
+                            android:text="Approve"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/twele" />
+
+                        <ImageView
+                            android:id="@+id/options"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_gravity="center"
+                            android:contentDescription="Options"
+                            android:src="@drawable/threedot" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!-- Date & Leave Info -->
+                <TextView
+                    android:id="@+id/textDate"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="15 - 22 Jun 2023 "
+                    android:textSize="@dimen/seventeen" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textLeaveType"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/one"
+                        android:layout_toStartOf="@+id/lblGetOutPass"
+                        android:text="Casual"
+                        android:textColor="@color/amber_yellow"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblGetOutPass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/generate_outpass"
+                        android:textColor="@color/iconBlue"
+                        android:visibility="gone">
+
+                    </TextView>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textReason"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/one"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:text="Reason: Fever"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
+
+            <!-- Just for spacing; actual floating menu is outside -->
+
+        </RelativeLayout>
+
+        <!-- Floating Menu -->
+        <RelativeLayout
+            android:id="@+id/relbuttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="@dimen/fourty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_white_2"
+            android:elevation="@dimen/ten"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/deletebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/three"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/three">
+
+                <ImageView
+                    android:layout_width="@dimen/sixteen"
+                    android:layout_height="@dimen/sixteen"
+                    android:layout_marginEnd="@dimen/six"
+                    android:src="@drawable/cross_delete_icon" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Cancel"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/fifteen_sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/deletebutton"
+                android:layout_margin="@dimen/three"
+                android:layout_marginBottom="@dimen/three"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/three">
+
+                <ImageView
+                    android:layout_width="@dimen/sixteen"
+                    android:layout_height="@dimen/sixteen"
+                    android:layout_marginEnd="@dimen/six"
+                    android:src="@drawable/edit_icon_1" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textColor="@color/iconBlue"
+                    android:textSize="@dimen/fifteen_sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

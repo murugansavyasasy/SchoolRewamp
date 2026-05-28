@@ -1,0 +1,38 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Shadow 1 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#10CCCCCC" />
+        </shape>
+    </item>
+
+    <!-- Shadow 2 -->
+    <item android:top="2dp">
+        <shape android:shape="oval">
+            <solid android:color="#20CCCCCC" />
+        </shape>
+    </item>
+
+    <!-- Shadow 3 -->
+    <item android:top="4dp">
+        <shape android:shape="oval">
+            <solid android:color="#30CCCCCC" />
+        </shape>
+    </item>
+
+    <!-- Shadow 4 -->
+    <item android:top="6dp">
+        <shape android:shape="oval">
+            <solid android:color="#40CCCCCC" />
+        </shape>
+    </item>
+
+    <!-- Main circle -->
+    <item android:top="2dp">
+        <shape android:shape="oval">
+            <solid android:color="#A6DADF" />
+        </shape>
+    </item>
+
+</layer-list>

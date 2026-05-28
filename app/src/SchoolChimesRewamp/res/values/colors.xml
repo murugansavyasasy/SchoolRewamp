@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+              
+    <color name="PrimaryColor">#4085ef</color>
+    <color name="splash_start"></color>
+    <color name="splash_center"></color>
+    <color name="splash_end"></color>
+    <color name="light_sky_blue_color"></color>
+    <color name="dark_blue_color"></color>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="@dimen/five"
+    app:cardElevation="@dimen/eight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/fifteen">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/question1"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/arrow_icon_1"
+                android:text="@string/what_is_the_school_admission_process"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <ImageView
+                android:id="@+id/arrow_icon_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_arrow_down" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/answer1"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:background="@android:color/transparent"
+            android:hint="@string/the_admission_process_includes_submitting_documents_and_an_entrance_exam"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

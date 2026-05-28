@@ -1,0 +1,116 @@
+package com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
+
+class GroupStaffAdapter(
+    private var isGroup: Boolean,
+    var itemList: List<NameAndIds>?,
+    private var listener: GroupListClickListener,
+    private var context: Context,
+    private var isLoading: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val TYPE_SHIMMER = 0
+    private val TYPE_DATA = 1
+
+    // Maintain selected item IDs
+    private val selectedIds = mutableSetOf<Int>()
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_SHIMMER) {
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.group_list_item)
+            ShimmerViewHolder(shimmerView)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.group_list_item, parent, false)
+            DataViewHolder(view)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is DataViewHolder) {
+            holder.bind(itemList!![position], position)
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (isLoading) 5 else itemList?.size ?: 0
+    }
+
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val lblGroupName: TextView = itemView.findViewById(R.id.lblgroupname)
+        private val lblCreated: TextView = itemView.findViewById(R.id.lblCreated)
+        private val lblDesignation: TextView = itemView.findViewById(R.id.lblDesignation)
+        private val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
+
+        fun bind(data: NameAndIds, position: Int) {
+            lblGroupName.text = data.name
+
+            if (isGroup) {
+                data.created_on.takeIf { it.isNotEmpty() }?.let {
+                    lblCreated.visibility = View.VISIBLE
+                    lblCreated.text = Constant.convertDateTimeFormat(it)
+                } ?: run {
+                    lblCreated.visibility = View.GONE
+                }
+            } else {
+                if (data.designation == "") {
+                    lblDesignation.visibility = View.GONE
+                } else {
+                    lblDesignation.visibility = View.VISIBLE
+                    lblDesignation.text = data.designation
+                }
+            }
+
+            chMultipleSchool.setOnCheckedChangeListener(null)
+            chMultipleSchool.isChecked = selectedIds.contains(data.id)
+
+            chMultipleSchool.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selectedIds.add(data.id)
+                    listener.onIdCheck(data)
+                } else {
+                    selectedIds.remove(data.id)
+                    listener.onIdUnchecked(data)
+                }
+            }
+        }
+    }
+
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
+        }
+    }
+
+    // Helper functions for select all / deselect all
+    fun selectAll() {
+        itemList?.forEach {
+            selectedIds.add(it.id)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun deselectAll() {
+        selectedIds.clear()
+        notifyDataSetChanged()
+    }
+
+
+}

@@ -1,147 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mild0">
+    android:background="@color/light_white">
 
-    <RelativeLayout
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
-
-        <RelativeLayout
-            android:id="@+id/rlaLblReportBug"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_light"
-            android:padding="@dimen/ten">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/twenty">
 
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblDescription"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_module"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    app:layout_constraintStart_toEndOf="@id/lblDescription"
+                    app:layout_constraintTop_toTopOf="@id/lblDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/spinnerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:background="@drawable/field_background"
+                android:padding="@dimen/ten">
+
+                <Spinner
+                    android:id="@+id/isMenuSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:paddingEnd="40dp"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/spinnerCorrectAnswerimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/three"
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black" />
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblRemark"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remark"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    app:layout_constraintStart_toEndOf="@id/lblRemark"
+                    app:layout_constraintTop_toTopOf="@id/lblRemark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrDesc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/arrow_back_black"></ImageView>
+                android:background="@drawable/field_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_toRightOf="@+id/imgBack"
-                android:text="@string/lblReportbug"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
-
-            </TextView>
+                <EditText
+                    android:id="@+id/edtReportBug"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/lblEntertheBug"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:padding="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp" />
+            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/lblSendBug"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginRight="@dimen/twenty"
-                android:gravity="center"
-                android:padding="@dimen/thirteen">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rlaTitleDescription"
+                android:layout_marginTop="@dimen/five">
 
                 <TextView
-                    android:id="@+id/lblSend"
+                    android:id="@+id/lblAddPhoto"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Send"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/add_attachment">
+
+                </TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblAddPhoto"
+                    android:text="@string/Optional"
+                    android:textColor="@color/mild_grey1"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/eight"
+                    android:layout_toEndOf="@id/lblAddPhoto"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    android:visibility="gone" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/eight"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblAddPhoto"
+                    android:text="@string/Optional"
+                    android:textColor="@color/mild_grey1"
                     android:visibility="gone">
 
                 </TextView>
 
                 <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_toRightOf="@+id/lblSend"
-                    android:src="@drawable/send_feedback_icon">
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:src="@drawable/ic_attach_file"
+                    android:visibility="invisible">
 
                 </ImageView>
 
+                <RelativeLayout
+                    android:id="@+id/rytRecyclewview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblAddPhoto">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/btnReportBug"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytRecyclewview"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:layout_marginBottom="@dimen/twenty"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="@string/send_mail"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <TextView
+                    android:id="@+id/btnOpenNextPage"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnReportBug"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:layout_marginBottom="@dimen/twenty"
+                    android:background="@drawable/background_radius_button"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="Open Quiz Page"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+
             </RelativeLayout>
-        </RelativeLayout>
 
 
-        <Spinner
-            android:id="@+id/isMenuSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaLblReportBug"
-            android:layout_margin="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/bg_white_box"></Spinner>
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rlaPickImage"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="@dimen/sixty"-->
+            <!--                android:layout_marginStart="@dimen/ten"-->
+            <!--                android:layout_marginTop="@dimen/ten"-->
+            <!--                android:layout_marginEnd="@dimen/ten"-->
+            <!--                android:background="@drawable/field_background"-->
+            <!--                android:gravity="center">-->
 
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/imgUpload"-->
+            <!--                    android:layout_width="@dimen/thirty"-->
+            <!--                    android:layout_height="@dimen/thirty"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:src="@drawable/upload" />-->
 
-        <EditText
-            android:id="@+id/edtReportBug"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_below="@+id/isMenuSpinner"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginRight="@dimen/twenty"
-            android:background="@drawable/bg_edittext"
-            android:gravity="top"
-            android:hint="@string/lblEntertheBug"
-            android:padding="10dp"
-            android:textSize="@dimen/thirteen_sp">
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginStart="@dimen/ten"-->
+            <!--                    android:layout_toEndOf="@id/imgUpload"-->
+            <!--                    android:text="@string/lblAttachment"-->
+            <!--                    android:textSize="@dimen/thirteen_sp"-->
+            <!--                    android:textStyle="bold" />-->
+            <!--            </RelativeLayout>-->
 
-        </EditText>
+            <!--            <GridView-->
+            <!--                android:id="@+id/imgPreview"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/ten"-->
+            <!--                android:horizontalSpacing="8dp"-->
+            <!--                android:numColumns="2"-->
+            <!--                android:padding="@dimen/ten"-->
+            <!--                android:stretchMode="columnWidth"-->
+            <!--                android:verticalSpacing="8dp" />-->
 
-        <RelativeLayout
-            android:id="@+id/rlaPickImage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sixty"
-            android:layout_below="@+id/edtReportBug"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginRight="@dimen/twenty"
-            android:background="@drawable/bg_dot_line"
-            android:gravity="center">
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-            <ImageView
-                android:id="@+id/imgUpload"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:src="@drawable/upload"></ImageView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ten"
-                android:layout_toRightOf="@+id/imgUpload"
-                android:text="@string/lblAttachment"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-        </RelativeLayout>
-
-        <GridView
-            android:id="@+id/imgPreview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rlaPickImage"
-            android:layout_marginTop="@dimen/ten"
-            android:numColumns="2"
-            android:padding="@dimen/ten"
-            android:stretchMode="columnWidth">
-
-        </GridView>
-    </RelativeLayout>
-</androidx.core.widget.NestedScrollView>
-
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    android:layout_marginStart="@dimen/five"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/five"
+    app:cardCornerRadius="@dimen/fifteen"
+    app:cardElevation="@dimen/zero"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dashboard_card"
+        android:orientation="vertical"
+        android:padding="@dimen/ten">
+
+        <View
+            android:id="@+id/imgReadCount"
+            android:layout_width="@dimen/ten"
+            android:layout_height="@dimen/ten"
+            android:layout_gravity="end"
+            android:background="@drawable/bg_red_circle"
+            android:visibility="gone">
+
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/eight"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/itemIcon"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/eight"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/itemTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="Your Feed"
+                android:textColor="@color/dark_blue_color"
+                android:textSize="@dimen/twele_sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/itemDescription"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            android:textColor="@color/mild_grey7"
+            android:textSize="@dimen/twele_sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,19 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="CustomCheckbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@drawable/custom_checkbox</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
-        <item name="android:textSize">16sp</item>
+    <style name="CircleImage">
+        <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Teacher_spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
 
     <style name="Circular">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="BoxItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/outline_gray</item>
+    </style>
+
+
+    <style name="BoxItemSelected">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/primary_colour_bg_radius_bg</item>
+    </style>
+    <style name="CustomDialogStyle" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+
+    <style name="IncomingFullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+
+    <style name="IndicatorStyle">
+        <item name="ci_width">8dp</item>
+        <item name="ci_height">8dp</item>
+        <item name="ci_margin">6dp</item>
+        <item name="ci_drawable">@drawable/indicator_active</item>
+        <item name="ci_drawable_unselected">@drawable/indicator_inactive</item>
+    </style>
+
+
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_to_top</item>
+    </style>
+
+    <!-- styles.xml -->
+
+
+    <!-- styles.xml -->
+
+    <!-- styles.xml -->
+
+
+    <!-- styles.xml -->
+
+    <style name="CustomTextStylePoppinsBold1" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/thirteen_sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="CustomTextStylePoppinsBold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/thirteen_sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="CustomTextStylePoppinsRegular" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+
+    </style>
+
+
+    <style name="RoundedAllCornersEvenly" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+    </style>
+
+    <style name="CustomTextStylePoppinsMedium1" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">@dimen/thirteen_sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="CustomTextStylePoppinsMedium" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">@dimen/thirteen_sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">@dimen/line_spacing</item>
+
+    </style>
+
+
+    <!--    &lt;!&ndash; res/values/styles.xml &ndash;&gt;-->
+    <!--    <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">-->
+    <!--        <item name="android:buttonTint">@color/primary</item>-->
+    <!--        <item name="android:textColor">@color/PrimaryColor</item>-->
+    <!--    </style>-->
+
+
+    <style name="RoundedSquare" parent="">
+        <item name="cornerSize">18dp</item>
+        <item name="cardCornerRadius">18dp</item>
+
+    </style>
+
+    <style name="ImageMediumRoundedCorners" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+
+    <style name="CircleImageShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_bg</item>
+    </style>
+
+    <style name="CircleImageViewShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+    <style name="AppEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
 
 </resources>

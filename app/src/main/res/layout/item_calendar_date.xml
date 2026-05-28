@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lytHeader"
+    android:layout_width="@dimen/sixty"
+    android:layout_height="@dimen/hundred_thirty"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- Day text -->
+    <TextView
+        android:id="@+id/txtDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/four"
+        android:text="Mon"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fourteen_sp" />
+
+    <!-- Line + Dot container -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twenty"
+        android:layout_marginVertical="@dimen/four">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_gravity="center"
+            android:background="@color/mild_grey1" />
+
+        <View
+            android:id="@+id/dot"
+            android:layout_width="@dimen/ten"
+            android:layout_height="@dimen/ten"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_dot"
+            android:elevation="@dimen/two" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/four"
+        android:text="15"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sixteen_sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/two"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="@dimen/twele_sp" />
+
+</LinearLayout>

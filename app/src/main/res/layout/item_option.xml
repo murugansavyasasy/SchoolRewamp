@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvOptionBullet"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="@dimen/thirty_two"
+        android:layout_height="@dimen/thirty_two"
+        android:background="@drawable/bg_circle_dark_gray"
+        android:gravity="center"
+        android:text="c"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constraintBottom_toBottomOf="@id/cardRight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cardRight" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twele"
+        android:background="@drawable/bg_option_normal"
+        android:minHeight="@dimen/sixty"
+        app:cardCornerRadius="@dimen/ten"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvOptionBullet"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/optionContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/sixty"
+            android:padding="@dimen/five">
+
+            <TextView
+                android:id="@+id/tvOptionText"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="Graph 3 shows a characteristic exponential rise."
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivCheckmark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivCheckmark"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/bg_light_blue_circle"
+                android:padding="@dimen/six"
+                android:src="@drawable/tick_circle_icon"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutGraph"
+                app:layout_constraintEnd_toStartOf="@id/layoutGraph"
+                app:layout_constraintTop_toTopOf="@+id/layoutGraph"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:id="@+id/layoutGraph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageView
+                    android:id="@+id/ivGraph"
+                    android:layout_width="@dimen/fifty_five"
+                    android:layout_height="@dimen/fifty_five"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/default_image_icon" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

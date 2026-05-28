@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/ten"
+    android:elevation="@dimen/five"
+    app:cardBackgroundColor="@color/mild_light_yellow"
+    app:cardCornerRadius="@dimen/twenty"
+    app:strokeColor="@color/light_gray_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twenty">
+
+        <TextView
+            android:id="@+id/lblFullName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Aran"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/lblStatus"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/lblRoomNo"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room G01"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <TextView
+            android:id="@+id/lblDot"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblYear"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spinge 000sac0"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowEntireDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            app:constraint_referenced_ids="lblRoomNo,lblDot,lblYear"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="@dimen/ten"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblDue"
+            app:layout_constraintEnd_toEndOf="@+id/lblFullName"
+            app:layout_constraintStart_toStartOf="@+id/lblFullName"
+            app:layout_constraintTop_toBottomOf="@+id/lblFullName">
+
+        </androidx.constraintlayout.helper.widget.Flow>
+
+        <TextView
+
+            android:id="@+id/lblTotalAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/lblStatus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.4"
+            app:layout_constraintStart_toStartOf="@+id/lblStatus"
+            app:layout_constraintTop_toTopOf="@+id/lblFullName">
+
+        </TextView>
+
+        <TextView
+
+            android:id="@+id/lblStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/flowEntireDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.4"
+            app:layout_constraintStart_toEndOf="@+id/lblFullName"
+            app:layout_constraintTop_toBottomOf="@+id/lblTotalAmount">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imgCal"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/calendar_icon_2"
+            android:tint="@color/light_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/lblDueDateOn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblDue"
+            >
+
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/lblDue"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/Due_Date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintStart_toEndOf="@id/imgCal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flowEntireDetails"
+            >
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblDueDateOn"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblOverDue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/lblDue"
+            app:layout_constraintTop_toBottomOf="@+id/lblDue"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblOverDue"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:paddingHorizontal="@dimen/eight"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableTint="@color/dark_red_6"
+            android:text="@string/overdue"
+            android:background="@drawable/rect_radius_15"
+            android:paddingVertical="@dimen/eight"
+            android:drawableStart="@drawable/clock_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:textColor="@color/dark_red_6"
+            android:backgroundTint="@color/light_red_5"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblDueDateOn"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

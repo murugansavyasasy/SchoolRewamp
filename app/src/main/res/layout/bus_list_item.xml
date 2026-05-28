@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/ten"
+    android:elevation="@dimen/five"
+    android:layout_marginBottom="@dimen/ten"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/fifteen"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lnrBusDetails"
+            android:gravity="center"
+            android:weightSum="1"
+            app:layout_constraintBottom_toTopOf="@+id/lnrCurrentBusStop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/thirty_five"
+                android:src="@drawable/bus_icon"
+                android:tint="@color/white"
+                android:padding="@dimen/ten"
+                android:backgroundTint="@color/PrimaryColor"
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:layout_height="@dimen/thirty_five">
+            </ImageView>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/ten"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblPlace"
+                    android:layout_width="match_parent"
+                    android:text="Place"
+                    android:textSize="@dimen/fifteen_sp"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/lblRouteNo"
+                    android:layout_width="match_parent"
+                    android:text="Route #00"
+                    android:visibility="gone"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="0dp"
+                android:id="@+id/lblBusNo"
+                android:layout_height="wrap_content"
+                android:text="Sample"
+                android:visibility="gone"
+                style="@style/CustomTextStylePoppinsBold"
+                app:backgroundTint="@color/light_blue_8"
+                android:minWidth="0dp"
+                android:textColor="@color/PrimaryColor"
+                android:layout_marginStart="@dimen/five"
+                android:padding="@dimen/five"
+                android:clickable="false"
+                android:focusable="false"
+                app:cornerRadius="@dimen/fifteen"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/lnrBusDetails"
+            android:layout_width="0dp"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/light_blue_14"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:padding="@dimen/fifteen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/lnrCurrentBusStop"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/thirty"
+                android:src="@drawable/map_icon_5"
+                android:tint="@color/white"
+                android:padding="@dimen/six"
+                android:backgroundTint="@color/PrimaryColor"
+                android:background="@drawable/circle_bg"
+                android:layout_height="@dimen/thirty">
+            </ImageView>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/five"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Your Stop"
+                    android:textColor="@color/PrimaryColor"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/lblCurrentStop"
+                    android:layout_width="match_parent"
+                    android:text="Current Stop"
+                    android:textSize="@dimen/fourteen_sp"
+                    android:layout_marginTop="@dimen/three"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginStart="@dimen/five"
+                android:layout_width="@dimen/twenty_five"
+                android:src="@drawable/location_fill_icon"
+                android:tint="@color/PrimaryColor"
+                android:layout_height="@dimen/twenty_five">
+            </ImageView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintTop_toBottomOf="@+id/lnrCurrentBusStop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lnrCurrentBusStop"
+            android:id="@+id/lnrPickUpAndDrop"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:backgroundTint="@color/light_blue_8"
+                android:padding="@dimen/eight"
+                android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="@string/pickup"
+                    android:textColor="@color/PrimaryColor"
+                    android:drawablePadding="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:drawableStart="@drawable/time_icon"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblPickUpTime"
+                    android:layout_width="match_parent"
+                    android:drawablePadding="@dimen/five"
+                    android:layout_marginTop="@dimen/eight"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="@dimen/eight"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginStart="@dimen/ten"
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:backgroundTint="@color/light_voilet_2"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="@string/drop"
+                    android:textAllCaps="true"
+                    android:textColor="@color/dark_voilet_4"
+                    android:drawablePadding="@dimen/five"
+                    android:drawableTint="@color/dark_voilet_4"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:drawableStart="@drawable/time_icon"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblDropTime"
+                    android:layout_width="match_parent"
+                    android:drawablePadding="@dimen/five"
+                    android:layout_marginTop="@dimen/eight"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/View1"
+            app:layout_constraintTop_toBottomOf="@+id/lnrPickUpAndDrop"
+            android:layout_width="0dp"
+            android:background="@color/gray4"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_height="1dp">
+
+        </View>
+
+        <LinearLayout
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/View1"
+            android:layout_width="0dp"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/light_blue_14"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:padding="@dimen/fifteen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/lnrBusRoteNumber"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Bus Number"
+                android:textColor="@color/light_gray"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/lblBusRouteNumber"
+                android:layout_width="match_parent"
+                android:text="#00"
+                android:layout_marginTop="@dimen/five"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/lnrBusRoteNumber"
+            android:layout_width="0dp"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/PrimaryColor"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/lnrTrackLive"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/find_my_bus"
+                android:gravity="center"
+                android:drawablePadding="@dimen/ten"
+                android:drawableEnd="@drawable/ic_right_arrow_"
+                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

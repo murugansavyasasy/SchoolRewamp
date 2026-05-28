@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mild_grey5">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_school_list_bg" />
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+        <TextView
+            android:id="@+id/sendlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginStart="@dimen/ten"
+            android:text="@string/send_to"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="normal"
+            android:visibility="gone" />
+
+
+        <RelativeLayout
+            android:id="@+id/lnrAcademicYearView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sendlabel"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tvAcademicYearLabel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:text="@string/lblchoose_academic_year"
+                android:textColor="@color/light_gray" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_toEndOf="@+id/tvAcademicYearLabel"
+                android:background="@drawable/bg_white_light_radious"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_toStartOf="@+id/isSpinnerimg"
+                    android:background="@null"
+                    android:drawSelectorOnTop="true"
+                    android:paddingVertical="@dimen/five" />
+
+                <ImageView
+                    android:id="@+id/isSpinnerimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/three"
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/black">
+
+                </ImageView>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/lnrAcademicYearView"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:background="@drawable/rect_light_gray"
+            android:orientation="horizontal"
+            android:padding="@dimen/one">
+
+            <TextView
+                android:id="@+id/tapEntireSchool"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="@string/entire_school"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ten_sp"></TextView>
+
+            <TextView
+                android:id="@+id/tapStandards"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/white_radious"
+                android:gravity="center"
+                android:text="@string/Standards"
+                android:textSize="@dimen/ten_sp" />
+
+            <TextView
+                android:id="@+id/tabSectionsStudent"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/section_student"
+                android:textSize="@dimen/ten_sp" />
+
+            <TextView
+                android:id="@+id/tabGroups"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/Groups"
+                android:textSize="@dimen/ten_sp" />
+
+
+            <TextView
+                android:id="@+id/tapStaffs"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/staff"
+                android:textSize="@dimen/ten_sp"></TextView>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/grouplabel"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabLayout"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:text="@string/Group"></TextView>
+
+        <RelativeLayout
+            android:id="@+id/rytStandardDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/grouplabel"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/isSpinnerSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toStartOf="@+id/isSpinnerSectionimg"
+                android:background="@null"
+                android:drawSelectorOnTop="true"
+                android:paddingVertical="@dimen/five" />
+
+            <ImageView
+                android:id="@+id/isSpinnerSectionimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/three"
+                android:src="@drawable/ic_drop_down"
+                app:tint="@color/black">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/chAllSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytStandardDropDown"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/Selectall"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold"
+            android:visibility="gone">
+
+        </CheckBox>
+
+        <TextView
+            android:id="@+id/lblCreatedOn"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabLayout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty"
+            android:gravity="end"
+            android:text="@string/group_created_on"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/rytList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomLayout"
+            android:layout_below="@+id/chAllSelect"
+            android:layout_marginBottom="@dimen/ten">
+
+            <!-- Scroll ONLY this area -->
+            <ScrollView
+                android:id="@+id/scrollRytList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <!-- ScrollView must have ONE child -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:background="@drawable/rect_white"
+                        android:paddingVertical="@dimen/five"
+                        android:visibility="gone" />
+
+                    <!-- Subject label -->
+                    <TextView
+                        android:id="@+id/subjectlabel"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:text="@string/subject"
+                        android:visibility="gone" />
+
+                    <!-- Subject & Level dropdown container -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <!-- Subject dropdown -->
+                        <RelativeLayout
+                            android:id="@+id/rytSubjectDropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:visibility="gone">
+
+                            <Spinner
+                                android:id="@+id/isSpinnerSubject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/isSpinnerSubjectimg"
+                                android:background="@null"
+                                android:drawSelectorOnTop="true"
+                                android:paddingVertical="@dimen/five" />
+
+                            <ImageView
+                                android:id="@+id/isSpinnerSubjectimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/three"
+                                android:src="@drawable/ic_drop_down"
+                                app:tint="@color/black" />
+                        </RelativeLayout>
+
+                        <!-- Level dropdown -->
+                        <RelativeLayout
+                            android:id="@+id/rytLevelDropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/fifteen"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:visibility="gone">
+
+                            <Spinner
+                                android:id="@+id/isSpinnerLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/isSpinnerLevelimg"
+                                android:background="@null"
+                                android:drawSelectorOnTop="true"
+                                android:paddingVertical="@dimen/five" />
+
+                            <ImageView
+                                android:id="@+id/isSpinnerLevelimg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/three"
+                                android:src="@drawable/ic_drop_down"
+                                app:tint="@color/black" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textdesc"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/nomessageEntire"
+            android:gravity="center"
+            android:padding="@dimen/sixteen"
+            android:text="@string/Tap_share_message_everyone_school"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/five"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/five"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/btnSpecificStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_gray"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/three"
+                    android:text="@string/specific_student"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rytSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_marginEnd="@dimen/twenty_five"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_orange"
+                    android:gravity="center"
+                    android:padding="@dimen/eight">
+
+
+                    <TextView
+                        android:id="@+id/lblSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_horizontal"
+                        android:text="@string/Send"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="normal"
+                        android:visibility="visible">
+
+                    </TextView>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/lblSend"
+                        android:src="@drawable/send_icon_white" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+
+            android:id="@+id/lblNoRecord"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nomessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_data_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_below="@+id/rytStandardDropDown"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nodataimage"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"
+            android:visibility="gone" />
+
+        <ImageView
+
+            android:id="@+id/nomessageEntire"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/ic_entire_school_send"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+
+            android:id="@+id/rytAcademicYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/customer_support"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp"
+                android:visibility="visible" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="center"
+                android:text="@string/your_academic_year_configuration_are_incorrect_please_contact_school_chimes">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSupportMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="center"
+                android:text="support@savyasasy.com"
+                android:textColor="@color/navi_blue6">
+
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

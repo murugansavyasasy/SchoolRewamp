@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lnrEntireQuestion"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/five">
+
+        <CheckBox
+            android:id="@+id/cbQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/two"
+            android:button="@drawable/ch_square"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/lblremove"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/close_red_color"></ImageView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/lblremove">
+
+            <TextView
+                android:id="@+id/lblChapter"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chapter" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblChapter"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtChapterName"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:hint="Enter Chapter here"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight"
+            tools:ignore="LabelFor" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblQuestion"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/question" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblQuestion"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtQuestion"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:clickable="true"
+            android:drawablePadding="10dp"
+            android:focusable="true"
+            android:hint="@string/enter_question_here"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight" />
+
+
+        <TextView
+            android:id="@+id/lblQuestionPick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/ten"
+            android:text="@string/add_files_to_question"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblOptionA"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_a"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblOptionA"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtOptionA"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:drawablePadding="10dp"
+            android:hint="@string/enter_option_a"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:text="Add image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionA"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgOptionA"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressOptionA"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblOptionB"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_b"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblOptionB"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtOptionB"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:drawablePadding="10dp"
+            android:hint="@string/enter_option_b"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:text="@string/add_image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionB"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgOptionB"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressOptionB"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblOptionC"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_c"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblOptionC"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtOptionC"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:drawablePadding="10dp"
+            android:hint="@string/enter_option_c"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:text="@string/add_image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionC"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgOptionC"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressOptionC"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblOptionD"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_d"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toEndOf="@+id/lblOptionD"
+                android:text="*"
+                android:textColor="@color/red">
+
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtOptionD"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_gray_radius"
+            android:drawablePadding="10dp"
+            android:hint="@string/enter_option_d"
+            android:imeOptions="actionNext"
+            android:padding="@dimen/eight" />
+
+        <TextView
+            android:id="@+id/lblAddImageD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/attachment_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:text="@string/add_image"
+            android:textColor="@color/iconBlue"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/framOptionD"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgOptionD"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressOptionD"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lblCorrectAns"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/correct_ans"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toEndOf="@+id/lblCorrectAns"
+                        android:text="*"
+                        android:textColor="@color/red">
+
+                    </TextView>
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/edtCorrectAns"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/rect_gray_radius"
+                    android:ellipsize="none"
+                    android:hint="@string/enter_correct_answer_here"
+                    android:imeOptions="actionNext"
+                    android:padding="@dimen/eight"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+
+                <RelativeLayout
+                    android:id="@+id/rytSpinnerHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/rect_gray_radius"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/spinnerCorrectAnswer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/spinnerCorrectAnswerimg"
+                        android:background="@null"
+                        android:drawSelectorOnTop="true"
+                        android:paddingVertical="@dimen/five" />
+
+                    <ImageView
+                        android:id="@+id/spinnerCorrectAnswerimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/three"
+                        android:src="@drawable/ic_drop_down"
+                        app:tint="@color/black">
+
+                    </ImageView>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lblMark"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mark"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/three"
+                        android:layout_toEndOf="@+id/lblMark"
+                        android:text="*"
+                        android:textColor="@color/red">
+
+                    </TextView>
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/edtMark"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/rect_gray_radius"
+                    android:ellipsize="none"
+                    android:hint="@string/enter_mark_here"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:padding="@dimen/eight"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrAttachment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:gravity="end"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/ten">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/black_rect_bg"
+                    android:gravity="center"
+                    android:padding="@dimen/eight">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/attachments"
+                        android:textColor="@color/white"></TextView>
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:drawableStart="@drawable/add_icon"
+                        android:text=""
+                        android:textColor="@color/white">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_gravity="end"
+                android:src="@drawable/close_red_color"
+                android:visibility="gone"></ImageView>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

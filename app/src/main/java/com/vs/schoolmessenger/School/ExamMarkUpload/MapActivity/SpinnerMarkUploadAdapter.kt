@@ -1,0 +1,63 @@
+package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import com.vs.schoolmessenger.R
+
+class SpinnerMarkUploadAdapter(
+    private val context: Context,
+    private val items: List<String>
+) : BaseAdapter() {
+
+    var selectedPosition: Int = -1
+    override fun getCount(): Int = items.size
+    override fun getItem(position: Int): Any = items[position]
+    override fun getItemId(position: Int): Long = position.toLong()
+
+    // view shown on toolbar (selected view)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = LayoutInflater.from(context).inflate(R.layout.simple_spinner_item, parent, false)
+        val textView = view.findViewById<TextView>(R.id.lblTextItem)
+        // show hint if no selection
+        if (selectedPosition == -1) {
+            textView.text = context.getString(R.string.please_select_a_value)
+        } else {
+            textView.text = items[selectedPosition]
+        }
+        return view
+    }
+
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.item_spinner_with_tick_new, parent, false)
+        val textView = view.findViewById<TextView>(R.id.textViewItem)
+        val viewDiv = view.findViewById<View>(R.id.viewDiv)
+
+        textView.text = items[position]
+
+        viewDiv.visibility = View.GONE
+
+        // Tick on selected item using drawableEnd
+        if (position == selectedPosition) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(
+                0, 0, R.drawable.ic_check_mark_new, 0
+            )
+        } else {
+            textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+        }
+
+        // Text color customization
+        when (position) {
+            0 -> textView.setTextColor(context.getColor(R.color.dark_bg_orange_2))
+            else -> textView.setTextColor(context.getColor(R.color.black))
+        }
+
+        return view
+    }
+}
+
+

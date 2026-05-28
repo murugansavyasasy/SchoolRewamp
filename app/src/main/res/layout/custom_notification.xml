@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/notification_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/circle_background_customm"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_logo"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/notification_icon"
+        android:layout_toStartOf="@id/notification_icon"
+        android:text="School Chimes"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/fourteen_sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/notification_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notification_title"
+        android:layout_marginTop="3dp"
+        android:layout_toStartOf="@id/notification_icon"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="This is a new message from your school"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/thirteen_sp"
+        android:textStyle="normal" />
+
+    <ImageView
+        android:id="@+id/notification_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notification_body"
+        android:layout_marginTop="@dimen/eight"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/cardHeader"
+        android:background="@drawable/bg_student_item"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten">
+
+        <TextView
+            app:layout_constraintHorizontal_weight="0.15"
+            android:id="@+id/lblInitialName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="101"
+            app:layout_constraintDimensionRatio="1:1"
+            android:textColor="@color/white"
+            android:padding="@dimen/three"
+            android:background="@drawable/circle_bg_orange"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/lblFullName"
+            app:layout_constraintBottom_toBottomOf="@+id/lblPrimarymobile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFullName">
+
+        </TextView>
+
+        <TextView
+
+            android:id="@+id/lblFullName"
+            android:layout_marginEnd="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text="Aran"
+            android:textSize="@dimen/sixteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toStartOf="@+id/lblStatus"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblInitialName"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/lblRoomAndClassDetails"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Room No 101"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblPrimarymobile"
+            app:layout_constraintEnd_toEndOf="@+id/lblFullName"
+            app:layout_constraintStart_toStartOf="@+id/lblFullName"
+            app:layout_constraintTop_toBottomOf="@+id/lblFullName"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblPrimarymobile"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="0000000000"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/lblFullName"
+            app:layout_constraintStart_toStartOf="@+id/lblFullName"
+            app:layout_constraintTop_toBottomOf="@+id/lblRoomAndClassDetails"></TextView>
+
+
+        <TextView
+
+            style="@style/CustomTextStylePoppinsRegular"
+            android:textSize="@dimen/ten_sp"
+            android:id="@+id/lblStatus"
+            android:paddingVertical="@dimen/three"
+            android:paddingHorizontal="@dimen/five"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFullName"
+            app:layout_constraintBottom_toBottomOf="@+id/lblPrimarymobile"
+            android:layout_width="0dp"
+            android:textAllCaps="true"
+            android:gravity="center"
+            app:layout_constraintHorizontal_weight="0.4"
+            app:layout_constraintStart_toEndOf="@+id/lblFullName"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:background="@color/light_gray_10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+
+    </View>
+
+</LinearLayout>

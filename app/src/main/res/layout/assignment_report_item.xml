@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerrelative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_white">
+
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/ten"
+        android:layout_height="@dimen/ten"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bg_red_circle"
+        android:elevation="@dimen/ten"
+        android:visibility="gone"></ImageView>
+
+
+    <TextView
+        android:id="@+id/lblTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Hello Title"
+        android:textSize="@dimen/eighteen_sp" />
+
+
+    <ImageView
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/ten"
+        android:contentDescription="Calendar icon"
+        android:src="@drawable/ic_more_vert" />
+
+    <TextView
+        android:id="@+id/createddate"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/options"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_toStartOf="@id/options"
+        android:text="21/05/2025"
+        android:textColor="@color/grey"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/lblDescription"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTitle"
+        android:layout_marginStart="@dimen/ten"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="10dp"
+        android:text="Experiment with solar power building and connection between them is the real power"
+        android:textColor="@color/clr_grey_dark"
+        android:textSize="@dimen/twele_sp" />
+
+
+    <LinearLayout
+        android:id="@+id/lnrSendBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblDescription"
+        android:layout_marginTop="@dimen/ten"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="1">
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_weight="0.6"
+            android:text="@string/send_by"
+            android:textColor="@color/navi_blue3"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSendby"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_weight="0.5"
+            android:text="Abi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearassigned_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/thirty"
+        android:layout_below="@+id/lnrSendBy"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/rect_shadow_light_green1"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/five">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/calendar_black" />
+
+        <TextView
+            android:id="@+id/lblassigned"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Assigned - 03/07/2025"
+            android:textColor="@color/dark_blue_1"
+            android:textSize="@dimen/twele_sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/category_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/thirty"
+        android:layout_below="@+id/lnrSendBy"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="@dimen/ten"
+        android:layout_toEndOf="@+id/linearassigned_layout"
+        android:background="@drawable/rect_light_grey"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/five">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/categoryimagesvg" />
+
+        <TextView
+            android:id="@+id/lblCategory"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/five"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="GENERAL"
+            android:textColor="@color/clr_grey_dark"
+            android:textSize="@dimen/ten" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relative_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category_linear"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/ten">
+
+
+        <LinearLayout
+            android:id="@+id/subject_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty"
+            android:background="@drawable/rect_shadow_light_green1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/five">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/subjectimagesvgformat" />
+
+
+            <TextView
+                android:id="@+id/lblSubject"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/five"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="TAMIL"
+                android:textColor="@color/dark_blue_1"
+                android:textSize="@dimen/twele_sp"></TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lbldeadline_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/five"
+            android:layout_toEndOf="@+id/subject_linear"
+            android:background="@drawable/rect_shadow_light_yellow1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/five">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/calendersvgformat" />
+
+            <TextView
+                android:id="@+id/lbldeadline"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/five"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Deadline 04-07-2025"
+                android:textColor="@color/dark_orange"
+                android:textSize="@dimen/twele_sp"></TextView>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblassignmentprogress"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout1"
+        android:layout_marginStart="@dimen/ten"
+        android:text="@string/assignment_progress"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBarAssignment"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eight"
+        android:layout_below="@+id/lblassignmentprogress"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/five"
+        android:max="100"
+        android:progress="30"
+        android:progressDrawable="@drawable/progress_bar_assignment" />
+
+    <TextView
+        android:id="@+id/lblSubmittedCount"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBarAssignment"
+        android:layout_marginStart="@dimen/ten"
+        android:text="0/0"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+
+    <LinearLayout
+        android:id="@+id/rytList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblSubmittedCount"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginBottom="@dimen/two"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rytList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/five"
+            android:minHeight="@dimen/sixty"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/total_numbers"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:layout_toEndOf="@id/rcyAssignment"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/video_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/bg_image_background_white_coupon"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_play"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <View
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/arrow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/dark_pink_background"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/eight"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/eight"
+            android:src="@drawable/arrow_right_white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytList"
+        android:layout_centerHorizontal="false"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="@dimen/ten"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lblSubmitted"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_shadow_light_yellow1"
+            android:gravity="center"
+            android:padding="@dimen/eight"
+            android:text="@string/submitted"
+            android:textColor="@color/dark_orange"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblNotSubmitted"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/lblSubmitted"
+            android:background="@drawable/rect_shadow_light_yellow1"
+            android:gravity="center"
+            android:padding="@dimen/eight"
+            android:text="NotSubmitted : 1"
+            android:textColor="@color/dark_orange"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

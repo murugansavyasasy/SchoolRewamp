@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five">
+
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/eighty"
+        android:layout_height="@dimen/eighty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/minus_eighteen"
+        android:elevation="@dimen/ten"
+        android:src="@drawable/new_icon"
+        android:visibility="visible">
+
+    </ImageView>
+
+    <ImageView
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/twenty"
+        android:elevation="@dimen/ten"
+        android:src="@drawable/noticeboard_pin"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="@dimen/thirteen"
+        android:layout_height="@dimen/thirteen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/eighteen"
+        android:elevation="@dimen/ten"
+        android:src="@drawable/circle_dark_blue"
+        android:visibility="gone"></ImageView>
+
+    <RelativeLayout
+        android:id="@+id/rlaImageReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_white"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/LblHWSubjectName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:text="Annual Day celebrations"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp" />
+
+
+        <TextView
+            android:id="@+id/lblDateImage"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="15 Nov 2024"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <LinearLayout
+            android:id="@+id/lytRecyclerwview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LblHWSubjectName"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyImgPDF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible" />
+
+            <me.relex.circleindicator.CircleIndicator2
+                android:id="@+id/indicator"
+                style="@style/IndicatorStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:layout_below="@+id/lytRecyclerwview"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/five"
+                android:elevation="@dimen/four"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lblTitleImage"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lytRecyclerwview"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:text="Annual Day celebrations" />
+
+
+        <TextView
+            android:id="@+id/lblContentImage"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitleImage"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:maxLines="3"
+            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress." />
+
+
+        <TextView
+            android:id="@+id/tvSeeMoreImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentImage"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaVoiceReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/lblDateVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVoiceContent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="01 Apr 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+        <ImageView
+            android:id="@+id/imgVoicePlay"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@+id/lblTitleVoice"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:src="@drawable/video_play">
+
+        </ImageView>
+
+        <ProgressBar
+            android:id="@+id/isVoiceProgress"
+            android:layout_width="@dimen/fourty_five"
+            android:layout_height="@dimen/fourty_five"
+            android:layout_below="@+id/lblTitleVoice"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <com.vs.schoolmessenger.Utils.WaveformSeekBar
+            android:id="@+id/waveformSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty"
+            android:layout_below="@+id/lblTitleVoice"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toEndOf="@+id/imgVoicePlay" />
+
+        <TextView
+            android:id="@+id/lblStartDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgVoicePlay"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_toEndOf="@+id/imgVoicePlay"
+            android:text="00:00"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblEndDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgVoicePlay"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="00:00"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblTitleVoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblVoiceContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblEndDuration"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:lineSpacingExtra="@dimen/five"
+            android:maxLines="3"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            android:id="@+id/tvSeeMoreVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVoiceContent"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaReportText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lblTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lblDateText"
+            android:text="Friday Leave"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/lblDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="01 Apr 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitleText"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:maxLines="3"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSeeMoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentText"
+            android:layout_marginStart="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@color/navi_blue2"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlaReportVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lblDateVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVideoContent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/five"
+            android:text="Sun 22 Mar,2020"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/rlaVimeoThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_fifty"
+            android:layout_below="@+id/lblTitleVideo">
+
+            <ImageView
+                android:id="@+id/imgVimeoThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one_fifty"
+                android:scaleType="centerCrop"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgVideoPlay"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerInParent="true"
+                android:src="@drawable/video_play"
+                android:visibility="gone">
+
+            </ImageView>
+
+            <ProgressBar
+                android:id="@+id/customProgressBar"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
+                android:indeterminateDrawable="@drawable/progress_bar_white"
+                android:indeterminateOnly="true">
+
+            </ProgressBar>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/lblTitleVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblVideoContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaVimeoThumbnail"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:lineSpacingExtra="@dimen/five"
+            android:maxLines="3"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            android:id="@+id/tvSeeMoreVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVideoContent"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lblDatePdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblPdfContent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/five"
+            android:text="Sun 22 Mar,2020"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblTitlePdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:text="Nothing"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <WebView
+            android:id="@+id/webPdf"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_fifty"
+            android:layout_below="@+id/lblTitlePdf"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            tools:ignore="WebViewLayout">
+
+        </WebView>
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone"></ProgressBar>
+
+
+        <TextView
+            android:id="@+id/lblPdfContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/webPdf"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:lineSpacingExtra="@dimen/five"
+            android:maxLines="3"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            android:id="@+id/tvSeeMorePdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblPdfContent"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

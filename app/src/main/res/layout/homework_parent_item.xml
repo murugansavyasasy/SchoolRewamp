@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/two_fifty"
+    android:background="@drawable/rect_shadow_white"
+    android:padding="@dimen/ten">
+
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <View
+            android:id="@+id/redDot"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/five"
+            android:background="@drawable/new_icon1"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lblSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/redDot"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toStartOf="@+id/rytImage"
+            android:text="Science"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/rytImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/redDot"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgSuccess"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:src="@drawable/complete_homework"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgEditAndDelete"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:src="@drawable/ic_more_vert"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <FrameLayout
+                android:id="@+id/progressContainer"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgTimimg"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/waiting_for_approval"></ImageView>
+
+                <!--        <ProgressBar-->
+                <!--            android:id="@+id/progressBar"-->
+                <!--            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="match_parent"-->
+                <!--            android:indeterminate="false"-->
+                <!--            android:max="100"-->
+                <!--            android:progress="50"-->
+                <!--            android:progressDrawable="@drawable/progress_circle_drawable"-->
+                <!--            android:rotation="270" />-->
+
+                <!--        <TextView-->
+                <!--            android:id="@+id/lblPercentage"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="match_parent"-->
+                <!--            android:gravity="center"-->
+                <!--            android:text="50%"-->
+                <!--            android:textColor="@android:color/holo_blue_dark"-->
+                <!--            android:textSize="@dimen/ten"-->
+                <!--            android:textStyle="bold" />-->
+            </FrameLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/lblTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/ten"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Tomorrow Exam on Science Chapter 5......"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rytHeader" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/one_fifty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:scaleType="fitCenter"
+        android:src="@drawable/teaching"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray_3_">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+
+                android:id="@+id/rlaSortSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/rect_grey"
+                android:backgroundTint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/header_text4">
+
+
+                <ImageView
+                    android:id="@+id/imgSearch1"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:alpha="0.34"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/txtSearchMenutext"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSearch1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lblSearch"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/header_text3"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="@string/request_for_certificate"
+                android:textSize="@dimen/twenty"
+                app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+                tools:ignore="NotSibling" />
+
+            <RelativeLayout
+                android:id="@+id/rytRequestTap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/rect_shadow_white"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/header_text3">
+
+                <TextView
+                    android:id="@+id/header_text"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/select_certificate" />
+
+                <RelativeLayout
+                    android:id="@+id/lnrSpinnner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_text"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_white_light_radious">
+
+                    <Spinner
+                        android:id="@+id/spinner_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_centerVertical="true"></Spinner>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/header_text1"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrSpinnner"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="@string/select_urgency_level" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_text1"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/five">
+
+                        <ImageView
+                            android:id="@+id/ivradio"
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/five"
+                            android:src="@drawable/custom_radio_button" />
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/five"
+                            android:button="@android:color/transparent"
+                            android:text="@string/not_urgent"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/five">
+
+                        <ImageView
+                            android:id="@+id/ivradio1"
+                            android:layout_width="@dimen/twenty_four"
+                            android:layout_height="@dimen/twenty_four"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_marginEnd="@dimen/five"
+                            android:src="@drawable/custom_radio_button" />
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/five"
+                            android:button="@android:color/transparent"
+                            android:text="@string/urgent" />
+                    </LinearLayout>
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/header_text5"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="@string/reason" />
+
+                <EditText
+                    android:id="@+id/txtReason"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_text5"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/text_bg"
+                    android:hint="@string/enter_your_reason_here"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/ten" />
+
+                <Button
+                    android:id="@+id/btnSendCertificateRequest"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_below="@+id/txtReason"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginBottom="@dimen/twele"
+                    android:background="@drawable/bg_orange"
+                    android:gravity="center"
+                    android:text="@string/request_certificate"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/header_text4"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="Certificate History"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty"
+                app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
+                app:layout_constraintTop_toBottomOf="@+id/rytRequestTap" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/rlaSortSearch1" />
+
+
+            <LinearLayout
+                android:id="@+id/lnrNoRecords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/ten"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/header_text4">
+
+                <ImageView
+                    android:id="@+id/nomessage"
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/no_certificaterequest_message"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="@string/no_list_found"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,289 @@
+package com.vs.schoolmessenger.Parent.CertificateRequest
+
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.CertificateRequestParentBinding
+
+
+class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View.OnClickListener {
+    private lateinit var adapter: CertificateRequestAdapter
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
+    private var isChildDetails: ChildDetails? = null
+    private lateinit var certificateRequestList: List<CertificateListData>
+    private var isSelectedCertificateName: String? = null
+    private var urgency_level: String? = ""
+
+    override fun getViewBinding(): CertificateRequestParentBinding {
+        return CertificateRequestParentBinding.inflate(layoutInflater)
+    }
+
+    override fun setupViews() {
+        super.setupViews()
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+        binding.ivradio.setOnClickListener(this)
+        binding.ivradio1.setOnClickListener(this)
+        urgency_level = getString(R.string.not_urgent)
+
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.btnSendCertificateRequest.setOnClickListener(this)
+
+//        binding.headerText3.text=Constant.isParentMenuName
+        binding.headerText3.text = Constant.isSelectedMenuName
+        isChildDetails = SharedPreference.getChildDetails(this)
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+
+        isAccessToken = isChildDetails?.access_token
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+        loadCertificateTypes()
+        binding.ivradio.setImageResource(R.drawable.selected_radio_button)
+        binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
+
+        appViewModel!!.isCertificateRequestList?.observe(this) { response ->
+            if (response != null) {
+                if (response != null && response.status) {
+                    certificateRequestList = response.data
+                    if (certificateRequestList.isNotEmpty()) {
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.lnrNoRecords.visibility = View.GONE
+                        setupRecyclerView()
+                        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    }
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.lnrNoRecords.visibility = View.VISIBLE
+                    binding.txtNoData.text = response.message ?: getString(R.string.no_data_found)
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                }
+            }
+        }
+
+        appViewModel!!.isCertificateType?.observe(this) { response ->
+            if (response != null) {
+                if (response != null && response.status) {
+                    val certificateTypeList = response.data
+                    loadCertificates(certificateTypeList)
+                }
+            }
+        }
+
+        appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
+            Constant.hideLoading(this)
+            if (response != null) {
+                if (response.status) {
+                    Constant.showParentDataValidation(
+                        getString(R.string.success),
+                        response!!.message,
+                        this
+                    )
+                } else {
+                    Constant.showParentDataValidation(
+                        getString(R.string.Oops),
+                        response!!.message,
+                        this
+                    )
+                }
+            } else {
+                Constant.showParentDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
+            }
+        }
+        loadCertificateRequestData()
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rlaSortSearch1.visibility == View.VISIBLE) {
+                binding.rlaSortSearch1.visibility = View.GONE
+                binding.txtSearchMenutext.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenutext.windowToken, 0)
+
+            } else {
+                binding.rlaSortSearch1.visibility = View.VISIBLE
+                binding.txtSearchMenutext.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenutext.windowToken, 0)
+            }
+        }
+
+        binding.txtSearchMenutext.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+                Log.d("Filter", s.toString())
+            }
+        })
+
+    }
+
+    private fun filter(text: String) {
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            certificateRequestList.orEmpty()
+        } else {
+            certificateRequestList.orEmpty().filter { student ->
+                val convertedDate = try {
+                    Constant.convertDateTimeFormat(student.requested_on.orEmpty())
+                } catch (e: Exception) {
+                    student.requested_on.orEmpty()
+                }
+
+                val fieldsToSearch = listOf(
+                    convertedDate.lowercase(),
+                    student.status?.lowercase().orEmpty(),
+                    student.type?.lowercase().orEmpty(),
+                    student.reason?.lowercase().orEmpty(),
+                    student.urgency_level?.lowercase().orEmpty(),
+                )
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field -> field.contains(word.lowercase()) }
+                }
+            }
+        }
+
+        if (filteredList.isNotEmpty()) {
+            ShowData()
+            adapter.updateData(filteredList)
+        } else {
+            binding.recyclerView.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_certificate_found))
+        }
+    }
+
+    fun ShowData() {
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.lnrNoRecords.visibility = View.GONE
+    }
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lnrNoRecords.visibility = View.VISIBLE
+        binding.txtNoData.text = ErrorMessage
+    }
+
+    private fun loadCertificates(certificateTypes: List<String>) {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, certificateTypes)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerText.adapter = adapter
+
+        binding.spinnerText.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                isSelectedCertificateName = certificateTypes[position]
+                Log.d("isSelectedCertificateName", isSelectedCertificateName!!)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+
+    private fun setupRecyclerView() {
+        adapter = CertificateRequestAdapter(certificateRequestList, object : CertificateListener {
+            override fun onItemClick(
+                data: CertificateListData, holder: CertificateRequestAdapter.DataViewHolder
+            ) {
+
+            }
+        }, this, Constant.isShimmerViewDisable)
+
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerView.adapter = adapter
+    }
+
+
+    private fun loadCertificateRequestData() {
+        //  showShimmer()
+        appViewModel?.getCertificateRequestList(
+            isAccessToken.orEmpty(), activity = this
+        )
+    }
+
+    private fun loadCertificateTypes() {
+        //  showShimmer()
+        appViewModel?.getCertificateTypes(
+            isAccessToken.orEmpty(), activity = this
+        )
+    }
+
+    override fun onClick(v: View?) {
+        if (v == null) return
+
+        when (v.id) {
+
+            R.id.lblLeftSideBar -> {
+                binding.rytRequestTap.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                loadCertificateRequestData()
+            }
+
+            R.id.lblRightSideBar -> {
+                binding.rytRequestTap.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                binding.lnrNoRecords.visibility = View.GONE
+            }
+
+            R.id.ivradio -> {
+                urgency_level = getString(R.string.not_urgent)
+                binding.ivradio.setImageResource(R.drawable.selected_radio_button)
+                binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
+            }
+
+            R.id.ivradio1 -> {
+                urgency_level = getString(R.string.urgent)
+                binding.ivradio.setImageResource(R.drawable.unselected_radio_button)
+                binding.ivradio1.setImageResource(R.drawable.selected_radio_button)
+            }
+
+
+            R.id.btnSendCertificateRequest -> {
+                if (binding.txtReason.text.isNotEmpty()) {
+                    Constant.showLoading(this)
+                    val jsonObject = JsonObject()
+                    jsonObject.addProperty(APIKeyNames.requested_for, isSelectedCertificateName)
+                    jsonObject.addProperty(APIKeyNames.urgency_level, urgency_level)
+                    jsonObject.addProperty(APIKeyNames.reason, binding.txtReason.text.toString())
+                    appViewModel?.sendCertificateRequest(
+                        isAccessToken.orEmpty(), jsonObject, activity = this
+                    )
+                } else {
+                    Toast.makeText(
+                        this, getString(R.string.please_enter_the_reason), Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+}

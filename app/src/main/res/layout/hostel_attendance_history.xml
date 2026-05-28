@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/consHeader"
+        android:backgroundTint="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:background="@drawable/bg_top_curve"
+        android:paddingVertical="@dimen/twenty"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/five"
+            app:layout_constraintEnd_toStartOf="@+id/imgClose"
+            android:id="@+id/lblAttendanceHistory"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/ten"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/twenty_sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="@string/attendance_history"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <ImageView
+            android:layout_marginEnd="@dimen/fifteen"
+            android:id="@+id/imgClose"
+            android:padding="@dimen/five"
+            app:layout_constraintStart_toEndOf="@+id/lblAttendanceHistory"
+            android:src="@drawable/close_icon"
+            android:backgroundTint="#4b70dc"
+            android:background="@drawable/circle_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/lblAttendanceHistory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblAttendanceHistory"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblAttendanceHistory"
+            android:id="@+id/lblHostelName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp"
+            android:layout_marginTop="@dimen/eight"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:background="@color/light_white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consHeader"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/lblStart"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintBottom_toTopOf="@+id/rytStart"
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintHorizontal_bias="0"
+                android:text="@string/selected_attendance_history_date" />
+
+            <TextView
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblStart"
+                app:layout_constraintTop_toTopOf="@+id/lblStart"
+                app:layout_constraintBottom_toBottomOf="@+id/lblStart"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:id="@+id/lblStar"
+                android:layout_marginStart="@dimen/three"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:textColor="@color/red" />
+
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/lblStart"
+                android:id="@+id/rytStart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/rcRoomAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/field_background"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/ten"
+                android:paddingVertical="@dimen/eight"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rytStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgCalendar"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/dark_blue_15"
+                        android:background="@drawable/rect_purple_rounded"
+                        android:padding="@dimen/five"
+                        android:src="@drawable/calendar_icon_6">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@+id/imgCalendar"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblDay"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/mild_grey_dark"></TextView>
+
+                        <TextView
+                            android:id="@+id/txtStartDate"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/three"
+                            android:text=""></TextView>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/rytStart"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:id="@+id/rcRoomAvailability"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toTopOf="@id/imgNoDataFound"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/rcRoomAvailability"
+                android:layout_width="@dimen/two_hundred"
+                android:id="@+id/imgNoDataFound"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/two_hundred">
+            </ImageView>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:id="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="nod"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

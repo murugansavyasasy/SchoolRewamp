@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/ten">
+
+    <ImageView
+        android:id="@+id/imgClose"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:src="@drawable/close_red_color">
+
+    </ImageView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcySlotDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/lblCreateSlot"
+        android:layout_below="@+id/imgClose"
+        android:layout_marginTop="@dimen/ten" />
+
+    <TextView
+        android:id="@+id/lblCreateSlot"
+        style="@style/CustomTextStylePoppinsBold1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
+        android:background="@drawable/bg_orange"
+        android:gravity="center"
+        android:padding="@dimen/ten"
+        android:text="@string/open_above_slots"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fifteen_sp" />
+</RelativeLayout>

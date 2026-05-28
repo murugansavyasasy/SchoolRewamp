@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rytSlots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/five"
+        android:background="@drawable/outline_gray"
+        android:padding="@dimen/ten">
+
+        <RelativeLayout
+            android:id="@+id/rltStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/bg_light_green_radious"
+            android:paddingHorizontal="@dimen/eight"
+            android:paddingVertical="@dimen/five">
+
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginStart="@dimen/five"
+                android:src="@drawable/checkmark_circle"></ImageView>
+
+            <TextView
+                android:id="@+id/lblStatus"
+                style="@style/CustomTextStylePoppinsMedium1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_toEndOf="@+id/imgStatus"
+                android:text="Booked"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgDot"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/eight"
+            android:src="@drawable/threedot"
+            app:tint="@color/PrimaryColor">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rltStatus"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:drawableStart="@drawable/clock_icon_2"
+            android:drawablePadding="@dimen/five"
+            android:text="12:00 PM - 03:00 PM"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblDuration"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTime"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:text="Duraction - 10 Minutes"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblWaitingBooking"
+            style="@style/CustomTextStylePoppinsMedium1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDuration"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/bg_light_radious_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Waiting for booking"
+            android:textColor="@color/dark_blue_2">
+
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/rltBookedBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDuration"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/bg_light_green"
+            android:padding="@dimen/ten"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/lblBookedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:text="Booked By : "
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgUser"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_below="@+id/lblBookedBy"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_sample"
+                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+            <TextView
+                android:id="@+id/lblBookedName"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblBookedBy"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_toStartOf="@+id/imgExpand"
+                android:layout_toEndOf="@+id/imgUser"
+                android:text="Sathish G"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgExpand"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
+                android:layout_below="@+id/lblBookedBy"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_down_blue_round"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/lblStandardAndSection"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblBookedName"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:layout_toEndOf="@+id/imgUser"
+                android:text=""
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="visible">
+
+            </TextView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/conParentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStandardAndSection"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblFatherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/four"
+                    android:text="Father Name  :"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtFatherName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/four"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblFatherName"
+                    app:layout_constraintStart_toEndOf="@id/lblFatherName" />
+
+                <TextView
+                    android:id="@+id/lblMotherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/two"
+                    android:text="Mother Name  :"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lblFatherName" />
+
+                <TextView
+                    android:id="@+id/txtMotherName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/four"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/lblMotherName"
+                    app:layout_constraintStart_toEndOf="@id/lblMotherName" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

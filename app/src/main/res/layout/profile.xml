@@ -7,9 +7,11 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/primary_light" />
+        android:layout_height="@dimen/two_fourty"
+        android:background="@color/PrimaryColor"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/topbar"
@@ -18,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/twenty"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="@dimen/fifteen">
 
         <ImageView
@@ -33,13 +36,51 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lblProfile"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/lblProfile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_sp"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:id="@+id/rytEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:text="@string/edit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/sixteen"
+                    android:layout_height="@dimen/sixteen"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:src="@drawable/edit_icon_3" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
 
         <Space
             android:layout_width="wrap_content"
@@ -82,9 +123,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/twenty"
+            android:paddingStart="@dimen/twenty"
             android:paddingTop="@dimen/ten"
-            android:paddingRight="@dimen/twenty">
+            android:paddingEnd="@dimen/twenty">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,8 +137,8 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgStudentProfile"
-                    android:layout_width="@dimen/hundred"
-                    android:layout_height="@dimen/hundred"
+                    android:layout_width="@dimen/seventy"
+                    android:layout_height="@dimen/seventy"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/ten"
                     android:scaleType="centerCrop"
@@ -113,6 +154,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/lblName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
@@ -122,23 +164,37 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/lblSchoolName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Register no : 1473538628"
-                        android:textSize="@dimen/fifteen_sp" />
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="Savyasasy Hr Sec School"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/lblRegisterNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:text="Register number : 1473538628"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
 
 
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/personalinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/lnrStandardDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/circlebordersolid"
@@ -152,18 +208,22 @@
 
 
                         <TextView
+                            android:id="@+id/lblStandard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Standard : IIX"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
 
 
                         <TextView
+                            android:id="@+id/lblSection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:text="Section : A"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -200,7 +260,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -212,7 +272,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:text="+91 6382677672"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -220,8 +280,8 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:layout_marginLeft="@dimen/sixty"
+                            android:layout_height="@dimen/point_five"
+                            android:layout_marginStart="@dimen/sixty"
                             android:layout_marginTop="@dimen/ten"
                             android:background="@color/grey">
 
@@ -232,7 +292,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -244,7 +304,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="sathishkumar@savyasasy.com"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -284,7 +344,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -296,8 +356,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="O+"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
 
@@ -306,7 +367,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -318,8 +379,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="Kodaikanal, Dindigul (D.T), Pin code : 624103"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
 
@@ -328,7 +390,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -340,8 +402,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="Hostel"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -349,7 +412,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/familyDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
@@ -372,7 +434,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:orientation="vertical">
 
                             <TextView
@@ -394,21 +456,23 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Father name"
+                                    android:text="@string/Fathername"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblFatherName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Ganesan"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -425,21 +489,23 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Mother name"
+                                    android:text="@string/mother_name"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblMotherName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Saraswathi"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -456,7 +522,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Father occupation"
+                                    android:text="@string/father_occupation"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -465,12 +531,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Farmer"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -487,7 +554,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Mother occupation"
+                                    android:text="@string/mother_occupation"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -496,12 +563,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Farmer"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -518,7 +586,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Secondary  Phone no"
+                                    android:text="@string/secondary_phone_no"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -527,6 +595,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="6382677672"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
                         </LinearLayout>

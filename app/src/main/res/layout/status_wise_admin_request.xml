@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/imgStatus"
+            android:layout_alignParentStart="true"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five">
+        </ImageView>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imgStatus"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/lblStatus"
+            android:layout_marginHorizontal="@dimen/five"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_gray">
+
+        </TextView>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcAdminRequestWise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten">
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

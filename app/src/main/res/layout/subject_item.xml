@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Subject Header -->
+    <LinearLayout
+        android:id="@+id/subHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/subArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/dark_orange_2" />
+
+        <TextView
+            android:id="@+id/subjectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:text="Mathematics"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrFlexContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/twenty"
+        android:paddingTop="@dimen/fifteen">
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activities"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexActivities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/sixteen"
+        android:layout_marginTop="@dimen/five"
+        android:gravity="center"
+        android:text="@string/no_data_found"
+        android:visibility="gone"></TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one"
+        android:background="@color/AthensGray">
+
+    </View>
+
+
+</LinearLayout>

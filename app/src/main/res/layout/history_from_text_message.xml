@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/minus_nineteen"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:elevation="@dimen/ten"
+        android:src="@drawable/new_icon"
+        android:visibility="gone">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Friday Leave"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblContent"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:maxLines="3"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <TextView
+            android:id="@+id/lblSeeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContent"
+            android:layout_marginStart="@dimen/ten"
+            android:text="@string/see_more"
+            android:textColor="@color/navi_blue2"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"
+            android:visibility="gone">
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSeeMore"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/lblDate"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/five"
+                android:text=""
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblTime"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/lblDate"
+                android:text=""
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp"></TextView>
+
+            <RelativeLayout
+                android:id="@+id/rlaSelectText"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/rect_blue_and_green_small_radious">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/five"
+                        android:contentDescription="@string/send"
+                        android:src="@drawable/send_icon_white" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

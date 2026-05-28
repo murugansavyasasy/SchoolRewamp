@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgBook"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/pink_radius_bg"
+                android:padding="@dimen/eight"
+                android:src="@drawable/book_icon_2"></ImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toStartOf="@+id/status_text1label"
+                android:layout_toEndOf="@+id/imgBook"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblSubjectId"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Tamil"></TextView>
+
+                <TextView
+                    android:id="@+id/lblTeaching"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Chapter"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
+
+                        <TextView
+                            android:id="@+id/lblLevel"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="@dimen/thirty"
+                            android:layout_height="@dimen/thirty"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_circle_gray"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/PrimaryColor"></TextView>
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_toEndOf="@+id/lblLevel"
+                            android:text="@string/level"></TextView>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:drawableStart="@drawable/red_circle_icon"
+                        android:drawablePadding="@dimen/five"
+                        android:text="@string/admin">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/edit_icon"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_more_vert"></ImageView>
+
+            <ImageView
+                android:id="@+id/status_text1label"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_below="@+id/edit_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"></ImageView>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divder1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_below="@+id/rytHeader"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/gray4">
+
+        </View>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detailsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divder1"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:nestedScrollingEnabled="false"
+            android:paddingStart="@dimen/thirteen"
+            android:paddingEnd="@dimen/thirteen" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detailsRecyclerView"
+            android:layout_marginBottom="@dimen/eight"
+            android:padding="@dimen/two"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/eight"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/eight"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/twele_sp"
+                    android:paddingTop="@dimen/six"
+                    android:paddingEnd="@dimen/twele"
+                    android:paddingBottom="@dimen/six">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:contentDescription="Edit Icon"
+                        android:src="@drawable/edit_icon_2" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/eight"
+                        android:text="@string/edit"
+                        android:textSize="@dimen/fourteen_sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnDeleteContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/eight"
+                    android:background="@drawable/bg_red_radoius_10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/twele"
+                    android:paddingTop="@dimen/six"
+                    android:paddingEnd="@dimen/twele"
+                    android:paddingBottom="@dimen/six"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/sixteen"
+                        android:layout_height="@dimen/sixteen"
+                        android:contentDescription="Delete Icon"
+                        android:src="@drawable/delete_bin" />
+
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/delete"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="@dimen/five"
+    app:cardCornerRadius="@dimen/ten"
+    app:strokeWidth="@dimen/zero"
+    android:layout_marginBottom="@dimen/ten"
+    app:cardBackgroundColor="@color/white"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/sixteen"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:padding="@dimen/three"
+            android:layout_marginEnd="@dimen/ten"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            android:src="@drawable/tick_circle_icon"
+            android:tint="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFeeName"
+            android:id="@+id/imgFeeImg"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="@color/light_green_1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/lblFeeName"
+            app:layout_constraintBottom_toBottomOf="@+id/flowFeeDetails"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+        </ImageView>
+
+        <TextView
+            app:layout_constraintHorizontal_weight="7"
+            style="@style/CustomTextStylePoppinsBold"
+            app:layout_constraintStart_toEndOf="@+id/imgFeeImg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lnrStatus"
+            app:layout_constraintBottom_toTopOf="@+id/flowFeeDetails"
+            android:id="@+id/lblFeeName"
+            android:text="Fee Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblTotal"
+            android:text="Total 5000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblPending"
+            android:text="Pending 2000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblDiscount"
+            android:text="Discount 3000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintEnd_toEndOf="@+id/lblFeeName"
+            app:layout_constraintTop_toBottomOf="@+id/lblFeeName"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/lblFeeName"
+            android:id="@+id/flowFeeDetails"
+            app:flow_wrapMode="chain"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="10dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_verticalGap="3dp"
+            app:constraint_referenced_ids="lblTotal,lblPending,lblDiscount"
+            android:layout_height="wrap_content">
+        </androidx.constraintlayout.helper.widget.Flow>
+
+        <LinearLayout
+            android:layout_marginStart="@dimen/ten"
+            app:layout_constraintHorizontal_weight="4"
+            app:layout_constraintTop_toTopOf="@+id/lblFeeName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/flowFeeDetails"
+            app:layout_constraintStart_toEndOf="@+id/lblFeeName"
+            android:id="@+id/lnrStatus"
+            android:layout_width="0dp"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblPaymentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UPI"
+                android:backgroundTint="@color/light_blue_3"
+                android:background="@drawable/rect_radius_15"
+                android:paddingHorizontal="@dimen/ten"
+                android:paddingVertical="@dimen/five"
+                android:drawableTint="@color/bpBlue"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_marginTop="@dimen/five"
+                android:textColor="@color/dark_very_blue_3"
+                android:drawableStart="@drawable/calendar_icon_2"
+                android:drawablePadding="@dimen/five"/>
+
+            <TextView
+                android:id="@+id/lblPaidDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due : 00 XYZ 0000"
+                android:layout_marginBottom="@dimen/five"
+                android:drawableTint="@color/bpBlue"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_marginTop="@dimen/five"
+                android:textColor="@color/light_gray"
+                android:drawableStart="@drawable/calendar_icon_2"
+                android:drawablePadding="@dimen/five"/>
+
+
+
+        </LinearLayout>
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/flowFeeDetails"
+            android:id="@+id/view"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/light_gray_10"
+            android:layout_width="0dp"
+            android:layout_height="1dp">
+
+        </View>
+
+        <TextView
+            style="@style/CustomTextStylePoppinsMedium"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblTransactionNo"
+            android:id="@+id/lblTransaction"
+            android:text="@string/transaction_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            app:layout_constraintTop_toBottomOf="@+id/lblTransaction"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/lblTransactionNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

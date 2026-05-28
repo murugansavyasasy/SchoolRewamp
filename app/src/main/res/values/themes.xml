@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.SchoolChimes" parent="android:Theme.Material.Light.NoActionBar" >
-    </style>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- Defining that new color in ColorPrimaryDark -->
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-<!--        <item name="android:navigationBarColor">@color/colorPrimary</item>-->
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-        <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="fontFamily">@font/poppins_regular</item> <!-- For newer APIs -->
+    <style name="Theme.SchoolChimes" parent="android:Theme.Material.Light.NoActionBar"></style>
+
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <!-- Defining that new color in ColorPrimaryDark -->
+        <item name="colorPrimaryDark">@color/PrimaryColor</item>
+        <item name="colorAccent">@color/PrimaryColor</item>
+        <item name="colorSecondary">@color/PrimaryColor</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="editTextStyle">@style/AppEditTextStyle</item>
+
+
+        <!--        <item name="android:statusBarColor">@color/PrimaryColor</item>-->
+        <item name="android:navigationBarColor">@color/white</item>
+        <!--        <item name="android:navigationBarColor">@color/colorPrimary</item>-->
+
+        <!--        <item name="android:windowTranslucentStatus">false</item>-->
+        <item name="android:windowTranslucentNavigation">false</item>
+
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item> <!-- For newer APIs -->
     </style>
+
+
+    <!-- 🚀 Launch splash theme (Shows instantly) -->
+    <style name="App.LaunchTheme" parent="Theme.SplashScreen">
+        <!-- Splash background color -->
+        <!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <!-- Splash logo -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo_inset</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- After splash, switch to AppTheme -->
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+
+    <!--    <style name="App.LaunchTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+    <!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
+    <!--        <item name="android:windowNoTitle">true</item>-->
+    <!--        <item name="android:windowFullscreen">true</item>-->
+    <!--    </style>-->
 
 </resources>

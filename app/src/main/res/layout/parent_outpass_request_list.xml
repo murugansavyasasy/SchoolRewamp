@@ -1,0 +1,230 @@
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/twenty"
+    android:layout_marginBottom="@dimen/ten"
+    android:background="@drawable/gray_box_background"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consReasonAndStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/lblLeaveDurationDays"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lblReason"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Leave Application"
+            android:textSize="@dimen/fifteen_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lblStatus"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/lblStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/five"
+            android:gravity="center"
+            android:paddingVertical="@dimen/three"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lblReason"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/lblLeaveDurationDays"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:text="00 000 0000"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblLeaveDurationToDays"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/consReasonAndStatus">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblLeaveDurationToDays"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:text="00 00 0000"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constraintBottom_toTopOf="@+id/view1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationDays">
+
+    </TextView>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@color/light_gray_11"
+        app:layout_constraintBottom_toTopOf="@+id/lblRequestOn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationToDays"></View>
+
+
+    <TextView
+        android:id="@+id/lblRequestOn"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Requested :00 Feb 0000"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/fourteen_sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblSeeGatepass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblSeeGatepass"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        app:layout_constraintHorizontal_bias="1"
+        android:text="@string/see_gatepass"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="@dimen/twele_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblRequestOn">
+
+    </TextView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:id="@+id/cardHeader"-->
+    <!--    android:layout_marginBottom="@dimen/ten"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    app:strokeWidth="0.5dp"-->
+    <!--    app:cardBackgroundColor="@color/white"-->
+    <!--    app:strokeColor="@color/light_gray_11">-->
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:padding="@dimen/twenty">-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:id="@+id/consReasonAndStatus"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintBottom_toTopOf="@+id/lblLeaveDurationDays"-->
+    <!--            android:layout_height="wrap_content">-->
+    <!--            <TextView-->
+    <!--                app:layout_constraintHorizontal_chainStyle="spread"-->
+    <!--                app:layout_constraintHorizontal_weight="1"-->
+    <!--                android:id="@+id/lblReason"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Leave Application"-->
+    <!--                app:layout_constraintEnd_toStartOf="@+id/lblStatus"-->
+    <!--                android:textSize="@dimen/fifteen_sp"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"></TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblStatus"-->
+    <!--                android:paddingVertical="@dimen/three"-->
+    <!--                android:layout_marginHorizontal="@dimen/five"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:gravity="center"-->
+    <!--                app:layout_constraintHorizontal_weight="0.5"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/lblReason"-->
+    <!--                android:layout_height="wrap_content">-->
+
+    <!--            </TextView>-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--        <TextView-->
+    <!--            android:layout_marginTop="@dimen/five"-->
+    <!--            android:id="@+id/lblLeaveDurationDays"-->
+    <!--            app:layout_constraintBottom_toTopOf="@+id/view1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            style="@style/CustomTextStylePoppinsMedium"-->
+    <!--            android:textColor="@color/light_gray"-->
+    <!--            android:textSize="@dimen/fourteen_sp"-->
+    <!--            android:text="00 Feb 0000 - 00 Feb 0000"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/consReasonAndStatus"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content">-->
+
+    <!--        </TextView>-->
+    <!--        <View-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_marginHorizontal="@dimen/fifteen"-->
+    <!--            android:id="@+id/view1"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            app:layout_constraintBottom_toTopOf="@+id/lblRequestOn"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/lblLeaveDurationDays"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            android:background="@color/light_gray_11"-->
+    <!--            android:layout_height="1dp">-->
+    <!--        </View>-->
+
+
+    <!--        <TextView-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:id="@+id/lblRequestOn"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            style="@style/CustomTextStylePoppinsMedium"-->
+    <!--            android:textColor="@color/light_gray"-->
+    <!--            android:textSize="@dimen/fourteen_sp"-->
+    <!--            android:text="Requested :00 Feb 0000"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/view1"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content">-->
+
+    <!--        </TextView>-->
+
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--</com.google.android.material.card.MaterialCardView>-->

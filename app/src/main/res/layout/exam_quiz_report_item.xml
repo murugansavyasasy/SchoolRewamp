@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:id="@+id/rlaHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgItem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one_eighty"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedAllCornersEvenly" />
+
+            <TextView
+                android:id="@+id/lblLevelStatus"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/rounded_radius_quiz"
+                android:elevation="@dimen/ten"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="Level 0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgOptions"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/two"
+                android:layout_marginEnd="@dimen/five"
+                android:background="@drawable/circle_bg"
+                android:backgroundTint="@color/PrimaryColor"
+                android:elevation="@dimen/ten"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:src="@drawable/threedot"
+                app:tint="@color/white"></ImageView>
+
+
+            <LinearLayout
+                android:id="@+id/lnrPendingQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgItem"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:src="@drawable/sandclockicon"
+                    app:tint="@color/dark_bg_orange"></ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/pending_please_complete_all_required_questions"
+                    android:textColor="@color/dark_bg_orange">
+
+                </TextView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblCreatedOn"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrPendingQuiz"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="start"
+                android:text="Create on 16,Oct 2025 06:32 PM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSubmitttedOn"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblCreatedOn"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="start"
+                android:text="Submitted on 16,Oct 2025 06:32 PM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSubmitttedOn"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                android:text="@string/online_quiz"
+                android:textSize="@dimen/fourteen_sp">
+
+            </TextView>
+
+            <TextView
+
+                android:id="@+id/lblQuizDescription"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/subjectvalue"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblQuizDescription"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:text="Tamil">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/lnrAddSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subjectvalue"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblAdd"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/light_green_radius"
+                    android:paddingStart="@dimen/twenty"
+                    android:paddingTop="@dimen/five"
+                    android:paddingEnd="@dimen/twenty"
+                    android:paddingBottom="@dimen/five"
+                    android:text="@string/add_question"
+                    android:textColor="@color/white"></TextView>
+
+                <TextView
+                    android:id="@+id/lblSubmitted"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten"
+                    android:background="@drawable/bg_light_orange"
+                    android:paddingStart="@dimen/twenty"
+                    android:paddingTop="@dimen/five"
+                    android:paddingEnd="@dimen/twenty"
+                    android:paddingBottom="@dimen/five"
+                    android:text="@string/submission_report"
+                    android:textColor="@color/white"></TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblPostedBy"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrAddSubmit"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:text="Posted By :Sathish"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/fourteen_sp"></TextView>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/athens_gray">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <ScrollView
+        android:id="@+id/svOverallCreateSLR"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fifteen"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/thirty">
+
+            <RelativeLayout
+                android:layout_gravity="end"
+                android:id="@+id/rytHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                >
+
+                <ImageView
+                    android:id="@+id/imgHistory"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/five"
+                    android:backgroundTint="@color/PrimaryColor"
+                    android:src="@drawable/ic_history">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgHistory"
+                    android:text="@string/history"
+                    android:textColor="@color/PrimaryColor" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_top_rounded_container"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/fifteen">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/ten">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
+                        android:background="@drawable/background_radius_button"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/grid_view" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/type"
+                            android:textColor="@color/light_gray_2"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                        <Spinner
+                            android:id="@+id/isLeaveCategories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@color/gray4" />
+                <!-- Reason -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/ten">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
+                        android:background="@drawable/background_radius_button"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:background="@drawable/marker_border"
+                            android:scaleType="centerInside" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cause"
+                            android:textColor="@color/light_gray_2"
+                            android:textSize="@dimen/fourteen_sp" />
+
+                        <EditText
+                            android:id="@+id/etLeaveReason"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/enter_reason"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:paddingTop="@dimen/four"
+                            android:paddingBottom="@dimen/four"
+                            android:text=""
+                            android:textColorHint="@color/light_gray_2"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@color/gray4" />
+                <!-- From Date -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/ten">
+
+                    <!-- Icon -->
+                    <LinearLayout
+                        android:id="@+id/lnrFromDateImg"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
+                        android:background="@drawable/background_radius_button"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/from_icon" />
+                    </LinearLayout>
+
+                    <!-- Date & Session Layout -->
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- From Date -->
+                        <LinearLayout
+                            android:id="@+id/lnrFromDate"
+                            android:layout_width="@dimen/zero"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.45"
+                            android:orientation="vertical"
+                            android:paddingEnd="@dimen/eight">
+
+                            <TextView
+                                style="@style/CustomTextStylePoppinsRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/from"
+                                android:textColor="@color/light_gray_2"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <TextView
+                                android:id="@+id/tvFromDate"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/down_arrow_3"
+                                android:drawablePadding="@dimen/five"
+                                android:text="@string/select_date"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="@dimen/one"
+                            android:layout_height="match_parent"
+                            android:background="@color/gray4" />
+
+                        <!-- Session Spinner -->
+                        <LinearLayout
+                            android:layout_width="@dimen/zero"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.555"
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/eight">
+
+                            <TextView
+                                style="@style/CustomTextStylePoppinsRegular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/session"
+                                android:textColor="@color/light_gray_2"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <Spinner
+                                android:id="@+id/isFromSession"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:spinnerMode="dropdown" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@color/gray4" />
+                <!--            <CalendarView-->
+
+                <LinearLayout
+                    android:id="@+id/activityMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/sixteen"
+                    android:paddingBottom="@dimen/sixteen"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/lblSelect"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:gravity="center"
+                        android:text="Select Date"
+                        android:textSize="@dimen/sixteen_sp">
+
+                    </TextView>
+
+                    <FrameLayout
+                        android:id="@+id/calendarFromFragmentContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/fifteen"
+                        android:paddingEnd="@dimen/fifteen" />
+
+                    <TextView
+                        android:id="@+id/FromDone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:background="@drawable/button_radius_bg"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/done"
+                        android:textColor="@color/white"
+                        android:visibility="gone"></TextView>
+
+                    <FrameLayout
+                        android:id="@+id/calendarToFragmentContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/fifteen"
+                        android:paddingEnd="@dimen/fifteen" />
+
+                    <TextView
+                        android:id="@+id/ToDone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/five"
+                        android:layout_marginEnd="@dimen/fifteen"
+                        android:background="@drawable/button_radius_bg"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/done"
+                        android:textColor="@color/white"
+                        android:visibility="gone"></TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@color/gray4" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/ten">
+
+                    <!-- Icon -->
+                    <LinearLayout
+                        android:id="@+id/lnrToDateImg"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginEnd="@dimen/twele"
+                        android:background="@drawable/background_radius_button"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/from_to_icom" />
+                    </LinearLayout>
+
+                    <!-- Date & Session Container -->
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- To Date -->
+                        <LinearLayout
+                            android:id="@+id/lnrToDate"
+                            android:layout_width="@dimen/zero"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/three"
+                            android:layout_weight="0.45"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/CustomTextStylePoppinsRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/to"
+                                android:textColor="@color/light_gray_2"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <TextView
+                                android:id="@+id/tvToDate"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/down_arrow_3"
+                                android:drawablePadding="@dimen/five"
+                                android:text="@string/select_date"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="@dimen/one"
+                            android:layout_height="match_parent"
+                            android:background="@color/gray4" />
+
+                        <!-- To Session -->
+                        <LinearLayout
+                            android:layout_width="@dimen/zero"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/three"
+                            android:layout_weight="0.55"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/session"
+                                android:textColor="@color/light_gray_2"
+                                android:textSize="@dimen/fourteen_sp" />
+
+                            <Spinner
+                                android:id="@+id/isToSession"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:spinnerMode="dropdown" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblErrorMessage"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:text=""
+                android:textColor="@color/red" />
+
+
+            <!-- Submit Button -->
+
+            <TextView
+                android:id="@+id/btnApplyLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/background_radius_button"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/apply_for_leave"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/btnupdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/background_radius_button"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/update_leave"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp"
+                android:visibility="gone">
+
+            </TextView>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

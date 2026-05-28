@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    android:backgroundTint="@android:color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="@dimen/eight">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layoutDateRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_orange"
+            android:backgroundTint="@color/light_lavender"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/five">
+
+            <ImageView
+                android:id="@+id/imgCalendar"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginEnd="@dimen/six"
+                android:contentDescription="Calendar Icon"
+                android:src="@drawable/ic_calendar_blue" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/four"
+                android:text="12 Sep 2025"
+                android:textColor="@color/Blue"
+                android:textSize="@dimen/sixteen" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcySlotTiming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutDateRow"
+            android:layout_marginTop="@dimen/ten" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

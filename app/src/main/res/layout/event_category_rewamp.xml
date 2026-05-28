@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout"
+    android:layout_width="@dimen/sixty"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/ten"
+    android:layout_marginEnd="@dimen/five">
+
+    <ImageView
+        android:id="@+id/category_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sixty"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_coupon_rounded_background"
+        android:padding="@dimen/eight"
+        android:src="@drawable/allimage" />
+
+    <TextView
+        android:id="@+id/category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/eight"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="5"
+        android:text="All"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twele_sp"
+        android:textStyle="normal" />
+
+</RelativeLayout>

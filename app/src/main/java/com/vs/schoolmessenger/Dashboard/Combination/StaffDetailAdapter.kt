@@ -1,14 +1,33 @@
 package com.vs.schoolmessenger.Dashboard.Combination
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isSchoolDashBoardData
 import com.vs.schoolmessenger.databinding.SchoolDetailsListItemBinding
 
-class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val context: Context) :
+class StaffDetailAdapter(
+    private val itemList: List<StaffDetails>?,
+    val context: Context,
+    private var listener: SchoolClickListener,
+    private val isStaffRole: String,
+    private val isSchoolList: Int
+) :
     RecyclerView.Adapter<StaffDetailAdapter.GridViewHolder>() {
 
     class GridViewHolder(val binding: SchoolDetailsListItemBinding) :
@@ -22,22 +41,21 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
     }
 
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
-        val item = itemList[position]
+        val item = itemList!![position]
 
+        if (isStaffRole == Constant.isStaffRole) {
+            holder.binding.selectionarrow.visibility = View.VISIBLE
+        } else {
+            holder.binding.selectionarrow.visibility = View.GONE
+        }
         when (position) {
 
             0 -> {
+
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_light_sky_blue
-                    )
-                )
-
-                holder.binding.imgSchool.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.school_building_1
+                        R.drawable.bg_blue_gradient
                     )
                 )
 
@@ -45,17 +63,11 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             1 -> {
+
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_violet
-                    )
-                )
-
-                holder.binding.imgSchool.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.school_building_2
+                        R.drawable.bg_purple_gradient
                     )
                 )
 
@@ -63,17 +75,11 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             2 -> {
+
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_green
-                    )
-                )
-
-                holder.binding.imgSchool.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.school_building_3
+                        R.drawable.bg_green_gradient
                     )
                 )
 
@@ -81,28 +87,77 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             3 -> {
+
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_blue
-                    )
-                )
-
-                holder.binding.imgSchool.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.school_building_4
+                        R.drawable.bg_orange_gradient
                     )
                 )
                 holder.binding.rlaStaffDetails.setPadding(50, 50, 50, 50)
             }
         }
 
-        holder.binding.lblSchoolName.text = item.schoolName
+        holder.binding.lblSchoolName.text = item.school_name
         holder.binding.lblRole.text = item.role
         holder.binding.lblStaffName.text = item.name
-        holder.binding.lblSchoolAddress.text = item.place
+        holder.binding.lblSchoolAddress.text = item.school_address
+
+        if (item.school_name_regional.equals("")) {
+            holder.binding.lblSchoolRegionalName.visibility = View.GONE
+        } else {
+            holder.binding.lblSchoolRegionalName.visibility = View.VISIBLE
+        }
+        holder.binding.lblSchoolRegionalName.text = item.school_name_regional
+
+        if (!item.city.isNullOrBlank()) {
+            holder.binding.lblCity.text = item.city
+            holder.binding.lblCity.visibility = View.VISIBLE
+        } else {
+            holder.binding.lblCity.visibility = View.GONE
+        }
+
+        holder.binding.rlaStaffDetails.setOnClickListener {
+            if (isStaffRole == Constant.isStaffRole) {
+                isSchoolDashBoardData = null
+                listener.onItemClick(item)
+            }
+        }
+
+        Glide.with(context)
+            .load(item.school_logo)
+            .thumbnail(0.1f)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(600, 600)
+            .centerCrop()  // Crop to fit circle efficiently
+            .dontAnimate()  // Skip fade-in for snappier lists
+            .priority(Priority.HIGH)  // Prioritize over other loads
+            .placeholder(R.drawable.school_sample) // Temporary image while loading
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Log the error if needed
+                    Log.e("GlideError", "Image load failed", e)
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            })
+            .into(holder.binding.imgSchool)
+
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int = itemList!!.size
 }
