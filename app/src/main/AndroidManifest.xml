@@ -65,6 +65,7 @@
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/school_app_logo"
         android:supportsRtl="true"
+        android:hardwareAccelerated="true"
         android:theme="@style/Theme.SchoolChimes"
         android:usesCleartextTraffic="true">
         <profileable android:shell="true" />

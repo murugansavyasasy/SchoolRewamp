@@ -729,7 +729,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 ParentHostelDashboard::class.java
             )
 
-//            Constant.M_BUS_TRACKING -> Intent(
+//            Constant.M_LIVE_BUS_TRACKING -> Intent(
 //                requireActivity(),
 //                MapsActivity::class.java
 //            )
@@ -737,8 +737,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 BusList::class.java
             )
-
-
 
 
             else -> null

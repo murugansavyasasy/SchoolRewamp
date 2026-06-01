@@ -30,6 +30,13 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
+        <org.maplibre.android.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible" />
 
         <WebView
             android:id="@+id/WVLiveBus"
@@ -41,7 +48,7 @@
             android:layout_marginTop="@dimen/ten"
             android:clipToPadding="false"
             android:paddingHorizontal="@dimen/five"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <LinearLayout
