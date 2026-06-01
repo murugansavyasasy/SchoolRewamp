@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -24,6 +25,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
@@ -40,6 +42,7 @@ import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.geometry.LatLngBounds
 import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.OnMapReadyCallback
 import org.maplibre.android.maps.Style
 import org.maplibre.android.style.layers.LineLayer
@@ -53,13 +56,13 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,OnMapReadyCallback {
 
-    override fun getViewBinding(): LiveBusTrackingBinding {
-        return LiveBusTrackingBinding.inflate(layoutInflater)
-    }
+
 
     private lateinit var map: MapLibreMap
+
+    private lateinit var mapView: MapView
 
     private var msg_id: Int = -1
     private var headerId: String? = null
@@ -94,6 +97,15 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var busIndex = 0
 
     private val handler = Handler(Looper.getMainLooper())
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        MapLibre.getInstance(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun getViewBinding(): LiveBusTrackingBinding {
+        return LiveBusTrackingBinding.inflate(layoutInflater)
+    }
 
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -147,26 +159,33 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
         binding.toolbarLayout.lblStudentName.text=Constant.isSelectedMenuName
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        mapView = binding.mapView
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+        setupScreen()
+    }
 
 
+    private fun setupScreen() {
+        if (isVendor) {
+            binding.WVLiveBus.visibility = View.VISIBLE
+            binding.mapCoordinatorLayout.visibility = View.GONE
 
-        if (isVendor){
-            binding.WVLiveBus.visibility= View.VISIBLE
-            binding.mapView.visibility= View.GONE
             observeLiveBusResponse()
-        checkAndRequestLocation()
-        }else{
-            if (!isVendor) {
-                try {
-                    MapLibre.getInstance(this)
-                } catch (e: Exception) {
-                    Log.e("MAP", "Init Error", e)
-                }
+            checkAndRequestLocation()
+        } else {
+            binding.WVLiveBus.visibility = View.GONE
+            binding.mapCoordinatorLayout.visibility = View.VISIBLE
+
+
+
+            try {
+                MapLibre.getInstance(this)
+            } catch (e: Exception) {
+                Log.e("MAP", "MapLibre Init Error", e)
             }
-            binding.WVLiveBus.visibility= View.GONE
-            binding.mapView.visibility= View.VISIBLE
-//            binding.mapView.getMapAsync(this)
+
+            mapView.onCreate(null)
+            mapView.getMapAsync(this)
         }
     }
 
@@ -316,54 +335,27 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
 
-    override fun onResume() {
-        super.onResume()
 
-        binding.WVLiveBus.onResume()
-        binding.WVLiveBus.resumeTimers()
 
-        if (isSettingsOpened) {
-            isSettingsOpened = false
-            checkAndRequestLocation()
-        }
-    }
 
-    override fun onPause() {
-        binding.WVLiveBus.onPause()
-        binding.WVLiveBus.pauseTimers()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        binding.WVLiveBus.apply {
-            clearHistory()
-            clearCache(true)
-            loadUrl("about:blank")
-            onPause()
-            removeAllViews()
-            destroy()
-        }
-        super.onDestroy()
-    }
 
     override fun onClick(v: View?) {}
 
 
-//    override fun onMapReady(mapLibre: MapLibreMap) {
-//
-//        if (!isVendor){
-//            map = mapLibre
-//            map.setStyle(
-//                Style.Builder().fromUri(
-//                    "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-//                )
-//            ) {
-//
-//                addStopPins()
-//                fetchRoute()
-//            }
-//        }
-//    }
+    override fun onMapReady(mapLibreMap: MapLibreMap) {
+
+        map = mapLibreMap
+
+        map.setStyle(
+            Style.Builder().fromUri(
+                "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+            )
+        ) {
+
+            addStopPins()
+            fetchRoute()
+        }
+    }
 
     private fun addStopPins() {
 
@@ -568,6 +560,76 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             CameraUpdateFactory.newLatLng(latLng),
             500
         )
+    }
+    override fun onStart() {
+        super.onStart()
+
+        if (!isVendor) {
+            mapView.onStart()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (isVendor) {
+            binding.WVLiveBus.onResume()
+            binding.WVLiveBus.resumeTimers()
+
+            if (isSettingsOpened) {
+                isSettingsOpened = false
+                checkAndRequestLocation()
+            }
+        } else {
+            mapView.onResume()
+        }
+    }
+
+    override fun onPause() {
+
+        if (isVendor) {
+            binding.WVLiveBus.onPause()
+            binding.WVLiveBus.pauseTimers()
+        } else {
+            mapView.onPause()
+        }
+
+        super.onPause()
+    }
+
+    override fun onStop() {
+
+        if (!isVendor) {
+            mapView.onStop()
+        }
+
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+
+        if (isVendor) {
+
+            binding.WVLiveBus.apply {
+                clearHistory()
+                clearCache(true)
+                loadUrl("about:blank")
+                removeAllViews()
+                destroy()
+            }
+
+        } else {
+            mapView.onDestroy()
+        }
+
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        if (!isVendor) {
+            mapView.onLowMemory()
+        }
     }
 
 }
