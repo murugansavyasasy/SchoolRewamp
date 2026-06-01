@@ -497,11 +497,11 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         stops.forEach { builder.include(LatLng(it.lat, it.lng)) }
 
         map.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(builder.build(), 250),
+            CameraUpdateFactory.newLatLngBounds(builder.build(), 350),
             1500
         )
 
-        map.setMinZoomPreference(12.0)
+        map.setMinZoomPreference(15.0)
         map.setMaxZoomPreference(25.0)
     }
 
