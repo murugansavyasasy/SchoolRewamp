@@ -41,6 +41,19 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="320dp" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabRecenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="340dp"
+                android:src="@drawable/ic_my_location"
+                android:visibility="gone"
+                app:backgroundTint="@color/white"
+                app:tint="@color/PrimaryColor"
+                app:elevation="6dp" />
+
             <LinearLayout
                 android:id="@+id/bottomSheet"
                 android:layout_width="match_parent"
@@ -284,14 +297,6 @@
                                 android:textSize="16sp" />
                         </LinearLayout>
 
-                        <TextView
-                            style="@style/CustomTextStylePoppinsMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="28dp"
-                            android:text="Route Progress"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
