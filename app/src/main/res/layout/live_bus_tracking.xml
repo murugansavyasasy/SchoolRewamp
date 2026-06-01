@@ -296,179 +296,38 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:orientation="vertical">
+                            android:layout_marginTop="28dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                style="@style/CustomTextStylePoppinsMedium"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:layout_weight="1"
+                                android:text="Route Progress"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
 
-                                <ImageView
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:src="@drawable/ic_bus_green" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 1 - Greenfield Bus Stand"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Now"
-                                    android:textColor="#4CAF50"
-                                    android:textSize="13sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="13dp"
-                                android:background="#34C759" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:background="@drawable/gray_circle" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 2 - Anna Nagar"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="13dp"
-                                android:background="#E0E0E0" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:background="@drawable/gray_circle" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 3 - Koyambedu"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="13dp"
-                                android:background="#E0E0E0" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:background="@drawable/gray_circle" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 4 - Vadapalani"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="13dp"
-                                android:background="#E0E0E0" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:background="@drawable/gray_circle" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 5 - Ashok Nagar"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="3dp"
-                                android:layout_height="24dp"
-                                android:layout_marginStart="13dp"
-                                android:background="#E0E0E0" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <View
-                                    android:layout_width="28dp"
-                                    android:layout_height="28dp"
-                                    android:background="@drawable/gray_circle" />
-
-                                <TextView
-                                    style="@style/CustomTextStylePoppinsMedium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="Stop 6 - Downtown School"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
+                            <ImageView
+                                android:id="@+id/imgRefresh"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_refresh"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:contentDescription="Refresh route" />
 
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/routeStopsContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="vertical" />
 
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
