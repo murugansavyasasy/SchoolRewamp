@@ -504,7 +504,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         map.setStyle(
             Style.Builder().fromUri(
-                "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+                "https://tiles.openfreemap.org/styles/bright"
             )
         ) {
             addStopPins()
