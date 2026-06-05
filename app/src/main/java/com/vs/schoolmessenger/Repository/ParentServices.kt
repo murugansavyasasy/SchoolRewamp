@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAss
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LatestLocation.GetLatestGeoLocationResponse
 import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
@@ -111,6 +112,7 @@ class ParentServices {
     var isPaymentStatusResponse: MutableLiveData<PaymentStatusResponse?>
     var isGetBusList: MutableLiveData<getBusList?>
     var isLiveBusData: MutableLiveData<getLiveBus?>
+    var isLatestLiveData: MutableLiveData<GetLatestGeoLocationResponse?>
 
     init {
         client_auth = RestClient()
@@ -164,6 +166,7 @@ class ParentServices {
         isPaymentStatusResponse = MutableLiveData()
         isGetBusList = MutableLiveData()
         isLiveBusData = MutableLiveData()
+        isLatestLiveData = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -1964,5 +1967,41 @@ class ParentServices {
 
     val isLiveBusLiveData: LiveData<getLiveBus?>
         get() = isLiveBusData
+
+
+
+
+    fun isgetgeolocation(
+        isToken: String,device_id: String,vehicle_id: String,route_id: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isgetgeolocation(isToken,device_id,vehicle_id,route_id)
+            ?.enqueue(object : Callback<GetLatestGeoLocationResponse?> {
+                override fun onResponse(
+                    call: Call<GetLatestGeoLocationResponse?>,
+                    response: Response<GetLatestGeoLocationResponse?>
+                ) {
+                    Log.d(
+                        "GetLatestGeoLocationResponse",
+                        response.code().toString() + " - " + response.toString()
+                    )
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+//                    val status = response.body()!!.status
+                    isLatestLiveData.postValue(response.body())
+//                        }
+//                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetLatestGeoLocationResponse?>, t: Throwable
+                ) {
+                    isLatestLiveData.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetgeolocationData: LiveData<GetLatestGeoLocationResponse?>
+        get() = isLatestLiveData
 
 }

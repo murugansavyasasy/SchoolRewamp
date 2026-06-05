@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,8 +17,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -36,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.BusTracking.Model.BusStop
@@ -91,19 +91,18 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var isSettingsOpened = false
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    var isVendor = false
 
-    private var stops = listOf(
-        BusStop("1", "Greenfield Bus Stand", "09:00", 13.0418, 80.2341, true, true),
-        BusStop("2", "Anna Nagar",           "09:05", 13.0350, 80.2360),
-        BusStop("3", "Koyambedu",            "09:10", 13.0280, 80.2300),
-        BusStop("4", "Vadapalani",           "09:15", 13.0109, 80.2120),
-        BusStop("5", "Ashok Nagar",          "09:20", 12.9941, 80.1709)
-    )
+    var isVendor: String? = ""
+
+    private var busData: BusListData? = null
+
+    private var journeyStatus: String? = null
+
+    private var stops = listOf<BusStop>()
 
     private var currentStopIndex = -1
-    private val roadCoords       = mutableListOf<Point>()
-    private val completedCoords  = mutableListOf<Point>()
+    private val roadCoords = mutableListOf<Point>()
+    private val completedCoords = mutableListOf<Point>()
     private var busMarker: Marker? = null
     private var busIndex = 0
     private val handler = Handler(Looper.getMainLooper())
@@ -114,8 +113,21 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var isCameraFollowingBus = true
     private var isFirstFit = true
 
+    private val POLL_INTERVAL_MS = 6_500L
+    private val locationPollHandler = Handler(Looper.getMainLooper())
+    private val locationPollRunnable = object : Runnable {
+        override fun run() {
+            isGetLatestGeoLocation()
+            locationPollHandler.postDelayed(this, POLL_INTERVAL_MS)
+        }
+    }
+    private var isMapReady = false
+
     private val Int.dp: Int get() = (this * resources.displayMetrics.density).toInt()
 
+    private val STOP_RADIUS_METERS = 150.0
+    private val LAST_STOP_RADIUS_METERS = 200.0
+    private var isTripCompleted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MapLibre.getInstance(this)
@@ -125,10 +137,135 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     override fun getViewBinding(): LiveBusTrackingBinding =
         LiveBusTrackingBinding.inflate(layoutInflater)
 
+
+    override fun setupViews() {
+        super.setupViews()
+
+        busData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("bus_data", BusListData::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra("bus_data")
+        }
+
+        journeyStatus = intent.getStringExtra("status")?.uppercase()
+
+        Log.d("LiveBusTracking", "━━━ onCreate ━━━")
+        Log.d("LiveBusTracking", "vehicleId  = ${busData?.vehicle_id}")
+        Log.d("LiveBusTracking", "vehicleNo  = ${busData?.vehicle_no}")
+        Log.d("LiveBusTracking", "routeId    = ${busData?.route_id}")
+        Log.d("LiveBusTracking", "journeyStatus = $journeyStatus")
+        Log.d("LiveBusTracking", "stoppingPoints count = ${busData?.stopping_points?.size}")
+
+        buildStopsFromBusData()
+        Log.d("LiveBusTracking", "stops.size after build = ${stops.size}")
+        isToolBarPrimaryParent(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        isVendor = userDetails?.child_details[0]?.gps_type
+
+        Log.d("LiveBusTracking", "isVendor = $isVendor")
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Constant.isSelectedMenuName = menu_name.toString()
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+        }
+        isAccessToken = if (Constant.isParentChoose)
+            SharedPreference.getChildDetails(this)?.access_token
+        else
+            SharedPreference.getStaffDetails(this)?.access_token
+
+        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+
+        mapView = binding.mapView
+        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
+
+        setupBottomSheet()
+        setupMapGestureListeners()
+        setupScreen()
+
+        appViewModel?.isgetgeolocation?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val loc = response.data[0]
+                val lat = loc.latitude.toDoubleOrNull() ?: return@observe
+                val lng = loc.longitude.toDoubleOrNull() ?: return@observe
+
+                Log.d("LiveBusTracking", "Bus update → lat=$lat, lng=$lng, speed=${loc.speed}")
+
+                if (isMapReady) {
+                    val newLatLng = LatLng(lat, lng)
+                    smoothMoveBusToLocation(newLatLng)
+                    checkStopReached(Point.fromLngLat(lng, lat))
+                }
+            } else {
+                Log.w("LiveBusTracking", "Geo-location response empty/failed: ${response?.message}")
+            }
+        }
+    }
+
+    private fun buildStopsFromBusData() {
+        val points = busData?.stopping_points
+        if (points.isNullOrEmpty()) {
+            Log.w("LiveBusTracking", "No stopping_points in BusListData – stops list is empty")
+            return
+        }
+
+        val matchedPoint = if (!journeyStatus.isNullOrEmpty()) {
+            points.firstOrNull { it.journey_type.equals(journeyStatus, ignoreCase = true) }
+                ?: run {
+                    Log.w(
+                        "LiveBusTracking",
+                        "No stopping_point matched journeyStatus='$journeyStatus'. " +
+                                "Available types: ${points.map { it.journey_type }}. " +
+                                "Falling back to first entry."
+                    )
+                    points.first()
+                }
+        } else {
+            Log.w("LiveBusTracking", "journeyStatus is null/empty – using first stopping_point")
+            points.first()
+        }
+
+        stops = matchedPoint.stops.mapIndexed { idx, s ->
+            BusStop(
+                id = s.stop_id,
+                name = s.stop_name,
+                time = s.stop_time,
+                lat = s.latitude.toDoubleOrNull() ?: 0.0,
+                lng = s.longitude.toDoubleOrNull() ?: 0.0,
+                isFirst = idx == 0,
+                isLast = idx == matchedPoint.stops.lastIndex
+            )
+        }
+
+        Log.d(
+            "LiveBusTracking",
+            "Built ${stops.size} stops for journey: ${matchedPoint.journey_type}"
+        )
+        stops.forEachIndexed { i, s ->
+            Log.d("LiveBusTracking", "  stop[$i] ${s.name} → (${s.lat}, ${s.lng})")
+        }
+    }
+
+
+
+
+
+
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted =
-                permissions[Manifest.permission.ACCESS_FINE_LOCATION]   == true ||
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
                         permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             if (granted) proceedAfterPermission()
             else {
@@ -140,46 +277,28 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
 
 
-    override fun setupViews() {
-        super.setupViews()
-        isToolBarPrimaryParent(
-            mainViewId      = R.id.main,
-            statusBarBgView = binding.statusBarBackground
+    private fun isGetLatestGeoLocation() {
+        appViewModel!!.isgetgeolocation(
+            isAccessToken!!,
+            Constant.getAndroidSecureId(this),
+            busData?.vehicle_no.toString(),
+            busData?.route_id.toString(),
+            this
         )
-
-        userDetails = SharedPreference.getUserDetails(this)
-
-        if (fromNotification) {
-            Constant.isParentChoose = true
-            msg_id     = intent.getIntExtra(Constant.msg_id, -1)
-            headerId   = intent.getStringExtra(Constant.header_id)
-            receiverId = intent.getStringExtra(Constant.receiverid)
-            menu_name  = intent.getStringExtra(Constant.menu_name)
-            Constant.isSelectedMenuName = menu_name.toString()
-            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this, matchedChild!!)
-        }
-
-        isAccessToken = if (Constant.isParentChoose)
-            SharedPreference.getChildDetails(this)?.access_token
-        else
-            SharedPreference.getStaffDetails(this)?.access_token
-
-        binding.toolbarLayout.lblStudentName.text = Constant.isSelectedMenuName
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-
-        mapView      = binding.mapView
-        appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
-
-        setupBottomSheet()
-        setupMapGestureListeners()
-        setupScreen()
     }
+
+    private fun startLocationPolling() {
+        locationPollHandler.removeCallbacks(locationPollRunnable)
+        locationPollHandler.post(locationPollRunnable)
+    }
+
+    private fun stopLocationPolling() = locationPollHandler.removeCallbacks(locationPollRunnable)
 
 
     private fun setupMapGestureListeners() {
         binding.fabRecenter.setOnClickListener {
             isCameraFollowingBus = true
+            isFirstFit                     = false
             binding.fabRecenter.visibility = View.GONE
             currentBusLatLng?.let { latLng ->
                 map.animateCamera(
@@ -202,146 +321,199 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         bottomSheetBehavior.isHideable = false
         bottomSheetBehavior.state      = BottomSheetBehavior.STATE_COLLAPSED
 
-        renderStopTimeline(-1)
+        populateBusInfoCard()
 
-//        binding.imgRefresh.setOnClickListener {
-//            animateRefreshIcon()
-//            resetAndReload()
-//        }
-    }
-
-    private fun animateRefreshIcon() {
-        val rotate = RotateAnimation(
-            0f, 360f,
-            RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-            RotateAnimation.RELATIVE_TO_SELF, 0.5f
-        ).apply {
-            duration     = 600
-            interpolator = LinearInterpolator()
-            repeatCount  = 0
+        binding.imgRefresh.setOnClickListener {
+            binding.imgRefresh.startAnimation(
+                android.view.animation.RotateAnimation(
+                    0f, 360f,
+                    android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
+                    android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
+                ).apply { duration = 600; interpolator = android.view.animation.DecelerateInterpolator() }
+            )
+            isGetLatestGeoLocation()
         }
-        binding.imgRefresh.startAnimation(rotate)
-    }
-
-    private fun resetAndReload() {
-        handler.removeCallbacksAndMessages(null)
-        busAnimator?.cancel()
-
-        busIndex         = 0
-        currentStopIndex = -1
-        isCameraFollowingBus = true
-        isFirstFit       = true
-        roadCoords.clear()
-        completedCoords.clear()
-        currentBusLatLng = null
-
-        busMarker?.remove()
-        busMarker = null
-
-        val empty = LineString.fromLngLats(emptyList())
-        map.style?.getSourceAs<GeoJsonSource>("completed-src")?.setGeoJson(empty)
-        map.style?.getSourceAs<GeoJsonSource>("remaining-src")?.setGeoJson(empty)
-        map.style?.getSourceAs<GeoJsonSource>("shadow-src")?.setGeoJson(empty)
 
         renderStopTimeline(-1)
-        binding.fabRecenter.visibility = View.GONE
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
 
-        fetchRoute()
+    private fun populateBusInfoCard() {
+        Log.d("BottomSheet", "populateBusInfoCard: busData=$busData stops=${stops.size}")
+        val data = busData ?: run { Log.e("BottomSheet", "❌ busData NULL"); return }
+
+        binding.tvBusNumber.text = data.vehicle_no?.let { "Bus - $it" } ?: "Bus"
+        binding.tvRouteName.text = buildString {
+            val from = stops.firstOrNull()?.name ?: data.stop_name ?: ""
+            val to   = stops.lastOrNull()?.name  ?: ""
+            if (from.isNotBlank() && to.isNotBlank()) append("$from  →  $to")
+            else append(data.route_name ?: "")
+        }
+
+        binding.tvFromStop.text = stops.firstOrNull()?.name ?: "—"
+        binding.tvFromTime.text = stops.firstOrNull()?.time ?: ""
+        binding.tvToStop.text   = stops.lastOrNull()?.name  ?: "—"
+        binding.tvToTime.text   = stops.lastOrNull()?.time  ?: ""
+        binding.tvBusNo.text    = data.vehicle_no?.let { "$it" } ?: "—"
+
+        Log.d("BottomSheet", "✅ tvBusNumber=${binding.tvBusNumber.text}")
+        Log.d("BottomSheet", "✅ tvFromStop =${binding.tvFromStop.text}")
+        Log.d("BottomSheet", "✅ tvToStop   =${binding.tvToStop.text}")
+        Log.d("BottomSheet", "✅ tvBusNo    =${binding.tvBusNo.text}")
+
+        updateNextStopLabel(-1)
+    }
+
+    private fun updateNextStopLabel(reachedIndex: Int) {
+        val nextIdx = reachedIndex + 1
+        binding.tvNextStop.text =
+            if (nextIdx < stops.size) stops[nextIdx].name
+            else stops.lastOrNull()?.name ?: "—"
     }
 
 
     private fun renderStopTimeline(reachedIndex: Int) {
+        Log.d("BottomSheet", "━━━ renderStopTimeline(reachedIndex=$reachedIndex) ━━━")
+        Log.d("BottomSheet", "stops.size = ${stops.size}")
+
         val container = binding.routeStopsContainer
         container.removeAllViews()
 
+        if (stops.isEmpty()) {
+            Log.e("BottomSheet", "❌ stops is EMPTY — timeline will not render!")
+            return
+        }
+
+        updateNextStopLabel(reachedIndex)
+
         stops.forEachIndexed { index, stop ->
-            val isReached  = index <= reachedIndex
-            val isCurrent  = index == reachedIndex
-            val isLast     = index == stops.lastIndex
+            val isReached = index <= reachedIndex
+            val isCurrent = index == reachedIndex
+            val isLast = index == stops.lastIndex
+
+            Log.d(
+                "BottomSheet",
+                "  stop[$index] '${stop.name}' isReached=$isReached isCurrent=$isCurrent"
+            )
 
             val row = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
-                gravity     = Gravity.CENTER_VERTICAL
+                gravity = Gravity.CENTER_VERTICAL
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-                ).also { it.topMargin = if (index == 0) 0 else 0 }
+                )
             }
 
-            if (isReached) {
-                row.addView(ImageView(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(28.dp, 28.dp)
+            val indicatorSize = 28.dp
+
+            val indicatorView: View = when {
+                isCurrent -> ImageView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(indicatorSize, indicatorSize)
                     setImageResource(R.drawable.ic_bus_green)
-                    if (isCurrent) startPulseAnimation(this)
-                })
-            } else {
-                row.addView(View(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(28.dp, 28.dp)
-                    setBackgroundResource(R.drawable.gray_circle)
-                })
+                    startPulseAnimation(this)
+                }
+
+                isReached -> ImageView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(indicatorSize, indicatorSize)
+                    setImageResource(R.drawable.ic_stop_reached)
+                }
+
+                else -> View(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(indicatorSize, indicatorSize)
+                    background = ContextCompat.getDrawable(
+                        this@LiveBusTracking, R.drawable.stop_circle_bg
+                    )
+                }
             }
+            row.addView(indicatorView)
 
             row.addView(TextView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
-                ).also { it.marginStart = 12.dp }
-                text     = stop.name
+                ).also { it.marginStart = 14.dp }
+                text = stop.name
                 textSize = if (isCurrent) 15f else 14f
                 setTextColor(
                     when {
-                        isCurrent -> ContextCompat.getColor(this@LiveBusTracking, R.color.PrimaryColor)
-                        isReached -> ContextCompat.getColor(this@LiveBusTracking, android.R.color.black)
-                        else      -> Color.parseColor("#9E9E9E")
+                        isCurrent -> ContextCompat.getColor(
+                            this@LiveBusTracking,
+                            R.color.PrimaryColor
+                        )
+
+                        isReached -> ContextCompat.getColor(
+                            this@LiveBusTracking,
+                            android.R.color.black
+                        )
+
+                        else -> Color.parseColor("#9E9E9E")
                     }
                 )
                 setTypeface(
                     typeface,
                     if (isCurrent) android.graphics.Typeface.BOLD
-                    else if (isReached) android.graphics.Typeface.NORMAL
                     else android.graphics.Typeface.NORMAL
                 )
             })
 
-            row.addView(TextView(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                text = when {
-                    isCurrent -> "Now"
-                    isReached -> stop.time
-                    else      -> stop.time
-                }
-                textSize = 12f
-                setTextColor(
-                    when {
-                        isCurrent -> Color.parseColor("#4CAF50")
-                        isReached -> Color.parseColor("#4CAF50")
-                        else      -> Color.parseColor("#BDBDBD")
-                    }
-                )
-            })
+            if (isCurrent) {
+                row.addView(TextView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    text = "  Now  "
+                    textSize = 11f
+                    setTextColor(Color.WHITE)
+                    setTypeface(typeface, android.graphics.Typeface.BOLD)
+                    background = createNowBadgeBackground()
+                    setPadding(0, 4.dp, 0, 4.dp)
+                })
+            } else {
+                row.addView(TextView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    text = stop.time
+                    textSize = 12f
+                    setTextColor(
+                        if (isReached) Color.parseColor("#4CAF50")
+                        else Color.parseColor("#BDBDBD")
+                    )
+                })
+            }
 
             container.addView(row)
 
             if (!isLast) {
                 container.addView(View(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(3.dp, 28.dp).also {
-                        it.marginStart = 13.dp
+                    layoutParams = LinearLayout.LayoutParams(3.dp, 32.dp).also {
+                        it.marginStart = ((indicatorSize / 2) - 1).dp
+                        it.topMargin = 0
                     }
                     setBackgroundColor(
                         if (isReached) Color.parseColor("#4CAF50")
-                        else           Color.parseColor("#E0E0E0")
+                        else Color.parseColor("#E0E0E0")
                     )
                 })
             }
         }
+
+        Log.d("BottomSheet", "Timeline rendered: ${container.childCount} views added")
     }
+
+
+    private fun createNowBadgeBackground(): android.graphics.drawable.Drawable =
+        android.graphics.drawable.GradientDrawable().apply {
+            shape = android.graphics.drawable.GradientDrawable.RECTANGLE
+            cornerRadius = 20f
+            setColor(Color.parseColor("#4CAF50"))
+        }
+
 
     private fun startPulseAnimation(view: View) {
         val animator = ValueAnimator.ofFloat(1f, 1.2f, 1f).apply {
-            duration    = 900
+            duration = 900
             repeatCount = ValueAnimator.INFINITE
             interpolator = android.view.animation.AccelerateDecelerateInterpolator()
             addUpdateListener {
@@ -356,20 +528,19 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
 
     private fun setupScreen() {
-        if (isVendor) {
-            binding.WVLiveBus.visibility            = View.VISIBLE
+        if (isVendor == "dhundhoo") {
+            binding.WVLiveBus.visibility = View.VISIBLE
             binding.mapCoordinatorLayout.visibility = View.GONE
-            binding.fabRecenter.visibility          = View.GONE
+            binding.fabRecenter.visibility = View.GONE
             observeLiveBusResponse()
             checkAndRequestLocation()
         } else {
-            binding.WVLiveBus.visibility            = View.GONE
+            binding.WVLiveBus.visibility = View.GONE
             binding.mapCoordinatorLayout.visibility = View.VISIBLE
             mapView.onCreate(null)
             mapView.getMapAsync(this)
         }
     }
-
 
     private fun checkAndRequestLocation() {
         if (!hasLocationPermission()) requestLocationPermission()
@@ -377,18 +548,29 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
     private fun hasLocationPermission() =
-        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)   == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(
+            this, Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestLocationPermission() {
         locationPermissionLauncher.launch(
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         )
     }
 
     private fun proceedAfterPermission() {
-        if (!isLocationEnabled()) { showGpsEnableDialog(); return }
-        if (!isApiCalled) { isApiCalled = true; isLiveBus() }
+        if (!isLocationEnabled()) {
+            showGpsEnableDialog(); return
+        }
+        if (!isApiCalled) {
+            isApiCalled = true; isLiveBus()
+        }
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -436,13 +618,13 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         appViewModel?.isGetLiveBusData?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.lytList.visibility   = View.GONE
-                binding.WVLiveBus.visibility  = View.VISIBLE
+                binding.lytList.visibility = View.GONE
+                binding.WVLiveBus.visibility = View.VISIBLE
                 binding.toolbarLayout.lblStudentSection.text = response.data[0].thing_id ?: ""
                 setupWebView(response.data[0].tracking_url ?: "")
             } else {
                 binding.WVLiveBus.visibility = View.GONE
-                binding.lytList.visibility   = View.VISIBLE
+                binding.lytList.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
@@ -450,24 +632,38 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private fun setupWebView(trackingUrl: String) {
         binding.WVLiveBus.apply {
-            settings.javaScriptEnabled    = true
-            settings.domStorageEnabled    = true
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
             settings.loadWithOverviewMode = true
-            settings.useWideViewPort      = true
-            settings.builtInZoomControls  = false
-            settings.displayZoomControls  = false
+            settings.useWideViewPort = true
+            settings.builtInZoomControls = false
+            settings.displayZoomControls = false
             settings.setGeolocationEnabled(true)
         }
         binding.WVLiveBus.webChromeClient = object : WebChromeClient() {
-            override fun onGeolocationPermissionsShowPrompt(origin: String?, callback: GeolocationPermissions.Callback?) {
+            override fun onGeolocationPermissionsShowPrompt(
+                origin: String?,
+                callback: GeolocationPermissions.Callback?
+            ) {
                 callback?.invoke(origin, true, false)
             }
         }
         binding.WVLiveBus.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) { Constant.showLoading(this@LiveBusTracking) }
-            override fun onPageFinished(view: WebView?, url: String?)                  { Constant.hideLoading(this@LiveBusTracking) }
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                Constant.hideLoading(this@LiveBusTracking); showWebViewError()
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                Constant.showLoading(this@LiveBusTracking)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                Constant.hideLoading(this@LiveBusTracking)
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                Constant.hideLoading(this@LiveBusTracking)
+                showWebViewError()
             }
         }
         binding.WVLiveBus.loadUrl(trackingUrl)
@@ -475,7 +671,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private fun showWebViewError() {
         binding.WVLiveBus.visibility = View.GONE
-        binding.lytList.visibility   = View.VISIBLE
+        binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = getString(R.string.Something_went_wrong_Please_try_again)
     }
 
@@ -490,9 +686,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     override fun onMapReady(mapLibreMap: MapLibreMap) {
         map = mapLibreMap
 
-        map.uiSettings.isLogoEnabled        = false
+        map.uiSettings.isLogoEnabled = false
         map.uiSettings.isAttributionEnabled = false
-
         map.uiSettings.isCompassEnabled = true
 
         map.addOnCameraMoveStartedListener { reason ->
@@ -502,104 +697,92 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             }
         }
 
-        map.setStyle(
-            Style.Builder().fromUri(
-                "https://tiles.openfreemap.org/styles/bright"
-            )
-        ) {
+        map.setStyle(Style.Builder().fromUri("https://tiles.openfreemap.org/styles/bright")) {
+            isMapReady = true
+            Log.d("LiveBusTracking", "Map ready — stops.size=${stops.size}")
             addStopPins()
-            fetchRoute()
+            setupRouteLayers()
+            fitToStops()
+            startLocationPolling()
         }
     }
-
 
     private fun vectorToBitmap(drawableRes: Int, width: Int, height: Int): Bitmap {
         val drawable = ContextCompat.getDrawable(this, drawableRes)
             ?: return createBitmap(width, height)
         drawable.setBounds(0, 0, width, height)
-        val bmp    = createBitmap(width, height)
+        val bmp = createBitmap(width, height)
         val canvas = android.graphics.Canvas(bmp)
         drawable.draw(canvas)
         return bmp
     }
 
-    private fun scaledStopIcon()  = IconFactory.getInstance(this)
-        .fromBitmap(vectorToBitmap(R.drawable.ic_location,  40.dp, 40.dp))
+    private fun scaledStopIcon() = IconFactory.getInstance(this)
+        .fromBitmap(vectorToBitmap(R.drawable.ic_location, 40.dp, 40.dp))
 
-    private fun scaledBusIcon()   = IconFactory.getInstance(this)
+    private fun scaledBusIcon() = IconFactory.getInstance(this)
         .fromBitmap(vectorToBitmap(R.drawable.ic_bus_green, 60.dp, 60.dp))
 
 
     private fun addStopPins() {
-        val stopIcon = scaledStopIcon()
-        stops.forEach { stop ->
+        if (stops.isEmpty()) {
+            Log.w("LiveBusTracking", "addStopPins: stops is empty — no pins added")
+            return
+        }
+        Log.d("LiveBusTracking", "Adding ${stops.size} stop pins")
+
+        stops.forEachIndexed { index, stop ->
+            val isEndpoint = index == 0 || index == stops.lastIndex
+
+            val icon = IconFactory.getInstance(this).fromBitmap(
+                vectorToBitmap(
+                    R.drawable.ic_location,
+                    if (isEndpoint) 48.dp else 36.dp,
+                    if (isEndpoint) 48.dp else 36.dp
+                )
+            )
+            val label = buildString {
+                append(stop.name)
+                when (index) {
+                    0               -> append(" 🚏 (Start)")
+                    stops.lastIndex -> append(" 🏁 (End)")
+                }
+            }
+
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(stop.lat, stop.lng))
-                    .title(stop.name)
-                    .icon(stopIcon)
+                    .title(label)
+                    .snippet("Stop time: ${stop.time}")
+                    .icon(icon)
             )
         }
-    }
 
-
-    private fun fetchRoute() {
-        val path = stops.joinToString(";") { "${it.lng},${it.lat}" }
-        val url  = "https://router.project-osrm.org/route/v1/driving/$path?overview=full&geometries=geojson"
-
-        thread {
-            try {
-                val connection = URL(url).openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.setRequestProperty("User-Agent", "Mozilla/5.0")
-                connection.connectTimeout = 15_000
-                connection.readTimeout    = 15_000
-
-                val responseCode = connection.responseCode
-                val stream = if (responseCode == HttpURLConnection.HTTP_OK) connection.inputStream
-                else connection.errorStream
-                val response = stream.bufferedReader().use { it.readText() }
-
-                if (responseCode != HttpURLConnection.HTTP_OK) return@thread
-
-                val json = JSONObject(response)
-                if (json.getString("code") != "Ok") {
-                    Log.e("OSRM", "Route error: ${json.getString("code")}"); return@thread
-                }
-
-                val coords = json.getJSONArray("routes")
-                    .getJSONObject(0).getJSONObject("geometry")
-                    .getJSONArray("coordinates")
-
-                roadCoords.clear()
-                for (i in 0 until coords.length()) {
-                    val c = coords.getJSONArray(i)
-                    roadCoords.add(Point.fromLngLat(c.getDouble(0), c.getDouble(1)))
-                }
-
-                runOnUiThread {
-                    setupRouteLayers()
-                    fitToRoute()
-                    startBusAnimation()
-                }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                runOnUiThread {
-                    Toast.makeText(this, "Route error: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+        map.setOnMarkerClickListener { marker ->
+            if (marker.isInfoWindowShown) {
+                marker.hideInfoWindow()
+            } else {
+                marker.showInfoWindow(map, binding.mapView)
             }
+            true
         }
     }
 
-
-    private fun fitToRoute() {
-        if (roadCoords.isEmpty()) return
+    private fun fitToStops() {
+        if (stops.isEmpty()) return
         val builder = LatLngBounds.Builder()
         stops.forEach { builder.include(LatLng(it.lat, it.lng)) }
 
-        if (isFirstFit) {
-            isFirstFit = false
+        if (stops.size == 1) {
+            map.animateCamera(
+                CameraUpdateFactory.newCameraPosition(
+                    CameraPosition.Builder()
+                        .target(LatLng(stops[0].lat, stops[0].lng))
+                        .zoom(15.0)
+                        .build()
+                ), 1800
+            )
+        } else {
             map.animateCamera(
                 CameraUpdateFactory.newLatLngBounds(builder.build(), 250), 1800
             )
@@ -608,7 +791,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         map.setMinZoomPreference(10.0)
         map.setMaxZoomPreference(20.0)
     }
-
 
     private fun setupRouteLayers() {
         val style = map.style ?: return
@@ -645,56 +827,87 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             )
         )
 
-        style.getSourceAs<GeoJsonSource>("shadow-src")
-            ?.setGeoJson(LineString.fromLngLats(roadCoords))
-
-        updateRemaining()
+        fetchRoute()
     }
 
-    private fun updateRemaining() {
-        val remain = if (busIndex < roadCoords.size)
-            roadCoords.subList(busIndex, roadCoords.size) else emptyList()
-        map.style?.getSourceAs<GeoJsonSource>("remaining-src")
-            ?.setGeoJson(LineString.fromLngLats(remain))
-    }
+    private fun fetchRoute() {
+        if (stops.size < 2) {
+            Log.w("LiveBusTracking", "fetchRoute: need ≥2 stops, have ${stops.size}")
+            return
+        }
+        val path = stops.joinToString(";") { "${it.lng},${it.lat}" }
+        val url =
+            "https://router.project-osrm.org/route/v1/driving/$path?overview=full&geometries=geojson"
+        Log.d("LiveBusTracking", "Fetching OSRM route: $url")
 
-    private fun updateCompleted() {
-        map.style?.getSourceAs<GeoJsonSource>("completed-src")
-            ?.setGeoJson(LineString.fromLngLats(completedCoords))
-    }
+        thread {
+            try {
+                val connection = URL(url).openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+                connection.connectTimeout = 15_000
+                connection.readTimeout = 15_000
 
-    private fun startBusAnimation() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                if (busIndex >= roadCoords.size) return
+                val responseCode = connection.responseCode
+                val stream = if (responseCode == HttpURLConnection.HTTP_OK)
+                    connection.inputStream
+                else
+                    connection.errorStream
+                val response = stream.bufferedReader().use { it.readText() }
 
-                val p = roadCoords[busIndex]
-                completedCoords.add(p)
-                updateCompleted()
-                updateRemaining()
-                smoothMoveBus(p)
-                checkStopReached(p)
+                if (responseCode != HttpURLConnection.HTTP_OK) {
+                    Log.e("LiveBusTracking", "OSRM HTTP $responseCode: $response")
+                    return@thread
+                }
 
-                busIndex++
-                handler.postDelayed(this, 800)
+                val json = JSONObject(response)
+                if (json.getString("code") != "Ok") {
+                    Log.e("LiveBusTracking", "OSRM error: ${json.getString("code")}")
+                    return@thread
+                }
+
+                val coords = json
+                    .getJSONArray("routes").getJSONObject(0)
+                    .getJSONObject("geometry").getJSONArray("coordinates")
+
+                roadCoords.clear()
+                for (i in 0 until coords.length()) {
+                    val c = coords.getJSONArray(i)
+                    roadCoords.add(Point.fromLngLat(c.getDouble(0), c.getDouble(1)))
+                }
+                Log.d("LiveBusTracking", "Route fetched: ${roadCoords.size} road coords")
+
+                runOnUiThread {
+                    map.style?.getSourceAs<GeoJsonSource>("shadow-src")
+                        ?.setGeoJson(LineString.fromLngLats(roadCoords))
+                    map.style?.getSourceAs<GeoJsonSource>("remaining-src")
+                        ?.setGeoJson(LineString.fromLngLats(roadCoords))
+                }
+
+            } catch (e: Exception) {
+                Log.e("LiveBusTracking", "Route fetch error: ${e.message}", e)
+                runOnUiThread {
+                    Toast.makeText(this, "Route error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
-        }, 800)
+        }
     }
 
 
-    private fun smoothMoveBus(p: Point) {
-        val targetLatLng = LatLng(p.latitude(), p.longitude())
-        val fromLatLng   = currentBusLatLng ?: targetLatLng
-        currentBusLatLng = targetLatLng
+    private fun smoothMoveBusToLocation(target: LatLng) {
+        val from = currentBusLatLng ?: target
+        currentBusLatLng = target
+
+        updateBusIndexForLocation(target)
 
         busAnimator?.cancel()
         busAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration     = 700
+            duration = 900
             interpolator = android.view.animation.AccelerateDecelerateInterpolator()
             addUpdateListener { anim ->
-                val fraction = anim.animatedValue as Float
-                val lat = fromLatLng.latitude  + (targetLatLng.latitude  - fromLatLng.latitude)  * fraction
-                val lng = fromLatLng.longitude + (targetLatLng.longitude - fromLatLng.longitude) * fraction
+                val f = anim.animatedValue as Float
+                val lat = from.latitude + (target.latitude - from.latitude) * f
+                val lng = from.longitude + (target.longitude - from.longitude) * f
                 val interpolated = LatLng(lat, lng)
 
                 if (busMarker == null) {
@@ -709,89 +922,163 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 }
 
                 if (isCameraFollowingBus) {
-                    val zoom = if (busIndex > 5) 15.5 else map.cameraPosition.zoom
                     map.moveCamera(
                         CameraUpdateFactory.newCameraPosition(
                             CameraPosition.Builder()
                                 .target(interpolated)
-                                .zoom(zoom)
-                                .tilt(if (busIndex > 5) 30.0 else 0.0)
-                                .bearing(bearingBetween(fromLatLng, targetLatLng))
+                                .zoom(15.5)
+                                .tilt(30.0)
+                                .bearing(bearingBetween(from, target))
                                 .build()
                         )
                     )
                 }
             }
+            addListener(object : android.animation.AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: android.animation.Animator) {
+                    updatePolylineSplit()
+                }
+            })
         }
         busAnimator!!.start()
     }
 
-    private fun bearingBetween(from: LatLng, to: LatLng): Double {
-        val lat1 = Math.toRadians(from.latitude)
-        val lat2 = Math.toRadians(to.latitude)
-        val dLng = Math.toRadians(to.longitude - from.longitude)
-        val y    = sin(dLng) * cos(lat2)
-        val x    = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLng)
-        return (Math.toDegrees(atan2(y, x)) + 360) % 360
+    private fun updateBusIndexForLocation(busLatLng: LatLng) {
+        if (roadCoords.isEmpty()) return
+        var minDist = Double.MAX_VALUE
+        var closest = 0
+        roadCoords.forEachIndexed { idx, point ->
+            val d = LatLng(point.latitude(), point.longitude()).distanceTo(busLatLng)
+            if (d < minDist) {
+                minDist = d; closest = idx
+            }
+        }
+        busIndex = closest
+    }
+
+    private fun updatePolylineSplit() {
+        if (roadCoords.isEmpty()) return
+        val completed = roadCoords.subList(0, minOf(busIndex + 1, roadCoords.size))
+        val remaining = roadCoords.subList(minOf(busIndex, roadCoords.size - 1), roadCoords.size)
+        map.style?.getSourceAs<GeoJsonSource>("completed-src")
+            ?.setGeoJson(LineString.fromLngLats(completed))
+        map.style?.getSourceAs<GeoJsonSource>("remaining-src")
+            ?.setGeoJson(LineString.fromLngLats(remaining))
     }
 
 
+
     private fun checkStopReached(busPoint: Point) {
+        if (isTripCompleted) return
+
+        val busLatLng = LatLng(busPoint.latitude(), busPoint.longitude())
+
+        val lastStop = stops.lastOrNull()
+        if (lastStop != null) {
+            val lastStopLatLng = LatLng(lastStop.lat, lastStop.lng)
+            if (busLatLng.distanceTo(lastStopLatLng) <= LAST_STOP_RADIUS_METERS) {
+                isTripCompleted = true
+                currentStopIndex = stops.lastIndex
+                renderStopTimeline(currentStopIndex)
+                showTripCompletedDialog()
+                return
+            }
+        }
+
         val nextIndex = currentStopIndex + 1
         if (nextIndex >= stops.size) return
 
-        val nextStop   = stops[nextIndex]
-        val busLatLng  = LatLng(busPoint.latitude(), busPoint.longitude())
+        val nextStop = stops[nextIndex]
         val stopLatLng = LatLng(nextStop.lat, nextStop.lng)
 
-        if (busLatLng.distanceTo(stopLatLng) <= 150.0) {
+        if (busLatLng.distanceTo(stopLatLng) <= STOP_RADIUS_METERS) {
             currentStopIndex = nextIndex
             renderStopTimeline(currentStopIndex)
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
     }
 
+    private fun showTripCompletedDialog() {
+        stopLocationPolling()
+
+        val journeyLabel = when (journeyStatus) {
+            "PICKING"  -> "Pick-up"
+            "DROPPING" -> "Drop-off"
+            else       -> "Bus"
+        }
+
+        runOnUiThread {
+            AlertDialog.Builder(this)
+                .setTitle("$journeyLabel Trip Completed ✅")
+                .setMessage(
+                    "The $journeyLabel journey has been completed.\n" +
+                            "The bus has reached the final stop: ${stops.lastOrNull()?.name ?: "Destination"}."
+                )
+                .setCancelable(false)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    // Optionally go back: onBackPressed()
+                }
+                .show()
+        }
+    }
+
+    private fun bearingBetween(from: LatLng, to: LatLng): Double {
+        val lat1 = Math.toRadians(from.latitude)
+        val lat2 = Math.toRadians(to.latitude)
+        val dLng = Math.toRadians(to.longitude - from.longitude)
+        val y = sin(dLng) * cos(lat2)
+        val x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLng)
+        return (Math.toDegrees(atan2(y, x)) + 360) % 360
+    }
+
 
     override fun onStart() {
         super.onStart()
-        if (!isVendor) mapView.onStart()
+        if (isVendor != "dhundhoo") mapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        if (isVendor) {
+        if (isVendor == "dhundhoo") {
             binding.WVLiveBus.onResume()
             binding.WVLiveBus.resumeTimers()
-            if (isSettingsOpened) { isSettingsOpened = false; checkAndRequestLocation() }
+            if (isSettingsOpened) {
+                isSettingsOpened = false; checkAndRequestLocation()
+            }
         } else {
             mapView.onResume()
+            if (isMapReady) startLocationPolling()
         }
     }
 
     override fun onPause() {
-        if (isVendor) {
+        if (isVendor == "dhundhoo") {
             binding.WVLiveBus.onPause()
             binding.WVLiveBus.pauseTimers()
         } else {
             mapView.onPause()
         }
-        handler.removeCallbacksAndMessages(null)
+        stopLocationPolling()
         busAnimator?.cancel()
         super.onPause()
     }
 
     override fun onStop() {
-        if (!isVendor) mapView.onStop()
+        if (isVendor != "dhundhoo") mapView.onStop()
         super.onStop()
     }
 
     override fun onDestroy() {
-        handler.removeCallbacksAndMessages(null)
+        stopLocationPolling()
         busAnimator?.cancel()
-        if (isVendor) {
+        if (isVendor == "dhundhoo") {
             binding.WVLiveBus.apply {
-                clearHistory(); clearCache(true)
-                loadUrl("about:blank"); removeAllViews(); destroy()
+                clearHistory()
+                clearCache(true)
+                loadUrl("about:blank")
+                removeAllViews()
+                destroy()
             }
         } else {
             mapView.onDestroy()
@@ -801,11 +1088,11 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     override fun onLowMemory() {
         super.onLowMemory()
-        if (!isVendor) mapView.onLowMemory()
+        if (isVendor != "dhundhoo") mapView.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (!isVendor) mapView.onSaveInstanceState(outState)
+        if (isVendor != "dhundhoo") mapView.onSaveInstanceState(outState)
     }
 }

@@ -43,6 +43,9 @@
     <color name="light_red_1">#ffebea</color>
     <color name="light_red_15">#f7dfdf</color>
     <color name="dark_green_9">#2E7D32</color>
+    <color name="mild_green">#F2F6F3</color>
+    <color name="mild_purple">#fcf3ff</color>
+    <color name="dark_green">#166B37</color>
     <color name="gray4">#D1D1D6</color>
     <color name="gray5">#C7C7CC</color>
     <color name="clr_black1">#414040</color>
@@ -252,7 +255,8 @@
 
     <color name="light_gray1">#F5F5F5</color>
     <color name="dark_blue_and_green_">#00c7be</color>
-    <color name="dark_green">#58B814</color>
+    <color name="dark_milk_green">#166B37</color>
+    <color name="dark_purple_color">#af68ea</color>
     <color name="dark_green_2">#0f4d0f</color>
     <color name="light_green4">#50C878</color>
 

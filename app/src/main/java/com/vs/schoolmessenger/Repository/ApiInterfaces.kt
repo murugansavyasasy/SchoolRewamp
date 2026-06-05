@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAss
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LatestLocation.GetLatestGeoLocationResponse
 import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
@@ -1514,5 +1515,11 @@ interface ApiInterfaces {
     ): Call<getLiveBus?>
 
 
-
+    @GET(APIMethods.Getlatestgeolocation)
+    fun isgetgeolocation(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("device_id") device_id : String,
+        @Query("vehicle_id") vehicle_id  : String,
+        @Query("route_id") route_id  : String,
+    ): Call<GetLatestGeoLocationResponse?>
 }

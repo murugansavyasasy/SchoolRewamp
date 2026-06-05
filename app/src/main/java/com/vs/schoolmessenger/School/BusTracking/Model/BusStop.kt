@@ -7,5 +7,7 @@ data class BusStop(
     val lat: Double,
     val lng: Double,
     var isCompleted: Boolean = false,
-    var isCurrent: Boolean = false
+    var isCurrent: Boolean = false,
+    var isFirst : Any,
+    var isLast : Any
 )

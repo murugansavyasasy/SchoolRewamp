@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- item_route_stop.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/ten"
+    android:paddingEnd="@dimen/ten"
+    android:paddingTop="@dimen/five"
+    android:paddingBottom="@dimen/five">
+
+    <!-- Number circle -->
+    <TextView
+        android:id="@+id/tvStopNumber"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/circle_bg"
+        android:backgroundTint="@color/PrimaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardStop"
+        app:layout_constraintBottom_toBottomOf="@+id/cardStop" />
+
+    <!-- Vertical line below circle (hidden for last item) -->
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        android:alpha="0.3"
+        app:layout_constraintStart_toStartOf="@+id/tvStopNumber"
+        app:layout_constraintEnd_toEndOf="@+id/tvStopNumber"
+        app:layout_constraintTop_toBottomOf="@+id/tvStopNumber"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Stop card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardStop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/ten"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintStart_toEndOf="@+id/tvStopNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ten">
+
+            <!-- Stop name -->
+            <TextView
+                android:id="@+id/tvStopName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvYourStop"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- "Your Stop" badge -->
+            <TextView
+                android:id="@+id/tvYourStop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Stop"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:paddingStart="@dimen/eight"
+                android:paddingEnd="@dimen/eight"
+                android:paddingTop="@dimen/three"
+                android:paddingBottom="@dimen/three"
+                android:visibility="gone"
+                android:background="@drawable/background_primary_radius_button"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <!-- Time row -->
+            <LinearLayout
+                android:id="@+id/lnrTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStopName">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/time_icon"
+                    android:tint="@color/PrimaryColor" />
+
+                <TextView
+                    android:id="@+id/tvStopTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:textSize="13sp"
+                    android:textColor="@color/PrimaryColor"
+                    style="@style/CustomTextStylePoppinsRegular" />
+            </LinearLayout>
+
+            <!-- Landmark row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnrTime">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/location_fill_icon"
+                    android:tint="@color/light_gray" />
+
+                <TextView
+                    android:id="@+id/tvLandmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:textSize="12sp"
+                    android:textColor="@color/light_gray"
+                    style="@style/CustomTextStylePoppinsRegular" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

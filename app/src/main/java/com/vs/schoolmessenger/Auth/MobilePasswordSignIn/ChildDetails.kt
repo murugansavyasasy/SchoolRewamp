@@ -28,6 +28,7 @@ data class ChildDetails(
     val class_teacher: String,
     val academic_year_id: String,
     val academic_year_name: String,
+    val gps_type: String,
     val is_not_allow: Boolean,
 
 )

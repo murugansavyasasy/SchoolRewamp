@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class BusListData(
+data class BusListData(
     val student_id: String?,
     val student_name: String?,
     val admission_no: String?,
@@ -15,5 +15,6 @@ class BusListData(
     val vehicle_id: String?,
     val vehicle_no: String?,
     val tentative_pickup_time: String?,
-    val tentative_drop_time: String?
+    val tentative_drop_time: String?,
+    val stopping_points: List<StoppingPoint>
 ) : Parcelable

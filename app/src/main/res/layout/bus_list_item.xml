@@ -1,304 +1,424 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="@dimen/ten"
-    android:elevation="@dimen/five"
-    android:layout_marginBottom="@dimen/ten"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginBottom="@dimen/ten"
+    android:elevation="@dimen/five"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/ten">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="@dimen/fifteen"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fifteen">
 
         <LinearLayout
             android:id="@+id/lnrBusDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:weightSum="1"
             app:layout_constraintBottom_toTopOf="@+id/lnrCurrentBusStop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="@dimen/thirty_five"
-                android:src="@drawable/bus_icon"
-                android:tint="@color/white"
-                android:padding="@dimen/ten"
-                android:backgroundTint="@color/PrimaryColor"
+                android:layout_height="@dimen/thirty_five"
                 android:background="@drawable/rect_bg_light_green_radius"
-                android:layout_height="@dimen/thirty_five">
-            </ImageView>
+                android:backgroundTint="@color/PrimaryColor"
+                android:padding="@dimen/ten"
+                android:src="@drawable/bus_icon"
+                android:tint="@color/white" />
 
             <LinearLayout
-                android:layout_marginStart="@dimen/ten"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/lblPlace"
-                    android:layout_width="match_parent"
-                    android:text="Place"
-                    android:textSize="@dimen/fifteen_sp"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Place"
+                    android:textSize="@dimen/fifteen_sp" />
 
-                </TextView>
                 <TextView
                     android:id="@+id/lblRouteNo"
-                    android:layout_width="match_parent"
-                    android:text="Route #00"
-                    android:visibility="gone"
                     style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_height="wrap_content">
-
-                </TextView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Route #00"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:layout_width="0dp"
                 android:id="@+id/lblBusNo"
-                android:layout_height="wrap_content"
-                android:text="Sample"
-                android:visibility="gone"
                 style="@style/CustomTextStylePoppinsBold"
-                app:backgroundTint="@color/light_blue_8"
-                android:minWidth="0dp"
-                android:textColor="@color/PrimaryColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
-                android:padding="@dimen/five"
                 android:clickable="false"
                 android:focusable="false"
-                app:cornerRadius="@dimen/fifteen"/>
-
+                android:minWidth="0dp"
+                android:padding="@dimen/five"
+                android:text="Sample"
+                android:textColor="@color/PrimaryColor"
+                android:visibility="gone"
+                app:backgroundTint="@color/light_blue_8"
+                app:cornerRadius="@dimen/fifteen" />
         </LinearLayout>
 
         <LinearLayout
-            app:layout_constraintTop_toBottomOf="@+id/lnrBusDetails"
+            android:id="@+id/lnrCurrentBusStop"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/rect_bg_light_green_radius"
             android:backgroundTint="@color/light_blue_14"
-            android:layout_marginTop="@dimen/ten"
             android:gravity="center"
             android:padding="@dimen/fifteen"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/lnrCurrentBusStop"
-            android:layout_height="wrap_content">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lnrBusDetails">
 
             <ImageView
                 android:layout_width="@dimen/thirty"
-                android:src="@drawable/map_icon_5"
-                android:tint="@color/white"
-                android:padding="@dimen/six"
-                android:backgroundTint="@color/PrimaryColor"
+                android:layout_height="@dimen/thirty"
                 android:background="@drawable/circle_bg"
-                android:layout_height="@dimen/thirty">
-            </ImageView>
+                android:backgroundTint="@color/PrimaryColor"
+                android:padding="@dimen/six"
+                android:src="@drawable/map_icon_5"
+                android:tint="@color/white" />
 
             <LinearLayout
-                android:layout_marginStart="@dimen/five"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
                 android:layout_weight="0.7"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:text="Your Stop"
-                    android:textColor="@color/PrimaryColor"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Stop"
+                    android:textColor="@color/PrimaryColor" />
 
-                </TextView>
                 <TextView
                     android:id="@+id/lblCurrentStop"
-                    android:layout_width="match_parent"
-                    android:text="Current Stop"
-                    android:textSize="@dimen/fourteen_sp"
-                    android:layout_marginTop="@dimen/three"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_height="wrap_content">
-
-                </TextView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/three"
+                    android:text="Current Stop"
+                    android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
 
             <ImageView
-                android:layout_marginStart="@dimen/five"
                 android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginStart="@dimen/five"
                 android:src="@drawable/location_fill_icon"
-                android:tint="@color/PrimaryColor"
-                android:layout_height="@dimen/twenty_five">
-            </ImageView>
-
-
+                android:tint="@color/PrimaryColor" />
         </LinearLayout>
 
         <LinearLayout
-
-            android:layout_marginTop="@dimen/ten"
-            app:layout_constraintTop_toBottomOf="@+id/lnrCurrentBusStop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/lnrCurrentBusStop"
             android:id="@+id/lnrPickUpAndDrop"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
             android:weightSum="1"
-            android:layout_height="wrap_content">
+            app:layout_constraintEnd_toEndOf="@+id/lnrCurrentBusStop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lnrCurrentBusStop">
 
             <LinearLayout
-                android:background="@drawable/rect_bg_light_green_radius"
-                android:backgroundTint="@color/light_blue_8"
-                android:padding="@dimen/eight"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="0.5"
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:backgroundTint="@color/mild_green"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:text="@string/pickup"
-                    android:textColor="@color/PrimaryColor"
-                    android:drawablePadding="@dimen/five"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:drawableStart="@drawable/time_icon"
-                    android:layout_height="wrap_content">
+                android:padding="@dimen/eight">
 
-                </TextView>
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/five"
+                    android:drawableStart="@drawable/carwavesup"
+                    android:drawableTint="@color/dark_milk_green"
+                    android:text="@string/pickup"
+                    android:textColor="@color/dark_milk_green" />
 
                 <TextView
                     android:id="@+id/lblPickUpTime"
-                    android:layout_width="match_parent"
-                    android:drawablePadding="@dimen/five"
-                    android:layout_marginTop="@dimen/eight"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/eight"
+                    android:drawablePadding="@dimen/five" />
             </LinearLayout>
 
             <LinearLayout
-                android:padding="@dimen/eight"
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
+                android:layout_weight="0.5"
                 android:background="@drawable/rect_bg_light_green_radius"
                 android:backgroundTint="@color/light_voilet_2"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:padding="@dimen/eight">
+
                 <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/five"
+                    android:drawableStart="@drawable/carwavesdown"
+                    android:drawableTint="@color/dark_voilet_4"
                     android:text="@string/drop"
                     android:textAllCaps="true"
-                    android:textColor="@color/dark_voilet_4"
-                    android:drawablePadding="@dimen/five"
-                    android:drawableTint="@color/dark_voilet_4"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:drawableStart="@drawable/time_icon"
-                    android:layout_height="wrap_content">
-
-                </TextView>
+                    android:textColor="@color/dark_voilet_4" />
 
                 <TextView
                     android:id="@+id/lblDropTime"
-                    android:layout_width="match_parent"
-                    android:drawablePadding="@dimen/five"
-                    android:layout_marginTop="@dimen/eight"
                     style="@style/CustomTextStylePoppinsBold"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/eight"
+                    android:drawablePadding="@dimen/five" />
             </LinearLayout>
-
         </LinearLayout>
 
         <View
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/View1"
-            app:layout_constraintTop_toBottomOf="@+id/lnrPickUpAndDrop"
             android:layout_width="0dp"
-            android:background="@color/gray4"
+            android:layout_height="1dp"
             android:layout_marginTop="@dimen/ten"
-            android:layout_height="1dp">
-
-        </View>
+            android:background="@color/gray4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lnrPickUpAndDrop" />
 
         <LinearLayout
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/View1"
+            android:id="@+id/lnrBusRoteNumber"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/rect_bg_light_green_radius"
             android:backgroundTint="@color/light_blue_14"
-            android:layout_marginTop="@dimen/ten"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="@dimen/fifteen"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/lnrBusRoteNumber"
-            android:layout_height="wrap_content"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/View1">
 
             <TextView
-                android:layout_width="match_parent"
-                android:text="Bus Number"
-                android:textColor="@color/light_gray"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bus Number"
+                android:textColor="@color/light_gray" />
 
-            </TextView>
             <TextView
                 android:id="@+id/lblBusRouteNumber"
-                android:layout_width="match_parent"
-                android:text="#00"
-                android:layout_marginTop="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_height="wrap_content">
-
-            </TextView>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five"
+                android:text="#00" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/lnrBusRoteNumber"
+            android:id="@+id/pickuproutelabel"
             android:layout_width="0dp"
-            android:background="@drawable/rect_bg_light_green_radius"
-            android:backgroundTint="@color/PrimaryColor"
-            android:layout_marginTop="@dimen/ten"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/lnrTrackLive"
             android:layout_height="wrap_content"
-            >
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/mild_green"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/fifteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lnrBusRoteNumber">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/carwavesup"
+                android:tint="@color/dark_milk_green" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/find_my_bus"
-                android:gravity="center"
-                android:drawablePadding="@dimen/ten"
-                android:drawableEnd="@drawable/ic_right_arrow_"
-                android:textColor="@color/white"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_height="wrap_content">
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_weight="1"
+                android:text="Pickup Route Details"
+                android:textColor="@color/dark_milk_green"
+                android:textStyle="bold" />
 
-            </TextView>
-
+            <ImageView
+                android:id="@+id/imgPickupArrow"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/blue_down_arrow_"
+                android:tint="@color/Blue" />
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/pickupDaysContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pickuproutelabel">
+
+            <LinearLayout
+                android:id="@+id/lnrPickupDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropuproutelabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/mild_purple"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:padding="@dimen/fifteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pickupDaysContainer">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/carwavesdown"
+                android:tint="@color/dark_purple_color" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_weight="1"
+                android:text="Drop Route Details"
+                android:textColor="@color/dark_purple_color"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgDropArrow"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/blue_down_arrow_"
+                android:tint="@color/dark_purple_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropDaysContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dropuproutelabel">
+
+            <LinearLayout
+                android:id="@+id/lnrDropDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrTrackLive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/rect_bg_light_green_radius"
+            android:backgroundTint="@color/PrimaryColor"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/ten"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dropDaysContainer">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_right_arrow_"
+                android:drawablePadding="@dimen/ten"
+                android:gravity="center"
+                android:text="@string/find_my_bus"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/lnrPickupDropBus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/lnrTrackLive"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <TextView
+                android:id="@+id/btnPickupBus"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:backgroundTint="@color/PrimaryColor"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="Pickup Bus"
+                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsBold" />
+
+            <TextView
+                android:id="@+id/btnDropBus"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/rect_bg_light_green_radius"
+                android:backgroundTint="@color/PrimaryColor"
+                android:layout_marginStart="8dp"
+                android:text="Drop Bus"
+                android:gravity="center"
+                android:textColor="@color/white"
+                style="@style/CustomTextStylePoppinsBold" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </com.google.android.material.card.MaterialCardView>

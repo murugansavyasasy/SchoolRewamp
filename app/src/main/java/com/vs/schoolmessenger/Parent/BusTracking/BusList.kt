@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.BusTracking
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Adapter.BusListAdapter
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Hostel.Model.HostelList.selctedHotelDetails
@@ -15,6 +17,7 @@ import com.vs.schoolmessenger.School.Hostel.SchoolHostelDashboard
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.BusListActivityBinding
+import kotlin.toString
 
 class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, BusClickListner {
 
@@ -28,12 +31,21 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     var isToolBarTitle = ""
     var isToolBarDescription = ""
 
+    var isVendor: String? = ""
+    var userDetails: UserDetails? = null
+
+
     override fun setupViews() {
         super.setupViews()
 
         isToolBarPrimaryParent(
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
+
+        userDetails = SharedPreference.getUserDetails(this)
+        isVendor  = userDetails?.child_details[0]?.gps_type
+
+        Log.d("isVendorValue", isVendor.toString())
 
         if (Constant.isParentChoose) {
             val childDetails = SharedPreference.getChildDetails(this)
@@ -83,12 +95,12 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     }
 
     private fun isLoadBusList(newData: List<BusListData>?) {
-        mAdapter = BusListAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        mAdapter = BusListAdapter(newData, this, this, Constant.isShimmerViewDisable,isVendor)
         binding.rvBusList.adapter = mAdapter
     }
 
     private fun isGetBusList() {
-        mAdapter = BusListAdapter(null, this, this, Constant.isShimmerViewShow)
+        mAdapter = BusListAdapter(null, this, this, Constant.isShimmerViewShow,isVendor)
 
         binding.rvBusList.layoutManager = LinearLayoutManager(this)
         binding.rvBusList.isNestedScrollingEnabled = false
@@ -110,6 +122,13 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     override fun OnBusClick(data: BusListData) {
         val intent = Intent(this, LiveBusTracking::class.java)
         intent.putExtra("bus_data", data)
+        startActivity(intent)
+    }
+
+    override fun onCustomClick(data: BusListData, status: String) {
+        val intent = Intent(this, LiveBusTracking::class.java)
+        intent.putExtra("bus_data", data)
+        intent.putExtra("status", status)
         startActivity(intent)
     }
 

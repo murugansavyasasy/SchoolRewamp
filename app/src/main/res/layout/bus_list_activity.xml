@@ -45,7 +45,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="Live Bus Tracking"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp" />
 

@@ -76,6 +76,7 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
@@ -253,6 +254,7 @@ object Constant {
     var staff = "staff"
     var Staff___ = "staff"
     var isVoiceSendingData: VoiceSendingData? = null
+    var isRouteData: getBusList? = null
     var isTextSendingData: TextSendingData? = null
     var commonFileList: MutableList<CommonFileData> = mutableListOf()
     var selectedFileIndex: Int = -1

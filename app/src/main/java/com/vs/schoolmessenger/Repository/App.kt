@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.Parent.Assignment.MySubmissionModel.MySubmittedAss
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.getBusList
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LatestLocation.GetLatestGeoLocationResponse
 import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
@@ -482,6 +483,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isPaymentStatusResponse: LiveData<PaymentStatusResponse?>? = null
     var isGetBusList: LiveData<getBusList?>? = null
     var isGetLiveBusData: LiveData<getLiveBus?>? = null
+    var isgetgeolocation: LiveData<GetLatestGeoLocationResponse?>? = null
 
 
 
@@ -688,6 +690,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isPaymentStatusResponse = apiParentRepositories.isPaymentStatusResponseLiveData
         isGetBusList = apiParentRepositories.isBusListLiveData
         isGetLiveBusData = apiParentRepositories.isLiveBusLiveData
+        isgetgeolocation = apiParentRepositories.isgetgeolocationData
 
     }
 
@@ -2234,6 +2237,14 @@ class App(application: Application) : AndroidViewModel(application) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isLiveBus(isToken,activity)
+    }
+
+    fun isgetgeolocation(
+        isToken: String, device_id: String,vehicle_id: String, route_id: String, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiParentRepositories.isgetgeolocation(isToken,device_id,vehicle_id,route_id,activity)
     }
 }
 
