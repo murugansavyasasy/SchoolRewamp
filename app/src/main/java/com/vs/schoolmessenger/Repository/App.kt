@@ -485,7 +485,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetLiveBusData: LiveData<getLiveBus?>? = null
     var isgetgeolocation: LiveData<GetLatestGeoLocationResponse?>? = null
 
-
+    var isFirstLocationSynced = false
 
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
