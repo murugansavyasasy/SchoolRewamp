@@ -136,9 +136,12 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     var isFirstLocationSynced = false
 
+    private var savedInstanceStateRef: Bundle? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MapLibre.getInstance(this)
+        savedInstanceStateRef = savedInstanceState
         super.onCreate(savedInstanceState)
     }
 
@@ -223,8 +226,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
 
-
-
     private fun syncInitialStopProgress(busLatLng: LatLng) {
         if (appViewModel?.isFirstLocationSynced == true) return
         appViewModel?.isFirstLocationSynced = true
@@ -249,15 +250,20 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         if (alreadyCompletedIndex >= 0) {
             currentStopIndex = alreadyCompletedIndex
-            Log.d("LiveBusTracking",
+            Log.d(
+                "LiveBusTracking",
                 "syncInitialStopProgress: bus near stop[$closestIndex] " +
-                        "→ marking stops 0..$alreadyCompletedIndex as completed")
+                        "→ marking stops 0..$alreadyCompletedIndex as completed"
+            )
             renderStopTimeline(currentStopIndex)
         } else {
-            Log.d("LiveBusTracking",
-                "syncInitialStopProgress: bus near first stop, nothing to pre-mark")
+            Log.d(
+                "LiveBusTracking",
+                "syncInitialStopProgress: bus near first stop, nothing to pre-mark"
+            )
         }
     }
+
     private fun buildStopsFromBusData() {
         val points = busData?.stopping_points
         if (points.isNullOrEmpty()) {
@@ -303,10 +309,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
 
-
-
-
-
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted =
@@ -323,9 +325,21 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
 
     private fun isGetLatestGeoLocation() {
+
+
+        //Production code  - Uncomment the code while releasing it for production
+//        appViewModel!!.isgetgeolocation(
+//            isAccessToken!!,
+//            Constant.getAndroidSecureId(this),
+//            busData?.vehicle_no.toString(),
+//            busData?.route_id.toString(),
+//            this
+//        )
+
+        //For testing purpose - Use the below code for testing purpose
         appViewModel!!.isgetgeolocation(
             isAccessToken!!,
-            Constant.getAndroidSecureId(this),
+            "ea973ebc50a1f536",
             busData?.vehicle_no.toString(),
             busData?.route_id.toString(),
             this
@@ -343,7 +357,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private fun setupMapGestureListeners() {
         binding.fabRecenter.setOnClickListener {
             isCameraFollowingBus = true
-            isFirstFit                     = false
+            isFirstFit = false
             binding.fabRecenter.visibility = View.GONE
             currentBusLatLng?.let { latLng ->
                 map.animateCamera(
@@ -364,7 +378,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior.peekHeight = resources.getDimensionPixelSize(R.dimen.three_twenty)
         bottomSheetBehavior.isHideable = false
-        bottomSheetBehavior.state      = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         populateBusInfoCard()
 
@@ -374,7 +388,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                     0f, 360f,
                     android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
                     android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
-                ).apply { duration = 600; interpolator = android.view.animation.DecelerateInterpolator() }
+                ).apply {
+                    duration = 600; interpolator = android.view.animation.DecelerateInterpolator()
+                }
             )
             isGetLatestGeoLocation()
         }
@@ -389,16 +405,16 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         binding.tvBusNumber.text = data.vehicle_no?.let { "Bus - $it" } ?: "Bus"
         binding.tvRouteName.text = buildString {
             val from = stops.firstOrNull()?.name ?: data.stop_name ?: ""
-            val to   = stops.lastOrNull()?.name  ?: ""
+            val to = stops.lastOrNull()?.name ?: ""
             if (from.isNotBlank() && to.isNotBlank()) append("$from  →  $to")
             else append(data.route_name ?: "")
         }
 
         binding.tvFromStop.text = stops.firstOrNull()?.name ?: "—"
         binding.tvFromTime.text = stops.firstOrNull()?.time ?: ""
-        binding.tvToStop.text   = stops.lastOrNull()?.name  ?: "—"
-        binding.tvToTime.text   = stops.lastOrNull()?.time  ?: ""
-        binding.tvBusNo.text    = data.vehicle_no?.let { "$it" } ?: "—"
+        binding.tvToStop.text = stops.lastOrNull()?.name ?: "—"
+        binding.tvToTime.text = stops.lastOrNull()?.time ?: ""
+        binding.tvBusNo.text = data.vehicle_no?.let { "$it" } ?: "—"
 
         Log.d("BottomSheet", "✅ tvBusNumber=${binding.tvBusNumber.text}")
         Log.d("BottomSheet", "✅ tvFromStop =${binding.tvFromStop.text}")
@@ -592,7 +608,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         } else {
             binding.WVLiveBus.visibility = View.GONE
             binding.mapCoordinatorLayout.visibility = View.VISIBLE
-            mapView.onCreate(null)
+            mapView.onCreate(savedInstanceStateRef)
             mapView.getMapAsync(this)
         }
     }
@@ -740,10 +756,11 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     override fun onMapReady(mapLibreMap: MapLibreMap) {
         map = mapLibreMap
-
         map.uiSettings.isLogoEnabled = false
         map.uiSettings.isAttributionEnabled = false
         map.uiSettings.isCompassEnabled = true
+
+        Log.d("MapLibre", "onMapReady called — loading style")
 
         map.addOnCameraMoveStartedListener { reason ->
             if (reason == MapLibreMap.OnCameraMoveStartedListener.REASON_API_GESTURE) {
@@ -753,16 +770,17 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
 
         map.setStyle(
-            Style.Builder().fromUri("https://tiles.openfreemap.org/styles/bright")
-        ) { style ->
-            Log.d("MAP", "Style Loaded Successfully")
-            isMapReady = true
-            Log.d("LiveBusTracking", "Map ready — stops.size=${stops.size}")
-            addStopPins()
-            setupRouteLayers()
-            fitToStops()
-            startLocationPolling()
-        }
+            Style.Builder().fromUri("https://tiles.openfreemap.org/styles/bright"),
+            Style.OnStyleLoaded { style ->
+                Log.d("MapLibre", "✅ Style loaded successfully")
+                isMapReady = true
+                addStopPins()
+                setupRouteLayers()
+                fitToStops()
+                isFirstFit = true
+                startLocationPolling()
+            }
+        )
     }
 
     private fun vectorToBitmap(drawableRes: Int, width: Int, height: Int): Bitmap {
@@ -802,7 +820,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             val label = buildString {
                 append(stop.name)
                 when (index) {
-                    0               -> append(" 🚏 (Start)")
+                    0 -> append(" 🚏 (Start)")
                     stops.lastIndex -> append(" 🏁 (End)")
                 }
             }
@@ -1028,8 +1046,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
 
-
-
     private fun checkStopReached(busPoint: Point) {
         if (isTripCompleted) return
         val busLatLng = LatLng(busPoint.latitude(), busPoint.longitude())
@@ -1065,9 +1081,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         stopLocationPolling()
 
         val journeyLabel = when (journeyStatus) {
-            "PICKING"  -> "Pick-up"
+            "PICKING" -> "Pick-up"
             "DROPPING" -> "Drop-off"
-            else       -> "Bus"
+            else -> "Bus"
         }
 
         runOnUiThread {
