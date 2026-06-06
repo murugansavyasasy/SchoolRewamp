@@ -16,6 +16,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
+import android.annotation.SuppressLint
 import android.view.View
 import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
@@ -37,6 +38,10 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
+import org.maplibre.android.location.LocationComponentActivationOptions
+import org.maplibre.android.location.LocationComponentOptions
+import org.maplibre.android.location.modes.CameraMode
+import org.maplibre.android.location.modes.RenderMode
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.BusTracking.Model.BusStop
 import com.vs.schoolmessenger.Utils.Constant
@@ -414,12 +419,12 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         binding.tvFromTime.text = stops.firstOrNull()?.time ?: ""
         binding.tvToStop.text = stops.lastOrNull()?.name ?: "—"
         binding.tvToTime.text = stops.lastOrNull()?.time ?: ""
-        binding.tvBusNo.text = data.vehicle_no?.let { "$it" } ?: "—"
+//        binding.tvBusNo.text = data.vehicle_no?.let { "$it" } ?: "—"
 
         Log.d("BottomSheet", "✅ tvBusNumber=${binding.tvBusNumber.text}")
         Log.d("BottomSheet", "✅ tvFromStop =${binding.tvFromStop.text}")
         Log.d("BottomSheet", "✅ tvToStop   =${binding.tvToStop.text}")
-        Log.d("BottomSheet", "✅ tvBusNo    =${binding.tvBusNo.text}")
+//        Log.d("BottomSheet", "✅ tvBusNo    =${binding.tvBusNo.text}")
 
         updateNextStopLabel(-1)
     }
@@ -480,7 +485,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             val indicatorView: View = when {
                 isCurrent -> ImageView(this).apply {
                     layoutParams = LinearLayout.LayoutParams(indicatorSize, indicatorSize)
-                    setImageResource(R.drawable.ic_bus_green)
+                    setImageResource(R.drawable.bussvg)
                     startPulseAnimation(this)
                 }
 
@@ -540,18 +545,18 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                     setPadding(0, 4.dp, 0, 4.dp)
                 })
             } else {
-                row.addView(TextView(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    text = stop.time
-                    textSize = 12f
-                    setTextColor(
-                        if (isReached) Color.parseColor("#4CAF50")
-                        else Color.parseColor("#BDBDBD")
-                    )
-                })
+//                row.addView(TextView(this).apply {
+//                    layoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    text = stop.time
+//                    textSize = 12f
+//                    setTextColor(
+//                        if (isReached) Color.parseColor("#4CAF50")
+//                        else Color.parseColor("#BDBDBD")
+//                    )
+//                })
             }
 
             container.addView(row)
@@ -779,6 +784,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 fitToStops()
                 isFirstFit = true
                 startLocationPolling()
+                enableUserLocationDisplay()
             }
         )
     }
@@ -797,7 +803,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         .fromBitmap(vectorToBitmap(R.drawable.ic_location, 40.dp, 40.dp))
 
     private fun scaledBusIcon() = IconFactory.getInstance(this)
-        .fromBitmap(vectorToBitmap(R.drawable.ic_bus_green, 60.dp, 60.dp))
+        .fromBitmap(vectorToBitmap(R.drawable.bussvg, 60.dp, 60.dp))
 
 
     private fun addStopPins() {
@@ -843,6 +849,46 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             true
         }
     }
+
+    @SuppressLint("MissingPermission")
+    private fun enableUserLocationDisplay() {
+        val style = map.style ?: return
+
+        if (!hasLocationPermission()) {
+            Log.w("LiveBusTracking", "Location permission not granted — skipping user dot")
+            return
+        }
+
+        try {
+            val options = LocationComponentOptions.builder(this)
+                .accuracyAlpha(0.12f)
+                .accuracyColor(Color.parseColor("#1976D2"))
+                .foregroundTintColor(Color.parseColor("#1976D2"))
+                .backgroundTintColor(Color.WHITE)
+                .bearingTintColor(Color.parseColor("#1565C0"))
+                .elevation(5f)
+                .build()
+
+            val activationOptions = LocationComponentActivationOptions
+                .builder(this, style)
+                .locationComponentOptions(options)
+                .useDefaultLocationEngine(true)
+                .build()
+
+            map.locationComponent.apply {
+                activateLocationComponent(activationOptions)
+                isLocationComponentEnabled = true
+                cameraMode   = CameraMode.NONE
+                renderMode   = RenderMode.COMPASS
+            }
+
+            Log.d("LiveBusTracking", "User location component enabled")
+
+        } catch (e: Exception) {
+            Log.w("LiveBusTracking", "Could not enable location component: ${e.message}")
+        }
+    }
+
 
     private fun fitToStops() {
         if (stops.isEmpty()) return
