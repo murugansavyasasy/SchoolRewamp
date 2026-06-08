@@ -24,6 +24,7 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -118,10 +119,10 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var isCameraFollowingBus = true
     private var isFirstFit = true
 
-    private val POLL_INTERVAL_MS = 6_500L
+    private val POLL_INTERVAL_MS = 3_000L
 
     private var lastStopReachedCount = 0
-    private val LAST_STOP_CONFIRM_COUNT = 2
+    private val LAST_STOP_CONFIRM_COUNT = 1
     private val locationPollHandler = Handler(Looper.getMainLooper())
     private val locationPollRunnable = object : Runnable {
         override fun run() {
@@ -1096,8 +1097,24 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         if (isTripCompleted) return
         val busLatLng = LatLng(busPoint.latitude(), busPoint.longitude())
 
+        val lastStop = stops.lastOrNull() ?: return
+        val lastLatLng = LatLng(lastStop.lat, lastStop.lng)
+        if (busLatLng.distanceTo(lastLatLng) <= LAST_STOP_RADIUS_METERS) {
+            lastStopReachedCount++
+            Log.d("LiveBusTracking", "Near last stop: count=$lastStopReachedCount")
+            if (lastStopReachedCount >= LAST_STOP_CONFIRM_COUNT) {
+                isTripCompleted = true
+                currentStopIndex = stops.lastIndex
+                renderStopTimeline(currentStopIndex)
+                showTripCompletedDialog()
+                return
+            }
+        } else {
+            lastStopReachedCount = 0
+        }
+
         val nextIndex = currentStopIndex + 1
-        if (nextIndex < stops.size) {
+        if (nextIndex < stops.lastIndex) {
             val stopLatLng = LatLng(stops[nextIndex].lat, stops[nextIndex].lng)
             if (busLatLng.distanceTo(stopLatLng) <= STOP_RADIUS_METERS) {
                 currentStopIndex = nextIndex
@@ -1107,44 +1124,41 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 }
             }
         }
-
-        val lastStop = stops.lastOrNull() ?: return
-        val lastLatLng = LatLng(lastStop.lat, lastStop.lng)
-        if (busLatLng.distanceTo(lastLatLng) <= LAST_STOP_RADIUS_METERS) {
-            lastStopReachedCount++
-            if (lastStopReachedCount >= LAST_STOP_CONFIRM_COUNT) {
-                isTripCompleted = true
-                currentStopIndex = stops.lastIndex
-                renderStopTimeline(currentStopIndex)
-                showTripCompletedDialog()
-            }
-        } else {
-            lastStopReachedCount = 0
-        }
     }
 
     private fun showTripCompletedDialog() {
+        if (isFinishing || isDestroyed) return
         stopLocationPolling()
 
-        val journeyLabel = when (journeyStatus) {
-            "PICKING" -> "Pick-up"
-            "DROPPING" -> "Drop-off"
-            else -> "Bus"
-        }
-
         runOnUiThread {
-            AlertDialog.Builder(this)
-                .setTitle("$journeyLabel Trip Completed ✅")
-                .setMessage(
-                    "The $journeyLabel journey has been completed.\n" +
-                            "The bus has reached the final stop: ${stops.lastOrNull()?.name ?: "Destination"}."
-                )
+
+            val dialogView = layoutInflater.inflate(
+                R.layout.dialog_trip_completed,
+                null
+            )
+
+            val tvDescription =
+                dialogView.findViewById<TextView>(R.id.tvDescription)
+
+            val btnDone =
+                dialogView.findViewById<Button>(R.id.btnDone)
+
+            tvDescription.text =
+                "Successfully completed ${stops.size} stops\nThank you for traveling with us!"
+
+            val dialog = AlertDialog.Builder(this)
+                .setView(dialogView)
                 .setCancelable(false)
-                .setPositiveButton("OK") { dialog, _ ->
-                    dialog.dismiss()
-                    // Optionally go back: onBackPressed()
-                }
-                .show()
+                .create()
+
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            btnDone.setOnClickListener {
+                dialog.dismiss()
+                finish()
+            }
+
+            dialog.show()
         }
     }
 
