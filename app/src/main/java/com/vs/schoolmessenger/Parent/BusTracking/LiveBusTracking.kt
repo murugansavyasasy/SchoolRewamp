@@ -108,7 +108,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private var currentStopIndex = -1
     private val roadCoords = mutableListOf<Point>()
-    private val completedCoords = mutableListOf<Point>()
     private var busMarker: Marker? = null
     private var busIndex = 0
     private val handler = Handler(Looper.getMainLooper())
@@ -133,14 +132,14 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var isMapReady = false
 
     private val Int.dp: Int get() = (this * resources.displayMetrics.density).toInt()
+    private val Float.dp: Float get() = (this * resources.displayMetrics.density)
 
     private val STOP_RADIUS_METERS = 150.0
     private val LAST_STOP_RADIUS_METERS = 200.0
     private var isTripCompleted = false
 
+    // FIX: Single flag for initial stop sync – removed the duplicate guard on ViewModel
     private var isFirstLocationReceived = false
-
-    var isFirstLocationSynced = false
 
     private var savedInstanceStateRef: Bundle? = null
 
@@ -176,6 +175,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         buildStopsFromBusData()
         Log.d("LiveBusTracking", "stops.size after build = ${stops.size}")
+
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
@@ -196,6 +196,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
             SharedPreference.putChildDetails(this, matchedChild!!)
         }
+
         isAccessToken = if (Constant.isParentChoose)
             SharedPreference.getChildDetails(this)?.access_token
         else
@@ -233,8 +234,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
 
     private fun syncInitialStopProgress(busLatLng: LatLng) {
-        if (appViewModel?.isFirstLocationSynced == true) return
-        appViewModel?.isFirstLocationSynced = true
         if (isFirstLocationReceived) return
         isFirstLocationReceived = true
 
@@ -250,7 +249,6 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 closestIndex = index
             }
         }
-
 
         val alreadyCompletedIndex = (closestIndex - 1).coerceAtLeast(-1)
 
@@ -331,18 +329,16 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
 
     private fun isGetLatestGeoLocation() {
+        // Production code – uncomment before release:
+        // appViewModel!!.isgetgeolocation(
+        //     isAccessToken!!,
+        //     Constant.getAndroidSecureId(this),
+        //     busData?.vehicle_no.toString(),
+        //     busData?.route_id.toString(),
+        //     this
+        // )
 
-
-        //Production code  - Uncomment the code while releasing it for production
-//        appViewModel!!.isgetgeolocation(
-//            isAccessToken!!,
-//            Constant.getAndroidSecureId(this),
-//            busData?.vehicle_no.toString(),
-//            busData?.route_id.toString(),
-//            this
-//        )
-
-        //For testing purpose - Use the below code for testing purpose
+        // Testing:
         appViewModel!!.isgetgeolocation(
             isAccessToken!!,
             "ea973ebc50a1f536",
@@ -395,7 +391,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                     android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
                     android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
                 ).apply {
-                    duration = 600; interpolator = android.view.animation.DecelerateInterpolator()
+                    duration = 600
+                    interpolator = android.view.animation.DecelerateInterpolator()
                 }
             )
             isGetLatestGeoLocation()
@@ -420,12 +417,10 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         binding.tvFromTime.text = stops.firstOrNull()?.time ?: ""
         binding.tvToStop.text = stops.lastOrNull()?.name ?: "—"
         binding.tvToTime.text = stops.lastOrNull()?.time ?: ""
-//        binding.tvBusNo.text = data.vehicle_no?.let { "$it" } ?: "—"
 
         Log.d("BottomSheet", "✅ tvBusNumber=${binding.tvBusNumber.text}")
         Log.d("BottomSheet", "✅ tvFromStop =${binding.tvFromStop.text}")
         Log.d("BottomSheet", "✅ tvToStop   =${binding.tvToStop.text}")
-//        Log.d("BottomSheet", "✅ tvBusNo    =${binding.tvBusNo.text}")
 
         updateNextStopLabel(-1)
     }
@@ -443,16 +438,14 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         Log.d("BottomSheet", "stops.size = ${stops.size}")
 
         val container = binding.routeStopsContainer
-        for (i in 0 until container.childCount) {
-            val child = container.getChildAt(i)
-            (child?.tag as? ValueAnimator)?.cancel()
-            if (child is LinearLayout) {
-                for (j in 0 until child.childCount) {
-                    (child.getChildAt(j)?.tag as? ValueAnimator)?.cancel()
-                }
+
+        fun cancelAnimatorsInView(view: View) {
+            (view.tag as? ValueAnimator)?.cancel()
+            if (view is android.view.ViewGroup) {
+                for (i in 0 until view.childCount) cancelAnimatorsInView(view.getChildAt(i))
             }
         }
-
+        for (i in 0 until container.childCount) cancelAnimatorsInView(container.getChildAt(i))
         container.removeAllViews()
 
         if (stops.isEmpty()) {
@@ -481,7 +474,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 )
             }
 
-            val indicatorSize = 28.dp
+            val indicatorSize = 32.dp
 
             val indicatorView: View = when {
                 isCurrent -> ImageView(this).apply {
@@ -509,19 +502,17 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                     0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
                 ).also { it.marginStart = 14.dp }
                 text = stop.name
-                textSize = if (isCurrent) 15f else 14f
+                textSize = if (isCurrent) 16f else 15f
                 setTextColor(
                     when {
                         isCurrent -> ContextCompat.getColor(
                             this@LiveBusTracking,
                             R.color.PrimaryColor
                         )
-
                         isReached -> ContextCompat.getColor(
                             this@LiveBusTracking,
                             android.R.color.black
                         )
-
                         else -> Color.parseColor("#9E9E9E")
                     }
                 )
@@ -539,25 +530,12 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
                     text = "  Now  "
-                    textSize = 11f
+                    textSize = 12f  // Slightly increased
                     setTextColor(Color.WHITE)
                     setTypeface(typeface, android.graphics.Typeface.BOLD)
                     background = createNowBadgeBackground()
                     setPadding(0, 4.dp, 0, 4.dp)
                 })
-            } else {
-//                row.addView(TextView(this).apply {
-//                    layoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    text = stop.time
-//                    textSize = 12f
-//                    setTextColor(
-//                        if (isReached) Color.parseColor("#4CAF50")
-//                        else Color.parseColor("#BDBDBD")
-//                    )
-//                })
             }
 
             container.addView(row)
@@ -800,56 +778,118 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         return bmp
     }
 
-    private fun scaledStopIcon() = IconFactory.getInstance(this)
-        .fromBitmap(vectorToBitmap(R.drawable.ic_location, 40.dp, 40.dp))
-
     private fun scaledBusIcon() = IconFactory.getInstance(this)
-        .fromBitmap(vectorToBitmap(R.drawable.bussvg, 60.dp, 60.dp))
+        .fromBitmap(vectorToBitmap(R.drawable.bussvg, 72.dp, 72.dp))
 
 
     private fun addStopPins() {
-        if (stops.isEmpty()) {
-            Log.w("LiveBusTracking", "addStopPins: stops is empty — no pins added")
-            return
-        }
-        Log.d("LiveBusTracking", "Adding ${stops.size} stop pins")
+        if (stops.isEmpty()) return
 
-        stops.forEachIndexed { index, stop ->
-            val isEndpoint = index == 0 || index == stops.lastIndex
-
-            val icon = IconFactory.getInstance(this).fromBitmap(
-                vectorToBitmap(
-                    R.drawable.ic_location,
-                    if (isEndpoint) 48.dp else 36.dp,
-                    if (isEndpoint) 48.dp else 36.dp
-                )
-            )
-            val label = buildString {
-                append(stop.name)
-                when (index) {
-                    0 -> append(" 🚏 (Start)")
-                    stops.lastIndex -> append(" 🏁 (End)")
-                }
-            }
+        stops.forEach { stop ->
+            val icon = IconFactory.getInstance(this)
+                .fromBitmap(createStopMarkerBitmap(stop.name))
 
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(stop.lat, stop.lng))
-                    .title(label)
-                    .snippet("Stop time: ${stop.time}")
+                    .title(stop.name)
+                    .snippet("Time : ${stop.time}")
                     .icon(icon)
             )
         }
 
         map.setOnMarkerClickListener { marker ->
-            if (marker.isInfoWindowShown) {
-                marker.hideInfoWindow()
-            } else {
-                marker.showInfoWindow(map, binding.mapView)
-            }
+            marker.showInfoWindow(map, mapView)
             true
         }
     }
+
+
+    private fun createStopMarkerBitmap(stopName: String): Bitmap {
+        val density = resources.displayMetrics.density
+
+        val textSizePx = 36f
+        val horizontalPadding = (20 * density)
+        val verticalPadding = (10 * density)
+        val cornerRadius = 14f * density
+        val pinWidth = (28 * density).toInt()
+        val pinHeight = (34 * density).toInt()
+        val bubbleBottomMargin = (4 * density)
+
+        val textPaint = android.graphics.Paint().apply {
+            color = Color.parseColor("#212121")
+            textSize = textSizePx
+            isAntiAlias = true
+            textAlign = android.graphics.Paint.Align.CENTER
+            typeface = android.graphics.Typeface.create(
+                android.graphics.Typeface.DEFAULT,
+                android.graphics.Typeface.BOLD
+            )
+        }
+
+        val textWidth = textPaint.measureText(stopName)
+        val bubbleWidth = textWidth + horizontalPadding * 2
+        val bubbleHeight = textSizePx + verticalPadding * 2
+
+        val totalWidth = bubbleWidth.toInt().coerceAtLeast(pinWidth)
+        val totalHeight = (bubbleHeight + bubbleBottomMargin + pinHeight).toInt()
+
+        val bitmap = Bitmap.createBitmap(totalWidth, totalHeight, Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(bitmap)
+
+        val shadowPaint = android.graphics.Paint().apply {
+            color = Color.parseColor("#33000000")
+            isAntiAlias = true
+        }
+        canvas.drawRoundRect(
+            android.graphics.RectF(
+                horizontalPadding / 2,
+                verticalPadding / 2 + 3 * density,
+                bubbleWidth - horizontalPadding / 2,
+                bubbleHeight + 3 * density
+            ),
+            cornerRadius,
+            cornerRadius,
+            shadowPaint
+        )
+
+        val bgPaint = android.graphics.Paint().apply {
+            color = Color.WHITE
+            isAntiAlias = true
+        }
+        canvas.drawRoundRect(
+            android.graphics.RectF(0f, 0f, bubbleWidth, bubbleHeight),
+            cornerRadius,
+            cornerRadius,
+            bgPaint
+        )
+
+        val borderPaint = android.graphics.Paint().apply {
+            color = Color.parseColor("#BDBDBD")
+            style = android.graphics.Paint.Style.STROKE
+            strokeWidth = 1.5f * density
+            isAntiAlias = true
+        }
+        canvas.drawRoundRect(
+            android.graphics.RectF(0f, 0f, bubbleWidth, bubbleHeight),
+            cornerRadius,
+            cornerRadius,
+            borderPaint
+        )
+
+        val fontMetrics = textPaint.fontMetrics
+        val textY = bubbleHeight / 2f - (fontMetrics.ascent + fontMetrics.descent) / 2f
+        canvas.drawText(stopName, bubbleWidth / 2f, textY, textPaint)
+
+        val pin = ContextCompat.getDrawable(this, R.drawable.ic_location)
+        val pinLeft = ((totalWidth - pinWidth) / 2)
+        val pinTop = (bubbleHeight + bubbleBottomMargin).toInt()
+        pin?.setBounds(pinLeft, pinTop, pinLeft + pinWidth, pinTop + pinHeight)
+        pin?.draw(canvas)
+
+        return bitmap
+    }
+
 
     @SuppressLint("MissingPermission")
     private fun enableUserLocationDisplay() {
@@ -879,8 +919,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             map.locationComponent.apply {
                 activateLocationComponent(activationOptions)
                 isLocationComponentEnabled = true
-                cameraMode   = CameraMode.NONE
-                renderMode   = RenderMode.COMPASS
+                cameraMode = CameraMode.NONE
+                renderMode = RenderMode.COMPASS
             }
 
             Log.d("LiveBusTracking", "User location component enabled")
@@ -984,14 +1024,22 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 }
 
                 val json = JSONObject(response)
-                if (json.getString("code") != "Ok") {
-                    Log.e("LiveBusTracking", "OSRM error: ${json.getString("code")}")
+                val code = json.optString("code", "")
+                if (code != "Ok") {
+                    Log.e("LiveBusTracking", "OSRM error code: $code")
                     return@thread
                 }
 
-                val coords = json
-                    .getJSONArray("routes").getJSONObject(0)
-                    .getJSONObject("geometry").getJSONArray("coordinates")
+                val routesArray = json.optJSONArray("routes")
+                if (routesArray == null || routesArray.length() == 0) {
+                    Log.e("LiveBusTracking", "OSRM returned no routes")
+                    return@thread
+                }
+
+                val coords = routesArray
+                    .getJSONObject(0)
+                    .getJSONObject("geometry")
+                    .getJSONArray("coordinates")
 
                 roadCoords.clear()
                 for (i in 0 until coords.length()) {
@@ -1093,12 +1141,14 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
 
+
     private fun checkStopReached(busPoint: Point) {
         if (isTripCompleted) return
         val busLatLng = LatLng(busPoint.latitude(), busPoint.longitude())
 
         val lastStop = stops.lastOrNull() ?: return
         val lastLatLng = LatLng(lastStop.lat, lastStop.lng)
+
         if (busLatLng.distanceTo(lastLatLng) <= LAST_STOP_RADIUS_METERS) {
             lastStopReachedCount++
             Log.d("LiveBusTracking", "Near last stop: count=$lastStopReachedCount")
@@ -1107,8 +1157,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 currentStopIndex = stops.lastIndex
                 renderStopTimeline(currentStopIndex)
                 showTripCompletedDialog()
-                return
             }
+            return
         } else {
             lastStopReachedCount = 0
         }
@@ -1131,17 +1181,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         stopLocationPolling()
 
         runOnUiThread {
-
-            val dialogView = layoutInflater.inflate(
-                R.layout.dialog_trip_completed,
-                null
-            )
-
-            val tvDescription =
-                dialogView.findViewById<TextView>(R.id.tvDescription)
-
-            val btnDone =
-                dialogView.findViewById<Button>(R.id.btnDone)
+            val dialogView = layoutInflater.inflate(R.layout.dialog_trip_completed, null)
+            val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)
+            val btnDone = dialogView.findViewById<Button>(R.id.btnDone)
 
             tvDescription.text =
                 "Successfully completed ${stops.size} stops\nThank you for traveling with us!"
