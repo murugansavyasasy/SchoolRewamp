@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Adapter.BusListAdapter
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
@@ -32,7 +33,7 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     var isToolBarDescription = ""
 
     var isVendor: String? = ""
-    var userDetails: UserDetails? = null
+    var isChildDetails: ChildDetails? = null
 
 
     override fun setupViews() {
@@ -42,16 +43,15 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
             mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
         )
 
-        userDetails = SharedPreference.getUserDetails(this)
-        isVendor  = userDetails?.child_details[0]?.gps_type
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isVendor  = isChildDetails?.gps_type
 
         Log.d("isVendorValue", isVendor.toString())
 
         if (Constant.isParentChoose) {
-            val childDetails = SharedPreference.getChildDetails(this)
-            isAccessToken = childDetails?.access_token
-            isToolBarTitle = childDetails?.name.toString()
-            isToolBarDescription = childDetails?.standard_name + " - " + childDetails?.section_name
+            isAccessToken = isChildDetails?.access_token
+            isToolBarTitle = isChildDetails?.name.toString()
+            isToolBarDescription = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         } else {
             val isStaffDetails = SharedPreference.getStaffDetails(this)
             isAccessToken = isStaffDetails?.access_token

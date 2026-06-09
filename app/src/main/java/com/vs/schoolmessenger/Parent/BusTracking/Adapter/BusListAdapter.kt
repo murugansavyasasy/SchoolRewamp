@@ -71,13 +71,13 @@ class BusListAdapter(
 
         private val pickuproutelabel: LinearLayout = itemView.findViewById(R.id.pickuproutelabel)
         private val imgPickupArrow: ImageView = itemView.findViewById(R.id.imgPickupArrow)
-        private val pickupDaysContainer: LinearLayout =
+        private val pickupDaysContainer: MaterialCardView =
             itemView.findViewById(R.id.pickupDaysContainer)
         private val lnrPickupDays: LinearLayout = itemView.findViewById(R.id.lnrPickupDays)
 
         private val dropuproutelabel: LinearLayout = itemView.findViewById(R.id.dropuproutelabel)
         private val imgDropArrow: ImageView = itemView.findViewById(R.id.imgDropArrow)
-        private val dropDaysContainer: LinearLayout =
+        private val dropDaysContainer: MaterialCardView =
             itemView.findViewById(R.id.dropDaysContainer)
         private val lnrDropDays: LinearLayout = itemView.findViewById(R.id.lnrDropDays)
         private val lnrPickupDropBus: LinearLayout = itemView.findViewById(R.id.lnrPickupDropBus)
@@ -231,7 +231,9 @@ class BusListAdapter(
             userStopId: String,
             startTime: String
         ) {
+
             stops.forEachIndexed { index, stop ->
+
                 val stopView = LayoutInflater.from(container.context)
                     .inflate(R.layout.item_route_stop, container, false)
 
@@ -244,7 +246,6 @@ class BusListAdapter(
                 val cardStop = stopView.findViewById<MaterialCardView>(R.id.cardStop)
 
                 tvNumber.text = (index + 1).toString()
-
                 tvName.text = stop.stop_name
                 tvTime.text = stop.stop_time
                 tvLandmark.text = stop.landmark
@@ -253,24 +254,61 @@ class BusListAdapter(
                     viewLine.visibility = View.INVISIBLE
                 }
 
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+                params.bottomMargin = dpToPx(8)
+                stopView.layoutParams = params
+
                 val isYourStop = stop.stop_id == userStopId
+
                 if (isYourStop) {
+
                     tvYourStop.visibility = View.VISIBLE
-                    cardStop.strokeWidth = dpToPx(2)
-                    cardStop.strokeColor = androidx.core.content.ContextCompat.getColor(
-                        container.context, R.color.PrimaryColor
+
+                    cardStop.strokeWidth = dpToPx(3)
+
+                    cardStop.strokeColor =
+                        androidx.core.content.ContextCompat.getColor(
+                            container.context,
+                            R.color.PrimaryColor
+                        )
+
+                    cardStop.cardElevation = dpToPx(8).toFloat()
+
+                    cardStop.setCardBackgroundColor(
+                        androidx.core.content.ContextCompat.getColor(
+                            container.context,
+                            R.color.light_blue_14
+                        )
                     )
+
                     tvNumber.backgroundTintList =
                         androidx.core.content.ContextCompat.getColorStateList(
-                            container.context, R.color.mild_green
+                            container.context,
+                            R.color.mild_green
                         )
+
                     tvNumber.setTextColor(
                         androidx.core.content.ContextCompat.getColor(
-                            container.context, R.color.PrimaryColor
+                            container.context,
+                            R.color.PrimaryColor
                         )
                     )
+
                 } else {
+
                     tvYourStop.visibility = View.GONE
+
+                    cardStop.strokeWidth = dpToPx(1)
+
+                    cardStop.strokeColor =
+                        androidx.core.content.ContextCompat.getColor(
+                            container.context,
+                            R.color.light_gray
+                        )
                 }
 
                 container.addView(stopView)

@@ -960,7 +960,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         }
         val path = stops.joinToString(";") { "${it.lng},${it.lat}" }
         val url =
-            "https://router.project-osrm.org/route/v1/driving/$path?overview=full&geometries=geojson"
+            "http://192.168.6.87:5000/route/v1/driving/$path?overview=full&geometries=geojson"
         Log.d("LiveBusTracking", "Fetching OSRM route: $url")
 
         thread {
