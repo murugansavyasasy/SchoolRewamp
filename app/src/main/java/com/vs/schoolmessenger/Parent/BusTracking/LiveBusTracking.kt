@@ -36,6 +36,7 @@ import androidx.core.graphics.createBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 import com.vs.schoolmessenger.R
@@ -142,6 +143,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     private var isFirstLocationReceived = false
 
     private var savedInstanceStateRef: Bundle? = null
+    var isChildDetails: ChildDetails? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -181,8 +183,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             statusBarBgView = binding.statusBarBackground
         )
 
-        userDetails = SharedPreference.getUserDetails(this)
-        isVendor = userDetails?.child_details[0]?.gps_type
+        isChildDetails = SharedPreference.getChildDetails(this)
+        isVendor  = isChildDetails?.gps_type
 
         Log.d("LiveBusTracking", "isVendor = $isVendor")
 
