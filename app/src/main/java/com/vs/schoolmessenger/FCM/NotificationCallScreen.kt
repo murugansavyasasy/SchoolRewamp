@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.FCM
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
@@ -37,7 +39,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private var notificationId: Int = 0
     private var audioUrls: Array<String?>? = emptyArray()
     private var audioList: MutableList<String?> = ArrayList()
-    private var welcome_file: String? = ""
     private var school_name: String? = ""
     private var member_name: String? = ""
     private var call_title: String? = ""
@@ -62,6 +63,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private var isUserResponse: String? = "NO"
     private var isSpecker: Boolean? = false
     private var totalDurationCalculated = 0L
+
+    private var isUserActionTaken = false
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -101,6 +104,13 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             if (response != null) {
                 response.status
                 response.message
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAndRemoveTask()
+                } else {
+                    finishAffinity()
+                }
+
                 finish()
             }
         }
@@ -113,7 +123,27 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         )
         when (launchSource) {
             "FULL_SCREEN" -> {
-                RingtonePlayer.start(this)
+                val isMissed =
+                    intent.getBooleanExtra(
+                        "is_missed_announcement",
+                        false
+                    )
+
+                if (!isMissed) {
+
+                    Log.d(
+                        "FSI_TEST",
+                        "Starting ringtone"
+                    )
+
+                    RingtonePlayer.stop()
+                    RingtonePlayer.start(this)
+
+                    handler.postDelayed(
+                        missedCallRunnable,
+                        30000
+                    )
+                }
                 // Opened automatically by Full Screen Intent
             }
             "ANSWER" -> {
@@ -122,21 +152,40 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
             "MISSED" -> {
                 // User tapped Missed Announcement notification
+                Log.d(
+                    "MISSED",
+                    "Notification opened"
+                )
+
+                RingtonePlayer.stop()
             }
         }
         binding.imgAcceptCall.setOnClickListener {
             if(launchSource.equals("FULL_SCREEN")){
                 Log.d("Ringtone stopped","yes")
                 RingtonePlayer.stop()
+                isUserActionTaken = true
+
+                handler.removeCallbacks(missedCallRunnable)
             }
+            NotificationManagerCompat
+                .from(this)
+                .cancel(1001)
             showConnectedState()
         }
 
         binding.imgDeclineCall.setOnClickListener {
-            if(launchSource.equals("FULL_SCREEN")){
-                Log.d("Ringtone stopped","yes")
-                RingtonePlayer.stop()
-            }
+
+            RingtonePlayer.stop()
+
+            isUserActionTaken = true
+
+            handler.removeCallbacks(missedCallRunnable)
+
+            NotificationManagerCompat
+                .from(this)
+                .cancel(1001)
+
             endCallWithoutListening()
         }
 
@@ -175,7 +224,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         welcomeUrl = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
         notificationId = intent.getIntExtra(Constant.isNotificationId, -1)
 
-        welcome_file = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
         school_name = intent.getStringExtra(Constant.school_name)
         member_name = intent.getStringExtra(Constant.member_name)
         call_title = intent.getStringExtra(Constant.call_title)
@@ -207,6 +255,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         audioUrls = audioList.toTypedArray()
 
         Log.d("AUDIO_ORDER", audioUrls!!.joinToString())
+        Log.d("totalDurationMs", totalDurationMs!!.toString())
 
         calculateTotalDuration {
             binding.lblTotalDuration.text = formatDuration(totalDurationMs)
@@ -219,9 +268,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         binding.lytDecline.visibility = View.GONE
         binding.rytCutCll.visibility = View.VISIBLE
 
-        if (Constant.mediaPlayer.isPlaying) {
-            Constant.mediaPlayer.stop()
-        }
         totalElapsed = 0
         totalDurationCalculated = 0L
         currentTrack = 0
@@ -253,6 +299,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                     .build()
             )
 
+            Log.d("audioUrls!![index]",audioUrls!![index].toString())
             mediaPlayer!!.setDataSource(audioUrls!![index])
             mediaPlayer!!.prepareAsync()
 
@@ -276,8 +323,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         } catch (e: Exception) {
             e.printStackTrace()
-            currentTrack++
-            playAudio(currentTrack)
+//            currentTrack++
+//            playAudio(currentTrack)
         }
     }
 
@@ -361,22 +408,81 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     private fun finishPlayback() {
+
         stopUpdatingProgress()
         releasePlayer()
+
         isEndTime = getNow()
         isListeningDuration = binding.lblCurrentDuration.text.toString()
-        isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
-        Log.d("isTotalDurationListened", isTotalDurationListened.toString())
+        isTotalDurationListened =
+            durationToSeconds(binding.lblCurrentDuration.text.toString())
 
-        updateNotificationCallLog(isStartTime!!, isEndTime!!)
+        updateNotificationCallLog(
+            isStartTime!!,
+            isEndTime!!
+        )
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAndRemoveTask()
+            } else {
+                finishAffinity()
+            }
+
+        }, 500)
     }
-
     private fun endCallWithoutListening() {
-        if (Constant.mediaPlayer.isPlaying) Constant.mediaPlayer.stop()
         isStartTime = getNow()
         isEndTime = isStartTime
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
+
+    private val missedCallRunnable = Runnable {
+
+        Log.d("CALL_DEBUG", "missedCallRunnable fired")
+
+        if (!isUserActionTaken) {
+
+            Log.d("CALL_TIMEOUT", "User did not respond")
+
+            RingtonePlayer.stop()
+
+            NotificationManagerCompat
+                .from(this)
+                .cancel(1001)
+
+            showMissedNotification()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAndRemoveTask()
+            } else {
+                finishAffinity()
+            }
+        }
+    }
+
+//    private val missedCallRunnable = Runnable {
+//
+//        if (!isUserActionTaken) {
+//
+//            Log.d("CALL_TIMEOUT", "User did not respond")
+//
+//            RingtonePlayer.stop()
+//
+//            NotificationManagerCompat
+//                .from(this)
+//                .cancel(1001)
+//
+//            showMissedNotification()
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                finishAndRemoveTask()
+//            } else {
+//                finishAffinity()
+//            }
+//        }
+//    }
 
     private fun stopAndFinishCall() {
         mediaPlayer?.stop()
@@ -386,7 +492,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         isListeningDuration = binding.lblCurrentDuration.text.toString()
         isTotalDurationListened = durationToSeconds(binding.lblCurrentDuration.text.toString())
         Log.d("isTotalDurationListened", isTotalDurationListened.toString())
-
         updateNotificationCallLog(isStartTime!!, isEndTime!!)
     }
 
@@ -431,6 +536,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     override fun onStop() {
         super.onStop()
+        RingtonePlayer.stop()
         if (isFinishing) {
             try {
                 mediaPlayer?.stop()
@@ -441,14 +547,78 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         }
     }
 
+    private fun showMissedNotification() {
+
+        RingtonePlayer.stop()
+        val intent = Intent(
+            this,
+            NotificationCallScreen::class.java
+        )
+
+        intent.putExtras(getIntent())
+
+        intent.putExtra(
+            "launch_source",
+            "MISSED"
+        )
+        intent.putExtra(
+            "is_missed_announcement",
+            true
+        )
+
+        val pendingIntent =
+            PendingIntent.getActivity(
+                this,
+                2001,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or
+                        PendingIntent.FLAG_IMMUTABLE
+            )
+
+        val notification =
+            NotificationCompat.Builder(
+                this,
+                "school_chimes_notification"
+            )
+                .setSmallIcon(
+                    android.R.drawable.sym_call_missed
+                )
+                .setContentTitle(
+                    "Missed School Announcement"
+                )
+                .setContentText(
+                    call_title ?: "Missed Announcement"
+                )
+                .setPriority(
+                    NotificationCompat.PRIORITY_HIGH
+                )
+                .setAutoCancel(true)
+                .setContentIntent(
+                    pendingIntent
+                )
+                .build()
+
+        NotificationManagerCompat
+            .from(this)
+            .notify(
+                2001,
+                notification
+            )
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        RingtonePlayer.stop()
+        handler.removeCallbacks(missedCallRunnable)
+
         stopUpdatingProgress()
+
         try {
             mediaPlayer?.stop()
             mediaPlayer?.release()
         } catch (ignored: Exception) {
         }
+
         mediaPlayer = null
     }
 
@@ -480,4 +650,20 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     override fun onClick(v: View?) {}
+
+
+    override fun onBackPressed() {
+
+        RingtonePlayer.stop()
+
+        NotificationManagerCompat
+            .from(this)
+            .cancel(1001)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask()
+        } else {
+            finishAffinity()
+        }
+    }
 }

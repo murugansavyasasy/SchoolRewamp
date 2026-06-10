@@ -320,7 +320,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
         jsonObject.addProperty(APIKeyNames.Req_device_token, token)
         jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
         jsonObject.add(APIKeyNames.device_info, Constant.getDeviceDetails(this))
-
+        jsonObject.addProperty(APIKeyNames.full_screen_intent, SharedPreference.getFullScreenNotificationStatus(this))
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 

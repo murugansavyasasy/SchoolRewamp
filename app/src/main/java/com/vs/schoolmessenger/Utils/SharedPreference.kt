@@ -38,8 +38,36 @@ object SharedPreference {
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
     const val KEY_SCHOOL_DASHBOARD_TOUR = "school_dashboard_tour"
     const val KEY_PARENT_DASHBOARD_TOUR = "parent_dashboard_tour"
+    const val FULLSCREEN_NOTIFICATION = "fullscreen_notification"
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+
+    fun setFullScreenNotificationStatus(activity: Context, enabled: Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit { putBoolean(FULLSCREEN_NOTIFICATION, enabled) }
+    }
+
+
+    fun getFullScreenNotificationStatus(activity: Activity): Boolean {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(FULLSCREEN_NOTIFICATION, false)
+    }
+
+
+
 
     fun setFingerPrintSetupSkip(activity: Activity, enabled: Boolean) {
         val sharedPreferences = EncryptedSharedPreferences.create(
