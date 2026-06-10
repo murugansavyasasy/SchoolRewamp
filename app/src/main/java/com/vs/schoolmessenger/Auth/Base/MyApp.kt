@@ -5,12 +5,15 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant.clearAllLocalStorage
 import com.vs.schoolmessenger.Utils.Constant.restartApp
 import com.vs.schoolmessenger.Utils.Constant.shouldResetApp
@@ -56,17 +59,27 @@ class MyApp : Application(), LifecycleObserver {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+
+            val call_notification_sound = Uri.parse(
+                "android.resource://$packageName/${R.raw.call_notification}"
+            )
+            val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                .build()
+
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                CHANNEL_NAME,
+                "School Emergency Alerts",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
+                description = "School Emergency Alerts"
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                setSound(null, null)
+                setSound(call_notification_sound, attributes)
+                enableVibration(true)
             }
 
             val manager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                getSystemService(NotificationManager::class.java)
 
             manager.createNotificationChannel(channel)
         }

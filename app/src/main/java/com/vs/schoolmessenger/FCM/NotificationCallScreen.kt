@@ -6,12 +6,14 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -69,6 +71,25 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     override fun setupViews() {
         super.setupViews()
         isToolBarNoticeCallTheme()
+        val notificationId =
+            intent.getIntExtra(
+                "notification_id",
+                -1
+            )
+        if (notificationId != -1) {
+            NotificationManagerCompat
+                .from(this)
+                .cancel(notificationId)
+        }
+
+        Log.e("FSI_TEST", "AnnouncementActivity Opened")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        }
+
+
         handleIntent(intent)
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
@@ -84,11 +105,38 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
         }
 
+        val launchSource =
+            intent.getStringExtra("launch_source")
+        Log.d(
+            "AnnouncementActivity",
+            "Source = $launchSource"
+        )
+        when (launchSource) {
+            "FULL_SCREEN" -> {
+                RingtonePlayer.start(this)
+                // Opened automatically by Full Screen Intent
+            }
+            "ANSWER" -> {
+                // User tapped Accept button
+                showConnectedState()
+            }
+            "MISSED" -> {
+                // User tapped Missed Announcement notification
+            }
+        }
         binding.imgAcceptCall.setOnClickListener {
+            if(launchSource.equals("FULL_SCREEN")){
+                Log.d("Ringtone stopped","yes")
+                RingtonePlayer.stop()
+            }
             showConnectedState()
         }
 
         binding.imgDeclineCall.setOnClickListener {
+            if(launchSource.equals("FULL_SCREEN")){
+                Log.d("Ringtone stopped","yes")
+                RingtonePlayer.stop()
+            }
             endCallWithoutListening()
         }
 
@@ -122,6 +170,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 
+        Log.d("Intent","values received")
         voiceUrl = intent.getStringExtra(Constant.isVoiceUrlNotifi)
         welcomeUrl = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
         notificationId = intent.getIntExtra(Constant.isNotificationId, -1)
