@@ -118,7 +118,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var currentPosition = 0
     private var mobile_number = ""
     private val REQUEST_CONTACT_PERMISSION = 1001
-
     private var originalMenuList = ArrayList<MenuDetail>()
     private var filteredMenuList = ArrayList<MenuDetail>()
 

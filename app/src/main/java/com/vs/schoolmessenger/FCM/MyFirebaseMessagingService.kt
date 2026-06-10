@@ -1,87 +1,3 @@
-//package com.vs.schoolmessenger.FCM
-//
-//import android.app.KeyguardManager
-//import android.content.Context
-//import android.content.Intent
-//import android.os.Build
-//import android.util.Log
-//import com.google.firebase.messaging.FirebaseMessagingService
-//import com.google.firebase.messaging.RemoteMessage
-//
-//class MyFirebaseMessagingService : FirebaseMessagingService() {
-//
-//    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-//        super.onMessageReceived(remoteMessage)
-//
-//        Log.d("FCM_DATA", remoteMessage.data.toString())
-//
-//        val type = remoteMessage.data["type"] ?: ""
-//
-//        if (type == "isCall") {
-//
-//            val msgId =
-//                remoteMessage.data["msg_id"]
-//                    ?: System.currentTimeMillis().toString()
-//
-//            val notificationId = msgId.hashCode()
-//
-//            CallStateManager.clear(
-//                applicationContext,
-//                notificationId
-//            )
-//
-//            val keyguardManager =
-//                getSystemService(Context.KEYGUARD_SERVICE)
-//                        as KeyguardManager
-//
-//            val isLocked =
-//                keyguardManager.isKeyguardLocked
-//
-//            Log.d("FCM_LOG", "PHONE LOCKED = $isLocked")
-//
-//            val serviceIntent =
-//                Intent(this, CallForegroundService::class.java)
-//
-//            serviceIntent.putExtra(
-//                "DATA",
-//                HashMap(remoteMessage.data)
-//            )
-//
-//            serviceIntent.putExtra(
-//                "NOTIFICATION_ID",
-//                notificationId
-//            )
-//
-//            serviceIntent.putExtra(
-//                "IS_LOCKED",
-//                isLocked
-//            )
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//                Log.d("FCM_LOG", "START FOREGROUND SERVICE")
-//
-//                startForegroundService(serviceIntent)
-//
-//            } else {
-//
-//                startService(serviceIntent)
-//            }
-//        }
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-
-
 package com.vs.schoolmessenger.FCM
 
 import android.Manifest
@@ -448,3 +364,80 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 }
+
+
+
+
+
+//package com.vs.schoolmessenger.FCM
+//
+//import android.app.KeyguardManager
+//import android.content.Context
+//import android.content.Intent
+//import android.os.Build
+//import android.util.Log
+//import com.google.firebase.messaging.FirebaseMessagingService
+//import com.google.firebase.messaging.RemoteMessage
+//
+//class MyFirebaseMessagingService : FirebaseMessagingService() {
+//
+//    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+//        super.onMessageReceived(remoteMessage)
+//
+//        Log.d("FCM_DATA", remoteMessage.data.toString())
+//
+//        val type = remoteMessage.data["type"] ?: ""
+//
+//        if (type == "isCall") {
+//
+//            val msgId =
+//                remoteMessage.data["msg_id"]
+//                    ?: System.currentTimeMillis().toString()
+//
+//            val notificationId = msgId.hashCode()
+//
+//            CallStateManager.clear(
+//                applicationContext,
+//                notificationId
+//            )
+//
+//            val keyguardManager =
+//                getSystemService(Context.KEYGUARD_SERVICE)
+//                        as KeyguardManager
+//
+//            val isLocked =
+//                keyguardManager.isKeyguardLocked
+//
+//            Log.d("FCM_LOG", "PHONE LOCKED = $isLocked")
+//
+//            val serviceIntent =
+//                Intent(this, CallForegroundService::class.java)
+//
+//            serviceIntent.putExtra(
+//                "DATA",
+//                HashMap(remoteMessage.data)
+//            )
+//
+//            serviceIntent.putExtra(
+//                "NOTIFICATION_ID",
+//                notificationId
+//            )
+//
+//            serviceIntent.putExtra(
+//                "IS_LOCKED",
+//                isLocked
+//            )
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//                Log.d("FCM_LOG", "START FOREGROUND SERVICE")
+//
+//                startForegroundService(serviceIntent)
+//
+//            } else {
+//
+//                startService(serviceIntent)
+//            }
+//        }
+//    }
+//}
