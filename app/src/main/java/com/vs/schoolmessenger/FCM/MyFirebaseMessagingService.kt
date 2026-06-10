@@ -94,17 +94,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             if (type.equals(Constant.isCall)) {
 
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    val notificationManager = getSystemService(NotificationManager::class.java)
-
-                    Log.d(
-                        "FSI",
-                        "Can use full screen intent: ${notificationManager.canUseFullScreenIntent()}"
-                    )
-                    SharedPreference.setFullScreenNotificationStatus(this,notificationManager.canUseFullScreenIntent())
-                }
-
 //                sendNotificationCall(
 //                    title,
 //                    body,
