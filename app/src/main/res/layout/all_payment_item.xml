@@ -39,7 +39,7 @@
                 android:background="@drawable/bg_light_blue1"
                 android:padding="@dimen/five"
                 android:visibility="gone"
-                android:src="@drawable/refresh"
+                android:src="@drawable/ic_refresh"
                 app:layout_constraintBottom_toBottomOf="@id/topBg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/topBg" />
@@ -64,7 +64,7 @@
                 android:layout_marginTop="10dp"
                 android:text=""
                 android:textColor="#0088FF"
-                android:textSize="@dimen/twenty_sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/txtPaidAmountLabel"
                 app:layout_constraintTop_toBottomOf="@id/txtPaidAmountLabel" />
@@ -78,7 +78,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="Payment Status"
                 android:textColor="#555555"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/topBg" />
@@ -134,8 +134,9 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="Transation ID"
-                android:textColor="@color/gnt_gray"
-                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider1" />
 
@@ -146,8 +147,8 @@
                 android:layout_marginEnd="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textColor="@color/gnt_gray"
+                android:textSize="@dimen/twele_sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/txtOrderLabel"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -159,8 +160,9 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="Create On"
-                android:textColor="@color/gnt_gray"
-                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtOrderLabel" />
 
@@ -170,8 +172,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/twenty"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textColor="@color/gnt_gray"
+                android:textSize="@dimen/twele_sp"
                 android:layout_marginTop="@dimen/ten"
                 app:layout_constraintBaseline_toBaselineOf="@id/txtStudentLabel"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -185,8 +187,9 @@
                 android:layout_marginTop="@dimen/ten"
                 android:paddingBottom="@dimen/ten"
                 android:text="Last Update On"
-                android:textColor="@color/gnt_gray"
-                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtStudentLabel" />
 
@@ -197,8 +200,8 @@
                 android:layout_marginEnd="@dimen/twenty"
                 android:text=""
                 android:paddingBottom="@dimen/ten"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textColor="@color/gnt_gray"
+                android:textSize="@dimen/twele_sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/txtCreatedLabel"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -239,7 +242,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:text="Payment Completed"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/eighteen_sp"
+                    android:textSize="@dimen/fifteen_sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

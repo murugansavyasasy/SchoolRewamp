@@ -102,10 +102,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/eight"
+                    android:padding="@dimen/five"
                     android:text="@string/payment"
                     android:textColor="@color/dark_blue"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twele_sp" />
 
                 <View
                     android:id="@+id/linePayment"
@@ -127,10 +127,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/eight"
+                    android:padding="@dimen/five"
                     android:text="@string/receipt"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twele_sp" />
 
                 <View
                     android:id="@+id/lineReceipt"
@@ -152,10 +152,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/eight"
+                    android:padding="@dimen/five"
                     android:text="@string/all_transaction"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/twele_sp" />
 
                 <View
                     android:id="@+id/lineTrance"

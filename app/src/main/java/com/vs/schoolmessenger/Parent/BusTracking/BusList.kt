@@ -95,7 +95,7 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     }
 
     private fun isLoadBusList(newData: List<BusListData>?) {
-        mAdapter = BusListAdapter(newData, this, this, Constant.isShimmerViewDisable,isVendor)
+        mAdapter = BusListAdapter(newData, this, this, Constant.isShimmerViewDisable,"isVendor")
         binding.rvBusList.adapter = mAdapter
     }
 

@@ -149,6 +149,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 Log.d("FeeDetails_Response", "Invoices received: $response")
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
+                binding.lytList.visibility = View.GONE
                 binding.rvReceipts.visibility = View.VISIBLE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 scrollToMessageId(msg_id)
@@ -156,6 +157,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 mAdapter.setData(listOf())
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.lytList.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
                 binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
                 Log.d("FeeDetails_Response", "No invoices found or response null")
@@ -173,7 +175,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 response.data.isNotEmpty()
             ) {
                 paymentList.clear()
-
+                binding.lytList.visibility= View.GONE
                 onlinePaymentAdapter = OnlinePaymentAdapter(
                     paymentList
                 ) { item, position ->
@@ -198,6 +200,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 onlinePaymentAdapter.updateList(response.data)
             }
             else{
+                binding.lytList.visibility= View.VISIBLE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rvReceipts.visibility = View.GONE
@@ -234,7 +237,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                     binding.btnReceipt.setTextColor(Color.BLACK)
                     binding.btnAllTrance.setTextColor(Color.BLACK)
                     loadPaymentPage(binding.payWebview)
-                    reloadPaymentPage()
+                    //reloadPaymentPage()
                 }
             }
 
@@ -301,19 +304,18 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.btnPayment.setTextColor(Color.parseColor("#0D47A1"))
                 binding.btnReceipt.setTextColor(Color.BLACK)
                 clearPopupWebViews()
-                reloadPaymentPage()
+//                reloadPaymentPage()
             }
-
         }
     }
 
-    private fun reloadPaymentPage() {
-        binding.payWebview.apply {
-            clearHistory()
-            clearCache(true)
-            reload()
-        }
-    }
+//    private fun reloadPaymentPage() {
+//        binding.payWebview.apply {
+//            clearHistory()
+//            clearCache(true)
+//            reload()
+//        }
+//    }
 
 
     private fun clearPopupWebViews() {
@@ -322,6 +324,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             binding.webviewContainer.removeView(webView)
             webView.destroy()
         }
+        binding.payWebview.reload()
     }
 
 
@@ -340,7 +343,9 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
         webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
         webView.isScrollbarFadingEnabled = true
+        settings.databaseEnabled = true
 
+        settings.cacheMode = WebSettings.LOAD_DEFAULT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         } else {
