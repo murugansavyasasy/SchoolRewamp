@@ -51,7 +51,6 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
 
 
@@ -134,9 +133,9 @@
 <!--            android:exported="true"-->
 <!--            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>-->
 
-        <receiver
-            android:name=".FCM.DismissReceiver"
-            android:exported="false"/>
+<!--        <receiver-->
+<!--            android:name=".FCM.DismissReceiver"-->
+<!--            android:exported="false"/>-->
 
 
         <activity

@@ -14,6 +14,7 @@ data class BusListData(
     val stop_name: String?,
     val vehicle_id: String?,
     val vehicle_no: String?,
+    val vehicle_reg_no: String?,
     val tentative_pickup_time: String?,
     val tentative_drop_time: String?,
     val map_url_schoolchimes: String?,

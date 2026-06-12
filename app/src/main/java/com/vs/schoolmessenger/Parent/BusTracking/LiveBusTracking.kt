@@ -332,22 +332,22 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private fun isGetLatestGeoLocation() {
         // Production code – uncomment before release:
-        // appViewModel!!.isgetgeolocation(
-        //     isAccessToken!!,
-        //     Constant.getAndroidSecureId(this),
-        //     busData?.vehicle_no.toString(),
-        //     busData?.route_id.toString(),
-        //     this
-        // )
+         appViewModel!!.isgetgeolocation(
+             isAccessToken!!,
+             Constant.getAndroidSecureId(this),
+             busData?.vehicle_reg_no.toString(),
+             busData?.route_id.toString(),
+             this
+         )
 
-        // Testing:
-        appViewModel!!.isgetgeolocation(
-            isAccessToken!!,
-            "ea973ebc50a1f536",
-            busData?.vehicle_no.toString(),
-            busData?.route_id.toString(),
-            this
-        )
+//        // Testing:
+//        appViewModel!!.isgetgeolocation(
+//            isAccessToken!!,
+//            "ea973ebc50a1f536",
+//            busData?.vehicle_reg_no.toString(),
+//            busData?.route_id.toString(),
+//            this
+//        )
     }
 
     private fun startLocationPolling() {
@@ -387,6 +387,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         populateBusInfoCard()
 
         binding.imgRefresh.setOnClickListener {
+
             binding.imgRefresh.startAnimation(
                 android.view.animation.RotateAnimation(
                     0f, 360f,
@@ -402,6 +403,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         renderStopTimeline(-1)
     }
+
+
+
 
     private fun populateBusInfoCard() {
         Log.d("BottomSheet", "populateBusInfoCard: busData=$busData stops=${stops.size}")
@@ -692,6 +696,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         binding.WVLiveBus.apply {
 
             settings.apply {
+                databaseEnabled=true
                 javaScriptEnabled = true
                 domStorageEnabled = true
                 loadWithOverviewMode = true
@@ -968,6 +973,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         binding.WVLiveBus.loadUrl(trackingUrl)
     }
+
 
     private fun showWebViewError() {
         binding.WVLiveBus.visibility = View.GONE
