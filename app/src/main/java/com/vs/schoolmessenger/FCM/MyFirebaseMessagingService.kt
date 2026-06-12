@@ -334,16 +334,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
 
 
-//                .setFullScreenIntent(
-//                    fullScreenPendingIntent,
-//                    true
-//                )
-               if (isEmergency) {
-                 notification.setFullScreenIntent(
-                  fullScreenPendingIntent,
-                true
-                 )
-               }
+                .setFullScreenIntent(
+                    fullScreenPendingIntent,
+                    true
+                )
+//               if (isEmergency) {
+//                 notification.setFullScreenIntent(
+//                  fullScreenPendingIntent,
+//                true
+//                 )
+//               }
 
 
         NotificationManagerCompat
