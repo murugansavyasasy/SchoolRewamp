@@ -1001,8 +1001,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             return
         }
         val path = stops.joinToString(";") { "${it.lng},${it.lat}" }
-        val url =
-            "http://192.168.6.87:5000/route/v1/driving/$path?overview=full&geometries=geojson"
+//        val url = "http://192.168.6.87:5000/route/v1/driving/$path?overview=full&geometries=geojson"
+        val url = "${busData?.map_url_schoolchimes}$path?overview=full&geometries=geojson"
         Log.d("LiveBusTracking", "Fetching OSRM route: $url")
 
         thread {
