@@ -306,6 +306,26 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
+    private fun createDeleteIntent(): PendingIntent {
+        val intent = Intent(this, NotificationDismissService::class.java)
+        intent.action = Constant.NOTIFICATION_DISMISSED
+
+        return PendingIntent.getService(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    private val stopMediaPlayerRunnable = Runnable {
+        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying) {
+            Constant.mediaPlayer.stop()
+            Constant.mediaPlayer.release()
+            Constant.mediaPlayer = MediaPlayer()
+        }
+    }
+
 
     private fun showCallNotification(
         title: String,

@@ -74,23 +74,23 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     override fun setupViews() {
         super.setupViews()
         isToolBarNoticeCallTheme()
-        val notificationId =
-            intent.getIntExtra(
-                "notification_id",
-                -1
-            )
-        if (notificationId != -1) {
-            NotificationManagerCompat
-                .from(this)
-                .cancel(notificationId)
-        }
+//        val notificationId =
+//            intent.getIntExtra(
+//                "notification_id",
+//                -1
+//            )
+//        if (notificationId != -1) {
+//            NotificationManagerCompat
+//                .from(this)
+//                .cancel(notificationId)
+//        }
 
-        Log.e("FSI_TEST", "AnnouncementActivity Opened")
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            setShowWhenLocked(true)
-            setTurnScreenOn(true)
-        }
+//        Log.e("FSI_TEST", "AnnouncementActivity Opened")
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+//            setShowWhenLocked(true)
+//            setTurnScreenOn(true)
+//        }
 
 
         handleIntent(intent)
@@ -115,76 +115,76 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
         }
 
-        val launchSource =
-            intent.getStringExtra("launch_source")
-        Log.d(
-            "AnnouncementActivity",
-            "Source = $launchSource"
-        )
-        when (launchSource) {
-            "FULL_SCREEN" -> {
-                val isMissed =
-                    intent.getBooleanExtra(
-                        "is_missed_announcement",
-                        false
-                    )
-
-                if (!isMissed) {
-
-                    Log.d(
-                        "FSI_TEST",
-                        "Starting ringtone"
-                    )
-
-                    RingtonePlayer.stop()
-                    RingtonePlayer.start(this)
-
-                    handler.postDelayed(
-                        missedCallRunnable,
-                        30000
-                    )
-                }
-                // Opened automatically by Full Screen Intent
-            }
-            "ANSWER" -> {
-                // User tapped Accept button
-                showConnectedState()
-            }
-            "MISSED" -> {
-                // User tapped Missed Announcement notification
-                Log.d(
-                    "MISSED",
-                    "Notification opened"
-                )
-
-                RingtonePlayer.stop()
-            }
-        }
+//        val launchSource =
+//            intent.getStringExtra("launch_source")
+//        Log.d(
+//            "AnnouncementActivity",
+//            "Source = $launchSource"
+//        )
+//        when (launchSource) {
+//            "FULL_SCREEN" -> {
+//                val isMissed =
+//                    intent.getBooleanExtra(
+//                        "is_missed_announcement",
+//                        false
+//                    )
+//
+//                if (!isMissed) {
+//
+//                    Log.d(
+//                        "FSI_TEST",
+//                        "Starting ringtone"
+//                    )
+//
+//                    RingtonePlayer.stop()
+//                    RingtonePlayer.start(this)
+//
+//                    handler.postDelayed(
+//                        missedCallRunnable,
+//                        30000
+//                    )
+//                }
+//                // Opened automatically by Full Screen Intent
+//            }
+//            "ANSWER" -> {
+//                // User tapped Accept button
+//                showConnectedState()
+//            }
+//            "MISSED" -> {
+//                // User tapped Missed Announcement notification
+//                Log.d(
+//                    "MISSED",
+//                    "Notification opened"
+//                )
+//
+//                RingtonePlayer.stop()
+//            }
+//        }
         binding.imgAcceptCall.setOnClickListener {
-            if(launchSource.equals("FULL_SCREEN")){
-                Log.d("Ringtone stopped","yes")
-                RingtonePlayer.stop()
-                isUserActionTaken = true
-
-                handler.removeCallbacks(missedCallRunnable)
-            }
-            NotificationManagerCompat
-                .from(this)
-                .cancel(1001)
+//            if(launchSource.equals("FULL_SCREEN")){
+//                Log.d("Ringtone stopped","yes")
+//                RingtonePlayer.stop()
+//                isUserActionTaken = true
+//
+//                handler.removeCallbacks(missedCallRunnable)
+//            }
+//            NotificationManagerCompat
+//                .from(this)
+//                .cancel(1001)
             showConnectedState()
         }
 
         binding.imgDeclineCall.setOnClickListener {
 
-            RingtonePlayer.stop()
-
-            isUserActionTaken = true
-
-            handler.removeCallbacks(missedCallRunnable)
-
-            NotificationManagerCompat
-                .from(this)
-                .cancel(1001)
+//            RingtonePlayer.stop()
+//
+//            isUserActionTaken = true
+//
+//            handler.removeCallbacks(missedCallRunnable)
+//
+//            NotificationManagerCompat
+//                .from(this)
+//                .cancel(1001)
 
             endCallWithoutListening()
         }
