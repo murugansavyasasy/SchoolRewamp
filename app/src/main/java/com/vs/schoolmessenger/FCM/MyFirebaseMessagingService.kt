@@ -62,7 +62,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             remoteMessage.data[Constant.body_] ?: Constant.You_have_a_new_message_from_your_school
         val tone = remoteMessage.data[Constant.tone_] ?: Constant.normal
         val type = remoteMessage.data[Constant.type_] ?: Constant.normal
-//        val type = "isCall"
         val isVoiceUrl = remoteMessage.data[Constant.isVoiceUrlNotifi] ?: Constant.normal
         val isWelcomeUrl = remoteMessage.data[Constant.isWelcomeUrlNotifi] ?: Constant.normal
         val imageUrl = remoteMessage.data[Constant.imageurl] ?: Constant.Default
@@ -87,11 +86,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val member_name = remoteMessage.data[Constant.member_name] ?: ""
         val school_name = remoteMessage.data[Constant.school_name] ?: ""
         val call_title = remoteMessage.data[Constant.call_title] ?: ""
+        val isEmergency = true;
 
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
-            // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
-
             if (type.equals(Constant.isCall)) {
 
 //                sendNotificationCall(
@@ -130,7 +128,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     call_title,
                     role,
                     circular_id,
-                    retrycount
+                    retrycount,
+                    isEmergency
                 )
 
 
@@ -191,7 +190,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         call_title: String,
         role: String,
         circular_id: String,
-        retrycount: String
+        retrycount: String,
+        isEmergency: Boolean
     ) {
 
         val answerIntent = Intent(
@@ -329,20 +329,26 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             answerPendingIntent
                         )
                 )
-
-                .setFullScreenIntent(
-                    fullScreenPendingIntent,
-                    true
-                )
                 .setContentIntent(answerPendingIntent)
                 .setDeleteIntent(dismissPendingIntent)
                 .setAutoCancel(true)
 
-                .build()
+
+//                .setFullScreenIntent(
+//                    fullScreenPendingIntent,
+//                    true
+//                )
+               if (isEmergency) {
+                 notification.setFullScreenIntent(
+                  fullScreenPendingIntent,
+                true
+                 )
+               }
+
 
         NotificationManagerCompat
             .from(this)
-            .notify(1001, notification)
+            .notify(1001, notification.build())
 
         startMissedAnnouncementTimer(
             title,
