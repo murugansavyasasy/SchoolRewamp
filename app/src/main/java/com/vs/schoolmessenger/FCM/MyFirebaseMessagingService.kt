@@ -92,27 +92,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         try {
             if (type.equals(Constant.isCall)) {
 
-//                sendNotificationCall(
-//                    title,
-//                    body,
-//                    receiver_id.toString(),
-//                    isWelcomeUrl,
-//                    isVoiceUrl,
-//                    ei1,
-//                    ei2,
-//                    ei3,
-//                    ei4,
-//                    ei5,
-//                    school_name,
-//                    member_name,
-//                    call_title,
-//                    role,
-//                    circular_id,
-//                    retrycount
-//                )
-
-
-                showCallNotification(
+                sendNotificationCall(
                     title,
                     body,
                     receiver_id.toString(),
@@ -128,9 +108,29 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     call_title,
                     role,
                     circular_id,
-                    retrycount,
-                    isEmergency
+                    retrycount
                 )
+
+
+//                showCallNotification(
+//                    title,
+//                    body,
+//                    receiver_id.toString(),
+//                    isWelcomeUrl,
+//                    isVoiceUrl,
+//                    ei1,
+//                    ei2,
+//                    ei3,
+//                    ei4,
+//                    ei5,
+//                    school_name,
+//                    member_name,
+//                    call_title,
+//                    role,
+//                    circular_id,
+//                    retrycount,
+//                    isEmergency
+//                )
 
 
             } else {
@@ -171,6 +171,139 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "New FCM Token: $token")
+    }
+
+    private fun sendNotificationCall(
+        title: String,
+        body: String,
+        receiver_id: String,
+        isWelcomeUrl: String,
+        isVoiceUrl: String,
+        ei1: String,
+        ei2: String,
+        ei3: String,
+        ei4: String,
+        ei5: String,
+        school_name: String,
+        member_name: String,
+        call_title: String,
+        role: String,
+        circular_id: String,
+        retrycount: String
+    ) {
+        // Check for notification permission (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                Log.e(TAG, "Notification permission not granted")
+                return
+            }
+        }
+        Log.d("Received_Call", "notification_call")
+        // Create Intent for notification tap
+        val intent = Intent(this, NotificationCallScreen::class.java).apply {
+            putExtra(Constant.menu_name, title)
+            putExtra(Constant.isNotificationId, "")
+            putExtra(Constant.isReceiverId, receiver_id)
+            putExtra(Constant.retrycount, retrycount)
+            putExtra(Constant.circularId, circular_id)
+            putExtra(Constant.ei1, ei1)
+            putExtra(Constant.ei2, ei2)
+            putExtra(Constant.ei3, ei3)
+            putExtra(Constant.ei4, ei4)
+            putExtra(Constant.ei5, ei5)
+            putExtra(Constant.role, role)
+            putExtra(Constant.menuId, "")
+            putExtra(Constant.school_name, school_name)
+            putExtra(Constant.member_name, member_name)
+            putExtra(Constant.call_title, call_title)
+            putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
+            putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        val uniqueID = (receiver_id + circular_id).hashCode()
+        val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
+        val pendingIntent = PendingIntent.getActivity(
+            this, requestCode, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        // Create notification channel
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val soundUri = Uri.parse("android.resource://${packageName}/raw/call_notification")
+            val channel = NotificationChannel(
+                CALL_CHANNEL_ID,
+                CALL_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = Constant.Channel_for_custom_notifications
+                enableLights(true)
+                enableVibration(true)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setSound(
+                    soundUri,
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
+                // 🔊 Play sound manually if needed
+                if (!Constant.mediaPlayer.isPlaying) {
+                    val mediaPlayer = MediaPlayer.create(this@MyFirebaseMessagingService, soundUri)
+                    mediaPlayer.isLooping = false
+                    mediaPlayer.start()
+                    Constant.mediaPlayer = mediaPlayer
+                }
+            }
+            manager.createNotificationChannel(channel)
+            handler.postDelayed(stopMediaPlayerRunnable, 30000)
+            Log.d(TAG, "Notification channel created")
+        }
+        // Try simple notification first to isolate RemoteViews issues
+        val builder = NotificationCompat.Builder(this, CALL_CHANNEL_ID)
+            .setSmallIcon(R.drawable.school_splash_logo)
+            .setContentTitle(title ?: Constant.School_Chimes)
+            .setContentText(body ?: Constant.You_have_a_new_message_from_your_school)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_CALL)
+            .setFullScreenIntent(pendingIntent, true)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setDeleteIntent(createDeleteIntent()) // Add delete intent for dismissal
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+        try {
+            val remoteView = RemoteViews(packageName, R.layout.custom_call_notification).apply {
+                setTextViewText(R.id.notification_title, title ?: "School Chimes")
+                setTextViewText(
+                    R.id.lblContent,
+                    body ?: Constant.incoming_call
+                ) // NEW: Set body text too
+                // Optional: Set button visibilities if dynamic
+                // setViewVisibility(R.id.imgDecline, View.VISIBLE) // e.g., show/hide based on state
+            }
+            // Use DecoratedCustomViewStyle for custom layout support, but set both views to the SAME RemoteViews
+            // to prevent expansion (no down arrow will show, as expanded state is identical to collapsed)
+            builder.setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(remoteView)
+                .setCustomBigContentView(remoteView) // Key fix: Same view for big content prevents expansion chevron
+        } catch (e: Exception) {
+            Log.e(TAG, "Error setting up custom notification: ${e.message}")
+            // Fallback to basic notification without custom views if RemoteViews fails
+            builder.setStyle(
+                NotificationCompat.BigTextStyle().bigText(body ?: Constant.incoming_call)
+            )
+        }
+        try {
+            val notificationId = uniqueID.takeIf { it != 0 } ?: (0..999999).random()
+            manager.notify(notificationId, builder.build())
+            Log.d(TAG, "Notification sent successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to send notification: ${e.message}")
+        }
     }
 
 
@@ -436,74 +569,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }, 30000)
     }
 
-//    private fun startMissedAnnouncementTimer(
-//        title: String,
-//        body: String,
-//        receiver_id: String,
-//        isWelcomeUrl: String,
-//        isVoiceUrl: String,
-//        ei1: String,
-//        ei2: String,
-//        ei3: String,
-//        ei4: String,
-//        ei5: String,
-//        school_name: String,
-//        member_name: String,
-//        call_title: String,
-//        role: String,
-//        circular_id: String,
-//        retrycount: String
-//    ) {
-//
-//
-//        Handler(Looper.getMainLooper()).postDelayed({
-//
-//            val notificationManager =
-//                NotificationManagerCompat.from(this)
-//
-//            val notificationService =
-//                getSystemService(Context.NOTIFICATION_SERVICE)
-//                        as NotificationManager
-//
-//            val isStillVisible =
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    notificationService.activeNotifications.any {
-//                        it.id == 1001
-//                    }
-//                } else {
-//                    true
-//                }
-//
-//            if (isStillVisible) {
-//
-//                Log.d("MISSED_CALL", "No user response")
-//
-//                RingtonePlayer.stop()
-//
-//                notificationManager.cancel(1001)
-//
-//                showMissedAnnouncement(
-//                    title,
-//                    body,
-//                    receiver_id,
-//                    isWelcomeUrl,
-//                    isVoiceUrl,
-//                    ei1,
-//                    ei2,
-//                    ei3,
-//                    ei4,
-//                    ei5,
-//                    school_name,
-//                    member_name,
-//                    call_title,
-//                    role,
-//                    circular_id,
-//                    retrycount
-//                )
-//            }
-//
-//        }, 30000)
-//    }
 
     private fun showMissedAnnouncement(
         title: String,
