@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -2133,6 +2134,19 @@ object Constant {
 
 
     fun getDeviceDetails(context: Activity): JsonObject {
+
+
+        var isFullScreenIntent=""
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val notificationManager = context.getSystemService(NotificationManager::class.java)
+
+            Log.d(
+                "FSI",
+                "Can use full screen intent: ${notificationManager.canUseFullScreenIntent()}"
+            )
+            isFullScreenIntent=notificationManager.canUseFullScreenIntent().toString()
+        }
+
         val json = JsonObject()
         json.addProperty("manufacturer", Build.MANUFACTURER)
         json.addProperty("model", Build.MODEL)
@@ -2143,6 +2157,7 @@ object Constant {
         json.addProperty("os_version", Build.VERSION.RELEASE)
         json.addProperty("sdk_int", Build.VERSION.SDK_INT)
         json.addProperty("app_version", getAppVersion(context))
+        json.addProperty("full_screen_intent", isFullScreenIntent)
         return json
     }
 

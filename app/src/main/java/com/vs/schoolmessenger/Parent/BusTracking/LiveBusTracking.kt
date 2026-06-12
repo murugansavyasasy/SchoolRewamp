@@ -1001,8 +1001,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             return
         }
         val path = stops.joinToString(";") { "${it.lng},${it.lat}" }
-        val url =
-            "http://192.168.6.87:5000/route/v1/driving/$path?overview=full&geometries=geojson"
+//        val url = "http://192.168.6.87:5000/route/v1/driving/$path?overview=full&geometries=geojson"
+        val url = "${busData?.map_url_schoolchimes}$path?overview=full&geometries=geojson"
         Log.d("LiveBusTracking", "Fetching OSRM route: $url")
 
         thread {
@@ -1148,6 +1148,30 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         if (isTripCompleted) return
         val busLatLng = LatLng(busPoint.latitude(), busPoint.longitude())
 
+        if (journeyStatus?.equals("DROPPING", ignoreCase = true) == true) {
+            val childStopName = busData?.stop_name?.trim() ?: return
+
+            val nextIndex = currentStopIndex + 1
+            if (nextIndex < stops.size) {
+                val nextStop = stops[nextIndex]
+                val nextLatLng = LatLng(nextStop.lat, nextStop.lng)
+
+                if (busLatLng.distanceTo(nextLatLng) <= STOP_RADIUS_METERS) {
+                    currentStopIndex = nextIndex
+                    renderStopTimeline(currentStopIndex)
+
+                    Log.d("LiveBusTracking", "DROPPING: reached stop '${nextStop.name}'")
+
+                    if (nextStop.name.trim().equals(childStopName, ignoreCase = true)) {
+                        isTripCompleted = true
+                        showTripCompletedDialog()
+                    }
+                }
+            }
+            return
+        }
+
+
         val lastStop = stops.lastOrNull() ?: return
         val lastLatLng = LatLng(lastStop.lat, lastStop.lng)
 
@@ -1183,12 +1207,16 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         stopLocationPolling()
 
         runOnUiThread {
+            binding.mapCoordinatorLayout.visibility = View.GONE
             val dialogView = layoutInflater.inflate(R.layout.dialog_trip_completed, null)
             val tvDescription = dialogView.findViewById<TextView>(R.id.tvDescription)
             val btnDone = dialogView.findViewById<Button>(R.id.btnDone)
 
-            tvDescription.text =
+            tvDescription.text = if (journeyStatus?.equals("DROPPING", ignoreCase = true) == true) {
+                "Successfully completed. Thank you for traveling with us! This trip has been completed, and no further tracking updates are available"
+            } else {
                 "Successfully completed ${stops.size} stops\nThank you for traveling with us!"
+            }
 
             val dialog = AlertDialog.Builder(this)
                 .setView(dialogView)

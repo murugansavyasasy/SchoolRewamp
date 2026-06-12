@@ -16,5 +16,6 @@ data class BusListData(
     val vehicle_no: String?,
     val tentative_pickup_time: String?,
     val tentative_drop_time: String?,
+    val map_url_schoolchimes: String?,
     val stopping_points: List<StoppingPoint>
 ) : Parcelable

@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.NotificationDismissService
+import com.vs.schoolmessenger.Utils.SharedPreference
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -92,7 +93,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             // Firebase may send it like: {"menu_id":"39", "menu_name":"Attachments", ...}
 
             if (type.equals(Constant.isCall)) {
-
 
 //                sendNotificationCall(
 //                    title,
@@ -216,6 +216,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
             putExtra("notification_id", 1001)
+            putExtra("is_missed_announcement", false)
             putExtra("launch_source", "ANSWER")
 
         }
@@ -241,7 +242,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.call_title, call_title)
             putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
-            putExtra("notification_id", 1002)
+            putExtra("notification_id", 1001)
+            putExtra("is_missed_announcement", false)
             putExtra("launch_source", "FULL_SCREEN")
 
         }
@@ -317,7 +319,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setOngoing(true)
+                .setOngoing(false)
 
                 .setStyle(
                     NotificationCompat.CallStyle
@@ -332,10 +334,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     fullScreenPendingIntent,
                     true
                 )
-
-                .setContentIntent(
-                    answerPendingIntent
-                )
+                .setContentIntent(answerPendingIntent)
+                .setDeleteIntent(dismissPendingIntent)
+                .setAutoCancel(true)
 
                 .build()
 
@@ -362,6 +363,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             retrycount
         )
     }
+
     private fun startMissedAnnouncementTimer(
         title: String,
         body: String,
@@ -386,44 +388,116 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notificationManager =
                 NotificationManagerCompat.from(this)
 
-            val activeNotifications =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    (getSystemService(Context.NOTIFICATION_SERVICE)
-                            as NotificationManager)
-                        .activeNotifications
-                } else {
-                    emptyArray()
-                }
+            val notificationService =
+                getSystemService(Context.NOTIFICATION_SERVICE)
+                        as NotificationManager
 
-            val isIncomingStillVisible =
-                activeNotifications.any {
-                    it.id == 1001
-                }
+            // STOP EVERYTHING
+            RingtonePlayer.stop()
 
-            if (isIncomingStillVisible) {
-                notificationManager.cancel(1001)
-                showMissedAnnouncement(
-                    title,
-                    body,
-                    receiver_id.toString(),
-                    isWelcomeUrl,
-                    isVoiceUrl,
-                    ei1,
-                    ei2,
-                    ei3,
-                    ei4,
-                    ei5,
-                    school_name,
-                    member_name,
-                    call_title,
-                    role,
-                    circular_id,
-                    retrycount
-                )
+            notificationManager.cancel(1001)
+            notificationService.cancel(1001)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                notificationService.activeNotifications.forEach {
+                    if (it.id == 1001) {
+                        notificationService.cancel(it.id)
+                    }
+                }
             }
 
-        }, 30000) // 30 seconds
+            Log.d("MISSED_CALL", "No user response")
+
+            showMissedAnnouncement(
+                title,
+                body,
+                receiver_id,
+                isWelcomeUrl,
+                isVoiceUrl,
+                ei1,
+                ei2,
+                ei3,
+                ei4,
+                ei5,
+                school_name,
+                member_name,
+                call_title,
+                role,
+                circular_id,
+                retrycount
+            )
+
+        }, 30000)
     }
+
+//    private fun startMissedAnnouncementTimer(
+//        title: String,
+//        body: String,
+//        receiver_id: String,
+//        isWelcomeUrl: String,
+//        isVoiceUrl: String,
+//        ei1: String,
+//        ei2: String,
+//        ei3: String,
+//        ei4: String,
+//        ei5: String,
+//        school_name: String,
+//        member_name: String,
+//        call_title: String,
+//        role: String,
+//        circular_id: String,
+//        retrycount: String
+//    ) {
+//
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//
+//            val notificationManager =
+//                NotificationManagerCompat.from(this)
+//
+//            val notificationService =
+//                getSystemService(Context.NOTIFICATION_SERVICE)
+//                        as NotificationManager
+//
+//            val isStillVisible =
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    notificationService.activeNotifications.any {
+//                        it.id == 1001
+//                    }
+//                } else {
+//                    true
+//                }
+//
+//            if (isStillVisible) {
+//
+//                Log.d("MISSED_CALL", "No user response")
+//
+//                RingtonePlayer.stop()
+//
+//                notificationManager.cancel(1001)
+//
+//                showMissedAnnouncement(
+//                    title,
+//                    body,
+//                    receiver_id,
+//                    isWelcomeUrl,
+//                    isVoiceUrl,
+//                    ei1,
+//                    ei2,
+//                    ei3,
+//                    ei4,
+//                    ei5,
+//                    school_name,
+//                    member_name,
+//                    call_title,
+//                    role,
+//                    circular_id,
+//                    retrycount
+//                )
+//            }
+//
+//        }, 30000)
+//    }
 
     private fun showMissedAnnouncement(
         title: String,
@@ -443,6 +517,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         circular_id: String,
         retrycount: String
     ) {
+        RingtonePlayer.stop()
+
+        NotificationManagerCompat
+            .from(this)
+            .cancel(1001)
 
         val intent = Intent(
             this,
@@ -700,14 +779,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Expandable notification sent successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
-        }
-    }
-
-    private val stopMediaPlayerRunnable = Runnable {
-        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying) {
-            Constant.mediaPlayer.stop()
-            Constant.mediaPlayer.release()
-            Constant.mediaPlayer = MediaPlayer()
         }
     }
 }

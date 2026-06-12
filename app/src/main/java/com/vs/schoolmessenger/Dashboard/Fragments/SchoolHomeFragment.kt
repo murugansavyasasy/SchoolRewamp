@@ -244,13 +244,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //                        )
 //                    )
 
-                                        originalMenuList.add(
-                        MenuDetail(
-                            id = 205,
-                            name = "Bus Live Tracking",
-                            description = "Monitor and manage student data"
-                        )
-                    )
+//                                        originalMenuList.add(
+//                        MenuDetail(
+//                            id = 205,
+//                            name = "Bus Live Tracking",
+//                            description = "Monitor and manage student data"
+//                        )
+//                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()
