@@ -13,6 +13,11 @@
         <domain includeSubdomains="true">vs5.voicesnapforschools.com</domain>
 <!--        <domain includeSubdomains="true">192.168.6.87</domain>-->
         <domain includeSubdomains="true">154.210.215.42</domain>
+        <domain includeSubdomains="true">mt0.google.com</domain>
+        <domain includeSubdomains="true">mt1.google.com</domain>
+        <domain includeSubdomains="true">mt2.google.com</domain>
+        <domain includeSubdomains="true">mt3.google.com</domain>
+        <domain includeSubdomains="true">maps.googleapis.com</domain>
     </domain-config>
 
 </network-security-config>

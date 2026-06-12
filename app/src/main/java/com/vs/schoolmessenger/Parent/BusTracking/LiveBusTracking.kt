@@ -688,30 +688,259 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
     private fun setupWebView(trackingUrl: String) {
+
         binding.WVLiveBus.apply {
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-            settings.loadWithOverviewMode = true
-            settings.useWideViewPort = true
-            settings.builtInZoomControls = false
-            settings.displayZoomControls = false
-            settings.setGeolocationEnabled(true)
+
+            settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                loadWithOverviewMode = true
+                useWideViewPort = true
+                setSupportZoom(true)
+                builtInZoomControls = true
+                displayZoomControls = false
+                setGeolocationEnabled(true)
+                mediaPlaybackRequiresUserGesture = false
+                setSupportMultipleWindows(true)
+                javaScriptCanOpenWindowsAutomatically = true
+                cacheMode = android.webkit.WebSettings.LOAD_DEFAULT
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                }
+
+                userAgentString =
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                            "AppleWebKit/537.36 (KHTML, like Gecko) " +
+                            "Chrome/124.0.0.0 Safari/537.36"
+            }
+
+            setLayerType(View.LAYER_TYPE_HARDWARE, null)
         }
+
         binding.WVLiveBus.webChromeClient = object : WebChromeClient() {
+
             override fun onGeolocationPermissionsShowPrompt(
                 origin: String?,
                 callback: GeolocationPermissions.Callback?
             ) {
                 callback?.invoke(origin, true, false)
             }
+
+            override fun onConsoleMessage(
+                consoleMessage: android.webkit.ConsoleMessage?
+            ): Boolean {
+                Log.d(
+                    "WebViewConsole",
+                    "[${consoleMessage?.messageLevel()}] " +
+                            "${consoleMessage?.message()} " +
+                            "@ line ${consoleMessage?.lineNumber()}"
+                )
+                return true
+            }
+
+            override fun onCreateWindow(
+                view: WebView?,
+                isDialog: Boolean,
+                isUserGesture: Boolean,
+                resultMsg: android.os.Message?
+            ): Boolean {
+                val newWebView = WebView(this@LiveBusTracking).apply {
+                    settings.javaScriptEnabled = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        settings.mixedContentMode =
+                            android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                    }
+                }
+                newWebView.webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView?,
+                        request: WebResourceRequest?
+                    ): Boolean {
+                        request?.url?.toString()?.let { newUrl ->
+                            Log.d("WebViewConsole", "window.open → $newUrl")
+                            binding.WVLiveBus.loadUrl(newUrl)
+                        }
+                        return true
+                    }
+                }
+                val transport = resultMsg?.obj as? WebView.WebViewTransport
+                transport?.webView = newWebView
+                resultMsg?.sendToTarget()
+                return true
+            }
         }
+
         binding.WVLiveBus.webViewClient = object : WebViewClient() {
+
+            override fun shouldInterceptRequest(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): android.webkit.WebResourceResponse? {
+                val url = request?.url?.toString() ?: return null
+
+                if (url.startsWith("http://mt0.google.com") ||
+                    url.startsWith("http://mt1.google.com") ||
+                    url.startsWith("http://mt2.google.com") ||
+                    url.startsWith("http://mt3.google.com") ||
+                    url.startsWith("http://maps.googleapis.com") ||
+                    url.startsWith("http://")
+                ) {
+                    val httpsUrl = url.replace("http://", "https://")
+                    Log.d("WebViewConsole", "Rewriting HTTP → HTTPS: $httpsUrl")
+
+                    return try {
+                        val connection =
+                            java.net.URL(httpsUrl).openConnection() as java.net.HttpURLConnection
+                        connection.apply {
+                            requestMethod = "GET"
+                            setRequestProperty(
+                                "User-Agent",
+                                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                                        "AppleWebKit/537.36 (KHTML, like Gecko) " +
+                                        "Chrome/124.0.0.0 Safari/537.36"
+                            )
+                            request.requestHeaders?.forEach { (key, value) ->
+                                setRequestProperty(key, value)
+                            }
+                            connectTimeout = 10_000
+                            readTimeout = 10_000
+                        }
+
+                        val responseCode = connection.responseCode
+                        val mimeType = connection.contentType
+                            ?.split(";")?.firstOrNull()?.trim()
+                            ?: "image/png"
+                        val encoding = connection.contentEncoding ?: "utf-8"
+
+                        if (responseCode == java.net.HttpURLConnection.HTTP_OK) {
+                            android.webkit.WebResourceResponse(
+                                mimeType,
+                                encoding,
+                                connection.inputStream
+                            )
+                        } else {
+                            Log.w("WebViewConsole", "HTTPS rewrite got $responseCode for $httpsUrl")
+                            null
+                        }
+                    } catch (e: Exception) {
+                        Log.e("WebViewConsole", "HTTP→HTTPS rewrite failed: ${e.message}")
+                        null
+                    }
+                }
+
+                return null
+            }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                val url = request?.url?.toString() ?: return false
+                Log.d("WebViewConsole", "shouldOverrideUrlLoading → $url")
+
+                return when {
+                    url.startsWith("intent://") -> {
+                        try {
+                            val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                            if (intent.resolveActivity(packageManager) != null) {
+                                startActivity(intent)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("WebViewConsole", "Intent parse failed: ${e.message}")
+                        }
+                        true
+                    }
+                    url.contains("dhundhoo.com") -> {
+                        view?.loadUrl(url)
+                        true
+                    }
+                    url.startsWith("geo:") ||
+                            url.contains("maps.google.com") ||
+                            url.contains("maps.app.goo.gl") -> {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                        true
+                    }
+                    url.startsWith("http") || url.startsWith("https") -> {
+                        view?.loadUrl(url)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                Log.d("WebViewConsole", "onPageStarted → $url")
                 Constant.showLoading(this@LiveBusTracking)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
+                Log.d("WebViewConsole", "onPageFinished → $url")
                 Constant.hideLoading(this@LiveBusTracking)
+
+                view?.postDelayed({
+                    view.evaluateJavascript(
+                        """
+        (function() {
+            try {
+                // STEP 1: Log ALL buttons/links so we can see exactly what's there
+                var allClickable = document.querySelectorAll('button, a, [role="button"], [onclick], input[type="button"]');
+                allClickable.forEach(function(el, i) {
+                    console.log('ELEMENT[' + i + '] tag=' + el.tagName 
+                        + ' text="' + (el.innerText || el.textContent || '').trim() + '"'
+                        + ' href="' + (el.href || '') + '"'
+                        + ' onclick="' + (el.getAttribute('onclick') || '') + '"'
+                        + ' class="' + (el.className || '') + '"'
+                        + ' id="' + (el.id || '') + '"'
+                        + ' outerHTML=' + el.outerHTML.substring(0, 200)
+                    );
+                });
+
+                // STEP 2: Log the full page URL and title
+                console.log('PAGE_URL=' + window.location.href);
+                console.log('PAGE_TITLE=' + document.title);
+
+                // STEP 3: Intercept window.open globally
+                var originalOpen = window.open;
+                window.open = function(url, target, features) {
+                    console.log('window.open INTERCEPTED url=' + url 
+                        + ' target=' + target);
+                    // Load inside same WebView instead
+                    if (url) window.location.href = url;
+                    return null;
+                };
+
+                // STEP 4: Intercept window.location changes
+                var originalAssign = window.location.assign.bind(window.location);
+                var originalReplace = window.location.replace.bind(window.location);
+                
+                Object.defineProperty(window, 'location', {
+                    get: function() { return window._location || location; }
+                });
+
+                // STEP 5: Watch for any dynamically added buttons (in case button loads late)
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(m) {
+                        m.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1) {
+                                var text = (node.innerText || node.textContent || '').toLowerCase();
+                                if (text.includes('track') || text.includes('browser')) {
+                                    console.log('DYNAMIC_BUTTON_FOUND: ' + node.outerHTML);
+                                }
+                            }
+                        });
+                    });
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+                console.log('MutationObserver watching for dynamic buttons');
+
+            } catch(e) {
+                console.log('inject error: ' + e);
+            }
+        })();
+        """.trimIndent(), null
+                    )
+                }, 1000)
             }
 
             override fun onReceivedError(
@@ -719,10 +948,24 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                 request: WebResourceRequest?,
                 error: WebResourceError?
             ) {
-                Constant.hideLoading(this@LiveBusTracking)
-                showWebViewError()
+                if (request?.isForMainFrame == true) {
+                    Log.e("WebViewConsole",
+                        "Main frame error: ${error?.description} for ${request.url}")
+                    Constant.hideLoading(this@LiveBusTracking)
+                    showWebViewError()
+                }
+            }
+
+            override fun onReceivedHttpError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                errorResponse: android.webkit.WebResourceResponse?
+            ) {
+                Log.w("WebViewConsole",
+                    "HTTP ${errorResponse?.statusCode} for ${request?.url}")
             }
         }
+
         binding.WVLiveBus.loadUrl(trackingUrl)
     }
 
