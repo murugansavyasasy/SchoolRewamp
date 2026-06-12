@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUsDialog
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
+import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.BusTracking.LiveBusTracking
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
@@ -816,7 +817,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
                     SharedPreference.putChildDetails(this, matchedChild!!)
 
-                    val detailIntent = Intent(this, LiveBusTracking::class.java).apply {
+                    val detailIntent = Intent(this, BusList::class.java).apply {
                         putExtra(Constant.menu_name, menu_name)
                         putExtra(Constant.header_id, headerId)
                         putExtra(Constant.receiverid, receiverId)
@@ -827,7 +828,7 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     }
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
-                        addParentStack(LiveBusTracking::class.java)
+                        addParentStack(BusList::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(
                         0,

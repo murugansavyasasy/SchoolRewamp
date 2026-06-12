@@ -188,16 +188,16 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
         Log.d("LiveBusTracking", "isVendor = $isVendor")
 
-        if (fromNotification) {
-            Constant.isParentChoose = true
-            msg_id = intent.getIntExtra(Constant.msg_id, -1)
-            headerId = intent.getStringExtra(Constant.header_id)
-            receiverId = intent.getStringExtra(Constant.receiverid)
-            menu_name = intent.getStringExtra(Constant.menu_name)
-            Constant.isSelectedMenuName = menu_name.toString()
-            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
-            SharedPreference.putChildDetails(this, matchedChild!!)
-        }
+//        if (fromNotification) {
+//            Constant.isParentChoose = true
+//            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+//            headerId = intent.getStringExtra(Constant.header_id)
+//            receiverId = intent.getStringExtra(Constant.receiverid)
+//            menu_name = intent.getStringExtra(Constant.menu_name)
+//            Constant.isSelectedMenuName = menu_name.toString()
+//            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+//            SharedPreference.putChildDetails(this, matchedChild!!)
+//        }
 
         isAccessToken = if (Constant.isParentChoose)
             SharedPreference.getChildDetails(this)?.access_token

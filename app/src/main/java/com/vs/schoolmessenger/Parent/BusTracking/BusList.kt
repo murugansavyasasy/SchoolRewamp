@@ -25,6 +25,11 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
     override fun getViewBinding(): BusListActivityBinding {
         return BusListActivityBinding.inflate(layoutInflater)
     }
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -34,6 +39,8 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
 
     var isVendor: String? = ""
     var isChildDetails: ChildDetails? = null
+
+    var userDetails: UserDetails? = null
 
 
     override fun setupViews() {
@@ -47,6 +54,18 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
         isVendor  = isChildDetails?.gps_type
 
         Log.d("isVendorValue", isVendor.toString())
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Constant.isSelectedMenuName = menu_name.toString()
+            userDetails= SharedPreference.getUserDetails(this)
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+        }
 
         if (Constant.isParentChoose) {
             isAccessToken = isChildDetails?.access_token
