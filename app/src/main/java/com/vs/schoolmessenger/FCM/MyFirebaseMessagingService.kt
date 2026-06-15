@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -29,7 +28,6 @@ import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.NotificationDismissService
-import com.vs.schoolmessenger.Utils.SharedPreference
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -225,6 +223,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
             putExtra("isEmergencyCall", isEmergency)
+            putExtra("notification_id", 1001)
+            putExtra("launch_source", "ANSWER")
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
         val uniqueID = (receiver_id + circular_id).hashCode()
@@ -320,7 +320,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                         try {
 
-                            if (!MyFirebaseMessagingService.isUserAnswered.isNotificationOpened){
+                            if (!isUserAnswered.isNotificationOpened){
                             showMissedNotificationForNormalCall(
                                 title,
                                 body,
@@ -537,7 +537,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .from(this)
             .notify(1001, notification.build())
 
-        if (MyFirebaseMessagingService.isUserAnswered.isNotificationOpened) {
+        if (!isUserAnswered.isNotificationOpened) {
             startMissedAnnouncementTimer(
                 title,
                 body,
@@ -581,7 +581,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Handler(Looper.getMainLooper()).postDelayed({
 
             Log.e("MISSED_CALL", "30 Seconds Completed")
-            MyFirebaseMessagingService.isUserAnswered.isNotificationOpened=false
+            isUserAnswered.isNotificationOpened=false
             try {
 
                 // Stop ringtone
@@ -615,7 +615,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
 
             Log.e("MISSED_CALL", "Showing Missed Notification")
-            if (!MyFirebaseMessagingService.isUserAnswered.isNotificationOpened) {
+            if (!isUserAnswered.isNotificationOpened) {
                 showMissedAnnouncement(
                     title,
                     body,
@@ -965,6 +965,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             putExtra("is_missed_announcement", true)
             putExtra("launch_source", "MISSED")
+            putExtra("launch_source", 1001)
             putExtra("isEmergencyCall", false)
         }
 
