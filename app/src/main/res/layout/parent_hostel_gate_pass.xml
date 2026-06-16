@@ -1,0 +1,15 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/twenty"
+    android:layout_marginHorizontal="@dimen/twenty"
+    android:fillViewport="true">
+
+    <include
+        android:id="@+id/hostel_gate_pass"
+        layout="@layout/hostel_gate_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</ScrollView>

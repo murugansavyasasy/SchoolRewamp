@@ -6,86 +6,132 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/ten"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five">
 
         <RelativeLayout
             android:id="@+id/fab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/fourty"
-            android:background="@drawable/rect_shadow_white"
-            android:paddingTop="@dimen/ten"
-            android:paddingBottom="@dimen/ten">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten">
 
-            <TextView
-                android:id="@+id/lblSendBy"
+            <LinearLayout
+                android:id="@+id/linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/twenty"
-                android:text="Send By Sathish"
-                android:textSize="@dimen/fifteen_sp"
-                android:textColor="@color/sky_blue0"
-                android:textStyle="bold">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/first_letter"
+                    android:layout_width="@dimen/twenty_seven"
+                    android:layout_height="@dimen/twenty_seven"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/notification_contact_bg"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/lblTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSendBy"
-                android:layout_marginLeft="@dimen/twenty"
-                android:layout_marginTop="@dimen/five"
-                android:text="Function"
-                android:textStyle="bold"
-                android:textSize="@dimen/thirteen_sp"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ten"
+                    android:paddingBottom="@dimen/twenty">
 
-                android:textColor="@color/black">
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginBottom="@dimen/three"
+                        android:text="Text Message"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
 
-            </TextView>
+                    <TextView
+                        android:id="@+id/lblContent"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/thirty"
+                        android:layout_marginBottom="@dimen/five"
+                        android:text="Probably at least one of the constraints in the following list is one you don't want."
+                        android:textColor="@color/mild_grey6"
+                        android:textSize="@dimen/fifteen_sp" />
 
-            <TextView
-                android:id="@+id/lblContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblTitle"
-                android:layout_marginLeft="@dimen/twenty"
-                android:layout_marginTop="@dimen/five"
-                android:textSize="@dimen/thirteen_sp"
-                android:text="All of you come to school tomorrow"
-                android:textColor="@color/black">
 
-            </TextView>
+                    <LinearLayout
+                        android:id="@+id/linear_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
+
+                        <TextView
+                            android:id="@+id/notification_date"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="1"
+                            android:text="10/09/2025"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <TextView
+                            android:id="@+id/lblSendBy"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="Saranraj"
+                            android:textColor="@color/sky_blue0"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_above="@+id/lblSendBy"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:background="@color/gray"
+                        android:visibility="visible"></View>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lblView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblContent"
-                android:layout_marginLeft="@dimen/twenty"
+                android:layout_below="@+id/linear_layout"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/five"
-                android:text="View >>"
-                android:visibility="gone"
-                android:textColor="@color/navi_blue1">
-
-            </TextView>
+                android:text="@string/view_"
+                android:textColor="@color/navi_blue1"
+                android:visibility="gone" />
 
         </RelativeLayout>
-
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgRoundCard"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/twenty_five"
-            android:elevation="@dimen/ten"
-            android:src="@drawable/text_notification">
-
-        </de.hdodenhof.circleimageview.CircleImageView>
 
     </RelativeLayout>
 
@@ -93,12 +139,12 @@
         android:id="@+id/lblNotification"
         android:layout_width="@dimen/fifteen"
         android:layout_height="@dimen/fifteen"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/five"
-        android:layout_alignParentLeft="true"
-        android:visibility="gone"
-        android:layout_marginLeft="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/twenty_three"
         android:background="@drawable/circle_dark_blue"
-        android:elevation="@dimen/ten"></TextView>
-
+        android:elevation="@dimen/ten"
+        android:visibility="gone" />
 
 </RelativeLayout>
+

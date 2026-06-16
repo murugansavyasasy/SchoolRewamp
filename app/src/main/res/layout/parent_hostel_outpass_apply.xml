@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/hostel_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/light_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginHorizontal="@dimen/ten"
+                android:id="@+id/consEntireApplyOutpass"
+                android:layout_marginVertical="@dimen/fifteen"
+                android:paddingBottom="@dimen/fifteen"
+                android:paddingTop="@dimen/ten"
+                android:paddingHorizontal="@dimen/ten"
+                android:background="@drawable/rect_radius_15"
+                android:layout_width="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lblMessageNote"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblMenuName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="@string/request_details"
+                    android:layout_marginEnd="@dimen/five"
+                    android:textSize="@dimen/sixteen_sp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/lblOutpassReason"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    app:layout_constraintTop_toBottomOf="@+id/lblMenuName"
+                    android:id="@+id/lblOutpassReason"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/edtReason"
+                    android:text="Reason for Outpass *"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/edtReason"
+                    android:background="@drawable/rect_radius_15"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingTop="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constraintTop_toBottomOf="@+id/lblOutpassReason"
+                    android:paddingBottom="@dimen/fifty"
+                    android:backgroundTint="@color/light_gray_16"
+                    app:layout_constraintBottom_toTopOf="@+id/lblDestination"
+                    android:hint="@string/enter_reason_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="0dp"
+                    android:inputType="textMultiLine"
+                    android:gravity="top|start"
+                    android:scrollbars="vertical"
+                    android:layout_height="wrap_content">
+
+                </EditText>
+
+
+                <TextView
+                    android:visibility="gone"
+                    style="@style/CustomTextStylePoppinsBold"
+                    app:layout_constraintTop_toBottomOf="@+id/edtReason"
+                    android:id="@+id/lblDestination"
+                    android:layout_width="wrap_content"
+                    android:text="Destination *"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/edtDestination"
+                    app:layout_constraintHorizontal_bias="0"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/edtDestination"
+                    android:background="@drawable/rect_radius_15"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:paddingVertical="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintTop_toBottomOf="@+id/lblDestination"
+                    android:backgroundTint="@color/light_gray_16"
+                    android:hint="@string/where_are_you_going"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/consFromTo"
+                    android:layout_height="wrap_content">
+
+                </EditText>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/consFromTo"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constraintBottom_toTopOf="@+id/consSelectedFromAndToDate"
+                    app:layout_constraintTop_toBottomOf="@+id/edtDestination"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/lblFromDate"
+                        android:layout_width="0dp"
+                        android:text="From Date *"
+                        app:layout_constraintEnd_toStartOf="@+id/lblToDate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/lblToDate"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="To Date *"
+                        app:layout_constraintStart_toEndOf="@+id/lblFromDate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/five"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/consFromToTime"
+                    app:layout_constraintTop_toBottomOf="@+id/consFromTo"
+                    android:id="@+id/consSelectedFromAndToDate"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/selectedFromDate"
+                        android:layout_width="0dp"
+                        android:background="@drawable/bg_stroke_white"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text=""
+                        android:drawableStart="@drawable/calendar_icon_2"
+                        android:drawablePadding="@dimen/five"
+                        android:padding="@dimen/six"
+                        app:layout_constraintEnd_toStartOf="@+id/selectedToDate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        android:padding="@dimen/six"
+                        android:drawableStart="@drawable/calendar_icon_2"
+                        android:drawablePadding="@dimen/five"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/selectedToDate"
+                        android:layout_width="0dp"
+                        android:background="@drawable/bg_stroke_white"
+                        android:layout_marginStart="@dimen/five"
+                        android:text=""
+                        app:layout_constraintStart_toEndOf="@+id/selectedFromDate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:id="@+id/consFromToTime"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constraintBottom_toTopOf="@+id/consSelectedFromAndToDateTime"
+                    app:layout_constraintTop_toBottomOf="@+id/consSelectedFromAndToDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/lblFromTime"
+                        android:layout_width="0dp"
+                        android:text="From Time *"
+                        app:layout_constraintEnd_toStartOf="@+id/lblToTime"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/lblToTime"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="To Time *"
+                        app:layout_constraintStart_toEndOf="@+id/lblFromTime"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/five"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/lblEmergerncyContact"
+                    app:layout_constraintTop_toBottomOf="@+id/consFromToTime"
+                    android:id="@+id/consSelectedFromAndToDateTime"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/selectedFromTime"
+                        android:layout_width="0dp"
+                        android:background="@drawable/rect_radius_15"
+                        android:backgroundTint="@color/light_gray_16"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="--:-- --"
+                        android:padding="@dimen/six"
+                        app:layout_constraintEnd_toStartOf="@+id/selectedToTime"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        android:padding="@dimen/six"
+                        app:layout_constraintHorizontal_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/selectedToTime"
+                        android:layout_width="0dp"
+                        android:background="@drawable/rect_radius_15"
+                        android:backgroundTint="@color/light_gray_16"
+                        android:layout_marginStart="@dimen/five"
+                        android:text="--:-- --"
+                        app:layout_constraintStart_toEndOf="@+id/selectedFromTime"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    app:layout_constraintTop_toBottomOf="@+id/consSelectedFromAndToDateTime"
+                    android:id="@+id/lblEmergerncyContact"
+                    android:layout_width="wrap_content"
+                    android:text="Emergency Contact Number *"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/edtContactNumber"
+                    app:layout_constraintHorizontal_bias="0"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/edtContactNumber"
+                    android:background="@drawable/rect_radius_15"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:paddingVertical="@dimen/ten"
+                    app:layout_constraintTop_toBottomOf="@+id/lblEmergerncyContact"
+                    android:backgroundTint="@color/light_gray_16"
+                    android:hint="@string/enter_contact_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="0dp"
+                    android:inputType="phone"
+                    android:digits="0123456789"
+                    android:singleLine="true"
+                    app:layout_constraintBottom_toTopOf="@+id/lblSubmitRequest"
+                    android:layout_height="wrap_content">
+
+                </EditText>
+
+
+
+                <com.google.android.material.button.MaterialButton
+
+                    android:id="@+id/lblSubmitRequest"
+                    android:minHeight="0dp"
+                    android:paddingVertical="@dimen/ten"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/ten"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintHorizontal_weight="1"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constrainedWidth="true"
+                    android:layout_marginBottom="@dimen/ten"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_marginHorizontal="@dimen/fifteen"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:icon="@drawable/send_icon_white"
+                    app:iconTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:iconGravity="textStart"
+                    app:iconPadding="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/edtContactNumber"
+                    android:text="@string/submit_request"
+                    android:layout_height="wrap_content">
+
+
+                </com.google.android.material.button.MaterialButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_marginHorizontal="@dimen/twenty"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintTop_toBottomOf="@+id/consEntireApplyOutpass"
+                android:id="@+id/lblMessageNote"
+                android:layout_width="0dp"
+                android:background="@drawable/rect_radius_15"
+                android:backgroundTint="@color/light_blue_15"
+                android:padding="@dimen/fifteen"
+                android:text="@string/note_your_outpass_request_will_be_sent_to_the_warden_for_approval_you_will_be_notified_once_the_decision_is_made_please_ensure_all_details_are_accurate"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

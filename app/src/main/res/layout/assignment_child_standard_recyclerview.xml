@@ -1,0 +1,28 @@
+<!-- res/layout/class_load_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/four"
+    android:background="@drawable/custom_bg_radius"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/six"
+        android:text="M Bharath  - X1 B"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp" />
+
+    <TextView
+        android:id="@+id/mobile_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/six"
+        android:text="+91 6383904707"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp" />
+</LinearLayout>

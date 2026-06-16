@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblMonthName"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="December 2023"
+        android:textColor="@color/light_gray"></TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMonthWiseHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

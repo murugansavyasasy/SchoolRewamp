@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="25dp"
+    android:height="25dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+
+    <!-- Medium-sized square outline -->
+    <path
+        android:fillColor="@color/white"
+        android:fillType="evenOdd"
+        android:pathData="
+            M2,2
+            H18
+            V18
+            H2
+            Z
+
+            M3.5,3.5
+            H16.5
+            V16.5
+            H3.5
+            Z" />
+
+    <!-- Checkmark sized to fit well inside -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="
+            M14.5,7.5
+            L9,14
+            a0.9,0.9 0,0 1,-0.65 0.3
+            h-0.06
+            a0.9,0.9 0,0 1,-0.6 -0.23
+            l-2.5,-2.2
+            a0.9,0.9 0,1 1,1.2 -1.3
+            l1.8,1.6
+            4.1,-4.8
+            a0.9,0.9 0,0 1,1.35 1.2Z" />
+</vector>

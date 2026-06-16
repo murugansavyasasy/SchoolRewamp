@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/ten"
+    android:elevation="@dimen/five"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/twenty"
+    app:strokeColor="@color/light_gray_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twenty">
+
+        <TextView
+            android:id="@+id/lblInitialName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/circle_bg_orange"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:text=""
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/lblRoomFullNo"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/lblFullName"
+            app:layout_constraintHorizontal_weight="0.20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFullName">
+
+        </TextView>
+
+        <TextView
+
+            android:id="@+id/lblFullName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Aran"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/lblStatus"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblInitialName"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/lblRoomFullNo"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/two"
+            android:text="Room No 101"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/lblDestination"
+            app:layout_constraintEnd_toEndOf="@+id/lblFullName"
+            app:layout_constraintStart_toStartOf="@+id/lblFullName"
+            app:layout_constraintTop_toBottomOf="@+id/lblFullName"></TextView>
+
+        <TextView
+
+            android:id="@+id/lblStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="@dimen/three"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="@dimen/eleven_sp"
+            app:layout_constraintBottom_toBottomOf="@+id/lblRoomFullNo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lblFullName"
+            app:layout_constraintTop_toTopOf="@+id/lblFullName">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblDestination"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:drawableStart="@drawable/location_icon"
+            android:drawablePadding="@dimen/five"
+            android:drawableTint="@color/red"
+            android:text="Destination : Library"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblRoomFullNo"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblReason"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text="Saran raj"
+            android:drawableTint="@color/black"
+            android:drawablePadding="@dimen/five"
+            android:backgroundTint="@color/black"
+            android:drawableStart="@drawable/reason_icon_3"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblDestination"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblOutDate"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:drawableStart="@drawable/calendar_icon"
+            android:drawablePadding="@dimen/five"
+            android:text="Feb 31, 00:00 AM"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/eleven_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toStartOf="@+id/lblInDate"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblReason"></TextView>
+
+        <TextView
+            android:id="@+id/lblInDate"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:drawableStart="@drawable/calendar_icon"
+            android:drawablePadding="@dimen/five"
+            android:text="Feb 31, 00:00 AM"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/eleven_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblOutDate"
+            app:layout_constraintTop_toBottomOf="@+id/lblReason"></TextView>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/brInOutDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="lblOutDate,lblInDate">
+
+        </androidx.constraintlayout.widget.Barrier>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lblApprove"
+            android:layout_marginEnd="@dimen/five"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/primary_rect_radius"
+            android:backgroundTint="@color/light_green4"
+            android:minHeight="0dp"
+            android:paddingVertical="@dimen/six"
+            android:text="@string/approve"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele_sp"
+            app:icon="@drawable/tick_circle_icon"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconTint="@color/white"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lblRejected"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brInOutDate">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lblRejected"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/primary_rect_radius"
+            android:backgroundTint="@color/red"
+            android:minHeight="0dp"
+            android:paddingVertical="@dimen/six"
+            android:text="@string/reject"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele_sp"
+            app:icon="@drawable/close_icon"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconTint="@color/white"
+            app:layout_constrainedHeight="true"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblApprove"
+            app:layout_constraintTop_toBottomOf="@+id/brInOutDate">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupApproveReject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="lblApprove,lblRejected">
+
+        </androidx.constraintlayout.widget.Group>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

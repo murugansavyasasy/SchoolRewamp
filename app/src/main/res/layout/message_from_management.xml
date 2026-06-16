@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/athens_gray">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+
+        <RelativeLayout
+            android:id="@+id/rytSearch1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@id/toolbarLayout"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginStart="@dimen/five"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imgSearch1"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytSearch1"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Spinner
+                android:id="@+id/schoollistfilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/three"
+                android:layout_toStartOf="@+id/schoollistfilterimg"
+                android:background="@null"
+                android:drawSelectorOnTop="true"
+                android:paddingVertical="@dimen/five" />
+
+            <ImageView
+                android:id="@+id/schoollistfilterimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/three"
+                android:src="@drawable/ic_drop_down"
+                app:tint="@color/black">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rytSpinner"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:id="@+id/rlaMessageFFromStaff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:paddingBottom="@dimen/twenty">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcMessageStaff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <!-- Center layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rcMessageStaff"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/lytList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/noDataImage"
+                            android:layout_width="@dimen/two_hundred"
+                            android:layout_height="@dimen/two_hundred"
+                            android:src="@drawable/no_data_found" />
+
+                        <TextView
+                            android:id="@+id/txtNoData"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="@string/no_data"
+                            android:textSize="@dimen/fifteen_sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/isArchiveErrorMsg"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblArchiveMsg"
+                        android:gravity="center"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:visibility="gone">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblArchiveMsg"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:text="@string/show_older_messages"
+                        android:textColor="@color/PrimaryColor"></TextView>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

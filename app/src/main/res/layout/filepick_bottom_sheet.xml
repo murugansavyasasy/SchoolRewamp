@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_top_corners"
+    android:padding="@dimen/five">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lblChooseFileType"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifteen"
+            android:text="@string/pick_your_file_type"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:id="@+id/lnrFilePick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblChooseFileType"
+            android:layout_marginTop="@dimen/fifteen">
+
+
+            <RelativeLayout
+                android:id="@+id/rlaGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourty"
+                android:layout_marginTop="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgGallery"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/gallery_icon"></ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgGallery"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/gallery">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlaCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgCamera"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/camera_icon"></ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgCamera"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/camera">
+
+                </TextView>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fourty">
+
+                <ImageView
+                    android:id="@+id/imgDocument"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/ic_document"></ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgDocument"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/document">
+
+                </TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrFilePick"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/twenty">
+
+
+            <RelativeLayout
+                android:id="@+id/rlaVideoPick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourty"
+                android:layout_marginTop="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgVideopick"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/video_icon"></ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVideopick"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/video">
+
+                </TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgVoice"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/audio_icon2">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoice"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/voice">
+
+                </TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlavoicerecorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/thirty"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgVoicerecord"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/record_voice_icon">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoicerecord"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="@string/voice_record">
+
+                </TextView>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

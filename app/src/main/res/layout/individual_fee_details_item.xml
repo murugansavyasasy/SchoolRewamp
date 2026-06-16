@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="@dimen/ten"
+    app:strokeWidth="@dimen/zero"
+    android:layout_marginBottom="@dimen/ten"
+    app:cardBackgroundColor="@color/gray_white"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/sixteen"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:id="@+id/consFeeDetailsHeader"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                android:id="@+id/lblFeeName"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:layout_height="wrap_content"
+                android:text="Fee Name "
+                app:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginHorizontal="@dimen/five"
+                style="@style/CustomTextStylePoppinsBold"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/lnrStatusDetails"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/flowFeeDetails" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:layout_marginTop="@dimen/five"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                android:id="@+id/flowFeeDetails"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lblTotalAmount,lblDiscount"
+                app:flow_horizontalStyle="packed"
+                app:flow_horizontalGap="@dimen/ten"
+                app:flow_horizontalBias="0"
+                app:flow_wrapMode="chain"
+                app:flow_verticalGap="@dimen/five"
+                app:layout_constraintEnd_toEndOf="@+id/lblFeeName"
+                app:layout_constraintStart_toStartOf="@id/lblFeeName"
+                app:layout_constraintTop_toBottomOf="@id/lblFeeName"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            <TextView
+                android:id="@+id/lblTotalAmount"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5000"
+              />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:id="@+id/lblDiscount"
+                android:textColor="@color/light_blue_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 2000"
+                />
+
+
+            <LinearLayout
+                app:layout_constraintHorizontal_weight="1.5"
+                android:paddingHorizontal="@dimen/ten"
+                android:id="@+id/lnrStatusDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/lblFeeName">
+
+                <TextView
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/five"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblFeeStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Cancel"
+                    />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:id="@+id/lblPending"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="pending"
+                    />
+
+                <TextView
+                    android:id="@+id/lblDueDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Due : 00 XYZ 0000"
+                    android:layout_marginBottom="@dimen/five"
+                    android:drawableTint="@color/bpBlue"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_marginTop="@dimen/five"
+                    android:textColor="@color/light_gray"
+                    android:drawableStart="@drawable/calendar_icon_2"
+                    android:drawablePadding="@dimen/five"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

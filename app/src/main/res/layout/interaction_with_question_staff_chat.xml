@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/ten">
+
+    <!-- Parent message block -->
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/circle_answer_background"
+        android:minWidth="180dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/five">
+
+        <!-- Name + more options row -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/five">
+
+            <TextView
+                android:id="@+id/aboveText"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Swathi "
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/more_options"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/more_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vert"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Question -->
+        <TextView
+            android:id="@+id/questionText"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/five"
+            android:maxWidth="250dp"
+            android:text="Hi Mam . This is Ramys . Nice to meet you"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <!-- Time -->
+        <TextView
+            android:id="@+id/belowText"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:text="10 days ago"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/reply_type"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/ten"
+        android:padding="@dimen/five"
+        android:text="Private Reply"
+        android:textColor="@color/black"
+        android:textSize="11sp" />
+
+
+    <LinearLayout
+        android:id="@+id/linear_121layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reply_type"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/circle_background"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/five">
+
+
+        <TextView
+            android:id="@+id/answerText"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I'm doing well"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+
+        <!-- Time -->
+        <TextView
+            android:id="@+id/belowanswertext"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:text="10 days ago"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+</RelativeLayout>

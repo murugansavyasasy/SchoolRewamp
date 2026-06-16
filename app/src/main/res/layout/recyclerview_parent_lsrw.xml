@@ -1,0 +1,213 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerrelative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="@dimen/five"
+    android:background="@drawable/rect_white"
+    android:clipToPadding="false"
+    android:elevation="4dp"
+    android:padding="@dimen/fifteen">
+
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/new_icon1"
+        android:elevation="@dimen/ten"
+        android:visibility="gone"></ImageView>
+
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_icon_round"
+        android:contentDescription="@string/app_name"
+        android:padding="5dp"
+        android:src="@drawable/headphonesvgformat" />
+
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgIcon"
+        android:text="TAMIL"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtSubtitle"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTitle"
+        android:layout_toEndOf="@id/imgIcon"
+        android:text="Listening"
+        android:textColor="@color/purple_700"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtMainDesc"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgIcon"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:text="I’m not sure what to say about the beach for"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtSubDesc"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtMainDesc"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="25dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="I’m not going back to the house and the beach for a few hours and then I’m going to bed and then I’ll head back home to get my stuff ready to the beach and then"
+        android:textColor="@color/bpTransparent_black"
+        android:textSize="13sp" />
+
+
+    <LinearLayout
+        android:id="@+id/rytList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSubDesc"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:id="@+id/rytList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/total_numbers"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_toEndOf="@id/rcyAssignment"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/video_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/bg_image_background_white_coupon"
+            android:scaleType="fitXY"
+            android:src="@drawable/video_play"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_bar_white"
+            android:indeterminateOnly="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <View
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/arrow_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/dark_pink_background"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/eight"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/eight"
+            android:src="@drawable/arrow_right_white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgArrow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="arrow"
+        android:src="@drawable/right_arrow" />
+
+
+    <TextView
+        android:id="@+id/txtProfile"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rytList"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/profile"
+        android:drawablePadding="6dp"
+        android:text="CHANDHRU V"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/txtProfile"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:drawableRight="@drawable/doublearrowsvgformatstyle"
+        android:drawablePadding="4dp"
+        android:text="@string/Start"
+        android:textColor="@color/teal_900"
+        android:textSize="14sp" />
+
+</RelativeLayout>

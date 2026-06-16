@@ -8,19 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_shadow_green"
+        android:background="@drawable/rect_shadow_light_green"
         android:padding="@dimen/ten">
 
         <TextView
             android:id="@+id/lblTitle"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/ten"
-            android:layout_toLeftOf="@+id/lblTime"
-            android:text="Images"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lblTime"
+            android:text="@string/images">
 
         </TextView>
 
@@ -40,7 +38,7 @@
             android:id="@+id/lblTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:text="May 22, 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -53,26 +51,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContent"
             android:layout_marginTop="@dimen/twenty"
+            android:layout_marginBottom="@dimen/five"
             android:background="@drawable/bg_blue"
             android:gravity="center"
-            android:layout_marginBottom="@dimen/five"
             android:padding="@dimen/five">
 
             <ImageView
                 android:id="@+id/imgAttachment"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
+                android:layout_marginStart="@dimen/five"
                 android:gravity="center"
-                android:layout_marginLeft="@dimen/five"
                 android:src="@drawable/attachment_icon"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
-                android:text="@string/lblAttachment"
-                android:layout_toRightOf="@+id/imgAttachment"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/imgAttachment"
                 android:gravity="center"
+                android:text="@string/lblAttachment"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">

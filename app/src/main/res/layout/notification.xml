@@ -1,80 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mild4">
+    android:background="@color/gray_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <RelativeLayout
-        android:id="@+id/rlaLblNotification"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_light"
-        android:paddingBottom="@dimen/thirty">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
 
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty_two"
-            android:src="@drawable/arrow_back_black">
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_margin="@dimen/ten"
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </RelativeLayout>
+
 
         <TextView
-            android:id="@+id/lblNotification"
+            android:id="@+id/btn_clearall"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_toRightOf="@+id/imgBack"
-            android:text="@string/lblNotifications"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
-            android:textStyle="bold">
-
-        </TextView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rytSearch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty_five"
-        android:layout_below="@+id/rlaLblNotification"
-        android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_white">
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_calendar_card"
+            android:padding="10dp"
+            android:text="@string/clear_all"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="12sp" />
 
 
-        <ImageView
-            android:id="@+id/imgSearch"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
-            android:src="@drawable/ic_search" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_clearall"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/twenty"
+            android:background="@drawable/bg_notification_rounded_container"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
 
-        <EditText
-            android:id="@+id/txtSearchMenu"
+        <LinearLayout
+            android:id="@+id/lytList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/imgSearch"
-            android:background="@android:color/transparent"
-            android:hint="@string/lblSearch"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:layout_below="@+id/toolbarLayout"
+            android:gravity="center"
+
+            android:orientation="vertical"
+            android:paddingStart="@dimen/fifteen"
+            android:paddingEnd="@dimen/fifteen"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/no_notification_message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty"
+                android:gravity="center"
+                android:text="@string/no_list_found"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
 
     </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyNotification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch"
-        android:layout_marginTop="@dimen/ten"
-        tools:listitem="@layout/resent_notifications">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

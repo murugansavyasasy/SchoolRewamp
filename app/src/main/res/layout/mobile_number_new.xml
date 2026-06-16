@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+        <RelativeLayout
+            android:id="@+id/rytBack"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/bg_circle_white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_back_black" />
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/footerLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <LinearLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/thirty"
+            android:background="@drawable/bg_rect_white_large_top_radius"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/thirty">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/twenty"
+                android:gravity="start"
+                android:text="@string/welcome_to_school_chimes"
+                android:textSize="@dimen/twenty_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@id/lblContent"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:gravity="start"
+                android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one_fifty"
+                android:layout_marginTop="@dimen/twenty"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_mobile_number_svg" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lblLogin"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:gravity="start"
+                        android:text="@string/log_in_to_stay_connected"
+                        android:textSize="@dimen/eighteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblMobile"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblLogin"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:text="@string/lblMobileNumber" />
+
+                    <RelativeLayout
+                        android:id="@+id/rytMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty_five"
+                        android:layout_below="@+id/lblMobile"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:background="@drawable/login_bg_rect_grey">
+
+                        <ImageView
+                            android:id="@+id/imgMobile"
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/mobile"
+                            android:visibility="gone" />
+
+                        <View
+                            android:id="@+id/vwMobile"
+                            android:layout_width="@dimen/one"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_toEndOf="@+id/imgMobile"
+                            android:background="@color/mild_grey1"
+                            android:visibility="gone" />
+
+                        <EditText
+                            android:id="@+id/txtMobileNumber"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/vwMobile"
+                            android:background="@drawable/edittext_background_selector"
+                            android:hint="@string/_00000_00000"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:textColorHint="@color/light_gray_"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/btnLoginContinue"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rytMobile"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:background="@drawable/rect_btn_blue"
+                        android:gravity="center"
+                        android:padding="@dimen/ten"
+                        android:text="@string/next"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fifteen_sp" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/footerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fifteen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imgSavyasasy"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:src="@drawable/savyasasy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgSavyasasy"
+            android:text="@string/powered_by_savyasasy"
+            android:textColor="@color/grey" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:id="@+id/main"-->
+    <!--    >-->
+
+    <!--    <View-->
+    <!--        android:id="@+id/statusBarBackground"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:id="@+id/toolbarLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rytBack"-->
+    <!--            android:layout_width="@dimen/fourty"-->
+    <!--            android:layout_height="@dimen/fourty"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:background="@drawable/bg_circle_white"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imgBack"-->
+    <!--                android:layout_width="@dimen/fifteen"-->
+    <!--                android:layout_height="@dimen/fifteen"-->
+    <!--                android:layout_centerInParent="true"-->
+    <!--                android:src="@drawable/ic_arrow_back_black" />-->
+    <!--        </RelativeLayout>-->
+
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+    <!--    <ScrollView-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:fillViewport="true"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp">-->
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/rytHeader"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/thirty"-->
+    <!--            android:background="@drawable/bg_rect_white_large_top_radius"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <TextView-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/twenty"-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:layout_marginEnd="@dimen/twenty"-->
+    <!--                android:gravity="start"-->
+    <!--                android:text="@string/welcome_to_school_chimes"-->
+    <!--                android:textSize="@dimen/twenty_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@id/lblContent"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/twenty"-->
+    <!--                android:layout_marginEnd="@dimen/twenty"-->
+    <!--                android:layout_marginTop="@dimen/ten"-->
+    <!--                android:gravity="start"-->
+    <!--                android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"-->
+    <!--                android:textSize="@dimen/thirteen_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/image_banner"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="@dimen/one_fifty"-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:adjustViewBounds="true"-->
+    <!--                android:src="@drawable/ic_mobile_number_svg" />-->
+
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent">-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/rytMobileNumber"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lblLogin"-->
+    <!--                        style="@style/CustomTextStylePoppinsBold"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty_five"-->
+    <!--                        android:gravity="start"-->
+    <!--                        android:text="@string/log_in_to_stay_connected"-->
+    <!--                        android:textSize="@dimen/eighteen_sp" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lblMobile"-->
+    <!--                        style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@+id/lblLogin"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty"-->
+    <!--                        android:text="@string/lblMobileNumber" />-->
+
+    <!--                    <RelativeLayout-->
+    <!--                        android:id="@+id/rytMobile"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="@dimen/fourty_five"-->
+    <!--                        android:layout_below="@+id/lblMobile"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:background="@drawable/login_bg_rect_grey">-->
+
+    <!--                        <ImageView-->
+    <!--                            android:id="@+id/imgMobile"-->
+    <!--                            android:layout_width="@dimen/twenty_five"-->
+    <!--                            android:layout_height="@dimen/twenty_five"-->
+    <!--                            android:layout_centerVertical="true"-->
+    <!--                            android:src="@drawable/mobile"-->
+    <!--                            android:visibility="gone" />-->
+
+    <!--                        <View-->
+    <!--                            android:id="@+id/vwMobile"-->
+    <!--                            android:layout_width="@dimen/one"-->
+    <!--                            android:layout_height="match_parent"-->
+    <!--                            android:layout_marginVertical="@dimen/ten"-->
+    <!--                            android:layout_marginStart="@dimen/ten"-->
+    <!--                            android:layout_toEndOf="@+id/imgMobile"-->
+    <!--                            android:background="@color/mild_grey1"-->
+    <!--                            android:visibility="gone" />-->
+
+    <!--                        <EditText-->
+    <!--                            android:id="@+id/txtMobileNumber"-->
+    <!--                            style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="match_parent"-->
+    <!--                            android:layout_toEndOf="@+id/vwMobile"-->
+    <!--                            android:background="@drawable/edittext_background_selector"-->
+    <!--                            android:hint="@string/_00000_00000"-->
+    <!--                            android:inputType="number"-->
+    <!--                            android:maxLength="10"-->
+    <!--                            android:paddingHorizontal="@dimen/ten"-->
+    <!--                            android:textColorHint="@color/light_gray_"-->
+    <!--                            android:textSize="@dimen/thirteen_sp" />-->
+
+
+    <!--                    </RelativeLayout>-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/btnLoginContinue"-->
+    <!--                        style="@style/CustomTextStylePoppinsBold"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@+id/rytMobile"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/thirty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginBottom="@dimen/ten"-->
+    <!--                        android:background="@drawable/rect_btn_blue"-->
+    <!--                        android:gravity="center"-->
+    <!--                        android:padding="@dimen/ten"-->
+    <!--                        android:text="@string/next"-->
+    <!--                        android:textColor="@color/white"-->
+    <!--                        android:textSize="@dimen/fifteen_sp" />-->
+    <!--                </RelativeLayout>-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/lnrPowered"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_alignParentBottom="true"-->
+    <!--                    android:layout_centerHorizontal="true"-->
+    <!--                    android:layout_marginBottom="@dimen/fifteen">-->
+
+    <!--                    <ImageView-->
+    <!--                        android:id="@+id/imgSavyasasy"-->
+    <!--                        android:layout_width="@dimen/thirty"-->
+    <!--                        android:layout_height="@dimen/thirty"-->
+    <!--                        android:layout_centerVertical="true"-->
+    <!--                        android:src="@drawable/savyasasy" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_centerVertical="true"-->
+    <!--                        android:layout_toEndOf="@+id/imgSavyasasy"-->
+    <!--                        android:text="@string/powered_by_savyasasy"-->
+    <!--                        android:textColor="@color/grey" />-->
+    <!--                </RelativeLayout>-->
+
+    <!--            </RelativeLayout>-->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:id="@+id/main"-->
+    <!--    android:background="@color/light_white">-->
+
+    <!--    <View-->
+    <!--        android:id="@+id/statusBarBackground"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:id="@+id/toolbarLayout"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="0dp"-->
+    <!--    android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent">-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rytBack"-->
+    <!--            android:layout_width="@dimen/fourty"-->
+    <!--            android:layout_height="@dimen/fourty"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:background="@drawable/bg_circle_white"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imgBack"-->
+    <!--                android:layout_width="@dimen/fifteen"-->
+    <!--                android:layout_height="@dimen/fifteen"-->
+    <!--                android:layout_centerInParent="true"-->
+    <!--                android:src="@drawable/ic_arrow_back_black" />-->
+    <!--        </RelativeLayout>-->
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/rytHeader"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/eighty"-->
+    <!--            android:background="@drawable/bg_rect_white_large_top_radius"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <TextView-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/twenty"-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:layout_marginEnd="@dimen/twenty"-->
+    <!--                android:gravity="start"-->
+    <!--                android:text="@string/welcome_to_school_chimes"-->
+    <!--                android:textSize="@dimen/twenty_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@id/lblContent"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/twenty"-->
+    <!--                android:layout_marginEnd="@dimen/twenty"-->
+    <!--                android:layout_marginTop="@dimen/ten"-->
+    <!--                android:gravity="start"-->
+    <!--                android:text="@string/stay_connected_with_your_school_community_your_updates_communication_and_school_life_all_in_one_place"-->
+    <!--                android:textSize="@dimen/thirteen_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/image_banner"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="@dimen/one_fifty"-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:adjustViewBounds="true"-->
+    <!--                android:src="@drawable/ic_mobile_number_svg" />-->
+
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent">-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/rytMobileNumber"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lblLogin"-->
+    <!--                        style="@style/CustomTextStylePoppinsBold"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty_five"-->
+    <!--                        android:gravity="start"-->
+    <!--                        android:text="@string/log_in_to_stay_connected"-->
+    <!--                        android:textSize="@dimen/eighteen_sp" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/lblMobile"-->
+    <!--                        style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@+id/lblLogin"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty"-->
+    <!--                        android:text="@string/lblMobileNumber" />-->
+
+    <!--                    <RelativeLayout-->
+    <!--                        android:id="@+id/rytMobile"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="@dimen/fourty_five"-->
+    <!--                        android:layout_below="@+id/lblMobile"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/twenty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:background="@drawable/login_bg_rect_grey">-->
+
+    <!--                        <ImageView-->
+    <!--                            android:id="@+id/imgMobile"-->
+    <!--                            android:layout_width="@dimen/twenty_five"-->
+    <!--                            android:layout_height="@dimen/twenty_five"-->
+    <!--                            android:layout_centerVertical="true"-->
+    <!--                            android:src="@drawable/mobile"-->
+    <!--                            android:visibility="gone" />-->
+
+    <!--                        <View-->
+    <!--                            android:id="@+id/vwMobile"-->
+    <!--                            android:layout_width="@dimen/one"-->
+    <!--                            android:layout_height="match_parent"-->
+    <!--                            android:layout_marginVertical="@dimen/ten"-->
+    <!--                            android:layout_marginStart="@dimen/ten"-->
+    <!--                            android:layout_toEndOf="@+id/imgMobile"-->
+    <!--                            android:background="@color/mild_grey1"-->
+    <!--                            android:visibility="gone" />-->
+
+    <!--                        <EditText-->
+    <!--                            android:id="@+id/txtMobileNumber"-->
+    <!--                            style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="match_parent"-->
+    <!--                            android:layout_toEndOf="@+id/vwMobile"-->
+    <!--                            android:background="@drawable/edittext_background_selector"-->
+    <!--                            android:hint="@string/_00000_00000"-->
+    <!--                            android:inputType="number"-->
+    <!--                            android:maxLength="10"-->
+    <!--                            android:paddingHorizontal="@dimen/ten"-->
+    <!--                            android:textColorHint="@color/light_gray_"-->
+    <!--                            android:textSize="@dimen/thirteen_sp" />-->
+
+
+    <!--                    </RelativeLayout>-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/btnLoginContinue"-->
+    <!--                        style="@style/CustomTextStylePoppinsBold"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@+id/rytMobile"-->
+    <!--                        android:layout_marginStart="@dimen/twenty"-->
+    <!--                        android:layout_marginTop="@dimen/thirty"-->
+    <!--                        android:layout_marginEnd="@dimen/twenty"-->
+    <!--                        android:layout_marginBottom="@dimen/ten"-->
+    <!--                        android:background="@drawable/rect_btn_blue"-->
+    <!--                        android:gravity="center"-->
+    <!--                        android:padding="@dimen/ten"-->
+    <!--                        android:text="@string/next"-->
+    <!--                        android:textColor="@color/white"-->
+    <!--                        android:textSize="@dimen/fifteen_sp" />-->
+    <!--                </RelativeLayout>-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/lnrPowered"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_alignParentBottom="true"-->
+    <!--                    android:layout_centerHorizontal="true"-->
+    <!--                    android:layout_marginBottom="@dimen/fifteen">-->
+
+    <!--                    <ImageView-->
+    <!--                        android:id="@+id/imgSavyasasy"-->
+    <!--                        android:layout_width="@dimen/thirty"-->
+    <!--                        android:layout_height="@dimen/thirty"-->
+    <!--                        android:layout_centerVertical="true"-->
+    <!--                        android:src="@drawable/savyasasy" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_centerVertical="true"-->
+    <!--                        android:layout_toEndOf="@+id/imgSavyasasy"-->
+    <!--                        android:text="@string/powered_by_savyasasyvyasasy"-->
+    <!--                        android:textColor="@color/grey" />-->
+    <!--                </RelativeLayout>-->
+
+    <!--            </RelativeLayout>-->
+    <!--        </LinearLayout>-->
+    <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

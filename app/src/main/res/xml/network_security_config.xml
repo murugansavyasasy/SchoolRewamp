@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+
+    <!-- Allow HTTP for all required domains -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">apiv8.schoolchimes.net</domain>
+        <domain includeSubdomains="true">reportv8.schoolchimes.net</domain>
+        <domain includeSubdomains="true">api.pauket.com</domain>
+        <domain includeSubdomains="true">api.schoolchimes.com</domain>
+
+        <!-- ADD THIS FOR YOUR IMAGE URL -->
+        <domain includeSubdomains="true">vs5.voicesnapforschools.com</domain>
+    </domain-config>
+
+</network-security-config>
+
+
+
+

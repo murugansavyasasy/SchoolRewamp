@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintBottom_toTopOf="@id/lnrPowered"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+        <RelativeLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:background="@drawable/bg_circle_white"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_back_black" />
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/eighty"
+            android:background="@drawable/bg_rect_white_large_top_radius"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/fifty">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:gravity="start"
+                    android:text="@string/enter_password_to_proceed"
+                    android:textSize="@dimen/twenty_sp" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="start"
+                    android:text="@string/your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/one_fifty"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_password_svg" />
+
+                <!-- Password Section -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lblPassword"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:text="@string/lblPassword"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rytMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty_five"
+                        android:layout_below="@id/lblPassword"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:background="@drawable/login_bg_rect_grey">
+
+                        <EditText
+                            android:id="@+id/txtPassword"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_background_selector"
+                            android:hint="@string/star"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <ImageView
+                            android:id="@+id/imgHide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:src="@drawable/password_hide" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/lblForgetPassword"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rytMobile"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:text="@string/lblForgotPassword"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+
+                    <TextView
+                        android:id="@+id/btnLoginContinue"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lblForgetPassword"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:background="@drawable/rect_btn_blue"
+                        android:gravity="center"
+                        android:padding="@dimen/ten"
+                        android:text="@string/lblValidate"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fifteen_sp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrPowered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fifteen"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imgSavyasasy"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:src="@drawable/savyasasy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:text="@string/powered_by_savyasasy"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/twele_sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

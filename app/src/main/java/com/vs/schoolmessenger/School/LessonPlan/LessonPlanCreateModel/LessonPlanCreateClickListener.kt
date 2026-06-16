@@ -1,0 +1,3 @@
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanCreateModel
+
+interface LessonPlanCreateClickListener

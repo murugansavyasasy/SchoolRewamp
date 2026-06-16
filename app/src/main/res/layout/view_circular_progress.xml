@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/one_twenty"
+    android:layout_height="@dimen/one_twenty"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <ProgressBar
+        android:id="@+id/circularProgressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/sixty"
+        android:layout_height="@dimen/sixty"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular_progressbar"
+        android:secondaryProgress="0" />
+
+    <TextView
+        android:id="@+id/lblPresentStatus"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sixty"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="0%"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/twele_sp" />
+
+    <TextView
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/circularProgressbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/twele"
+        android:gravity="center"
+        android:text="@string/sending_wait"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twele_sp" />
+</RelativeLayout>

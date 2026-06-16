@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/ten"
+    android:background="@color/white">
+
+    <!-- Colored Dot -->
+    <View
+        android:id="@+id/groupColourPercent"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:background="@drawable/circle_dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Subject Name -->
+    <TextView
+        android:id="@+id/groupSubjectname"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:text="@string/subject_name"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintEnd_toStartOf="@id/mark"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/groupColourPercent"
+        app:layout_constraintTop_toTopOf="@id/groupColourPercent" />
+
+    <!-- Marks -->
+    <TextView
+        android:id="@+id/mark"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text=""
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/groupSubjectname" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcGroupSplitMark"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintEnd_toEndOf="@id/mark"
+        app:layout_constraintStart_toStartOf="@id/groupSubjectname"
+        app:layout_constraintTop_toBottomOf="@id/groupSubjectname" />
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/one"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@color/iron"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcGroupSplitMark" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

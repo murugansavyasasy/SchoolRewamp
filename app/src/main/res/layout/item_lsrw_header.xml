@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:layout_width="@dimen/one_eighty"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="@dimen/sixteen"
+    card_view:cardElevation="@dimen/four">
+
+
+    <LinearLayout
+        android:id="@+id/root_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/twele">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgIcon"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:background="@drawable/bg_icon_round"
+                android:padding="@dimen/six"
+                android:src="@drawable/booksvgformatstyle" />
+
+            <TextView
+                android:id="@+id/txtCount"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/twenty_sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtTitle"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Today Submitted"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <TextView
+            android:id="@+id/txtSubTitle"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="0 Students"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fourteen_sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

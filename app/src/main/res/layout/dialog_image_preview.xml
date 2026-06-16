@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="@dimen/sixteen">
+
+    <!-- Card Container -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/three_hundred"
+        android:layout_height="@dimen/three_sixty"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/sixteen"
+        app:cardElevation="@dimen/eight"
+        app:cardUseCompatPadding="true"
+        android:backgroundTint="@android:color/white">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imgPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/eight"
+                android:scaleType="fitCenter" />
+
+
+
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="@dimen/thirty_two"
+                android:layout_height="@dimen/thirty_two"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/eight"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/close_icon_red_custom" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

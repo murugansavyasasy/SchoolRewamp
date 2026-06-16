@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background (represents total students) -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="8dp" />
+            <solid android:color="#B0B0B0" />
+        </shape>
+    </item>
+
+    <!-- Progress (represents absentees) -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="8dp" />
+                <solid android:color="@color/red" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

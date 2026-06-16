@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audioBubble"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+
+    android:layout_alignParentEnd="true"
+    android:background="@drawable/rect_shadow_white"
+    android:padding="@dimen/twenty_five"
+    android:visibility="visible">
+
+
+    <ImageView
+        android:id="@+id/imgVoicePlay"
+        android:layout_width="@dimen/fourty"
+        android:layout_height="@dimen/fourty"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/eight"
+        android:src="@drawable/video_play" />
+
+
+    <SeekBar
+        android:id="@+id/audioSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/thirty"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="@dimen/twele"
+        android:layout_toStartOf="@id/lblCurrentDuration"
+        android:layout_toEndOf="@id/lblTime" />
+
+
+    <TextView
+        android:id="@+id/lblCurrentDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/eight"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp" />
+
+    <TextView
+        android:id="@+id/lblTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/twele"
+        android:layout_toEndOf="@id/imgVoicePlay"
+        android:text="00:00"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen_sp"
+        android:visibility="visible" />
+
+</RelativeLayout>
+
+

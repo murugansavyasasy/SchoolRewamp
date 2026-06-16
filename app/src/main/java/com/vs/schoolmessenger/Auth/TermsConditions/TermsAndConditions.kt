@@ -1,11 +1,15 @@
 package com.vs.schoolmessenger.Auth.TermsConditions
+
+import android.net.Uri
+import android.util.Log
 import android.view.View
-import android.webkit.WebViewClient
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.BuildConfig
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.TermsAndConditionsBinding
 
-class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnClickListener {
+class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): TermsAndConditionsBinding {
         return TermsAndConditionsBinding.inflate(layoutInflater)
@@ -14,25 +18,69 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
-        setupToolbar()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main,
+            statusBarBgView = binding.statusBarBackground
+        )
         // Enable JavaScript
-        binding.webView.settings.javaScriptEnabled = true
-        // Enable zoom controls (optional)
-        binding.webView.settings.setSupportZoom(true)
-        binding.webView.settings.builtInZoomControls = true
-        binding.webView.settings.displayZoomControls = false
-        // Set WebViewClient to handle page navigation within the WebView
-        binding.webView.webViewClient = WebViewClient()
-        // Load a URL
-        binding.webView.loadUrl("https://schoolchimes.com/vs_web/terms_conditions/")
+        val screen_name = intent.getStringExtra("screen_name") ?: ""
         binding.imgBack.setOnClickListener(this)
+
+        var URL = ""
+        binding.lblParentToolBar.text = when (screen_name) {
+            "isTerms" -> {
+                if (BuildConfig.BASE_APP) {
+                    URL = BuildConfig.TERMS_URL
+                } else {
+                    val url = BuildConfig.TERMS_URL
+                    URL = Uri.parse(url)
+                        .buildUpon()
+                        .appendQueryParameter("id", BuildConfig.SCHOOL_ID)
+                        .build()
+                        .toString()
+                }
+                "Terms and Conditions"
+            }
+
+            "isPrivacy" -> {
+                if (BuildConfig.BASE_APP) {
+                    URL = Constant.isGlobalVariableData?.privacy_policy ?: ""
+                } else {
+                    val url  = Constant.isGlobalVariableData?.wl_privacy?: ""
+                    URL = Uri.parse(url)
+                        .buildUpon()
+                        .appendQueryParameter("id", BuildConfig.SCHOOL_ID)
+                        .build()
+                        .toString()
+                }
+                "Privacy Policy"
+            }
+
+            "isAboutTheApp" -> {
+                URL = Constant.isGlobalVariableData?.about_the_app ?: ""
+                "About the App"
+            }
+
+            "HowToUse" -> {
+                URL = Constant.isGlobalVariableData?.how_to_use ?: ""
+                "How to Use?"
+            }
+
+            else -> ""
+        }
+        Log.d("URL",URL)
+        Constant.loadWebView(
+            this,
+            binding.webView,
+            URL
+        )
 
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
-               finish()
+                finish()
             }
         }
     }

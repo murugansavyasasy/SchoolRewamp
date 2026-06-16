@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/ten"
+    android:elevation="@dimen/five"
+    android:id="@+id/cardHeader"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/twenty"
+    app:strokeColor="@color/light_gray_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twenty">
+
+        <TextView
+            android:id="@+id/lblRoomNo"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Room 10012"
+            android:textSize="@dimen/sixteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <ImageView
+            android:id="@+id/imgPersonStrength"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:tint="@color/light_gray__1"
+            android:src="@drawable/three_person_icon"
+            ></ImageView>
+
+        <TextView
+            android:id="@+id/lblPersonStrength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/light_gray__2"
+            ></TextView>
+
+        <ImageView
+            android:id="@+id/imgBedCount"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/bed_icon"
+            android:tint="@color/light_gray__1"
+            ></ImageView>
+
+        <TextView
+            android:textColor="@color/light_gray__2"
+            android:id="@+id/lblBedCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            ></TextView>
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowRoomDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            app:constraint_referenced_ids="imgPersonStrength,lblPersonStrength,imgBedCount,lblBedCount"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="@dimen/ten"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblRoomNo">
+
+        </androidx.constraintlayout.helper.widget.Flow>
+
+        <TextView
+            android:id="@+id/lblOccupancy"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
+            android:text="@string/occupancy"
+            android:visibility="gone"
+            android:textColor="@color/light_gray__2"
+            app:layout_constraintEnd_toStartOf="@+id/lblOccupancyPercentage"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flowRoomDetails"></TextView>
+
+        <TextView
+            android:id="@+id/lblOccupancyPercentage"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/five"
+            android:gravity="end"
+            android:text="60%"
+            android:textSize="@dimen/sixteen_sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/lblOccupancy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.2"
+            app:layout_constraintStart_toEndOf="@+id/lblOccupancy"
+            app:layout_constraintTop_toTopOf="@+id/lblOccupancy"></TextView>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/brOccupancyPecentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            android:visibility="gone"
+            app:constraint_referenced_ids="lblOccupancy,lblOccupancyPercentage"></androidx.constraintlayout.widget.Barrier>
+
+        <ProgressBar
+            android:id="@+id/proRoomAvailProgressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/eight"
+            android:visibility="gone"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/brOccupancyPecentage" />
+
+        <TextView
+            android:id="@+id/lblFirstName"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:text="• Sathish Kumar"
+            android:visibility="gone"
+            android:textColor="@color/light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/proRoomAvailProgressBar">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSecondName"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone"
+            android:text="• Saranraj"
+            android:textColor="@color/light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblFirstName">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblHostellarRemainingCount"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:text="• +2 more"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/ErrorMsg"
+            android:textColor="@color/light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblSecondName">
+
+        </TextView>
+
+
+        <TextView
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/lblHostellarRemainingCount"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:id="@+id/ErrorMsg"
+            android:text="@string/room_empty"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:background="@drawable/rect_radius_15"
+            android:backgroundTint="@color/light_gray1"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/ten"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/vwDivider"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <View
+            android:id="@+id/vwDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@color/light_gray_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ErrorMsg">
+
+        </View>
+
+        <TextView
+            android:id="@+id/lblMarkAttendance"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/five"
+            android:text="@string/mark_attendance"
+            android:textColor="@color/light_gray__2"
+            android:textSize="@dimen/sixteen_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imgArrow"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vwDivider"></TextView>
+
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:src="@drawable/right_arrow"
+            android:tint="@color/light_gray__1"
+            app:layout_constraintBottom_toBottomOf="@+id/lblMarkAttendance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.1"
+            app:layout_constraintStart_toEndOf="@+id/lblMarkAttendance"
+            app:layout_constraintTop_toTopOf="@+id/lblMarkAttendance"></ImageView>
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/GroupsRoomDetails"
+            app:constraint_referenced_ids="vwDivider,lblMarkAttendance,imgArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.Group>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

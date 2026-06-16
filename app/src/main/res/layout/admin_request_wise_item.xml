@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardHeader"
+    android:layout_marginBottom="@dimen/ten"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/five"
+    app:cardBackgroundColor="@color/mild_light_yellow"
+    app:cardCornerRadius="@dimen/twenty"
+    app:strokeColor="@color/light_gray_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twenty">
+
+        <TextView
+            app:layout_constraintHorizontal_weight="0.15"
+            android:id="@+id/lblRoomNo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="101"
+            app:layout_constraintDimensionRatio="1:1"
+            android:textColor="@color/white"
+            android:padding="@dimen/three"
+            android:background="@drawable/rect_bg_light_green_present"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/lblFullRoomNo"
+            app:layout_constraintBottom_toBottomOf="@+id/lblName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFullRoomNo">
+
+        </TextView>
+
+        <TextView
+
+            android:id="@+id/lblFullRoomNo"
+            android:layout_marginEnd="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:text="Room 101"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintEnd_toStartOf="@+id/imgStatus"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/lblRoomNo"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/lblName"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Saran raj"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintBottom_toTopOf="@+id/lblReason"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/two"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@+id/lblFullRoomNo"
+            app:layout_constraintStart_toStartOf="@+id/lblFullRoomNo"
+            app:layout_constraintTop_toBottomOf="@+id/lblFullRoomNo"></TextView>
+
+        <ImageView
+
+            android:id="@+id/imgStatus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lblFullRoomNo"
+            app:layout_constraintBottom_toBottomOf="@+id/lblName"
+            android:layout_width="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_weight="0.1"
+            app:layout_constraintStart_toEndOf="@+id/lblFullRoomNo"
+            android:layout_height="0dp">
+
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/lblReason"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Saran raj"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblName"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblDate"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Feb 31, 00:00 AM"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblReason"></TextView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

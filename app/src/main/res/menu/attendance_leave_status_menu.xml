@@ -1,0 +1,141 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Present / Present -->
+    <item
+        android:icon="@drawable/present_icon"
+        android:title="@string/present" />
+
+    <!-- Absent / Absent -->
+    <item
+        android:icon="@drawable/absent_icon"
+        android:title="@string/absent" />
+
+    <!-- No Taken -->
+    <item
+        android:icon="@drawable/att_no_taken"
+        android:title="@string/not_taken" />
+
+    <!-- OD / OD -->
+    <item
+        android:icon="@drawable/att_od_icon"
+        android:title="@string/OD" />
+
+    <!-- Late / Late -->
+    <item
+        android:icon="@drawable/att_late_icon"
+        android:title="@string/late_comer" />
+
+    <!-- Holiday -->
+    <item
+        android:icon="@drawable/holiday_icon"
+        android:title="@string/holiday2" />
+
+    <!-- Present / Absent -->
+    <item
+        android:icon="@drawable/p_and_a"
+        android:title="@string/fn_present_an_absent" />
+
+    <!-- Present / OD -->
+    <item
+        android:icon="@drawable/p_and_od"
+        android:title="@string/fn_present_an_od" />
+
+    <!-- Present / Late -->
+    <item
+        android:icon="@drawable/p_and_l"
+        android:title="@string/fn_present_an_late_comer" />
+
+    <!-- Present / No Taken -->
+    <item
+        android:icon="@drawable/p_and_n"
+        android:title="@string/fn_present_an_not_taken" />
+
+
+    <!-- Absent / Present -->
+    <item
+        android:icon="@drawable/a_and_p"
+        android:title="@string/fn_absent_an_present" />
+
+
+    <!-- Absent / OD -->
+    <item
+        android:icon="@drawable/a_and_od"
+        android:title="@string/fn_absent_an_od" />
+
+    <!-- Absent / Late -->
+    <item
+        android:icon="@drawable/a_and_l"
+        android:title="@string/fn_absent_an_late_comer" />
+
+    <!-- Absent / No Taken -->
+    <item
+        android:icon="@drawable/a_and_n"
+        android:title="@string/fn_absent_an_not_taken" />
+
+
+    <!-- Late / Present -->
+    <item
+        android:icon="@drawable/a_and_p"
+        android:title="@string/fn_late_comer_an_present" />
+
+    <!-- Late / Absent -->
+    <item
+        android:icon="@drawable/l_and_a"
+        android:title="@string/fn_late_comer_an_absent" />
+
+    <!-- Late / OD -->
+    <item
+        android:icon="@drawable/l_and_od"
+        android:title="@string/fn_late_comer_an_od" />
+
+
+    <!-- Late / No Taken -->
+    <item
+        android:icon="@drawable/l_and_n"
+        android:title="@string/fn_late_comer_an_not_taken" />
+
+
+    <!-- Not Taken / Present -->
+    <item
+        android:icon="@drawable/n_and_p"
+        android:title="@string/fn_not_taken_an_present" />
+
+    <!-- Not Taken / Absent -->
+    <item
+        android:icon="@drawable/n_and_a"
+        android:title="@string/fn_not_taken_an_absent" />
+
+    <!-- Not Taken / OD -->
+    <item
+        android:icon="@drawable/n_and_od"
+        android:title="@string/fn_not_taken_an_od" />
+
+    <!-- Not Taken / Late -->
+    <item
+        android:icon="@drawable/n_and_l"
+        android:title="@string/fn_not_taken_an_late_comer" />
+
+
+    <!-- OD / Present -->
+    <item
+        android:icon="@drawable/od_and_p"
+        android:title="@string/fn_od_an_present" />
+
+    <!-- OD / Absent -->
+    <item
+        android:icon="@drawable/od_and_a"
+        android:title="@string/fn_od_an_absent" />
+
+
+    <!-- OD / Late -->
+    <item
+        android:icon="@drawable/od_and_l"
+        android:title="@string/fn_od_an_late_comer" />
+
+    <!-- OD / Not Taken -->
+    <item
+        android:icon="@drawable/od_and_n"
+        android:title="@string/fn_od_an_not_taken" />
+
+
+</menu>

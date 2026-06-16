@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/hostel_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.core.widget.NestedScrollView
+        android:background="@color/light_white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginVertical="@dimen/fifteen"
+            android:paddingBottom="@dimen/fifty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/consTotalStudent"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                app:layout_constraintBottom_toTopOf="@+id/cons_cardTodayAttendanceDetails"
+                app:layout_constraintEnd_toStartOf="@+id/consOutpassRequests"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:padding="@dimen/fifteen"
+                android:background="@drawable/bg_rect_priamry_colur_radius"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgTotalStudent"
+                    android:src="@drawable/studnet_count_icon"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five">
+                </ImageView>
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/ten"
+                    android:textSize="@dimen/twenty_sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/imgTotalStudent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblTotalStudentCount"
+                    android:text="-"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <TextView
+                    android:textColor="@color/white"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    app:layout_constraintTop_toBottomOf="@+id/lblTotalStudentCount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblTotalStudents"
+                    android:text="@string/total_students"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/ten"
+                android:id="@+id/consOutpassRequests"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintBottom_toTopOf="@+id/cons_cardTodayAttendanceDetails"
+                android:layout_marginStart="@dimen/five"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/consTotalStudent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:padding="@dimen/fifteen"
+                android:background="@drawable/bg_rect_priamry_colur_radius"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgOutpassRequest"
+                    android:src="@drawable/outpass_icon"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five">
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_marginTop="@dimen/ten"
+                    android:textSize="@dimen/twenty_sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/imgOutpassRequest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblOutpassRequestCount"
+                    android:text="-"
+                    app:layout_constraintEnd_toStartOf="@+id/imgGoOutPass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+                <ImageView
+                    app:layout_constraintTop_toTopOf="@+id/lblOutpassRequestCount"
+                    android:id="@+id/imgGoOutPass"
+                    app:layout_constraintStart_toEndOf="@+id/lblOutpassRequestCount"
+                    android:layout_width="@dimen/twenty"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/right_arrow"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="@dimen/twenty">
+
+                </ImageView>
+
+                <TextView
+                    android:textColor="@color/white"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    app:layout_constraintTop_toBottomOf="@+id/lblOutpassRequestCount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/lblOutpassRequests"
+                    android:text="@string/outpass_requests"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgGoOutPass"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:id="@+id/cons_cardTodayAttendanceDetails"
+                app:layout_constraintTop_toBottomOf="@+id/consTotalStudent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/cardAttendanceRequired"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone"
+                android:elevation="@dimen/five"
+                app:strokeColor="@color/light_gray_10"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/twenty"
+                android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/twenty"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsRegular"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/TodayAttendancePercent"
+                        android:id="@+id/lblTodayAttendance"
+                        app:layout_constraintHorizontal_weight="1"
+                        android:text="@string/today_s_attendance"
+                        android:layout_width="0dp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_marginEnd="@dimen/five"
+                        android:textSize="@dimen/twenty_two_sp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <TextView
+                        app:layout_constraintHorizontal_weight="0.25"
+                        android:gravity="end"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/lblTodayAttendance"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/TodayAttendancePercent"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/twenty_two_sp"
+                        android:text="10%"
+                        android:layout_width="0dp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/brAttendance"
+                        android:layout_width="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="lblTodayAttendance,TodayAttendancePercent"
+                        android:layout_height="wrap_content">
+                    </androidx.constraintlayout.widget.Barrier>
+                    <TextView
+                        style="@style/CustomTextStylePoppinsRegular"
+                        app:layout_constraintTop_toBottomOf="@+id/brAttendance"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/lblNoRoomMarked"
+                        android:text="0/8 rooms marked"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textColor="@color/light_gray"
+                        android:layout_marginTop="@dimen/five"
+                        app:layout_constraintBottom_toBottomOf="@+id/lblViewHistory"
+                        android:layout_marginEnd="@dimen/five"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintEnd_toStartOf="@+id/lblViewHistory"
+                        android:layout_width="0dp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <TextView
+                        android:drawableStart="@drawable/clock_icon_2"
+                        android:layout_marginTop="@dimen/three"
+                        android:drawableTint="@color/PrimaryColor"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:id="@+id/lblViewHistory"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:drawablePadding="@dimen/five"
+                        android:textColor="@color/PrimaryColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/lblNoRoomMarked"
+                        app:layout_constraintHorizontal_weight="0.4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/lblNoRoomMarked"
+                        app:layout_constraintTop_toBottomOf="@+id/brAttendance"
+                        android:text="@string/view_history"
+                        android:layout_width="0dp"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/brRoomDetails"
+                        android:layout_width="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="lblNoRoomMarked,lblViewHistory"
+                        android:layout_height="wrap_content">
+
+                    </androidx.constraintlayout.widget.Barrier>
+
+                    <ProgressBar
+                        android:id="@+id/proAttendanceProgressBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ten"
+                        android:progress="50"
+                        android:max="100"
+                        android:progressDrawable="@drawable/progress_blue"
+                        app:layout_constraintTop_toBottomOf="@id/brRoomDetails"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginBottom="@dimen/eight" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:id="@+id/cardAttendanceRequired"
+                app:layout_constraintTop_toBottomOf="@+id/cons_cardTodayAttendanceDetails"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/fifteen"
+                android:elevation="@dimen/five"
+                app:strokeColor="@color/light_gray_10"
+                app:cardBackgroundColor="@color/mild_light_yellow"
+                app:cardCornerRadius="@dimen/twenty"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/ten"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgAttendanceRequired"
+                        app:layout_constraintTop_toTopOf="@+id/lblAttendanceRequired"
+                        app:layout_constraintBottom_toBottomOf="@+id/lblRoomPendingDetails"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/calendar_icon_6"
+                        android:tint="@color/dark_orange"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty">
+
+                    </ImageView>
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imgAttendanceRequired"
+                        android:id="@+id/lblAttendanceRequired"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        android:text="@string/today_attendance"
+                        android:layout_width="0dp"
+                        android:textColor="@color/dark_brown"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:textSize="@dimen/sixteen_sp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_marginTop="@dimen/five"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        app:layout_constraintTop_toBottomOf="@+id/lblAttendanceRequired"
+                        app:layout_constraintStart_toEndOf="@+id/imgAttendanceRequired"
+                        android:id="@+id/lblRoomPendingDetails"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/view_history"
+                        android:drawablePadding="@dimen/five"
+                        android:drawableTint="@color/PrimaryColor"
+                        android:drawableStart="@drawable/schedule_clock_icon"
+                        android:layout_width="0dp"
+                        android:textColor="@color/PrimaryColor"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constrainedHeight="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:layout_height="wrap_content">
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/cardAttendanceRequired"
+                android:layout_width="0dp"
+                android:id="@+id/rcRoomAvailability"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toTopOf="@+id/imgNoDataFound"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/rcRoomAvailability"
+                android:layout_width="@dimen/two_hundred"
+                android:id="@+id/imgNoDataFound"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintBottom_toTopOf="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/two_hundred">
+            </ImageView>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:id="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="nod"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

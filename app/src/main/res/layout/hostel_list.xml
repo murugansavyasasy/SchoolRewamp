@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+
+    <TextView
+        android:background="@color/light_white"
+        android:layout_marginTop="@dimen/ten"
+        android:id="@+id/lblAvailableHostel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScroll"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        android:layout_width="0dp"
+        android:textAllCaps="true"
+        android:textColor="@color/light_gray"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/nestedScroll"
+        android:background="@color/light_white"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblAvailableHostel"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:paddingBottom="@dimen/fifty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
+                android:id="@+id/rcHostelAvailablility"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/ten"
+                app:layout_constraintTop_toBottomOf="@+id/rcHostelAvailablility"
+                android:layout_width="@dimen/two_hundred"
+                android:id="@+id/imgNoDataFound"
+                android:src="@drawable/no_data_found"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/two_hundred">
+            </ImageView>
+            <TextView
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:id="@+id/lblErrorMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="nod"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginHorizontal="@dimen/twenty"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

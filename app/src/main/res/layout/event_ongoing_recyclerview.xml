@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/five"
+    android:layout_marginTop="@dimen/five"
+    android:layout_marginEnd="@dimen/five"
+    android:background="@drawable/dark_pink_background"
+    android:padding="@dimen/five">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/event_header"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Christmaasjus Day Celebration"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <TextView
+            android:id="@+id/eventdesc"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five"
+            android:ellipsize="end"
+            android:lines="3"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:maxLines="3"
+            android:text="Festival 10:00 AM -17/07"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
+                android:src="@drawable/white_calender_icon" />
+
+
+            <TextView
+                android:id="@+id/event_time"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Meetup 10:00AM - 17/07"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginTop="@dimen/two"
+                android:src="@drawable/ic_location_white" />
+
+            <TextView
+                android:id="@+id/event_location"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Chennai Arumbakkam"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rytList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/rytList2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_radiantwhite1"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImgPDF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/five"
+                    android:paddingEnd="@dimen/five"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/total_numbers"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/thirty_six"
+                    android:layout_height="@dimen/thirty_six"
+                    android:layout_marginStart="@dimen/minus_fifteen"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
+                    android:background="@drawable/bg_image_background_white_coupon"
+                    android:gravity="center"
+                    android:text="+9"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <android.webkit.WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/video_player"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:scaleType="fitXY"
+                android:src="@drawable/video_play"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+            <ProgressBar
+                android:id="@+id/loadingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/progress_bar_white"
+                android:indeterminateOnly="true"
+                android:visibility="gone">
+
+            </ProgressBar>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
+                android:layout_weight="1" />
+
+
+            <TextView
+                android:id="@+id/status_event"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_background_white_coupon"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/eight"
+                android:paddingEnd="@dimen/ten"
+                android:paddingBottom="@dimen/eight"
+                android:text="Today's Event" />
+
+        </LinearLayout>
+
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/indicator"
+            style="@style/IndicatorStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/twenty"
+            android:elevation="@dimen/four"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/five"
+    android:layout_marginBottom="@dimen/ten"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/twenty"
+    app:strokeColor="@color/light_gray_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginHorizontal="@dimen/twenty"
+            android:id="@+id/consSessionHeader"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/five"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/circle_bg"
+                app:layout_constraintEnd_toStartOf="@+id/lblAttendanceDate"
+                android:backgroundTint="@color/light_blue_13"
+                android:textColor="@color/dark_blue_13"
+                android:layout_width="@dimen/thirty_five"
+                android:text="1"
+                app:layout_constraintVertical_bias="0.5"
+                android:id="@+id/lblSessionNo"
+                android:gravity="center"
+                android:padding="@dimen/six"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/sixteen_sp"
+                android:layout_height="@dimen/thirty_five">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblAttendanceDate"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/five"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:text="Tuesday,Mar 3"
+                android:textSize="@dimen/eighteen_sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblSessionNo"
+                app:layout_constraintEnd_toStartOf="@+id/lblAttendancePercentage"
+                app:layout_constraintHorizontal_weight="1"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/lblAttendancePercentage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="center"
+                android:text="60%"
+                android:textColor="@color/green"
+                android:textSize="@dimen/twenty_five"
+                app:layout_constraintBottom_toBottomOf="@+id/lblAttendanceDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lblAttendanceDate"
+                app:layout_constraintTop_toTopOf="@+id/lblAttendanceDate"></TextView>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/brAttendanceDatePercentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="lblAttendanceDate,lblAttendancePercentage"></androidx.constraintlayout.widget.Barrier>
+
+
+            <TextView
+                android:id="@+id/lblNoStudnets"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:text="0 student"
+                android:textSize="@dimen/twele_sp"
+                android:layout_marginStart="@dimen/five"
+                android:textColor="@color/light_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/brAttendanceDatePercentDetails"
+                app:layout_constraintEnd_toStartOf="@+id/lblAttendanceLabel"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/lblSessionNo"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/lblAttendanceLabel"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="center"
+                android:text="@string/present_rate"
+                android:textSize="@dimen/twele_sp"
+                android:textColor="@color/light_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lblNoStudnets"
+                app:layout_constraintTop_toTopOf="@+id/lblNoStudnets"></TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/ten"
+            app:layout_constrainedWidth="true"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            android:background="@drawable/rect_radius_15"
+            android:id="@+id/consTotalStudentDetails"
+            app:layout_constraintEnd_toStartOf="@+id/consPresentDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/consSessionHeader"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblTotalStudents"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:gravity="center"
+                android:drawablePadding="@dimen/five"
+                android:drawableTint="@color/dark_blue_3"
+                android:drawableTop="@drawable/studnet_count_icon"
+                android:textColor="@color/dark_blue_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lblTotalStudentCount"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/lblTotalStudentCount"
+                android:layout_width="0dp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/twenty_sp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="22"
+                android:textColor="@color/dark_blue_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblTotalStudents" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/eight"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/ten"
+            app:layout_constrainedWidth="true"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintHorizontal_weight="1"
+            android:background="@drawable/rect_radius_15"
+            android:id="@+id/consPresentDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/consTotalStudentDetails"
+            app:layout_constraintEnd_toStartOf="@+id/consAbsentDetails"
+            app:layout_constraintStart_toEndOf="@+id/consTotalStudentDetails"
+            app:layout_constraintTop_toBottomOf="@+id/consSessionHeader"
+            android:layout_height="0dp">
+
+            <TextView
+                android:drawableTop="@drawable/person_present"
+                android:id="@+id/lblPresentDetails"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:drawableTint="@color/light_green_3"
+                android:layout_height="wrap_content"
+                android:text="@string/present"
+                android:gravity="center"
+                android:drawablePadding="@dimen/five"
+                android:textColor="@color/light_green_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lblPresentCount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/lblPresentCount"
+                android:layout_width="0dp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/twenty_sp"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:gravity="center"
+                android:textColor="@color/light_green_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblPresentDetails" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/ten"
+            app:layout_constrainedWidth="true"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintHorizontal_weight="1"
+            android:background="@drawable/rect_radius_15"
+            android:id="@+id/consAbsentDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/consTotalStudentDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/consPresentDetails"
+            app:layout_constraintTop_toBottomOf="@+id/consSessionHeader"
+            android:layout_height="0dp">
+
+            <TextView
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0"
+                android:id="@+id/lblAbsentDetails"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/absent"
+                android:drawableTint="@color/red"
+                android:drawableTop="@drawable/person_reject"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:drawablePadding="@dimen/five"
+                app:layout_constraintBottom_toTopOf="@+id/lblAbsentCount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/lblAbsentCount"
+                android:layout_width="0dp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/twenty_sp"
+                android:layout_height="wrap_content"
+                android:text="22"
+                android:gravity="center"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblAbsentDetails" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="wrap_content"
+            android:id="@+id/brAttendanceDetails"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="consTotalStudentDetails,consPresentDetails,consAbsentDetails"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.Barrier>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lblViewStudents"
+            android:minHeight="0dp"
+            android:paddingVertical="@dimen/ten"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginTop="@dimen/ten"
+            app:layout_constrainedHeight="true"
+            app:iconTint="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constrainedWidth="true"
+            android:layout_marginBottom="@dimen/five"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/fifteen"
+            android:textColor="@color/black"
+            app:icon="@drawable/ic_down_arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/View3"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/light_gray_11"
+            app:layout_constraintTop_toBottomOf="@+id/brAttendanceDetails"
+            android:text="@string/view_students"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <View
+            android:id="@+id/View3"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            app:layout_constraintTop_toBottomOf="@+id/lblViewStudents"
+            app:layout_constraintBottom_toTopOf="@+id/rcStudentsDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/light_gray_10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+
+        </View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcStudentsDetails"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@+id/View3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

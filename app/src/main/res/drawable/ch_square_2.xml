@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Checked and disabled state -->
+    <item android:drawable="@drawable/ch_square_uncheck_2" android:state_checked="true" android:state_enabled="false" />
+
+    <!-- Checked and enabled state -->
+    <item android:drawable="@drawable/ch_square_check_2" android:state_checked="true" android:state_enabled="true" />
+
+    <!-- Unchecked state -->
+    <item android:drawable="@drawable/ch_square_uncheck_2" />
+</selector>

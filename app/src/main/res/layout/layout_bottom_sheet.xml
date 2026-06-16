@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white_light_radious"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/ten"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_btn_blue">
+
+    </View>
+
+    <TextView
+        android:id="@+id/lblTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twenty"
+        android:gravity="center"
+        android:text="@string/developer_mode_conflict"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty_sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/lblContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty"
+        android:lineSpacingExtra="@dimen/five"
+        android:padding="@dimen/ten"
+        android:text="@string/the_app_encountered_as_error_if_you_have_enabled_developer_mode_on_your_device_please_try_disabling_it_and_relaunching_the_app_if_the_issue_presists_please_contact_customer_support_please_follow_the_path_device_settings_search_for_developer_options_toggle_the_switch_to_off"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="normal"></TextView>
+
+
+    <RelativeLayout
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty"
+        android:layout_below="@+id/lblForgetPassword"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        card_view:cardCornerRadius="@dimen/ten"
+        card_view:cardElevation="@dimen/ten">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_btn_blue"
+            android:gravity="center"
+            android:text="@string/permission_ok"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+    

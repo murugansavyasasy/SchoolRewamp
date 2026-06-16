@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/ten"
+    android:background="@drawable/rect_white"
+    android:padding="@dimen/ten">
+
+    <TextView
+        android:id="@+id/lblLogo"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/circle_bg_violet"
+        android:gravity="center"
+        android:text="SA"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <LinearLayout
+        android:id="@+id/lytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_toEndOf="@id/lblLogo"
+        android:orientation="horizontal">
+        <!-- Left Side: Details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameheader"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Saran Raj"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/subjectheader"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="TAMIL"
+                android:textColor="@color/PrimaryColor" />
+
+            <TextView
+                android:id="@+id/lblDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="A common messages"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/yesterdayheader"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yesterday"
+                android:textColor="@color/Emerald1" />
+
+            <TextView
+                android:id="@+id/unreadcount"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/circle_bg_red"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/lytHeader"
+        android:layout_marginTop="@dimen/twenty"
+        android:background="@color/light_white_4"
+        android:visibility="visible" />
+</RelativeLayout>

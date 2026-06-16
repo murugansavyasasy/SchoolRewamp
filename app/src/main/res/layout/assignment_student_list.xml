@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    android:backgroundTint="@android:color/white"
+    card_view:cardCornerRadius="@dimen/twele"
+    card_view:cardElevation="@dimen/four">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twele">
+
+        <!-- Avatar -->
+        <TextView
+            android:id="@+id/avatarText"
+            android:layout_width="@dimen/fourty_eight"
+            android:layout_height="@dimen/fourty_eight"
+            android:background="@drawable/avatar_circle"
+            android:gravity="center"
+            android:text="L"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Status Button -->
+        <LinearLayout
+            android:id="@+id/statusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_six"
+            android:background="@drawable/pending_button_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/twele"
+            android:paddingEnd="@dimen/twele"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/cancelimage"
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:layout_marginEnd="@dimen/six"
+                android:src="@drawable/downloadsvgformat" />
+
+            <TextView
+                android:id="@+id/statuslabel"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending"
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblStudentName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fifteen_sp"
+
+            app:layout_constraintStart_toEndOf="@id/avatarText"
+            app:layout_constraintEnd_toStartOf="@id/statusButton"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sectionlabel"
+
+            app:layout_constraintVertical_chainStyle="packed"
+
+            android:layout_marginStart="@dimen/twele"
+            android:layout_marginEnd="@dimen/eight" />
+
+       <TextView
+            android:id="@+id/sectionlabel"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:visibility="gone"
+            android:textColor="@color/light_gray_5"
+            android:textSize="@dimen/thirteen_sp"
+
+            app:layout_constraintStart_toStartOf="@id/lblStudentName"
+            app:layout_constraintEnd_toEndOf="@id/lblStudentName"
+
+            app:layout_constraintTop_toBottomOf="@id/lblStudentName"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

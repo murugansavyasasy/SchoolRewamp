@@ -1,0 +1,79 @@
+<!-- res/layout/custom_alert.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white"
+    android:orientation="vertical"
+    android:padding="@dimen/twenty">
+
+    <TextView
+        android:id="@+id/alertTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/ten"
+        android:gravity="start"
+        android:text="@string/save_contacts"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sixteen_sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/alertMessage"
+        style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/ten"
+        android:text="@string/please_save_contact_to_avoid_spam_calls"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+    <ImageView
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/ic_fingerprint"
+        android:visibility="gone" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/five">
+
+
+        <TextView
+            android:id="@+id/lblNo"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/five"
+            android:text="@string/Cancel"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/lblSave"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/thirty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/lblNo"
+            android:padding="@dimen/five"
+            android:text="@string/proceed_to_save_contacts"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<!-- res/layout/class_load_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/four"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/lblClasses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_bg_radius"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/seven"
+        android:text="X - B"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fourteen" />
+</LinearLayout>

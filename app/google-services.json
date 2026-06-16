@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "369542815930",
+    "project_id": "school-chimes",
+    "storage_bucket": "school-chimes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369542815930:android:14774cdbc3214c92b96283",
+        "android_client_info": {
+          "package_name": "com.srisudhadhone.schools"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwuHjeRJgUrd5T08K7GfwZxq_UwCEdFiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369542815930-4b0d032g7jlva8qsukc99448q7pjvlh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.voicesnap.schoolmessenger"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369542815930:android:2589f48573b07decb96283",
+        "android_client_info": {
+          "package_name": "com.sss.schoolchimesrewamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwuHjeRJgUrd5T08K7GfwZxq_UwCEdFiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369542815930-4b0d032g7jlva8qsukc99448q7pjvlh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.voicesnap.schoolmessenger"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369542815930:android:4508615ae09b17cab96283",
+        "android_client_info": {
+          "package_name": "com.vaggisvari.connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwuHjeRJgUrd5T08K7GfwZxq_UwCEdFiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369542815930-4b0d032g7jlva8qsukc99448q7pjvlh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.voicesnap.schoolmessenger"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369542815930:android:4a9785f193e87e29b96283",
+        "android_client_info": {
+          "package_name": "com.vs.schoolmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwuHjeRJgUrd5T08K7GfwZxq_UwCEdFiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369542815930-ik5imsc3jr0lu2ltkf9tcjikhbaa2pke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369542815930-4b0d032g7jlva8qsukc99448q7pjvlh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.voicesnap.schoolmessenger"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

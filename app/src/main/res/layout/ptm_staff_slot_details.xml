@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/toolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblMeetingTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty"
+                android:text="@string/function_meeting"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sixteen_sp"></TextView>
+
+            <TextView
+                android:id="@+id/lblMeetingMode"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblMeetingTitle"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifteen"
+                android:text="Mode - Online"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"></TextView>
+
+            <LinearLayout
+                android:id="@+id/ltyMeetingDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblMeetingMode"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imgCalender"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/calendar_black"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblMeetingDate"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_toEndOf="@+id/imgCalender"
+                        android:text="@string/date"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/lblDate"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblMeetingDate"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:text="April 1, 2002"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+
+                    <ImageView
+                        android:id="@+id/imgSlotDuration"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_below="@+id/lblDate"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:src="@drawable/alarm"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblSlotDuration"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblDate"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/twenty_three"
+                        android:layout_toEndOf="@+id/imgCalender"
+                        android:text="@string/slot_duration"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/lblHostName"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgSlotDuration"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:text="10 minutes"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imgTime"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/ten"
+                        android:src="@drawable/clock_circle" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_toEndOf="@id/imgTime"
+                        android:text="@string/time"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblTime"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgTime"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:text="03:00 PM to 05:00 PM"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+
+                    <ImageView
+                        android:id="@+id/imgMode"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_below="@id/lblTime"
+                        android:layout_marginTop="@dimen/twenty_seven"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/person_2_fill" />
+
+                    <TextView
+                        android:id="@+id/lblMode"
+                        style="@style/CustomTextStylePoppinsMedium1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/imgMode"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginTop="@dimen/one"
+                        android:layout_toEndOf="@id/imgMode"
+                        android:includeFontPadding="false"
+                        android:text="@string/mode_"
+                        android:textColor="@color/light_gray_5"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblModeMeeting"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgMode"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:text="In Person"
+                        android:textSize="@dimen/fourteen_sp"></TextView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgSlotClasses"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_below="@+id/ltyMeetingDetails"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/list_bullet_clipboard_fill"></ImageView>
+
+            <TextView
+                android:id="@+id/lblClasses"
+                style="@style/CustomTextStylePoppinsMedium1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ltyMeetingDetails"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_toEndOf="@+id/imgSlotClasses"
+                android:text="@string/classes"
+                android:textColor="@color/light_gray_5"
+                android:textSize="@dimen/fourteen_sp"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyClasses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblClasses"
+                android:layout_marginStart="@dimen/thirty_five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+
+            <RelativeLayout
+                android:id="@+id/rytJoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyClasses"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@drawable/rect_btn_blue"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:padding="@dimen/ten"
+                    android:text="@string/join_meeting"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/eighteen"></TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:padding="@dimen/ten"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen"
+                    android:visibility="gone"></TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblGuest"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytJoin"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty"
+                android:text="@string/meeting_slots"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcySlotList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblGuest"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"></androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

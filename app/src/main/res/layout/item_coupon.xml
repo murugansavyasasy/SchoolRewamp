@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+
+        <ProgressBar
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginTop="@dimen/fourty"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ProgressBar>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/one_fifty"
+            android:padding="@dimen/five"
+            android:scaleType="centerCrop"
+            android:src="@drawable/imagebanner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgOverlay"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/minus_twenty"
+            android:background="@drawable/bg_rect_white"
+            android:elevation="@dimen/six"
+            android:padding="@dimen/five"
+            android:src="@drawable/school_splash_logo"
+            app:layout_constraintBottom_toBottomOf="@id/imgProduct"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rounded_bg"
+            android:padding="@dimen/five"
+            android:src="@drawable/group_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/lblProductName"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/four"
+            android:paddingTop="@dimen/four"
+            android:text="The Amazon Product"
+            android:textSize="@dimen/twele"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@id/imgOverlay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgProduct" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/lblProductOffer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/three"
+        android:text="20% Off"
+        android:textColor="@color/black"
+        android:textSize="@dimen/eighteen_sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/lblCompanyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:text="MGM Dizzee World"
+        android:textColor="@color/clr_grey_dark"
+        android:textSize="@dimen/sixteen_sp"
+        android:textStyle="normal" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/three"
+        android:layout_marginTop="@dimen/six"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/thirteen"
+                android:layout_height="@dimen/thirteen"
+                android:src="@drawable/clockloader" />
+
+            <TextView
+                android:id="@+id/lblDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/three"
+                android:text="5 days"
+                android:textColor="@color/bpDarker_red"
+                android:textSize="@dimen/eleven_sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,153 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bpWhite">
+
 
     <RelativeLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:background="@color/PrimaryColor">
+
+        <ImageView
+            android:id="@+id/imgBurgerMenu"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:src="@drawable/burger_menu"></ImageView>
+
 
         <RelativeLayout
-            android:id="@+id/rytHeader"
+            android:id="@+id/rytDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:padding="@dimen/ten">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgSchoolLogo"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:layout_centerVertical="true"
-                android:src="@drawable/splash_icon6"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="1dp" />
-
-            <RelativeLayout
-                android:id="@+id/rytSchoolDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ten"
-                android:layout_toLeftOf="@+id/imgSearchClick"
-                android:layout_toRightOf="@+id/imgSchoolLogo">
-
-                <TextView
-                    android:id="@+id/lblSchoolName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Savyasasy schools"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
-
-                <TextView
-                    android:id="@+id/lblSchoolAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblSchoolName"
-                    android:text="Savyasasy schools, Chennai - 600043"
-                    android:textColor="@color/light_gray"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/imgSearchClick"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ten"
-                android:layout_toLeftOf="@+id/imgNotification"
-                android:src="@drawable/search_icon">
-
-            </ImageView>
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lnrNotifi"
+            android:layout_toEndOf="@+id/imgBurgerMenu">
 
             <TextView
-                android:id="@+id/lblNotificationCount"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:layout_alignParentRight="true"
+                android:id="@+id/username"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="Madhuri Sharma  "
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/eighteen_sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrSchoolnames"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBurgerMenu"
+            android:layout_below="@+id/rytDetails"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSchoolName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:layout_marginTop="@dimen/twenty"
+                android:ellipsize="end"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/lblRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSchoolName"
                 android:layout_marginTop="@dimen/five"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_red_small_size"
-                android:elevation="@dimen/ten"
-                android:gravity="center"
-                android:text="5"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                android:text="Staff"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrNotifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
 
             <ImageView
                 android:id="@+id/imgNotification"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ten"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:scaleType="centerCrop"
                 android:src="@drawable/notification_icon" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rytSearch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fourty_five"
-            android:layout_below="@id/rytHeader"
-            android:layout_margin="@dimen/ten"
-            android:background="@drawable/rect_white"
-            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ten"
-                android:src="@drawable/ic_search" />
+                android:layout_width="@dimen/twenty_eight"
+                android:layout_height="@dimen/twenty_eight"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:scaleType="centerCrop"
+                android:src="@drawable/search_icon_white">
 
-            <EditText
-                android:id="@+id/txtSearchMenu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/imgSearch"
-                android:background="@android:color/transparent"
-                android:hint="@string/lblSearch"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
-        </RelativeLayout>
+            </ImageView>
 
-        <RelativeLayout
-            android:id="@+id/rlaPieChartCount"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="@dimen/sixty"
+                android:layout_height="@dimen/sixty"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/sixteen"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_profile"
+                android:padding="@dimen/two"
+                android:scaleType="fitCenter"
+                android:src="@drawable/school_sample"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
+
+
+        </LinearLayout>
+
+
+        <com.vs.schoolmessenger.Utils.DashBoardWaveDesign
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/five"
-            android:layout_marginRight="@dimen/five"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rytSearch"
-            android:visibility="visible">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyAutoScrolling"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-
-            <LinearLayout
-                android:id="@+id/dotContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rcyAutoScrolling"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal"
-                android:padding="@dimen/ten" />
-        </RelativeLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rlaPieChartCount"
-            android:layout_marginTop="@dimen/ten"
-            tools:listitem="@layout/menu_item_card" />
+            android:layout_height="@dimen/sixty"
+            android:layout_below="@+id/lnrSchoolnames" />
     </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/autoScrollRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hundred"
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="-10dp"
+        android:background="@color/bpWhite"
+        android:orientation="horizontal"
+        tools:listitem="@layout/resent_using_app_item" />
+
+    <LinearLayout
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autoScrollRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <RelativeLayout
+        android:id="@+id/rytsearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@+id/dotsIndicator"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSearch1"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search_grey" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch1"
+            android:background="@android:color/transparent"
+            android:hint="@string/search_dot"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gridRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rytsearch"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:background="@color/bpWhite"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/ten"
+        tools:listitem="@layout/dashboard_app_item" />
+
+
+    <LinearLayout
+        android:id="@+id/rytNORecordFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rytsearch"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/no_menu_found">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:text="No menu found..."
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,153 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/five"
+    android:background="@drawable/rect_white"
+    android:orientation="vertical"
+    android:padding="@dimen/ten">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <RelativeLayout
+            android:id="@+id/lnrImage"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rect_grey">
+
+            <ImageView
+
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_mobile_icon" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/lnrImage"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblPhoneModel"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/rytVerified"
+                    android:text="Xiomi 21Xret"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytVerified"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/bg_dark_green_radius_10dp"
+                    android:paddingHorizontal="@dimen/fifteen"
+                    android:paddingVertical="@dimen/five"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgVerified"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_time_icon_white" />
+
+                    <TextView
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_toEndOf="@+id/imgVerified"
+                        android:text="Verified"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
+
+                <RelativeLayout
+                    android:id="@+id/rytTimeIcon"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:background="@drawable/rect_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/time_icon" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblTime"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/rytTimeIcon"
+                    android:text="10:10 AM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytType"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_toEndOf="@+id/lblTime"
+                    android:background="@drawable/rect_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_fingerprint_primary" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblPunchType"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/rytType"
+                    android:text="Punch"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

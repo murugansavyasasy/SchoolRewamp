@@ -1,0 +1,345 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/six">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/Image_value"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:backgroundTint="@color/PrimaryColor"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImageViewShape" />
+
+
+        <!-- Left Section: Student Details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStudentName"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ABC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <TextView
+                android:id="@+id/tvAdmissionNo"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:text="Admission No :000"
+                android:textColor="@color/very_dark_gray2"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:id="@+id/tvRollNo"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:text="Roll No : 000"
+                android:textColor="@color/very_dark_gray2"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="@dimen/two"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/eight"
+            android:background="@color/gray4" />
+
+        <!-- FN & AN Section -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- FN -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/statusFN"
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/seven"
+                    android:gravity="center"
+                    android:text="FN"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/twele_sp" />
+            </LinearLayout>
+
+            <!-- AN -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/statusAN"
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/seven"
+                    android:gravity="center"
+                    android:text="AN"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/twele_sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@color/gray4" />
+
+</LinearLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<RelativeLayout-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:padding="@dimen/twele">-->
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/rlaDetails"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+    <!--        <FrameLayout-->
+
+    <!--            android:id="@+id/avatarContainer"-->
+    <!--            android:layout_width="@dimen/fifty"-->
+    <!--            android:layout_height="@dimen/fifty"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_centerVertical="true">-->
+
+    <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:id="@+id/imgAvatar"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:scaleType="centerInside"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:src="@drawable/default_profile"&ndash;&gt;-->
+    <!--&lt;!&ndash;                />&ndash;&gt;-->
+    <!--            <com.google.android.material.imageview.ShapeableImageView-->
+    <!--                android:id="@+id/imgAvatar"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:scaleType="centerCrop"-->
+    <!--                android:src="@drawable/default_profile"-->
+    <!--                app:shapeAppearanceOverlay="@style/CircularImageView"-->
+    <!--                android:adjustViewBounds="true"/>-->
+    <!--        </FrameLayout>-->
+
+    <!--        &lt;!&ndash; Name and class container &ndash;&gt;-->
+    <!--        <LinearLayout-->
+
+    <!--            android:id="@+id/textContainer"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_toEndOf="@+id/avatarContainer"-->
+    <!--            android:layout_toStartOf="@+id/tvStatus"-->
+
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginStart="@dimen/twele"-->
+    <!--            android:layout_marginEnd="@dimen/twele"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <TextView-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:id="@+id/tvName"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Lakshmanan"-->
+    <!--                android:textSize="@dimen/fourteen"-->
+    <!--                />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblAdmissionNoValue"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="ADMINSN012872"-->
+    <!--                android:textSize="@dimen/twele_sp"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_marginTop="@dimen/six"-->
+    <!--                />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tvRollNo"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="23-UBS-2023"-->
+    <!--                android:textSize="@dimen/twele_sp"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_marginTop="@dimen/six"-->
+    <!--                />-->
+    <!--        </LinearLayout>-->
+
+    <!--        &lt;!&ndash; Submitted pill &ndash;&gt;-->
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/tvStatus"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:paddingHorizontal="@dimen/ten"-->
+    <!--            android:paddingVertical="@dimen/five"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:background="@drawable/green_bg_radius"-->
+    <!--            >-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/tvStatus1"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="present"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                style="@style/CustomTextStylePoppinsMedium"-->
+    <!--                android:textSize="@dimen/fourteen_sp"-->
+    <!--                android:textColor="@color/white"-->
+    <!--                />-->
+    <!--        </LinearLayout>-->
+    <!--    </RelativeLayout>-->
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:background="@color/athens_gray"-->
+    <!--        android:layout_below="@+id/rlaDetails"-->
+    <!--        android:layout_marginTop="@dimen/five"-->
+    <!--        android:layout_height="@dimen/two">-->
+
+    <!--    </View>-->
+
+    <!--</RelativeLayout>-->
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    tools:ignore="MissingDefaultResource"-->
+    <!--    android:fitsSystemWindows="true">-->
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/ten"-->
+    <!--        android:layout_marginEnd="@dimen/ten"-->
+    <!--        android:background="@drawable/rect_shadow_white">-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rlaAttendance"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            >-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblStudentName"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/twenty_five"-->
+    <!--                android:layout_marginTop="@dimen/fifteen"-->
+    <!--                android:layout_marginEnd="@dimen/twenty_five"-->
+    <!--                android:gravity="start"-->
+    <!--                android:text="Sathish"-->
+    <!--                android:textSize="@dimen/thirteen_sp"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                >-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblAdmission"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblStudentName"-->
+    <!--                android:layout_marginStart="@dimen/twenty_five"-->
+    <!--                android:layout_marginTop="@dimen/ten"-->
+    <!--                android:text="@string/Admissionno"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                >-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblAdmissionValue"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblStudentName"-->
+    <!--                android:layout_marginStart="@dimen/ten"-->
+    <!--                android:layout_marginTop="@dimen/ten"-->
+    <!--                android:layout_toEndOf="@+id/lblAdmission"-->
+    <!--                android:text="1234556776"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:textSize="@dimen/thirteen_sp"-->
+    <!--                >-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblAttendanceStatus"-->
+    <!--                android:layout_width="@dimen/eighty"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblAdmission"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:background="@drawable/rounded_top_right_bottom_end_green"-->
+    <!--                android:gravity="center"-->
+    <!--                android:padding="@dimen/five"-->
+    <!--                android:text="@string/present"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:textColor="@color/white"-->
+    <!--                >-->
+
+    <!--            </TextView>-->
+
+
+    <!--        </RelativeLayout>-->
+    <!--    </RelativeLayout>-->
+    <!--</RelativeLayout>-->

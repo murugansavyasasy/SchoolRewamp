@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/lblSplitSubjectName"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_weight="0.8"
+        android:text="@string/subject_name"
+        android:textSize="@dimen/twele_sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/lblSplitmarkoutof100"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="end"
+        android:text=""
+        android:textSize="@dimen/twele_sp">
+
+    </TextView>
+
+</LinearLayout>

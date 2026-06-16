@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/five"
+    android:background="@drawable/rect_shadow_white">
+
+    <RelativeLayout
+        android:id="@+id/rytCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/imgCalender"
+            android:layout_width="@dimen/twenty_eight"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:src="@drawable/calendar_circle_fill">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblDate"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toEndOf="@+id/imgCalender"
+            android:text="01 Apr, 2025"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblCertificateTitle"
+            style="@style/CustomTextStylePoppinsMedium1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgCalender"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/five"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Study Certificate"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblCertificateReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblCertificateTitle"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/ten"
+            android:layout_toStartOf="@+id/imgNext"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Study Certificate"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imgNext"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_below="@+id/lblCertificateTitle"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/arrow_right_circle">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

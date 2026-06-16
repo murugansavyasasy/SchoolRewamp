@@ -1,0 +1,2247 @@
+package com.vs.schoolmessenger.CommonScreens.SelectRecipient
+
+import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupStaffAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
+import com.vs.schoolmessenger.CommonScreens.SpecificStudent.SpecificStudent
+import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.ApiCallRequest
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
+import com.vs.schoolmessenger.School.Event.Model.EventDetails
+import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.School.LSRW.Model.LsrwnewTaskSendingData
+import com.vs.schoolmessenger.School.QuizExam.Model.AddQuestion.QuizRequestBody
+import com.vs.schoolmessenger.School.QuizExam.Model.CreateQuiz.SaveCreateExamQuizDetails
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizCheckLevel.GetCheckLevelData
+import com.vs.schoolmessenger.School.QuizExam.QuizExamReport.QuizDataTempHolder
+import com.vs.schoolmessenger.School.QuizExam.QuizTempHolder
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_LSRW
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
+import com.vs.schoolmessenger.Utils.DimOverlayManager
+import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
+import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.SelectRecipientBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
+import java.io.File
+
+
+class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
+    SectionListClickListener, StandardListClickListener, GroupListClickListener,
+    VimeoVideoUpload.UploadCompletionListener {
+
+    override fun getViewBinding(): SelectRecipientBinding {
+        return SelectRecipientBinding.inflate(layoutInflater)
+    }
+
+    private var quizData: QuizRequestBody? = null
+    private var isSaveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
+    val isGroupSelectedIds = mutableListOf<NameAndIds>()
+    val isStandardSelectedIds = mutableListOf<Standard>()
+    val isSectionSelectedIds = mutableListOf<Section>()
+    var isDropDown = false
+    private var isSectionId = mutableListOf<Int>()
+    var isGetSubjectListData: List<NameAndIds>? = null
+    var isGetGroupListData: List<NameAndIds>? = null
+    var isGetStaffListData: List<NameAndIds>? = null
+    var isAcademicYear: List<AcademicYear>? = null
+    private var isSectionAdapter: SectionListAdapter? = null
+    private var isStandardListAdapter: StandardListAdapter? = null
+    var isGetStandard: List<Standard>? = null
+    var isSection: List<Section>? = null
+    var selectedLevelValue = 0
+    private var isGroupStaffAdapter: GroupStaffAdapter? = null
+    private var isAccessToken: String? = null
+    private var isUserDetails: UserDetails? = null
+    private var isStaffDetails: StaffDetails? = null
+    private var selectedIds = mutableListOf<String>()
+    var isSelectedType = 0
+    var isAcademicYearId = -1
+    private var isSubjectId: Int? = null
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+    var isCurrentAcademicYear = true
+    var isTargetType: Int? = null
+    var isCircularType: String? = null
+    var isIframe = ""
+    var isFileSize = ""
+    var isValidAcademicYear = false
+    var isSelectedAcademicYear: String? = null
+    private var appViewModel: App? = null
+    val handler = Handler(Looper.getMainLooper())
+    private lateinit var dimOverlayManager: DimOverlayManager
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isTotalSelectedItem = 0
+    var isStandardId = ""
+    var isClickedTab = 0
+    private var isAssignmentData: AssignmentSendingData? = null
+    private val uploadedFiles = mutableListOf<AwsUploadedFiles>()
+    private var pendingFiles: List<FilePath> = emptyList()
+    private var currentIndex = 0
+    private lateinit var pendingBody: QuizRequestBody
+    private var currentVideoPath: String? = null
+    private var totalFilesToUpload = 0
+
+
+    override fun setupViews() {
+        super.setupViews()
+        isToolBarPrimarySchool(
+            mainViewId = R.id.main, statusBarBgView = binding.statusBarBackground
+        )
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+
+
+        binding.rytSend.setOnClickListener(this)
+        binding.btnSpecificStudent.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.rytAcademicYear.setOnClickListener(this)
+        binding.tapEntireSchool.setOnClickListener(this)
+        binding.tapStandards.setOnClickListener(this)
+        binding.tabSectionsStudent.setOnClickListener(this)
+        binding.tabGroups.setOnClickListener(this)
+        binding.tapStaffs.setOnClickListener(this)
+        Constant.hideLoading(this)
+
+        dimOverlayManager = DimOverlayManager(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
+        isUserDetails = SharedPreference.getUserDetails(this)
+        binding.toolbarLayout.lblParentToolBar.text = isStaffDetails!!.school_name
+        isAssignmentData = intent.getParcelableExtra(Constant.assignment_data)
+
+        if (isStaffDetails!!.school_name_regional != "") {
+            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+            binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name_regional
+        } else {
+            binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+        }
+
+        isGetAcademicYear()
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            response?.data?.let { academicList ->
+                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
+                if (isAcademicYear == reorderedList) return@observe
+                isAcademicYear = reorderedList
+                isLoadAcademicYear(isAcademicYear)
+                isValidAcademicYear =
+                    isAcademicYear?.any { it.current_academic_year } == true
+                isSelectedAcademicYear = isAcademicYear!![0].year
+                isAcademicYearId = isAcademicYear!![0].id
+                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+                if (isValidAcademicYear) {
+                    binding.rytAcademicYear.visibility = View.GONE
+                    binding.tabLayout.visibility = View.VISIBLE
+                    if (isSelectedType != 0) {
+                        isGetStandardSection()
+                    }
+                    tapVisibility()
+                } else {
+                    binding.lblSupportMail.paintFlags =
+                        binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                    binding.rytAcademicYear.visibility = View.VISIBLE
+                    binding.tabLayout.visibility = View.GONE
+                }
+            }
+        }
+
+
+        appViewModel!!.isGetGroupList?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+
+            if (response != null) {
+                isGetGroupListData = response.data
+                if (isGetGroupListData!!.isNotEmpty()) {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.GONE
+                    binding.chAllSelect.visibility = View.VISIBLE
+                    binding.grouplabel.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.bottomLayout.visibility = View.VISIBLE
+                    binding.lblCreatedOn.visibility = View.VISIBLE
+                } else {
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.chAllSelect.visibility = View.GONE
+                    binding.grouplabel.visibility = View.GONE
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.GONE
+                    binding.lblCreatedOn.visibility = View.GONE
+                }
+                isLoadGroupData(isGetGroupListData)
+            }
+        }
+
+        appViewModel!!.isGetSubjectList?.observe(this) { response ->
+            //Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                if (response.status) {
+                    isGetSubjectListData = response.data
+                    if (isGetSubjectListData!!.isNotEmpty()) {
+                        binding.rytSubjectDropDown.visibility = View.VISIBLE
+                        binding.subjectlabel.visibility = View.VISIBLE
+                        isLoadSubject(isGetSubjectListData)
+                    }
+                } else {
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+                    isSubjectId = null
+                    Constant.showDataValidationNoDashboardRedirectSubject(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isGetCheckLevel?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    isLoadCheckLevelData(response.data)
+                }
+            }
+        }
+
+        appViewModel!!.isStandardSectionList?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+
+            if (response != null) {
+                if (response.status) {
+                    isGetStandard = response.data
+                    if (isGetStandard!!.isNotEmpty()) {
+                        isLoadStandard(isGetStandard)
+                        binding.txtNoData.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.chAllSelect.visibility = View.VISIBLE
+                        binding.grouplabel.visibility = View.VISIBLE
+                        Log.d("isSelectedType", isSelectedType.toString())
+                        if (isSelectedType != 1) {
+                            binding.rytStandardDropDown.visibility = View.VISIBLE
+                            binding.bottomLayout.visibility = View.VISIBLE
+                            isSection = isGetStandard!!.get(0).sections
+                            binding.nomessage.visibility = View.GONE
+                            isLoadData(isSection)
+                            binding.grouplabel.text = resources.getString(R.string.Standards)
+                        } else {
+                            isLoadTheStandardData(isGetStandard)
+                            binding.bottomLayout.visibility = View.VISIBLE
+                            binding.grouplabel.text = resources.getString(R.string.Standards)
+                        }
+
+                    } else {
+                        binding.recyclerView.visibility = View.GONE
+                        binding.txtNoData.visibility = View.VISIBLE
+                        binding.rytStandardDropDown.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.GONE
+                        binding.grouplabel.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
+                        binding.txtNoData.text = response.message
+                        binding.nomessage.visibility = View.VISIBLE
+
+                    }
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.rytStandardDropDown.visibility = View.GONE
+                    binding.chAllSelect.visibility = View.GONE
+                    binding.grouplabel.visibility = View.GONE
+                    binding.bottomLayout.visibility = View.GONE
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        appViewModel!!.isGetStaffList?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                isGetStaffListData = response.data
+
+                if (isGetStaffListData!!.isNotEmpty()) {
+                    binding.txtNoData.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.chAllSelect.visibility = View.VISIBLE
+                    binding.grouplabel.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                } else {
+                    binding.txtNoData.visibility = View.VISIBLE
+                    binding.chAllSelect.visibility = View.GONE
+                    binding.grouplabel.visibility = View.GONE
+                    binding.bottomLayout.visibility = View.GONE
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility = View.VISIBLE
+                }
+                isLoadStaffData(response.data)
+            }
+        }
+
+        appViewModel!!.sendevent?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            ProgressDialogHelper.dismiss()
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+        appViewModel!!.isCreateQuiz?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            ProgressDialogHelper.dismiss()
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                val saveCreateExamQuizDetails: SaveCreateExamQuizDetails? = null
+                val isQuizRequestBody: QuizRequestBody? = null
+                QuizDataTempHolder.quizDataBody = saveCreateExamQuizDetails
+                QuizTempHolder.quizBody = isQuizRequestBody
+
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+        appViewModel!!.isAssignmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+                if (response.status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_assignment)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
+                }
+            }
+        }
+
+
+        appViewModel!!.isCreateQuiz?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+        appViewModel!!.islsrwSkillCreate?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            ProgressDialogHelper.dismiss()
+            if (response != null) {
+                if (response.status) {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
+                }
+            } else {
+                Constant.showDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
+            }
+        }
+
+
+        appViewModel!!.islsrwSkillSubmit?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            ProgressDialogHelper.dismiss()
+            if (response != null) {
+                if (response.status) {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.Oops),
+                        response.message,
+                        this
+                    )
+                }
+            } else {
+                Constant.showDataValidation(
+                    getString(R.string.Oops),
+                    getString(R.string.something_went_wrong_please_try_again_later),
+                    this
+                )
+            }
+        }
+
+        appViewModel!!.isVoiceSend?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+
+                if (response.status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_voice)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isSendText?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+
+                if (response.status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_text)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isSendHomeWork?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Constant.showTopAlertPopup(response.message, this)
+
+                if (response.status) {
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_homework)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isAttachmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+
+                if (response.status) {
+                    Constant.showTopAlertPopup(response.message, this)
+                    val mobileNumber = SharedPreference.getMobileNumber(this)
+                    val jsonObject = JsonObject().apply {
+                        addProperty(APIKeyNames.mobile_number, mobileNumber)
+                        addProperty(APIKeyNames.activity, Constant.add_points_send_attachment)
+                        addProperty(APIKeyNames.user_type, Constant.user_type_as_staff)
+                        addProperty(APIKeyNames.menu_id, SELECTED_MENU_ID)
+                    }
+                    appViewModel?.isAddRewardPoints(isAccessToken ?: "", jsonObject, this)
+                } else {
+                    Constant.errorAlert(
+                        this,
+                        this.getString(R.string.Oops),
+                        response.message
+                    )
+                }
+            }
+        }
+
+
+        binding.chAllSelect.setOnClickListener {
+            if (isSelectedType == 1) {
+                if (binding.chAllSelect.isChecked) {
+                    isStandardListAdapter!!.selectAll()
+                    isStandardListAdapter!!.itemList?.forEach { item ->
+                        onIdCheck(item)
+                    }
+                } else {
+                    isStandardListAdapter!!.deselectAll()
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+                    isStandardListAdapter!!.itemList?.forEach { item ->
+                        onIdUnchecked(item)
+                    }
+                }
+            } else if (isSelectedType == 2) {
+                Log.d("isComing", "isComing")
+
+                if (binding.chAllSelect.isChecked) {
+                    isSectionAdapter!!.selectAll()
+                    isSectionAdapter!!.itemList?.forEach { item ->
+                        onIdCheck(item)
+                    }
+                } else {
+                    isSectionAdapter!!.deselectAll()
+                    isSectionAdapter!!.itemList?.forEach { item ->
+                        onIdUnchecked(item)
+                    }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+
+                }
+            } else if (isSelectedType == 3) {
+
+                if (binding.chAllSelect.isChecked) {
+                    isGroupStaffAdapter!!.selectAll()
+                    isGroupStaffAdapter!!.itemList?.forEach { item ->
+                        onIdCheck(item)
+                    }
+                } else {
+                    isGroupStaffAdapter!!.deselectAll()
+                    isGroupStaffAdapter!!.itemList?.forEach { item ->
+                        onIdUnchecked(item)
+                    }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+
+                }
+            } else if (isSelectedType == 4) {
+
+                if (binding.chAllSelect.isChecked) {
+                    isGroupStaffAdapter!!.selectAll()
+                    isGroupStaffAdapter!!.itemList?.forEach { item ->
+                        onIdCheck(item)
+                    }
+                } else {
+                    isGroupStaffAdapter!!.deselectAll()
+                    isGroupStaffAdapter!!.itemList?.forEach { item ->
+                        onIdUnchecked(item)
+                    }
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+
+    private fun tapVisibility() {
+        Log.d("Tap Visibility Check", "Tap Debug Check")
+        if (isUserDetails!!.staff_role == Constant.isStaffRole) {
+            when (SELECTED_MENU_ID) {
+                M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+
+                M_ASSIGNMENT -> {
+
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+
+                M_LSRW -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+
+                else -> {
+
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.GONE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+            }
+            binding.tapStandards.visibility = View.GONE
+
+        } else {
+            Log.d("SELECTED_SCHOOL_MENU", SELECTED_MENU_ID.toString())
+            when (SELECTED_MENU_ID) {
+                M_HOMEWORK, Constant.M_QUIZ_EXAM -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+
+                M_ASSIGNMENT -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+                }
+
+                M_LSRW -> {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
+
+                }
+
+                M_SCHOOL_CLASS_EVENTS -> {
+                    binding.textdesc.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.VISIBLE
+                    binding.nomessageEntire.visibility = View.VISIBLE
+                    binding.tapEntireSchool.visibility = View.VISIBLE
+                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tabSectionsStudent.visibility = View.GONE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isStandard)
+                    isGetAcademicYear()
+                }
+
+                else -> {
+                    binding.textdesc.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.VISIBLE
+                    binding.nomessageEntire.visibility = View.VISIBLE
+                    binding.tapEntireSchool.visibility = View.VISIBLE
+                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.VISIBLE
+                    changeTapBg(Constant.isStandard)
+                    isGetAcademicYear()
+
+                }
+            }
+        }
+    }
+
+    private fun isLoadStaffData(data: List<NameAndIds>) {
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        isGroupStaffAdapter = GroupStaffAdapter(
+            false, data, this@RecipientActivity, this, Constant.isShimmerViewDisable
+        )
+        binding.recyclerView.adapter = isGroupStaffAdapter
+    }
+
+    private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        isGroupStaffAdapter = GroupStaffAdapter(
+            true, isGetGroupListData, this@RecipientActivity, this, Constant.isShimmerViewDisable
+        )
+        binding.recyclerView.adapter = isGroupStaffAdapter
+    }
+
+    private fun isLoadCheckLevelData(data: List<GetCheckLevelData>?) {
+        if (data.isNullOrEmpty()) return
+
+        val levelList = data.toMutableList()
+        levelList.add(0, GetCheckLevelData(0))
+
+        val displayList = levelList.map {
+            if (it.level == 0) "Select Level" else "Level ${it.level}"
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.isSpinnerLevel.adapter = adapter
+        binding.isSpinnerLevel.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedLevel = levelList[position]
+                    Log.d("DropdownMenu", "Clicked Level: ${selectedLevel.level}")
+
+                    selectedLevelValue = if (position != 0) {
+                        selectedLevel.level
+                    } else {
+                        0
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+        binding.isSpinnerLevel.setSelection(0)
+    }
+
+    private fun isLoadData(isSection: List<Section>?) {
+        if (isSection!!.size > 0) {
+            binding.recyclerView.visibility = View.VISIBLE
+            binding.chAllSelect.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.GONE
+            binding.chAllSelect.visibility = View.GONE
+            Constant.showDataValidationNoDashboardRedirectSubject(
+                resources.getString(R.string.Oops),
+                this.getString(R.string.no_section_found),
+                this
+            )
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        isSectionAdapter = SectionListAdapter(
+            isSection, this@RecipientActivity, this, Constant.isShimmerViewDisable
+        )
+        binding.recyclerView.adapter = isSectionAdapter
+
+    }
+
+    private fun isLoadTheStandardData(isGetStandard: List<Standard>?) {
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        isStandardListAdapter = StandardListAdapter(
+            isGetStandard, this, this, Constant.isShimmerViewDisable
+        )
+        binding.recyclerView.adapter = isStandardListAdapter
+    }
+
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+
+        var lastSelectedPosition = -1
+        var isFirstLoad = true
+
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                if (!isFirstLoad && lastSelectedPosition == position) return
+
+                lastSelectedPosition = position
+                adapter.selectedPosition = position
+                binding.nomessage.visibility = View.GONE
+                val selectedOption = isAcademicYear!![position]
+                isSelectedAcademicYear = selectedOption.year
+                isAcademicYearId = selectedOption.id
+                isCurrentAcademicYear = selectedOption.current_academic_year
+
+                Log.d(
+                    "DropdownMenu",
+                    "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                )
+
+                // Reset selections
+                isSectionSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isGroupSelectedIds.clear()
+                binding.subjectlabel.visibility = View.GONE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.rytLevelDropDown.visibility = View.GONE
+                selectedIds.clear()
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+                binding.chAllSelect.isChecked = false
+
+                when (isSelectedType) {
+                    1, 2 -> {
+                        isGetStandardSection()
+                    }
+
+                    3 -> {
+                        isGetGroupList()
+                    }
+
+                    4 -> {
+                        isGetStaffList()
+                    }
+                }
+
+                isFirstLoad = false
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun isLoadSubject(isSubject: List<NameAndIds>?) {
+        if (isSubject.isNullOrEmpty()) return
+
+        val subjectList = isSubject.toMutableList()
+        val adapter = SubjectLoadAdapter(this, subjectList)
+        binding.isSpinnerSubject.adapter = adapter
+
+        binding.isSpinnerSubject.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
+                    val selectedItem = subjectList[position]
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Subject: ID = ${selectedItem.id}, Name = ${selectedItem.name}"
+                    )
+                    isSubjectId = selectedItem.id
+
+                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
+                        binding.rytLevelDropDown.visibility = View.VISIBLE
+                        isCheckLevel()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+        binding.isSpinnerSubject.setSelection(0)
+    }
+
+
+    private fun isLoadStandard(isStandard: List<Standard>?) {
+        val adapter = StandardDropDownListAdapter(this, isStandard)
+        binding.isSpinnerSection.adapter = adapter
+        binding.chAllSelect.isChecked = false
+        isSectionId.clear()
+        isSectionSelectedIds.clear()
+        binding.isSpinnerSection.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    isStandard!![position]
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${isStandard!![position].id}, Year = ${isStandard[position].name}"
+                    )
+
+                    isStandardId = isStandard[position].id.toString()
+                    isSection = isStandard[position].sections
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.rytSubjectDropDown.visibility = View.GONE
+                    binding.rytLevelDropDown.visibility = View.GONE
+                    binding.subjectlabel.visibility = View.GONE
+                    binding.chAllSelect.isChecked = false
+                    isSectionId.clear()
+                    isSectionSelectedIds.clear()
+//                    Every time when we change the Class we need to disable the specfic student
+                    binding.btnSpecificStudent.isEnabled = false
+                    binding.btnSpecificStudent.background =
+                        ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+                    binding.chAllSelect.isChecked = false
+                    isLoadData(isSection)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
+
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+
+            R.id.rytAcademicYear -> {
+                val sub = Constant.isMailTitle
+                val body = Constant.isMailSend
+                Constant.redirectToMail(this, binding.lblSupportMail.text.toString(), sub, body)
+            }
+
+            R.id.btnSpecificStudent -> {
+                selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
+                val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.putExtra(Constant.isAcademicYearId, isAcademicYearId)
+                intent.putExtra(Constant.isCurrentAcademicYear, isCurrentAcademicYear)
+                intent.putExtra(Constant.lblAcademicYear, isSelectedAcademicYear)
+                intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
+                if (SELECTED_MENU_ID == M_ASSIGNMENT) {
+                    intent.putExtra(Constant.assignment_data, isAssignmentData)
+                    intent.putExtra("subject_id", isSubjectId)
+                }
+                startActivity(intent)
+            }
+
+            R.id.rytSend -> {
+                var isTypeOfName = ""
+
+                Log.d("isSelectedType++", isSelectedType.toString())
+                when (isSelectedType) {
+                    0 -> {
+                        isTargetType = Constant.isSchool
+                        isCircularType = Constant.school
+                        selectedIds.clear()
+                        isTypeOfName = "School"
+                        isStaffDetails!!.school_id.let {
+                            selectedIds.add(it)
+                        }
+                    }
+
+                    1 -> {
+                        isTargetType = Constant.isStandard
+                        isCircularType = Constant.standard
+                        isTypeOfName = resources.getString(R.string.Standard)
+                        selectedIds = isStandardSelectedIds.map { it.id.toString() }.toMutableList()
+                    }
+
+                    2 -> {
+                        isTargetType = Constant.isSection
+                        isCircularType = Constant.section
+                        isTypeOfName = resources.getString(R.string.Section)
+                        selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
+                    }
+
+                    3 -> {
+                        selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
+                        isTargetType = Constant.isGroup
+                        isCircularType = Constant.group
+                        isTypeOfName = resources.getString(R.string.Group)
+                    }
+
+                    4 -> {
+                        selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
+                        isTypeOfName = resources.getString(R.string.Staff)
+                        isTargetType = Constant.isStaff
+                        isCircularType = Constant.staff
+                    }
+                }
+
+                for (id in selectedIds) {
+                    Log.d("isSelectedIds", id.toString())
+                }
+                if (selectedIds.isNotEmpty()) {
+                    var isAcademicYearNote: String? = null
+                    if (!isCurrentAcademicYear) {
+                        if (isTargetType != Constant.isStaff) {
+                            isAcademicYearNote =
+                                resources.getString(R.string.NOTE_message_addressed) + " " + isSelectedAcademicYear + " " + resources.getString(
+                                    R.string.which_communication_academic
+                                )
+                        } else {
+                            isAcademicYearNote =
+                                resources.getString(R.string.are_you_sure_you_want_to_sent)
+                        }
+                    } else {
+                        isAcademicYearNote =
+                            resources.getString(R.string.are_you_sure_you_want_to_sent)
+                    }
+
+                    if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID || M_HOMEWORK == SELECTED_MENU_ID || M_LSRW == SELECTED_MENU_ID) {
+                        if (isSubjectId == null) {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                getString(R.string.select_the_subject),
+                                this
+                            )
+                        } else {
+                            if (Constant.M_QUIZ_EXAM == SELECTED_MENU_ID) {
+                                if (selectedLevelValue == 0) {
+                                    Constant.showValidationAlertPopup(
+                                        getString(R.string.alert),
+                                        getString(R.string.select_the_level),
+                                        this
+                                    )
+                                } else {
+                                    showSendConfirmationDialog(
+                                        resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                            R.string._s
+                                        ), isAcademicYearNote
+                                    )
+
+                                }
+                            } else {
+                                showSendConfirmationDialog(
+                                    resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                        R.string._s
+                                    ), isAcademicYearNote!!
+                                )
+                            }
+
+                        }
+
+                    } else {
+
+                        showSendConfirmationDialog(
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                R.string._s
+                            ), isAcademicYearNote
+                        )
+                    }
+
+                } else {
+                    Constant.showValidationAlertPopup(
+                        getString(
+                            R.string.alert
+                        ),
+                        resources.getString(R.string.Please_select_leastone) + " " + isTypeOfName + " " + resources.getString(
+                            R.string.send_message
+                        ),
+                        this
+                    )
+                }
+            }
+
+            R.id.tapEntireSchool -> {
+                if (isClickedTab != Constant.isSchool) {
+                    changeTapBg(Constant.isSchool)
+                }
+            }
+
+            R.id.tapStandards -> {
+                if (isClickedTab != Constant.isStandard) {
+                    changeTapBg(Constant.isStandard)
+                }
+            }
+
+            R.id.tabSectionsStudent -> {
+                if (isClickedTab != Constant.isSection) {
+                    changeTapBg(Constant.isSection)
+                }
+            }
+
+            R.id.tabGroups -> {
+                if (isClickedTab != Constant.isGroup) {
+                    changeTapBg(Constant.isGroup)
+                }
+            }
+
+            R.id.tapStaffs -> {
+                if (isClickedTab != Constant.isStaff) {
+                    changeTapBg(Constant.isStaff)
+                }
+            }
+        }
+    }
+
+
+    private fun changeTapBg(type: Int) {
+
+        isClickedTab = type
+
+        when (type) {
+            Constant.isSchool -> {
+                isSelectedType = 0
+                binding.tapEntireSchool.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+                binding.nomessageEntire.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                binding.chAllSelect.visibility = View.GONE
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                binding.rytStandardDropDown.visibility = View.GONE
+                binding.grouplabel.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                binding.textdesc.visibility = View.VISIBLE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.btnSpecificStudent.visibility = View.GONE
+
+            }
+
+            Constant.isStandard -> {
+                isSelectedType = 1
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = false
+                isGetStandardSection()
+                binding.rytStandardDropDown.visibility = View.GONE
+                binding.grouplabel.text = resources.getString(R.string.Standards)
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.btnSpecificStudent.visibility = View.GONE
+
+            }
+
+            Constant.isSection -> {
+                isSelectedType = 2
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = true
+                isGetStandardSection()
+                binding.recyclerView.visibility = View.GONE
+                binding.rytStandardDropDown.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.grouplabel.text = resources.getString(R.string.Standards)
+
+                binding.chAllSelect.visibility = View.GONE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                if (SELECTED_MENU_ID == M_COMMUNICATION || SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_ASSIGNMENT) {
+                    binding.btnSpecificStudent.visibility = View.VISIBLE
+                } else {
+                    binding.btnSpecificStudent.visibility = View.GONE
+                }
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+            }
+
+            Constant.isGroup -> {
+                isSelectedType = 3
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                binding.grouplabel.text = resources.getString(R.string.Groups)
+                selectedIds.clear()
+                binding.rytStandardDropDown.visibility = View.GONE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.lblCreatedOn.visibility = View.VISIBLE
+                binding.btnSpecificStudent.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                if (isAcademicYearId != -1) {
+                    isGetGroupList()
+                }
+            }
+
+            Constant.isStaff -> {
+                isSelectedType = 4
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = false
+                isGetStaffList()
+                binding.rytStandardDropDown.visibility = View.GONE
+                binding.grouplabel.text = resources.getString(R.string.Staff)
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                binding.chAllSelect.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.btnSpecificStudent.visibility = View.GONE
+                Log.d("isDropDown", isDropDown.toString())
+            }
+        }
+    }
+
+    private fun isGetGroupList() {
+        Constant.showLoading(this@RecipientActivity)
+        appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
+    }
+
+    private fun isCheckLevel() {
+        appViewModel!!.isGetCheckLevel(
+            isAccessToken!!, isStandardId, isSubjectId!!.toString(),
+            "", this
+        )
+    }
+
+    private fun isGetSubjectList(isSectionId: String) {
+
+        appViewModel!!.isGetSubjectList(
+            isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
+        )
+    }
+
+    private fun isGetStandardSection() {
+        Constant.showLoading(this@RecipientActivity)
+        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
+    }
+
+    private fun isGetStaffList() {
+        Constant.showLoading(this@RecipientActivity)
+        appViewModel!!.isGetStaffList(
+            isAccessToken!!, this
+        )
+    }
+
+    private fun isGetAcademicYear() {
+        Constant.showLoading(this@RecipientActivity)
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
+    }
+
+
+    fun isUploadFilesInServer(isFileType: String?) {
+        ProgressDialogHelper.show(this)
+        ProgressDialogHelper.updateProgress(0)
+
+        if (SELECTED_MENU_ID == M_ATTACHMENTS || SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_SCHOOL_CLASS_EVENTS || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW) {
+            if (Constant.selectedFiles.isNotEmpty()) {
+                Constant.selectedFiles.removeAt(0)
+            }
+            Log.d("UploadDebug", "Removed first file due to menu type: $SELECTED_MENU_ID")
+        }
+
+        isTotalSelectedItem = Constant.selectedFiles.size
+        Log.d("UploadDebug", "Total selected items: $isTotalSelectedItem")
+
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+        val numNonVideoFiles = Constant.selectedFiles.size
+        val numVideos = isVideoSelectedArrayList.size
+
+        val videoSteps = 10
+        var totalTasks = (numNonVideoFiles * 2) + (numVideos * videoSteps)
+
+        if (totalTasks == 0 && numVideos > 0) {
+            totalTasks = videoSteps
+        }
+        var completedTasks = 0
+
+        fun updateProgress() {
+            if (totalTasks > 0) {
+                val progress = (completedTasks * 100) / totalTasks
+                ProgressDialogHelper.updateProgress(progress)
+            } else {
+                ProgressDialogHelper.dismiss()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(
+                isFileType,
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading(
+                totalTasks,
+                { completedTasks++; updateProgress() })
+
+            else -> {
+                Log.d("UploadDebug", "No files to upload.")
+            }
+        }
+    }
+
+    private fun isFileUploadInAws(
+        isFileType: String?,
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+                when (SELECTED_MENU_ID) {
+                    M_HOMEWORK -> isHomeWorkSend()
+                    M_COMMUNICATION -> voiceSendApi()
+                    M_ASSIGNMENT -> isAssignmentSend()
+                    M_LSRW -> isLsrwSkillSend()
+
+                }
+            } else {
+                videoUploading(totalTasks, onTaskComplete)
+            }
+        } else {
+
+            Constant.selectedFiles.size
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                    onTaskComplete()
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this@RecipientActivity,
+                            isCountryId!!,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles.getOrNull(i)?.type?.name
+                                                ?: "UNKNOWN"
+                                        )
+                                    )
+                                    onTaskComplete()
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                        when (SELECTED_MENU_ID) {
+                                            M_HOMEWORK -> isHomeWorkSend()
+                                            M_COMMUNICATION -> voiceSendApi()
+                                            M_ATTACHMENTS -> attachmentSendApi()
+                                            M_SCHOOL_CLASS_EVENTS -> eventsendapi()
+                                            M_ASSIGNMENT -> isAssignmentSend()
+                                            M_LSRW -> isLsrwSkillSend()
+                                        }
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading(totalTasks, onTaskComplete)
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                    // Optionally handle error, e.g., retry or dismiss
+                                    onTaskComplete()
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading(
+        totalTasks: Int,
+        onTaskComplete: () -> Unit
+    ) {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        if (isVideoSelectedArrayList.isEmpty()) {
+            ProgressDialogHelper.dismiss()
+            when (SELECTED_MENU_ID) {
+                M_HOMEWORK -> {
+                    isHomeWorkSend()
+                }
+
+                M_ATTACHMENTS -> {
+                    attachmentSendApi()
+                }
+
+                M_SCHOOL_CLASS_EVENTS -> {
+                    eventsendapi()
+                }
+
+                M_ASSIGNMENT -> {
+                    isAssignmentSend()
+                }
+
+                M_LSRW -> {
+                    isLsrwSkillSend()
+                }
+            }
+        } else {
+            for (i in isVideoSelectedArrayList.indices) {
+                Thread {
+                    for (x in 1..10) {
+                        Thread.sleep(400)
+                        runOnUiThread { onTaskComplete() }
+                    }
+                }.start()
+
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        }
+    }
+
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+
+        if (SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+            if (!success || link == null) {
+                runOnUiThread {
+                    ProgressDialogHelper.dismiss()
+                    Toast.makeText(this, "Vimeo upload failed", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+
+            val fileName = File(currentVideoPath!!).name
+
+            uploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link, isFileType = "VIDEO", originalFileName = fileName
+                )
+            )
+            currentIndex++
+            updateProgress()
+            uploadNextFile()
+        } else {
+            runOnUiThread {
+                if (success) {
+                    Log.d("link", link.toString())
+                    Constant.isAwsUploadedFiles.add(
+                        AwsUploadedFiles(
+                            isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                        )
+                    )
+
+                    if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                        ProgressDialogHelper.dismiss()
+                        when (SELECTED_MENU_ID) {
+                            M_HOMEWORK -> {
+                                isHomeWorkSend()
+                            }
+
+                            M_ATTACHMENTS -> {
+                                attachmentSendApi()
+                            }
+
+                            M_SCHOOL_CLASS_EVENTS -> {
+                                eventsendapi()
+                            }
+
+                            M_ASSIGNMENT -> {
+                                isAssignmentSend()
+                            }
+
+                            M_LSRW -> {
+                                isLsrwSkillSend()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            // Optionally handle failure, e.g., dismiss dialog or show error
+            ProgressDialogHelper.dismiss()
+        }
+    }
+
+
+    fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = isMessage
+        lblSelectTarget.text = isSelectTarget
+        lblSelectTarget.visibility = if (isSelectTarget.isEmpty()) View.GONE else View.VISIBLE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+
+            when (SELECTED_MENU_ID) {
+                M_HOMEWORK, M_ATTACHMENTS, M_SCHOOL_CLASS_EVENTS, M_ASSIGNMENT, M_LSRW -> {
+                    if (Constant.selectedFiles.size != 1) {
+                        isUploadFilesInServer("file")
+                    } else {
+                        when (SELECTED_MENU_ID) {
+                            M_HOMEWORK -> isHomeWorkSend()
+                            M_SCHOOL_CLASS_EVENTS -> eventsendapi()
+                            M_ASSIGNMENT -> isAssignmentSend()
+                            M_LSRW -> isLsrwSkillSend()
+                        }
+                    }
+                }
+
+                M_COMMUNICATION -> {
+                    if (Constant.isCommunicationType == 3) {
+                        Constant.isTextSendingData?.let { textData ->
+                            val json = ApiCallRequest.isSendText(
+                                isAcademicYearId,
+                                selectedIds,
+                                textData.isTitle,
+                                textData.isContent,
+                                isTargetType!!
+                            )
+                            appViewModel?.isSendText(isAccessToken!!, json, this)
+                        }
+                    } else {
+                        isUploadFilesInServer("audio")
+                    }
+                }
+
+                Constant.M_QUIZ_EXAM -> {
+                    Constant.showLoading(this)
+                    quizData = QuizTempHolder.quizBody
+                    isSaveCreateExamQuizDetails = QuizDataTempHolder.quizDataBody
+                    submitQuiz()
+                }
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    fun eventsendapi() {
+
+        // 1️⃣ Show loader first
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        // 2️⃣ Give UI one frame to render loader
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val eventDetails =
+                intent.getSerializableExtra(Constant.event_data) as? EventDetails
+
+            if (eventDetails != null) {
+
+                val jsonObject = ApiCallRequest.isSendEvent(
+                    title = eventDetails.txtTitle,
+                    content = eventDetails.txtDesc,
+                    venue = eventDetails.txtLocation,
+                    event_date = eventDetails.txtStartDate,
+                    event_time = eventDetails.txtStartTime,
+                    target_type = isTargetType,
+                    target_code = selectedIds,
+                    iframe = isIframe,
+                    fileSize = isFileSize,
+                    isSelectedCategory = eventDetails.isCategory
+                )
+
+                Log.d("EventSend", jsonObject.toString())
+
+                appViewModel!!.sendevent(
+                    isAccessToken!!,
+                    jsonObject,
+                    this
+                )
+
+            } else {
+                Constant.hideLoading(this)
+                Log.e("RecepientEventList", "EventDetails not found in intent")
+            }
+
+        }, 100)
+    }
+
+
+    override fun onIdCheck(group: NameAndIds) {
+        if (!isGroupSelectedIds.any { it.id == group.id }) {
+            isGroupSelectedIds.add(group)
+        }
+        if (isSelectedType == 3) {
+            binding.chAllSelect.isChecked = isGroupSelectedIds.size == isGetGroupListData?.size
+        } else {
+            binding.chAllSelect.isChecked = isGroupSelectedIds.size == isGetStaffListData?.size
+        }
+    }
+
+    override fun onIdUnchecked(group: NameAndIds) {
+        isGroupSelectedIds.removeAll { it.id == group.id }
+        binding.chAllSelect.isChecked = false
+    }
+
+    override fun onIdCheck(isStandard: Standard) {
+        if (!isStandardSelectedIds.any { it.id == isStandard.id }) {
+            isStandardSelectedIds.add(isStandard)
+        }
+        binding.chAllSelect.isChecked = isStandardSelectedIds.size == isGetStandard?.size
+    }
+
+    override fun onIdUnchecked(isStandard: Standard) {
+        isStandardSelectedIds.removeAll { it.id == isStandard.id }
+        binding.chAllSelect.isChecked = false
+    }
+
+    override fun onIdCheck(data: Section) {
+        if (!isSectionSelectedIds.any { it.id == data.id }) {
+            isSectionSelectedIds.add(data)
+        }
+        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        Log.d("idString", idString.toString())
+        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+            isGetSubjectList(idString)
+        }
+        binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
+        if (isSelectedType == 2) {
+            if (isSectionSelectedIds.size == 1) {
+                binding.btnSpecificStudent.isEnabled = true
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_orange)
+            } else {
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_gray)
+            }
+        }
+    }
+
+    override fun onIdUnchecked(data: Section) {
+        isSectionSelectedIds.removeAll { it.id == data.id }
+        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        Log.d("idString", idString.toString())
+        if (SELECTED_MENU_ID == M_HOMEWORK || SELECTED_MENU_ID == M_ASSIGNMENT || SELECTED_MENU_ID == M_LSRW || SELECTED_MENU_ID == Constant.M_QUIZ_EXAM) {
+
+            if (idString != "") {
+                isGetSubjectList(idString)
+            } else {
+                binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
+                isSubjectId = null
+
+            }
+        }
+        binding.chAllSelect.isChecked = false
+        if (isSelectedType == 2) {
+            if (isSectionSelectedIds.size == 1) {
+                binding.btnSpecificStudent.isEnabled = true
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_orange)
+            } else {
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_gray)
+            }
+        }
+    }
+
+    fun attachmentSendApi() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val jsonObject = ApiCallRequest.isSendAttachment(
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedIds,
+                title = Constant.isCommonTitle,
+                description = Constant.isCommonDescription,
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                fileSize = isFileSize,
+            )
+
+            appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+        }, 100)
+    }
+
+    fun isAssignmentSend() {
+
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            isAssignmentData?.let {
+
+                val jsonObject = ApiCallRequest.isSendAssignment(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    file_size = isFileSize,
+                    isAcademicYearId = isAcademicYearId,
+                    selectedIds = selectedIds,
+                    title = it.isTitle,
+                    description = it.isDescription,
+                    assignmentType = it.isAssignmentType,
+                    date = it.isDate,
+                    time = it.isTime,
+                    subjectId = isSubjectId!!,
+                )
+
+                appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    "Assignment details is missing.",
+                    this
+                )
+            }
+
+        }, 100)
+    }
+
+
+    fun isLsrwSkillSend() {
+
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            val isLsrwnewTaskSendingData =
+                intent.getParcelableExtra<LsrwnewTaskSendingData>(Constant.lsrwskill_data)
+
+            isLsrwnewTaskSendingData?.let {
+
+                val jsonObject = ApiCallRequest.isSendLsrwSkill(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    thumbnail = "",
+                    file_size = isFileSize,
+                    selectedIds = selectedIds,
+                    title = it.isTitle,
+                    description = it.isDescription,
+                    isLsrwType = it.isLsrwType,
+                    submission_date = it.submission_date,
+                    subjectId = isSubjectId!!
+                )
+
+                appViewModel!!.islsrwSkillCreate(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    "Task details is missing.",
+                    this
+                )
+            }
+
+        }, 100)
+    }
+
+    fun isHomeWorkSend() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            ProgressDialogHelper.dismiss()
+
+            val sectionDetails =
+                intent.getParcelableExtra<SectionDetails>(Constant.section_data)
+
+            sectionDetails?.let {
+
+                val jsonObject = ApiCallRequest.isSendHomeWork(
+                    targetType = isTargetType!!,
+                    iframe = isIframe,
+                    file_size = isFileSize,
+                    isAcademicYearId = isAcademicYearId,
+                    selectedIds = selectedIds,
+                    title = it.title,
+                    description = it.description,
+                    subjectId = isSubjectId!!,
+                )
+
+                appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
+
+            } ?: run {
+                Constant.hideLoading(this)
+                Constant.showValidationAlertPopup(
+                    getString(R.string.alert),
+                    resources.getString(R.string.Section_details_missing),
+                    this
+                )
+            }
+
+        }, 100)
+    }
+
+    fun voiceSendApi() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            val isVoiceData = Constant.isVoiceSendingData
+            val jsonObject = ApiCallRequest.isVoiceSend(
+                isAcademicYearId = isAcademicYearId,
+                isCommunicationType = isVoiceData!!.isCommunicationType,
+                selectedDates = isVoiceData.selectedDates,
+                isStartTimeText = isVoiceData.isStartTimeText,
+                isEndTimeText = isVoiceData.isEndTimeText,
+                title = isVoiceData.title,
+                isEmergency = isVoiceData.isEmergency,
+                isScheduleCall = isVoiceData.isScheduleCall,
+                schoolId = selectedIds,
+                targetType = isTargetType!!,
+                circularType = isCircularType!!,
+                fileName = isVoiceData.isFileName
+            )
+            appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+        }, 100)
+    }
+
+
+    // QUIZ
+    fun submitQuiz() {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            pendingBody = quizData!!
+            uploadedFiles.clear()
+
+            val filesToUpload = collectLocalFiles(quizData!!)
+
+            totalFilesToUpload = filesToUpload.size
+            currentIndex = 0
+            ProgressDialogHelper.updateProgress(0)
+
+            if (filesToUpload.isEmpty()) {
+                ProgressDialogHelper.updateProgress(100)
+                callApi(quizData!!)
+            } else {
+                pendingFiles = filesToUpload
+                uploadNextFile()
+            }
+        }, 100)
+    }
+
+    private fun updateProgress() {
+        if (totalFilesToUpload == 0) return
+
+        val percent =
+            ((currentIndex.toFloat() / totalFilesToUpload) * 100).toInt()
+
+        ProgressDialogHelper.updateProgress(percent.coerceAtMost(100))
+    }
+
+    private fun uploadNextFile() {
+        if (currentIndex >= pendingFiles.size) {
+            replaceUrlsInBody(pendingBody)
+            ProgressDialogHelper.updateProgress(100)
+            callApi(pendingBody)
+            return
+        }
+
+        val file = pendingFiles[currentIndex]
+
+        if (file.type == "VIDEO") {
+            uploadVideo(file)
+        } else {
+            uploadToAws(file)
+        }
+    }
+
+    private fun uploadVideo(file: FilePath) {
+        currentVideoPath = file.url
+
+        VimeoVideoUpload.uploadVideo(
+            this,
+            Constant.quiz,
+            Constant.quiz,
+            file.url,
+            this
+        )
+    }
+
+    private fun replaceUrlsInBody(body: QuizRequestBody) {
+        body.questions.forEach { q ->
+            // Question attachments
+            q.file_path = q.file_path.map { file ->
+                if (file.url.startsWith("http")) {
+                    file
+                } else {
+                    val name = File(file.url).name
+                    val uploaded = uploadedFiles.find { it.originalFileName == name }
+
+                    if (uploaded != null) {
+                        FilePath(uploaded.isFileUrl, uploaded.isFileType)
+                    } else {
+                        file
+                    }
+                }
+            }.toMutableList()
+
+            // Option images
+            q.a_image = mapOptionImage(q.a_image)
+            q.b_image = mapOptionImage(q.b_image)
+            q.c_image = mapOptionImage(q.c_image)
+            q.d_image = mapOptionImage(q.d_image)
+        }
+    }
+
+    private fun mapOptionImage(path: String?): String? {
+        if (path.isNullOrEmpty() || path.startsWith("http")) return path
+
+        val name = File(path).name
+        return uploadedFiles.find { it.originalFileName == name }?.isFileUrl ?: path
+    }
+
+    private fun callApi(body: QuizRequestBody) {
+        runOnUiThread {
+            Constant.showLoading(this)
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            ProgressDialogHelper.dismiss()
+
+            var isQuestionId = 0
+            val quizRequest: QuizRequestBody = quizData!!
+            val mainJson = JsonObject()
+
+            mainJson.addProperty("ok_flag", false)
+            mainJson.addProperty("max_mark", quizRequest.max_mark)
+            mainJson.addProperty("open_to_student", quizRequest.open_to_student)
+            mainJson.addProperty("target_type", isTargetType)
+            mainJson.addProperty("level", selectedLevelValue)
+            mainJson.addProperty("subject_id", isSubjectId!!.toString())
+            mainJson.addProperty("class_id", isStandardId)
+
+            val jsonArray = JsonArray()
+            selectedIds.forEach { id ->
+                jsonArray.add(id)
+            }
+            mainJson.add("target_code", jsonArray)
+
+            val updateQBankArray = JsonArray()
+            quizRequest.update_question_bank.forEach { item ->
+                val obj = JsonObject()
+                obj.addProperty("ques_no", item.ques_no)
+                obj.addProperty("subject_id", item.subject_id)
+                obj.addProperty("chapter", item.chapter)
+                obj.addProperty("question", item.question)
+                obj.addProperty("a_option", item.a_option)
+                obj.addProperty("b_option", item.b_option)
+                obj.addProperty("c_option", item.c_option)
+                obj.addProperty("d_option", item.d_option)
+                obj.addProperty("a_image", item.a_image)
+                obj.addProperty("b_image", item.b_image)
+                obj.addProperty("c_image", item.c_image)
+                obj.addProperty("d_image", item.d_image)
+                obj.addProperty("answer", item.answer)
+                obj.addProperty("mark", item.mark)
+                updateQBankArray.add(obj)
+            }
+            mainJson.add("update_question_bank", updateQBankArray)
+
+            val questionsArray = JsonArray()
+            quizRequest.questions.forEach { q ->
+                val qObj = JsonObject()
+                isQuestionId++
+
+                qObj.addProperty("ques_no", isQuestionId.toString())
+                qObj.addProperty("chapter", q.chapter)
+                qObj.addProperty("question", q.question)
+                qObj.addProperty("a_option", q.a_option)
+                qObj.addProperty("b_option", q.b_option)
+                qObj.addProperty("c_option", q.c_option)
+                qObj.addProperty("d_option", q.d_option)
+                qObj.addProperty("answer", q.answer)
+                qObj.addProperty("mark", q.mark)
+                qObj.addProperty("iframe", q.iframe)
+                qObj.addProperty("file_size", q.file_size)
+                qObj.addProperty("thumbnail", q.thumbnail)
+                qObj.addProperty("a_image", q.a_image ?: "")
+                qObj.addProperty("b_image", q.b_image ?: "")
+                qObj.addProperty("c_image", q.c_image ?: "")
+                qObj.addProperty("d_image", q.d_image ?: "")
+
+                val fileArray = JsonArray()
+                q.file_path.forEach { file ->
+                    val fileObj = JsonObject()
+                    fileObj.addProperty("url", file.url)
+                    fileObj.addProperty("type", file.type)
+                    fileArray.add(fileObj)
+                }
+                qObj.add("q_file_path", fileArray)
+
+                questionsArray.add(qObj)
+            }
+
+            mainJson.add("questions", questionsArray)
+
+            mainJson.addProperty("title", isSaveCreateExamQuizDetails!!.title)
+            mainJson.addProperty("description", isSaveCreateExamQuizDetails!!.description)
+            mainJson.addProperty(
+                "no_of_question",
+                isSaveCreateExamQuizDetails!!.no_of_question.toInt()
+            )
+            mainJson.addProperty("level_flag", isSaveCreateExamQuizDetails!!.level_flag)
+
+            Log.d("FINAL_JSON", mainJson.toString())
+
+            appViewModel!!.isCreateQuiz(isAccessToken!!, mainJson, this)
+
+        }, 100)
+    }
+
+
+    private fun collectLocalFiles(body: QuizRequestBody): List<FilePath> {
+        val list = mutableListOf<FilePath>()
+
+        body.questions.forEach { q ->
+            // Question attachments
+            q.file_path.forEach { file ->
+                if (!isAlreadyUploaded(file.url)) {
+                    list.add(file)
+                }
+            }
+            // Option images
+            addIfLocalFilePath(q.a_image, list)
+            addIfLocalFilePath(q.b_image, list)
+            addIfLocalFilePath(q.c_image, list)
+            addIfLocalFilePath(q.d_image, list)
+        }
+
+        return list
+    }
+
+    private fun isAlreadyUploaded(path: String?): Boolean {
+        return path.isNullOrEmpty() || path.startsWith("http")
+    }
+
+    private fun addIfLocalFilePath(
+        path: String?,
+        list: MutableList<FilePath>
+    ) {
+        if (!isAlreadyUploaded(path)) {
+            list.add(FilePath(path!!, "IMAGE"))
+        }
+    }
+
+    private fun uploadToAws(file: FilePath) {
+
+        val fileName = File(file.url).name
+
+        isAwsUploadingPreSigned?.getPreSignedUrl(
+            file.url,
+            isStaffDetails!!.school_id,
+            Constant.quiz,
+            this,
+            SharedPreference.getCountryId(this)!!,
+            false,
+            object : UploadCallback {
+
+                override fun onUploadSuccess(response: String?, isFileUploaded: String?) {
+
+                    uploadedFiles.add(
+                        AwsUploadedFiles(
+                            isFileUrl = isFileUploaded!!,
+                            isFileType = file.type,
+                            originalFileName = fileName
+                        )
+                    )
+
+                    currentIndex++
+                    updateProgress()
+                    uploadNextFile()
+                }
+
+                override fun onUploadError(error: String?) {
+                    runOnUiThread {
+                        ProgressDialogHelper.dismiss()
+                        Toast.makeText(
+                            this@RecipientActivity,
+                            "AWS upload failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        )
+    }
+}
