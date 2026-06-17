@@ -986,7 +986,10 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
         appViewModel?.isLiveBus(isAccessToken!!, this)
     }
 
-    override fun onClick(v: View?) {}
+    override fun onClick(v: View?) {
+
+    }
+
 
 
     override fun onMapReady(mapLibreMap: MapLibreMap) {

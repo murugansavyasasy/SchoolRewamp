@@ -415,6 +415,7 @@ object Constant {
     var READ = "READ"
     var VOICE = "VOICE"
     var AUDIO = "AUDIO"
+    var AUDIO_TYPE = "audio"
     var VIDEO = "VIDEO"
     var DOCUMENT = "DOCUMENT"
     var document_ = "document"

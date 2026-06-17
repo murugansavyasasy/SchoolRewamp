@@ -47,7 +47,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         var isNotificationOpened = false
     }
 
-    var isEmergency = false
+    var isEmergency = true
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
@@ -496,7 +496,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val person = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             Person.Builder()
-                .setName("School Chimes Calling")
+                .setName("Calling from your school")
                 .build()
         } else {
             TODO("VERSION.SDK_INT < P")
@@ -508,7 +508,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 "school_chimes_notification"
             )
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("🚨 Emergency Alert")
+                .setContentTitle("Important announcement from your school")
                 .setContentText(title)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
