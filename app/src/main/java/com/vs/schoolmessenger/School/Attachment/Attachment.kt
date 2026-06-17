@@ -1020,17 +1020,10 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
             Constant.selectedFiles.addAll(mappedList)
         }
-        if (Constant.selectedFiles.size > 1) {
-            binding.rcyImages.visibility = View.VISIBLE
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-            binding.rcyImages.adapter = mAdapter
-        } else {
-            binding.rcyImages.visibility = View.VISIBLE
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-            binding.rcyImages.adapter = mAdapter
-        }
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
     }
 
     fun isUpdateAttachment() {
