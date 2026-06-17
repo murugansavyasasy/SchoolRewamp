@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.R
@@ -714,8 +715,28 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             }
 
                             override fun onUploadError(error: String?) {
+                                Log.d("Type of file",isFileType.toString())
                                 Log.d("isUploadIssue", error.toString())
-                                onTaskComplete()  // Still increment on error to avoid hanging, but you can handle errors differently if needed
+                                if(isFileType == Constant.AUDIO_TYPE) {
+                                    runOnUiThread {
+                                        ProgressDialogHelper.dismiss()
+                                        AlertDialog.Builder(this@SchoolList)
+                                            .setTitle(getString(R.string.Oops))
+                                            .setMessage("Files Upload failed. Please check your connection and try again.")
+                                            .setCancelable(false)
+                                            .setPositiveButton("Okay") { dialog, _ ->
+                                                dialog.dismiss()
+                                                val intent = Intent(this@SchoolList,
+                                                    SchoolDashboard::class.java)
+                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            .show()
+                                    }
+                                } else {
+                                    onTaskComplete()
+                                } // Still increment on error to avoid hanging, but you can handle errors differently if needed
                             }
                         })
                 }
@@ -788,6 +809,20 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            ProgressDialogHelper.dismiss()
+            AlertDialog.Builder(this@SchoolList)
+                .setTitle(getString(R.string.Oops))
+                .setMessage("Video Upload failed. Please check your connection and try again.")
+                .setCancelable(false)
+                .setPositiveButton("Okay") { dialog, _ ->
+                    dialog.dismiss()
+                    val intent = Intent(this@SchoolList,
+                        SchoolDashboard::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
+                }
+                .show()
         }
     }
 

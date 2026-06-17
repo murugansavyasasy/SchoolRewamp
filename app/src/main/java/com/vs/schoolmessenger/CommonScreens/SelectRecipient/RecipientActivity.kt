@@ -1466,6 +1466,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?
                                 ) {
+                                    Log.d("Type of file",isFileType)
                                     isAwsUploadingFile.add(isFileUploaded!!)
                                     Constant.isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
@@ -1493,22 +1494,27 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 }
 
                                 override fun onUploadError(error: String?) {
+                                    Log.d("Type of file",isFileType.toString())
                                     Log.d("isUploadIssue", error.toString())
-                                    runOnUiThread {
-                                        ProgressDialogHelper.dismiss()
-                                        AlertDialog.Builder(this@RecipientActivity)
-                                            .setTitle(getString(R.string.Oops))
-                                            .setMessage("Files Upload failed. Please check your connection and try again.")
-                                            .setCancelable(false)
-                                            .setPositiveButton("Okay") { dialog, _ ->
-                                                dialog.dismiss()
-                                                val intent = Intent(this@RecipientActivity,
-                                                    SchoolDashboard::class.java)
-                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                                startActivity(intent)
-                                                finish()
-                                            }
-                                            .show()
+                                    if(isFileType == Constant.AUDIO_TYPE) {
+                                        runOnUiThread {
+                                            ProgressDialogHelper.dismiss()
+                                            AlertDialog.Builder(this@RecipientActivity)
+                                                .setTitle(getString(R.string.Oops))
+                                                .setMessage("Files Upload failed. Please check your connection and try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton("Okay") { dialog, _ ->
+                                                    dialog.dismiss()
+                                                    val intent = Intent(this@RecipientActivity,
+                                                        SchoolDashboard::class.java)
+                                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                    startActivity(intent)
+                                                    finish()
+                                                }
+                                                .show()
+                                        }
+                                    } else {
+                                        onTaskComplete()
                                     }
                                 }
                             })

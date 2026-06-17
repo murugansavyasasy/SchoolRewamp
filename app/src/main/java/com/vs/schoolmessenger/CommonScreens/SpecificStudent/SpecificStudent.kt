@@ -440,22 +440,27 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                 }
 
                                 override fun onUploadError(error: String?) {
+                                    Log.d("Type of file",isFileType.toString())
                                     Log.d("isUploadIssue", error.toString())
-                                    runOnUiThread {
-                                        ProgressDialogHelper.dismiss()
-                                        AlertDialog.Builder(this@SpecificStudent)
-                                            .setTitle(getString(R.string.Oops))
-                                            .setMessage("Files Upload failed. Please check your connection and try again.")
-                                            .setCancelable(false)
-                                            .setPositiveButton("Okay") { dialog, _ ->
-                                                dialog.dismiss()
-                                                val intent = Intent(this@SpecificStudent,
-                                                    SchoolDashboard::class.java)
-                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                                startActivity(intent)
-                                                finish()
-                                            }
-                                            .show()
+                                    if(isFileType == Constant.AUDIO_TYPE) {
+                                        runOnUiThread {
+                                            ProgressDialogHelper.dismiss()
+                                            AlertDialog.Builder(this@SpecificStudent)
+                                                .setTitle(getString(R.string.Oops))
+                                                .setMessage("Files Upload failed. Please check your connection and try again.")
+                                                .setCancelable(false)
+                                                .setPositiveButton("Okay") { dialog, _ ->
+                                                    dialog.dismiss()
+                                                    val intent = Intent(this@SpecificStudent,
+                                                        SchoolDashboard::class.java)
+                                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                    startActivity(intent)
+                                                    finish()
+                                                }
+                                                .show()
+                                        }
+                                    } else {
+                                        onTaskComplete()
                                     }
                                 }
                             })
