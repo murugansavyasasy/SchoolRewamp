@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens.SpecificStudent
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -23,6 +24,7 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.ApiCallRequest
@@ -439,7 +441,22 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
-                                    onTaskComplete()
+                                    runOnUiThread {
+                                        ProgressDialogHelper.dismiss()
+                                        AlertDialog.Builder(this@SpecificStudent)
+                                            .setTitle(getString(R.string.Oops))
+                                            .setMessage("Files Upload failed. Please check your connection and try again.")
+                                            .setCancelable(false)
+                                            .setPositiveButton("Okay") { dialog, _ ->
+                                                dialog.dismiss()
+                                                val intent = Intent(this@SpecificStudent,
+                                                    SchoolDashboard::class.java)
+                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            .show()
+                                    }
                                 }
                             })
                     }
@@ -516,6 +533,20 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+            ProgressDialogHelper.dismiss()
+            AlertDialog.Builder(this@SpecificStudent)
+                .setTitle(getString(R.string.Oops))
+                .setMessage("Video Upload failed. Please check your connection and try again.")
+                .setCancelable(false)
+                .setPositiveButton("Okay") { dialog, _ ->
+                    dialog.dismiss()
+                    val intent = Intent(this@SpecificStudent,
+                        SchoolDashboard::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
+                }
+                .show()
         }
     }
 

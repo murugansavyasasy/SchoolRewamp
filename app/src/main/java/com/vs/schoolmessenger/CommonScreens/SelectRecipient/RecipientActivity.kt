@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.CommonScreens.SpecificStudent.SpecificStudent
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Parent.Assignment.Model.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -1377,6 +1378,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         totalTasks: Int,
         onTaskComplete: () -> Unit
     ) {
+        Log.d("ReproCheck", "isTotalSelectedItem=$isTotalSelectedItem, selectedFiles=${Constant.selectedFiles.size}, videos=${isVideoSelectedArrayList.size}")
+
         val iterator = Constant.selectedFiles.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1491,8 +1494,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                                 override fun onUploadError(error: String?) {
                                     Log.d("isUploadIssue", error.toString())
-                                    // Optionally handle error, e.g., retry or dismiss
-                                    onTaskComplete()
+                                    runOnUiThread {
+                                        ProgressDialogHelper.dismiss()
+                                        AlertDialog.Builder(this@RecipientActivity)
+                                            .setTitle(getString(R.string.Oops))
+                                            .setMessage("Files Upload failed. Please check your connection and try again.")
+                                            .setCancelable(false)
+                                            .setPositiveButton("Okay") { dialog, _ ->
+                                                dialog.dismiss()
+                                                val intent = Intent(this@RecipientActivity,
+                                                    SchoolDashboard::class.java)
+                                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            .show()
+                                    }
                                 }
                             })
                     }
@@ -1624,8 +1641,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
-            // Optionally handle failure, e.g., dismiss dialog or show error
             ProgressDialogHelper.dismiss()
+            AlertDialog.Builder(this@RecipientActivity)
+                .setTitle(getString(R.string.Oops))
+                .setMessage("Video Upload failed. Please check your connection and try again.")
+                .setCancelable(false)
+                .setPositiveButton("Okay") { dialog, _ ->
+                    dialog.dismiss()
+                    val intent = Intent(this@RecipientActivity,
+                        SchoolDashboard::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
+                }
+                .show()
         }
     }
 
@@ -2027,6 +2056,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
+
     private fun uploadVideo(file: FilePath) {
         currentVideoPath = file.url
 
@@ -2234,11 +2264,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 override fun onUploadError(error: String?) {
                     runOnUiThread {
                         ProgressDialogHelper.dismiss()
-                        Toast.makeText(
-                            this@RecipientActivity,
-                            "AWS upload failed",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        AlertDialog.Builder(this@RecipientActivity)
+                            .setTitle(getString(R.string.Oops))
+                            .setMessage("Files Upload failed in server. Please check your internet connection and try again.")
+                            .setCancelable(false)
+                            .setPositiveButton("Okay") { dialog, _ ->
+                                dialog.dismiss()
+                                val intent = Intent(this@RecipientActivity,
+                                    SchoolDashboard::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                startActivity(intent)
+                                finish()
+                            }
+                            .show()
                     }
                 }
             }
