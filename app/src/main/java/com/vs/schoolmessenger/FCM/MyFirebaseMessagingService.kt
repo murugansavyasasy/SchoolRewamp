@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -29,7 +28,6 @@ import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.NotificationDismissService
-import com.vs.schoolmessenger.Utils.SharedPreference
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -45,8 +43,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val CALL_CHANNEL_NAME = "Incoming Calls"
     }
 
+    object isUserAnswered {
+        var isNotificationOpened = false
+    }
 
-    private val handler = Handler()
+    var isEmergency = false
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
@@ -86,51 +87,50 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val member_name = remoteMessage.data[Constant.member_name] ?: ""
         val school_name = remoteMessage.data[Constant.school_name] ?: ""
         val call_title = remoteMessage.data[Constant.call_title] ?: ""
-        val isEmergency = true;
 
         // Optional: Parse nested msg_info JSON if it's in valid JSON format
         try {
             if (type.equals(Constant.isCall)) {
 
-                sendNotificationCall(
-                    title,
-                    body,
-                    receiver_id.toString(),
-                    isWelcomeUrl,
-                    isVoiceUrl,
-                    ei1,
-                    ei2,
-                    ei3,
-                    ei4,
-                    ei5,
-                    school_name,
-                    member_name,
-                    call_title,
-                    role,
-                    circular_id,
-                    retrycount
-                )
-
-
-//                showCallNotification(
-//                    title,
-//                    body,
-//                    receiver_id.toString(),
-//                    isWelcomeUrl,
-//                    isVoiceUrl,
-//                    ei1,
-//                    ei2,
-//                    ei3,
-//                    ei4,
-//                    ei5,
-//                    school_name,
-//                    member_name,
-//                    call_title,
-//                    role,
-//                    circular_id,
-//                    retrycount,
-//                    isEmergency
-//                )
+                if (isEmergency) {
+                    showCallNotification(
+                        title,
+                        body,
+                        receiver_id.toString(),
+                        isWelcomeUrl,
+                        isVoiceUrl,
+                        ei1,
+                        ei2,
+                        ei3,
+                        ei4,
+                        ei5,
+                        school_name,
+                        member_name,
+                        call_title,
+                        role,
+                        circular_id,
+                        retrycount
+                    )
+                } else {
+                    sendNotificationCall(
+                        title,
+                        body,
+                        receiver_id.toString(),
+                        isWelcomeUrl,
+                        isVoiceUrl,
+                        ei1,
+                        ei2,
+                        ei3,
+                        ei4,
+                        ei5,
+                        school_name,
+                        member_name,
+                        call_title,
+                        role,
+                        circular_id,
+                        retrycount
+                    )
+                }
 
 
             } else {
@@ -222,6 +222,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra(Constant.call_title, call_title)
             putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
             putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
+            putExtra("isEmergencyCall", isEmergency)
+            putExtra("notification_id", 1001)
+            putExtra("launch_source", "ANSWER")
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
         val uniqueID = (receiver_id + circular_id).hashCode()
@@ -250,16 +253,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .build()
                 )
-                // 🔊 Play sound manually if needed
-                if (!Constant.mediaPlayer.isPlaying) {
-                    val mediaPlayer = MediaPlayer.create(this@MyFirebaseMessagingService, soundUri)
-                    mediaPlayer.isLooping = false
-                    mediaPlayer.start()
-                    Constant.mediaPlayer = mediaPlayer
-                }
             }
             manager.createNotificationChannel(channel)
-            handler.postDelayed(stopMediaPlayerRunnable, 30000)
             Log.d(TAG, "Notification channel created")
         }
         // Try simple notification first to isolate RemoteViews issues
@@ -298,8 +293,64 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
         }
         try {
+
+
             val notificationId = uniqueID.takeIf { it != 0 } ?: (0..999999).random()
             manager.notify(notificationId, builder.build())
+           isUserAnswered.isNotificationOpened = false
+
+                try {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        if (isUserAnswered.isNotificationOpened) {
+
+                            Log.d(
+                                "MISSED_CALL",
+                                "User attended call, no missed notification"
+                            )
+
+                            return@postDelayed
+                        }
+
+                        Log.d(
+                            "MISSED_CALL",
+                            "User did not attend call"
+                        )
+
+                        try {
+
+                            if (!isUserAnswered.isNotificationOpened){
+                            showMissedNotificationForNormalCall(
+                                title,
+                                body,
+                                receiver_id,
+                                isWelcomeUrl,
+                                isVoiceUrl,
+                                ei1,
+                                ei2,
+                                ei3,
+                                ei4,
+                                ei5,
+                                school_name,
+                                member_name,
+                                call_title,
+                                role,
+                                circular_id,
+                                retrycount
+                            )
+                                }
+
+                        } catch (e: Exception) {
+                            Log.e("MISSED_CALL", e.message ?: "")
+                        }
+
+                    }, 30000)
+
+                } catch (e: Exception) {
+                    Log.e("MISSED_CALL", e.message ?: "")
+                }
+
             Log.d(TAG, "Notification sent successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
@@ -318,15 +369,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         )
     }
 
-    private val stopMediaPlayerRunnable = Runnable {
-        if (Constant.mediaPlayer != null && Constant.mediaPlayer.isPlaying) {
-            Constant.mediaPlayer.stop()
-            Constant.mediaPlayer.release()
-            Constant.mediaPlayer = MediaPlayer()
-        }
-    }
-
-
     private fun showCallNotification(
         title: String,
         body: String,
@@ -343,8 +385,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         call_title: String,
         role: String,
         circular_id: String,
-        retrycount: String,
-        isEmergency: Boolean
+        retrycount: String
     ) {
 
         val answerIntent = Intent(
@@ -371,6 +412,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("notification_id", 1001)
             putExtra("is_missed_announcement", false)
             putExtra("launch_source", "ANSWER")
+            putExtra("isEmergencyCall", isEmergency)
 
         }
 
@@ -398,11 +440,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("notification_id", 1001)
             putExtra("is_missed_announcement", false)
             putExtra("launch_source", "FULL_SCREEN")
+            putExtra("isEmergencyCall", isEmergency)
 
         }
-
-        val uniqueID = (receiver_id + circular_id).hashCode()
-        val requestCode = uniqueID.takeIf { it != 0 } ?: System.currentTimeMillis().toInt()
 
         val answerPendingIntent =
             PendingIntent.getActivity(
@@ -442,6 +482,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
                 putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
                 putExtra("notification_id", 1001)
+                putExtra("isEmergencyCall", isEmergency)
             }
 
         val dismissPendingIntent =
@@ -491,36 +532,31 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     fullScreenPendingIntent,
                     true
                 )
-//               if (isEmergency) {
-//                 notification.setFullScreenIntent(
-//                  fullScreenPendingIntent,
-//                true
-//                 )
-//               }
-
 
         NotificationManagerCompat
             .from(this)
             .notify(1001, notification.build())
 
-        startMissedAnnouncementTimer(
-            title,
-            body,
-            receiver_id.toString(),
-            isWelcomeUrl,
-            isVoiceUrl,
-            ei1,
-            ei2,
-            ei3,
-            ei4,
-            ei5,
-            school_name,
-            member_name,
-            call_title,
-            role,
-            circular_id,
-            retrycount
-        )
+        if (!isUserAnswered.isNotificationOpened) {
+            startMissedAnnouncementTimer(
+                title,
+                body,
+                receiver_id.toString(),
+                isWelcomeUrl,
+                isVoiceUrl,
+                ei1,
+                ei2,
+                ei3,
+                ei4,
+                ei5,
+                school_name,
+                member_name,
+                call_title,
+                role,
+                circular_id,
+                retrycount
+            )
+        }
     }
 
     private fun startMissedAnnouncementTimer(
@@ -544,6 +580,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
+            Log.e("MISSED_CALL", "30 Seconds Completed")
+            isUserAnswered.isNotificationOpened=false
+            try {
+
+                // Stop ringtone
+                RingtonePlayer.stop()
+
+            } catch (_: Exception) {
+            }
+
             val notificationManager =
                 NotificationManagerCompat.from(this)
 
@@ -551,44 +597,47 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 getSystemService(Context.NOTIFICATION_SERVICE)
                         as NotificationManager
 
-            // STOP EVERYTHING
-            RingtonePlayer.stop()
+            try {
 
-            notificationManager.cancel(1001)
-            notificationService.cancel(1001)
+                // Remove incoming notification
+                notificationManager.cancel(1001)
+                notificationService.cancel(1001)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                notificationService.activeNotifications.forEach {
-                    if (it.id == 1001) {
-                        notificationService.cancel(it.id)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    notificationService.activeNotifications.forEach {
+                        if (it.id == 1001) {
+                            notificationService.cancel(it.id)
+                        }
                     }
                 }
+
+            } catch (_: Exception) {
             }
 
-            Log.d("MISSED_CALL", "No user response")
-
-            showMissedAnnouncement(
-                title,
-                body,
-                receiver_id,
-                isWelcomeUrl,
-                isVoiceUrl,
-                ei1,
-                ei2,
-                ei3,
-                ei4,
-                ei5,
-                school_name,
-                member_name,
-                call_title,
-                role,
-                circular_id,
-                retrycount
-            )
+            Log.e("MISSED_CALL", "Showing Missed Notification")
+            if (!isUserAnswered.isNotificationOpened) {
+                showMissedAnnouncement(
+                    title,
+                    body,
+                    receiver_id,
+                    isWelcomeUrl,
+                    isVoiceUrl,
+                    ei1,
+                    ei2,
+                    ei3,
+                    ei4,
+                    ei5,
+                    school_name,
+                    member_name,
+                    call_title,
+                    role,
+                    circular_id,
+                    retrycount
+                )
+            }
 
         }, 30000)
     }
-
 
     private fun showMissedAnnouncement(
         title: String,
@@ -642,6 +691,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
             putExtra("notification_id", 2001)
             putExtra("launch_source", "MISSED")
+            putExtra("isEmergencyCall", isEmergency)
 
 
         }
@@ -871,5 +921,78 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send notification: ${e.message}")
         }
+    }
+
+    private fun showMissedNotificationForNormalCall(
+        title: String,
+        body: String,
+        receiver_id: String,
+        isWelcomeUrl: String,
+        isVoiceUrl: String,
+        ei1: String,
+        ei2: String,
+        ei3: String,
+        ei4: String,
+        ei5: String,
+        school_name: String,
+        member_name: String,
+        call_title: String,
+        role: String,
+        circular_id: String,
+        retrycount: String
+    ) {
+
+        val intent = Intent(
+            this,
+            NotificationCallScreen::class.java
+        ).apply {
+
+            putExtra(Constant.menu_name, title)
+            putExtra(Constant.isReceiverId, receiver_id)
+            putExtra(Constant.retrycount, retrycount)
+            putExtra(Constant.circularId, circular_id)
+            putExtra(Constant.ei1, ei1)
+            putExtra(Constant.ei2, ei2)
+            putExtra(Constant.ei3, ei3)
+            putExtra(Constant.ei4, ei4)
+            putExtra(Constant.ei5, ei5)
+            putExtra(Constant.role, role)
+            putExtra(Constant.school_name, school_name)
+            putExtra(Constant.member_name, member_name)
+            putExtra(Constant.call_title, call_title)
+            putExtra(Constant.isVoiceUrlNotifi, isVoiceUrl)
+            putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
+
+            putExtra("is_missed_announcement", true)
+            putExtra("launch_source", "MISSED")
+            putExtra("launch_source", 1001)
+            putExtra("isEmergencyCall", false)
+        }
+
+        val pendingIntent =
+            PendingIntent.getActivity(
+                this,
+                2001,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or
+                        PendingIntent.FLAG_IMMUTABLE
+            )
+
+        val notification =
+            NotificationCompat.Builder(
+                this,
+                CALL_CHANNEL_ID
+            )
+                .setSmallIcon(R.drawable.school_splash_logo)
+                .setContentTitle("Missed School Announcement")
+                .setContentText(title)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
+
+        NotificationManagerCompat
+            .from(this)
+            .notify(2001, notification)
     }
 }

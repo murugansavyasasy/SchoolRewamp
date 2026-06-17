@@ -12,7 +12,7 @@ object RingtonePlayer {
     fun start(context: Context) {
 
         Log.e("RINGTONE", "START CALLED", Throwable())
-
+        stop()
         try {
 
             if (mediaPlayer?.isPlaying == true) {

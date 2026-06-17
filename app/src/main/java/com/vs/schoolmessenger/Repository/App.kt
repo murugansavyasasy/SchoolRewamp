@@ -2242,8 +2242,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isgetgeolocation(
         isToken: String, device_id: String,vehicle_id: String, route_id: String, activity: Activity
     ) {
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isgetgeolocation(isToken,device_id,vehicle_id,route_id,activity)
     }
 }
