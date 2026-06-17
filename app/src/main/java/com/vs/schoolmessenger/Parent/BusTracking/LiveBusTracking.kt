@@ -45,7 +45,7 @@ import org.maplibre.android.location.LocationComponentOptions
 import org.maplibre.android.location.modes.CameraMode
 import org.maplibre.android.location.modes.RenderMode
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.BusTracking.Model.BusStop
+import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.BusStop
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LiveBusTrackingBinding

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.FCM
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -64,7 +65,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     private var isUserActionTaken = false
 
-    private var isEmergency = false
+    private var isEmergency: String? = null
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -76,10 +77,25 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         isToolBarNoticeCallTheme()
 
         val notificationId = intent.getIntExtra("notification_id", -1)
-        isEmergency = intent.getBooleanExtra("isEmergencyCall", false)
+        isEmergency = intent.getStringExtra("isEmergencyCall")
         val launchSource = intent.getStringExtra("launch_source")
 
-        if (isEmergency) {
+        val circularId = intent.getStringExtra(Constant.circularId)
+
+        if (!circularId.isNullOrEmpty()) {
+
+            NotificationManagerCompat
+                .from(this)
+                .cancel(circularId.hashCode())
+
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            notificationManager.cancel(circularId.hashCode())
+        }
+
+
+        if (isEmergency== "true") {
             if (notificationId != -1) {
                 NotificationManagerCompat
                     .from(this)
@@ -118,7 +134,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
         }
 
-        if (isEmergency) {
+        if (isEmergency== "true") {
             Log.d(
                 "AnnouncementActivity",
                 "Source = $launchSource"
@@ -137,9 +153,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                             "FSI_TEST",
                             "Starting ringtone"
                         )
-
-                        RingtonePlayer.stop()
-                        RingtonePlayer.start(this)
 
                         handler.postDelayed(
                             missedCallRunnable,
@@ -168,7 +181,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         }
 
         binding.imgAcceptCall.setOnClickListener {
-
+            cancelMissedTimer()
             isUserActionTaken = true
             MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
 
@@ -176,15 +189,18 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
             RingtonePlayer.stop()
 
-            NotificationManagerCompat
-                .from(this)
-                .cancel(1001)
-
+            circular_id?.let {
+                NotificationManagerCompat
+                    .from(this)
+                    .cancel(it.hashCode())
+            }
             showConnectedState()
         }
 
         binding.imgDeclineCall.setOnClickListener {
 
+            cancelMissedTimer()
+
             isUserActionTaken = true
             MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
 
@@ -192,10 +208,11 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
             RingtonePlayer.stop()
 
-            NotificationManagerCompat
-                .from(this)
-                .cancel(1001)
-
+            circular_id?.let {
+                NotificationManagerCompat
+                    .from(this)
+                    .cancel(it.hashCode())
+            }
             endCallWithoutListening()
         }
 
@@ -226,6 +243,26 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         }
     }
 
+    private fun cancelMissedTimer() {
+
+        if (circular_id.isNullOrEmpty()) return
+
+        synchronized(MyFirebaseMessagingService.activeMissedTimers) {
+
+            MyFirebaseMessagingService.activeMissedTimers[circular_id]?.let {
+
+                MyFirebaseMessagingService.handler.removeCallbacks(it)
+
+                MyFirebaseMessagingService.activeMissedTimers.remove(circular_id)
+
+                Log.e(
+                    "MISSED_CALL",
+                    "TIMER REMOVED : $circular_id"
+                )
+            }
+        }
+    }
+
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 
@@ -246,8 +283,9 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         receiver_id = intent.getStringExtra(Constant.isReceiverId)
         retrycount = intent.getStringExtra(Constant.retrycount)
         circular_id = intent.getStringExtra(Constant.circularId)
-        isEmergency = intent.getBooleanExtra("isEmergencyCall", false)
-
+        isEmergency = intent.getStringExtra("isEmergencyCall")
+        MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
+        cancelMissedTimer()
         Log.d("Circular_id", receiver_id + " " + circular_id)
 
         binding.lblSchoolName.text = school_name
@@ -275,6 +313,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     private fun showConnectedState() {
 
+        MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
+
         binding.lytAccept.visibility = View.GONE
         binding.lytDecline.visibility = View.GONE
         binding.rytCutCll.visibility = View.VISIBLE
@@ -297,7 +337,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
 
     private fun playAudio(index: Int) {
-
+        MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
+        RingtonePlayer.stop()
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
             finishPlayback()
             return
@@ -581,7 +622,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         val notification =
             NotificationCompat.Builder(
                 this,
-                "school_chimes_notification"
+                "notification_school_chimes"
             )
                 .setSmallIcon(android.R.drawable.sym_call_missed)
                 .setContentTitle("Missed School Announcement")
@@ -593,13 +634,18 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         NotificationManagerCompat
             .from(this)
-            .notify(2001, notification)
+            .notify(
+                circular_id.hashCode(),
+                notification
+            )
     }
 
     override fun onDestroy() {
 
         try {
+            cancelMissedTimer()
 
+            MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
             RingtonePlayer.stop()
 
             handler.removeCallbacksAndMessages(null)
@@ -648,9 +694,11 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         RingtonePlayer.stop()
 
-        NotificationManagerCompat
-            .from(this)
-            .cancel(1001)
+        circular_id?.let {
+            NotificationManagerCompat
+                .from(this)
+                .cancel(it.hashCode())
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             finishAndRemoveTask()

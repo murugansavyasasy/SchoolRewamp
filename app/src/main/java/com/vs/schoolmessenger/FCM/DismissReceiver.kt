@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.FCM
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.vs.schoolmessenger.FCM.AnnouncementStatusManager.sendStatus
 import com.vs.schoolmessenger.Utils.Constant
@@ -32,7 +34,6 @@ class DismissReceiver : BroadcastReceiver() {
        val retrycount = intent.getStringExtra(Constant.retrycount)
        val circular_id = intent.getStringExtra(Constant.circularId)
 
-
         sendStatus(
             context,
             voiceUrl,
@@ -52,8 +53,17 @@ class DismissReceiver : BroadcastReceiver() {
             retrycount
         )
 
-        NotificationManagerCompat
-            .from(context)
-            .cancel(1001)
+        RingtonePlayer.stop()
+        if (!circular_id.isNullOrEmpty()) {
+
+            NotificationManagerCompat
+                .from(context)
+                .cancel(circular_id.hashCode())
+
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            notificationManager.cancel(circular_id.hashCode())
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Utils
+package com.vs.schoolmessenger.FCM
 
 import android.app.Service
 import android.content.Intent
@@ -9,7 +9,7 @@ class NotificationDismissService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && "NOTIFICATION_DISMISSED" == intent.action) {
             Log.d("Notification", "Notification was dismissed")
-            Constant.mediaPlayer.stop()
+            RingtonePlayer.stop()
         }
         stopSelf()
         return START_NOT_STICKY

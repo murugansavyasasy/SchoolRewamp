@@ -23,7 +23,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 class MyApp : Application(), LifecycleObserver {
 
     companion object {
-        const val CHANNEL_ID = "school_chimes_notification"
+        const val CHANNEL_ID = "notification_school_chimes"
         const val CHANNEL_NAME= "School Notifications"
     }
 
@@ -60,12 +60,12 @@ class MyApp : Application(), LifecycleObserver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
 
-            val call_notification_sound = Uri.parse(
-                "android.resource://$packageName/${R.raw.call_notification}"
-            )
-            val attributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-                .build()
+//            val call_notification_sound = Uri.parse(
+//                "android.resource://$packageName/${R.raw.call_notification}"
+//            )
+//            val attributes = AudioAttributes.Builder()
+//                .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+//                .build()
 
             val channel = NotificationChannel(
                 CHANNEL_ID,
@@ -74,8 +74,8 @@ class MyApp : Application(), LifecycleObserver {
             ).apply {
                 description = "School Emergency Alerts"
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                setSound(call_notification_sound, attributes)
-                enableVibration(true)
+                setSound(null, null)
+                enableVibration(false)
             }
 
             val manager =

@@ -41,7 +41,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
-
 class SettingsFragment : Fragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
@@ -255,7 +254,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     private fun RedirectToWhatsnew() {
         val intent = Intent(requireContext(), WhatsNewActivity::class.java)
-//        val intent = Intent(requireContext(), MapsActivity::class.java)
         startActivity(intent)
     }
 

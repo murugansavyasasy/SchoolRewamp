@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.BusTracking.Model
+package com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus
 
 data class BusStop(
     val id: String,

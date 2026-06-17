@@ -52,6 +52,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 
 
@@ -106,7 +108,7 @@
         <receiver android:name=".Parent.Noticeboard.Adapter.ReminderBroadcastReceiver" />
 
         <service
-            android:name=".Utils.NotificationDismissService"
+            android:name=".FCM.NotificationDismissService"
             android:exported="false" />
 
         <service
@@ -734,13 +736,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
-        <activity
-            android:name=".School.BusTracking.MapsActivity"
-        android:configChanges="uiMode|orientation|screenSize"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".School.StudentDetails.StudentDetails"

@@ -73,12 +73,16 @@ class TextHistoryAdapter(
             adapter: TextHistoryAdapter
         ) {
             lblTitle.text = data.title
-            val parts = data.date.split(" ")
-            val date = parts[0]
-            val time = parts[1] + " " + parts[2]
 
-            lblTime.text = time
-            lblDate.text = Constant.convertDateTimeFormat(date)
+            val parts = data.date.orEmpty().trim().split(" ")
+            lblDate.text = parts.getOrNull(0)?.let {
+                Constant.convertDateTimeFormat(it)
+            } ?: ""
+            lblTime.text = listOfNotNull(
+                parts.getOrNull(1),
+                parts.getOrNull(2)
+            ).joinToString(" ")
+
             lblContent.text = data.content
             isSeeMoreVisibility(lblContent, lblSeeMore)
             lblSeeMore.setOnClickListener {
