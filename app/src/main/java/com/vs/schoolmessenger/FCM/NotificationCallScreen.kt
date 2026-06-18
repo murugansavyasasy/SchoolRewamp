@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
@@ -78,7 +79,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         val notificationId = intent.getIntExtra("notification_id", -1)
         isEmergency = intent.getStringExtra("isEmergencyCall")
-        val launchSource = intent.getStringExtra("launch_source")
 
         val circularId = intent.getStringExtra(Constant.circularId)
 
@@ -112,7 +112,6 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
         }
 
-        handleIntent(intent)
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
@@ -123,6 +122,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             if (response != null) {
                 response.status
                 response.message
+                Log.d("update_call_log","update_call_log")
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     finishAndRemoveTask()
@@ -134,51 +134,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
         }
 
-        if (isEmergency== "true") {
-            Log.d(
-                "AnnouncementActivity",
-                "Source = $launchSource"
-            )
-            when (launchSource) {
-                "FULL_SCREEN" -> {
-                    val isMissed =
-                        intent.getBooleanExtra(
-                            "is_missed_announcement",
-                            false
-                        )
+        handleIntent(intent)
 
-                    if (!isMissed) {
-
-                        Log.d(
-                            "FSI_TEST",
-                            "Starting ringtone"
-                        )
-
-                        handler.postDelayed(
-                            missedCallRunnable,
-                            30000
-                        )
-                    }
-                    // Opened automatically by Full Screen Intent
-                }
-
-                "ANSWER" -> {
-                    // User tapped Accept button
-                    showConnectedState()
-                }
-
-                "MISSED" -> {
-                    // User tapped Missed Announcement notification
-                    Log.d(
-                        "MISSED",
-                        "Notification opened"
-                    )
-
-                    RingtonePlayer.stop()
-                }
-            }
-
-        }
 
         binding.imgAcceptCall.setOnClickListener {
             cancelMissedTimer()
@@ -266,10 +223,12 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private fun handleIntent(intent: Intent?) {
         if (intent == null) return
 
+        val launchSource = intent.getStringExtra("launch_source")
+
         Log.d("Intent", "values received")
         voiceUrl = intent.getStringExtra(Constant.isVoiceUrlNotifi)
         welcomeUrl = intent.getStringExtra(Constant.isWelcomeUrlNotifi)
-        notificationId = intent.getIntExtra(Constant.isNotificationId, -1)
+        notificationId = intent.getIntExtra("notification_id", -1)
 
         school_name = intent.getStringExtra(Constant.school_name)
         member_name = intent.getStringExtra(Constant.member_name)
@@ -303,11 +262,56 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         audioUrls = audioList.toTypedArray()
 
-        Log.d("AUDIO_ORDER", audioUrls!!.joinToString())
-        Log.d("totalDurationMs", totalDurationMs!!.toString())
+        getTotalDuration(audioList as List<String>) { duration ->
+            binding.lblTotalDuration.text = formatDuration(duration)
 
-        calculateTotalDuration {
-            binding.lblTotalDuration.text = formatDuration(totalDurationMs)
+            Log.d("TotalDuration", duration.toString())
+        }
+
+        if (isEmergency== "true") {
+            Log.d(
+                "AnnouncementActivity",
+                "Source = $launchSource"
+            )
+            when (launchSource) {
+                "FULL_SCREEN" -> {
+                    val isMissed =
+                        intent.getBooleanExtra(
+                            "is_missed_announcement",
+                            false
+                        )
+
+                    if (!isMissed) {
+
+                        Log.d(
+                            "FSI_TEST",
+                            "Starting ringtone"
+                        )
+
+                        handler.postDelayed(
+                            missedCallRunnable,
+                            30000
+                        )
+                    }
+                    // Opened automatically by Full Screen Intent
+                }
+
+                "ANSWER" -> {
+                    // User tapped Accept button
+                    showConnectedState()
+                }
+
+                "MISSED" -> {
+                    // User tapped Missed Announcement notification
+                    Log.d(
+                        "MISSED",
+                        "Notification opened"
+                    )
+
+                    RingtonePlayer.stop()
+                }
+            }
+
         }
     }
 
@@ -331,15 +335,14 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         // ▶ Start playback from first audio
         playAudio(currentTrack)
-
         isUserResponse = "OC"
     }
-
 
     private fun playAudio(index: Int) {
         MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
         RingtonePlayer.stop()
         if (audioUrls.isNullOrEmpty() || index >= audioUrls!!.size) {
+            Log.d("looping",index.toString())
             finishPlayback()
             return
         }
@@ -355,12 +358,14 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                     .build()
             )
 
-            Log.d("audioUrls!![index]", audioUrls!![index].toString())
             mediaPlayer!!.setDataSource(audioUrls!![index])
             mediaPlayer!!.prepareAsync()
 
             mediaPlayer!!.setOnPreparedListener { mp ->
-                mp.start()
+                Log.d("Duration", mp.duration.toString())
+                if (mp.duration <= 0) {
+                    Log.d("Audio_Duration", "Invalid audio file")
+                }
                 val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
                 val halfVolume = maxVolume / 2
                 audioManager.setStreamVolume(
@@ -368,10 +373,20 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                     halfVolume,
                     0
                 )
+                mp.start()
                 startUpdatingProgress()
+            }
+            mediaPlayer!!.setOnErrorListener { mp, what, extra ->
+                Log.e("MediaPlayer", "onError what=$what extra=$extra")
+                true
+            }
+            mediaPlayer!!.setOnInfoListener { mp, what, extra ->
+                Log.d("MediaPlayer", "onInfo what=$what extra=$extra")
+                false
             }
 
             mediaPlayer!!.setOnCompletionListener { mp ->
+                Log.d("AudioCompleted","completed")
                 totalElapsed += mp.duration
                 currentTrack++
                 MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
@@ -380,6 +395,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.d("Audio_Exception",e.toString())
         }
     }
 
@@ -404,62 +420,44 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         updateRunnable?.let { handler.removeCallbacks(it) }
     }
 
-    private fun calculateTotalDuration(onComplete: () -> Unit) {
+    private fun getTotalDuration(
+        audioUrls: List<String>,
+        callback: (Long) -> Unit
+    ) {
 
-        val validUrls = audioUrls?.filter { !it.isNullOrEmpty() } ?: emptyList()
+        Thread {
 
-        if (validUrls.isEmpty()) {
-            totalDurationMs = 0
-            onComplete()
-            return
-        }
+            var totalDuration: Long = 0
 
-        totalDurationMs = 0
-        preparedCount = 0
+            for (url in audioUrls) {
 
-        for (url in validUrls) {
-            val tempPlayer = MediaPlayer()
+                val retriever = MediaMetadataRetriever()
 
-            try {
-                tempPlayer.setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
+                try {
 
-                tempPlayer.setDataSource(url)
-                tempPlayer.setOnPreparedListener { mp ->
-                    totalDurationMs += mp.duration
-                    preparedCount++
-                    mp.release()
+                    retriever.setDataSource(url, HashMap())
 
-                    if (preparedCount == validUrls.size) {
-                        onComplete()
+                    val duration =
+                        retriever.extractMetadata(
+                            MediaMetadataRetriever.METADATA_KEY_DURATION
+                        )
+
+                    if (duration != null) {
+                        totalDuration += duration.toLong()
                     }
-                }
 
-                tempPlayer.setOnErrorListener { mp, _, _ ->
-                    preparedCount++
-                    mp.release()
-
-                    if (preparedCount == validUrls.size) {
-                        onComplete()
-                    }
-                    true
-                }
-
-                tempPlayer.prepareAsync()
-
-            } catch (e: Exception) {
-                preparedCount++
-                tempPlayer.release()
-
-                if (preparedCount == validUrls.size) {
-                    onComplete()
+                } catch (e: Exception) {
+                    Log.e("Duration", "Failed for $url", e)
+                } finally {
+                    retriever.release()
                 }
             }
-        }
+
+            Handler(Looper.getMainLooper()).post {
+                callback(totalDuration)
+            }
+
+        }.start()
     }
 
     private fun finishPlayback() {
@@ -666,9 +664,15 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     private fun formatDuration(ms: Long): String {
-        val min = TimeUnit.MILLISECONDS.toMinutes(ms)
-        val sec = TimeUnit.MILLISECONDS.toSeconds(ms) % 60
-        return String.format("%02d:%02d", min, sec)
+//        val min = TimeUnit.MILLISECONDS.toMinutes(ms)
+//        val sec = TimeUnit.MILLISECONDS.toSeconds(ms) % 60
+//        return String.format("%02d:%02d", min, sec)
+
+        val totalSeconds = ms / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+
+        return String.format("%02d:%02d", minutes, seconds)
     }
 
     private fun durationToSeconds(time: String): Int {
@@ -679,12 +683,21 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     private fun releasePlayer() {
+//        try {
+//            mediaPlayer?.stop()
+//            mediaPlayer?.release()
+//        } catch (ignored: Exception) {
+//        }
+//        mediaPlayer = null
+
         try {
-            mediaPlayer?.stop()
+            mediaPlayer?.reset()
             mediaPlayer?.release()
-        } catch (ignored: Exception) {
+        } catch (e: Exception) {
+            Log.e("MediaPlayer", "Release error", e)
+        } finally {
+            mediaPlayer = null
         }
-        mediaPlayer = null
     }
 
     override fun onClick(v: View?) {}
