@@ -97,7 +97,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 if (!RingtonePlayer.isPlaying()) {
                     RingtonePlayer.start(this)
                 }
-                if (isEmergency == "true") {
+                if (isEmergency == "1") {
                     showCallNotification(
                         title,
                         body,
@@ -1004,7 +1004,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("is_missed_announcement", true)
             putExtra("launch_source", "MISSED")
             putExtra("launch_source", 1001)
-            putExtra("isEmergencyCall", "false")
+            putExtra("isEmergencyCall", "0")
         }
 
         val pendingIntent =

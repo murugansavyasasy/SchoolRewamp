@@ -95,7 +95,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         }
 
 
-        if (isEmergency== "true") {
+        if (isEmergency== "1") {
             if (notificationId != -1) {
                 NotificationManagerCompat
                     .from(this)
@@ -268,7 +268,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             Log.d("TotalDuration", duration.toString())
         }
 
-        if (isEmergency== "true") {
+        if (isEmergency== "1") {
             Log.d(
                 "AnnouncementActivity",
                 "Source = $launchSource"
