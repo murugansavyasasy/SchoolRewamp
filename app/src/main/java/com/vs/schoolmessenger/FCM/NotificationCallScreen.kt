@@ -576,13 +576,16 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
 
     override fun onStop() {
         super.onStop()
-        RingtonePlayer.stop()
+
         if (isFinishing) {
+
+            RingtonePlayer.stop()
+
             try {
                 mediaPlayer?.stop()
                 mediaPlayer?.release()
                 mediaPlayer = null
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
             }
         }
     }

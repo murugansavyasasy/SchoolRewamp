@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.FCM
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -11,6 +13,7 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.telephony.TelephonyManager
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.R
 
 object RingtonePlayer {
@@ -207,18 +210,22 @@ object RingtonePlayer {
 
 
     private fun isPhoneBusy(context: Context): Boolean {
-
         return try {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.READ_PHONE_STATE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                Log.e("RingtonePlayer", "READ_PHONE_STATE permission not granted")
+                false
+            } else {
+                val telephonyManager =
+                    context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
-            val telephonyManager =
-                context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-
-            telephonyManager.callState != TelephonyManager.CALL_STATE_IDLE
-
+                telephonyManager.callState != TelephonyManager.CALL_STATE_IDLE
+            }
         } catch (e: Exception) {
-
-            Log.e("RINGTONE", "CALL STATE ERROR", e)
-
+            Log.e("RingtonePlayer", "CALL STATE ERROR", e)
             false
         }
     }
