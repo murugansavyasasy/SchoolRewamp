@@ -186,9 +186,11 @@
 
         <ImageButton
             android:id="@+id/imgSpecker"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/fourty_five"
+            android:layout_height="@dimen/fourty_five"
             android:layout_centerVertical="true"
+            android:viewportWidth="64"
+            android:viewportHeight="64"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/callEndButton"
             android:background="@drawable/volume_low" />
