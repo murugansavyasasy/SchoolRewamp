@@ -318,7 +318,7 @@
             android:layout_below="@+id/view4"
             android:layout_marginStart="@dimen/five"
             android:padding="@dimen/five"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <CheckBox
                 android:id="@+id/chArabic"
