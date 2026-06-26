@@ -26,7 +26,7 @@ android {
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 199
+        versionCode = 200
         versionName = "8.12"
         // 👇 Add these lines
         buildConfigField("int", "VERSION_CODE", versionCode.toString())
@@ -151,7 +151,6 @@ android {
                 val _3000_schools = school["_3000_schools"].toString()
                 val welcome_splash_message = school["welcome_splash_message"].toString()
                 val welcome_to_school_chimes = school["welcome_to_school_chimes"].toString()
-
 
 
                 val flavorResDir = File(srcDir, "$ID/res")

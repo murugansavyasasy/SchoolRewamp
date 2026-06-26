@@ -70,5 +70,23 @@
     "_3000_schools": "",
     "welcome_splash_message": "WELCOME TO SRI KALAIVANI VIDHYALAYA",
     "welcome_to_school_chimes": "WELCOME TO SRI KALAIVANI VIDHYALAYA"
+  },
+  {
+    "id": "WISDOMGROUP",
+    "school_id": "9999",
+    "name": "WISDOM GROUP OF INSTITUTIONS",
+    "package_suffix": "com.wisdomgroups.schools",
+    "color": "#7AD166",
+    "start_color": "#FFFFFF",
+    "center_color": "#6BB558",
+    "end_color": "#6BB558",
+    "light_sky_blue_color": "#6BB558",
+    "dark_blue_color": "#2F5027",
+    "icon": "ic_wisdom_groups_institutions",
+    "terms_url": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/",
+    "empowering": "",
+    "_3000_schools": "",
+    "welcome_splash_message": "WELCOME TO WISDOM GROUP OF INSTITUTIONS",
+    "welcome_to_school_chimes": "WELCOME TO WISDOM GROUP OF INSTITUTIONS"
   }
 ]
