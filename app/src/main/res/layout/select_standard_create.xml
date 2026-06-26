@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryRadiant">
+
+
+    <LinearLayout
+        android:id="@+id/lytHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/PrimaryColor"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/fourty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/statusBarBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:paddingHorizontal="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/eight"
+                android:src="@drawable/arrow_left_white" />
+
+            <RelativeLayout
+                android:id="@+id/rlaSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_white_stroke">
+
+                <Spinner
+                    android:id="@+id/isAcademicSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/three"
+                    android:layout_toEndOf="@id/isAcademicSpinner"
+                    android:src="@drawable/ic_drop_down"
+                    app:tint="@color/white" />
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:id="@+id/toolbarSearchIcon"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/four"
+                android:layout_toStartOf="@id/rlaSpinner"
+                android:padding="@dimen/four"
+                android:src="@drawable/ic_search"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/txtTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_toEndOf="@id/imgBack"
+                android:layout_toStartOf="@id/toolbarSearchIcon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Create Class Test"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <TextView
+                android:id="@+id/lblStepInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step 1 of 5"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/twenty"
+            android:layout_marginTop="@dimen/eight"
+            android:text="Select Standard"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty_four_sp" />
+
+        <TextView
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/twenty"
+            android:layout_marginTop="@dimen/four"
+            android:text="Choose the class for which you want to create a test"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lytContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rect_white_top_rounded"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="-20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lytHeader">
+
+        <include
+            android:id="@+id/stepIndicator"
+            layout="@layout/layout_step_indicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sixteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierSearchBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stepIndicator" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcClassList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/six"
+            android:layout_marginTop="@dimen/eight"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toTopOf="@id/btnContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierSearchBottom" />
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btnContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierSearchBottom">
+
+            <ImageView
+                android:id="@+id/noDataImage"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:src="@drawable/no_data_found" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twenty"
+                android:textSize="@dimen/fifteen_sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnContinue"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginHorizontal="@dimen/sixteen"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/rect_primary_rounded"
+            android:gravity="center"
+            android:text="Continue  ›"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

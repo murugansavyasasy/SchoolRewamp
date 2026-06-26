@@ -62,6 +62,7 @@ import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveR
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaff
+import com.vs.schoolmessenger.School.ClassTest.StandardActivity
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -236,13 +237,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     originalMenuList.addAll(isSchoolMenuDetails!!)
                     //Hardcode from here
                     //Added the hardcode data
-//                    originalMenuList.add(
-//                        MenuDetail(
-//                            id = 996,
-//                            name = "Student Details",
-//                            description = "Monitor and manage student data"
-//                        )
-//                    )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 789,
+                            name = "Class create",
+                            description = "Creating Standard and Section"
+                        )
+                    )
 
 //                                        originalMenuList.add(
 //                        MenuDetail(
@@ -1026,9 +1027,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-//            Constant.M_STUDENTDATE-> {
-//                StudentDetails::class.java
-//            }
+            Constant.M_STUDENTDATE-> {
+                StandardActivity::class.java
+            }
 
             else -> null
         }

@@ -136,7 +136,7 @@ class SchoolMenuAdapter(
                 Constant.M_APPROVE_STAFF_LEAVE_REQUEST -> imgMenu.setImageResource(R.drawable.approve_staff_leave)
                 Constant.M_HOSTEL -> imgMenu.setImageResource(R.drawable.hotel_attendance)
                 Constant.M_LIVE_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.bus_tracking_icon)
-//                Constant.M_STUDENTDATE -> imgMenu.setImageResource(R.drawable.student_report)
+                Constant.M_STUDENTDATE -> imgMenu.setImageResource(R.drawable.student_report)
 
             }
 

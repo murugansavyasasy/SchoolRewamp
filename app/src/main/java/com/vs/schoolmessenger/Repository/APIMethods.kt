@@ -249,7 +249,8 @@ object APIMethods {
 //    const val LiveBusData ="admin/api/transport/get-vehicle-live-tracking-details "
     const val GetStudentRoute ="transport/api/get-student-route-list"
     const val LiveBusData ="transport/api/get-vehicle-live-tracking-details"
-    const val Getlatestgeolocation ="transport/api/get-latest-geo-location              "
+    const val Getlatestgeolocation ="transport/api/get-latest-geo-location"
+    const val GetisgetSectionWiseSubjects ="/exam/api/exam/section-wise-subjects"
 
 }
 

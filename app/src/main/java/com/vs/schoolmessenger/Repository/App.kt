@@ -94,6 +94,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -484,6 +485,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetBusList: LiveData<getBusList?>? = null
     var isGetLiveBusData: LiveData<getLiveBus?>? = null
     var isgetgeolocation: LiveData<GetLatestGeoLocationResponse?>? = null
+    var isSectionwisesubjectsdetail: LiveData<Subjectlistresponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -691,7 +693,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetBusList = apiParentRepositories.isBusListLiveData
         isGetLiveBusData = apiParentRepositories.isLiveBusLiveData
         isgetgeolocation = apiParentRepositories.isgetgeolocationData
-
+        isSectionwisesubjectsdetail = apiSchoolRepositoriesTwo.isSectionwisesubjectsdetailLiveData
     }
 
     fun isDashBoardData(
@@ -2246,6 +2248,15 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.isgetgeolocation(isToken,device_id,vehicle_id,route_id,activity)
     }
+
+    fun isSectionwisesubjectsdetail(
+        isToken: String, section_ids: String, activity: Activity) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isSectionwisesubjectsdetail(isToken,section_ids,activity)
+
+    }
+
 }
 
 

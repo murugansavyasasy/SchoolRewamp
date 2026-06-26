@@ -204,6 +204,7 @@ object Constant {
 
     //    val M_BUS_TRACKING = 999
         val M_LIVE_BUS_TRACKING = 205
+    val M_STUDENTDATE = 789
 //    val M_STUDENTDATE = 996
     var SELECTED_MENU_ID = 0
     var isEmergencyVoiceNoticeBoard: Boolean? = false
@@ -307,6 +308,10 @@ object Constant {
     var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null
     var FrequentSchoollyUsedMenuItems: List<MenuDetail>? = null
     var isSchoolAdItem: List<AdItem>? = null
+    var isSelectedStandardId: String = ""
+    var isSelectedStandardName: String = ""
+    var isAllStandardSections: List<StandardSection>? = null
+    var isSelectedSections: List<StandardSection> = emptyList()
 
 
     var menuNameList: MutableList<String> = mutableListOf()

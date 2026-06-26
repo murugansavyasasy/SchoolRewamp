@@ -104,6 +104,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -1522,4 +1523,13 @@ interface ApiInterfaces {
         @Query("vehicle_id") vehicle_id  : String,
         @Query("route_id") route_id  : String,
     ): Call<GetLatestGeoLocationResponse?>
+
+
+    @GET(APIMethods.GetisgetSectionWiseSubjects)
+    fun isgetSectionWiseSubjects(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("section_ids ") section_ids : String,
+    ): Call<Subjectlistresponse?>
+
+
 }

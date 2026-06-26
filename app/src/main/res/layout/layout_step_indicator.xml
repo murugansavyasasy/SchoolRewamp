@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="12dp"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/step1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_step_active"
+            android:gravity="center"
+            android:text="✓"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblStep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Standard"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="#CCCCCC" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/step2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_step_inactive"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblStep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Sections"
+            android:textColor="#AAAAAA"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="#CCCCCC" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/step3"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_step_inactive"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblStep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Subjects"
+            android:textColor="#AAAAAA"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="#CCCCCC" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/step4"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_step_inactive"
+            android:gravity="center"
+            android:text="4"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblStep4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Details"
+            android:textColor="#AAAAAA"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line4"
+        android:layout_width="0dp"
+        android:layout_height="1.5dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="#CCCCCC" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/step5"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_step_inactive"
+            android:gravity="center"
+            android:text="5"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblStep5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Review"
+            android:textColor="#AAAAAA"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</LinearLayout>

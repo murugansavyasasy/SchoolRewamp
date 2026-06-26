@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
@@ -36,6 +37,7 @@ class SchoolServicesTwo {
     var schoolHostelOutpassUpdateStatus: MutableLiveData<schoolHostelOutpassUpdateStatus?>
     var getParentHostelDetails: MutableLiveData<getParentHostelDetails?>
     var getParentHostelDashboard: MutableLiveData<getParentHostelDashboard?>
+    var isSectionwisesubjectsdetail: MutableLiveData<Subjectlistresponse?>
 
 
     init {
@@ -52,6 +54,7 @@ class SchoolServicesTwo {
         schoolHostelOutpassUpdateStatus = MutableLiveData()
         getParentHostelDetails = MutableLiveData()
         getParentHostelDashboard = MutableLiveData()
+        isSectionwisesubjectsdetail = MutableLiveData()
 
     }
 
@@ -417,6 +420,40 @@ class SchoolServicesTwo {
 
     val isParentHotelDashBoardLiveData: LiveData<getParentHostelDashboard?>
         get() = getParentHostelDashboard
+
+
+
+
+
+    fun isSectionwisesubjectsdetail(
+        isToken: String,section_ids : String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isgetSectionWiseSubjects(isToken,section_ids)
+            ?.enqueue(object : Callback<Subjectlistresponse?> {
+                override fun onResponse(
+                    call: Call<Subjectlistresponse?>, response: Response<Subjectlistresponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isSectionwisesubjectsdetail.postValue(response.body())
+                        }
+                    } else {
+                        isSectionwisesubjectsdetail.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<Subjectlistresponse?>, t: Throwable) {
+                    isSectionwisesubjectsdetail.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSectionwisesubjectsdetailLiveData: LiveData<Subjectlistresponse?>
+        get() = isSectionwisesubjectsdetail
 
 
 
