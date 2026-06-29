@@ -5,6 +5,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -63,6 +64,7 @@ import com.vs.schoolmessenger.databinding.UploadMarkSheetBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -612,29 +614,29 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         }
     }
 
-    private fun getFileName(uri: Uri): String {
-        var fileName: String? = null
-
-        if (uri.scheme.equals("content", ignoreCase = true)) {
-            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
-
-            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-                if (cursor.moveToFirst()) {
-                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    if (columnIndex != -1) {
-                        fileName = cursor.getString(columnIndex)
-                    }
-                }
-            }
-        }
-
-        if (fileName.isNullOrEmpty()) {
-            fileName = uri.lastPathSegment
-            fileName = fileName?.substringAfterLast("/")
-        }
-
-        return fileName ?: "temp_file_${System.currentTimeMillis()}"
-    }
+//    private fun getFileName(uri: Uri): String {
+//        var fileName: String? = null
+//
+//        if (uri.scheme.equals("content", ignoreCase = true)) {
+//            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
+//
+//            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+//                if (cursor.moveToFirst()) {
+//                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//                    if (columnIndex != -1) {
+//                        fileName = cursor.getString(columnIndex)
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (fileName.isNullOrEmpty()) {
+//            fileName = uri.lastPathSegment
+//            fileName = fileName?.substringAfterLast("/")
+//        }
+//
+//        return fileName ?: "temp_file_${System.currentTimeMillis()}"
+//    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -778,26 +780,124 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
     }
 
 
+//    private fun UploadMarks() {
+//        if (Constant.selectedFiles.isEmpty()) {
+//            Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//        Constant.showLoading(this)
+//        val selectedFile = Constant.selectedFiles[0]
+//        val fileUri = Uri.parse(selectedFile.path)
+//        val fileName = getFileName(fileUri)
+//        val file = File(selectedFile.path)
+//        if (!file.exists()) {
+//            Constant.hideLoading(this)
+//            Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+//        val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
+//
+//        appViewModel?.uploadmarks(filePart, this)
+//
+//    }
+
     private fun UploadMarks() {
+
         if (Constant.selectedFiles.isEmpty()) {
             Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
             return
         }
+
         Constant.showLoading(this)
-        val selectedFile = Constant.selectedFiles[0]
-        val fileUri = Uri.parse(selectedFile.path)
-        val fileName = getFileName(fileUri)
-        val file = File(selectedFile.path)
-        if (!file.exists()) {
+
+        try {
+
+            val selectedFile = Constant.selectedFiles[0]
+
+            Log.d("Upload", "Selected Path : ${selectedFile.path}")
+
+            val uri = Uri.parse(selectedFile.path)
+
+            val file = getFileFromUri(uri)
+
+            if (file == null || !file.exists()) {
+                Constant.hideLoading(this)
+                Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val requestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
+
+            val filePart = MultipartBody.Part.createFormData(
+                "image",
+                file.name,
+                requestBody
+            )
+
+            appViewModel?.uploadmarks(filePart, this)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
             Constant.hideLoading(this)
-            Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
-            return
+            Toast.makeText(this, e.message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
         }
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
+    }
 
-        appViewModel?.uploadmarks(filePart, this)
+    private fun getFileName(uri: Uri): String {
 
+        var fileName = "upload_file"
+
+        if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+
+            val cursor = contentResolver.query(uri, null, null, null, null)
+
+            cursor?.use {
+
+                if (it.moveToFirst()) {
+
+                    val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+
+                    if (index != -1) {
+                        fileName = it.getString(index)
+                    }
+                }
+            }
+
+        } else {
+
+            uri.path?.let {
+                fileName = File(it).name
+            }
+        }
+
+        return fileName
+    }
+
+    private fun getFileFromUri(uri: Uri): File? {
+
+        return try {
+
+            if (uri.scheme.equals("file", true)) {
+                return File(uri.path!!)
+            }
+
+            val fileName = getFileName(uri)
+
+            val file = File(cacheDir, fileName)
+
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                file.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+
+            file
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
 }
