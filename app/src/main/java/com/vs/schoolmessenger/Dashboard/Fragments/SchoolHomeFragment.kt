@@ -62,7 +62,7 @@ import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.ApproveStaffLeaveR
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaff
-import com.vs.schoolmessenger.School.ClassTest.StandardActivity
+import com.vs.schoolmessenger.School.ClassTest.Standard.StandardActivity
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -84,8 +84,6 @@ import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffLeaveRequest.StaffLeaveRequest
-import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
-import com.vs.schoolmessenger.School.StudentDetails.StudentDetails
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.FrequentSchoollyUsedMenuItems

@@ -1528,7 +1528,7 @@ interface ApiInterfaces {
     @GET(APIMethods.GetisgetSectionWiseSubjects)
     fun isgetSectionWiseSubjects(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("section_ids ") section_ids : String,
+        @Query("section_ids") section_ids : String,
     ): Call<Subjectlistresponse?>
 
 

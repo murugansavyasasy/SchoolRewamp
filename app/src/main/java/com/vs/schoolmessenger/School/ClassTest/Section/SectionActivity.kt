@@ -1,11 +1,13 @@
-package com.vs.schoolmessenger.School.ClassTest
+package com.vs.schoolmessenger.School.ClassTest.Section
 
-import android.os.Bundle
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
+import com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass.SubjectActivity
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ActivitySectionBinding
@@ -77,11 +79,9 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>() {
     }
 
     private fun setupButtons() {
-
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
         binding.btnContinue.setOnClickListener {
             val selected = sectionAdapter.getSelectedSections()
             if (selected.isEmpty()) {
@@ -92,9 +92,11 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>() {
                 ).show()
                 return@setOnClickListener
             }
-
             Constant.isSelectedSections = selected
-
+            val sectionIds = selected.joinToString(",") { it.sectionId }
+            val intent = Intent(this, SubjectActivity::class.java)
+            intent.putExtra("SECTION_IDS",sectionIds)
+            startActivity(intent)
         }
     }
 }

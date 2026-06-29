@@ -86,6 +86,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.isStaffLeaveHistoryData
+import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SubjectDataDetail
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
@@ -269,6 +270,9 @@ object Constant {
     var mediaPlayer: MediaPlayer = MediaPlayer()
 
     var isAcademicYearList: List<AcademicYear>? = null
+
+    var isSelectedSubjects: List<SubjectDataDetail> = emptyList()
+
     var isSelectedAcademicYear: String?=null
     var isHostelName: String?=null
 

@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.ClassTest
+package com.vs.schoolmessenger.School.ClassTest.Section
 
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
