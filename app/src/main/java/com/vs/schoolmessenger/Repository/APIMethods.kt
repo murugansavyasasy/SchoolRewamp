@@ -250,9 +250,10 @@ object APIMethods {
     const val GetStudentRoute ="transport/api/get-student-route-list"
     const val LiveBusData ="transport/api/get-vehicle-live-tracking-details"
     const val Getlatestgeolocation ="transport/api/get-latest-geo-location"
-    const val GetisgetSectionWiseSubjects ="/exam/api/exam/section-wise-subjects"
     const val isClassTestStudent ="exam/api/exam-test/class-tests-for-student"
     const val isViewClassTestStudent ="exam/api/exam-test/view-marks-for-student"
+    const val GetisgetSectionWiseSubjects ="/exam/api/exam-test/section-wise-subjects"
+    const val PostCreateClasstest ="/exam/api/exam-test/create-class-test"
 
 }
 

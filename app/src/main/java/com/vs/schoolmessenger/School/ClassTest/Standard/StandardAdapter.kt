@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.ClassTest
+package com.vs.schoolmessenger.School.ClassTest.Standard
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -24,7 +24,8 @@ class StandardAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA    = 1
 
-    private var selectedStandardId: String? = null
+    private var selectedStandardId: String? =
+        itemList?.firstOrNull()?.standardId
 
     fun getSelectedStandardId(): String? = selectedStandardId
 
@@ -60,10 +61,10 @@ class StandardAdapter(
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val cardStandard:   CardView   = itemView.findViewById(R.id.cardStandard)
-        private val lblStandardName: TextView  = itemView.findViewById(R.id.lblStandardName)
-        private val lblSectionCount: TextView  = itemView.findViewById(R.id.lblSectionCount)
-        private val imgCheckMark:   ImageView  = itemView.findViewById(R.id.imgCheckMark)
+        private val cardStandard: CardView = itemView.findViewById(R.id.cardStandard)
+        private val lblStandardName: TextView = itemView.findViewById(R.id.lblStandardName)
+        private val lblSectionCount: TextView = itemView.findViewById(R.id.lblSectionCount)
+        private val imgCheckMark: ImageView = itemView.findViewById(R.id.imgCheckMark)
 
         fun bind(item: StandardSection) {
             lblStandardName.text = item.standardName

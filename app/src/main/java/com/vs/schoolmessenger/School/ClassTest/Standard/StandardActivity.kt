@@ -1,14 +1,10 @@
-package com.vs.schoolmessenger.School.ClassTest
+package com.vs.schoolmessenger.School.ClassTest.Standard
 
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -18,11 +14,12 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ClassTest.Section.SectionActivity
+import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectStandardCreateBinding
-
 
 class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnClickListener {
 
@@ -42,6 +39,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
 
     override fun setupViews() {
         super.setupViews()
+        Constant.clearClassTestFlowData()
         window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
@@ -97,10 +95,10 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
             for (section in standard.sections) {
                 standardSectionList.add(
                     StandardSection(
-                        standardId   = standard.id.toString(),
+                        standardId = standard.id.toString(),
                         standardName = standard.name,
-                        sectionId    = section.id.toString(),
-                        sectionName  = section.name
+                        sectionId = section.id.toString(),
+                        sectionName = section.name
                     )
                 )
             }
@@ -113,15 +111,22 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
     }
 
     private fun showStandardCards(uniqueStandards: List<StandardSection>) {
+
+        if (uniqueStandards.isNotEmpty()) {
+            Constant.isSelectedStandardId = uniqueStandards.first().standardId ?: ""
+            Constant.isSelectedStandardName = uniqueStandards.first().standardName ?: ""
+        }
+
         adapter = StandardAdapter(
-            itemList        = uniqueStandards,
-            context         = this,
-            isLoading       = false,
+            itemList = uniqueStandards,
+            context = this,
+            isLoading = false,
             fullSectionList = isClassList
         )
+
         binding.rcClassList.apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter       = this@StandardActivity.adapter
+            adapter = this@StandardActivity.adapter
         }
     }
 

@@ -96,6 +96,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -490,6 +491,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSectionwisesubjectsdetail: LiveData<Subjectlistresponse?>? = null
     var isClassTestResponsel: LiveData<ClassTestResponse?>? = null
     var isViewClassTestResponsel: LiveData<ClassTestMarkResponse?>? = null
+    var isCreateClasstest: LiveData<CreateClassTestResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -700,6 +702,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSectionwisesubjectsdetail = apiSchoolRepositoriesTwo.isSectionwisesubjectsdetailLiveData
         isClassTestResponsel = apiSchoolRepositoriesTwo.isClassTestResponselLiveData
         isViewClassTestResponsel = apiSchoolRepositoriesTwo.isViewClassTestResponselLiveData
+        isCreateClasstest = apiSchoolRepositoriesTwo.isCreateClasstestLiveData
     }
 
     fun isDashBoardData(
@@ -2257,8 +2260,8 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSectionwisesubjectsdetail(
         isToken: String, section_ids: String, activity: Activity) {
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isSectionwisesubjectsdetail(isToken,section_ids,activity)
 
     }
@@ -2281,6 +2284,15 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isViewClassTesFortStudent(isToken,isExamId,activity)
 
+    }
+
+    fun isCreateClasstest(
+        isToken: String,
+        jsonArray: JsonArray, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isCreateClasstest(isToken, jsonArray)
     }
 }
 

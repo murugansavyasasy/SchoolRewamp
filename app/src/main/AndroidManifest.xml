@@ -145,6 +145,19 @@
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.ClassTest.Class.ClassActivity.ClassActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.ClassTest.Review.ReviewActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".CommonScreens.SelectRecipient.RecipientActivity"
             android:configChanges="uiMode|orientation|screenSize"
@@ -778,13 +791,19 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
-            android:name=".School.ClassTest.StandardActivity"
+            android:name=".School.ClassTest.Standard.StandardActivity"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
-            android:name=".School.ClassTest.SectionActivity"
+            android:name=".School.ClassTest.Section.SectionActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".School.ClassTest.Subject.ActivityClass.SubjectActivity"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />

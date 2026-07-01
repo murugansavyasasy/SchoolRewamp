@@ -4,12 +4,14 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestMarkResponse
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
@@ -42,6 +44,7 @@ class SchoolServicesTwo {
     var isSectionwisesubjectsdetail: MutableLiveData<Subjectlistresponse?>
     var isClassTestResponse: MutableLiveData<ClassTestResponse?>
     var isViewClassTestResponse: MutableLiveData<ClassTestMarkResponse?>
+    var isCreateClasstest: MutableLiveData<CreateClassTestResponse?>
 
 
     init {
@@ -61,6 +64,7 @@ class SchoolServicesTwo {
         isSectionwisesubjectsdetail = MutableLiveData()
         isClassTestResponse = MutableLiveData()
         isViewClassTestResponse = MutableLiveData()
+        isCreateClasstest = MutableLiveData()
 
     }
 
@@ -521,6 +525,39 @@ class SchoolServicesTwo {
 
     val isViewClassTestResponselLiveData: LiveData<ClassTestMarkResponse?>
         get() = isViewClassTestResponse
+
+
+
+
+    fun isCreateClasstest(
+        isToken: String,jsonArray: JsonArray) {
+        RestClient.Companion.apiInterfaces.ispostCreateClasstest(isToken,jsonArray)
+            ?.enqueue(object : Callback<CreateClassTestResponse?> {
+                override fun onResponse(
+                    call: Call<CreateClassTestResponse?>, response: Response<CreateClassTestResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isCreateClasstest.postValue(response.body())
+                        }
+                    } else {
+                        isCreateClasstest.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<CreateClassTestResponse?>, t: Throwable) {
+                    isCreateClasstest.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isCreateClasstestLiveData: LiveData<CreateClassTestResponse?>
+        get() = isCreateClasstest
 
 
 

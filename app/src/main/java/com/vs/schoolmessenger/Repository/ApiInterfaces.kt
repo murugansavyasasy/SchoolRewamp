@@ -106,6 +106,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -1530,7 +1531,7 @@ interface ApiInterfaces {
     @GET(APIMethods.GetisgetSectionWiseSubjects)
     fun isgetSectionWiseSubjects(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("section_ids ") section_ids : String,
+        @Query("section_ids") section_ids : String,
     ): Call<Subjectlistresponse?>
 
 
@@ -1544,5 +1545,10 @@ interface ApiInterfaces {
     @GET(APIMethods.isViewClassTestStudent)
     fun isViewClassTestStudent(
         @Header(APIKeyNames.Authorization) token: String,  @Query("class_test_id") class_test_id  : String,): Call<ClassTestMarkResponse?>
+    @POST(APIMethods.PostCreateClasstest)
+    fun ispostCreateClasstest(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonArray: JsonArray,
+    ): Call<CreateClassTestResponse?>
 
 }

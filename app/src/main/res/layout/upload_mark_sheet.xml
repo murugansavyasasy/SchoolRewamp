@@ -262,7 +262,8 @@
                                 android:gravity="center"
                                 android:text="@string/continue_to_upload"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/fifteen_sp"></TextView>
+                                android:textSize="@dimen/fifteen_sp">
+                            </TextView>
                         </LinearLayout>
                     </LinearLayout>
 
