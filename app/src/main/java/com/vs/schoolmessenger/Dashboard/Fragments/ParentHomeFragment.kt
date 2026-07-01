@@ -58,6 +58,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
+import com.vs.schoolmessenger.Parent.ClassTestMark.Activity.ClassTest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.Parent.EBooks.Ebooks
@@ -195,13 +196,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //Hardcode from here
                     //Added the hardcode data
-//                    originalMenuList.add(
-//                        MenuDetail(
-//                            id = 202,
-//                            name = "Hostel parent Portal",
-//                            description = "Monitor hostel student activities and  accommodation details"
-//                        )
-//                    )
+                                        originalMenuList.add(
+                        MenuDetail(
+                            id = 789,
+                            name = "Class Test Create",
+                            description = "Creating Standard and Section"
+                        )
+                    )
 
 
 //                    originalMenuList.add(
@@ -731,6 +732,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_LIVE_BUS_TRACKING -> Intent(
                 requireActivity(),
                 BusList::class.java
+            )
+
+            Constant.M_STUDENTDATE -> Intent(
+                requireActivity(),
+                ClassTest::class.java
             )
 
 

@@ -614,30 +614,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
         }
     }
 
-//    private fun getFileName(uri: Uri): String {
-//        var fileName: String? = null
-//
-//        if (uri.scheme.equals("content", ignoreCase = true)) {
-//            val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
-//
-//            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-//                if (cursor.moveToFirst()) {
-//                    val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-//                    if (columnIndex != -1) {
-//                        fileName = cursor.getString(columnIndex)
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (fileName.isNullOrEmpty()) {
-//            fileName = uri.lastPathSegment
-//            fileName = fileName?.substringAfterLast("/")
-//        }
-//
-//        return fileName ?: "temp_file_${System.currentTimeMillis()}"
-//    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -676,7 +652,6 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
             R.id.lnrUpload -> {
                 UploadMarks()
-
             }
 
             R.id.cardUploadImage -> {
@@ -775,32 +750,33 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
 
         }
-
-
     }
+    private fun getUploadFile(path: String): File? {
+        return try {
+            val file = File(path)
 
+            if (file.exists()) {
+                return file
+            }
+            val uri = Uri.parse(path)
 
-//    private fun UploadMarks() {
-//        if (Constant.selectedFiles.isEmpty()) {
-//            Toast.makeText(this, "Please select a file first.", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//        Constant.showLoading(this)
-//        val selectedFile = Constant.selectedFiles[0]
-//        val fileUri = Uri.parse(selectedFile.path)
-//        val fileName = getFileName(fileUri)
-//        val file = File(selectedFile.path)
-//        if (!file.exists()) {
-//            Constant.hideLoading(this)
-//            Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-//        val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
-//
-//        appViewModel?.uploadmarks(filePart, this)
-//
-//    }
+            val fileName = getFileName(uri)
+
+            val cacheFile = File(cacheDir, fileName)
+
+            contentResolver.openInputStream(uri)?.use { input ->
+                cacheFile.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            cacheFile
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     private fun UploadMarks() {
 
@@ -811,53 +787,40 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
         Constant.showLoading(this)
 
-        try {
+        val selectedFile = Constant.selectedFiles[0]
 
-            val selectedFile = Constant.selectedFiles[0]
+        Log.d("Upload", "Path = ${selectedFile.path}")
 
-            Log.d("Upload", "Selected Path : ${selectedFile.path}")
+        val file = getUploadFile(selectedFile.path)
 
-            val uri = Uri.parse(selectedFile.path)
-
-            val file = getFileFromUri(uri)
-
-            if (file == null || !file.exists()) {
-                Constant.hideLoading(this)
-                Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            val requestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
-
-            val filePart = MultipartBody.Part.createFormData(
-                "image",
-                file.name,
-                requestBody
-            )
-
-            appViewModel?.uploadmarks(filePart, this)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (file == null || !file.exists()) {
             Constant.hideLoading(this)
-            Toast.makeText(this, e.message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Selected file not found.", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val requestBody = file.asRequestBody("*/*".toMediaTypeOrNull())
+
+        val filePart = MultipartBody.Part.createFormData(
+            "image",
+            file.name,
+            requestBody
+        )
+
+        appViewModel?.uploadmarks(filePart, this)
     }
 
     private fun getFileName(uri: Uri): String {
 
         var fileName = "upload_file"
 
-        if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+        if (uri.scheme == "content") {
 
             val cursor = contentResolver.query(uri, null, null, null, null)
 
             cursor?.use {
-
                 if (it.moveToFirst()) {
-
                     val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-
                     if (index != -1) {
                         fileName = it.getString(index)
                     }
@@ -873,31 +836,4 @@ class UploadMarkSheet : BaseActivity<UploadMarkSheetBinding>(), View.OnClickList
 
         return fileName
     }
-
-    private fun getFileFromUri(uri: Uri): File? {
-
-        return try {
-
-            if (uri.scheme.equals("file", true)) {
-                return File(uri.path!!)
-            }
-
-            val fileName = getFileName(uri)
-
-            val file = File(cacheDir, fileName)
-
-            contentResolver.openInputStream(uri)?.use { inputStream ->
-                file.outputStream().use { outputStream ->
-                    inputStream.copyTo(outputStream)
-                }
-            }
-
-            file
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
 }

@@ -41,6 +41,8 @@ import com.vs.schoolmessenger.Parent.BusTracking.Model.LatestLocation.GetLatestG
 import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestMarkResponse
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -1533,6 +1535,16 @@ interface ApiInterfaces {
     ): Call<Subjectlistresponse?>
 
 
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isClassTestStudent)
+    fun isClassTestStudent(
+        @Header(APIKeyNames.Authorization) token: String): Call<ClassTestResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isViewClassTestStudent)
+    fun isViewClassTestStudent(
+        @Header(APIKeyNames.Authorization) token: String,  @Query("class_test_id") class_test_id  : String,): Call<ClassTestMarkResponse?>
     @POST(APIMethods.PostCreateClasstest)
     fun ispostCreateClasstest(
         @Header(APIKeyNames.Authorization) token: String,

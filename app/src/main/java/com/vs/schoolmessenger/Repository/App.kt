@@ -35,6 +35,8 @@ import com.vs.schoolmessenger.Parent.BusTracking.Model.LatestLocation.GetLatestG
 import com.vs.schoolmessenger.Parent.BusTracking.Model.LiveBus.getLiveBus
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestMarkResponse
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -487,6 +489,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetLiveBusData: LiveData<getLiveBus?>? = null
     var isgetgeolocation: LiveData<GetLatestGeoLocationResponse?>? = null
     var isSectionwisesubjectsdetail: LiveData<Subjectlistresponse?>? = null
+    var isClassTestResponsel: LiveData<ClassTestResponse?>? = null
+    var isViewClassTestResponsel: LiveData<ClassTestMarkResponse?>? = null
     var isCreateClasstest: LiveData<CreateClassTestResponse?>? = null
 
     var isFirstLocationSynced = false
@@ -696,6 +700,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetLiveBusData = apiParentRepositories.isLiveBusLiveData
         isgetgeolocation = apiParentRepositories.isgetgeolocationData
         isSectionwisesubjectsdetail = apiSchoolRepositoriesTwo.isSectionwisesubjectsdetailLiveData
+        isClassTestResponsel = apiSchoolRepositoriesTwo.isClassTestResponselLiveData
+        isViewClassTestResponsel = apiSchoolRepositoriesTwo.isViewClassTestResponselLiveData
         isCreateClasstest = apiSchoolRepositoriesTwo.isCreateClasstestLiveData
     }
 
@@ -2260,6 +2266,25 @@ class App(application: Application) : AndroidViewModel(application) {
 
     }
 
+    fun isClassTestStudent(
+        isToken: String, activity: Activity) {
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        RestClient.changeApiBaseUrl(reporting_url!!)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isClassTesFortStudent(isToken,activity)
+
+    }
+
+    fun isViewClassTestStudent(
+        isToken: String, isExamId: String, activity: Activity) {
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        RestClient.changeApiBaseUrl(reporting_url!!)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isViewClassTesFortStudent(isToken,isExamId,activity)
+
+    }
 
     fun isCreateClasstest(
         isToken: String,
@@ -2269,7 +2294,6 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isCreateClasstest(isToken, jsonArray)
     }
-
 }
 
 

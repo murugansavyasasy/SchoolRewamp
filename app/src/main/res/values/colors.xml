@@ -322,5 +322,8 @@
     <color name="light_red_10">#F7E3DF</color>
     <color name="light_orange_10">#FFF2D9</color>
 
+    <color name="blue_session">#1976D2</color>
+    <color name="orange_session">#E65100</color>
+
 
 </resources>

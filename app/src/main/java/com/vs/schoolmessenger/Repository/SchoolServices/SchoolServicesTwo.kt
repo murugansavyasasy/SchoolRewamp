@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestMarkResponse
+import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Repository.RestClient
@@ -40,6 +42,8 @@ class SchoolServicesTwo {
     var getParentHostelDetails: MutableLiveData<getParentHostelDetails?>
     var getParentHostelDashboard: MutableLiveData<getParentHostelDashboard?>
     var isSectionwisesubjectsdetail: MutableLiveData<Subjectlistresponse?>
+    var isClassTestResponse: MutableLiveData<ClassTestResponse?>
+    var isViewClassTestResponse: MutableLiveData<ClassTestMarkResponse?>
     var isCreateClasstest: MutableLiveData<CreateClassTestResponse?>
 
 
@@ -58,6 +62,8 @@ class SchoolServicesTwo {
         getParentHostelDetails = MutableLiveData()
         getParentHostelDashboard = MutableLiveData()
         isSectionwisesubjectsdetail = MutableLiveData()
+        isClassTestResponse = MutableLiveData()
+        isViewClassTestResponse = MutableLiveData()
         isCreateClasstest = MutableLiveData()
 
     }
@@ -458,6 +464,67 @@ class SchoolServicesTwo {
 
     val isSectionwisesubjectsdetailLiveData: LiveData<Subjectlistresponse?>
         get() = isSectionwisesubjectsdetail
+
+
+    fun isClassTesFortStudent(
+        isToken: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isClassTestStudent(isToken)
+            ?.enqueue(object : Callback<ClassTestResponse?> {
+                override fun onResponse(
+                    call: Call<ClassTestResponse?>, response: Response<ClassTestResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isClassTestResponse.postValue(response.body())
+                        }
+                    } else {
+                        isClassTestResponse.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ClassTestResponse?>, t: Throwable) {
+                    isClassTestResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isClassTestResponselLiveData: LiveData<ClassTestResponse?>
+        get() = isClassTestResponse
+
+    fun isViewClassTesFortStudent(
+        isToken: String, isClassTestId: String, activity: Activity) {
+        RestClient.Companion.apiInterfaces.isViewClassTestStudent(isToken,isClassTestId)
+            ?.enqueue(object : Callback<ClassTestMarkResponse?> {
+                override fun onResponse(
+                    call: Call<ClassTestMarkResponse?>, response: Response<ClassTestMarkResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isViewClassTestResponse.postValue(response.body())
+                        }
+                    } else {
+                        isViewClassTestResponse.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ClassTestMarkResponse?>, t: Throwable) {
+                    isViewClassTestResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isViewClassTestResponselLiveData: LiveData<ClassTestMarkResponse?>
+        get() = isViewClassTestResponse
 
 
 
