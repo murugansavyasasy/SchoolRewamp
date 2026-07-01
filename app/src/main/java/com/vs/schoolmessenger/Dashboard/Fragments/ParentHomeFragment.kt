@@ -58,6 +58,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
+import com.vs.schoolmessenger.Parent.ClassTestMark.Activity.ClassTest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.Parent.EBooks.Ebooks
@@ -735,7 +736,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_STUDENTDATE -> Intent(
                 requireActivity(),
-                BusList::class.java
+                ClassTest::class.java
             )
 
 
