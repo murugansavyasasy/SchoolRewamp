@@ -86,6 +86,8 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.isStaffLeaveHistoryData
+import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
+import com.vs.schoolmessenger.School.ClassTest.Class.Models.SelectedSubject
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SubjectDataDetail
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
@@ -301,6 +303,10 @@ object Constant {
     var isParentDashBoardData: List<DashboardData>? = null
     var isSchoolDashBoardData: List<DashboardData>? = null
 
+    var isClassTestItems: List<ClassTestItem>? = null
+    var isExamName: String = ""
+    var isSelectedSubjectss: List<SelectedSubject>? = null
+
     var isParentContactDetails: ContactDetails? = null
     var isParentMenuDetails: List<MenuDetail>? = null
     var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
@@ -314,10 +320,18 @@ object Constant {
     var isSchoolAdItem: List<AdItem>? = null
     var isSelectedStandardId: String = ""
     var isSelectedStandardName: String = ""
-    var isAllStandardSections: List<StandardSection>? = null
+    var isAllStandardSections: List<StandardSection> = emptyList()
     var isSelectedSections: List<StandardSection> = emptyList()
 
-
+    fun clearClassTestFlowData() {
+        isAllStandardSections = emptyList()
+        isSelectedStandardId = ""
+        isSelectedStandardName = ""
+        isSelectedSections = emptyList()
+        isSelectedSubjectss = emptyList()
+        isClassTestItems = emptyList()
+        isExamName = ""
+    }
     var menuNameList: MutableList<String> = mutableListOf()
     fun setMenuNames(allMenuItems: List<MenuDetail>?) {
         menuNameList.clear()

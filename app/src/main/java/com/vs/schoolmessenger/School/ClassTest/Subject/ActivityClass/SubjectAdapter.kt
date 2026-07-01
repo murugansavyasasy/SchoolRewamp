@@ -165,9 +165,21 @@ class SubjectAdapter(
     fun getTotalSubjectCount(): Int =
         flatList.count { it is ListItem.SubjectRow }
 
-    fun getAllSelectedSubjects(): List<SubjectDataDetail> =
-        flatList
-            .filterIsInstance<ListItem.SubjectRow>()
-            .filter { it.isSelected }
-            .map { it.subject }
+
+    fun getAllSelectedSubjectsWithSection(): List<SectionDataDetail> {
+        val selectedSectionIds = selectedMap
+            .filter { it.value.isNotEmpty() }
+            .keys.toSet()
+
+        return sections.filter { it.section_id in selectedSectionIds }
+            .map { section ->
+                SectionDataDetail(
+                    section_id   = section.section_id,
+                    section_name = section.section_name,
+                    subjects     = section.subjects.filter { subject ->
+                        selectedMap[section.section_id]?.contains(subject.id) == true
+                    }
+                )
+            }
+    }
 }

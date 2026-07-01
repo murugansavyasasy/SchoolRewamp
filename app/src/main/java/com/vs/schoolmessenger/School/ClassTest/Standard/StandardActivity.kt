@@ -39,6 +39,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
 
     override fun setupViews() {
         super.setupViews()
+        Constant.clearClassTestFlowData()
         window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
@@ -110,15 +111,22 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
     }
 
     private fun showStandardCards(uniqueStandards: List<StandardSection>) {
+
+        if (uniqueStandards.isNotEmpty()) {
+            Constant.isSelectedStandardId = uniqueStandards.first().standardId ?: ""
+            Constant.isSelectedStandardName = uniqueStandards.first().standardName ?: ""
+        }
+
         adapter = StandardAdapter(
             itemList = uniqueStandards,
             context = this,
             isLoading = false,
             fullSectionList = isClassList
         )
+
         binding.rcClassList.apply {
             layoutManager = GridLayoutManager(context, 2)
-            adapter       = this@StandardActivity.adapter
+            adapter = this@StandardActivity.adapter
         }
     }
 

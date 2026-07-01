@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_subject_card"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lytSubjectHeader"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#3D7BFF">
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bookimage" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtSubjectName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TAMIL"
+                    android:textColor="#202020"
+                    android:textSize="14sp"
+                    style="@style/CustomTextStylePoppinsBold" />
+
+                <TextView
+                    android:id="@+id/txtSectionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Section B"
+                    android:textColor="#8A8A8A"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtActivityCount"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_activity_badge"
+                android:gravity="center"
+                android:minWidth="88dp"
+                android:paddingHorizontal="14dp"
+                android:text=""
+                android:visibility="gone"
+                android:textColor="#5A66F5"
+                android:textSize="12sp"
+                style="@style/CustomTextStylePoppinsBold" />
+
+            <ImageView
+                android:id="@+id/imgCompleted"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_check_circle_green"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imgChevron"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_right_gray" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dividerExpanded"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/lytExpanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/lytMergeBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/bg_merge_banner"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtMergeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Copy data from MATHS · Sec B?"
+                        android:textColor="#B45309"
+                        android:textSize="13sp"
+                        style="@style/CustomTextStylePoppinsBold" />
+
+                    <TextView
+                        android:id="@+id/txtMergeSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Fills all tests from that subject into this section"
+                        android:textColor="#92400E"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btnMerge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_merge_button"
+                    android:gravity="center"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Merge"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    style="@style/CustomTextStylePoppinsBold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lytTestsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/btnAddTest"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
+                android:text="+ Add Activity"
+                android:gravity="center"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="14sp"
+                style="@style/CustomTextStylePoppinsBold"
+                android:background="@drawable/btn_dashed_border1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -161,4 +161,34 @@
     </style>
 
 
+
+    <!--
+    FieldLabel – uppercase grey label above each input field
+    Usage: style="@style/FieldLabel"
+-->
+    <style name="FieldLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#9E9E9E</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!--
+        FieldInput – rounded grey EditText used across all form fields
+        Usage: style="@style/FieldInput"
+    -->
+    <style name="FieldInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:background">@drawable/input_field_bg</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#1A1A2E</item>
+        <item name="android:textColorHint">#BDBDBD</item>
+    </style>
+
+
 </resources>

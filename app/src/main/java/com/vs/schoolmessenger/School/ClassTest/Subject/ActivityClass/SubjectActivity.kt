@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass
 
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ClassTest.Class.ClassActivity.ClassActivity
+import com.vs.schoolmessenger.School.ClassTest.Class.Models.SelectedSubject
 import com.vs.schoolmessenger.School.ClassTest.Standard.StandardAdapter
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SectionDataDetail
@@ -87,12 +90,25 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
         }
 
         binding.btnContinue.setOnClickListener {
-            if(totalSelectedCount ==0) {
-                Toast.makeText(this,"Please select atleast one subject", Toast.LENGTH_SHORT).show()
+            if (totalSelectedCount == 0) {
+                Toast.makeText(this, "Please select atleast one subject", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val allSelected = adapter.getAllSelectedSubjects()
-            Constant.isSelectedSubjects = allSelected
+
+            val allSelected: List<SelectedSubject> = adapter.getAllSelectedSubjectsWithSection()
+                .flatMap { section ->
+                    section.subjects.map { subject ->
+                        SelectedSubject(
+                            subjectId   = subject.id,
+                            subjectName = subject.name,
+                            sectionId   = section.section_id,
+                            sectionName = section.section_name
+                        )
+                    }
+                }
+
+            Constant.isSelectedSubjectss = allSelected
+            startActivity(Intent(this, ClassActivity::class.java))
         }
 
     }

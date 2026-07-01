@@ -104,6 +104,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -1531,5 +1532,11 @@ interface ApiInterfaces {
         @Query("section_ids") section_ids : String,
     ): Call<Subjectlistresponse?>
 
+
+    @POST(APIMethods.PostCreateClasstest)
+    fun ispostCreateClasstest(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonArray: JsonArray,
+    ): Call<CreateClassTestResponse?>
 
 }

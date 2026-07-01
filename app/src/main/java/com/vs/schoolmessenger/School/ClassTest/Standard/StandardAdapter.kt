@@ -24,7 +24,8 @@ class StandardAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA    = 1
 
-    private var selectedStandardId: String? = null
+    private var selectedStandardId: String? =
+        itemList?.firstOrNull()?.standardId
 
     fun getSelectedStandardId(): String? = selectedStandardId
 

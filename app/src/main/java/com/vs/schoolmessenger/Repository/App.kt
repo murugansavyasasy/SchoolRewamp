@@ -94,6 +94,7 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -486,6 +487,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetLiveBusData: LiveData<getLiveBus?>? = null
     var isgetgeolocation: LiveData<GetLatestGeoLocationResponse?>? = null
     var isSectionwisesubjectsdetail: LiveData<Subjectlistresponse?>? = null
+    var isCreateClasstest: LiveData<CreateClassTestResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -694,6 +696,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetLiveBusData = apiParentRepositories.isLiveBusLiveData
         isgetgeolocation = apiParentRepositories.isgetgeolocationData
         isSectionwisesubjectsdetail = apiSchoolRepositoriesTwo.isSectionwisesubjectsdetailLiveData
+        isCreateClasstest = apiSchoolRepositoriesTwo.isCreateClasstestLiveData
     }
 
     fun isDashBoardData(
@@ -2251,10 +2254,20 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSectionwisesubjectsdetail(
         isToken: String, section_ids: String, activity: Activity) {
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isSectionwisesubjectsdetail(isToken,section_ids,activity)
 
+    }
+
+
+    fun isCreateClasstest(
+        isToken: String,
+        jsonArray: JsonArray, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isCreateClasstest(isToken, jsonArray)
     }
 
 }
