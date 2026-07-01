@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
               
-    <color name="PrimaryColor">#7AD166</color>
+    <color name="PrimaryColor">#68f368</color>
     <color name="splash_start">#FFFFFF</color>
     <color name="splash_center">#6BB558</color>
-    <color name="splash_end">#2F5027</color>
+    <color name="splash_end">#6BB558</color>
     <color name="light_sky_blue_color">#6BB558</color>
     <color name="dark_blue_color">#2F5027</color>
 </resources>

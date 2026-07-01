@@ -11,7 +11,7 @@
         android:layout_height="@dimen/sixty"
         android:layout_centerHorizontal="true"
         android:indeterminate="false"
-        android:max="100"
+        android:max="97"
         android:progress="0"
         android:progressDrawable="@drawable/circular_progressbar"
         android:secondaryProgress="0" />
