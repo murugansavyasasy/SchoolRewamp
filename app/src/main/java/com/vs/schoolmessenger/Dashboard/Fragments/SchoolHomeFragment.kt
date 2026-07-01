@@ -256,7 +256,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     filteredMenuList.addAll(originalMenuList)
 
                     allMenuItems = filteredMenuList
-                    //We are saving the menu name in list to use anywhere
                     Constant.setMenuNames(allMenuItems)
                     isLoadData()
                     setupRecyclerView()
