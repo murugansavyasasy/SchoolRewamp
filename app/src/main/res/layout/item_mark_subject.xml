@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="12dp"
+    android:layout_margin="@dimen/five"
     app:cardElevation="2dp">
 
     <LinearLayout
@@ -13,14 +14,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Subject Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp"
             android:gravity="center_vertical"
-            android:background="#F0EDFA">
+           >
 
             <View
                 android:layout_width="10dp"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:text="MATHS"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="15sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="120%"
                 android:textColor="@color/PrimaryColor"
-                android:textSize="14sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 android:layout_marginStart="4dp" />
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="12dp 16dp"
+            android:padding="12dp"
             android:background="#F8F8F8">
 
             <TextView
@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:text="ACTIVITY"
                 android:textColor="#888888"
-                android:textSize="12sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:layout_marginStart="8dp" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="MARKS"
                 android:textColor="#888888"
-                android:textSize="12sp" />
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
 
         <!-- Activities will be added here -->
@@ -108,16 +108,16 @@
                 android:layout_weight="1"
                 android:text="TOTAL"
                 android:textColor="#1A1A2E"
-                android:textSize="14sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSubjectTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="120 / 100"
+                android:text=""
                 android:textColor="#1A1A2E"
-                android:textSize="14sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

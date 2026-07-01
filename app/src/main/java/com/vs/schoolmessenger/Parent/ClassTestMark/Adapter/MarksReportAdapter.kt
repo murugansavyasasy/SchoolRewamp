@@ -34,12 +34,11 @@ class MarksReportAdapter(
         fun bind(subject: MarkSubjectData) {
             tvSubjectName.text = subject.subjectName
 
-            // Calculate subject total and percentage
             var subjectTotalScored = 0
             var subjectTotalMax = 0
             subject.activities.forEach { activity ->
-                subjectTotalScored += activity.mark.toIntOrNull() ?: 0
-                subjectTotalMax += activity.maxMark.toIntOrNull() ?: 0
+                subjectTotalScored += activity.mark.toDouble().toInt()
+                subjectTotalMax += activity.maxMark.toDouble().toInt()
             }
 
             val percentage = if (subjectTotalMax > 0) {
@@ -47,20 +46,45 @@ class MarksReportAdapter(
             } else 0
             tvSubjectPercentage.text = "$percentage%"
 
-            // Add activities
             activitiesContainer.removeAllViews()
             subject.activities.forEachIndexed { index, activity ->
                 val activityView = LayoutInflater.from(itemView.context)
                     .inflate(R.layout.item_mark_activity, activitiesContainer, false)
 
-                activityView.findViewById<TextView>(R.id.tvSerialNo).text = "${index + 1}"
-                activityView.findViewById<TextView>(R.id.tvActivityName).text = activity.activityName
-                activityView.findViewById<TextView>(R.id.tvSession).text =
-                    if (activity.session == "FN") "Forenoon" else "Afternoon"
-                activityView.findViewById<TextView>(R.id.tvDate).text = activity.examDate
-                activityView.findViewById<TextView>(R.id.tvSyllabus).text = activity.syllabus
-                activityView.findViewById<TextView>(R.id.tvMark).text = activity.mark
-                activityView.findViewById<TextView>(R.id.tvMaxMark).text = "/${activity.maxMark.toInt()}"
+                activityView.findViewById<TextView>(R.id.tvSerialNo).apply {
+                    text = "${index + 1}"
+                    textSize = 12f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvActivityName).apply {
+                    text = activity.activityName
+                    textSize = 13f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvSession).apply {
+                    text = if (activity.session == "FN") "Forenoon" else "Afternoon"
+                    textSize = 11f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvDate).apply {
+                    text = activity.examDate
+                    textSize = 11f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvSyllabus).apply {
+                    text = activity.syllabus
+                    textSize = 11f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvMark).apply {
+                    text = activity.mark
+                    textSize = 14f
+                }
+
+                activityView.findViewById<TextView>(R.id.tvMaxMark).apply {
+                    text = "${activity.maxMark.toDouble().toInt()}"
+                    textSize = 12f
+                }
 
                 activitiesContainer.addView(activityView)
             }

@@ -9,11 +9,12 @@ import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.MarkData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.MarkReportBinding
 
-class MarksReportActivity : BaseActivity<ActivityMarksReportBinding>() {
+class MarksReportActivity : BaseActivity<MarkReportBinding>() {
 
-    override fun getViewBinding(): ActivityMarksReportBinding {
-        return ActivityMarksReportBinding.inflate(layoutInflater)
+    override fun getViewBinding(): MarkReportBinding {
+        return MarkReportBinding.inflate(layoutInflater)
     }
 
     private var appViewModel: App? = null
@@ -25,11 +26,6 @@ class MarksReportActivity : BaseActivity<ActivityMarksReportBinding>() {
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarPrimaryParent(
-            mainViewId = R.id.main,
-            statusBarBgView = binding.statusBarBackground
-        )
-
         examId = intent.getStringExtra("EXAM_ID")
         examName = intent.getStringExtra("EXAM_NAME")
 
@@ -37,8 +33,6 @@ class MarksReportActivity : BaseActivity<ActivityMarksReportBinding>() {
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-
-        binding.tvReportTitle.text = "$examName — Marks"
 
         setupRecyclerView()
         getMarksReport()
@@ -50,6 +44,9 @@ class MarksReportActivity : BaseActivity<ActivityMarksReportBinding>() {
                 }
             }
         }
+        binding.isBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -60,18 +57,10 @@ class MarksReportActivity : BaseActivity<ActivityMarksReportBinding>() {
     }
 
     private fun displayMarksData(data: MarkData) {
-        // Header info
-        binding.tvExamName.text = data.examName
-        val totalSubjects = data.subjects.size
-        val totalAssessed = data.subjects.sumOf { it.activities.size }
-        binding.tvExamDetail.text = "$totalSubjects ${if (totalSubjects == 1) "subject" else "subjects"} · $totalAssessed assessed"
-
-        binding.tvOverallPercentage.text = data.overallPercentage
         binding.tvScored.text = data.overallStudentMarks
         binding.tvTotal.text = data.overallMarks
         binding.tvPercentage.text = data.overallPercentage
 
-        // Setup subjects RecyclerView
         binding.rvMarkSubjects.adapter = MarksReportAdapter(data.subjects)
     }
 

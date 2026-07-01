@@ -39,9 +39,19 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
 
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
+        binding.toolbarLayout.lblStudentName.visibility=View.VISIBLE
+        binding.toolbarLayout.lblStudentSection.visibility=View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.lblStudentName.text = childDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            childDetails?.standard_name + " - " + childDetails?.section_name
 
         setupRecyclerView()
         isGetClassTestMark()
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
 
         appViewModel?.isClassTestResponsel?.observe(this) { response ->
             binding.progressBar.visibility = View.GONE
@@ -49,7 +59,6 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
                 if (response.data.isNotEmpty()) {
                     classTestList = response.data
                     classTestAdapter.updateList(classTestList)
-                    updateHeaderStats(response)
                 }
             }
         }
@@ -68,18 +77,6 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
             layoutManager = LinearLayoutManager(this@ClassTest)
             adapter = classTestAdapter
         }
-    }
-
-    private fun updateHeaderStats(response: ClassTestResponse) {
-        val totalExams = response.data.size
-        val totalSubjects = response.data.sumOf { it.subjects.size }
-        val totalActivities = response.data.sumOf { exam ->
-            exam.subjects.sumOf { it.activities.size }
-        }
-
-        binding.tvExamsCount.text = totalExams.toString()
-        binding.tvSubjectsCount.text = totalSubjects.toString()
-        binding.tvActivitiesCount.text = totalActivities.toString()
     }
 
     private fun isGetClassTestMark() {

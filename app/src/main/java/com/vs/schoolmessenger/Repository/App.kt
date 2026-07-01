@@ -2265,16 +2265,20 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isClassTestStudent(
         isToken: String, activity: Activity) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
-        RestClient.changeApiBaseUrl(reporting_url!!)
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        RestClient.changeApiBaseUrl(reporting_url!!)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isClassTesFortStudent(isToken,activity)
 
     }
 
     fun isViewClassTestStudent(
         isToken: String, isExamId: String, activity: Activity) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
-        RestClient.changeApiBaseUrl(reporting_url!!)
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        RestClient.changeApiBaseUrl(reporting_url!!)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isViewClassTesFortStudent(isToken,isExamId,activity)
 
     }

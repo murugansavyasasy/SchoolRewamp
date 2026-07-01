@@ -41,7 +41,6 @@ class ActivityAdapter(
             tvMaxMark.text = activity.maxMark.toInt().toString()
             tvMinMark.text = activity.minMark.toInt().toString()
 
-            // Session handling
             when (activity.session) {
                 "FN" -> {
                     tvSession.text = "Forenoon"

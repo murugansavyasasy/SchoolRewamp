@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +20,10 @@ class ClassTestAdapter(
 ) : RecyclerView.Adapter<ClassTestAdapter.ExamViewHolder>() {
 
     private val expandedPositions = mutableSetOf<Int>()
+
+    init {
+        examList.indices.forEach { expandedPositions.add(it) }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,26 +40,24 @@ class ClassTestAdapter(
 
     fun updateList(newList: List<ClassTestData>) {
         examList = newList
+        expandedPositions.clear()
+        newList.indices.forEach { expandedPositions.add(it) }
         notifyDataSetChanged()
     }
 
-    /**
-     * Helper function to create a subject chip TextView programmatically
-     */
     private fun createChip(context: Context, subjectName: String): TextView {
         return TextView(context).apply {
             text = subjectName
-            textSize = 12f
+            textSize = 10f
             setTextColor(ContextCompat.getColor(context, R.color.PrimaryColor))
             setPadding(24, 12, 24, 12)
             background = ContextCompat.getDrawable(context, R.drawable.bg_subject_chip)
 
-            // Layout params for FlexboxLayout
             val params = FlexboxLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(0, 8, 12, 8) // left, top, right, bottom
+                setMargins(0, 8, 12, 8)
             }
             layoutParams = params
         }
@@ -64,33 +65,37 @@ class ClassTestAdapter(
 
     inner class ExamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvExamName: TextView = itemView.findViewById(R.id.tvExamName)
-        private val tvExamInfo: TextView = itemView.findViewById(R.id.tvExamInfo)
-        private val ivExpand: ImageView = itemView.findViewById(R.id.ivExpand)
-        private val chipContainer: FlexboxLayout = itemView.findViewById(R.id.chipContainer)
-        private val btnViewMarks: AppCompatButton = itemView.findViewById(R.id.btnViewMarks)
-        private val expandableContainer: LinearLayout = itemView.findViewById(R.id.expandableContainer)
-        private val rvSubjects: RecyclerView = itemView.findViewById(R.id.rvSubjects)
+        private val tvExamInfo: TextView? = itemView.findViewById(R.id.tvExamInfo)
+        private val ivExpand: ImageView? = itemView.findViewById(R.id.ivExpand)
+        private val chipContainer: FlexboxLayout? = itemView.findViewById(R.id.chipContainer)
+        private val btnViewMarks: View? = itemView.findViewById(R.id.btnViewMarks)
+        private val expandableContainer: LinearLayout? = itemView.findViewById(R.id.expandableContainer)
+        private val rvSubjects: RecyclerView? = itemView.findViewById(R.id.rvSubjects)
 
         fun bind(exam: ClassTestData, position: Int) {
             tvExamName.text = exam.examName
 
             val totalSubjects = exam.subjects.size
             val totalTests = exam.subjects.sumOf { it.activities.size }
-            tvExamInfo.text = "$totalSubjects ${if (totalSubjects == 1) "subject" else "subjects"} · $totalTests ${if (totalTests == 1) "test" else "tests"}"
+            tvExamInfo?.text = "$totalSubjects ${if (totalSubjects == 1) "subject" else "subjects"} · $totalTests ${if (totalTests == 1) "test" else "tests"}"
 
-            // Add subject chips
-            chipContainer.removeAllViews()
+            chipContainer?.removeAllViews()
             exam.subjects.forEach { subject ->
                 val chipView = this@ClassTestAdapter.createChip(itemView.context, subject.subjectName)
-                chipContainer.addView(chipView)
+                chipContainer?.addView(chipView)
             }
 
-            // Expand/Collapse
             val isExpanded = expandedPositions.contains(position)
-            expandableContainer.visibility = if (isExpanded) View.VISIBLE else View.GONE
-            ivExpand.rotation = if (isExpanded) 180f else 0f
+            expandableContainer?.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            ivExpand?.rotation = if (isExpanded) 180f else 0f
 
-            ivExpand.setOnClickListener {
+            if (isExpanded) {
+                rvSubjects?.layoutManager = LinearLayoutManager(itemView.context)
+                rvSubjects?.adapter = SubjectAdapter(exam.subjects)
+                rvSubjects?.isNestedScrollingEnabled = false
+            }
+
+            ivExpand?.setOnClickListener {
                 if (expandedPositions.contains(position)) {
                     expandedPositions.remove(position)
                 } else {
@@ -99,14 +104,7 @@ class ClassTestAdapter(
                 notifyItemChanged(position)
             }
 
-            // Setup inner RecyclerView for subjects when expanded
-            if (isExpanded) {
-                rvSubjects.layoutManager = LinearLayoutManager(itemView.context)
-                rvSubjects.adapter = SubjectAdapter(exam.subjects)
-            }
-
-            // View Marks button
-            btnViewMarks.setOnClickListener {
+            btnViewMarks?.setOnClickListener {
                 onViewMarksClick(exam)
             }
         }
