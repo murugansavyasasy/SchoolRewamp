@@ -235,13 +235,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     originalMenuList.addAll(isSchoolMenuDetails!!)
                     //Hardcode from here
                     //Added the hardcode data
-                    originalMenuList.add(
-                        MenuDetail(
-                            id = 789,
-                            name = "Class create",
-                            description = "Creating Standard and Section"
-                        )
-                    )
+//                    originalMenuList.add(
+//                        MenuDetail(
+//                            id = 789,
+//                            name = "Class create",
+//                            description = "Creating Standard and Section"
+//                        )
+//                    )
 
 //                                        originalMenuList.add(
 //                        MenuDetail(

@@ -73,10 +73,10 @@
   },
   {
     "id": "WISDOMGROUP",
-    "school_id": "9999",
-    "name": "WISDOM GROUP OF INSTITUTIONS",
+    "school_id": "7645",
+    "name": "WISDOM SMART CONNECT",
     "package_suffix": "com.wisdomgroups.schools",
-    "color": "#7AD166",
+    "color": "#68f368",
     "start_color": "#FFFFFF",
     "center_color": "#6BB558",
     "end_color": "#6BB558",
