@@ -235,13 +235,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     originalMenuList.addAll(isSchoolMenuDetails!!)
                     //Hardcode from here
                     //Added the hardcode data
-//                    originalMenuList.add(
-//                        MenuDetail(
-//                            id = 789,
-//                            name = "Class create",
-//                            description = "Creating Standard and Section"
-//                        )
-//                    )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 789,
+                            name = "Class create",
+                            description = "Creating Standard and Section"
+                        )
+                    )
 
 //                                        originalMenuList.add(
 //                        MenuDetail(
@@ -1025,8 +1025,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_STUDENTDATE-> {
-                StandardActivity::class.java
+
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    StandardActivity::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        StandardActivity::class.java
+                    }
+                }
             }
+
 
             else -> null
         }
