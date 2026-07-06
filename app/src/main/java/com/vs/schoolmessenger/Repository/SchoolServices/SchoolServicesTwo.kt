@@ -11,8 +11,13 @@ import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.ClassTest.Report.DeleteClassTestExamModel.DeleteClassTestResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamTestDeleteModel.ExamTestDeleteResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.Model.ExamlistModelResponse
 import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
@@ -23,6 +28,7 @@ import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateSt
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import kotlinx.serialization.StringFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +51,11 @@ class SchoolServicesTwo {
     var isClassTestResponse: MutableLiveData<ClassTestResponse?>
     var isViewClassTestResponse: MutableLiveData<ClassTestMarkResponse?>
     var isCreateClasstest: MutableLiveData<CreateClassTestResponse?>
+    var isgetExamreportdetails: MutableLiveData<ExamlistModelResponse?>
+    var isputExamDelete: MutableLiveData<ExamTestDeleteResponse?>
+    var isputClassTestDelete: MutableLiveData<DeleteClassTestResponse?>
+    var isexamDetailsMark: MutableLiveData<ClassEntryMarkResponse?>
+    var isexamdetailsmarkpost: MutableLiveData<UploadMarksClassEntryResponse?>
 
 
     init {
@@ -65,6 +76,11 @@ class SchoolServicesTwo {
         isClassTestResponse = MutableLiveData()
         isViewClassTestResponse = MutableLiveData()
         isCreateClasstest = MutableLiveData()
+        isgetExamreportdetails = MutableLiveData()
+        isputExamDelete = MutableLiveData()
+        isputClassTestDelete = MutableLiveData()
+        isexamDetailsMark = MutableLiveData()
+        isexamdetailsmarkpost = MutableLiveData()
 
     }
 
@@ -561,5 +577,161 @@ class SchoolServicesTwo {
 
 
 
+
+    fun isgetExamreportdetails(
+        isToken: String, class_test_id: String,exam_date: String,academic_year_id: String, activity: Activity) {
+        RestClient.Companion.apiInterfaces.isgetExamreportdetails(isToken,class_test_id,exam_date,academic_year_id)
+            ?.enqueue(object : Callback<ExamlistModelResponse?> {
+                override fun onResponse(
+                    call: Call<ExamlistModelResponse?>, response: Response<ExamlistModelResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isgetExamreportdetails.postValue(response.body())
+                        }
+                    } else {
+                        isgetExamreportdetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ExamlistModelResponse?>, t: Throwable) {
+                    isgetExamreportdetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetExamreportdetailsLiveData: LiveData<ExamlistModelResponse?>
+        get() = isgetExamreportdetails
+
+
+    fun isputExamDelete(
+        isToken: String, jsonObject: JsonObject , activity: Activity) {
+        RestClient.Companion.apiInterfaces.isputExamDelete(isToken,jsonObject)
+            ?.enqueue(object : Callback<ExamTestDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<ExamTestDeleteResponse?>, response: Response<ExamTestDeleteResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isputExamDelete.postValue(response.body())
+                        }
+                    } else {
+                        isputExamDelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ExamTestDeleteResponse?>, t: Throwable) {
+                    isputExamDelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isputExamDeleteLiveData: LiveData<ExamTestDeleteResponse?>
+        get() = isputExamDelete
+
+
+    fun isputClassTestDelete(
+        isToken: String, jsonObject: JsonObject , activity: Activity) {
+        RestClient.Companion.apiInterfaces.isputClassTestDelete(isToken,jsonObject)
+            ?.enqueue(object : Callback<DeleteClassTestResponse?> {
+                override fun onResponse(
+                    call: Call<DeleteClassTestResponse?>, response: Response<DeleteClassTestResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isputClassTestDelete.postValue(response.body())
+                        }
+                    } else {
+                        isputClassTestDelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<DeleteClassTestResponse?>, t: Throwable) {
+                    isputClassTestDelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isputClassTestDeleteLiveData: LiveData<DeleteClassTestResponse?>
+        get() = isputClassTestDelete
+
+
+
+    fun isexamDetailsMark(
+        isToken: String, class_test_id: String ,section_id: String, activity: Activity) {
+        RestClient.Companion.apiInterfaces.isexamDetailsMark(isToken,class_test_id,section_id)
+            ?.enqueue(object : Callback<ClassEntryMarkResponse?> {
+                override fun onResponse(
+                    call: Call<ClassEntryMarkResponse?>, response: Response<ClassEntryMarkResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isexamDetailsMark.postValue(response.body())
+                        }
+                    } else {
+                        isexamDetailsMark.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ClassEntryMarkResponse?>, t: Throwable) {
+                    isexamDetailsMark.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isexamDetailsMarkLiveData: LiveData<ClassEntryMarkResponse?>
+        get() = isexamDetailsMark
+
+
+
+    fun isexamdetailsmarkpost(
+        isToken: String,jsonObject: JsonObject) {
+        RestClient.Companion.apiInterfaces.isexamdetailsmarkpost(isToken,jsonObject)
+            ?.enqueue(object : Callback<UploadMarksClassEntryResponse?> {
+                override fun onResponse(
+                    call: Call<UploadMarksClassEntryResponse?>, response: Response<UploadMarksClassEntryResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isexamdetailsmarkpost.postValue(response.body())
+                        }
+                    } else {
+                        isexamdetailsmarkpost.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<UploadMarksClassEntryResponse?>, t: Throwable) {
+                    isexamdetailsmarkpost.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isexamdetailsmarkpostLiveData: LiveData<UploadMarksClassEntryResponse?>
+        get() = isexamdetailsmarkpost
 
 }

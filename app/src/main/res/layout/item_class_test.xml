@@ -14,7 +14,6 @@
         android:orientation="vertical"
         android:padding="@dimen/ten">
 
-        <!-- Header Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,8 +25,7 @@
                 android:layout_height="48dp"
                 android:src="@drawable/ic_graduation_cap"
                 android:background="@drawable/bg_exam_icon"
-                android:padding="12dp"
-                app:tint="@android:color/white" />
+                android:padding="12dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -43,7 +41,7 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold" />
+                    style="@style/CustomTextStylePoppinsBold"/>
 
                 <TextView
                     android:id="@+id/tvExamInfo"
@@ -52,7 +50,8 @@
                     android:text=""
                     android:textColor="#888888"
                     android:textSize="13sp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <ImageView
@@ -62,10 +61,9 @@
                 android:src="@drawable/ic_chevron_down"
                 android:background="@drawable/bg_circle_light"
                 android:padding="8dp"
-                app:tint="#888888" />
+                app:tint="@color/PrimaryColor" />
         </LinearLayout>
 
-        <!-- Subject Chips -->
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/chipContainer"
             android:layout_width="match_parent"
@@ -99,7 +97,7 @@
                 android:text="View Marks"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="14sp"
-                android:fontFamily="sans-serif-medium" />
+                style="@style/CustomTextStylePoppinsBold" />
         </LinearLayout>
 
         <LinearLayout

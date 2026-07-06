@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.ClassTest.Class.Models
 
-data class ClassTestItem(
+data class  ClassTestItem(
     val subjectId: String,
     val subjectName: String,
     val sectionId: String,

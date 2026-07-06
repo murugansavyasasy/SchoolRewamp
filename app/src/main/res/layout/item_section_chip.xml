@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txtSectionChip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/four"
+    android:background="@drawable/bg_outline_purple_radius"
+    android:drawableEnd="@drawable/ic_arrow_forward_circle"
+    android:drawableTint="@color/PrimaryColor"
+    android:drawablePadding="@dimen/four"
+    android:paddingHorizontal="@dimen/twele"
+    android:paddingVertical="@dimen/six"
+    android:textColor="@color/PrimaryColor"
+    android:textSize="@dimen/twele_sp"
+    tools:text="Section A"
+    xmlns:tools="http://schemas.android.com/tools" />

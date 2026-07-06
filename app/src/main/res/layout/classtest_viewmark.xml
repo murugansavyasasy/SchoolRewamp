@@ -53,6 +53,33 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
+
+        <LinearLayout
+            android:id="@+id/lytList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/nomessage"
+                android:layout_width="@dimen/two_fifty"
+                android:layout_height="@dimen/two_fifty"
+                android:layout_gravity="center"
+                android:src="@drawable/no_assignment_message" />
+
+
+            <TextView
+                android:id="@+id/txtNoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="No data available"
+                android:textSize="14sp" />
+        </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

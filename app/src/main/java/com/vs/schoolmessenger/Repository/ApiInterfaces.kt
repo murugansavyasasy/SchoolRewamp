@@ -106,8 +106,13 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Report.DeleteClassTestExamModel.DeleteClassTestResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamTestDeleteModel.ExamTestDeleteResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.Model.ExamlistModelResponse
 import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -1550,5 +1555,43 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body jsonArray: JsonArray,
     ): Call<CreateClassTestResponse?>
+
+
+    @GET(APIMethods.GetExamReportDetails)
+    fun isgetExamreportdetails(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("class_test_id") class_test_id  : String,
+        @Query("exam_date") exam_date   : String,
+        @Query("academic_year_id") academic_year_id   : String,
+    ): Call<ExamlistModelResponse?>
+
+
+    @PUT(APIMethods.PutExamDelete)
+    fun isputExamDelete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject
+    ): Call<ExamTestDeleteResponse?>
+
+
+    @PUT(APIMethods.PutClassTestDelete)
+    fun isputClassTestDelete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject
+    ): Call<DeleteClassTestResponse?>
+
+    @GET(APIMethods.examdetailsmark)
+    fun isexamDetailsMark(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("class_test_id") class_test_id  : String,
+        @Query("section_id") section_id   : String,
+    ): Call<ClassEntryMarkResponse?>
+
+
+    @POST(APIMethods.Examdetailsmarkpost)
+    fun isexamdetailsmarkpost(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<UploadMarksClassEntryResponse?>
+
 
 }

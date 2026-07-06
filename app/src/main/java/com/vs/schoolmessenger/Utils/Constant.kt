@@ -88,6 +88,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.ApproveStaffLeaveRequest.Model.isStaffLeaveHistoryData
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.SelectedSubject
+import com.vs.schoolmessenger.School.ClassTest.Report.Model.SubjectModeldata
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SubjectDataDetail
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
@@ -322,6 +323,10 @@ object Constant {
     var isSelectedStandardName: String = ""
     var isAllStandardSections: List<StandardSection> = emptyList()
     var isSelectedSections: List<StandardSection> = emptyList()
+    var isSelectedClassTestId: String = ""
+    var isSelectedSectionId: String = ""
+    var isSelectedSectionName: String = ""
+    var isExamReportSubjects: List<SubjectModeldata>? = null
 
     fun clearClassTestFlowData() {
         isAllStandardSections = emptyList()
@@ -451,6 +456,8 @@ object Constant {
     var VOICE_ALL = "VOICE_ALL"
     var dateForMate = "%02d:%02d"
     var isSelectedFiles = "isSelectedFiles"
+    const val CLASS_TEST_ID = "class_test_id"
+    const val SECTION_ID = "section_id"
     var Remaining = 10
 
     var IMAGE = "IMAGE"

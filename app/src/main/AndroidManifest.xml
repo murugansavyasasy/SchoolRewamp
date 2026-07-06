@@ -847,6 +847,27 @@
             android:windowSoftInputMode="adjustPan" />
 
 
+        <activity
+            android:name=".School.ClassTest.Report.ExamMarksEnterActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <activity
+            android:name=".School.ClassTest.Report.ExamReportActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <activity
+            android:name=".School.ClassTest.UploadMarks.ClassUploadMarks"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
 
     </application>
 

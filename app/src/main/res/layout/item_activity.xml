@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_margin="@dimen/five"
-    android:background="@drawable/outline_gray">
+    android:background="@drawable/bg_test_form_inner">
 
     <LinearLayout
         android:layout_width="match_parent"

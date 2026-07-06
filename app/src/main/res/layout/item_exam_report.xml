@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/ten"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    app:cardCornerRadius="@dimen/twele"
+    app:cardElevation="@dimen/two">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/twele">
+
+        <ImageView
+            android:id="@+id/imgExamIcon"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:background="@drawable/bg_icon_purple_light"
+            android:padding="@dimen/eight"
+            android:src="@drawable/ic_document"
+            app:tint="@color/PrimaryColor" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_icon_red_light"
+            android:padding="@dimen/six"
+            android:src="@drawable/delete_bin"
+            app:tint="@color/red" />
+
+        <TextView
+            android:id="@+id/txtExamName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@id/imgDelete"
+            android:layout_toEndOf="@id/imgExamIcon"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"
+            tools:text="Unit Test 1" />
+
+        <TextView
+            android:id="@+id/txtSentBy"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtExamName"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@id/imgExamIcon"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/twele_sp"
+            tools:text="Sent by: M BHARATH" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexSections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgExamIcon"
+            android:layout_marginTop="@dimen/eight"
+            app:flexWrap="wrap" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

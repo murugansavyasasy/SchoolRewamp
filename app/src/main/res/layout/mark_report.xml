@@ -25,7 +25,7 @@
                 <TextView
                     android:id="@+id/isBack"
                     android:layout_width="match_parent"
-                    android:text="Class Test"
+                    android:text="Class Tests"
                     android:gravity="center"
                     android:paddingStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
@@ -43,6 +43,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginHorizontal="10dp"
+                    android:visibility="gone"
                     android:background="@drawable/white_bg_card"
                     android:padding="5dp">
 
@@ -67,7 +68,7 @@
                             android:text=""
                             android:textColor="#1A1A2E"
                             android:textSize="15sp"
-                            android:textStyle="bold"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
 
@@ -97,7 +98,7 @@
                             android:text=""
                             android:textColor="#1A1A2E"
                             android:textSize="15sp"
-                            android:textStyle="bold"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
 
@@ -127,7 +128,7 @@
                             android:text=""
                             android:textColor="#2E7D32"
                             android:textSize="15sp"
-                            android:textStyle="bold"
+                          style="@style/CustomTextStylePoppinsBold"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -138,6 +139,35 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:nestedScrollingEnabled="false" />
+
+
+                <LinearLayout
+                    android:id="@+id/lytList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/nomessage"
+                        android:layout_width="@dimen/two_fifty"
+                        android:layout_height="@dimen/two_fifty"
+                        android:layout_gravity="center"
+                        android:src="@drawable/no_assignment_message" />
+
+
+
+                    <TextView
+                        android:id="@+id/txtNoData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="No data available"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

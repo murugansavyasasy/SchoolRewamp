@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Section.SectionActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
@@ -48,6 +49,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
             binding.statusBarBackground.requestLayout()
         }
         binding.imgBack.setOnClickListener(this)
+        binding.viewreporttext.setOnClickListener(this)
         setupStepIndicator()
         setupViewModel()
         setupContinueButton()
@@ -186,11 +188,16 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
         binding.txtNoData.text         = message
     }
 
+    private fun RedirectToReport() {
+        val intent = Intent(this, ExamReportActivity::class.java)
+        startActivity(intent)
+    }
 
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
+            R.id.viewreporttext-> RedirectToReport()
         }
     }
 }

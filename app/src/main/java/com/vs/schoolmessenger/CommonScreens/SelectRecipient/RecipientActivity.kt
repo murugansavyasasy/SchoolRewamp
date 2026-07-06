@@ -1286,7 +1286,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetSubjectList(isSectionId: String) {
-
         appViewModel!!.isGetSubjectList(
             isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
         )

@@ -254,6 +254,11 @@ object APIMethods {
     const val isViewClassTestStudent ="exam/api/exam-test/view-marks-for-student"
     const val GetisgetSectionWiseSubjects ="/exam/api/exam-test/section-wise-subjects"
     const val PostCreateClasstest ="/exam/api/exam-test/create-class-test"
+    const val GetExamReportDetails ="/exam/api/exam-test/class-test-details"
+    const val PutExamDelete ="/exam/api/exam-test/delete"
+    const val PutClassTestDelete ="/exam/api/exam-test/delete-class-test-subject"
+    const val examdetailsmark ="/exam/api/exam-test/mark-details"
+    const val Examdetailsmarkpost ="/exam/api/exam-test/upload-marks"
 
 }
 

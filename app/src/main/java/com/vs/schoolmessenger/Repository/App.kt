@@ -96,8 +96,13 @@ import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.AttachmentTargetDetails.AttachmentTargetDetailResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.AttendanceReportFromStaff.AttendanceReportFromStaffDataClass
+import com.vs.schoolmessenger.School.ClassTest.Report.DeleteClassTestExamModel.DeleteClassTestResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamTestDeleteModel.ExamTestDeleteResponse
+import com.vs.schoolmessenger.School.ClassTest.Report.Model.ExamlistModelResponse
 import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
+import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -492,6 +497,11 @@ class App(application: Application) : AndroidViewModel(application) {
     var isClassTestResponsel: LiveData<ClassTestResponse?>? = null
     var isViewClassTestResponsel: LiveData<ClassTestMarkResponse?>? = null
     var isCreateClasstest: LiveData<CreateClassTestResponse?>? = null
+    var isgetExamreportdetails: LiveData<ExamlistModelResponse?>? = null
+    var isputExamDelete: LiveData<ExamTestDeleteResponse?>? = null
+    var isputClassTestDelete: LiveData<DeleteClassTestResponse?>? = null
+    var isexamDetailsMark: LiveData<ClassEntryMarkResponse?>? = null
+    var isexamdetailsmarkpost: LiveData<UploadMarksClassEntryResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -703,6 +713,11 @@ class App(application: Application) : AndroidViewModel(application) {
         isClassTestResponsel = apiSchoolRepositoriesTwo.isClassTestResponselLiveData
         isViewClassTestResponsel = apiSchoolRepositoriesTwo.isViewClassTestResponselLiveData
         isCreateClasstest = apiSchoolRepositoriesTwo.isCreateClasstestLiveData
+        isgetExamreportdetails = apiSchoolRepositoriesTwo.isgetExamreportdetailsLiveData
+        isputExamDelete = apiSchoolRepositoriesTwo.isputExamDeleteLiveData
+        isputClassTestDelete = apiSchoolRepositoriesTwo.isputClassTestDeleteLiveData
+        isexamDetailsMark = apiSchoolRepositoriesTwo.isexamDetailsMarkLiveData
+        isexamdetailsmarkpost = apiSchoolRepositoriesTwo.isexamdetailsmarkpostLiveData
     }
 
     fun isDashBoardData(
@@ -2293,6 +2308,47 @@ class App(application: Application) : AndroidViewModel(application) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isCreateClasstest(isToken, jsonArray)
+    }
+
+    fun isgetExamreportdetails(
+        isToken: String, class_test_id: String, exam_date: String,academic_year_id: String,activity: Activity) {
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isgetExamreportdetails(isToken,class_test_id,exam_date,academic_year_id,activity)
+
+    }
+    fun isputExamDelete(
+        isToken: String, jsonObject: JsonObject,activity : Activity) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isputExamDelete(isToken,jsonObject,activity)
+
+    }
+
+    fun isputClassTestDelete(
+        isToken: String, jsonObject: JsonObject,activity : Activity) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isputClassTestDelete(isToken,jsonObject,activity)
+
+    }
+
+    fun isexamDetailsMark(
+        isToken: String, class_test_id: String,section_id : String,activity : Activity) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isexamDetailsMark(isToken,class_test_id,section_id,activity)
+
+    }
+
+
+    fun isexamdetailsmarkpost(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isexamdetailsmarkpost(isToken, jsonObject)
     }
 }
 

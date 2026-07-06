@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.ClassTestMark.Activity
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -38,10 +39,25 @@ class MarksReportActivity : BaseActivity<MarkReportBinding>() {
         getMarksReport()
 
         appViewModel?.isViewClassTestResponsel?.observe(this) { response ->
+
             if (response != null && response.status) {
+
                 if (response.data.isNotEmpty()) {
+                    binding.rvMarkSubjects.visibility = View.VISIBLE
+                    binding.lytList.visibility = View.GONE
+
                     displayMarksData(response.data[0])
+
+                } else {
+                    binding.rvMarkSubjects.visibility = View.GONE
+                    binding.lytList.visibility = View.VISIBLE
+                    binding.txtNoData.text = response.message
                 }
+
+            } else {
+                binding.rvMarkSubjects.visibility = View.GONE
+                binding.lytList.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message
             }
         }
         binding.isBack.setOnClickListener {

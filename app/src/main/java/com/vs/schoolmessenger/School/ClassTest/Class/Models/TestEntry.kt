@@ -6,5 +6,6 @@ data class TestEntry(
     var session: String = "FN",
     var maxMarks: String = "100",
     var minMarks: String = "35",
-    var syllabus: String = ""
+    var syllabus: String = "",
+    var classTestSubjectId: String? = null
 )
