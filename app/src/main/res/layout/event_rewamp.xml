@@ -46,6 +46,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/event_categories"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
 
@@ -70,6 +71,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/ongoing_events"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/eighteen_sp" />
 
 
@@ -104,6 +106,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/upcoming_events"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/eighteen_sp" />
 
                 <LinearLayout

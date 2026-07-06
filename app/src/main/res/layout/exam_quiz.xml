@@ -145,6 +145,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:textAlignment="viewStart"
                     android:id="@+id/edtTitle"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
@@ -209,6 +210,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:textAlignment="viewStart"
                     android:id="@+id/edtDescription"
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="match_parent"
@@ -279,6 +281,7 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:digits="0123456789"
                 android:hint="@string/no_of_question"
+                android:textAlignment="viewStart"
                 android:inputType="number"
                 android:maxLength="4">
 
@@ -374,6 +377,7 @@
                 android:layout_toEndOf="@id/imgSearch1"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
+                android:textAlignment="viewStart"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:scrollHorizontally="true"

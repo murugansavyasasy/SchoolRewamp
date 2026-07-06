@@ -537,6 +537,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginEnd="@dimen/ten"
+                                android:textAlignment="viewStart"
                                 android:textSize="@dimen/thirteen_sp">
 
                             </EditText>
@@ -579,6 +580,7 @@
                                 android:background="@drawable/bg_outline_black"
                                 android:gravity="start|top"
                                 android:hint="@string/Description"
+                                android:textAlignment="viewStart"
                                 android:inputType="textMultiLine|textCapSentences"
                                 android:minHeight="@dimen/two_hundred"
                                 android:padding="@dimen/ten"
@@ -876,6 +878,7 @@
                                     android:id="@+id/edtTitle"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:textAlignment="viewStart"
                                     android:textSize="@dimen/thirteen_sp"></EditText>
                             </RelativeLayout>
                         </RelativeLayout>

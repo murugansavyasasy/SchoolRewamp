@@ -110,6 +110,7 @@
                 android:background="@drawable/rect_radius_fill_stoke_15"
                 android:drawablePadding="@dimen/ten"
                 android:padding="@dimen/fifteen"
+                android:textAlignment="viewStart"
                 android:text="@string/map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually"
                 android:textStyle="bold"></TextView>
 

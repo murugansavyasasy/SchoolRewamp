@@ -33,6 +33,7 @@
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/NoticeBoard"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/twenty_sp"
         app:layout_constraintStart_toStartOf="parent"

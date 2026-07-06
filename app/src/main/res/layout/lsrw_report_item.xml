@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textAlignment="viewStart"
             android:text="Test For Notification"
             android:textColor="@android:color/black"
             android:textSize="@dimen/sixteen_sp" />
@@ -77,6 +78,7 @@
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/twenty"
         android:ellipsize="end"
+        android:textAlignment="viewStart"
         android:maxLines="4"
         android:text="Purpose of testing student's skill"
         android:textColor="@color/black"
@@ -94,6 +96,7 @@
         android:layout_marginEnd="@dimen/twenty"
         android:ellipsize="end"
         android:maxLines="3"
+        android:textAlignment="viewStart"
         android:text="Purpose of testing student's skill"
         android:textColor="#666666"
         android:textSize="@dimen/thirteen_sp" />

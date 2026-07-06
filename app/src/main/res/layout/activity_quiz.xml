@@ -28,6 +28,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="Question 1/10"
             android:textSize="@dimen/eighteen_sp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="@id/ivQuestionIcon"
             app:layout_constraintStart_toEndOf="@id/ivQuestionIcon"
             app:layout_constraintTop_toTopOf="@id/ivQuestionIcon" />

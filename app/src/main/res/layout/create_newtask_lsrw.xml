@@ -198,6 +198,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:hint="@string/enter_title"
+                    android:textAlignment="viewStart"
                     android:paddingHorizontal="@dimen/ten" />
 
             </LinearLayout>
@@ -257,6 +258,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:gravity="start"
+                    android:textAlignment="viewStart"
                     android:hint="@string/Enterdescription"
                     android:inputType="textMultiLine|textCapSentences"
                     android:padding="@dimen/ten"
@@ -310,6 +312,7 @@
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/field_background"
                 android:clickable="true"
+                android:textAlignment="viewStart"
                 android:drawableEnd="@drawable/calendar_icon"
                 android:drawablePadding="8dp"
                 android:focusable="false"

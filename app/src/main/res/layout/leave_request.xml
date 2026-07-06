@@ -39,6 +39,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:text=""
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty">
 

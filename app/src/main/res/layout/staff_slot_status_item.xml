@@ -39,6 +39,7 @@
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toEndOf="@+id/imgStatus"
                 android:text="Booked"
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -68,6 +69,7 @@
             android:layout_marginTop="@dimen/ten"
             android:drawableStart="@drawable/clock_icon_2"
             android:drawablePadding="@dimen/five"
+            android:textAlignment="viewStart"
             android:text="12:00 PM - 03:00 PM"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"

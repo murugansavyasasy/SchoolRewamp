@@ -123,6 +123,7 @@
                         android:layout_alignStart="@+id/lblEventTitle"
                         android:background="@android:color/transparent"
                         android:hint="@string/enter_title"
+                        android:textAlignment="viewStart"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingBottom="@dimen/ten" />
 
@@ -182,6 +183,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="top"
+                        android:textAlignment="viewStart"
                         android:hint="@string/Enterdescription"
                         android:inputType="textMultiLine|textCapSentences"
                         android:text="" />

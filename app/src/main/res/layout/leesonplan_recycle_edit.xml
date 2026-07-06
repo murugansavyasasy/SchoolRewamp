@@ -11,10 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:text="Month "
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp" />
 
     <EditText
+        android:textAlignment="viewStart"
         android:id="@+id/headerlabe1l"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"

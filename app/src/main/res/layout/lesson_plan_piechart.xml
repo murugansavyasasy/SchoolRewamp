@@ -70,6 +70,7 @@
 
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblSubject"
                         style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
@@ -81,6 +82,7 @@
 
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblStaffName"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
@@ -94,6 +96,7 @@
 
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblSection"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
@@ -107,6 +110,7 @@
 
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblStatus"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"

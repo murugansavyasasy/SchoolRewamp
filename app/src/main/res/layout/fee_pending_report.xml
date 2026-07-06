@@ -179,6 +179,7 @@
             android:layout_marginEnd="@dimen/fifteen">
 
             <TextView
+                android:textAlignment="viewStart"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
