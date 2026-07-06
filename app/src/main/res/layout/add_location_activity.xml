@@ -219,6 +219,7 @@
                             android:background="@drawable/outline_gray"
                             android:hint="@string/pin_your_location_name"
                             android:padding="@dimen/eight"
+                            android:textAlignment="viewStart"
                             android:textColorHint="@color/jumbo"
                             android:textSize="@dimen/fifteen_sp" />
 
@@ -338,6 +339,7 @@
                                 android:text="@string/your_address"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/fifteen_sp"
+                                android:textAlignment="viewStart"
                                 android:textStyle="bold"
                                 android:visibility="gone" />
 
@@ -349,6 +351,7 @@
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginTop="@dimen/ten"
                                 android:text=""
+                                android:textAlignment="viewStart"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="normal" />
@@ -361,6 +364,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/fifteen_sp"
                                 android:textStyle="bold"
+                                android:textAlignment="viewStart"
                                 android:visibility="gone" />
 
                             <TextView
@@ -370,6 +374,7 @@
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginTop="@dimen/ten"
                                 android:text=""
+                                android:textAlignment="viewStart"
                                 android:textColor="@color/jumbo"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:textStyle="normal"

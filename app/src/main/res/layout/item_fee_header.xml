@@ -21,6 +21,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textAlignment="viewStart"
                 android:id="@+id/total_label"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="@dimen/zero"

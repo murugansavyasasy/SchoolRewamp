@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:textAlignment="viewStart"
                 android:text="Madhuri Sharma  "
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />
@@ -62,6 +63,7 @@
                 android:layout_marginTop="@dimen/twenty"
                 android:ellipsize="end"
                 android:text=""
+                android:textAlignment="viewStart"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -72,6 +74,7 @@
                 android:layout_below="@+id/lblSchoolName"
                 android:layout_marginTop="@dimen/five"
                 android:text="Staff"
+                android:textAlignment="viewStart"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -176,6 +179,7 @@
             android:hint="@string/search_dot"
             android:imeOptions="actionDone"
             android:maxLines="1"
+            android:textAlignment="viewStart"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/black"

@@ -75,6 +75,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/field_background"
                     android:hint="@string/purpose_of_meeting"
                     android:padding="@dimen/ten"

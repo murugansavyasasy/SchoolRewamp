@@ -46,10 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Live Bus Tracking"
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp" />
 
             <TextView
+                android:textAlignment="viewStart"
                 android:id="@+id/lblSubHeaderTitle"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"

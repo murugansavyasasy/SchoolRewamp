@@ -249,6 +249,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:hint="@string/enter_title"
+                    android:textAlignment="viewStart"
                     android:paddingHorizontal="@dimen/ten">
 
 
@@ -315,6 +316,7 @@
                     android:background="@android:color/transparent"
                     android:ellipsize="none"
                     android:gravity="start|top"
+                    android:textAlignment="viewStart"
                     android:hint="@string/Enterdescription"
                     android:inputType="textMultiLine|textCapSentences"
                     android:overScrollMode="always"

@@ -47,6 +47,7 @@
                     android:paddingStart="5dp">
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/examTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -55,6 +56,7 @@
                         android:textSize="18sp" />
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

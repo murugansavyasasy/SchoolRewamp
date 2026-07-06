@@ -33,6 +33,7 @@
         android:layout_marginTop="@dimen/ten"
         android:paddingStart="@dimen/sixteen"
         android:text="@string/quiz_submission"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/twenty"
         app:layout_constraintStart_toStartOf="parent"

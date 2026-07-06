@@ -45,6 +45,7 @@
                     android:paddingBottom="@dimen/twenty">
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblTitle"
                         style="@style/CustomTextStylePoppinsMedium1"
                         android:layout_width="match_parent"
@@ -56,6 +57,7 @@
                         android:textSize="@dimen/fifteen_sp" />
 
                     <TextView
+                        android:textAlignment="viewStart"
                         android:id="@+id/lblContent"
                         style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
@@ -78,6 +80,7 @@
 
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/notification_date"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
@@ -90,6 +93,7 @@
                             android:textSize="@dimen/thirteen_sp" />
 
                         <TextView
+                            android:textAlignment="viewEnd"
                             android:id="@+id/lblSendBy"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"

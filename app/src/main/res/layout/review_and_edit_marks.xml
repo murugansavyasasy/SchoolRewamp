@@ -85,6 +85,7 @@
                 android:text="@string/review_and_edit_marks"
                 android:textColor="@color/dark_orange_2"
                 android:textSize="@dimen/twenty_sp"
+                android:textAlignment="viewStart"
                 android:textStyle="bold"></TextView>
 
             <ImageView
@@ -106,6 +107,7 @@
                 android:layout_below="@+id/lblReviewDetail"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
+                android:textAlignment="viewStart"
                 android:text="@string/verify_the_data_and_make_any_necessary_corrections"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
@@ -135,6 +137,7 @@
                 android:layout_below="@+id/lblIssueFound"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
+                android:textAlignment="viewStart"
                 android:text="@string/ai_can_make_mistakes_please_check_properly_before_submitting"
                 android:textColor="@color/light_gray_4"
                 android:textSize="@dimen/thirteen_sp">

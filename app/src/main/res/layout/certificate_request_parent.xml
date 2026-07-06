@@ -70,6 +70,7 @@
                     android:layout_toEndOf="@+id/imgSearch1"
                     android:background="@android:color/transparent"
                     android:hint="@string/lblSearch"
+                    android:textAlignment="viewStart"
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:scrollHorizontally="true"
@@ -85,6 +86,7 @@
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/request_for_certificate"
                 android:textSize="@dimen/twenty"
+                android:textAlignment="viewStart"
                 app:layout_constraintStart_toStartOf="@+id/rytRequestTap"
                 app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
                 tools:ignore="NotSibling" />
@@ -221,6 +223,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/text_bg"
                     android:hint="@string/enter_your_reason_here"
                     android:inputType="textMultiLine"

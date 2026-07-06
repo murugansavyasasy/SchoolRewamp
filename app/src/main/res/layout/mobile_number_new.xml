@@ -165,6 +165,7 @@
                             android:background="@drawable/edittext_background_selector"
                             android:hint="@string/_00000_00000"
                             android:inputType="number"
+                            android:textAlignment="viewStart"
                             android:maxLength="10"
                             android:paddingHorizontal="@dimen/ten"
                             android:textColorHint="@color/light_gray_"

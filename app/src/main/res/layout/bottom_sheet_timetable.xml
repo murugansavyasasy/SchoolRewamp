@@ -17,6 +17,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
+            android:textAlignment="viewStart"
             android:padding="@dimen/sixteen_sp"
             android:text="@string/monday"
             android:textSize="@dimen/eighteen_sp" />

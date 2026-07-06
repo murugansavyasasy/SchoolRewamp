@@ -68,6 +68,7 @@
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
             android:minLines="1"
+            android:textAlignment="viewStart"
             android:overScrollMode="ifContentScrolls"
             android:paddingHorizontal="12dp"
             android:scrollbars="vertical"

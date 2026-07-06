@@ -83,6 +83,7 @@
                 android:layout_marginEnd="@dimen/five">
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblSelectClass"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
@@ -93,6 +94,7 @@
                     android:textSize="@dimen/twenty_sp"></TextView>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblClassDetail"
                     style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="match_parent"

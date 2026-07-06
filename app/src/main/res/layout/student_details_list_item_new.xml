@@ -71,6 +71,7 @@
 
                         <TextView
                             android:id="@+id/lblSchoolName"
+                            android:textAlignment="viewStart"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -88,6 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lblSchoolName"
                             android:layout_marginEnd="@dimen/five"
+                            android:textAlignment="viewStart"
                             android:text="iascisacscanniascnioscnia sdhjshdsdjhsdhjsdhsdjhsdhj"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"
@@ -104,6 +106,7 @@
                             android:layout_below="@+id/lblSchoolRegionalName"
                             android:layout_marginEnd="@dimen/five"
                             android:text="xxxxxxxx"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -114,6 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
                             android:text="Chandru "
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -125,6 +129,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/ten"
                             android:text="IX - A2/EM"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp">
 
@@ -138,6 +143,7 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_weight="0.9"
                             android:text="Roll No : SS-16"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -150,6 +156,7 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:layout_marginBottom="@dimen/ten"
                             android:text="Academic year : 2025 - 2026"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"
                             android:visibility="visible">
@@ -167,6 +174,7 @@
                             android:layout_marginBottom="@dimen/ten"
                             android:gravity="center"
                             android:text="Sathish"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp"
                             android:visibility="gone">

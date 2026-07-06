@@ -120,9 +120,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Wednesday"
+                            android:textAlignment="viewStart"
                             android:textSize="@dimen/fifteen"></TextView>
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/lblMonthYear"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="match_parent"
@@ -147,6 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:textAlignment="viewStart"
                         android:text="@string/this_week_status"></TextView>
 
                     <ImageView

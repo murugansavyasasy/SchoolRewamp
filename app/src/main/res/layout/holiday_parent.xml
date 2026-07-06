@@ -48,6 +48,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/HoliDay"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/twenty">
 
                 </TextView>

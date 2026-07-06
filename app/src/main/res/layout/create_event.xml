@@ -127,6 +127,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:hint="@string/enter_venue"
+                        android:textAlignment="viewStart"
                         android:paddingHorizontal="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp" />
 
@@ -171,6 +172,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:hint="@string/enter_title"
+                        android:textAlignment="viewStart"
                         android:paddingHorizontal="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp" />
 
@@ -229,6 +231,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:gravity="start"
+                        android:textAlignment="viewStart"
                         android:hint="@string/Enterdescription"
                         android:inputType="textMultiLine|textCapSentences"
                         android:padding="@dimen/ten">

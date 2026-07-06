@@ -43,10 +43,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lakshmanan"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/sixteen_sp" />
 
             <TextView
                 android:id="@+id/tvClass"
+                android:textAlignment="viewStart"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

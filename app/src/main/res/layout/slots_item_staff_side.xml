@@ -61,6 +61,7 @@
             android:layout_below="@+id/lblDate"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
+            android:textAlignment="viewStart"
             android:maxLines="1"
             android:text="Exam Meeting"
             android:textColor="@color/black"
@@ -74,6 +75,7 @@
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
+            android:textAlignment="viewStart"
             android:text="Mode - Online"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen"></TextView>

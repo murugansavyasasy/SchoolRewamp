@@ -55,6 +55,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Savyasasy software solution pvt ltd.," />
 
@@ -66,6 +67,7 @@
                 android:layout_below="@+id/lblSchoolName"
                 android:layout_marginEnd="@dimen/ten"
                 android:text=""
+                android:textAlignment="viewStart"
                 android:visibility="gone">
 
             </TextView>
@@ -77,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSchoolRegionalName"
                 android:layout_marginTop="@dimen/five"
+                android:textAlignment="viewStart"
                 android:text="Chennai, Nungambakkam"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp" />
