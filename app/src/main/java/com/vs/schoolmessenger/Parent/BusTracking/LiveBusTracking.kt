@@ -982,8 +982,19 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
     }
 
     private fun isLiveBus() {
+        Log.d("LiveBus", "isLiveBus() called")
+        Log.d("LiveBus", "AccessToken: $isAccessToken")
+        Log.d("LiveBus", "JourneyStatus: ${journeyStatus.toString()}")
+
         Constant.showLoading(this)
-        appViewModel?.isLiveBus(isAccessToken!!, this)
+
+        appViewModel?.isLiveBus(
+            isAccessToken!!,
+            journeyStatus.toString(),
+            this
+        )
+
+        Log.d("LiveBus", "isLiveBus API request initiated")
     }
 
     override fun onClick(v: View?) {

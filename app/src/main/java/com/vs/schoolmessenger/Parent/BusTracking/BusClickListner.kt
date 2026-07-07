@@ -5,6 +5,6 @@ import com.vs.schoolmessenger.Parent.BusTracking.Model.BusList.BusListData
 
 interface BusClickListner {
 
-    fun OnBusClick(data: BusListData)
+    fun OnBusClick(data: BusListData, status: String)
     fun onCustomClick(data: BusListData,status : String)
 }

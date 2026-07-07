@@ -60,6 +60,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = "Exams"
+        binding.toolbarLayout.lblExamCount.visibility = View.VISIBLE
         setupRecyclerView()
         setupViewModel()
         setupDateFilter()
@@ -72,6 +73,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
                     showMessageDialog(response.message ?: "Deleted successfully") {
                         if (index != -1) {
                             adapter.removeAt(index)
+                            updateExamCountBadge(examListData.size)
                         }
                     }
                 } else {
@@ -85,6 +87,12 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         }
 
     }
+
+    private fun updateExamCountBadge(count: Int) {
+        binding.toolbarLayout.lblExamCount.text =
+            "$count ${if (count == 1) "EXAM" else "EXAMS"}"
+    }
+
 
     private fun setupRecyclerView() {
         adapter = ExamReportAdapter(
@@ -236,6 +244,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         binding.rcyexamlist.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
         adapter.updateList(data)
+        updateExamCountBadge(data.size)
     }
 
     private fun showError(message: String) {
@@ -245,5 +254,6 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         binding.txtNoData.visibility = View.VISIBLE
         binding.txtNoData.text = message
         adapter.updateList(emptyList())
+        updateExamCountBadge(0)
     }
 }

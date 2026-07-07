@@ -11,7 +11,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
@@ -23,7 +22,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.Interface.OnMarksChangedListener
-
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkColumn
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.StudentMarkList
 import com.vs.schoolmessenger.Utils.Constant
@@ -35,6 +33,7 @@ class ClassUploadMarksAdapter(
     private val reviewFlagMap: Map<String, String>,
     private val context: Context,
     private val listener: OnMarksChangedListener,
+    private val onMarkFieldFocused: (EditText?) -> Unit
 ) : RecyclerView.Adapter<ClassUploadMarksAdapter.MarksViewHolder>() {
 
     private val SUBJECT_CELL_WIDTH = 200
@@ -139,6 +138,11 @@ class ClassUploadMarksAdapter(
                 } else {
                     setText("")
                 }
+            }
+
+
+            et.setOnFocusChangeListener { _, hasFocus ->
+                onMarkFieldFocused(if (hasFocus) et else null)
             }
 
             val icon = ImageView(context).apply {

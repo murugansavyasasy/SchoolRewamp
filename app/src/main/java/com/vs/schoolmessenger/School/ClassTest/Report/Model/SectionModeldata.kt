@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 data class SectionModeldata(
 
+        @SerializedName("class_name")
+        val className: String,
+
+
         @SerializedName("section_id")
         val sectionId: String,
 

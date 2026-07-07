@@ -13,10 +13,13 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -24,6 +27,9 @@ import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -49,6 +55,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.HorizontalScrollSync
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ClassUploadReviewBinding
+import java.lang.ref.WeakReference
 
 class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickListener,
     OnMarksChangedListener {
@@ -82,6 +89,12 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
     private var classTestId: String = ""
     private var sectionId: String = ""
 
+    private var activeMarkEditText: WeakReference<EditText>? = null
+    private lateinit var markSuggestionBar: LinearLayout
+
+    private val Int.dp: Int
+        get() = (this * resources.displayMetrics.density).toInt()
+
     override fun setupViews() {
         super.setupViews()
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -106,6 +119,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
 
         binding.lblDisclaimerForAI.visibility = View.GONE
 
+        setupMarkSuggestionBar()
+
         fetchExamDetailsMark()
 
         appViewModel!!.isexamDetailsMark?.observe(this) { response ->
@@ -126,7 +141,9 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
                 originalStudentsList = currentStudentsList.toMutableList()
                 binding.rvMarks.adapter = ClassUploadMarksAdapter(
                     currentStudentsList, markColumns, reviewFlagMap, this, this
-                )
+                ) { focusedEditText ->
+                    onMarkFieldFocusChanged(focusedEditText)
+                }
                 (binding.rvMarks.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
             } else {
                 binding.rvMarks.adapter?.notifyDataSetChanged()
@@ -174,6 +191,70 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         }
         setupSearch()
     }
+
+    private fun setupMarkSuggestionBar() {
+        val btnAB = TextView(this).apply {
+            text = "AB"
+            setTextColor(ContextCompat.getColor(this@ClassUploadMarks, R.color.PrimaryColor))
+            textSize = 15f
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            setPadding(32.dp, 12.dp, 32.dp, 12.dp)
+            background = ContextCompat.getDrawable(
+                this@ClassUploadMarks, R.drawable.bg_ab_suggestion_chip
+            )
+            setOnClickListener {
+                activeMarkEditText?.get()?.let { et ->
+                    et.setText("AB")
+                    et.setSelection(et.text.length)
+                }
+            }
+        }
+
+        markSuggestionBar = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setBackgroundColor(Color.TRANSPARENT)
+            setPadding(16.dp, 8.dp, 16.dp, 8.dp)
+            visibility = View.GONE
+            addView(btnAB)
+        }
+
+        val rootContent = findViewById<FrameLayout>(android.R.id.content)
+        val barParams = FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+            gravity = Gravity.BOTTOM or Gravity.START
+            leftMargin = 16.dp
+            bottomMargin = 4.dp
+        }
+        rootContent.addView(markSuggestionBar, barParams)
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootContent) { _, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+
+            if (imeVisible && activeMarkEditText?.get() != null) {
+                markSuggestionBar.visibility = View.VISIBLE
+                markSuggestionBar.translationY = -imeInsets.bottom.toFloat()
+            } else {
+                markSuggestionBar.visibility = View.GONE
+            }
+            insets
+        }
+    }
+
+    private fun onMarkFieldFocusChanged(focusedEditText: EditText?) {
+        activeMarkEditText = if (focusedEditText != null) WeakReference(focusedEditText) else null
+
+        val insets = ViewCompat.getRootWindowInsets(binding.rvMarks)
+        val imeVisible = insets?.isVisible(WindowInsetsCompat.Type.ime()) == true
+
+        if (imeVisible && focusedEditText != null) {
+            markSuggestionBar.visibility = View.VISIBLE
+            val imeBottom = insets?.getInsets(WindowInsetsCompat.Type.ime())?.bottom ?: 0
+            markSuggestionBar.translationY = -imeBottom.toFloat()
+        } else {
+            markSuggestionBar.visibility = View.GONE
+        }
+    }
+
 
     private fun fetchExamDetailsMark() {
         Constant.showLoading(this)
@@ -236,7 +317,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
     private fun normalize(value: String?): String {
         return value?.trim()?.lowercase()?.replace("[^a-z0-9]".toRegex(), "") ?: ""
     }
-
 
     private fun flattenSubjectsAndActivities(
         response: ClassEntryMarkResponse
@@ -475,7 +555,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             0
         })
 
-        Log.d(TAG_SORT, "----- SORT RESULT ORDER -----")
         list.forEachIndexed { index, s ->
             Log.d(TAG_SORT, "$index -> ${s.name} | gender=${s.gender}")
         }
@@ -484,7 +563,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         currentStudentsList.addAll(list)
         binding.rvMarks.adapter?.notifyDataSetChanged()
 
-        Log.d(TAG_SORT, "----- APPLY SORT END -----")
     }
 
     private fun genderWeight(gender: String?, asc: Boolean): Int {

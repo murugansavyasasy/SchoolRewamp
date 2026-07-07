@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_table_row"
     android:orientation="horizontal"
     android:paddingStart="12dp"
@@ -18,12 +19,20 @@
         android:button="@null"
         android:background="@drawable/selector_checkbox_subject" />
 
-    <ImageView
-        android:id="@+id/ivBookIcon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/book_icon_2" />
+    <FrameLayout
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_book_icon">
+
+        <ImageView
+            android:id="@+id/ivBookIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/book__2_"
+            android:tint="@color/PrimaryColor"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvSubjectName"

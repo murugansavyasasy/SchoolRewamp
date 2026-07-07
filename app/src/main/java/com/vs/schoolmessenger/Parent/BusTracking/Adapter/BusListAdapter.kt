@@ -81,8 +81,11 @@ class BusListAdapter(
             itemView.findViewById(R.id.dropDaysContainer)
         private val lnrDropDays: LinearLayout = itemView.findViewById(R.id.lnrDropDays)
         private val lnrPickupDropBus: LinearLayout = itemView.findViewById(R.id.lnrPickupDropBus)
+        private val lnrCustomPickupDropBus: LinearLayout = itemView.findViewById(R.id.lnrCustomPickupDropBus)
         private val btnPickupBus: TextView = itemView.findViewById(R.id.btnPickupBus)
         private val btnDropBus: TextView = itemView.findViewById(R.id.btnDropBus)
+        private val btnCustomPickupBus: TextView = itemView.findViewById(R.id.btnCustomPickupBus)
+        private val btnCustomDropBus: TextView = itemView.findViewById(R.id.btnCustomDropBus)
 
 
         fun bind(data: BusListData, position: Int) {
@@ -93,7 +96,16 @@ class BusListAdapter(
             lblPickUpTime.text = data.tentative_pickup_time ?: ""
             lblDropTime.text = data.tentative_drop_time ?: ""
 
-            lnrTrackLive.setOnClickListener { listener.OnBusClick(data) }
+//            lnrTrackLive.setOnClickListener { listener.OnBusClick(data) }
+
+
+            btnCustomPickupBus.setOnClickListener {
+                listener.OnBusClick(data,"PICKING")
+            }
+
+            btnCustomDropBus.setOnClickListener {
+                listener.OnBusClick(data,"DROPPING")
+            }
 
             btnPickupBus.setOnClickListener {
                 listener.onCustomClick(data,"PICKING")
@@ -104,11 +116,13 @@ class BusListAdapter(
 
             if (isVendor.equals("school_chimes", true)) {
                 lnrTrackLive.visibility= View.GONE
+                lnrCustomPickupDropBus.visibility= View.GONE
                 lnrPickupDropBus.visibility = View.VISIBLE
                 dropuproutelabel.visibility = View.VISIBLE
                 pickuproutelabel.visibility = View.VISIBLE
             } else {
-                lnrTrackLive.visibility= View.VISIBLE
+                lnrTrackLive.visibility= View.GONE
+                lnrCustomPickupDropBus.visibility = View.VISIBLE
                 lnrPickupDropBus.visibility = View.GONE
                 dropuproutelabel.visibility = View.GONE
                 pickuproutelabel.visibility = View.GONE

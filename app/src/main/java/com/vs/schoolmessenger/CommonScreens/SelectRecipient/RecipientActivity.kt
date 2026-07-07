@@ -10,9 +10,12 @@ import android.net.Uri
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -73,6 +76,9 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
+import kotlin.collections.filter
+import kotlin.collections.isNotEmpty
+import kotlin.collections.orEmpty
 
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
@@ -129,6 +135,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private lateinit var pendingBody: QuizRequestBody
     private var currentVideoPath: String? = null
     private var totalFilesToUpload = 0
+    private var isStaffSearchTab = false
 
 
     override fun setupViews() {
@@ -168,6 +175,39 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         isGetAcademicYear()
 
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            if (binding.rytSearch1.visibility == View.VISIBLE) {
+                binding.rytSearch1.visibility = View.GONE
+                binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+
+            } else {
+                binding.rytSearch1.visibility = View.VISIBLE
+                binding.txtSearch1.text.clear()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearch1.windowToken, 0)
+
+            }
+        }
+
+        binding.txtSearch1.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+                Log.d("Search", s.toString())
+
+
+            }
+        })
+
+
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             response?.data?.let { academicList ->
@@ -203,6 +243,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 isGetGroupListData = response.data
                 if (isGetGroupListData!!.isNotEmpty()) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.txtNoData.visibility = View.GONE
                     binding.chAllSelect.visibility = View.VISIBLE
@@ -211,6 +252,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.bottomLayout.visibility = View.VISIBLE
                     binding.lblCreatedOn.visibility = View.VISIBLE
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
@@ -311,6 +353,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isGetStaffListData = response.data
 
                 if (isGetStaffListData!!.isNotEmpty()) {
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.VISIBLE
                     binding.txtNoData.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.VISIBLE
@@ -318,6 +361,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.bottomLayout.visibility = View.VISIBLE
                     binding.nomessage.visibility = View.GONE
                 } else {
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
@@ -604,6 +648,86 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
     }
+
+    private fun filter(text: String) {
+
+        val currentList = if (isStaffSearchTab) {
+            isGetStaffListData.orEmpty()
+        } else {
+            isGetGroupListData.orEmpty()
+        }
+
+        val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            currentList
+        } else {
+            currentList.filter { item ->
+
+                val fieldsToSearch = listOf(
+                    item.name?.lowercase().orEmpty(),
+                    item.roll_no?.lowercase().orEmpty(),
+                    item.admission_no?.lowercase().orEmpty(),
+                    item.designation?.lowercase().orEmpty(),
+                    item.created_on?.lowercase().orEmpty()
+                )
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field ->
+                        field.contains(word)
+                    }
+                }
+            }
+        }
+
+        if (filteredList.isNotEmpty()) {
+
+            isGroupStaffAdapter?.updateData(filteredList)
+            if (isStaffSearchTab) {
+//                Staff Seacrh
+                binding.txtNoData.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.chAllSelect.visibility = View.VISIBLE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+            } else {
+                // Group Search
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.visibility = View.VISIBLE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.lblCreatedOn.visibility = View.VISIBLE
+            }
+
+        }
+        else {
+
+            if (isStaffSearchTab) {
+                binding.recyclerView.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.chAllSelect.visibility = View.GONE
+                binding.grouplabel.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.txtNoData.text = getString(R.string.no_data_found)
+                binding.nomessage.visibility = View.VISIBLE
+            } else {
+                // Group Search Empty
+                binding.recyclerView.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.chAllSelect.visibility = View.GONE
+                binding.grouplabel.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.txtNoData.text = getString(R.string.no_data_found)
+            }
+        }
+    }
+
+
 
 
     private fun tapVisibility() {
@@ -1066,30 +1190,45 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             R.id.tapEntireSchool -> {
                 if (isClickedTab != Constant.isSchool) {
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.txtSearch1.text.clear()
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
                     changeTapBg(Constant.isSchool)
                 }
             }
 
             R.id.tapStandards -> {
                 if (isClickedTab != Constant.isStandard) {
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.txtSearch1.text.clear()
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
                     changeTapBg(Constant.isStandard)
                 }
             }
 
             R.id.tabSectionsStudent -> {
                 if (isClickedTab != Constant.isSection) {
+                    binding.rytSearch1.visibility = View.GONE
+                    binding.txtSearch1.text.clear()
+                    binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
                     changeTapBg(Constant.isSection)
                 }
             }
 
             R.id.tabGroups -> {
                 if (isClickedTab != Constant.isGroup) {
+                    isStaffSearchTab = false
+                    binding.txtSearch1.text.clear()
+                    binding.rytSearch1.visibility = View.GONE
                     changeTapBg(Constant.isGroup)
                 }
             }
 
             R.id.tapStaffs -> {
                 if (isClickedTab != Constant.isStaff) {
+                    isStaffSearchTab = true
+                    binding.txtSearch1.text.clear()
+                    binding.rytSearch1.visibility = View.GONE
                     changeTapBg(Constant.isStaff)
                 }
             }
@@ -2288,3 +2427,4 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
     }
 }
+

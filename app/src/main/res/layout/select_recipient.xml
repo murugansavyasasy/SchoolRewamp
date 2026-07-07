@@ -182,12 +182,49 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/rytSearch1"
+            android:layout_below="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/white_bg_card"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch1"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/imgSearch1"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:textAlignment="viewStart"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+
+
         <TextView
             android:id="@+id/grouplabel"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tabLayout"
+            android:layout_below="@+id/rytSearch1"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/fifteen"
             android:text="@string/Group"></TextView>
@@ -248,7 +285,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tabLayout"
+            android:layout_below="@+id/rytSearch1"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/twenty"

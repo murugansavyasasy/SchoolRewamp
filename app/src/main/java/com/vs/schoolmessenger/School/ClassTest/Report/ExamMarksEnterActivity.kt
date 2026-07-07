@@ -239,6 +239,8 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
     }
 
     private fun buildAdapter(items: List<ClassTestItem>) {
+        items.firstOrNull()?.isExpanded = true
+
         adapter = ExamMarksEnterAdapter(items.toMutableList()) { item, test, testIndex, itemPos ->
             onDeleteTestClicked(item, test, testIndex, itemPos)
         }

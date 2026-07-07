@@ -1936,9 +1936,9 @@ class ParentServices {
         get() = isGetBusList
 
     fun isLiveBus(
-        isToken: String, activity: Activity
+        isToken: String,journey_type: String, activity: Activity
     ) {
-        RestClient.apiInterfaces.isLiveBus(isToken)
+        RestClient.apiInterfaces.isLiveBus(isToken,journey_type)
             ?.enqueue(object : Callback<getLiveBus?> {
                 override fun onResponse(
                     call: Call<getLiveBus?>,

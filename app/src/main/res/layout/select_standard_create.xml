@@ -124,11 +124,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/twenty"
-                android:text="View Reports >>"
+                android:text="View Reports >"
                 android:layout_marginTop="@dimen/one"
                 android:textColor="@color/white"
                 android:gravity="end"
-                android:textSize="@dimen/twele_sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
 
         </LinearLayout>

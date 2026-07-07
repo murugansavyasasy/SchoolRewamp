@@ -91,6 +91,17 @@
                 android:drawableStart="@drawable/ic_book_small"
                 android:drawableTint="#888888"
                 android:drawablePadding="4dp" />
+
+            <TextView
+                android:id="@+id/tvminmarkdetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:drawableTint="#888888"
+                android:drawablePadding="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,11 +121,10 @@
                 android:textStyle="bold" />
 
             <View
+                android:id="@+id/viewMarkUnderline"
                 android:layout_width="40dp"
                 android:background="@color/primary"
-                android:layout_height="2dp">
-
-            </View>
+                android:layout_height="2dp" />
 
             <TextView
                 android:id="@+id/tvMaxMark"
@@ -126,11 +136,11 @@
                 android:textSize="13sp" />
 
             <ImageView
+                android:id="@+id/imgStatusIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="@dimen/ten"
                 android:src="@drawable/ic_check_circle"
-                app:tint="#4CAF50"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
     </LinearLayout>

@@ -52,15 +52,35 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:text="Create Class Test"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            style="@style/CustomTextStylePoppinsBold" />
+            android:id="@+id/linear_layoutcreate"
+            android:orientation="horizontal">
 
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/eight"
+                android:text="Create Class Test"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twenty_four_sp" />
+
+            <TextView
+                android:id="@+id/viewreporttext"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Reports >"
+                android:layout_marginTop="@dimen/one"
+                android:textColor="@color/white"
+                android:gravity="end"
+                android:textSize="@dimen/fourteen_sp" />
+
+
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -48,11 +48,24 @@
             tools:text="Unit Test 1" />
 
         <TextView
-            android:id="@+id/txtSentBy"
+            android:id="@+id/txtsection"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtExamName"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@id/imgExamIcon"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twele_sp"
+            tools:text="" />
+
+
+        <TextView
+            android:id="@+id/txtSentBy"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtsection"
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@id/imgExamIcon"
             android:textColor="@color/grey"
@@ -63,7 +76,7 @@
             android:id="@+id/flexSections"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imgExamIcon"
+            android:layout_below="@id/txtSentBy"
             android:layout_marginTop="@dimen/eight"
             app:flexWrap="wrap" />
 

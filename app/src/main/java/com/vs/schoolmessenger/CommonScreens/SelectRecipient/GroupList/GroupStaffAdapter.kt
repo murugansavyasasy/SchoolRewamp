@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.QuizExam.Model.QuizReport.GetQuizExamReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -47,6 +48,10 @@ class GroupStaffAdapter(
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
+    }
+    fun updateData(newList: List<NameAndIds>) {
+        itemList = newList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -114,3 +119,5 @@ class GroupStaffAdapter(
 
 
 }
+
+

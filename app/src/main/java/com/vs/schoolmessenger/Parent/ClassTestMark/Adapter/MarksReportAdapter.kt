@@ -3,8 +3,10 @@ package com.vs.schoolmessenger.Parent.ClassTestMark.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.MarkSubjectData
 import com.vs.schoolmessenger.R
@@ -37,8 +39,9 @@ class MarksReportAdapter(
             var subjectTotalScored = 0
             var subjectTotalMax = 0
             subject.activities.forEach { activity ->
-                subjectTotalScored += activity.mark.toDouble().toInt()
-                subjectTotalMax += activity.maxMark.toDouble().toInt()
+                val isAbsent = activity.attendance.equals("AB", ignoreCase = true)
+                subjectTotalScored += if (isAbsent) 0 else (activity.mark.toDoubleOrNull()?.toInt() ?: 0)
+                subjectTotalMax += activity.maxMark.toDoubleOrNull()?.toInt() ?: 0
             }
 
             val percentage = if (subjectTotalMax > 0) {
@@ -50,6 +53,11 @@ class MarksReportAdapter(
             subject.activities.forEachIndexed { index, activity ->
                 val activityView = LayoutInflater.from(itemView.context)
                     .inflate(R.layout.item_mark_activity, activitiesContainer, false)
+
+                val ctx = itemView.context
+                val green = ContextCompat.getColor(ctx, R.color.green_pass)
+                val red = ContextCompat.getColor(ctx, R.color.red_fail)
+                val darkText = ContextCompat.getColor(ctx, android.R.color.black)
 
                 activityView.findViewById<TextView>(R.id.tvSerialNo).apply {
                     text = "${index + 1}"
@@ -76,14 +84,42 @@ class MarksReportAdapter(
                     textSize = 11f
                 }
 
-                activityView.findViewById<TextView>(R.id.tvMark).apply {
-                    text = activity.mark
-                    textSize = 14f
+                activityView.findViewById<TextView>(R.id.tvminmarkdetails).apply {
+                    text = "Min mark - " +activity.minMark
+                    textSize = 11f
                 }
 
-                activityView.findViewById<TextView>(R.id.tvMaxMark).apply {
-                    text = "${activity.maxMark.toDouble().toInt()}"
-                    textSize = 12f
+                val tvMark = activityView.findViewById<TextView>(R.id.tvMark)
+                val tvMaxMark = activityView.findViewById<TextView>(R.id.tvMaxMark)
+                val viewUnderline = activityView.findViewById<View>(R.id.viewMarkUnderline)
+                val imgStatusIcon = activityView.findViewById<ImageView>(R.id.imgStatusIcon)
+
+                tvMaxMark.text = "${activity.maxMark.toDoubleOrNull()?.toInt() ?: 0}"
+
+                val isAbsent = activity.attendance.equals("AB", ignoreCase = true)
+                val markValue = activity.mark.toDoubleOrNull() ?: 0.0
+                val minMarkValue = activity.minMark.toDoubleOrNull() ?: 0.0
+                val isFail = !isAbsent && markValue < minMarkValue
+
+                when {
+                    isAbsent -> {
+                        tvMark.text = "AB"
+                        tvMark.setTextColor(red)
+                        viewUnderline.setBackgroundColor(red)
+                        imgStatusIcon.setImageResource(R.drawable.ic_cross_circle)
+                    }
+                    isFail -> {
+                        tvMark.text = activity.mark
+                        tvMark.setTextColor(red)
+                        viewUnderline.setBackgroundColor(red)
+                        imgStatusIcon.setImageResource(R.drawable.ic_cross_circle)
+                    }
+                    else -> {
+                        tvMark.text = activity.mark
+                        tvMark.setTextColor(darkText)
+                        viewUnderline.setBackgroundColor(green)
+                        imgStatusIcon.setImageResource(R.drawable.ic_check_circle)
+                    }
                 }
 
                 activitiesContainer.addView(activityView)

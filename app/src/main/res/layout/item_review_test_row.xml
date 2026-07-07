@@ -51,7 +51,7 @@
             android:id="@+id/imgReviewDelete"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/delete_bin_12" />
+            android:src="@drawable/delete_bin" />
 
         <TextView
             android:id="@+id/txtReviewRemove"

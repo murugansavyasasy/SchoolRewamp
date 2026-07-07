@@ -2258,11 +2258,11 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isLiveBus(
-        isToken: String, activity: Activity
+        isToken: String,journey_type: String, activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiParentRepositories.isLiveBus(isToken,activity)
+        apiParentRepositories.isLiveBus(isToken,journey_type,activity)
     }
 
     fun isgetgeolocation(

@@ -15,8 +15,8 @@ data class StudentMarkEntryUploadData (
     @SerializedName("student_name")
     val studentName: String,
 
-    @SerializedName("attendance")
-    val attendance: String,
+//    @SerializedName("attendance")
+//    val attendance: String,
 
     @SerializedName("mark")
     val mark: String,

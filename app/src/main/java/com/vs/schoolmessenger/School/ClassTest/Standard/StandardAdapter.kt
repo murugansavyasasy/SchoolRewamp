@@ -102,6 +102,7 @@ class StandardAdapter(
                 lblStandardName.setTextColor(white)
                 lblSectionCount.setTextColor(white)
                 imgCheckMark.visibility = View.VISIBLE
+                imgCheckMark.setColorFilter(primaryColor)
             } else {
                 cardStandard.setCardBackgroundColor(white)
                 lblStandardName.setTextColor(black)

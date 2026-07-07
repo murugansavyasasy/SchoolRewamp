@@ -1521,6 +1521,7 @@ interface ApiInterfaces {
 
     fun isLiveBus(
         @Header(APIKeyNames.Authorization) token: String,
+        @Query("journey_type") journey_type : String
     ): Call<getLiveBus?>
 
 

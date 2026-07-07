@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.ClassTest.Review
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.util.Log
@@ -20,6 +21,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Standard.StandardActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
@@ -205,6 +207,28 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
             return
         }
 
+        val totalTests = items.sumOf { it.tests.size }
+        showSubmitConfirmationDialog(totalTests) {
+            performSubmit(items, examName)
+        }
+    }
+
+    private fun showSubmitConfirmationDialog(totalTests: Int, onConfirm: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle("Create Activities?")
+            .setMessage("You're about to create $totalTests ${if (totalTests == 1) "activity" else "activity"}. This action cannot be undone. Do you want to continue?")
+            .setPositiveButton("Confirm") { dialog, _ ->
+                dialog.dismiss()
+                onConfirm()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .show()
+    }
+
+    private fun performSubmit(items: List<ClassTestItem>, examName: String?) {
         val jsonArray = JsonArray()
         items.forEach { subject ->
             subject.tests.forEach { test ->

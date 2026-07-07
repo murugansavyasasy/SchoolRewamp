@@ -6,13 +6,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass.SubjectActivity
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ActivitySectionBinding
 
-class SectionActivity : BaseActivity<ActivitySectionBinding>() {
+class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickListener  {
 
     private lateinit var sectionAdapter: SectionAdapter
 
@@ -41,6 +42,8 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>() {
             onBackPressedDispatcher.onBackPressed()
         }
 
+
+        binding.viewreporttext.setOnClickListener(this)
         binding.lblStepInfo.text = "Step 2 of 5"
         binding.lblSubtitle.text =
             "Standard ${Constant.isSelectedStandardName} — select one or more"
@@ -66,18 +69,18 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>() {
 
         binding.rcSectionList.layoutManager = LinearLayoutManager(this)
         binding.rcSectionList.adapter = sectionAdapter
+
+        updateSelectionBadge(0)
     }
 
     private fun updateSelectionBadge(count: Int) {
-        if (count == 0) {
-            binding.lblSelectionCount.visibility = View.GONE
-        } else {
-            binding.lblSelectionCount.text =
-                "$count section${if (count > 1) "s" else ""} selected"
-            binding.lblSelectionCount.visibility = View.VISIBLE
+        binding.lblSelectionCount.visibility = View.VISIBLE
+        binding.lblSelectionCount.text = when (count) {
+            0 -> "0 sections selected"
+            1 -> "1 section selected"
+            else -> "$count sections selected"
         }
     }
-
     private fun setupButtons() {
         binding.btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -97,6 +100,18 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>() {
             val intent = Intent(this, SubjectActivity::class.java)
             intent.putExtra("SECTION_IDS",sectionIds)
             startActivity(intent)
+        }
+    }
+
+
+    private fun RedirectToReport() {
+        val intent = Intent(this, ExamReportActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.viewreporttext-> RedirectToReport()
         }
     }
 }

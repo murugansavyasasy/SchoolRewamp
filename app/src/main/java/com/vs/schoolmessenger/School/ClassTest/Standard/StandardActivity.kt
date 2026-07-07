@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.NewAcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
@@ -34,6 +35,15 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
 
     private var isClassList: List<StandardSection> = emptyList()
 
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var instituteId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+
+    private var userDetails: UserDetails? = null
+
     override fun getViewBinding(): SelectStandardCreateBinding {
         return SelectStandardCreateBinding.inflate(layoutInflater)
     }
@@ -48,6 +58,24 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
                 resources.getDimensionPixelSize(resourceId)
             binding.statusBarBackground.requestLayout()
         }
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+        if (fromNotification) {
+            Constant.isParentChoose = false
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            instituteId = intent.getStringExtra(Constant.institute_id)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+            val matchedChild = userDetails?.staff_details?.find { it.school_id == instituteId }
+            SharedPreference.putStaffDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
         binding.imgBack.setOnClickListener(this)
         binding.viewreporttext.setOnClickListener(this)
         setupStepIndicator()

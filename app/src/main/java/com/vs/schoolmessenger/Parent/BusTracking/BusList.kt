@@ -138,9 +138,11 @@ class BusList : BaseActivity<BusListActivityBinding>(), View.OnClickListener, Bu
         isGetBusList()
     }
 
-    override fun OnBusClick(data: BusListData) {
+    override fun OnBusClick(data: BusListData,status: String) {
         val intent = Intent(this, LiveBusTracking::class.java)
         intent.putExtra("bus_data", data)
+        intent.putExtra("status", status)
+        Log.d("LiveBusTracking", "BusListStatus = $status")
         startActivity(intent)
     }
 

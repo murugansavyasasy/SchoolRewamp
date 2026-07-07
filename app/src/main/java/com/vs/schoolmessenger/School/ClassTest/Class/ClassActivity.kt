@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.School.ClassTest.Class.ClassActivity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -10,18 +12,26 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ClassTest.Class.ClassAdapter
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.SelectedSubject
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Review.ReviewActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ClassActivityBinding
 
-class ClassActivity : BaseActivity<ClassActivityBinding>() {
+class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener  {
 
     private lateinit var adapter: ClassAdapter
 
     override fun getViewBinding(): ClassActivityBinding {
         return ClassActivityBinding.inflate(layoutInflater)
     }
+
+    private val backPressCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            handleExitAttempt()
+        }
+    }
+
 
     override fun setupViews() {
         super.setupViews()
@@ -35,7 +45,10 @@ class ClassActivity : BaseActivity<ClassActivityBinding>() {
         setupStepIndicator()
         loadSubjectData()
         setupContinueButton()
-        binding.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.viewreporttext.setOnClickListener(this)
+        onBackPressedDispatcher.addCallback(this, backPressCallback)
+        binding.imgBack.setOnClickListener { handleExitAttempt() }
+
     }
 
     override fun onResume() {
@@ -49,13 +62,53 @@ class ClassActivity : BaseActivity<ClassActivityBinding>() {
         StepIndicatorHelper.setStep(binding.stepIndicator.root, currentStep = 4)
     }
 
+    private fun handleExitAttempt() {
+        if (hasUnsavedData()) {
+            showExitConfirmationDialog()
+        } else {
+            finish()
+        }
+    }
+
+    private fun showExitConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Discard changes?")
+            .setMessage("You have unsaved test details. If you exit now, this information will be lost.")
+            .setPositiveButton("Exit") { dialog, _ ->
+                dialog.dismiss()
+                finish()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .show()
+    }
+
+    private fun hasUnsavedData(): Boolean {
+        val examName = binding.etExamName.text?.toString()?.trim().orEmpty()
+        if (examName.isNotBlank()) return true
+
+        if (!::adapter.isInitialized) return false
+
+        return adapter.getAllItems().any { item ->
+            item.tests.any { t ->
+                t.examName.isNotBlank() ||
+                        t.testDate.isNotBlank() ||
+                        t.maxMarks.isNotBlank() ||
+                        t.minMarks.isNotBlank() ||
+                        t.syllabus.isNotBlank()
+            }
+        }
+    }
+
     private fun loadSubjectData() {
         val selectedSubjects: List<SelectedSubject> = Constant.isSelectedSubjectss ?: emptyList()
         if (selectedSubjects.isEmpty()) {
             showError("No subjects selected")
             return
         }
-        val items = selectedSubjects.map { s ->
+        val items = selectedSubjects.mapIndexed { index, s ->
             ClassTestItem(
                 subjectId = s.subjectId,
                 subjectName = s.subjectName,
@@ -63,13 +116,15 @@ class ClassActivity : BaseActivity<ClassActivityBinding>() {
                 sectionLabel = "Section ${s.sectionName}",
                 isMerged = false,
                 mergedSections = emptyList(),
-                mergedSectionIds = emptyList()
+                mergedSectionIds = emptyList(),
+                isExpanded = index == 0
             )
         }
         buildAdapter(items)
     }
 
     private fun buildAdapter(items: List<ClassTestItem>) {
+        items.firstOrNull()?.isExpanded = true
         adapter = ClassAdapter(items.toMutableList())
         binding.rcClassList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -78,9 +133,8 @@ class ClassActivity : BaseActivity<ClassActivityBinding>() {
         binding.rcClassList.visibility = View.VISIBLE
         binding.lytList.visibility = View.GONE
     }
-
     private fun setupContinueButton() {
-        binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.btnBack.setOnClickListener { handleExitAttempt() }
 
         binding.btnContinue.setOnClickListener {
             if (!::adapter.isInitialized) return@setOnClickListener
@@ -154,5 +208,18 @@ class ClassActivity : BaseActivity<ClassActivityBinding>() {
         binding.rcClassList.visibility = View.GONE
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = message
+    }
+
+    private fun RedirectToReport() {
+        val intent = Intent(this, ExamReportActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imgBack -> onBackPressed()
+            R.id.viewreporttext-> RedirectToReport()
+        }
     }
 }

@@ -29,6 +29,8 @@ class ExamReportAdapter(
         val item = list[position]
 
         holder.binding.txtExamName.text = item.examName
+        holder.binding.txtsection.text =
+            "Standard : ${item.sections.firstOrNull()?.className ?: "-"}"
         holder.binding.txtSentBy.text = "Sent by: ${item.sentBy}"
 
         holder.binding.flexSections.removeAllViews()

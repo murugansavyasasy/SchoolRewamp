@@ -63,10 +63,8 @@ class ClassUploadMarksEntryAdapter (
             holder.container.addView(editText)
         }
 
-        // ✅ APPLY GLOBAL SCROLL POSITION
         holder.container.scrollTo(Constant.scrollX, 0)
 
-        // ✅ UPDATE GLOBAL SCROLL (NO notifyDataSetChanged)
         holder.container.setOnScrollChangeListener { _, x, _, _, _ ->
             Constant.scrollX = x
         }

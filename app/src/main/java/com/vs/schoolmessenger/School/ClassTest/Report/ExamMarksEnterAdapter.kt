@@ -50,6 +50,7 @@ class ExamMarksEnterAdapter(
         val lytHeader: View = view.findViewById(R.id.lytSubjectHeader)
         val txtSubjectName: TextView = view.findViewById(R.id.txtSubjectName)
         val txtSectionLabel: TextView = view.findViewById(R.id.txtSectionLabel)
+        val txtActivityCount: TextView = view.findViewById(R.id.txtActivityCount)
         val imgChevron: ImageView = view.findViewById(R.id.imgChevron)
         val imgCompleted: ImageView = view.findViewById(R.id.imgCompleted)
         val lytExpanded: View = view.findViewById(R.id.lytExpanded)
@@ -61,7 +62,6 @@ class ExamMarksEnterAdapter(
         val txtMergeSubtitle: TextView = view.findViewById(R.id.txtMergeSubtitle)
         val btnMerge: TextView = view.findViewById(R.id.btnMerge)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         SubjectViewHolder(
             LayoutInflater.from(parent.context)
@@ -74,10 +74,20 @@ class ExamMarksEnterAdapter(
         val item = items[position]
 
         holder.txtSubjectName.text = item.subjectName
-        holder.txtSectionLabel.text = item.sectionLabel
+        holder.txtSectionLabel.visibility = View.GONE
 
         val isAllComplete = isItemFullyFilled(item)
         holder.imgCompleted.visibility = if (isAllComplete) View.VISIBLE else View.GONE
+
+        val activityCount = item.tests.count { it.examName.isNotBlank() }
+        if (activityCount > 0) {
+            holder.txtActivityCount.text =
+                "$activityCount ${if (activityCount == 1) "Activity" else "Activities"}"
+            holder.txtActivityCount.visibility = View.VISIBLE
+        } else {
+            holder.txtActivityCount.visibility = View.GONE
+        }
+        holder.imgCompleted.visibility = View.GONE
 
         holder.imgChevron.animate()
             .rotation(if (item.isExpanded) 90f else 0f)

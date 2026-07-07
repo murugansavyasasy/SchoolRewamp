@@ -237,6 +237,22 @@
                 android:src="@drawable/blocksvgformat"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/lblExamCount"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/bg_white_pill_rounded"
+                android:paddingHorizontal="@dimen/fifteen"
+                android:paddingVertical="@dimen/six"
+                android:text=""
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/twele_sp"
+                android:visibility="gone" />
+
         </RelativeLayout>
 
         <RelativeLayout
