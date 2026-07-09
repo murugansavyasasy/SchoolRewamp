@@ -150,7 +150,7 @@
             android:name=".School.ClassTest.Class.ClassActivity.ClassActivity"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".School.ClassTest.Review.ReviewActivity"
@@ -865,7 +865,7 @@
             android:name=".School.ClassTest.UploadMarks.ClassUploadMarks"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
 
 
 

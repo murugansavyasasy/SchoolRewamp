@@ -78,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/yes_send"
+            android:text="@string/Yes"
             android:textColor="@color/navi_blue2" />
     </LinearLayout>
 

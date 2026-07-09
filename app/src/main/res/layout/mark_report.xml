@@ -161,8 +161,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="P - Well done! Continue to shine brightly (Pass)"
-                                android:textColor="#1A1A2E"
+                                android:text="P - Pass"
+                                android:textColor="@color/green"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -180,8 +180,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="F - Keep learning, keep growing. (Fail)"
-                                android:textColor="#1A1A2E"
+                                android:text="F - Fail"
+                                android:textColor="@color/red"
                                 android:textSize="12sp" />
                         </LinearLayout>
 

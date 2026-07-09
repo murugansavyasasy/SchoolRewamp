@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Class
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -74,9 +76,16 @@ class ClassAdapter(
             item.tests.add(TestEntry())
         }
         val sourceItem = findPreviousFilledSameSubject(position)
-        if (sourceItem != null && item.isExpanded) {
-            holder.txtMergeTitle.text =
+        val shouldShowBanner = sourceItem != null && item.isExpanded &&
+                (!item.isMerged || snapshotOf(sourceItem) != item.mergedSourceSnapshot)
+
+        if (shouldShowBanner && sourceItem != null) {
+            val label = if (item.isMerged)
+                "Source data changed — re-copy from ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
+            else
                 "Copy data from ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
+
+            holder.txtMergeTitle.text = label
             holder.txtMergeSubtitle.text =
                 "Fills all tests from that subject into this section"
             holder.lytMergeBanner.visibility = View.VISIBLE
@@ -101,10 +110,20 @@ class ClassAdapter(
         if (item.isExpanded) {
             renderTestForms(holder, item, position)
         }
-
         holder.btnAddTest.setOnClickListener {
+            val lastTest = item.tests.lastOrNull()
+            if (lastTest != null && (lastTest.examName.isBlank())) {
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Please fill Activity Name  before adding another activity",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             item.tests.add(TestEntry())
             notifyItemChanged(position)
+            notifyMergeDependents(position)
         }
     }
 
@@ -112,7 +131,6 @@ class ClassAdapter(
         if (item.tests.isEmpty()) return false
         return item.tests.all { t ->
             t.examName.isNotBlank() &&
-                    t.testDate.isNotBlank() &&
                     t.maxMarks.isNotBlank() &&
                     t.minMarks.isNotBlank()
         }
@@ -146,8 +164,25 @@ class ClassAdapter(
                 )
             )
         }
+        target.isMerged = true
+        target.mergedSourceSnapshot = snapshotOf(source)
     }
 
+
+    private fun snapshotOf(item: ClassTestItem): String {
+        return item.tests.joinToString("||") { t ->
+            "${t.examName}~${t.testDate}~${t.session}~${t.maxMarks}~${t.minMarks}~${t.syllabus}"
+        }
+    }
+
+
+    private fun notifyMergeDependents(sourceItemPos: Int) {
+        if (sourceItemPos !in items.indices) return
+        val subjectId = items[sourceItemPos].subjectId
+        items.indices
+            .filter { it != sourceItemPos && items[it].subjectId == subjectId }
+            .forEach { notifyItemChanged(it) }
+    }
     private fun renderTestForms(
         holder: SubjectViewHolder,
         item: ClassTestItem,
@@ -184,6 +219,24 @@ class ClassAdapter(
         val imgDelete: ImageView = v.findViewById(R.id.imgDeleteTest)
         val removetext: TextView = v.findViewById(R.id.removetext)
 
+        val focusScrollListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                view.post {
+                    val recyclerView = v.rootView.findViewById<RecyclerView>(R.id.rcClassList)
+                    recyclerView?.let { rv ->
+                        val rect = Rect()
+                        view.getDrawingRect(rect)
+                        view.requestRectangleOnScreen(rect, true)
+                    }
+                }
+            }
+        }
+
+        etExamName.onFocusChangeListener = focusScrollListener
+        etMaxMarks.onFocusChangeListener = focusScrollListener
+        etMinMarks.onFocusChangeListener = focusScrollListener
+        etSyllabus.onFocusChangeListener = focusScrollListener
+
         txtTestNumber.text = "${testIndex + 1}"
         testlabel.text = "Activity ${testIndex + 1}"
 
@@ -195,6 +248,7 @@ class ClassAdapter(
                 item.tests.add(TestEntry())
             }
             notifyItemChanged(itemPos)
+            notifyMergeDependents(itemPos)
         }
 
         removetext.setOnClickListener {
@@ -203,6 +257,7 @@ class ClassAdapter(
                 item.tests.add(TestEntry())
             }
             notifyItemChanged(itemPos)
+            notifyMergeDependents(itemPos)
         }
 
         etExamName.setText(test.examName)
@@ -214,45 +269,86 @@ class ClassAdapter(
         if (test.testDate.isNotEmpty()) tvTestDate.text = test.testDate
         tvTestDate.setOnClickListener {
             val cal = Calendar.getInstance()
-            DatePickerDialog(
+
+            val datePickerDialog = DatePickerDialog(
                 ctx,
                 { _, y, m, d ->
                     val s = "%02d/%02d/%04d".format(d, m + 1, y)
                     test.testDate = s
                     tvTestDate.text = s
-                    // Refresh tick after date is picked
                     refreshCompletedState(v, item, itemPos)
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+
+            datePickerDialog.show()
         }
 
         applySessionStyle(ctx, btnFN, btnAN, test.session)
         btnFN.setOnClickListener {
             test.session = "FN"
             applySessionStyle(ctx, btnFN, btnAN, "FN")
+            notifyMergeDependents(itemPos)
         }
         btnAN.setOnClickListener {
             test.session = "AN"
             applySessionStyle(ctx, btnFN, btnAN, "AN")
+            notifyMergeDependents(itemPos)
         }
 
         etMaxMarks.setText(test.maxMarks)
         etMaxMarks.addTextChangedListener(watcher {
             test.maxMarks = it
             refreshCompletedState(v, item, itemPos)
+            validateMarksRange(ctx, etMaxMarks, etMinMarks)
         })
 
         etMinMarks.setText(test.minMarks)
         etMinMarks.addTextChangedListener(watcher {
             test.minMarks = it
             refreshCompletedState(v, item, itemPos)
+            validateMarksRange(ctx, etMaxMarks, etMinMarks)
         })
+
+        // Run once on bind so restored/saved invalid data is flagged immediately
+        validateMarksRange(ctx, etMaxMarks, etMinMarks)
 
         etSyllabus.setText(test.syllabus)
         etSyllabus.addTextChangedListener(watcher { test.syllabus = it })
+    }
+
+
+    private fun validateMarksRange(
+        ctx: Context,
+        etMaxMarks: EditText,
+        etMinMarks: EditText
+    ): Boolean {
+        val maxText = etMaxMarks.text?.toString()?.trim().orEmpty()
+        val minText = etMinMarks.text?.toString()?.trim().orEmpty()
+
+        if (maxText.isEmpty() || minText.isEmpty()) {
+            etMinMarks.error = null
+            etMinMarks.background = ContextCompat.getDrawable(ctx, R.drawable.input_field_bg)
+            return true
+        }
+
+        val maxVal = maxText.toDoubleOrNull()
+        val minVal = minText.toDoubleOrNull()
+
+        val isValid = maxVal != null && minVal != null && minVal < maxVal
+
+        if (isValid) {
+            etMinMarks.error = null
+            etMinMarks.background = ContextCompat.getDrawable(ctx, R.drawable.input_field_bg)
+        } else {
+            etMinMarks.background = ContextCompat.getDrawable(ctx, R.drawable.input_field_bg_error)
+            etMinMarks.error = "Min marks must be less than Max marks"
+        }
+
+        return isValid
     }
 
     private fun refreshCompletedState(
@@ -271,6 +367,8 @@ class ClassAdapter(
         } else {
             notifyItemChanged(itemPos)
         }
+
+        notifyMergeDependents(itemPos)
     }
 
     private fun applySessionStyle(

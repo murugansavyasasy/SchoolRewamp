@@ -1585,6 +1585,8 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query("class_test_id") class_test_id  : String,
         @Query("section_id") section_id   : String,
+        @Query("class_test_subject_id") class_test_subject_id    : String,
+
     ): Call<ClassEntryMarkResponse?>
 
 

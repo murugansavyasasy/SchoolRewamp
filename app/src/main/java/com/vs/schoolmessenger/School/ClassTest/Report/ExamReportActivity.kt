@@ -59,7 +59,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
             statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "Exams"
+        binding.toolbarLayout.lblParentToolBar.text = "View Created test list"
         binding.toolbarLayout.lblExamCount.visibility = View.VISIBLE
         setupRecyclerView()
         setupViewModel()
@@ -68,20 +68,30 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
 
         appViewModel!!.isputExamDelete?.observe(this) { response ->
             if (response != null) {
+
                 if (response.status) {
-                    val index = examListData.indexOfFirst { it.classTestId == pendingDeleteId }
-                    showMessageDialog(response.message ?: "Deleted successfully") {
+
+                    val index = examListData.indexOfFirst {
+                        it.classTestId == pendingDeleteId
+                    }
+
+                    showMessageDialog(
+                        response.message ?: "Exam deleted successfully."
+                    ) {
                         if (index != -1) {
                             adapter.removeAt(index)
                             updateExamCountBadge(examListData.size)
                         }
                     }
+
                 } else {
+
                     showMessageDialog(
                         response.message
                             ?: getString(R.string.something_went_wrong_please_try_again_later)
                     )
                 }
+
                 pendingDeleteId = null
             }
         }
@@ -90,7 +100,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
 
     private fun updateExamCountBadge(count: Int) {
         binding.toolbarLayout.lblExamCount.text =
-            "$count ${if (count == 1) "EXAM" else "EXAMS"}"
+            "$count ${if (count == 1) "TEST" else "TESTS"}"
     }
 
 
@@ -101,14 +111,35 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
                 openMarksEntry(classTest, section)
             },
             onDeleteClick = { classTest, position ->
-               deleteClassTest(classTest, position)
+                showDeleteConfirmationDialog(classTest, position)
             }
         )
         binding.rcyexamlist.layoutManager = LinearLayoutManager(this)
         binding.rcyexamlist.adapter = adapter
     }
 
-    private fun deleteClassTest(classTest: ExamlistModel, position: Int) {
+    private fun showDeleteConfirmationDialog(
+        classTest: ExamlistModel,
+        position: Int
+    ) {
+        AlertDialog.Builder(this)
+            .setTitle("Delete Exam")
+            .setMessage("Are you sure you want to delete \"${classTest.examName}\"?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                deleteClassTest(classTest, position)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteClassTest(
+        classTest: ExamlistModel,
+        position: Int
+    ) {
         pendingDeleteId = classTest.classTestId
 
         val jsonObject = JsonObject().apply {

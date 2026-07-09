@@ -106,41 +106,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear_layoutcreate"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/eight">
 
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/twenty"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/ten"
                 android:text="Select Standard"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/twenty_four_sp" />
 
             <TextView
                 android:id="@+id/viewreporttext"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/twenty"
-                android:text="View Reports >"
-                android:layout_marginTop="@dimen/one"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="View created test >>"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="end"
                 android:textSize="@dimen/fourteen_sp" />
 
-
         </LinearLayout>
+
 
 
         <TextView
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/twenty"
+            android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
             android:text="Choose the class for which you want to create a test"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+
+        <TextView
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginTop="@dimen/four"
+            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -224,17 +241,53 @@
             android:id="@+id/btnContinue"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
-            android:layout_height="@dimen/fifty"
-            android:layout_marginHorizontal="@dimen/sixteen"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/sixteen"
+            android:layout_marginEnd="@dimen/sixteen"
+            android:layout_marginBottom="@dimen/eight"
             android:background="@drawable/rect_primary_rounded"
             android:gravity="center"
             android:text="Continue  ›"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
+            app:layout_constraintBottom_toTopOf="@id/btnAddTestMarks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/btnAddTestMarks"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/sixteen"
+            android:layout_marginEnd="@dimen/sixteen"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/rect_primary_rounded"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/eighteen"
+                android:layout_height="@dimen/eighteen"
+                android:layout_marginEnd="@dimen/eight"
+                android:src="@drawable/ic_add_circle_outline"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvAddTestMarks"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Test Marks"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

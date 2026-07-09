@@ -2,7 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Report.Model
 
 import com.google.gson.annotations.SerializedName
 
-data class ActivityModeldata (
+data class ActivityModeldata(
     @SerializedName("class_test_subject_id")
     val classTestSubjectId: String,
 
@@ -25,5 +25,8 @@ data class ActivityModeldata (
     val minMark: String,
 
     @SerializedName("syllabus")
-    val syllabus: String
+    val syllabus: String,
+
+    @SerializedName("can_delete")
+    val candelete: Boolean
 )

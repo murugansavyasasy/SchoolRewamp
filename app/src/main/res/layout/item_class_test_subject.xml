@@ -130,7 +130,7 @@
                         android:id="@+id/txtMergeTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Copy data from MATHS · Sec B?"
+                        android:text=""
                         android:textColor="#B45309"
                         android:textSize="13sp"
                         style="@style/CustomTextStylePoppinsBold" />
@@ -154,7 +154,7 @@
                     android:gravity="center"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Merge"
+                    android:text="Copy"
                     android:textColor="@color/white"
                     android:textSize="13sp"
                     style="@style/CustomTextStylePoppinsBold" />
@@ -169,7 +169,7 @@
             <TextView
                 android:id="@+id/btnAddTest"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="41dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="4dp"
                 android:text="+ Add Activity"

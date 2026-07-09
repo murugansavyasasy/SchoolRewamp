@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -51,7 +54,22 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
     override fun setupViews() {
         super.setupViews()
         Constant.clearClassTestFlowData()
-        window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.statusBarBackground.layoutParams.height = statusBarHeight
+            binding.statusBarBackground.requestLayout()
+
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val baseBottomMargin = resources.getDimensionPixelSize(R.dimen.twenty)
+            val lytContentParams =
+                binding.lytContent.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+            lytContentParams.bottomMargin = baseBottomMargin + navBarHeight
+            binding.lytContent.layoutParams = lytContentParams
+
+            insets
+        }
+
         val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (resourceId > 0) {
             binding.statusBarBackground.layoutParams.height =
@@ -78,6 +96,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
 
         binding.imgBack.setOnClickListener(this)
         binding.viewreporttext.setOnClickListener(this)
+        binding.btnAddTestMarks.setOnClickListener(this)
         setupStepIndicator()
         setupViewModel()
         setupContinueButton()
@@ -226,6 +245,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
             R.id.viewreporttext-> RedirectToReport()
+            R.id.btnAddTestMarks-> RedirectToReport()
         }
     }
 }

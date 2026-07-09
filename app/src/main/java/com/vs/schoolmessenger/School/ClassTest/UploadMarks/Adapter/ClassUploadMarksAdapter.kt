@@ -377,7 +377,9 @@ class ClassUploadMarksAdapter(
     }
 
     private fun isAllowedValue(value: String): Boolean {
-        return value.equals("AB", true) || value.toDoubleOrNull() != null
+        return value.equals("AB", true) ||
+                value.equals("NA", true) ||
+                value.toDoubleOrNull() != null
     }
 
     private fun normalize(value: String?): String =

@@ -128,7 +128,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 215
+    var isVersionId = 216
 
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
@@ -209,7 +209,8 @@ object Constant {
     //    val M_BUS_TRACKING = 999
         val M_LIVE_BUS_TRACKING = 205
     val M_STUDENTDATE = 789
-//    val M_STUDENTDATE = 996
+    val M_CLASSTEST = 206
+    //    val M_STUDENTDATE = 996
     var SELECTED_MENU_ID = 0
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null
@@ -308,6 +309,10 @@ object Constant {
     var isExamName: String = ""
     var isSelectedSubjectss: List<SelectedSubject>? = null
 
+
+    //For cache binding
+    var isSavedClassTestState: MutableList<ClassTestItem>? = null
+    var isSavedExamNameState: String? = null
     var isParentContactDetails: ContactDetails? = null
     var isParentMenuDetails: List<MenuDetail>? = null
     var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
@@ -458,6 +463,10 @@ object Constant {
     var isSelectedFiles = "isSelectedFiles"
     const val CLASS_TEST_ID = "class_test_id"
     const val SECTION_ID = "section_id"
+    const val EXAM_NAME = "exam_name"
+
+    const val CLASS_TEST_SUBJECT_ID = "class_test_subject_id"
+
     var Remaining = 10
 
     var IMAGE = "IMAGE"

@@ -41,7 +41,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
             statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "Exam Mark"
+        binding.toolbarLayout.lblParentToolBar.text = "View Test & Enter marks"
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -135,7 +135,8 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
                         maxMarks = activity.maxMark,
                         minMarks = activity.minMark,
                         syllabus = activity.syllabus,
-                        classTestSubjectId = activity.classTestSubjectId
+                        classTestSubjectId = activity.classTestSubjectId,
+                        canDelete = activity.candelete
                     )
                 }.toMutableList(),
                 sectionId = Constant.isSelectedSectionId,
@@ -225,7 +226,8 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
                         maxMarks = activity.maxMark,
                         minMarks = activity.minMark,
                         syllabus = activity.syllabus,
-                        classTestSubjectId = activity.classTestSubjectId
+                        classTestSubjectId = activity.classTestSubjectId,
+                        canDelete = activity.candelete
                     )
                 }.toMutableList(),
                 sectionId = Constant.isSelectedSectionId,
@@ -256,12 +258,27 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         binding.btnContinue.setOnClickListener {
+            val classTestSubjectIds = getAllClassTestSubjectIds()
+            val globalexamname = Constant.isExamName
+
             val intent = Intent(this, ClassUploadMarks::class.java).apply {
                 putExtra(Constant.CLASS_TEST_ID, Constant.isSelectedClassTestId)
                 putExtra(Constant.SECTION_ID, Constant.isSelectedSectionId)
+                putExtra(Constant.CLASS_TEST_SUBJECT_ID, classTestSubjectIds)
+                putExtra(Constant.isExamName, globalexamname)
             }
             startActivity(intent)
         }
+    }
+
+    private fun getAllClassTestSubjectIds(): String {
+        val subjects = Constant.isExamReportSubjects ?: return ""
+
+        return subjects
+            .flatMap { it.activities }
+            .mapNotNull { it.classTestSubjectId }
+            .filter { it.isNotBlank() }
+            .joinToString(",")
     }
 
     private fun showError(message: String) {

@@ -2135,6 +2135,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.lnrHistoryList.visibility = View.VISIBLE
 
         } else {
+            handler.removeCallbacksAndMessages(null)
+            mAdapter?.releaseMediaPlayer()
             super.onBackPressed()
         }
     }

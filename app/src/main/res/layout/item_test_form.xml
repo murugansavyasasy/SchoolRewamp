@@ -80,6 +80,15 @@
             style="@style/FieldLabel"
             android:layout_marginStart="4dp"
             android:text="ACTIVITY NAME" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="*"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textSize="13sp" />
     </LinearLayout>
 
     <EditText
@@ -226,6 +235,15 @@
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
                     android:text="MAX MARKS" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <EditText
@@ -233,7 +251,7 @@
                 style="@style/FieldInput"
                 android:layout_marginTop="4dp"
                 android:inputType="numberDecimal"
-                android:text="100" />
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
@@ -259,6 +277,15 @@
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
                     android:text="MIN MARKS" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <EditText
@@ -266,7 +293,7 @@
                 style="@style/FieldInput"
                 android:layout_marginTop="4dp"
                 android:inputType="numberDecimal"
-                android:text="35" />
+                android:text="" />
         </LinearLayout>
     </LinearLayout>
 
@@ -291,10 +318,11 @@
     <EditText
         android:id="@+id/etSyllabus"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/input_field_bg"
         android:gravity="top|start"
+        android:minHeight="@dimen/seventy"
         android:inputType="textMultiLine|textCapSentences"
         android:paddingStart="12dp"
         android:paddingTop="8dp"

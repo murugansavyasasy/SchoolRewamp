@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/main"
     android:background="@color/colorPrimaryRadiant">
 
     <View
@@ -56,28 +57,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear_layoutcreate"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/eight">
 
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_weight="1"
                 android:text="Review"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/twenty_four_sp" />
 
             <TextView
                 android:id="@+id/viewreporttext"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View Reports >"
-                android:layout_marginTop="@dimen/one"
+                android:layout_marginStart="@dimen/eight"
+                android:text="View created test >>"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="end"
                 android:textSize="@dimen/fourteen_sp" />
-
 
         </LinearLayout>
 
@@ -88,9 +94,19 @@
             android:text="Almost done - confirm your entries"
             android:textColor="#CCFFFFFF"
             android:textSize="13sp" />
+        <TextView
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/two"
+            android:layout_marginTop="@dimen/four"
+            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lytContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -126,8 +142,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             android:layout_marginTop="10dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"
@@ -163,8 +179,8 @@
             <TextView
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="  Create Activity"
+                android:layout_height="@dimen/fourty"
+                android:text="Create Test"
                 android:gravity="center"
                 android:drawablePadding="8dp"
                 android:textColor="@color/white"
@@ -175,7 +191,7 @@
             <TextView
                 android:id="@+id/btnBack"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/fourty"
                 android:layout_marginTop="8dp"
                 android:text="Back"
                 android:gravity="center"
