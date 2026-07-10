@@ -48,6 +48,8 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
     private val apiDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
     private val displayDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
+    private var isFirstResume = true
+
     override fun getViewBinding(): ExamReportListBinding {
         return ExamReportListBinding.inflate(layoutInflater)
     }
@@ -286,5 +288,14 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         binding.txtNoData.text = message
         adapter.updateList(emptyList())
         updateExamCountBadge(0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirstResume) {
+            isFirstResume = false
+        } else {
+            fetchExamReport()
+        }
     }
 }

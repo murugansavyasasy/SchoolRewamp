@@ -30,6 +30,9 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
     private var pendingDeleteItemPos: Int = -1
     private var pendingDeleteTestIndex: Int = -1
 
+    private var pendingDeleteWasLastTest: Boolean = false
+
+
     override fun getViewBinding(): ExamMarksEnterBinding {
         return ExamMarksEnterBinding.inflate(layoutInflater)
     }
@@ -65,8 +68,13 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
         appViewModel!!.isputClassTestDelete?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    val wasLastTest = pendingDeleteWasLastTest
                     showMessageDialog(response.message ?: "Deleted successfully") {
-                        refreshExamData()
+                        if (wasLastTest) {
+                            onBackPressedDispatcher.onBackPressed()
+                        } else {
+                            refreshExamData()
+                        }
                     }
                 } else {
                     showMessageDialog(
@@ -76,6 +84,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
                 }
                 pendingDeleteItemPos = -1
                 pendingDeleteTestIndex = -1
+                pendingDeleteWasLastTest = false
             }
         }
     }
@@ -175,6 +184,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
                 dialog.dismiss()
                 pendingDeleteItemPos = itemPos
                 pendingDeleteTestIndex = testIndex
+                pendingDeleteWasLastTest = item.tests.count { it.examName.isNotBlank() } <= 1   // NEW
 
                 val jsonObject = JsonObject().apply {
                     addProperty("class_test_subject_id", activityId)

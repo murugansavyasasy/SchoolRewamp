@@ -27,7 +27,7 @@
                 android:layout_height="48dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#3D7BFF">
+                app:cardBackgroundColor="@color/PrimaryColor">
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
