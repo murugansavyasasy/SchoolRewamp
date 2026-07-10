@@ -118,7 +118,7 @@
                 android:layout_below="@+id/lblSampleDesc"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Note: Use &quot;AB&quot; for absent students and &quot;N/A&quot; for marks that are not applicable."
+                android:text="Note: Use &quot;AB&quot; for absent students and NA for marks that are not applicable."
                 android:textSize="@dimen/fifteen_sp"
                 android:textColor="@color/grey"/>
 
