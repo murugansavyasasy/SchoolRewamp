@@ -1,13 +1,14 @@
 package com.vs.schoolmessenger.School.ClassTest.Class.Models
 
-data class  ClassTestItem(
+data class ClassTestItem(
     val subjectId: String,
     val subjectName: String,
     val sectionId: String,
     val sectionLabel: String,
-    val isMerged: Boolean,
-    val mergedSections: List<String>,
-    val mergedSectionIds: List<String>,
-    val tests: MutableList<TestEntry> = mutableListOf(),
-    var isExpanded: Boolean = false
+    var isMerged: Boolean = false,
+    var mergedSections: List<String> = emptyList(),
+    var mergedSectionIds: List<String> = emptyList(),
+    var isExpanded: Boolean = false,
+    var mergedSourceSnapshot: String = "",
+    val tests: MutableList<TestEntry> = mutableListOf()
 )

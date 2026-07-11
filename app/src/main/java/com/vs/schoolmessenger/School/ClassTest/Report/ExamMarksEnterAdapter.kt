@@ -215,8 +215,8 @@ class ExamMarksEnterAdapter(
         txtTestNumber.text = "${testIndex + 1}"
         testlabel.text = "Activity ${testIndex + 1}"
 
-        imgDelete.visibility = View.VISIBLE
-        removetext.visibility = View.VISIBLE
+        imgDelete.visibility = if (test.canDelete) View.VISIBLE else View.GONE
+        removetext.visibility = if (test.canDelete) View.VISIBLE else View.GONE
 
         etExamName.isEnabled = false
         tvTestDate.isEnabled = false

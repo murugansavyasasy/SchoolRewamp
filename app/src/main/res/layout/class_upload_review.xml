@@ -77,15 +77,14 @@
 
             <TextView
                 android:id="@+id/lblReviewDetail"
-                style="@style/CustomTextStylePoppinsRegular"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSearch1"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:text="@string/review_and_edit_marks"
                 android:textColor="@color/dark_orange_2"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/twenty_sp">
             </TextView>
 
             <ImageView
@@ -101,7 +100,7 @@
 
             <TextView
                 android:id="@+id/lblSampleDesc"
-                style="@style/CustomTextStylePoppinsRegular"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblReviewDetail"
@@ -109,16 +108,27 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/verify_the_data_and_make_any_necessary_corrections"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
-
+                >
             </TextView>
+            <TextView
+                android:id="@+id/lblSampleDesc2"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSampleDesc"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Note: Use &quot;AB&quot; for absent students and NA for marks that are not applicable."
+                android:textSize="@dimen/fifteen_sp"
+                android:textColor="@color/grey"/>
+
 
             <TextView
                 android:id="@+id/lblIssueFound"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSampleDesc"
+                android:layout_below="@+id/lblSampleDesc2"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:text=""
@@ -206,7 +216,7 @@
                 android:layout_below="@+id/lytSearch"
                 android:orientation="vertical">
 
-                <include layout="@layout/layout_marks_header" />
+                <include layout="@layout/layout_marks_header1" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMarks"
@@ -232,25 +242,57 @@
                 </View>
 
                 <LinearLayout
-                    android:id="@+id/lnrSaveAllMarks2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
-                    android:background="@drawable/rect_orange_bg"
-                    android:gravity="center"
-                    android:paddingVertical="@dimen/eight">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <TextView
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/lnrSaveAllMarks2"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/save_icon"
-                        android:drawablePadding="@dimen/eight"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/five"
+                        android:background="@drawable/rect_orange_bg"
                         android:gravity="center"
-                        android:text="@string/save_all_marks"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"></TextView>
+                        android:paddingVertical="@dimen/eight">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/save_icon"
+                            android:drawablePadding="@dimen/eight"
+                            android:gravity="center"
+                            android:text="@string/save_all_marks"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrPublish"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/five"
+                        android:background="@drawable/rect_green_bg"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/eight">
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_publish"
+                            android:drawablePadding="@dimen/eight"
+                            android:gravity="center"
+                            android:text="Publish"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

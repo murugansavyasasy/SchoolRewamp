@@ -76,10 +76,10 @@
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/fourty"
                 android:background="@drawable/rect_primary_rounded"
                 android:gravity="center"
-                android:text="View &amp; Enter marks"
+                android:text="View Test &amp; Enter marks"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>

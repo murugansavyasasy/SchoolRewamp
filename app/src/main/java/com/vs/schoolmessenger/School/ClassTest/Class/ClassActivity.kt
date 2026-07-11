@@ -2,10 +2,16 @@ package com.vs.schoolmessenger.School.ClassTest.Class.ClassActivity
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Rect
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -35,20 +41,36 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
     override fun setupViews() {
         super.setupViews()
-        window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            binding.statusBarBackground.layoutParams.height =
-                resources.getDimensionPixelSize(resourceId)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.statusBarBackground.layoutParams.height = statusBarHeight
             binding.statusBarBackground.requestLayout()
+
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val baseBottomMargin = resources.getDimensionPixelSize(R.dimen.five)
+            val lytContentParams =
+                binding.lytContent.layoutParams as LinearLayout.LayoutParams
+            lytContentParams.bottomMargin = baseBottomMargin + navBarHeight
+            binding.lytContent.layoutParams = lytContentParams
+
+            insets
         }
         setupStepIndicator()
+        restoreExamNameIfAny()
         loadSubjectData()
         setupContinueButton()
+//        setupKeyboardScrollBehavior()
         binding.viewreporttext.setOnClickListener(this)
         onBackPressedDispatcher.addCallback(this, backPressCallback)
         binding.imgBack.setOnClickListener { handleExitAttempt() }
 
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        saveCurrentStateToCache()
     }
 
     override fun onResume() {
@@ -57,6 +79,72 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             adapter.notifyDataSetChanged()
         }
     }
+
+    private fun restoreExamNameIfAny() {
+        Constant.isSavedExamNameState?.let {
+            binding.etExamName.setText(it)
+        }
+    }
+
+    private fun isTestFilled(t: com.vs.schoolmessenger.School.ClassTest.Class.Models.TestEntry): Boolean {
+        return t.examName.isNotBlank() ||
+                t.testDate.isNotBlank() ||
+                t.maxMarks.isNotBlank() ||
+                t.minMarks.isNotBlank() ||
+                t.syllabus.isNotBlank()
+    }
+
+
+    private fun hasValidMarksRange(t: com.vs.schoolmessenger.School.ClassTest.Class.Models.TestEntry): Boolean {
+        val maxVal = t.maxMarks.trim().toDoubleOrNull()
+        val minVal = t.minMarks.trim().toDoubleOrNull()
+        if (maxVal == null || minVal == null) return true
+        return minVal < maxVal
+    }
+
+    private fun saveCurrentStateToCache() {
+        if (!::adapter.isInitialized) return
+
+        Constant.isSavedExamNameState = binding.etExamName.text?.toString()
+
+        val snapshot = adapter.getAllItems().map { item ->
+            item.copy(
+                tests = item.tests
+                    .filter { isTestFilled(it) }
+                    .map { it.copy() }
+                    .toMutableList()
+            )
+        }
+        Constant.isSavedClassTestState = snapshot.toMutableList()
+    }
+
+//    private fun setupKeyboardScrollBehavior() {
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+//            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+//            if (imeVisible) {
+//                val focused = currentFocus
+//                if (focused is EditText) {
+//                    focused.post {
+//                        val location = IntArray(2)
+//                        focused.getLocationInWindow(location)
+//                        val rootLocation = IntArray(2)
+//                        binding.rcClassList.getLocationInWindow(rootLocation)
+//
+//                        val focusedBottomInList = location[1] - rootLocation[1] + focused.height
+//                        val listVisibleBottom = binding.rcClassList.height
+//
+//                        if (focusedBottomInList > listVisibleBottom) {
+//                            binding.rcClassList.smoothScrollBy(
+//                                0,
+//                                focusedBottomInList - listVisibleBottom + 40
+//                            )
+//                        }
+//                    }
+//                }
+//            }
+//            insets
+//        }
+//    }
 
     private fun setupStepIndicator() {
         StepIndicatorHelper.setStep(binding.stepIndicator.root, currentStep = 4)
@@ -108,18 +196,39 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             showError("No subjects selected")
             return
         }
-        val items = selectedSubjects.mapIndexed { index, s ->
-            ClassTestItem(
-                subjectId = s.subjectId,
-                subjectName = s.subjectName,
-                sectionId = s.sectionId,
-                sectionLabel = "Section ${s.sectionName}",
-                isMerged = false,
-                mergedSections = emptyList(),
-                mergedSectionIds = emptyList(),
-                isExpanded = index == 0
-            )
+
+        val savedItems = Constant.isSavedClassTestState
+
+        val matchesSelection = savedItems != null &&
+                savedItems.size == selectedSubjects.size &&
+                savedItems.map { it.subjectId to it.sectionId }.toSet() ==
+                selectedSubjects.map { it.subjectId to it.sectionId }.toSet()
+
+        val items = if (matchesSelection) {
+            savedItems!!.mapIndexed { index, saved ->
+                saved.copy(
+                    tests = saved.tests
+                        .filter { isTestFilled(it) }
+                        .map { it.copy() }
+                        .toMutableList(),
+                    isExpanded = index == 0
+                )
+            }
+        } else {
+            selectedSubjects.mapIndexed { index, s ->
+                ClassTestItem(
+                    subjectId = s.subjectId,
+                    subjectName = s.subjectName,
+                    sectionId = s.sectionId,
+                    sectionLabel = "Section ${s.sectionName}",
+                    isMerged = false,
+                    mergedSections = emptyList(),
+                    mergedSectionIds = emptyList(),
+                    isExpanded = index == 0
+                )
+            }
         }
+
         buildAdapter(items)
     }
 
@@ -138,7 +247,6 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
         binding.btnContinue.setOnClickListener {
             if (!::adapter.isInitialized) return@setOnClickListener
-
             val globalExamName = binding.etExamName.text?.toString()?.trim() ?: ""
             if (globalExamName.isBlank()) {
                 binding.etExamName.background = ContextCompat.getDrawable(
@@ -158,7 +266,9 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
             val touchedItems = allItems.filter { item ->
                 item.tests.any { t ->
-                    t.examName.isNotBlank() || t.testDate.isNotBlank()
+                    t.examName.isNotBlank() &&
+                            t.minMarks.isNotBlank() &&
+                            t.maxMarks.isNotBlank()
                 }
             }
 
@@ -173,14 +283,27 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
             val hasIncomplete = touchedItems.any { item ->
                 item.tests.any { t ->
-                    t.examName.isBlank() || t.testDate.isBlank()
+                    t.examName.isBlank() || t.minMarks.isBlank() || t.maxMarks.isBlank()
                 }
             }
 
             if (hasIncomplete) {
                 Toast.makeText(
                     this,
-                    "Please fill Activity Name and Test Date for every test",
+                    "Please fill Activity Name and Marks for every test",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            val hasInvalidMarks = touchedItems.any { item ->
+                item.tests.any { t -> !hasValidMarksRange(t) }
+            }
+
+            if (hasInvalidMarks) {
+                Toast.makeText(
+                    this,
+                    "Min marks must be less than Max marks for every activity",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener

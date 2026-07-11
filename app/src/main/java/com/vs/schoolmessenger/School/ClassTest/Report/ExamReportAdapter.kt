@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Report
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.School.ClassTest.Report.Model.ExamlistModel
@@ -32,6 +33,9 @@ class ExamReportAdapter(
         holder.binding.txtsection.text =
             "Standard : ${item.sections.firstOrNull()?.className ?: "-"}"
         holder.binding.txtSentBy.text = "Sent by: ${item.sentBy}"
+
+        holder.binding.imgDelete.visibility =
+            if (item.candelete) View.VISIBLE else View.GONE
 
         holder.binding.flexSections.removeAllViews()
         item.sections.forEach { section ->

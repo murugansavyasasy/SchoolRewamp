@@ -2334,10 +2334,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isexamDetailsMark(
-        isToken: String, class_test_id: String,section_id : String,activity : Activity) {
+        isToken: String, class_test_id: String,section_id : String,class_test_subject_id: String,activity : Activity) {
         val reporting_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositoriesTwo.isexamDetailsMark(isToken,class_test_id,section_id,activity)
+        apiSchoolRepositoriesTwo.isexamDetailsMark(isToken,class_test_id,section_id,class_test_subject_id,activity)
 
     }
 

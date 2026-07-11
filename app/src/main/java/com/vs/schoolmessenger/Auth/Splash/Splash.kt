@@ -58,6 +58,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.BusTracking.BusList
 import com.vs.schoolmessenger.Parent.BusTracking.LiveBusTracking
+import com.vs.schoolmessenger.Parent.ClassTestMark.Activity.ClassTest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
@@ -1156,6 +1157,31 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
                     // Build proper back stack
                     val pendingIntent = TaskStackBuilder.create(this).apply {
                         addParentStack(MessageFromManagement::class.java)
+                        addNextIntent(detailIntent)
+                    }.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    pendingIntent?.send()
+                }
+
+                (menu_id == Constant.M_CLASSTEST && receiverType == Constant.Student__) -> {
+                    val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+                    SharedPreference.putChildDetails(this, matchedChild!!)
+
+                    val detailIntent = Intent(this, ClassTest::class.java).apply {
+                        putExtra(Constant.menu_name, menu_name)
+                        putExtra(Constant.header_id, headerId)
+                        putExtra(Constant.receiver_type, receiverType)
+                        putExtra(Constant.receiverid, receiverId)
+                        putExtra(Constant.menu_id, menu_id)
+                        putExtra(Constant.msg_id, msg_id)
+                        putExtra(Constant.fromNotification, fromNotification)
+                    }
+                    // Build proper back stack
+                    val pendingIntent = TaskStackBuilder.create(this).apply {
+                        addParentStack(ClassTest::class.java)
                         addNextIntent(detailIntent)
                     }.getPendingIntent(
                         0,

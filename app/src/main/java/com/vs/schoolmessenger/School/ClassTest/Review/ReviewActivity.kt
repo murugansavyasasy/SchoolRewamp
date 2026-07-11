@@ -11,8 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -22,6 +26,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Standard.StandardActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
@@ -32,7 +37,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ReviewActivityBinding
 
 
-class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
+class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListener {
 
     private lateinit var adapter: ReviewAdapter
 
@@ -47,12 +52,20 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
 
     override fun setupViews() {
         super.setupViews()
-        window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            binding.statusBarBackground.layoutParams.height =
-                resources.getDimensionPixelSize(resourceId)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.statusBarBackground.layoutParams.height = statusBarHeight
             binding.statusBarBackground.requestLayout()
+
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val baseBottomMargin = resources.getDimensionPixelSize(R.dimen.five)
+            val lytContentParams =
+                binding.lytContent.layoutParams as LinearLayout.LayoutParams
+            lytContentParams.bottomMargin = baseBottomMargin + navBarHeight
+            binding.lytContent.layoutParams = lytContentParams
+
+            insets
         }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -61,6 +74,7 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
         setupStepIndicator()
         loadReviewData()
         setupButtons()
+        binding.viewreporttext.setOnClickListener(this)
         binding.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         appViewModel!!.isCreateClasstest?.observe(this) { response ->
@@ -178,11 +192,11 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
 
         binding.btnSubmit.isEnabled = canSubmit
         binding.btnSubmit.alpha = if (canSubmit) 1f else 0.5f
-        binding.btnSubmit.text = when {
-            totalTests == 0     -> "No activities to create"
-            hasEmptySubject     -> "Remove empty subjects to continue"
-            else                -> "  Create $totalTests Activities"
-        }
+//        binding.btnSubmit.text = when {
+//            totalTests == 0     -> "No activities to create"
+//            hasEmptySubject     -> "Remove empty subjects to continue"
+//            else                -> "  Create $totalTests Activities"
+//        }
     }
 
     private fun setupButtons() {
@@ -270,5 +284,15 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>() {
         binding.rcReviewList.visibility = View.GONE
         binding.lytList.visibility = View.VISIBLE
         binding.txtNoData.text = message
+    }
+    private fun RedirectToReport() {
+        val intent = Intent(this, ExamReportActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.viewreporttext-> RedirectToReport()
+        }
     }
 }

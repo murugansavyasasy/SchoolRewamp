@@ -25,9 +25,6 @@ class ClassTestAdapter(
 
     private val expandedPositions = mutableSetOf<Int>()
 
-    init {
-        examList.indices.forEach { expandedPositions.add(it) }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -46,7 +43,6 @@ class ClassTestAdapter(
         examList = newList
 
         expandedPositions.clear()
-        newList.indices.forEach { expandedPositions.add(it) }
 
         notifyDataSetChanged()
     }
@@ -57,11 +53,8 @@ class ClassTestAdapter(
             if (query.trim().isEmpty()) {
                 originalList
             } else {
-
                 originalList.filter { exam ->
-
                     exam.examName.contains(query, true) ||
-
                             exam.subjects.any {
                                 it.subjectName.contains(query, true)
                             }
@@ -69,7 +62,6 @@ class ClassTestAdapter(
             }
 
         expandedPositions.clear()
-        examList.indices.forEach { expandedPositions.add(it) }
 
         notifyDataSetChanged()
     }

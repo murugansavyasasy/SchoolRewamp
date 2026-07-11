@@ -5,16 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.ClassTestMark.Adapter.ClassTestAdapter
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestData
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ClasstestViewmarkBinding
 
@@ -28,6 +31,13 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
     private var isAccessToken: String? = null
     private lateinit var classTestAdapter: ClassTestAdapter
     private var classTestList: List<ClassTestData> = emptyList()
+
+    private var msg_id: Int = -1
+    private var headerId: String? = null
+    private var receiverId: String? = null
+    private var menu_name: String? = null
+    private var fromNotification: Boolean = false
+    var userDetails: UserDetails? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -48,6 +58,25 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
         binding.toolbarLayout.lblStudentName.text = childDetails?.name ?: ""
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
+
+        userDetails = SharedPreference.getUserDetails(this)
+        fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
+
+        if (fromNotification) {
+            Constant.isParentChoose = true
+            msg_id = intent.getIntExtra(Constant.msg_id, -1)
+            headerId = intent.getStringExtra(Constant.header_id)
+            receiverId = intent.getStringExtra(Constant.receiverid)
+            menu_name = intent.getStringExtra(Constant.menu_name)
+            Log.d(
+                "NoticeBoard_EXTRAS",
+                "Raw extras - headerId: $headerId, receiverId: $receiverId, menu_name: $menu_name"
+            )
+            val matchedChild = userDetails?.child_details?.find { it.child_id == receiverId }
+            SharedPreference.putChildDetails(this, matchedChild!!)
+            Constant.isSelectedMenuName = menu_name!!
+        }
+
 
         setupRecyclerView()
         isGetClassTestMark()

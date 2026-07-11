@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:background="@color/colorPrimaryRadiant">
     <LinearLayout
         android:id="@+id/lytHeader"
@@ -61,30 +62,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linear_layoutcreate"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/eight">
 
             <TextView
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/twenty"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/ten"
                 android:text="Select Subject"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/twenty_four_sp" />
 
             <TextView
                 android:id="@+id/viewreporttext"
                 style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/twenty"
-                android:text="View Reports >"
-                android:layout_marginTop="@dimen/one"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="View created test >>"
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:gravity="end"
                 android:textSize="@dimen/fourteen_sp" />
-
 
         </LinearLayout>
 
@@ -94,9 +100,19 @@
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/twenty"
+            android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
             android:text="Choose subjects to include in the test "
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginTop="@dimen/four"
+            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
@@ -191,7 +207,7 @@
                 android:id="@+id/btnBack"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/fourty"
                 android:layout_marginEnd="@dimen/eight"
                 android:layout_weight="0.35"
                 android:background="@drawable/rect_white_border_rounded"
@@ -204,7 +220,7 @@
                 android:id="@+id/btnContinue"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/fourty"
                 android:layout_weight="0.65"
                 android:background="@drawable/rect_primary_rounded"
                 android:text="Continue ›"

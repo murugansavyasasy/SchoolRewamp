@@ -24,6 +24,7 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -80,7 +81,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
     private val SUBJECT_CELL_GAP = 40
 
     private var markColumns: List<MarkColumn> = emptyList()
-    private val reviewFlagMap = mutableMapOf<String, String>() // kept for adapter signature; stays empty now
+    private val reviewFlagMap = mutableMapOf<String, String>()
 
     private var currentStudentsList: MutableList<StudentMarkList> = mutableListOf()
     private var originalStudentsList: MutableList<StudentMarkList> = mutableListOf()
@@ -88,6 +89,9 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
 
     private var classTestId: String = ""
     private var sectionId: String = ""
+    private var globalexamname: String = ""
+
+    private var classTestSubjectId: String = ""
 
     private var activeMarkEditText: WeakReference<EditText>? = null
     private lateinit var markSuggestionBar: LinearLayout
@@ -107,15 +111,21 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         binding.lytSearch.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.imgFilterStudentList.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        globalexamname = intent.getStringExtra(Constant.isExamName).orEmpty()
+        binding.toolbarLayout.lblParentToolBar.text = globalexamname
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+//        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+//        binding.toolbarLayout.lblSchoolName.text = globalexamname
 
         classTestId = intent.getStringExtra(Constant.CLASS_TEST_ID).orEmpty()
         sectionId = intent.getStringExtra(Constant.SECTION_ID).orEmpty()
+
+
+        classTestSubjectId = intent.getStringArrayListExtra(Constant.CLASS_TEST_SUBJECT_ID)
+            ?.joinToString(",")
+            ?: intent.getStringExtra(Constant.CLASS_TEST_SUBJECT_ID).orEmpty()
 
         binding.lblDisclaimerForAI.visibility = View.GONE
 
@@ -159,31 +169,11 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         }
 
         binding.lnrSaveAllMarks2.setOnClickListener {
-            val maxIssues = getMaxMarkIssues(currentStudentsList, markColumns)
-            if (maxIssues.isNotEmpty()) {
-                val message = maxIssues.joinToString("\n") {
-                    "• ${it.studentName} → ${it.subjectName} → ${it.activityName} → ${it.selected_name} (${it.enteredMark}/${it.maxMark})"
-                }
-                Constant.errorAlert1(
-                    this, getString(R.string.alert),
-                    getString(R.string.max_mark_exceeded_please_correct_the_marks, message)
-                )
-                return@setOnClickListener
-            }
+            validateAndConfirmMarks(isPublish = false)
+        }
 
-            val invalidIssues = getInvalidValueIssues(currentStudentsList, markColumns)
-            if (invalidIssues.isNotEmpty()) {
-                val message = invalidIssues.joinToString("\n") {
-                    "• ${it.studentName} → ${it.subjectName} → ${it.selectedname} (${it.enteredValue})"
-                }
-                Constant.errorAlert1(
-                    this, getString(R.string.alert),
-                    getString(R.string.invalid_mark_values_found_please_correct_them, message)
-                )
-                return@setOnClickListener
-            }
-
-            showSendConfirmationDialog()
+        binding.lnrPublish.setOnClickListener {
+            validateAndConfirmMarks(isPublish = true)
         }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
@@ -192,19 +182,121 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         setupSearch()
     }
 
+    private fun validateAndConfirmMarks(isPublish: Boolean) {
+        val maxIssues = getMaxMarkIssues(currentStudentsList, markColumns)
+        if (maxIssues.isNotEmpty()) {
+            showSimpleAlertDialog(
+                getString(R.string.alert),
+                "Entered marks exceed the maximum allowed marks for one or more subjects."
+            )
+            return
+        }
+
+        val invalidIssues = getInvalidValueIssues(currentStudentsList, markColumns)
+        if (invalidIssues.isNotEmpty()) {
+            showSimpleAlertDialog(
+                getString(R.string.alert),
+                "Please enter valid marks for all students."
+            )
+            return
+        }
+
+        if (isPublish) {
+            val missingIssues = getMissingMarkIssues(currentStudentsList, markColumns)
+            if (missingIssues.isNotEmpty()) {
+                showSimpleAlertDialog(
+                    getString(R.string.please_fill_all_marks_before_publishing_title),
+                    "Please fill all the marks for all students before publishing."
+                )
+                return
+            }
+        }
+
+        showSendConfirmationDialog(isPublish)
+    }
+
+    private fun showSimpleAlertDialog(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.OK_2)) { dialog, _ -> dialog.dismiss() }
+            .setCancelable(true)
+            .show()
+    }
+
+    private fun getMissingMarkIssues(
+        students: List<StudentMarkList>,
+        columns: List<MarkColumn>
+    ): List<InvalidMarkIssue> {
+
+        val issues = mutableListOf<InvalidMarkIssue>()
+
+        students.forEach { student ->
+            columns.forEachIndexed { index, column ->
+                val isEditable = student.isEditList.getOrNull(index) ?: true
+                if (!isEditable) return@forEachIndexed
+
+                val text = student.markTexts.getOrNull(index)?.trim().orEmpty()
+
+                if (text.isEmpty()) {
+                    issues.add(
+                        InvalidMarkIssue(
+                            studentName = student.name,
+                            subjectName = column.subjectName,
+                            selectedname = column.selected_name,
+                            enteredValue = ""
+                        )
+                    )
+                }
+            }
+        }
+
+        return issues
+    }
+
     private fun setupMarkSuggestionBar() {
+
         val btnAB = TextView(this).apply {
             text = "AB"
             setTextColor(ContextCompat.getColor(this@ClassUploadMarks, R.color.PrimaryColor))
             textSize = 15f
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            setTypeface(typeface, Typeface.BOLD)
             setPadding(32.dp, 12.dp, 32.dp, 12.dp)
             background = ContextCompat.getDrawable(
-                this@ClassUploadMarks, R.drawable.bg_ab_suggestion_chip
+                this@ClassUploadMarks,
+                R.drawable.bg_ab_suggestion_chip
             )
             setOnClickListener {
                 activeMarkEditText?.get()?.let { et ->
                     et.setText("AB")
+                    et.setSelection(et.text.length)
+                }
+            }
+        }
+
+
+        val btnNA = TextView(this).apply {
+            text = "NA"
+            setTextColor(ContextCompat.getColor(this@ClassUploadMarks, R.color.PrimaryColor))
+            textSize = 15f
+            setTypeface(typeface, Typeface.BOLD)
+            setPadding(32.dp, 12.dp, 32.dp, 12.dp)
+            background = ContextCompat.getDrawable(
+                this@ClassUploadMarks,
+                R.drawable.bg_ab_suggestion_chip
+            )
+
+            val params = LinearLayout.LayoutParams(
+                WRAP_CONTENT,
+                WRAP_CONTENT
+            ).apply {
+                marginStart = 12.dp
+            }
+            layoutParams = params
+
+            setOnClickListener {
+                activeMarkEditText?.get()?.let { et ->
+                    et.setText("NA")
                     et.setSelection(et.text.length)
                 }
             }
@@ -215,7 +307,9 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             setBackgroundColor(Color.TRANSPARENT)
             setPadding(16.dp, 8.dp, 16.dp, 8.dp)
             visibility = View.GONE
+
             addView(btnAB)
+            addView(btnNA)
         }
 
         val rootContent = findViewById<FrameLayout>(android.R.id.content)
@@ -239,7 +333,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             insets
         }
     }
-
     private fun onMarkFieldFocusChanged(focusedEditText: EditText?) {
         activeMarkEditText = if (focusedEditText != null) WeakReference(focusedEditText) else null
 
@@ -255,10 +348,15 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         }
     }
 
-
     private fun fetchExamDetailsMark() {
         Constant.showLoading(this)
-        appViewModel!!.isexamDetailsMark(isAccessToken!!, classTestId, sectionId, this)
+        appViewModel!!.isexamDetailsMark(
+            isAccessToken!!,
+            classTestId,
+            sectionId,
+            classTestSubjectId,
+            this
+        )
     }
 
     private fun toggleSearch(show: Boolean) {
@@ -406,6 +504,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             layout.addView(TextView(this).apply {
                 text = col.activityName
                 gravity = Gravity.CENTER
+                maxLines = 3
             })
 
             layout.addView(TextView(this).apply {
@@ -562,7 +661,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         currentStudentsList.clear()
         currentStudentsList.addAll(list)
         binding.rvMarks.adapter?.notifyDataSetChanged()
-
     }
 
     private fun genderWeight(gender: String?, asc: Boolean): Int {
@@ -775,7 +873,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
 
     private fun buildSaveMarksJson(
         students: List<StudentMarkList>,
-        columns: List<MarkColumn>
+        columns: List<MarkColumn>,
+        isPublish: Boolean
     ): JsonObject {
 
         val subjectMap = LinkedHashMap<String, MutableList<Pair<Int, MarkColumn>>>()
@@ -802,7 +901,6 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
                     val rawMark = student.markTexts.getOrNull(index)?.trim().orEmpty()
                     studentsArray.add(JsonObject().apply {
                         addProperty("student_id", student.student_id)
-                        addProperty("attendance", "P")
                         addProperty("mark", rawMark)
                         addProperty("remarks", "")
                     })
@@ -819,11 +917,12 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         return JsonObject().apply {
             addProperty("class_test_id", classTestId)
             addProperty("section_id", sectionId)
+            addProperty("is_publish", isPublish)
             add("subjects", subjectsArray)
         }
     }
 
-    fun showSendConfirmationDialog() {
+    fun showSendConfirmationDialog(isPublish: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -835,17 +934,58 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
         alertMessage.text = ""
         alertMessage.visibility = View.VISIBLE
-        lblSelectTarget.text = getString(R.string.are_you_want_to_save_the_marks)
+
+        lblSelectTarget.text = if (isPublish) {
+            getString(R.string.are_you_want_to_publish_the_marks)
+        } else {
+            getString(R.string.are_you_want_to_save_the_marks)
+        }
 
         okButton.setOnClickListener {
             Constant.showLoading(this@ClassUploadMarks)
-            val saveMarksJsonObject = buildSaveMarksJson(currentStudentsList, markColumns)
+            val saveMarksJsonObject = buildSaveMarksJson(currentStudentsList, markColumns, isPublish)
             Log.d("saveMarksJsonArray", saveMarksJsonObject.toString())
 
             appViewModel?.isexamdetailsmarkpost(isAccessToken!!, saveMarksJsonObject, this)
             alertDialog.dismiss()
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    private fun showIssueListDialog(title: String, issues: List<String>) {
+        val scrollView = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            val maxHeightPx = (resources.displayMetrics.heightPixels * 0.5).toInt()
+            viewTreeObserver.addOnGlobalLayoutListener {
+                if (height > maxHeightPx) {
+                    layoutParams = layoutParams.apply { height = maxHeightPx }
+                }
+            }
+        }
+
+        val messageText = TextView(this).apply {
+            text = issues.joinToString("\n") { "• $it" }
+            textSize = 14f
+            setPadding(40, 24, 40, 24)
+            setTextColor(ContextCompat.getColor(this@ClassUploadMarks, R.color.black))
+        }
+
+        scrollView.addView(messageText)
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(scrollView)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setView(container)
+            .setPositiveButton(getString(R.string.OK_2)) { dialog, _ -> dialog.dismiss() }
+            .setCancelable(true)
+            .show()
     }
 
     private fun getInvalidValueIssues(
@@ -861,6 +1001,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
 
                 if (text.isEmpty()) return@forEachIndexed
                 if (text.equals("AB", true)) return@forEachIndexed
+                if (text.equals("NA", true)) return@forEachIndexed
 
                 if (text.toDoubleOrNull() == null) {
                     val column = columns.getOrNull(index) ?: return@forEachIndexed

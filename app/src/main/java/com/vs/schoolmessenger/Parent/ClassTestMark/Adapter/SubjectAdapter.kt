@@ -14,7 +14,7 @@ class SubjectAdapter(
     private val subjects: List<TestSubjectData>
 ) : RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
 
-    private val expandedPositions = subjects.indices.toMutableSet()
+    private val expandedPositions = mutableSetOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val view = LayoutInflater.from(parent.context)

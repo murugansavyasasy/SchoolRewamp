@@ -196,15 +196,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //Hardcode from here
                     //Added the hardcode data
-                                        originalMenuList.add(
-                        MenuDetail(
-                            id = 789,
-                            name = "Class Test Create",
-                            description = "Creating Standard and Section"
-                        )
-                    )
-
-
 //                    originalMenuList.add(
 //                        MenuDetail(
 //                            id = 999,
@@ -734,7 +725,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 BusList::class.java
             )
 
-            Constant.M_STUDENTDATE -> Intent(
+            Constant.M_CLASSTEST -> Intent(
                 requireActivity(),
                 ClassTest::class.java
             )

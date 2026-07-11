@@ -15,6 +15,9 @@ data class ExamlistModel (
     @SerializedName("sent_on")
     val sentOn: String,
 
+    @SerializedName("can_delete")
+    val candelete: Boolean,
+
     @SerializedName("sections")
     val sections: List<SectionModeldata>
 )

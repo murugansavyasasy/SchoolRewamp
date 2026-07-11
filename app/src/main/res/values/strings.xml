@@ -1175,6 +1175,8 @@
     <string name="track_live">Track Live</string>
     <string name="find_my_bus">Find My Bus</string>
     <string name="only_mp3_m4a_wav_files_are_allowed">(only .mp3, .m4a, .wav files are allowed)</string>
-
+    <string name="are_you_want_to_publish_the_marks">Are you sure you want to publish the marks?</string>
+    <string name="please_fill_all_marks_before_publishing">Please fill in all marks before publishing:\n\n%s</string>
+    <string name="please_fill_all_marks_before_publishing_title">Please fill all marks before publishing</string>
 
 </resources>

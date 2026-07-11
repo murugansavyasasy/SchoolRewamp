@@ -3,6 +3,9 @@ package com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,12 +40,20 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
     }
     override fun setupViews() {
         super.setupViews()
-        window.statusBarColor = resources.getColor(R.color.PrimaryColor, theme)
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            binding.statusBarBackground.layoutParams.height =
-                resources.getDimensionPixelSize(resourceId)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, insets ->
+            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            binding.statusBarBackground.layoutParams.height = statusBarHeight
             binding.statusBarBackground.requestLayout()
+
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val baseBottomMargin = resources.getDimensionPixelSize(R.dimen.twenty)
+            val lytContentParams =
+                binding.lytContent.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+            lytContentParams.bottomMargin = baseBottomMargin + navBarHeight
+            binding.lytContent.layoutParams = lytContentParams
+
+            insets
         }
         sectionIds = intent.getStringExtra("SECTION_IDS") ?: ""
         binding.imgBack.setOnClickListener(this)
