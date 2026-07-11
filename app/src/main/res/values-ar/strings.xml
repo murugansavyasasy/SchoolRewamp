@@ -1174,5 +1174,8 @@
     <string name="drop">النزول</string>
     <string name="track_live">تتبع مباشر</string>
     <string name="find_my_bus">البحث عن حافلتي</string>
+    <string name="only_mp3_m4a_wav_files_are_allowed">
+    يسمح فقط بملفات MP3 وM4A وWAV
+</string>
 
 </resources>

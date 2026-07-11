@@ -100,6 +100,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
+                    android:textAlignment="viewStart"
                     android:layout_marginBottom="@dimen/ten"
                     android:gravity="start"
                     android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
@@ -263,6 +264,7 @@
                         android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginBottom="@dimen/ten"
                         android:gravity="start"
+                        android:textAlignment="viewStart"
                         android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
                         android:textSize="@dimen/thirteen_sp">
 

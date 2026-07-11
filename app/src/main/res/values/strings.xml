@@ -1174,6 +1174,7 @@
     <string name="drop">Drop</string>
     <string name="track_live">Track Live</string>
     <string name="find_my_bus">Find My Bus</string>
+    <string name="only_mp3_m4a_wav_files_are_allowed">(only .mp3, .m4a, .wav files are allowed)</string>
 
 
 </resources>

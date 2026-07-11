@@ -74,6 +74,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="viewStart"
                     android:layout_below="@+id/rytIsEmergency"
                     android:layout_marginStart="@dimen/thirteen"
                     android:layout_marginTop="@dimen/ten"
@@ -286,6 +287,7 @@
                     android:layout_below="@+id/lblTitleText"
                     android:layout_marginStart="@dimen/ten"
                     android:autoLink="web"
+                    android:textAlignment="viewStart"
                     android:linksClickable="true"
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/ten"
@@ -335,6 +337,7 @@
                         android:layout_marginEnd="@dimen/eight"
                         android:layout_toStartOf="@id/lblTimeText"
                         android:text="01 Apr 2024"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="visible"></TextView>
