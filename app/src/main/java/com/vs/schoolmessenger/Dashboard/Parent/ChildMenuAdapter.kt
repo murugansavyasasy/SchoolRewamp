@@ -135,7 +135,7 @@ class ChildMenuAdapter(
 //                Constant.M_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.ic_bus_green)
                 Constant.M_LIVE_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.bus_tracking_icon)
                 Constant.M_STUDENTDATE -> imgMenu.setImageResource(R.drawable.student_report)
-                Constant.M_CLASSTEST -> imgMenu.setImageResource(R.drawable.student_report)
+                Constant.M_CLASSTEST -> imgMenu.setImageResource(R.drawable.classtestprofile)
             }
 
             rlaMenu.setOnClickListener {
