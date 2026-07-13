@@ -544,10 +544,14 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
+
     private fun showFilterDialog() {
 
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_filter_student)
+
+        // Prevent dismiss on outside touch / back-area tap
+        dialog.setCanceledOnTouchOutside(false)
 
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -557,15 +561,27 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val container = dialog.findViewById<LinearLayout>(R.id.lytFilterContainer)
         val btnApply = dialog.findViewById<Button>(R.id.btnApply)
         val btnClear = dialog.findViewById<Button>(R.id.btnClear)
+        val imgClose = dialog.findViewById<ImageView>(R.id.imgCloseFilter)
 
         container.removeAllViews()
 
+        val onSelectionChanged: () -> Unit = {
+            updateApplyButtonState(container, btnApply)
+        }
+
         if (savedFilters.isEmpty()) {
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
         } else {
             savedFilters.forEach {
-                addFilterRow(container, it)
+                addFilterRow(container, it, onSelectionChanged)
             }
+        }
+
+        // Set initial Apply button state based on current rows
+        updateApplyButtonState(container, btnApply)
+
+        imgClose?.setOnClickListener {
+            dialog.dismiss()
         }
 
         btnApply.setOnClickListener {
@@ -574,12 +590,27 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             for (i in 0 until container.childCount) {
                 val row = container.getChildAt(i)
-                val type = row.findViewById<Spinner>(R.id.spnType).selectedItem.toString()
-                val value = row.findViewById<Spinner>(R.id.spnValue).selectedItem.toString()
+                val spnType = row.findViewById<Spinner>(R.id.spnType)
+                val spnValue = row.findViewById<Spinner>(R.id.spnValue)
 
+                val type = spnType.selectedItem?.toString() ?: "Select Type"
+
+                // Only read spnValue when the row actually has a type selected
+                // (spnValue has no adapter/selection while type == "Select Type")
                 if (type != "Select Type") {
+                    val value = spnValue.selectedItem?.toString() ?: "Ascending"
                     savedFilters.add(FilterState(type, value))
                 }
+            }
+
+            if (savedFilters.isEmpty()) {
+                // Safety net - Apply should already be disabled in this case
+                Toast.makeText(
+                    this,
+                    "Please select at least one filter type",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
 
             applySortUsingSavedFilters()
@@ -592,7 +623,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             savedFilters.clear()
 
             container.removeAllViews()
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
+            updateApplyButtonState(container, btnApply)
 
             currentStudentsList.clear()
             currentStudentsList.addAll(originalStudentsList)
@@ -602,6 +634,27 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         dialog.show()
+    }
+
+    /**
+     * Enables Apply only if at least one row in the filter dialog has a
+     * real type selected (i.e. not "Select Type").
+     */
+    private fun updateApplyButtonState(container: LinearLayout, btnApply: Button) {
+        var hasValidType = false
+
+        for (i in 0 until container.childCount) {
+            val row = container.getChildAt(i)
+            val spnType = row.findViewById<Spinner>(R.id.spnType)
+            val type = spnType.selectedItem?.toString()
+            if (!type.isNullOrBlank() && type != "Select Type") {
+                hasValidType = true
+                break
+            }
+        }
+
+        btnApply.isEnabled = hasValidType
+        btnApply.alpha = if (hasValidType) 1f else 0.5f
     }
 
     private fun applySortUsingSavedFilters() {
@@ -735,9 +788,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
     }
 
+
     private fun addFilterRow(
         container: LinearLayout,
-        state: FilterState? = null
+        state: FilterState? = null,
+        onSelectionChanged: (() -> Unit)? = null
     ) {
         val row = layoutInflater.inflate(R.layout.item_filter_row, container, false)
 
@@ -783,6 +838,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 } else {
                     lytValueSpinner.visibility = View.GONE
                 }
+
+                onSelectionChanged?.invoke()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -813,7 +870,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
 
             imgAdd.visibility = View.GONE
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
+            onSelectionChanged?.invoke()
         }
 
 

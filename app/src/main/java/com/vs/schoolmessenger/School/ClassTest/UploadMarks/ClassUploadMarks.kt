@@ -539,6 +539,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_filter_student)
 
+        dialog.setCanceledOnTouchOutside(false)
+
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -547,15 +549,26 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         val container = dialog.findViewById<LinearLayout>(R.id.lytFilterContainer)
         val btnApply = dialog.findViewById<Button>(R.id.btnApply)
         val btnClear = dialog.findViewById<Button>(R.id.btnClear)
+        val imgClose = dialog.findViewById<ImageView>(R.id.imgCloseFilter)
 
         container.removeAllViews()
 
+        val onSelectionChanged: () -> Unit = {
+            updateApplyButtonState(container, btnApply)
+        }
+
         if (savedFilters.isEmpty()) {
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
         } else {
             savedFilters.forEach {
-                addFilterRow(container, it)
+                addFilterRow(container, it, onSelectionChanged)
             }
+        }
+
+        updateApplyButtonState(container, btnApply)
+
+        imgClose?.setOnClickListener {
+            dialog.dismiss()
         }
 
         btnApply.setOnClickListener {
@@ -563,12 +576,25 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
 
             for (i in 0 until container.childCount) {
                 val row = container.getChildAt(i)
-                val type = row.findViewById<Spinner>(R.id.spnType).selectedItem.toString()
-                val value = row.findViewById<Spinner>(R.id.spnValue).selectedItem.toString()
+                val spnType = row.findViewById<Spinner>(R.id.spnType)
+                val spnValue = row.findViewById<Spinner>(R.id.spnValue)
+
+                val type = spnType.selectedItem?.toString() ?: "Select Type"
+
 
                 if (type != "Select Type") {
+                    val value = spnValue.selectedItem?.toString() ?: "Ascending"
                     savedFilters.add(FilterState(type, value))
                 }
+            }
+
+            if (savedFilters.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    "Please select at least one filter type",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
 
             applySortUsingSavedFilters()
@@ -579,7 +605,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             savedFilters.clear()
 
             container.removeAllViews()
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
+            updateApplyButtonState(container, btnApply)
 
             currentStudentsList.clear()
             currentStudentsList.addAll(originalStudentsList)
@@ -589,6 +616,23 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         }
 
         dialog.show()
+    }
+
+    private fun updateApplyButtonState(container: LinearLayout, btnApply: Button) {
+        var hasValidType = false
+
+        for (i in 0 until container.childCount) {
+            val row = container.getChildAt(i)
+            val spnType = row.findViewById<Spinner>(R.id.spnType)
+            val type = spnType.selectedItem?.toString()
+            if (!type.isNullOrBlank() && type != "Select Type") {
+                hasValidType = true
+                break
+            }
+        }
+
+        btnApply.isEnabled = hasValidType
+        btnApply.alpha = if (hasValidType) 1f else 0.5f
     }
 
     private fun applySortUsingSavedFilters() {
@@ -681,9 +725,11 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         }
     }
 
+
     private fun addFilterRow(
         container: LinearLayout,
-        state: FilterState? = null
+        state: FilterState? = null,
+        onSelectionChanged: (() -> Unit)? = null
     ) {
         val row = layoutInflater.inflate(R.layout.item_filter_row, container, false)
 
@@ -729,6 +775,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
                 } else {
                     lytValueSpinner.visibility = View.GONE
                 }
+
+                onSelectionChanged?.invoke()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -750,7 +798,8 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             }
 
             imgAdd.visibility = View.GONE
-            addFilterRow(container)
+            addFilterRow(container, onSelectionChanged = onSelectionChanged)
+            onSelectionChanged?.invoke()
         }
 
         if (container.childCount > 0) {
