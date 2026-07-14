@@ -11,16 +11,32 @@
         android:orientation="vertical"
         android:padding="@dimen/five">
 
-        <TextView
-            style="@style/CustomTextStylePoppinsBold1"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fifteen"
-            android:text="Sort the student list"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp">
+            android:layout_marginTop="@dimen/fifteen">
 
-        </TextView>
+            <TextView
+                style="@style/CustomTextStylePoppinsBold1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Sort the student list"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <ImageView
+                android:id="@+id/imgCloseFilter"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="Close"
+                android:padding="4dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:tint="@color/red"/>
+
+        </RelativeLayout>
 
         <!-- FILTER ROWS -->
         <LinearLayout
