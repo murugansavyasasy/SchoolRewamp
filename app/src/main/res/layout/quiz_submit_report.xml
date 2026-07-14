@@ -108,6 +108,7 @@
 
                 <TextView
                     android:id="@+id/tvTitle"
+                    android:textAlignment="viewStart"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,6 +139,7 @@
                     android:textSize="@dimen/eighteen_sp"></TextView>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/tvDescription"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"

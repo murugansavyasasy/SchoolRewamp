@@ -39,6 +39,7 @@
             android:layout_toEndOf="@id/avatarText"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textAlignment="viewStart"
             android:text="SARANRAJ SHANMUjnGAM"
             android:textColor="@android:color/black"
             android:textSize="@dimen/fifteen_sp" />
@@ -55,6 +56,7 @@
             android:layout_toEndOf="@id/avatarText"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textAlignment="viewStart"
             android:text="I - B"
             android:textColor="@color/light_gray_5"
             android:textSize="@dimen/thirteen_sp" />
@@ -69,6 +71,7 @@
             android:layout_marginTop="@dimen/six"
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
@@ -81,6 +84,7 @@
             android:layout_marginStart="@dimen/four"
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
