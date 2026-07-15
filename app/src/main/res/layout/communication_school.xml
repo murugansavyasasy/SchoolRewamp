@@ -631,7 +631,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_toEndOf="@+id/lblNExt"
-                            android:src="@drawable/rightwhitearrow" />
+                            android:src="@drawable/rightwhitearrow_2" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -911,7 +911,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_toEndOf="@+id/lblSend"
-                                android:src="@drawable/rightwhitearrow">
+                                android:src="@drawable/rightwhitearrow_2">
 
                             </ImageView>
                         </RelativeLayout>
