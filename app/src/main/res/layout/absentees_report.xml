@@ -160,6 +160,8 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:max="100"
                         android:progress="80"
+                        android:layoutDirection="locale"
+                        android:mirrorForRtl="true"
                         android:progressDrawable="@drawable/absentees_custom_progress" />
 
 
