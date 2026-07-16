@@ -71,7 +71,8 @@
             android:layout_marginTop="@dimen/six"
             android:layout_toEndOf="@id/avatarText"
             android:text="Submitted:"
-            android:textAlignment="viewStart"
+            android:layoutDirection="locale"
+            android:textDirection="locale"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
@@ -84,7 +85,8 @@
             android:layout_marginStart="@dimen/four"
             android:layout_toEndOf="@id/submittedLabel"
             android:text="Mon, 11"
-            android:textAlignment="viewStart"
+            android:layoutDirection="locale"
+            android:textDirection="locale"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
