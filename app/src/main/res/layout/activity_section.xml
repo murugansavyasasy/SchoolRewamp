@@ -42,7 +42,7 @@
                 android:layout_toStartOf="@id/lblStepInfo"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Create Class Test"
+                android:text="@string/create_class_test"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -54,7 +54,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="Step 2 of 5"
+                android:text="@string/step_2_of_5"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/ten"
-                android:text="Select Sections"
+                android:text="@string/select_sections"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="View created test >>"
+                android:text="@string/view_created_test"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
-            android:text="Standard I — select one or more"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
         <TextView
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
-            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
+            android:text="@string/class_description"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
@@ -182,7 +182,7 @@
                 android:layout_marginEnd="@dimen/eight"
                 android:layout_weight="0.35"
                 android:background="@drawable/rect_white_border_rounded"
-                android:text="‹ Back"
+                android:text="@string/back_text"
                 android:gravity="center"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/twele_sp" />
@@ -194,7 +194,7 @@
                 android:layout_height="@dimen/fourty"
                 android:layout_weight="0.65"
                 android:background="@drawable/rect_primary_rounded"
-                android:text="Continue ›"
+                android:text="@string/continue_text"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />

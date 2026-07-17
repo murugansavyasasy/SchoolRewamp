@@ -90,7 +90,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/mon"
+                    android:text="Mon"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -102,7 +102,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/tue"
+                    android:text="Tue"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -114,7 +114,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/wed"
+                    android:text="Wed"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -126,7 +126,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/thu"
+                    android:text="Thu"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -138,7 +138,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/fri"
+                    android:text="Fri"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -150,7 +150,7 @@
                     android:layout_marginBottom="@dimen/eight"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/sat"
+                    android:text="Sat"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />

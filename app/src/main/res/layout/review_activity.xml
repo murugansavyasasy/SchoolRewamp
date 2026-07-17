@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Create Class Test"
+                android:text="@string/create_class_test"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 style="@style/CustomTextStylePoppinsBold" />
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Step 5 of 5"
+                android:text="@string/step_5_of_5"
                 android:textColor="#CCFFFFFF"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -66,7 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Review"
+                android:text="@string/review"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"
-                android:text="View created test >>"
+                android:text="@string/view_created_test"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Almost done - confirm your entries"
+            android:text="@string/almost_done_confirm_your_entries"
             android:textColor="#CCFFFFFF"
             android:textSize="13sp" />
         <TextView
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/two"
             android:layout_marginTop="@dimen/four"
-            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
+            android:text="@string/class_description"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
     </LinearLayout>
@@ -130,7 +130,7 @@
             android:id="@+id/exam_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="klmaskldalmdlsmakld"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_marginStart="20dp"
@@ -180,7 +180,7 @@
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty"
-                android:text="Create Test"
+                android:text="@string/create_test"
                 android:gravity="center"
                 android:drawablePadding="8dp"
                 android:textColor="@color/white"
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty"
                 android:layout_marginTop="8dp"
-                android:text="Back"
+                android:text="@string/back"
                 android:gravity="center"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="14sp"

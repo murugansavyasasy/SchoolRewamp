@@ -981,6 +981,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         fromDateMillis: Long,
         preSelectedDate: String? = null
     ) {
+
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
         val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
@@ -998,11 +1005,30 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         val dialog = DatePickerDialog(
             context, { _, y, m, d ->
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
                 val cal = Calendar.getInstance()
                 cal.set(y, m, d)
                 listener.onDateSelected(sdf.format(cal.time))
             }, year, month, day
         )
+
+        dialog.setOnCancelListener {
+            // Restore locale if dialog is cancelled
+            Locale.setDefault(originalLocale)
+            context.resources.updateConfiguration(
+                Configuration(context.resources.configuration).apply {
+                    setLocale(originalLocale)
+                },
+                context.resources.displayMetrics
+            )
+        }
 
         // 🚫 Block FUTURE DATES
         dialog.datePicker.maxDate = System.currentTimeMillis()
@@ -1034,8 +1060,25 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         val datePickerDialog = DatePickerDialog(
             context, { _, selectedYear, selectedMonth, selectedDay ->
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -1043,6 +1086,17 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 listener.onDateSelected(formattedDate)
             }, year, month, day
         )
+
+        datePickerDialog.setOnCancelListener {
+            // Restore locale if dialog is cancelled
+            Locale.setDefault(originalLocale)
+            context.resources.updateConfiguration(
+                Configuration(context.resources.configuration).apply {
+                    setLocale(originalLocale)
+                },
+                context.resources.displayMetrics
+            )
+        }
 
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
 
@@ -1117,12 +1171,26 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             }
         }
 
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
             context, { _, selectedYear, selectedMonth, selectedDay ->
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
                 val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -1130,6 +1198,17 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 listener.onDateSelected(formattedDate)
             }, year, month, day
         )
+
+        datePickerDialog.setOnCancelListener {
+            // Restore locale if dialog is cancelled
+            Locale.setDefault(originalLocale)
+            context.resources.updateConfiguration(
+                Configuration(context.resources.configuration).apply {
+                    setLocale(originalLocale)
+                },
+                context.resources.displayMetrics
+            )
+        }
 
 
         datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000

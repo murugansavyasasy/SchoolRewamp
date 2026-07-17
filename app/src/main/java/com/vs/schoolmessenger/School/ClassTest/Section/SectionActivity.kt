@@ -47,9 +47,8 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickList
 
 
         binding.viewreporttext.setOnClickListener(this)
-        binding.lblStepInfo.text = "Step 2 of 5"
         binding.lblSubtitle.text =
-            "Standard ${Constant.isSelectedStandardName} — select one or more"
+            getString(R.string.standard_select_one_or_more, Constant.isSelectedStandardName)
 
         setupStepIndicator()
         loadSections()
@@ -79,9 +78,9 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickList
     private fun updateSelectionBadge(count: Int) {
         binding.lblSelectionCount.visibility = View.VISIBLE
         binding.lblSelectionCount.text = when (count) {
-            0 -> "0 sections selected"
-            1 -> "1 section selected"
-            else -> "$count sections selected"
+            0 -> getString(R.string._0_sections_selected)
+            1 -> getString(R.string._1_section_selected)
+            else -> getString(R.string.sections_selected, count)
         }
     }
     private fun setupButtons() {
