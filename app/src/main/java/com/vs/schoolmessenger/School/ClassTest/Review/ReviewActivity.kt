@@ -158,7 +158,7 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
     private fun loadReviewData() {
         val items = Constant.isClassTestItems
         if (items.isNullOrEmpty()) {
-            showError("No test data found")
+            showError(getString(R.string.no_test_data_found))
             return
         }
         binding.examName.text = Constant.isExamName
@@ -209,15 +209,17 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
         val examName = Constant.isExamName
 
         if (items.isNullOrEmpty()) {
-            Toast.makeText(this, "No test data found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_test_data_found), Toast.LENGTH_SHORT).show()
             return
         }
         if (items.sumOf { it.tests.size } == 0) {
-            Toast.makeText(this, "Please add at least one activity before submitting", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.please_add_at_least_one_activity_before_submitting), Toast.LENGTH_SHORT).show()
             return
         }
         if (items.any { it.tests.isEmpty() }) {
-            Toast.makeText(this, "Some subjects have no activities. Remove them first.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.some_subjects_have_no_activities_remove_them_first), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -229,13 +231,18 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
 
     private fun showSubmitConfirmationDialog(totalTests: Int, onConfirm: () -> Unit) {
         AlertDialog.Builder(this)
-            .setTitle("Create Activities?")
-            .setMessage("You're about to create $totalTests ${if (totalTests == 1) "activity" else "activity"}. This action cannot be undone. Do you want to continue?")
-            .setPositiveButton("Confirm") { dialog, _ ->
+            .setTitle(getString(R.string.create_activities))
+            .setMessage(
+                getString(
+                    R.string.you_re_about_to_create_this_action_cannot_be_undone_do_you_want_to_continue,
+                    totalTests,
+                    if (totalTests == 1) getString(R.string.activity) else getString(R.string.activity)
+                ))
+            .setPositiveButton(getString(R.string.lblConfirm)) { dialog, _ ->
                 dialog.dismiss()
                 onConfirm()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .setCancelable(true)
@@ -274,7 +281,7 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
     private fun showLoading(show: Boolean) {
         binding.btnSubmit.isEnabled = !show
         if (show) {
-            binding.btnSubmit.text = "Submitting..."
+            binding.btnSubmit.text = getString(R.string.submitting)
         } else {
             updateSubmitButtonState()
         }

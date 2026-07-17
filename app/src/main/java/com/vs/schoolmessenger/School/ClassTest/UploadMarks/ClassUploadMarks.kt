@@ -187,7 +187,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         if (maxIssues.isNotEmpty()) {
             showSimpleAlertDialog(
                 getString(R.string.alert),
-                "Entered marks exceed the maximum allowed marks for one or more subjects."
+                getString(R.string.entered_marks_exceed_the_maximum_allowed_marks_for_one_or_more_subjects)
             )
             return
         }
@@ -196,7 +196,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
         if (invalidIssues.isNotEmpty()) {
             showSimpleAlertDialog(
                 getString(R.string.alert),
-                "Please enter valid marks for all students."
+                getString(R.string.please_enter_valid_marks_for_all_students)
             )
             return
         }
@@ -206,7 +206,7 @@ class ClassUploadMarks : BaseActivity<ClassUploadReviewBinding>(), View.OnClickL
             if (missingIssues.isNotEmpty()) {
                 showSimpleAlertDialog(
                     getString(R.string.please_fill_all_marks_before_publishing_title),
-                    "Please fill all the marks for all students before publishing."
+                    getString(R.string.please_fill_all_the_marks_for_all_students_before_publishing)
                 )
                 return
             }

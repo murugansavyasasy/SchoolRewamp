@@ -215,7 +215,7 @@ class StandardActivity : BaseActivity<SelectStandardCreateBinding>(), View.OnCli
             if (!::adapter.isInitialized || adapter.getSelectedStandardId() == null) {
                 Toast.makeText(
                     this,
-                    "Please select a standard to continue",
+                    getString(R.string.please_select_a_standard_to_continue),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
