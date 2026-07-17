@@ -67,6 +67,7 @@
                     android:layout_toEndOf="@id/imgSearch1"
                     android:background="@android:color/transparent"
                     android:hint="@string/lblSearch"
+                    android:textAlignment="viewStart"
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:scrollHorizontally="true"

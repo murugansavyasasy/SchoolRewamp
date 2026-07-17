@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/lblRoomNo"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
@@ -60,6 +61,7 @@
             android:id="@+id/lblStudentsBeds"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
+            android:textAlignment="viewStart"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:text=""
@@ -73,6 +75,7 @@
 
         <TextView
             android:id="@+id/lblHostelName"
+            android:textAlignment="viewStart"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

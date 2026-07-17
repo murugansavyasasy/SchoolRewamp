@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
+            android:textAlignment="viewStart"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
@@ -39,6 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
+            android:textAlignment="viewStart"
+
             android:lines="3"
             android:autoLink="web"
             android:linksClickable="true"
@@ -51,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
+            android:textAlignment="viewStart"
             android:orientation="horizontal">
 
             <ImageView
@@ -73,6 +77,7 @@
 
 
         <LinearLayout
+            android:textAlignment="viewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"

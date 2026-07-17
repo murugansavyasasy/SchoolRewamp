@@ -255,6 +255,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Today Meetings"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 
@@ -277,6 +278,7 @@
                     android:layout_below="@+id/rcyToday"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
+                    android:textAlignment="viewStart"
                     android:text="@string/upcoming_meetings"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"></TextView>
@@ -302,6 +304,7 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:text="Completed Meetings"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"></TextView>
 

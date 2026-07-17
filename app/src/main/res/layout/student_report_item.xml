@@ -66,6 +66,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
                             android:text="@string/admission_no"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black">
 
                         </TextView>
@@ -89,6 +90,7 @@
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
                             android:text="1785278272"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black">
 
                         </TextView>
@@ -111,6 +113,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
                             android:text="@string/Gender"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black">
 
                         </TextView>
@@ -134,6 +137,7 @@
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
                             android:text="Male"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black">
 
                         </TextView>
@@ -156,6 +160,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.26"
                             android:text="@string/Dateofbirth"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black">
 
                         </TextView>
@@ -178,6 +183,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.26"
+                            android:textAlignment="viewStart"
                             android:text="Apr 1 , 2021"
                             android:textColor="@color/black">
 
@@ -238,6 +244,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
+                        android:textAlignment="viewStart"
                         android:text="@string/Fathername">
 
                     </TextView>
@@ -258,6 +265,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
+                        android:textAlignment="viewStart"
                         android:text="Ganesan">
 
                     </TextView>
@@ -279,6 +287,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
+                        android:textAlignment="viewStart"
                         android:text="@string/roll_no">
 
                     </TextView>
@@ -299,6 +308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
+                        android:textAlignment="viewStart"
                         android:text="21">
 
                     </TextView>
@@ -321,6 +331,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.3"
+                        android:textAlignment="viewStart"
                         android:text="@string/class_teacher_2">
 
                     </TextView>
@@ -341,6 +352,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.22"
+                        android:textAlignment="viewStart"
                         android:text="Abi">
 
                     </TextView>
