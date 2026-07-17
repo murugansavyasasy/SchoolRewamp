@@ -441,7 +441,7 @@
     <string name="type_your_message_here">พิมพ์ข้อความของคุณที่นี่...</string>
     <string name="delete">ลบ</string>
     <string name="yet_to_start">ยังไม่เริ่ม</string>
-    <string name="in_progress">กำลังดำเนินการ</string>
+    <string name="in_progress_text">กำลังดำเนินการ</string>
     <string name="your_locations">ตำแหน่งของคุณ</string>
     <string name="use_fingerprint_or_mobile_number_to_login">ใช้ลายนิ้วมือหรือหมายเลขโทรศัพท์มือถือเพื่อเข้าสู่ระบบ</string>
     <string name="fd_full_day">FD: เต็มวัน</string>

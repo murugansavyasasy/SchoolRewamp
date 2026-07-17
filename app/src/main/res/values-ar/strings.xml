@@ -441,7 +441,7 @@
     <string name="type_your_message_here">اكتب رسالتك هنا...</string>
     <string name="delete">حذف</string>
     <string name="yet_to_start">لم يبدأ بعد</string>
-    <string name="in_progress">قيد التنفيذ</string>
+    <string name="in_progress_text">قيد التنفيذ</string>
     <string name="your_locations">مواقعك</string>
     <string name="use_fingerprint_or_mobile_number_to_login">استخدم البصمة أو رقم الجوال لتسجيل الدخول</string>
     <string name="fd_full_day">FD: يوم كامل</string>

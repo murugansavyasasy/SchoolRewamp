@@ -441,7 +441,7 @@
     <string name="type_your_message_here">अपना संदेश यहाँ टाइप करें...</string>
     <string name="delete">हटाएं</string>
     <string name="yet_to_start">अभी शुरू नहीं हुआ</string>
-    <string name="in_progress">प्रगति पर</string>
+    <string name="in_progress_text">प्रगति पर</string>
     <string name="your_locations">आपके स्थान</string>
     <string name="use_fingerprint_or_mobile_number_to_login">लॉगिन करने के लिए फिंगरप्रिंट या मोबाइल नंबर का उपयोग करें</string>
     <string name="fd_full_day">FD: पूरा दिन</string>

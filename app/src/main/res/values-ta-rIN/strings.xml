@@ -441,7 +441,7 @@
     <string name="type_your_message_here">உங்கள் செய்தியை இங்கே தட்டச்சு செய்யவும்...</string>
     <string name="delete">அழி</string>
     <string name="yet_to_start">இன்னும் தொடங்கவில்லை</string>
-    <string name="in_progress">நடைபெறுகிறது</string>
+    <string name="in_progress_text">நடைபெறுகிறது</string>
     <string name="your_locations">உங்கள் இடங்கள்</string>
     <string name="use_fingerprint_or_mobile_number_to_login">உள்நுழைய கைரேகை அல்லது மொபைல் எண்ணை பயன்படுத்தவும்</string>
     <string name="fd_full_day">FD: முழு நாள்</string>

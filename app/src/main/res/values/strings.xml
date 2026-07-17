@@ -441,7 +441,7 @@
     <string name="type_your_message_here">Type your message here...</string>
     <string name="delete">Delete</string>
     <string name="yet_to_start">Yet to Start</string>
-    <string name="in_progress">In Progress</string>
+    <string name="in_progress_text">In Progress</string>
     <string name="your_locations">Your Locations</string>
     <string name="use_fingerprint_or_mobile_number_to_login">Use Fingerprint or Mobile Number to login</string>
     <string name="fd_full_day">FD: Full Day</string>
