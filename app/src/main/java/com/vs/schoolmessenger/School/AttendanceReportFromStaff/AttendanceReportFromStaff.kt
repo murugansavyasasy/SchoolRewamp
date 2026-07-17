@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.AttendanceReportFromStaff
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
@@ -322,11 +323,26 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
     private fun openFromDatePicker() {
 
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(this.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        this.resources.updateConfiguration(config, this.resources.displayMetrics)
+
         val calendar = Calendar.getInstance()
 
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
+
+                Locale.setDefault(originalLocale)
+                this.resources.updateConfiguration(
+                    Configuration(this.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    this.resources.displayMetrics
+                )
 
                 val selectedCal = Calendar.getInstance()
                 selectedCal.set(year, month, dayOfMonth)

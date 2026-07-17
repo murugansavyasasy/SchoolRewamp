@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.res.Configuration
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -310,6 +311,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             R.id.rytPickFromTime -> {
                 val calendar = Calendar.getInstance()
+
+                val originalLocale = Locale.getDefault()
+                Locale.setDefault(Locale.ENGLISH)
+
+                val config = Configuration(this.resources.configuration)
+                config.setLocale(Locale.ENGLISH)
+                this.resources.updateConfiguration(config, this.resources.displayMetrics)
                 TimePickerDialog(
                     this,
                     { _, hour, minute ->
@@ -321,6 +329,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             set(Calendar.MILLISECOND, 0)
                         }
 
+                        Locale.setDefault(originalLocale)
+                        this.resources.updateConfiguration(
+                            Configuration(this.resources.configuration).apply {
+                                setLocale(originalLocale)
+                            },
+                            this.resources.displayMetrics
+                        )
                         // Format today and compare properly
                         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                         val todayStr = sdf.format(now.time)
@@ -352,7 +367,6 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                                 return@TimePickerDialog
                             }
                         }
-
                         // Save and display
                         startCalendar = chosenTime
                         binding.lblFromTime.text =
@@ -382,6 +396,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 }
 
                 val calendar = Calendar.getInstance()
+
+                val originalLocale = Locale.getDefault()
+                Locale.setDefault(Locale.ENGLISH)
+
+                val config = Configuration(this.resources.configuration)
+                config.setLocale(Locale.ENGLISH)
+                this.resources.updateConfiguration(config, this.resources.displayMetrics)
                 TimePickerDialog(
                     this,
                     { _, hour, minute ->
@@ -391,6 +412,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             set(Calendar.SECOND, 0)
                             set(Calendar.MILLISECOND, 0)
                         }
+
+                        Locale.setDefault(originalLocale)
+                        this.resources.updateConfiguration(
+                            Configuration(this.resources.configuration).apply {
+                                setLocale(originalLocale)
+                            },
+                            this.resources.displayMetrics
+                        )
+
 
                         when {
                             endCalendar!!.before(startCalendar) -> {

@@ -9,6 +9,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Paint
 import android.media.MediaPlayer
 import android.media.MediaRecorder
@@ -85,8 +86,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var toHour24: Int? = null
     private var toMinute: Int? = null
     private var isFromTime = true
-
-
     private var isInitialized = false
     private var selectedDatesAdapter: SelectedDatesAdapter? = null
 
@@ -352,10 +351,27 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
         val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
 
+        //        // Force English locale globally for this dialog creation
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         var isTimeSelected = false
 
         val timePicker = TimePickerDialog(
             context, { _, selectedHour, selectedMinute ->
+
+                // Restore original locale after selection
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
 
                 isTimeSelected = true
 
@@ -445,6 +461,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (!isFromTime && !isTimeSelected &&
                 fromHour24 != null && fromMinute != null
             ) {
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
                 val cal = Calendar.getInstance().apply {
                     set(Calendar.HOUR_OF_DAY, fromHour24!!)
                     set(Calendar.MINUTE, fromMinute!!)
