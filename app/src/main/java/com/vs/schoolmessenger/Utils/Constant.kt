@@ -8,6 +8,7 @@ import android.app.Dialog
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -1420,9 +1421,27 @@ object Constant {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         val datePickerDialog = DatePickerDialog(
             context,
             { _, selectedYear, selectedMonth, selectedDay ->
+
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
+
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
@@ -1432,6 +1451,11 @@ object Constant {
             },
             year, month, day
         )
+
+        datePickerDialog.setOnDismissListener {
+            restoreLocale(context, originalLocale)
+        }
+
         datePickerDialog.datePicker.minDate = minDate ?: Calendar.getInstance().timeInMillis
 
         maxDate?.let {
@@ -1443,6 +1467,13 @@ object Constant {
         }
 
         datePickerDialog.show()
+    }
+
+    private fun restoreLocale(context: Context, originalLocale: Locale) {
+        Locale.setDefault(originalLocale)
+        val restoreConfig = Configuration(context.resources.configuration)
+        restoreConfig.setLocale(originalLocale)
+        context.resources.updateConfiguration(restoreConfig, context.resources.displayMetrics)
     }
 
 
@@ -2901,6 +2932,14 @@ object Constant {
         preSelectedDate: String? = null,
         onDateSelected: (String) -> Unit
     ) {
+
+
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
         val calendar = Calendar.getInstance()
 
         // If a previously selected date exists, use it
@@ -2923,6 +2962,15 @@ object Constant {
         val datePicker = DatePickerDialog(
             context,
             { _, selectedYear, selectedMonth, selectedDay ->
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
                 val pickedCalendar = Calendar.getInstance()
                 pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
 

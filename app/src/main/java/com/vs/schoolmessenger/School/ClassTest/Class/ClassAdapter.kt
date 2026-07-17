@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Class
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,8 +20,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.TestEntry
 import java.util.Calendar
+import java.util.Locale
 
-class ClassAdapter(
+class ClassAdapter(var context: Context,
     private val items: MutableList<ClassTestItem>
 ) : RecyclerView.Adapter<ClassAdapter.SubjectViewHolder>() {
 
@@ -268,11 +270,29 @@ class ClassAdapter(
 
         if (test.testDate.isNotEmpty()) tvTestDate.text = test.testDate
         tvTestDate.setOnClickListener {
+
+            val originalLocale = Locale.getDefault()
+            Locale.setDefault(Locale.ENGLISH)
+
+            val config = Configuration(context.resources.configuration)
+            config.setLocale(Locale.ENGLISH)
+            context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
             val cal = Calendar.getInstance()
 
             val datePickerDialog = DatePickerDialog(
                 ctx,
                 { _, y, m, d ->
+
+                    Locale.setDefault(originalLocale)
+                    context.resources.updateConfiguration(
+                        Configuration(context.resources.configuration).apply {
+                            setLocale(originalLocale)
+                        },
+                        context.resources.displayMetrics
+                    )
+
+
                     val s = "%02d/%02d/%04d".format(d, m + 1, y)
                     test.testDate = s
                     tvTestDate.text = s

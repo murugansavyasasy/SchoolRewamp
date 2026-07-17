@@ -234,7 +234,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
     private fun buildAdapter(items: List<ClassTestItem>) {
         items.firstOrNull()?.isExpanded = true
-        adapter = ClassAdapter(items.toMutableList())
+        adapter = ClassAdapter(this,items.toMutableList())
         binding.rcClassList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ClassActivity.adapter

@@ -66,6 +66,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         isAccessToken = isStaffDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
+
         val calendarFragment = CustomAbsenteesCalendarFragment.newInstance(
             minDate = "2020-01-01",
             maxDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()),
