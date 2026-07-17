@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="testing iOS"
+            android:text=""
             android:textColor="#1A1A2E"
             android:textSize="14sp" />
 
@@ -43,7 +43,7 @@
             android:background="@drawable/bg_session_chip"
             android:gravity="center"
             android:paddingHorizontal="10dp"
-            android:text="FN"
+            android:text="@string/fn"
             android:textColor="@color/PrimaryColor"
             android:textSize="11sp" />
 
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Remove"
+            android:text="@string/remove"
             android:textColor="#FF3B30"
             android:textSize="12sp" />
     </LinearLayout>
@@ -82,8 +82,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DATE"
+                android:text="@string/date"
                 android:textColor="#9E9E9E"
+                android:textAllCaps="true"
                 android:textSize="10sp" />
 
             <TextView
@@ -92,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="30/06/2026"
+                android:text=""
                 android:textColor="#1A1A2E"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -113,7 +114,8 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MAX"
+                android:text="@string/Max"
+                android:textAllCaps="true"
                 android:textColor="#9E9E9E"
                 android:textSize="10sp" />
 
@@ -144,7 +146,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MIN"
+                android:text="@string/min"
                 android:textColor="#9E9E9E"
                 android:textSize="10sp" />
 
@@ -175,7 +177,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SYLLABUS"
+            android:text="@string/syllabus"
             android:textColor="#9E9E9E"
             android:textSize="10sp" />
 

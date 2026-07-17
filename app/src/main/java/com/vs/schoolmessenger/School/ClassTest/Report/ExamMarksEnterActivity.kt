@@ -44,7 +44,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
             statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "View Test & Enter marks"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.view_test_enter_marks)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -124,11 +124,11 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
 
     private fun rebuildItemsFromSubjects(subjects: List<com.vs.schoolmessenger.School.ClassTest.Report.Model.SubjectModeldata>) {
         if (subjects.isNullOrEmpty()) {
-            showError("No subjects found for this section")
+            showError(getString(R.string.no_subjects_found_for_this_section))
             return
         }
 
-        val sectionLabel = "Section ${Constant.isSelectedSectionName}"
+        val sectionLabel = getString(R.string.section, Constant.isSelectedSectionName)
 
         val items = subjects.map { subject ->
             ClassTestItem(
@@ -178,9 +178,9 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
         }
 
         AlertDialog.Builder(this)
-            .setMessage("Are you sure you want to delete this activity?")
+            .setMessage(getString(R.string.are_you_sure_you_want_to_delete_this_activity))
             .setCancelable(true)
-            .setPositiveButton("Delete") { dialog, _ ->
+            .setPositiveButton(getString(R.string.delete)) { dialog, _ ->
                 dialog.dismiss()
                 pendingDeleteItemPos = itemPos
                 pendingDeleteTestIndex = testIndex
@@ -196,7 +196,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
                     this
                 )
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
@@ -204,7 +204,7 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
         AlertDialog.Builder(this)
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("OK") { dialog, _ ->
+            .setPositiveButton(getString(R.string.OK_2)) { dialog, _ ->
                 dialog.dismiss()
                 onOkClick?.invoke()
             }
@@ -216,11 +216,11 @@ class ExamMarksEnterActivity : BaseActivity<ExamMarksEnterBinding>() {
 
         val subjects = Constant.isExamReportSubjects
         if (subjects.isNullOrEmpty()) {
-            showError("No subjects found for this section")
+            showError(getString(R.string.no_subjects_found_for_this_section))
             return
         }
 
-        val sectionLabel = "Section ${Constant.isSelectedSectionName}"
+        val sectionLabel = getString(R.string.section, Constant.isSelectedSectionName)
 
         val items = subjects.map { subject ->
             ClassTestItem(
