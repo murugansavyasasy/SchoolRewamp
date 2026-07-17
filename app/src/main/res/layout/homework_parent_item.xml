@@ -34,6 +34,7 @@
             android:layout_marginTop="@dimen/five"
             android:layout_toStartOf="@+id/rytImage"
             android:text="Science"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
@@ -115,6 +116,7 @@
         android:layout_marginEnd="@dimen/ten"
         android:ellipsize="end"
         android:maxLines="2"
+        android:textAlignment="viewStart"
         android:text="Tomorrow Exam on Science Chapter 5......"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp"

@@ -153,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one"
+                    android:textAlignment="viewStart"
                     android:layout_marginBottom="@dimen/ten"
                     android:text="Reason: Fever"
                     android:textSize="@dimen/fourteen_sp" />

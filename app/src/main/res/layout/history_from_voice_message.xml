@@ -167,6 +167,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text=""
+                        android:textAlignment="viewStart"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/twele_sp"></TextView>
 
@@ -178,6 +179,8 @@
                         android:layout_marginEnd="@dimen/eight"
                         android:layout_toStartOf="@id/lblTime"
                         android:text=""
+                        android:textAlignment="viewStart"
+
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
                         android:visibility="visible"></TextView>
@@ -275,6 +278,7 @@
                     android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/ten"
                     android:text="Friday Leave"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -303,6 +307,7 @@
                     android:layout_below="@+id/lblContentText"
                     android:layout_marginStart="@dimen/ten"
                     android:text="@string/View"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/navi_blue2"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"

@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:clickable="false"
+                    android:textAlignment="viewStart"
                     android:focusable="false"
                     android:paddingHorizontal="@dimen/ten">
 
@@ -135,6 +136,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:editable="true"
+                    android:textAlignment="viewStart"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
