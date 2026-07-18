@@ -538,8 +538,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Constant.selectedFiles.clear()
         if (checkAndRequestPermissions(this)) {
             val dir = externalCacheDir ?: cacheDir
-            val timeStamp =
-                SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+//            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmssSSS, Locale.getDefault()).format(Date())
             val fileName = "${Constant.original_}$timeStamp${Constant.m4a}"
             val filePath = "${dir.absolutePath}/$fileName"
             audioFilePath = filePath
@@ -1941,7 +1941,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 val extension = getAudioExtension(uri)
 
                 val timeStamp = SimpleDateFormat(
-                    Constant.yyyyMMdd_HHmmss,
+                    Constant.yyyyMMdd_HHmmssSSS,
                     Locale.getDefault()
                 ).format(Date())
 

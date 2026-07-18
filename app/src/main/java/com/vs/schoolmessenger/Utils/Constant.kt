@@ -128,7 +128,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 217
+    var isVersionId = 218
 
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
@@ -498,6 +498,7 @@ object Constant {
     var packagename = "package"
     var timeForMateWithAMPM = "%02d:%02d %s"
     var yyyyMMdd_HHmmss = "yyyyMMdd_HHmmss"
+    val yyyyMMdd_HHmmssSSS = "yyyyMMdd_HHmmss_SSS"
     var tel = "tel:"
     var mailto = "mailto:"
     var sms = "sms:"

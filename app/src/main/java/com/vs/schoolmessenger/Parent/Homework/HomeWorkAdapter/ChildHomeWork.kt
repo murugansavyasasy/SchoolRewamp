@@ -1579,7 +1579,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         if (isRecording) return
 
         val timeStamp: String =
-            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmssSSS, Locale.getDefault()).format(Date())
         val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
         val audioFile: File = try {
             File.createTempFile("AUDIO_${timeStamp}_", Constant.wav, storageDir)
