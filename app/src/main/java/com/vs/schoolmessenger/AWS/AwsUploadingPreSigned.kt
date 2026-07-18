@@ -61,7 +61,8 @@ class AwsUploadingPreSigned {
                 M_COMMUNICATION -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
                     isFolderName = "voice/original"
-                    bucketPath = "$isFolderName/$currentDate"
+//                    bucketPath = "$isFolderName/$currentDate"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
 
                 }
 

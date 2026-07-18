@@ -499,6 +499,7 @@ object Constant {
     var packagename = "package"
     var timeForMateWithAMPM = "%02d:%02d %s"
     var yyyyMMdd_HHmmss = "yyyyMMdd_HHmmss"
+    val yyyyMMdd_HHmmssSSS = "yyyyMMdd_HHmmss_SSS"
     var tel = "tel:"
     var mailto = "mailto:"
     var sms = "sms:"

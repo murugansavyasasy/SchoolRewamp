@@ -14,6 +14,7 @@
         android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:layout_weight="0.8"
+        android:textAlignment="viewStart"
         android:text="@string/subject_name"
         android:textSize="@dimen/twele_sp">
 
