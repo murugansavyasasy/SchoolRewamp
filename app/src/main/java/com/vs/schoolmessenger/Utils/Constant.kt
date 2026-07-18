@@ -2256,22 +2256,26 @@ object Constant {
     }
 
     //We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
-    //We use this to convert the Date Format 12 May 2025 to 12 Monday(we get Date And Day)
     fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
         return try {
-            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH) // force English
-            val dayNameFormat =
-                SimpleDateFormat("EEEE", Locale.getDefault())   // still localized day name
-            val dayNumberFormat = SimpleDateFormat("dd", Locale.ENGLISH)        // day number
+
+            val locale = Locale.getDefault()
+
+            val inputFormat = SimpleDateFormat("dd MMM yyyy", locale)
 
             val date = inputFormat.parse(inputDateStr)!!
-            val dayName = dayNameFormat.format(date)     // localized day name
-            val dayNumber = dayNumberFormat.format(date) // e.g., 13
+
+            val dayNumber =
+                SimpleDateFormat("dd", locale).format(date)
+
+            val dayName =
+                SimpleDateFormat("EEEE", locale).format(date)
 
             Pair(dayNumber, dayName)
+
         } catch (e: Exception) {
             e.printStackTrace()
-            Pair("", "") // fallback
+            Pair("", "")
         }
     }
     @SuppressLint("SimpleDateFormat")

@@ -64,6 +64,7 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant.isCommunicationType
 import com.vs.schoolmessenger.Utils.Constant.selectedFiles
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -498,7 +499,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
 
                 Constant.DatePicker(this, false, defaultDate = defaultCal) { selectedDate ->
-                    txtStartDate = Constant.covertDateFormate(selectedDate)
+                    txtStartDate = DateFormatterUtil.normalizeToApiFormat(Constant.covertDateFormate(selectedDate))
                     val (_, formattedDate) = Constant.getDayAndDateOnly2(txtStartDate.toString())// 13 Monday
                     binding.lblDay.text = formattedDate
                     binding.txtStartDate.text = txtStartDate
@@ -552,7 +553,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     minDate = minDate,
                     maxDate = maxDate
                 ) { selectedDate ->
-                    txtEndDate = Constant.covertDateFormate(selectedDate)
+                    txtEndDate = DateFormatterUtil.normalizeToApiFormat(Constant.covertDateFormate(selectedDate))
                     val (_, endformattedDate) = Constant.getDayAndDateOnly2(txtEndDate.toString())
                     binding.lblEndDay.text = endformattedDate
                     binding.txtEndDate.text = txtEndDate
@@ -896,8 +897,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private fun isRedirectToSchoolList() {
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
-        val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
-        val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
+        val txtEndDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(txtEndDate!!))
+        val txtStartDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(txtStartDate!!))
         if (title.isEmpty()) {
             binding.txtTitle.error = getString(R.string.This_field_required)
             binding.txtTitle.requestFocus()
@@ -1240,8 +1241,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
-        val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
-        val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
+        val txtEndDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(txtEndDate!!))
+        val txtStartDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(txtStartDate!!))
         jsonObject.addProperty(APIKeyNames.id, noticeboardData!!.id)
         jsonObject.addProperty(APIKeyNames.title, binding.txtTitle.text.toString())
         jsonObject.addProperty(APIKeyNames.description, binding.txtDesc.text.toString())

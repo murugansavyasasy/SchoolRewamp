@@ -65,6 +65,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -637,7 +638,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val today = Calendar.getInstance()
 
         val selectedDate = try {
-            val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+            val sdf = SimpleDateFormat(
+                "dd MMM yyyy",
+                Locale.getDefault()
+            )
             sdf.parse(binding.txtStartDate.text.toString())
         } catch (e: Exception) {
             null
@@ -716,7 +720,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
                 // GET SELECTED DATE FROM TEXTVIEW
                 val effectiveSelectedDate = try {
-                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                    val sdf = SimpleDateFormat(
+                        "dd MMM yyyy",
+                        Locale.getDefault()
+                    )
                     val date = sdf.parse(binding.txtStartDate.text.toString())
                     Calendar.getInstance().apply {
                         time = date!!
@@ -1217,8 +1224,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val txtLocation = binding.txtLocation.text.toString().trim()
         val txtTitle = binding.txtTitle.text.toString().trim()
         val txtDesc = binding.txtDesc.text.toString().trim()
-        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
-        val txtStartTime = binding.txtStartTime.text.toString().trim()
+        val txtStartDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(binding.txtStartDate.text.toString()))
+        val txtStartTime = DateFormatterUtil.normalizeToApiFormat(binding.txtStartTime.text.toString().trim())
 
         if (txtLocation.isEmpty()) {
             binding.txtLocation.error = getString(R.string.This_field_required)
@@ -1568,10 +1575,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         jsonObject.addProperty(APIKeyNames.file_size, "")
         jsonObject.addProperty(APIKeyNames.thumbnail, "")
         jsonObject.addProperty(
-            APIKeyNames.event_date,
-            Constant.convertDateFormat(binding.txtStartDate.text.toString())
+            APIKeyNames.event_date, DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(binding.txtStartDate.text.toString())
+            )
         )
-        jsonObject.addProperty(APIKeyNames.event_time, binding.txtStartTime.text.toString().trim())
+        jsonObject.addProperty(APIKeyNames.event_time, DateFormatterUtil.normalizeToApiFormat(binding.txtStartTime.text.toString().trim()))
         jsonObject.addProperty(APIKeyNames.category, isSelectedCategoryId)
         jsonObject.addProperty(APIKeyNames.venue, binding.txtLocation.text.toString())
         for (i in Constant.isAwsUploadedFiles.indices) {

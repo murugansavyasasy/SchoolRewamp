@@ -31,6 +31,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportData
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
@@ -347,8 +348,11 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
         binding.rcyHomeWorkReport.setHasFixedSize(true)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+
+        val apiSafeDate = DateFormatterUtil.normalizeToApiFormat(isSelectedDate)
+
         appViewModel?.isGetHomeWorkReport(
-            isAccessToken!!, isSectionId, isAcademicYearId, isSelectedDate, this
+            isAccessToken!!, isSectionId, isAcademicYearId, apiSafeDate, this
         )
     }
 
