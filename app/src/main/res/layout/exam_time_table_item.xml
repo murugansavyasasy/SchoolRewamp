@@ -9,6 +9,7 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
         android:layout_marginStart="@dimen/ten"
         android:textColor="@color/PrimaryColor"
         android:textSize="@dimen/twenty_sp"></TextView>

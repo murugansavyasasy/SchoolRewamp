@@ -186,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line1"
                     android:layout_marginStart="@dimen/fifteen"
+                    android:textAlignment="viewStart"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/subject_marks"
                     android:textSize="@dimen/thirteen_sp">
@@ -219,6 +220,7 @@
                     android:layout_below="@+id/ExamMarkRV"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/five"
+                    android:textAlignment="viewStart"
                     android:text="@string/other_activities"
                     android:textColor="@color/black">
 

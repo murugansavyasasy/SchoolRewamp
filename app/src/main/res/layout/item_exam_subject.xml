@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="TAMIL"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/sixteen_sp" />
 
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/five"
         android:text="Unit"
+        android:textAlignment="viewStart"
         android:textSize="@dimen/fifteen_sp"></TextView>
 
     <RelativeLayout

@@ -24,6 +24,7 @@
         android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:text="@string/subject_name"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp"
         app:layout_constraintEnd_toStartOf="@id/markoutof100"

@@ -334,6 +334,7 @@
                                                     android:layout_centerVertical="true"
                                                     android:layout_toStartOf="@id/rightIconContainerB"
                                                     android:padding="10dp"
+                                                    android:textAlignment="viewStart"
                                                     android:text="Option 2"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
@@ -425,6 +426,7 @@
                                                     android:layout_centerVertical="true"
                                                     android:layout_toStartOf="@id/rightIconContainerC"
                                                     android:padding="10dp"
+                                                    android:textAlignment="viewStart"
                                                     android:text="Option 3"
                                                     android:textColor="@color/azure_radiance"
                                                     android:textSize="@dimen/fourteen_sp" />
