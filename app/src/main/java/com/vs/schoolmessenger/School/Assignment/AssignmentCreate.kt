@@ -65,6 +65,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -214,7 +215,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
 
 
 
-        isSelectedDate = Constant.getCurrentDate()
+        isSelectedDate = DateFormatterUtil.normalizeToApiFormat(Constant.getCurrentDate())
 
         binding.txtStartDate.text = Constant.convertToReadableDate(isSelectedDate)
         val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
@@ -575,11 +576,11 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
     }
 
     override fun onDateSelected(date: String) {
-        isSelectedDate = date
-        binding.txtStartDate.text = Constant.convertToReadableDate(date)
+        isSelectedDate = DateFormatterUtil.normalizeToApiFormat(date)
+        binding.txtStartDate.text = DateFormatterUtil.normalizeToApiFormat(Constant.convertToReadableDate(date))
         val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
-        Log.d("isSelectedDate", date)
+        Log.d("isSelectedDate", isSelectedDate)
     }
 
     private fun openCameraIntent() {
@@ -1192,7 +1193,7 @@ class AssignmentCreate : BaseActivity<AssignmentBinding>(), AssignmentClickListe
             }
         }
 
-        binding.txtStartDate.text = Constant.covertDateFormate(data.created_date)
+        binding.txtStartDate.text = DateFormatterUtil.normalizeToApiFormat(Constant.covertDateFormate(data.created_date))
         val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
         binding.lblDay.text = formattedDate
         binding.lblTimePick.text = data.created_time

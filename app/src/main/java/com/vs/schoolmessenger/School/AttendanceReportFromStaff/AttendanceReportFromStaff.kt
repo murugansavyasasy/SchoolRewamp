@@ -70,7 +70,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private var isToDFate: String = ""
 
     private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-    private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
 
     override fun setupViews() {
         super.setupViews()
@@ -94,8 +94,6 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         val calendar = Calendar.getInstance()
         fromDateMillis = calendar.timeInMillis
         toDateMillis = calendar.timeInMillis
-        val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-        val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val displayDate = displayFormat.format(calendar.time)
         val apiDate = apiFormat.format(calendar.time)
         binding.fromDate2.text = displayDate

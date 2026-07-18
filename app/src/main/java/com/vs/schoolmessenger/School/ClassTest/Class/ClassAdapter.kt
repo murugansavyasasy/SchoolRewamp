@@ -292,8 +292,7 @@ class ClassAdapter(var context: Context,
                         context.resources.displayMetrics
                     )
 
-
-                    val s = "%02d/%02d/%04d".format(d, m + 1, y)
+                    val s = String.format(Locale.ENGLISH, "%02d/%02d/%04d", d, m + 1, y)
                     test.testDate = s
                     tvTestDate.text = s
                     refreshCompletedState(v, item, itemPos)

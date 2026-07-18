@@ -58,6 +58,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -352,7 +353,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
 
     override fun onDateSelected(date: String) {
         isSelectedDate = date
-        binding.edtdate.text = Constant.convertToReadableDate(date)
+        binding.edtdate.text = DateFormatterUtil.normalizeToApiFormat(Constant.convertToReadableDate(date))
     }
 
 
@@ -1018,7 +1019,7 @@ class CreateNewTask : BaseActivity<CreateNewtaskLsrwBinding>(), View.OnClickList
     private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
-        val edtdate = binding.edtdate.text.toString().trim()
+        val edtdate = DateFormatterUtil.normalizeToApiFormat(binding.edtdate.text.toString().trim())
 
         if (title.isEmpty()) {
             binding.edtTitle.shake()
