@@ -153,7 +153,7 @@ class InteractionWithStudentAdapter(
 
         fun getRelativeTime(apiTime: String): String {
             return try {
-                val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+                val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
                 val date = format.parse(apiTime) ?: return apiTime
 
                 val now = Date()
@@ -175,7 +175,7 @@ class InteractionWithStudentAdapter(
                         }" else ""
                     } ${context.getString(R.string.ago)}"
 
-                    else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
+                    else -> SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(date)
                 }
             } catch (e: Exception) {
                 apiTime

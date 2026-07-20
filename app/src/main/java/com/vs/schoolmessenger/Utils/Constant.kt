@@ -908,7 +908,7 @@ object Constant {
     }
 
     fun isWithin30Minutes(postedDate: String): Boolean {
-        val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val format = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
         format.isLenient = false
 
         val postedTime = format.parse(postedDate) ?: return false
@@ -999,8 +999,8 @@ object Constant {
     }
 
     fun removeSeconds(dateTime: String): String {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
 
         val date = inputFormat.parse(dateTime) ?: return dateTime
         return outputFormat.format(date)
@@ -2412,7 +2412,7 @@ object Constant {
     fun formatChatDate(createdOn: String): String {
         if (createdOn.isBlank()) return ""
 
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
         val date: Date = try {
             inputFormat.parse(createdOn) ?: return createdOn
         } catch (e: ParseException) {
@@ -2427,10 +2427,10 @@ object Constant {
             now.get(Calendar.DAY_OF_YEAR) == messageCal.get(Calendar.DAY_OF_YEAR)
         ) {
             // Same day → show only time
-            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(date)
+            SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(date)
         } else {
             // Different day → show both date + time
-            SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(date)
+            SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.ENGLISH).format(date)
         }
     }
 

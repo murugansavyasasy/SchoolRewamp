@@ -537,7 +537,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     fun generateDates(daysCount: Int): List<Triple<String, Int, Int>> { // month, day, year
         val list = mutableListOf<Triple<String, Int, Int>>()
         val calendar = Calendar.getInstance()
-        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
+        val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
 
         repeat(daysCount) {
             val month = monthFormat.format(calendar.time)
