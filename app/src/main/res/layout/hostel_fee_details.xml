@@ -22,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text=""
+            android:textAlignment="viewStart"
             style="@style/CustomTextStylePoppinsBold1"
             android:textSize="@dimen/fifteen_sp"
             android:textColor="#000"

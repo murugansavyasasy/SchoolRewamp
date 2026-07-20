@@ -18,6 +18,7 @@
         app:layout_constraintEnd_toStartOf="@+id/lblValue"
         app:layout_constraintBottom_toBottomOf="@+id/br"
         android:id="@+id/lblKey"
+        android:textAlignment="viewStart"
         android:layout_height="wrap_content">
 
     </TextView>
@@ -32,7 +33,7 @@
         app:layout_constraintStart_toEndOf="@+id/lblKey"
         app:layout_constraintBottom_toTopOf="@+id/br"
         android:layout_width="0dp"
-        android:gravity="center|end"
+        android:textAlignment="viewStart"
         android:id="@+id/lblValue"
         android:textColor="@color/black"
         android:layout_height="wrap_content">
