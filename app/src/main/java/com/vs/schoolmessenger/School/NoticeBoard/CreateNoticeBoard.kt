@@ -486,7 +486,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                 val defaultCal = Calendar.getInstance()
 
                 // Use previously selected date if available
@@ -504,7 +504,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     binding.lblDay.text = formattedDate
                     binding.txtStartDate.text = txtStartDate
 
-                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                     val startDate = sdf.parse(txtStartDate!!) ?: Date()
                     val cal = Calendar.getInstance()
                     cal.time = startDate
@@ -530,7 +530,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     return
                 }
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                 val startDate = sdf.parse(txtStartDate!!) ?: Date()
 
                 val cal = Calendar.getInstance()
@@ -574,7 +574,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
     private fun initializeDefaultDates() {
-        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val today = Calendar.getInstance().time
         txtStartDate = sdf.format(today)
         val (_, formattedDate) = Constant.getDayAndDateOnly2(binding.txtStartDate.text.toString())// 13 Monday
@@ -878,7 +878,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.ENGLISH).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile(
             "${Constant.IMG_}${timeStamp}${Constant.underscore}",
@@ -1186,9 +1186,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.txtDesc.setText(data.description)
 
 
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val dayFormat = SimpleDateFormat("d", Locale.getDefault())
-        val displayFormat = SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val dayFormat = SimpleDateFormat("d", Locale.ENGLISH)
+        val displayFormat = SimpleDateFormat("EEE, MMM yyyy", Locale.ENGLISH)
 
         try {
             val startDate = data.visible_from?.let { inputFormat.parse(it) }

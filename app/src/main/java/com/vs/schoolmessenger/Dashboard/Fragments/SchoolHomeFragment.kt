@@ -407,7 +407,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 .into(imgProfile)
         }
 
-        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH).format(Date())
         txtDate.text = currentDate
 
         dimView.setOnClickListener {

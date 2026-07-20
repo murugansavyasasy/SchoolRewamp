@@ -15,7 +15,7 @@ data class DateItem(
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.DAY_OF_MONTH, day)
         // Format date as dd-MM-yyyy
-        val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
 }

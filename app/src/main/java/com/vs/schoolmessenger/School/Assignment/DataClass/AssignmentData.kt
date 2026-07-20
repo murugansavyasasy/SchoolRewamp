@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AssignmentData(
     val id: String,
-    val header_id: String,
+    val header_id: String?,
     val title: String,
     val description: String,
     val category: String,

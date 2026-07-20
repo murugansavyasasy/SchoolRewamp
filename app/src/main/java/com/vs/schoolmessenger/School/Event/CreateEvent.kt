@@ -640,7 +640,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val selectedDate = try {
             val sdf = SimpleDateFormat(
                 "dd MMM yyyy",
-                Locale.getDefault()
+                Locale.ENGLISH
             )
             sdf.parse(binding.txtStartDate.text.toString())
         } catch (e: Exception) {
@@ -722,7 +722,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 val effectiveSelectedDate = try {
                     val sdf = SimpleDateFormat(
                         "dd MMM yyyy",
-                        Locale.getDefault()
+                        Locale.ENGLISH
                     )
                     val date = sdf.parse(binding.txtStartDate.text.toString())
                     Calendar.getInstance().apply {
@@ -1192,7 +1192,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.ENGLISH).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile(
             "${Constant.IMG_}${timeStamp}${Constant.underscore}",
@@ -1536,7 +1536,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         try {
             val sdfInput = SimpleDateFormat(
                 "dd/MM/yyyy",
-                Locale.getDefault()
+                Locale.ENGLISH
             )  // Adjust if data.date format differs
             val parsedDate = sdfInput.parse(binding.txtStartDate.text.toString())
             selectedDate = Calendar.getInstance().apply { time = parsedDate!! }

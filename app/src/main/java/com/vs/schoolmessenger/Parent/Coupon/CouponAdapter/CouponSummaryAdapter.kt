@@ -125,7 +125,7 @@ class CouponSummaryAdapter(
 
             val expiryDateStr: String = data.expiry_date
 
-            val sdf = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
+            val sdf = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.ENGLISH)
 
             try {
                 val expiryDate = sdf.parse(expiryDateStr)

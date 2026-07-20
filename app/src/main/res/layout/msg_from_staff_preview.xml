@@ -80,6 +80,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/tvAudioTittle"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="match_parent"
@@ -105,6 +106,7 @@
                             </ImageView>
 
                             <TextView
+                                android:textAlignment="viewStart"
                                 android:id="@+id/lblEmergency"
                                 style="@style/CustomTextStylePoppinsMedium"
                                 android:layout_width="match_parent"
@@ -203,6 +205,7 @@
                             android:src="@drawable/time_icon"></ImageView>
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/lblSentTime"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
@@ -222,6 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_marginEnd="@dimen/five"
+                        android:textAlignment="viewStart"
                         android:text="acubicsaubca"
                         android:textColor="@color/gnt_gray"
                         android:textSize="@dimen/fifteen_sp"></TextView>
@@ -240,6 +244,7 @@
                             app:tint="@color/PrimaryColor"></ImageView>
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/lblTitle"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
@@ -259,6 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_marginEnd="@dimen/five"
+                        android:textAlignment="viewStart"
                         android:text="Sample Testing"
                         android:textSize="@dimen/fifteen_sp"></TextView>
 
@@ -278,6 +284,7 @@
                             app:tint="@color/PrimaryColor"></ImageView>
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/lblDescription"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
@@ -299,6 +306,7 @@
                         android:linksClickable="true"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_marginEnd="@dimen/five"
+                        android:textAlignment="viewStart"
                         android:text="Hello this is testing Messsge Please Ignore this!"
                         android:textSize="@dimen/fifteen_sp"></TextView>
 
@@ -315,6 +323,7 @@
                             android:src="@drawable/person_circle"></ImageView>
 
                         <TextView
+                            android:textAlignment="viewStart"
                             android:id="@+id/lblSendBy"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="match_parent"

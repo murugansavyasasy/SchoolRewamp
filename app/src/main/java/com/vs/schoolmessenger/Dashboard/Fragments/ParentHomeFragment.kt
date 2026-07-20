@@ -355,7 +355,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
         lottieView.playAnimation()
         txtName.text = childDetails!!.name
-        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH).format(Date())
         txtDate.text = currentDate
         Glide.with(this)
             .load(childDetails!!.profile)

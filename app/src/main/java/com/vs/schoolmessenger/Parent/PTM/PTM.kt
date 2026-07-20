@@ -273,7 +273,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                     val calendar = Calendar.getInstance()
                     val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
                     val todayMonth =
-                        SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+                        SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.time)
 
                     val todayPos = dates.indexOfFirst {
                         it.first == todayMonth && it.second == todayDay

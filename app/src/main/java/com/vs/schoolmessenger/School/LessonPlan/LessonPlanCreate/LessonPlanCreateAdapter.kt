@@ -149,8 +149,8 @@ class LessonPlanCreateAdapter(
                     if (!data.value.isNullOrEmpty()) {
                         try {
                             // Parse API format (dd-MM-yyyy)
-                            val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                            val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                            val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+                            val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                             val parsedDate = apiFormat.parse(data.value!!)
                             headerDateLabel.text = displayFormat.format(parsedDate!!)
                         } catch (e: Exception) {
@@ -175,9 +175,9 @@ class LessonPlanCreateAdapter(
                                     cal.set(selectedYear, selectedMonth, selectedDay)
 
                                     val displayFormat =
-                                        SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                        SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                                     val apiFormat =
-                                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                                        SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
 
 
                                     val formattedDisplayDate = displayFormat.format(cal.time)

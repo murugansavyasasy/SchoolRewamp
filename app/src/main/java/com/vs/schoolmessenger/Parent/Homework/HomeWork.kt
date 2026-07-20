@@ -78,7 +78,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val todayDate =
             SimpleDateFormat(
                 Constant.ddMMyyyy,
-                Locale.getDefault()
+                Locale.ENGLISH
             ).format(Calendar.getInstance().time)
         isHomeWorkDate = todayDate
         calendarAdapter = CalendarAdapter(dateList, todayDate) {
@@ -102,7 +102,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.recyclerViewCalendar.adapter = calendarAdapter
 
         binding.recyclerViewCalendar.post {
-            val todayDate = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+            val todayDate = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
                 .format(Calendar.getInstance().time)
 
             val todayPos = dateList.indexOfFirst { it.fullDate == todayDate }
@@ -205,10 +205,10 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
 
         calendar.add(Calendar.MONTH, -6)
 
-        val dayFormatter = SimpleDateFormat(Constant.EEE, Locale.getDefault())
-        val dateFormatter = SimpleDateFormat(Constant.dd, Locale.getDefault())
-        val fullFormatter = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
-        val monthFormatter = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
+        val dayFormatter = SimpleDateFormat(Constant.EEE, Locale.ENGLISH)
+        val dateFormatter = SimpleDateFormat(Constant.dd, Locale.ENGLISH)
+        val fullFormatter = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
+        val monthFormatter = SimpleDateFormat(Constant.MMM_, Locale.ENGLISH)
 
         while (!calendar.time.after(today)) {
             val date = calendar.time
@@ -272,6 +272,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
         binding.recyclerView.setHasFixedSize(true)
+        Log.d("HWFinalDate",isHomeWorkDate.toString())
         appViewModel?.isHomeWorkDetails(isAccessToken!!, this, isHomeWorkDate)
     }
 

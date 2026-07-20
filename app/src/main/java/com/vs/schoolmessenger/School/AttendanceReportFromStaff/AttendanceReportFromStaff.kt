@@ -69,7 +69,7 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private var isFromDate: String = ""
     private var isToDFate: String = ""
 
-    private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH)
     private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
 
     override fun setupViews() {

@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:textAlignment="viewStart"
                 android:layout_toStartOf="@+id/nextMonthButton"
                 android:layout_toEndOf="@+id/prevMonthButton"
                 android:text="January 2024"

@@ -359,9 +359,9 @@ class MeetingHistoryAdapter(
         if (dateString.isNullOrEmpty()) return ""
         return try {
             val inputFormat =
-                java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+                java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.ENGLISH)
             val outputFormat =
-                java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.ENGLISH)
             val date = inputFormat.parse(dateString)
             outputFormat.format(date!!)
         } catch (e: Exception) {

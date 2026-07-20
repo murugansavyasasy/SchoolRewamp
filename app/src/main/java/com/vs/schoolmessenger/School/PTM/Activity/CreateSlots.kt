@@ -347,7 +347,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             try {
                                 // Try to parse any format like dd-MMM-yyyy or yyyy-MM-dd
                                 val parsed =
-                                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(it)
+                                    SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(it)
                                 sdf.format(parsed!!)
                             } catch (e: Exception) {
                                 it

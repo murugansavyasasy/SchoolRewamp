@@ -965,7 +965,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             context, { _, selectedYear, selectedMonth, selectedDay ->
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
             }, year, month, day
@@ -989,7 +989,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         config.setLocale(Locale.ENGLISH)
         context.resources.updateConfiguration(config, context.resources.displayMetrics)
         val calendar = Calendar.getInstance()
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
 
         if (!preSelectedDate.isNullOrEmpty()) {
             try {
@@ -1046,7 +1046,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         if (!preSelectedDate.isNullOrEmpty()) {
             try {
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val date = sdf.parse(preSelectedDate)
                 if (date != null) {
                     calendar.time = date
@@ -1081,7 +1081,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
             }, year, month, day
@@ -1163,7 +1163,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         if (!preselectedDate.isNullOrEmpty()) {
             try {
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val date = sdf.parse(preselectedDate)
                 calendar.time = date!!
             } catch (e: Exception) {
@@ -1193,7 +1193,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 )
                 val cal = Calendar.getInstance()
                 cal.set(selectedYear, selectedMonth, selectedDay)
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
             }, year, month, day
@@ -1227,7 +1227,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Try to parse last selected date if available
         if (!isSelectedDate.isNullOrEmpty()) {
             try {
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val selectedDate = sdf.parse(isSelectedDate)
                 calendar.time = selectedDate!!
             } catch (e: Exception) {
@@ -1243,7 +1243,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             context, { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedCalendar = Calendar.getInstance()
                 selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(selectedCalendar.time)
                 listener.onDateSelected(formattedDate)
             }, year, month, day

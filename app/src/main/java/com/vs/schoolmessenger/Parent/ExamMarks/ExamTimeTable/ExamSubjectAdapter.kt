@@ -58,12 +58,12 @@ class ExamSubjectAdapter(
 
                     // Parse the date: "dd-MM-yyyy"
                     val dateFormat =
-                        java.text.SimpleDateFormat(Constant.ddMMyyyy, java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat(Constant.ddMMyyyy, java.util.Locale.ENGLISH)
                     val date = dateFormat.parse(subject.exam_date)
 
                     // Parse start and end time: "hh:mm a"
                     val timeFormat =
-                        java.text.SimpleDateFormat(Constant.hh_mm_a, java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat(Constant.hh_mm_a, java.util.Locale.ENGLISH)
                     val startTime = timeFormat.parse(subject.start_time)
                     val endTime = timeFormat.parse(subject.end_time)
 

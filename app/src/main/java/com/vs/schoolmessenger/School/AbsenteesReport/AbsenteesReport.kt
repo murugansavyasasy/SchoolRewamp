@@ -69,7 +69,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
         val calendarFragment = CustomAbsenteesCalendarFragment.newInstance(
             minDate = "2020-01-01",
-            maxDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()),
+            maxDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date()),
             selectedDate = null,
             tag = "absentees_calendar"
         )
@@ -161,7 +161,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         val isCurrentMonth = currentMonth == now.monthValue && currentYear == now.year
         if (isCurrentMonth && absenteeList.isNotEmpty()) {
             // For current month only, default to today if available, else earliest
-            val today = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+            val today = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(Date())
             if (absenteeList.any { it.absent_date_only == today }) {
                 filterByDate(today)
             } else {
@@ -313,8 +313,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun formatDateDisplay(date: String): String {
-        val input = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val output = SimpleDateFormat("EEE MMM dd, yyyy", Locale.getDefault())
+        val input = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val output = SimpleDateFormat("EEE MMM dd, yyyy", Locale.ENGLISH)
         return try {
             output.format(input.parse(date)!!)
         } catch (e: Exception) {
@@ -356,8 +356,8 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
     override fun onDateSelected(date: String, tag: String) {
         try {
-            val input = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val output = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val input = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val output = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             val formattedDate = output.format(input.parse(date)!!)
             filterByDate(formattedDate)
         } catch (e: Exception) {

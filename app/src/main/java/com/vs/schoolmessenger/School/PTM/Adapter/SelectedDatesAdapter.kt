@@ -31,8 +31,8 @@ class SelectedDatesAdapter(
         val rawDate = dates[position]
 
         val formattedDate = try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val parsedDate = inputFormat.parse(rawDate)
             if (parsedDate != null) outputFormat.format(parsedDate) else rawDate
         } catch (e: Exception) {

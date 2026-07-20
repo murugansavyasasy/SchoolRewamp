@@ -54,7 +54,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private var currentReadFilter = ReadFilter.ALL
 
     private val apiDateFormat =
-        SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+        SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
 
     var mAttachmentReportAdapter: AttachmentAdapter? = null
     private var isAccessToken: String? = null
@@ -374,7 +374,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 fromDateMillis = selectedCal.timeInMillis
 
                 binding.txtFromDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                         .format(selectedCal.time)
 
                 // ❌ If From > To → reset To
@@ -417,7 +417,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 toDateMillis = selectedCal.timeInMillis
 
                 binding.txtToDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                         .format(selectedCal.time)
                 updateClearFilterVisibility()
                 // 🔥 Re-apply filter

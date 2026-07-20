@@ -1076,8 +1076,8 @@ object Constant {
     }
 
     fun formatDatepostedby(dateStr: String): String {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH)
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
         return outputFormat.format(inputDate)
@@ -1140,8 +1140,8 @@ object Constant {
 
     //"dd-MM-yyyy" to "dd MMMM, yyyy"
     fun formatDate(dateStr: String): String {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
 
@@ -1163,8 +1163,8 @@ object Constant {
 
     fun convertDateTimeFormatDateMonth(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -1177,9 +1177,9 @@ object Constant {
         if (input.isNullOrEmpty()) return ""
 
         return try {
-            val inputFormatWithTime = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-            val inputFormatDateOnly = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+            val inputFormatWithTime = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val inputFormatDateOnly = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH)
 
             val date = if (input.contains(":")) {
                 // Has time
@@ -1206,14 +1206,14 @@ object Constant {
 
     fun getDayAndMonth(input: String): Pair<String, String> {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
-            val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+            val dayFormat = SimpleDateFormat("dd", Locale.ENGLISH)
 
             val date = inputFormat.parse(input)
 
             val day = dayFormat.format(date!!)
-            val month = monthFormat.format(date).uppercase(Locale.getDefault())
+            val month = monthFormat.format(date).uppercase(Locale.ENGLISH)
 
             Pair(day, month)
 
@@ -1226,8 +1226,8 @@ object Constant {
     //"dd-MM-yyyy" to "dd MMM yyyy"
 
     fun isFormatDate(dateStr: String): String {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
         val inputDate = inputFormat.parse(dateStr) ?: return dateStr
 
@@ -1446,7 +1446,7 @@ object Constant {
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(selectedCalendar.time)
                 onDateSelected(formattedDate)
             },
@@ -1480,8 +1480,8 @@ object Constant {
 
     fun covertDate(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -1510,7 +1510,7 @@ object Constant {
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
-                val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                     .format(selectedCalendar.time)
                 onDateSelected(formattedDate)
             },
@@ -1526,8 +1526,8 @@ object Constant {
     fun covertDateFormate(input: String): String {
         Log.d("Input Date Format", input)
         return try {
-            val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
+            val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.ENGLISH)
             val date = inputFormat.parse(input)
             Log.d("OutPut Date Format", date.toString())
             outputFormat.format(date!!)
@@ -2246,13 +2246,13 @@ object Constant {
 
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern(hh_mm_a)
+        val formatter = DateTimeFormatter.ofPattern(hh_mm_a, Locale.ENGLISH)
         return currentTime.format(formatter)
     }
 
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern(ddMMyyyy)
+        val formatter = DateTimeFormatter.ofPattern(ddMMyyyy, Locale.ENGLISH)
         return currentDate.format(formatter)
     }
 
@@ -2260,7 +2260,7 @@ object Constant {
     fun getDayAndDateOnly2(inputDateStr: String): Pair<String, String> {
         return try {
 
-            val locale = Locale.getDefault()
+            val locale = Locale.ENGLISH
 
             val inputFormat = SimpleDateFormat("dd MMM yyyy", locale)
 
@@ -2374,11 +2374,11 @@ object Constant {
         val calendar = android.icu.util.Calendar.getInstance()
 
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
-        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
-        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
-        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        val dayOfWeek = SimpleDateFormat("EEE", Locale.ENGLISH).format(calendar.time)
+        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(calendar.time)
+        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(calendar.time)
         val customFormat =
-            SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+            SimpleDateFormat("EEE, MMM yyyy", Locale.ENGLISH).format(calendar.time)
 
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
     }
@@ -2387,11 +2387,11 @@ object Constant {
         val calendar = android.icu.util.Calendar.getInstance()
 
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
-        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
-        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
-        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.ENGLISH).format(calendar.time)
+        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(calendar.time)
+        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(calendar.time)
         val customFormat =
-            SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+            SimpleDateFormat("EEE, MMM yyyy", Locale.ENGLISH).format(calendar.time)
 
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
     }
@@ -2399,8 +2399,8 @@ object Constant {
 
     fun convertDateFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat(dd_MMM_yyyy_1, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+            val inputFormat = SimpleDateFormat(dd_MMM_yyyy_1, Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -2437,8 +2437,8 @@ object Constant {
 
     fun CustomisedconvertDateTimeFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -2450,13 +2450,13 @@ object Constant {
         if (input.isNullOrEmpty()) return "--"
 
         return try {
-            val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormatFull = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
             val date = try {
                 inputFormatFull.parse(input)
             } catch (e: Exception) {
-                val inputFormatDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val inputFormatDate = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 inputFormatDate.parse(input)
             }
 
@@ -2469,8 +2469,8 @@ object Constant {
     fun formatToUi2(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"
         return try {
-            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
-            val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+            val outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH)
             val localDate = LocalDate.parse(dateStr, inputFormatter)
             localDate.format(outputFormatter)
         } catch (e: Exception) {
@@ -2482,9 +2482,9 @@ object Constant {
     fun formatToPretty(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"
         return try {
-            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault())
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
             val outputFormatter =
-                DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.getDefault())
+                DateTimeFormatter.ofPattern("EEE, MMM dd yyyy", Locale.ENGLISH)
             val localDate = LocalDate.parse(dateStr, inputFormatter)
             localDate.format(outputFormatter)
         } catch (e: Exception) {
@@ -2498,10 +2498,10 @@ object Constant {
 
         return try {
 
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.ENGLISH)
 
 
-            val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH)
 
             val date = inputFormat.parse(input)
             date?.let { outputFormat.format(it) } ?: "--"
@@ -2512,8 +2512,8 @@ object Constant {
 
     fun convertDateAndTimeFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy h.mm a", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy h.mm a", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             if (date != null) outputFormat.format(date) else input
         } catch (e: Exception) {
@@ -2616,14 +2616,14 @@ object Constant {
     }
 
     fun getDateDetails(input: String): Triple<String, Int, String> {
-        val sdf = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+        val sdf = SimpleDateFormat(ddMMyyyy, Locale.ENGLISH)
         val date = sdf.parse(input) ?: return Triple("", -1, "")
 
         val calendar = Calendar.getInstance().apply { time = date }
 
-        val month = SimpleDateFormat(MMMM, Locale.getDefault()).format(date) // "April"
+        val month = SimpleDateFormat(MMMM, Locale.ENGLISH).format(date) // "April"
         val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
-        val dayOfWeek = SimpleDateFormat(EEEE, Locale.getDefault()).format(date) // "Tuesday"
+        val dayOfWeek = SimpleDateFormat(EEEE, Locale.ENGLISH).format(date) // "Tuesday"
         val shortDay = dayOfWeek.take(3) // First 3 characters
 
 
@@ -2656,8 +2656,8 @@ object Constant {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val formattedDay = if (day < 10) "0$day" else day.toString()
 
-        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
-        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.ENGLISH).format(calendar.time)
+        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH).format(calendar.time)
 
         return mapOf(
             "day" to formattedDay,
@@ -2950,7 +2950,7 @@ object Constant {
         // If a previously selected date exists, use it
         if (!preSelectedDate.isNullOrBlank()) {
             try {
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val date = sdf.parse(preSelectedDate)
                 if (date != null) {
                     calendar.time = date
@@ -2979,7 +2979,7 @@ object Constant {
                 val pickedCalendar = Calendar.getInstance()
                 pickedCalendar.set(selectedYear, selectedMonth, selectedDay)
 
-                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(pickedCalendar.time)
 
                 // Return selected date
@@ -2995,8 +2995,8 @@ object Constant {
 
     fun convertDateTimeFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -3007,8 +3007,8 @@ object Constant {
 
     fun convertEventDateTimeFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -3019,8 +3019,8 @@ object Constant {
 
     fun convertDateTimeFormat2(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
