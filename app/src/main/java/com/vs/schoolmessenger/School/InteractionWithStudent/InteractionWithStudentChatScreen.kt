@@ -203,7 +203,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             showErrorUI(getString(R.string.no_staff_data_available))
             return
         }
-        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.getDefault())
+        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.ENGLISH)
         val sortedData = data.sortedBy {
             try {
                 inputFormat.parse(it.created_on)
