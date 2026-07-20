@@ -16,6 +16,7 @@
             app:layout_constraintEnd_toStartOf="@+id/div2"
             style="@style/CustomTextStylePoppinsBold"
             android:id="@+id/txtDay"
+
             android:layout_width="@dimen/eighty"
             android:layout_height="wrap_content"
             android:padding="12dp" />

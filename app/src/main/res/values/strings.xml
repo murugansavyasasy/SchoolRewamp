@@ -1266,5 +1266,7 @@
     <string name="activity_1">ACTIVITY</string>
     <string name="marks">MARKS</string>
     <string name="total_1">TOTAL</string>
+    <string name="submit_remark">Submit Remark</string>
+    <string name="your_stop">Your Stop</string>
 
 </resources>

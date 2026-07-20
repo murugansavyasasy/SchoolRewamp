@@ -296,6 +296,7 @@
                 android:background="@drawable/bg_edittext_rounded"
                 android:hint="@string/description2"
                 android:padding="@dimen/twele"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
 

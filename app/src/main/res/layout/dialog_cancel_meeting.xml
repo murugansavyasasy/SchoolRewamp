@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight"
+        android:textAlignment="viewStart"
         android:background="@drawable/bg_edittext"
         android:hint="@string/enter_reason"
         android:padding="@dimen/twele_sp" />
