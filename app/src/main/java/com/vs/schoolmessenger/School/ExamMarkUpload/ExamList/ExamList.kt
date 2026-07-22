@@ -136,6 +136,8 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             }
         }
 
+
+
         appViewModel!!.getSubjectWiseActivities?.observe(this) { response ->
             if (response != null) {
 
@@ -143,31 +145,25 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                     selectedExamActivities = response.data
                     adapter.updateSecondData(response.data)
                     adapter.notifyItemChanged(adapter.expandedPosition)
-
                 } else {
                     selectedExamActivities = emptyList()
                     adapter.updateSecondData(emptyList())
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 }
 
-                if (isDirectToUploadPage&&isUploadClicked) {
+                if (isDirectToUploadPage && isUploadClicked) {
                     Log.d("UploadDebug", "Upload button clicked")
+                    Log.d("UploadDebug", "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}")
+                    Log.d("UploadDebug", "Activities Count -> ${selectedExamActivities?.size ?: 0}")
 
-                    Log.d(
-                        "UploadDebug",
-                        "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}"
-                    )
-
-                    Log.d(
-                        "UploadDebug",
-                        "Activities Count -> ${selectedExamActivities?.size ?: 0}"
-                    )
-
-                    selectedExamActivities?.forEachIndexed { index, act ->
-                        Log.d(
-                            "UploadDebug",
-                            "Activity[$index] -> subject=${act.subject_name}, class=${act.class_name}, class=${act.splitup_details[0].name}"
-                        )
+                    selectedExamActivities?.forEachIndexed { index, subject ->
+                        Log.d("UploadDebug", "Subject[$index] -> subject=${subject.subject_name}")
+                        subject.activities.forEachIndexed { actIndex, activity ->
+                            Log.d("UploadDebug", "  Activity[$actIndex] -> name=${activity.activity_name}, maxMark=${activity.max_mark}")
+                            activity.rubrics.forEachIndexed { rubIndex, rubric ->
+                                Log.d("UploadDebug", "    Rubric[$rubIndex] -> name=${rubric.rubric_name}, maxMark=${rubric.max_mark}")
+                            }
+                        }
                     }
 
                     Constant.staffWisExamList = staffWisExamList
@@ -178,6 +174,49 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                 }
             }
         }
+
+
+//        appViewModel!!.getSubjectWiseActivities?.observe(this) { response ->
+//            if (response != null) {
+//
+//                if (response.status && response.data.isNotEmpty()) {
+//                    selectedExamActivities = response.data
+//                    adapter.updateSecondData(response.data)
+//                    adapter.notifyItemChanged(adapter.expandedPosition)
+//                } else {
+//                    selectedExamActivities = emptyList()
+//                    adapter.updateSecondData(emptyList())
+//                    adapter.notifyItemChanged(adapter.expandedPosition)
+//                }
+//
+//                if (isDirectToUploadPage&&isUploadClicked) {
+//                    Log.d("UploadDebug", "Upload button clicked")
+//
+//                    Log.d(
+//                        "UploadDebug",
+//                        "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}"
+//                    )
+//
+//                    Log.d(
+//                        "UploadDebug",
+//                        "Activities Count -> ${selectedExamActivities?.size ?: 0}"
+//                    )
+//
+//                    selectedExamActivities?.forEachIndexed { index, act ->
+//                        Log.d(
+//                            "UploadDebug",
+//                            "Activity[$index] -> subject=${act.subject_name}, class=${act.class_name}, class=${act.splitup_details[0].name}"
+//                        )
+//                    }
+//
+//                    Constant.staffWisExamList = staffWisExamList
+//                    Constant.isSelectedExamActivities = selectedExamActivities
+//                    Constant.isMarkUploadExamListDataDetails = selectedExam
+//                    val intent = Intent(this, UploadMarkSheet::class.java)
+//                    startActivity(intent)
+//                }
+//            }
+//        }
 
 
         isGetStaffWiseData()

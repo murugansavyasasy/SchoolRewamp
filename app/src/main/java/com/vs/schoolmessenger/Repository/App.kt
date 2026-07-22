@@ -2060,7 +2060,8 @@ class App(application: Application) : AndroidViewModel(application) {
         section_id:String,
         activity: Activity
     ) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+        val reporting_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id,section_id)
     }

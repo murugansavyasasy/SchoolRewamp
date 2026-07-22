@@ -134,12 +134,12 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
             getActivitySubjectNameData(
                 subject = subject.subject_name,
-                section_id = subject.section_id,
-                class_id = subject.class_id,
-                class_name = subject.class_name,
+                section_id = "subject.section_id",
+                class_id = "subject.class_id",
+                class_name = "subject.class_name",
                 subject_id = subject.subject_id,
-                section_name = subject.section_name,
-                paper = subject.splitup_details.map { split ->
+                section_name = "subject.section_name",
+                paper = "subject.splitup_details".map { split ->
 
                     if (index < selectedColumns.size)
                         selectedColumns[index]
@@ -148,9 +148,9 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
                     index++
 
                     getActivityPaperNameData(
-                        activity_id = split.id,
-                        name = split.name,
-                        max_mark = split.max_mark,
+                        activity_id = "split.id",
+                        name = "split.name",
+                        max_mark = "split.max_mark",
                         activities = selectedColumns,
                         selectedValue = null,
                         selectedActivityID = null

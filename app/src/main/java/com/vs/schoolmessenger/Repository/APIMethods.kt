@@ -201,8 +201,10 @@ object APIMethods {
     const val ismysubmissiondelete = "comm/api/assignment/delete-submission"
     const val dashboard_newupdates = "dashboard/api/dashboard/new-updates"
     const val getAttendanceStudentList = "stud-attd/api/attendance/student-list"
-    const val getStaffWiseExam = "exam/api/exam/get-staff-wise-exam"
-    const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
+//    const val getStaffWiseExam = "exam/api/exam/get-staff-wise-exam"
+    const val getStaffWiseExam = "exam/api/new-exam/get-staffwise-exam"
+//    const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
+    const val getSubjectWiseACtivities = "exam/api/new-exam/get-subjectwise-activities"
 
 
     const val isblockstudent = "/comm/api/interaction/block-student"
