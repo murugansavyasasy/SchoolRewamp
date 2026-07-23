@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.RubricSelectableData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
@@ -123,47 +124,53 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
     private fun LoadExamList() {
 
         val selectedColumns =
-            extractedDetails
-                ?.firstOrNull()
-                ?.tableStructure
-                ?.selectedColumns
-                ?: emptyList()
+            extractedDetails?.firstOrNull()?.tableStructure?.selectedColumns ?: emptyList()
 
-        var index = 0
+        val sectionId = Constant.isMarkUploadClassSectionDetails?.sectionId ?: ""
+        val sectionName = Constant.isMarkUploadClassSectionDetails?.sectionName ?: ""
+        val classId = Constant.isMarkUploadClassSectionDetails?.standardId ?: ""     // adjust field name to match your ClassSectionDetails model
+        val className = Constant.isMarkUploadClassSectionDetails?.standardName ?: ""
 
         val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
+
+            val papers = subject.activities.map { activity ->
+                getActivityPaperNameData(
+                    activity_id = activity.activity_id,
+                    name = activity.activity_name,
+                    max_mark = activity.max_mark,
+                    activities = selectedColumns,
+                    selectedValue = null,
+                    selectedActivityID = null,
+                    rubrics = activity.rubrics.map { rubric ->
+                        RubricSelectableData(
+                            rubric_id = rubric.rubric_id,
+                            rubric_name = rubric.rubric_name,
+                            max_mark = rubric.max_mark,
+                            isSelected = false
+                        )
+                    }
+                )
+
+            }
+
             getActivitySubjectNameData(
-                subject = subject.subject_name,
-                section_id = "subject.section_id",
-                class_id = "subject.class_id",
-                class_name = "subject.class_name",
+                section_id = sectionId,
+                section_name = sectionName,
+                class_id = classId,
+                class_name = className,
                 subject_id = subject.subject_id,
-                section_name = "subject.section_name",
-                paper = "subject.splitup_details".map { split ->
-
-                    if (index < selectedColumns.size)
-                        selectedColumns[index]
-                    else null
-
-                    index++
-
-                    getActivityPaperNameData(
-                        activity_id = "split.id",
-                        name = "split.name",
-                        max_mark = "split.max_mark",
-                        activities = selectedColumns,
-                        selectedValue = null,
-                        selectedActivityID = null
-                    )
-                }
+                subject = subject.subject_name,
+                paper = papers
             )
         }
+
 
         isClassList = mappedList
 
         adapter = ActivityExamListAdapter(mappedList, isEntryType, this, false)
         binding.rcMapActivity.layoutManager = LinearLayoutManager(this)
         binding.rcMapActivity.adapter = adapter
+
     }
 
 
@@ -184,7 +191,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
             }
         }
 
-        // Update UI
         if (filteredList.isNotEmpty()) {
             ShowData()
             adapter.updateData(filteredList)
@@ -211,7 +217,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
 
         val spannable = SpannableString(fullText)
 
-        // Tip: in black
         spannable.setSpan(
             ForegroundColorSpan(Color.BLACK),
             0,
@@ -219,7 +224,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        // Remaining part in very_dark_gray2
         spannable.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(textView.context, R.color.very_dark_gray2)),
             tip.length + 1,  // skip the space
@@ -257,7 +261,8 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
                 if (isEntryType) {
                     !paper.selectedValue.isNullOrEmpty()
                 } else {
-                    !paper.selectedActivityID.isNullOrEmpty()
+                    if (paper.rubrics.isNotEmpty()) paper.rubrics.any { it.isSelected }
+                    else !paper.selectedActivityID.isNullOrEmpty()
                 }
             }
 

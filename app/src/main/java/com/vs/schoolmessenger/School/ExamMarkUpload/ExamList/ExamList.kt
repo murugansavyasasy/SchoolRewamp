@@ -152,9 +152,14 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                 }
 
                 if (isDirectToUploadPage && isUploadClicked) {
-                    Log.d("UploadDebug", "Upload button clicked")
-                    Log.d("UploadDebug", "Selected Exam -> ${selectedExam?.id} | ${selectedExam?.name}")
+
+                    Log.d("ConstantSave", "===== Saving to Constant =====")
                     Log.d("UploadDebug", "Activities Count -> ${selectedExamActivities?.size ?: 0}")
+                    Log.d("ConstantSave", "selectedExamID ->  ${selectedExam?.id} | ${selectedExam?.name}")
+                    Log.d("ConstantSave", "staffWisExamList size -> ${Constant.staffWisExamList?.size}")
+                    Log.d("ConstantSave", "isMarkUploadExamListDataDetails -> id=${Constant.isMarkUploadExamListDataDetails?.id}, name=${Constant.isMarkUploadExamListDataDetails?.name}")
+                    Log.d("ConstantSave", "isSelectedExamActivities size -> ${Constant.isSelectedExamActivities?.size}")
+
 
                     selectedExamActivities?.forEachIndexed { index, subject ->
                         Log.d("UploadDebug", "Subject[$index] -> subject=${subject.subject_name}")
@@ -274,7 +279,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.rcExamList.adapter = adapter
         appViewModel!!.getStaffWiseExam(
             isAccessToken!!,
-            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "", Constant.isUploadMarksSelectedAcademicID, this
+            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "", "7", this
         )
     }
 
