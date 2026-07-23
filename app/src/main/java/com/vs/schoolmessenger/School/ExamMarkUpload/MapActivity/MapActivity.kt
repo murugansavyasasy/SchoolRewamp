@@ -130,7 +130,6 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
                 ?: emptyList()
 
         var index = 0
-
         val mappedList = (selectedExamActivities ?: emptyList()).map { subject ->
             getActivitySubjectNameData(
                 subject = subject.subject_name,
