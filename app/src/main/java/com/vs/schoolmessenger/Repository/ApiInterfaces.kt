@@ -913,10 +913,10 @@ interface ApiInterfaces {
     ): Call<LeaveRequestDeleteResponse?>
 
 
-    @GET(APIMethods.progress_card)
+    @POST(APIMethods.progress_card)
     fun getProgressMarks(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.exam_id) exam_id: String
+        @Body requestBody: JsonObject
     ): Call<ProgressCardResponse?>?
 
 

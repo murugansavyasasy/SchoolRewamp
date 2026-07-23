@@ -50,8 +50,8 @@
                 android:textAllCaps="true"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
-                android:alpha="0.6"
-                android:textSize="@dimen/sixteen_sp" />
+                android:alpha="0.5"
+                android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>
 
 

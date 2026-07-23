@@ -13,6 +13,12 @@ data class ExamTimetableActivity(
     @SerializedName("activity_name")
     val activityName: String?,
 
+    @SerializedName("max_mark")
+    val max_mark: String?,
+
+    @SerializedName("pass_mark")
+    val pass_mark: String?,
+
     @SerializedName("scheduling_details")
     val schedulingDetails: ExamScheduleDetails?,
 

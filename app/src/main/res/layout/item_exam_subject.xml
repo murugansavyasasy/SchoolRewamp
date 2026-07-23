@@ -58,7 +58,7 @@
                 android:background="@drawable/light_green_radius"
                 android:paddingHorizontal="@dimen/ten"
                 android:paddingVertical="@dimen/four"
-                android:text="@string/view_details"
+                android:text="@string/view_schedule"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/twele_sp" />
 
