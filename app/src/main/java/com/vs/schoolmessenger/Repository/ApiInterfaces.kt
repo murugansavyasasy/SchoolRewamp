@@ -61,6 +61,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
@@ -878,7 +879,7 @@ interface ApiInterfaces {
     @GET(APIMethods.get_exams)
     fun getexams(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<ExamTimeTableResponse?>?
+    ): Call<ExamTimetableResponse?>?
 
 
     @GET(APIMethods.exam_list)

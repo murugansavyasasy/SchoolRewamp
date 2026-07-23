@@ -26,8 +26,18 @@
                   <option name="appId" value="com.vs.schoolmessenger" />
                 </ConnectionSetting>
               </option>
+              <option name="devices">
+                <list>
+                  <DeviceSetting>
+                    <option name="deviceType" value="Phone" />
+                    <option name="displayName" value="Redmi  Note  6  Pro" />
+                    <option name="manufacturer" value="xiaomi" />
+                    <option name="model" value="tulip" />
+                  </DeviceSetting>
+                </list>
+              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
-              <option name="timeIntervalDays" value="SIXTY_DAYS" />
+              <option name="timeIntervalDays" value="ONE_DAY" />
               <option name="visibilityType" value="ALL" />
             </InsightsFilterSettings>
           </value>

@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEven
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
@@ -385,7 +386,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getstaffquestions: LiveData<QuestionResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
     var sendanswer: LiveData<AnswerModelResponse?>? = null
-    var getexams: LiveData<ExamTimeTableResponse?>? = null
+    var getexams: LiveData<ExamTimetableResponse?>? = null
     var getexamslist: LiveData<ExamResponse?>? = null
     var getviewmarks: LiveData<ExamMarksResponse?>? = null
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
@@ -1365,8 +1366,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getexams(
         isToken: String, activity: Activity
     ) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
-        RestClient.changeApiBaseUrl(reporting_url!!)
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
         apiParentRepositories.getexams(isToken)
     }
 

@@ -1,7 +1,10 @@
-package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewamp
+package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ExamTimetableActivity(
 
     @SerializedName("activity_id")
@@ -15,4 +18,5 @@ data class ExamTimetableActivity(
 
     @SerializedName("rubrics")
     val rubrics: List<ExamTimetableRubric>?
-)
+
+) : Parcelable

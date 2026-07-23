@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/AthensGray"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    >
 
     <View
         android:id="@+id/statusBarBackground"
@@ -46,84 +47,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
+                android:textAllCaps="true"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp" />
+                android:alpha="0.6"
+                android:textSize="@dimen/sixteen_sp" />
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/toolbarLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/headerview"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/ten"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:id="@+id/lnrTabOneName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/headerview"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabOneName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/five"
-                    android:gravity="center"
-                    android:text="@string/exam_timetable"
-                    android:textColor="@color/PrimaryColor"></TextView>
-
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginEnd="@dimen/five"
-                    android:background="@color/PrimaryColor"></View>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/lnrTabTwoName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabTwoName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:gravity="center"
-                    android:text="@string/exam_marks"></TextView>
-
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:layout_below="@+id/groupheading"
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_marginTop="@dimen/five"></View>
-            </LinearLayout>
-
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rytSearch1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
-            android:layout_below="@+id/toolbarLayout1"
+            android:layout_below="@+id/headerview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
@@ -157,23 +94,13 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/exammarkrecyclerview"
+            android:id="@+id/rcExamTimeTableAct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/ten"
             android:layout_below="@+id/rytSearch1"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="5dp" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcExamTimeTable"
-            android:layout_width="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/exammarkrecyclerview"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginBottom="16dp" />
 
 
         <LinearLayout

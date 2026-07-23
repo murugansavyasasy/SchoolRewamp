@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
         android:textColor="@color/PrimaryColor"
-        android:textSize="@dimen/twenty_sp"></TextView>
+        android:textSize="@dimen/sixteen_sp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/eight" />
 </LinearLayout>

@@ -1,0 +1,60 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/five"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#e8e8ec">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/ten">
+
+        <LinearLayout
+            android:id="@+id/iconContainer"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rect_bg_light_blue"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:src="@drawable/tick_icon_5"
+                android:tint="@android:color/black"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right_arrow"
+            android:tint="#6B7280"/>
+
+        <TextView
+            android:id="@+id/rubricsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconContainer"
+            android:layout_toStartOf="@id/imgArrow"
+            android:layout_marginStart="18dp"
+            android:text="Botiba Setup"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

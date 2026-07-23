@@ -12,13 +12,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamDataRewamp
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ExamMarkAdapter(
-    private var itemList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>,
+    private var itemList: List<ExamDataRewamp>,
     private var listener: ExamMarkListener,
     private var context: Context,
     private var isLoading: Boolean,
@@ -26,9 +27,9 @@ class ExamMarkAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> =
+    private var fullList: List<ExamDataRewamp> =
         itemList ?: listOf()
-    private var filteredList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> =
+    private var filteredList: List<ExamDataRewamp> =
         itemList ?: listOf()
 
     init {
@@ -73,7 +74,7 @@ class ExamMarkAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.name.lowercase().contains(query)
+                        it.reportName.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -83,7 +84,7 @@ class ExamMarkAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList =
-                    results?.values as? List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>
+                    results?.values as? List<ExamDataRewamp>
                         ?: listOf()
                 listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
@@ -101,21 +102,33 @@ class ExamMarkAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            exam: com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData,
+            exam: ExamDataRewamp,
             position: Int,
             adapter: ExamMarkAdapter
         ) {
             rootHeader.background.alpha = (0.1f * 255).toInt()
-            textExamTitle.text = exam.name
+            textExamTitle.text = exam.reportName
+
+            if (exam.mark_sent){
+                btnViewMarks.visibility= View.VISIBLE
+            }else{
+                btnViewMarks.visibility= View.GONE
+            }
+            if (exam.report_sent){
+                btnViewProgress.visibility= View.VISIBLE
+            }else{
+                btnViewProgress.visibility= View.GONE
+            }
+
             btnViewMarks.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ExamMarkResults::class.java)
-                intent.putExtra(Constant.exam_title, exam.name)
-                intent.putExtra(Constant.exam_id, exam.id)
+                intent.putExtra(Constant.exam_title, exam.reportName)
+                intent.putExtra(Constant.exam_id, exam.report_id)
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {
-                listener.onExamSelected(exam.id ?: "", exam.name ?: "")
+                listener.onExamSelected(exam.report_id.toString() ?: "", exam.reportName ?: "")
 
             }
 

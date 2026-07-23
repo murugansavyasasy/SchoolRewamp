@@ -1,10 +1,10 @@
-package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewamp
+package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel
 
 import com.google.gson.annotations.SerializedName
 
 data class ExamTimetableResponse(
     @SerializedName("status")
-    val status: String?,
+    val status: Boolean,
 
     @SerializedName("message")
     val message: String?,

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    app:cardCornerRadius="@dimen/ten"
+    android:elevation="@dimen/five"
+    app:strokeColor="@color/white"
+    android:layout_marginBottom="@dimen/ten"
+    app:cardElevation="@dimen/five">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/subject_name"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject_Name"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"></TextView>
+
+            <LinearLayout
+                android:id="@+id/lnrScheduleDetails"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imgDate"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_bg_light_blue"
+                        android:backgroundTint="@color/light_blue_22"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/calenderstylesvg"
+                        android:tint="@color/dark_blue_22">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:id="@+id/lnrDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/eight"
+                        android:layout_toEndOf="@id/imgDate"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date"
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                        <TextView
+                            android:id="@+id/lblDate"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="00 ABC 0000"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginVertical="@dimen/eight"
+                    android:background="@color/very_light_gray_12"></View>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imgClock"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_bg_light_blue"
+                        android:backgroundTint="@color/light_voliet_22"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/clock"
+                        android:tint="@color/dark_voliet_22">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/eight"
+                        android:layout_toEndOf="@id/imgClock"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time"
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/lblTime"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginVertical="@dimen/eight"
+                    android:background="@color/very_light_gray_12"></View>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imgSession"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_bg_light_blue"
+                        android:backgroundTint="@color/light_green_22"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/sun_icon"
+                        android:tint="@color/dark_green_22">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/eight"
+                        android:layout_toEndOf="@id/imgSession"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/session"
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/lblSession"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginVertical="@dimen/eight"
+                    android:background="@color/very_light_gray_12"></View>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imgVenue"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_bg_light_blue"
+                        android:backgroundTint="@color/light_orange_22"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/map_icon_5"
+                        android:tint="@color/dark_orange_22">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/eight"
+                        android:layout_toEndOf="@id/imgVenue"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Venue"
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/lblVenue"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one"
+                    android:layout_marginVertical="@dimen/eight"
+                    android:background="@color/very_light_gray_12"></View>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imgSyllabus"
+                        android:layout_width="@dimen/fourty"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/rect_bg_light_blue"
+                        android:backgroundTint="@color/light_green_23"
+                        android:padding="@dimen/ten"
+                        android:src="@drawable/book__2_"
+                        android:tint="@color/dark_green_23">
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="@dimen/eight"
+                        android:layout_toEndOf="@id/imgSyllabus"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/syllabus"
+                            android:textAlignment="viewStart"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:id="@+id/lblSyllabus"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/div1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginVertical="@dimen/five"
+            android:background="@color/very_light_gray_12"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ten"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblRubrics"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rubrics"
+                android:textAlignment="viewStart"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:drawableStart="@drawable/more_options_2"
+                android:drawableTint="@color/black"
+                android:drawablePadding="@dimen/five"
+                android:textSize="@dimen/fifteen_sp"></TextView>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaNoDataFound"
+                android:layout_marginTop="@dimen/ten"
+                android:padding="@dimen/fifteen"
+                android:background="@drawable/dotted_rounded_rectangle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/imgRubrics"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/rect_bg_light_blue"
+                    android:backgroundTint="@color/light_pink_23"
+                    android:padding="@dimen/twele"
+                    android:src="@drawable/more_options_2"
+                    android:tint="@color/black">
+
+                </ImageView>
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Rubrics Available"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/eight"
+                    android:layout_toEndOf="@id/imgRubrics"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp"></TextView>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="@dimen/ten"
+                android:id="@+id/rcRubrics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
