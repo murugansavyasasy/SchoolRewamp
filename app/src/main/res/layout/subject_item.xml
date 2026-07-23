@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -31,6 +32,7 @@
             android:textSize="17sp" />
     </LinearLayout>
 
+    <!-- Activities Container (Expanded/Collapsed) -->
     <LinearLayout
         android:id="@+id/lnrFlexContainer"
         android:layout_width="match_parent"
@@ -46,18 +48,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activities"
-            android:textSize="@dimen/fifteen_sp">
+            android:textSize="@dimen/fifteen_sp" />
 
-        </TextView>
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexActivities"
+        <!-- Container for all activities -->
+        <LinearLayout
+            android:id="@+id/activitiesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start" />
+            android:orientation="vertical"
+            android:paddingTop="12dp" />
 
     </LinearLayout>
 
@@ -70,14 +69,11 @@
         android:layout_marginTop="@dimen/five"
         android:gravity="center"
         android:text="@string/no_data_found"
-        android:visibility="gone"></TextView>
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/one"
-        android:background="@color/AthensGray">
-
-    </View>
-
+        android:background="@color/AthensGray" />
 
 </LinearLayout>

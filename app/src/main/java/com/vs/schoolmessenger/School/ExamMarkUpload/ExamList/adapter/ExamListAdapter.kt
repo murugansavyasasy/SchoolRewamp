@@ -69,6 +69,11 @@ class ExamListAdapter(
         if (expandedPosition != -1) notifyItemChanged(expandedPosition)
     }
 
+//    fun updateSecondData(newList: List<getSubjectWiseACtivitiesData>?) {
+//        getSubjectActivitiesList = newList
+//        if (expandedPosition != -1) notifyItemChanged(expandedPosition)
+//    }
+
     inner class ExamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val title: TextView = itemView.findViewById(R.id.examTitle)

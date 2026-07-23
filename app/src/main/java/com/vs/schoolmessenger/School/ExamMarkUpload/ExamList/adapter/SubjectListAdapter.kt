@@ -14,7 +14,7 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseAc
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SubjectListAdapter(
-    private var subjects: List<getSubjectWiseACtivitiesData>?,   // 🔥 supports null for shimmer
+    private var subjects: List<getSubjectWiseACtivitiesData>?,
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -48,12 +48,11 @@ class SubjectListAdapter(
             subjects?.get(position)?.let { holder.bind(it, position) }
     }
 
-    //  Called by ExamListAdapter when API result arrives
+    // Called by ExamListAdapter when API result arrives
     fun updateData(newList: List<getSubjectWiseACtivitiesData>?) {
         subjects = newList
         notifyDataSetChanged()
     }
-
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() = ShimmerUtil.startShimmer(itemView)
@@ -62,7 +61,7 @@ class SubjectListAdapter(
     inner class SubjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)
-        private val flexActivities: FlexboxLayout = itemView.findViewById(R.id.flexActivities)
+        private val activitiesContainer: LinearLayout = itemView.findViewById(R.id.activitiesContainer)
         private val subArrow: ImageView = itemView.findViewById(R.id.subArrow)
         private val subjectHeader: LinearLayout = itemView.findViewById(R.id.subHeader)
         private val lblNoData: TextView = itemView.findViewById(R.id.lblNoData)
@@ -71,14 +70,38 @@ class SubjectListAdapter(
         fun bind(item: getSubjectWiseACtivitiesData, position: Int) {
 
             subjectName.text = item.subject_name
-            flexActivities.removeAllViews()
+            activitiesContainer.removeAllViews()
 
-            if (item.splitup_details.isNotEmpty()) {
-                item.splitup_details?.forEach { act ->
-                    val chip = LayoutInflater.from(context)
-                        .inflate(R.layout.activity_item, flexActivities, false) as TextView
-                    chip.text = act.name
-                    flexActivities.addView(chip)
+            if (item.activities.isNotEmpty()) {
+                item.activities.forEach { activity ->
+                    // Inflate activity item layout
+                    val activityView = LayoutInflater.from(context)
+                        .inflate(R.layout.activity_item_with_rubrics, activitiesContainer, false)
+
+                    val activityName: TextView = activityView.findViewById(R.id.activityName)
+                    val rubricsFlex: FlexboxLayout = activityView.findViewById(R.id.flexRubrics)
+                    val lblNoRubrics: TextView = activityView.findViewById(R.id.lblNoRubrics)
+                    val rubricsContainer: LinearLayout = activityView.findViewById(R.id.rubricsContainer)
+
+                    activityName.text = activity.activity_name
+
+                    // Add rubric chips
+                    rubricsFlex.removeAllViews()
+                    if (activity.rubrics.isNotEmpty()) {
+                        activity.rubrics.forEach { rubric ->
+                            val chip = LayoutInflater.from(context)
+                                .inflate(R.layout.rubric_chip_item, rubricsFlex, false) as TextView
+                            chip.text = rubric.rubric_name
+                            rubricsFlex.addView(chip)
+                        }
+                        rubricsContainer.visibility = View.VISIBLE
+                        lblNoRubrics.visibility = View.GONE
+                    } else {
+                        rubricsContainer.visibility = View.GONE
+                        lblNoRubrics.visibility = View.VISIBLE
+                    }
+
+                    activitiesContainer.addView(activityView)
                 }
                 lnrFlexContainer.visibility = View.VISIBLE
                 lblNoData.visibility = View.GONE
