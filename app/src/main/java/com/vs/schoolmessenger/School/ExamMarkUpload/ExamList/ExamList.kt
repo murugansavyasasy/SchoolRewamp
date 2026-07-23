@@ -279,7 +279,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         binding.rcExamList.adapter = adapter
         appViewModel!!.getStaffWiseExam(
             isAccessToken!!,
-            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "", "7", this
+            Constant.isMarkUploadClassSectionDetails?.sectionId ?: "", Constant.isUploadMarksSelectedAcademicID, this
         )
     }
 
