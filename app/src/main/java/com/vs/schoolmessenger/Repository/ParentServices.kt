@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.PauketPoint
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.PauketPoints.SpentPointsModel
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
@@ -75,7 +76,7 @@ class ParentServices {
     var getstudentdetailsforchat: MutableLiveData<InteractionWithStudentResponse?>
     var getstaffanswers: MutableLiveData<AnswerResponse?>
     var sendquestion: MutableLiveData<QuestionModelResponse?>
-    var getexams: MutableLiveData<ExamTimeTableResponse?>
+    var getexams: MutableLiveData<ExamTimetableResponse?>
     var getexamslist: MutableLiveData<ExamResponse?>
     var getviewmarks: MutableLiveData<ExamMarksResponse?>
     var isleaverequestupdate: MutableLiveData<LeaveUpdateResponse?>
@@ -636,10 +637,10 @@ class ParentServices {
         isToken: String
     ) {
         RestClient.apiInterfaces.getexams(isToken)
-            ?.enqueue(object : Callback<ExamTimeTableResponse?> {
+            ?.enqueue(object : Callback<ExamTimetableResponse?> {
                 override fun onResponse(
-                    call: Call<ExamTimeTableResponse?>,
-                    response: Response<ExamTimeTableResponse?>
+                    call: Call<ExamTimetableResponse?>,
+                    response: Response<ExamTimetableResponse?>
                 ) {
                     Log.d(
                         "certificate list Response",
@@ -656,7 +657,7 @@ class ParentServices {
                 }
 
                 override fun onFailure(
-                    call: Call<ExamTimeTableResponse?>,
+                    call: Call<ExamTimetableResponse?>,
                     t: Throwable
                 ) {
                     getexams.postValue(null)
@@ -665,7 +666,7 @@ class ParentServices {
             })
     }
 
-    val getexamsLiveData: LiveData<ExamTimeTableResponse?>
+    val getexamsLiveData: LiveData<ExamTimetableResponse?>
         get() = getexams
 
 

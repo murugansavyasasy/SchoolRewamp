@@ -126,6 +126,17 @@
     <color name="light_gray_16">#f2f2f5</color>
     <color name="light_blue_15">#bed8f9</color>
     <color name="gray_white">#f2f2f7</color>
+    <color name="dark_blue_22">#4679ca</color>
+    <color name="dark_voliet_22">#7B1FA2</color>
+    <color name="dark_green_22">#2E7D32</color>
+    <color name="dark_orange_22">#E65100</color>
+    <color name="dark_green_23">#00695C</color>
+    <color name="light_green_23">#E0F2F1</color>
+    <color name="light_orange_22">#FFF3E0</color>
+    <color name="light_pink_23">#e7e0ec</color>
+    <color name="light_green_22">#E8F5E9</color>
+    <color name="light_voliet_22">#F3E5F5</color>
+    <color name="light_blue_22">#e3f2fd</color>
     <color name="dark_brown_4">#84461b</color>
     <color name="mild_grey6">#656565</color>
     <color name="mild_grey7">#586171</color>

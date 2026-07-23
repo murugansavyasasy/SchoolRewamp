@@ -14,7 +14,7 @@ plugins {
 }
 android {
     namespace = "com.vs.schoolmessenger"
-    compileSdk = 35
+    compileSdk = 37
     ndkVersion = "28.0.12433566"
     packaging {
         jniLibs {
@@ -25,7 +25,7 @@ android {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 205
         versionName = "8.12"
         // 👇 Add these lines
