@@ -166,7 +166,7 @@ class ActivityExamListAdapter(
             val bg = lnrUploadImage.background as GradientDrawable
             bg.mutate()
             when {
-                selectedCount == 0 -> { // ORIGINAL
+                selectedCount == 0 -> {
 
                     if (isEntryType) {
                         bg.setStroke(
