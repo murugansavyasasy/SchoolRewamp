@@ -2049,7 +2049,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isAcademicYearId: String,
         activity: Activity
     ) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        val reporting_url = SharedPreference.getReportingUrl(activity)
+        val reporting_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id,isAcademicYearId)
     }
