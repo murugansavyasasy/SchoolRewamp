@@ -128,7 +128,7 @@ class ExamMarkAdapter(
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {
-                listener.onExamSelected(exam.report_id.toString() ?: "", exam.reportName ?: "")
+                listener.onExamSelected(exam.report_id.toString() ?: "", exam.reportName ?: "",exam.type?:"")
 
             }
 

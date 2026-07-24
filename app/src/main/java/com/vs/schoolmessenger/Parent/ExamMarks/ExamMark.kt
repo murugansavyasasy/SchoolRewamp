@@ -482,13 +482,11 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
     }
 
-    override fun onExamSelected(examid: String, examName: String) {
+    override fun onExamSelected(examid: String, examName: String,type: String) {
 
         val jsonObject = JsonObject().apply {
-            addProperty("report_id", 105) // or actual report ID
-            addProperty("section_id", "91746")
-            addProperty("standard_id", "8")
-            addProperty("type", "term")
+            addProperty("report_id", examid) // or actual report ID
+            addProperty("type",type )
         }
 
         appViewModel?.getProgressMarks(isAccessToken ?: "",jsonObject , this)

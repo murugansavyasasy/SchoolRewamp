@@ -1366,8 +1366,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getexams(
         isToken: String, activity: Activity
     ) {
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getexams(isToken)
     }
 

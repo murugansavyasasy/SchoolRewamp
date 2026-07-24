@@ -198,7 +198,7 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
     override fun onSearchResultEmpty(isEmpty: Boolean) {
     }
 
-    override fun onExamSelected(examid: String, examName: String) {
+    override fun onExamSelected(examid: String, examName: String,type: String) {
     }
 
     override fun onRubricClick(rubric: ExamTimetableRubric) {

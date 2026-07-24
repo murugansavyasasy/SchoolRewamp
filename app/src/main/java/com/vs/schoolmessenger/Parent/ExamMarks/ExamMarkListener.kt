@@ -4,7 +4,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTime
 
 interface ExamMarkListener {
     fun onSearchResultEmpty(isEmpty: Boolean)
-    fun onExamSelected(examid: String, examName: String)
+    fun onExamSelected(examid: String, examName: String,type: String)
     fun onRubricClick(rubric: ExamTimetableRubric)
 
 
