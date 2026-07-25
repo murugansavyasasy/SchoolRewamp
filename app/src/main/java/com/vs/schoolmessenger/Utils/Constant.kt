@@ -519,6 +519,7 @@ object Constant {
     var isDelete = "isDelete"
     var isEdit = "isEdit"
     var role = "role"
+    var school_logo = "school_logo"
     var emergency = "emergency"
     var menuId = "menuId"
     var isVideoPostedDate = ""
