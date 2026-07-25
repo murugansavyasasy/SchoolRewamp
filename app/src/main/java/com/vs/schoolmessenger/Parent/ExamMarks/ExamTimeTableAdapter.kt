@@ -73,7 +73,7 @@ class ExamTimeTableAdapter(
                         exam.examName.orEmpty().lowercase().contains(query) ||
                                 exam.subjects.orEmpty().any { subject ->
                                     subject.subjectName.orEmpty().lowercase().contains(query) ||
-                                            subject.max_mark?.toString().orEmpty().lowercase().contains(query)
+                                            subject.total_mark?.toString().orEmpty().lowercase().contains(query)
                                 }
                     }
                 }

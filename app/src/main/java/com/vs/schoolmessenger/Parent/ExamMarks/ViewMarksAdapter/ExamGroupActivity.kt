@@ -55,16 +55,16 @@ class ExamGroupActivity(
 
         fun bind(groupExamMark: Group) {
             groupSubjectname.text = groupExamMark.name
-            mark.text = groupExamMark.mark
+            mark.text = groupExamMark.mark?:""
 
-            if (groupExamMark.sub_groups.size <= 1) {
+            if (groupExamMark.subjects.size <= 1) {
                 rcGroupSplitMark.visibility = View.GONE
             } else {
                 rcGroupSplitMark.visibility = View.VISIBLE
                 rcGroupSplitMark.layoutManager =
                     LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
                 groupExamMarkResultsAdapter =
-                    GroupExamMarkResultsAdapter(groupExamMark.sub_groups, itemView.context, false)
+                    GroupExamMarkResultsAdapter(groupExamMark.subjects, itemView.context, false)
                 rcGroupSplitMark.isNestedScrollingEnabled = false
                 rcGroupSplitMark.adapter = groupExamMarkResultsAdapter
             }

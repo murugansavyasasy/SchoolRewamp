@@ -122,7 +122,7 @@ object APIMethods {
     const val staff_ans_question = "/comm/api/interaction/staff-ans-question"
     const val get_exams = "/exam/api/new-exam/get-exams"
     const val exam_list = "/exam/api/new-exam/get-report-status"
-    const val view_marks = "/exam/api/exam/view-marks"
+    const val view_marks = "exam/api/new-exam/get-mark-details"
     const val progress_card = "/exam/api/new-exam/get-student-progresscard"
     const val isleaverequestupdate = "comm/api/leave-req/update"
     const val isleaverequestdelete = "comm/api/leave-req/delete"

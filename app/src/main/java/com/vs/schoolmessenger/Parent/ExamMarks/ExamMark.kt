@@ -398,7 +398,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                     Constant.commonFileList.add(
                         CommonFileData(
                             type = Constant.PDF,
-                            path = response.data[0]
+                            path = response.data.firstOrNull()?.link?:""
                         )
                     )
                     Constant.selectedFileIndex = 0

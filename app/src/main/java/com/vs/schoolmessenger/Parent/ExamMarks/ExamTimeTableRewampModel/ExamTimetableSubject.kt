@@ -13,8 +13,8 @@ data class ExamTimetableSubject(
     @SerializedName("subject_name")
     val subjectName: String?,
 
-    @SerializedName("max_mark")
-    val max_mark: String?,
+    @SerializedName("total_mark")
+    val total_mark: String?,
 
     @SerializedName("activities")
     val activities: List<ExamTimetableActivity>?

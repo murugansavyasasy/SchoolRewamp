@@ -891,7 +891,7 @@ interface ApiInterfaces {
     @GET(APIMethods.view_marks)
     fun getviewmarks(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.exam_id) exam_id: String
+        @Query("report_id") exam_id: String
     ): Call<ExamMarksResponse?>?
 
     @Headers("Content-Type: application/json")
