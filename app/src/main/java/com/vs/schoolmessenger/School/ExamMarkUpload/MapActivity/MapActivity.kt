@@ -259,11 +259,24 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         finalListFromAdapter.forEach { subject ->
 
             val validPapers = subject.paper.filter { paper ->
-                if (isEntryType) {
-                    !paper.selectedValue.isNullOrEmpty()
-                } else {
-                    if (paper.rubrics.isNotEmpty()) paper.rubrics.any { it.isSelected }
-                    else !paper.selectedActivityID.isNullOrEmpty()
+                val hasRubrics = paper.rubrics.isNotEmpty()
+
+                if (isEntryType) {               // ── AI mode ──
+                    if (hasRubrics) {
+                        // AI + rubrics: at least one rubric mapped to a column
+                        paper.rubrics.any { !it.selectedRubricesValue.isNullOrEmpty() }
+                    } else {
+                        // AI + no rubrics: paper-level spinner has a value
+                        !paper.selectedValue.isNullOrEmpty()
+                    }
+                } else {                          // ── Manual mode ──
+                    if (hasRubrics) {
+                        // Manual + rubrics: at least one rubric ticked
+                        paper.rubrics.any { it.isSelected }
+                    } else {
+                        // Manual + no rubrics: checkbox ticked
+                        !paper.selectedActivityID.isNullOrEmpty()
+                    }
                 }
             }
 
@@ -289,4 +302,43 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
         startActivity(intent)
     }
+
+//    private fun saveSelectedMappings(
+//        finalListFromAdapter: List<getActivitySubjectNameData>
+//    ) {
+//        val finalSubjectList = mutableListOf<getActivitySubjectNameData>()
+//
+//        finalListFromAdapter.forEach { subject ->
+//
+//            val validPapers = subject.paper.filter { paper ->
+//                if (isEntryType) {
+//                    !paper.selectedValue.isNullOrEmpty()
+//                } else {
+//                    if (paper.rubrics.isNotEmpty()) paper.rubrics.any { it.isSelected }
+//                    else !paper.selectedActivityID.isNullOrEmpty()
+//                }
+//            }
+//
+//            if (validPapers.isNotEmpty()) {
+//                finalSubjectList.add(
+//                    subject.copy(paper = validPapers)
+//                )
+//            }
+//        }
+//
+//        Log.d("FINAL_SUBJECT_LIST", finalSubjectList.toString())
+//
+//        if (finalSubjectList.isEmpty()) {
+//            Toast.makeText(
+//                this,
+//                getString(R.string.please_select_at_least_one_mapping),
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return
+//        }
+//
+//        val intent = Intent(this, ReviewAndEditMarks::class.java)
+//        intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
+//        startActivity(intent)
+//    }
 }

@@ -56,9 +56,9 @@ class MarkEntryAdapter(
                 gravity = Gravity.CENTER
             }
 
-//            editText.addTextChangedListener {
-//                activity.mark = it.toString()
-//            }
+            editText.addTextChangedListener {
+                activity.mark = it.toString()
+            }
 
             holder.container.addView(editText)
         }

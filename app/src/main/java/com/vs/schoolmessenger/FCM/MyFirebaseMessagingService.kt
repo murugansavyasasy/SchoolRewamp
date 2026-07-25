@@ -85,6 +85,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val ei4 = remoteMessage.data[Constant.ei4] ?: ""
         val ei5 = remoteMessage.data[Constant.ei5] ?: ""
         val role = remoteMessage.data[Constant.role] ?: ""
+        val school_logo = remoteMessage.data[Constant.school_logo] ?: ""
         isEmergency = remoteMessage.data[Constant.emergency] ?: ""
         val member_name = remoteMessage.data[Constant.member_name] ?: ""
         val school_name = remoteMessage.data[Constant.school_name] ?: ""
@@ -99,6 +100,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 }
                 if (isEmergency == "1") {
                     showCallNotification(
+                        school_logo,
                         title,
                         body,
                         receiver_id.toString(),
@@ -118,6 +120,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     )
                 } else {
                     sendNotificationCall(
+                        school_logo,
                         title,
                         body,
                         receiver_id.toString(),
@@ -202,6 +205,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotificationCall(
+        school_logo: String,
         title: String,
         body: String,
         receiver_id: String,
@@ -253,6 +257,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("isEmergencyCall", isEmergency)
             putExtra("notification_id", 1001)
             putExtra("launch_source", "ANSWER")
+            putExtra("school_logo", school_logo)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
@@ -408,6 +413,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showCallNotification(
+        school_logo: String,
         title: String,
         body: String,
         receiver_id: String,
@@ -451,6 +457,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("is_missed_announcement", false)
             putExtra("launch_source", "ANSWER")
             putExtra("isEmergencyCall", isEmergency)
+            putExtra("school_logo", school_logo)
 
         }
 
@@ -479,6 +486,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("is_missed_announcement", false)
             putExtra("launch_source", "FULL_SCREEN")
             putExtra("isEmergencyCall", isEmergency)
+            putExtra("school_logo", school_logo)
 
         }
 
@@ -521,6 +529,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 putExtra(Constant.isWelcomeUrlNotifi, isWelcomeUrl)
                 putExtra("notification_id", 1001)
                 putExtra("isEmergencyCall", isEmergency)
+                putExtra("school_logo", school_logo)
             }
 
         val dismissPendingIntent =
@@ -725,7 +734,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("notification_id", 2001)
             putExtra("launch_source", "MISSED")
             putExtra("isEmergencyCall", isEmergency)
-
 
         }
 

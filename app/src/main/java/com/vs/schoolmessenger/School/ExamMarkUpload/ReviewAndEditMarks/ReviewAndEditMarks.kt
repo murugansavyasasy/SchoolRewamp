@@ -705,215 +705,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         HorizontalScrollSync.bind(headerScroll)
     }
 
-    // UPDATED: Setup header with proper visual hierarchy
-//    private fun setupHeader(columns: List<MarkColumn>) {
-//        val container = findViewById<LinearLayout>(R.id.headerSubjectContainer)
-//        val headerScroll = findViewById<HorizontalScrollView>(R.id.headerScroll)
-//        container.removeAllViews()
-//
-//        fun dpToPx(dp: Int): Int = (dp * Resources.getSystem().displayMetrics.density).toInt()
-//
-//        // Fixed row heights
-//        val subjectRowHeight = dpToPx(32)
-//        val activityRowHeight = dpToPx(24)
-//        val rubricRowHeight = dpToPx(40)
-//        val totalHeaderHeight = subjectRowHeight + activityRowHeight + rubricRowHeight
-//
-//        // Group columns by subject
-//        val subjectGroups = columns.groupBy { it.subjectId }
-//
-//        subjectGroups.forEach { (subjectId, subjectColumns) ->
-//
-//            // Subject container - exact total height
-//            val subjectContainer = LinearLayout(this).apply {
-//                orientation = LinearLayout.VERTICAL
-//                gravity = Gravity.CENTER_HORIZONTAL
-//                layoutParams = LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    totalHeaderHeight
-//                )
-//            }
-//
-//            // --- ROW 1: Subject Name ---
-//            subjectContainer.addView(TextView(this).apply {
-//                text = subjectColumns.firstOrNull()?.subjectName ?: ""
-//                setTypeface(null, Typeface.BOLD)
-//                gravity = Gravity.CENTER
-//                textSize = 14f
-//                setTextColor(Color.BLACK)
-//                layoutParams = LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    subjectRowHeight
-//                )
-//            })
-//
-//            // --- ROW 2: Activity Names ---
-//            val activitiesRow = LinearLayout(this).apply {
-//                orientation = LinearLayout.HORIZONTAL
-//                gravity = Gravity.CENTER
-//                layoutParams = LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    activityRowHeight
-//                )
-//            }
-//
-//            val activityGroups = subjectColumns.groupBy { it.activityId }
-//
-//            activityGroups.forEach { (activityId, activityCols) ->
-//                val activityName = activityCols.firstOrNull()?.parentActivityName?.trim()
-//                    ?: activityCols.firstOrNull()?.activityName?.trim()
-//                    ?: ""
-//
-//                val rubricCount = activityCols.count { it.isRubric }
-//                val activityWidth = if (rubricCount > 0) {
-//                    (rubricCount * SUBJECT_CELL_WIDTH) + ((rubricCount - 1) * SUBJECT_CELL_GAP)
-//                } else {
-//                    SUBJECT_CELL_WIDTH
-//                }
-//
-//                activitiesRow.addView(TextView(this).apply {
-//                    text = activityName
-//                    gravity = Gravity.CENTER
-//                    textSize = 11f
-//                    setTypeface(null, Typeface.BOLD)
-//                    setTextColor(Color.parseColor("#666666"))
-//                    layoutParams = LinearLayout.LayoutParams(
-//                        activityWidth,
-//                        LinearLayout.LayoutParams.MATCH_PARENT
-//                    )
-//                })
-//
-//                // SPACING between activities (no line, just gap)
-//                if (activityId != activityGroups.keys.lastOrNull()) {
-//                    activitiesRow.addView(View(this).apply {
-//                        layoutParams = LinearLayout.LayoutParams(
-//                            SUBJECT_CELL_GAP * 2,  // Gap only, no background
-//                            LinearLayout.LayoutParams.MATCH_PARENT
-//                        )
-//                    })
-//                }
-//            }
-//
-//            subjectContainer.addView(activitiesRow)
-//
-//            // --- ROW 3: Rubric Names + Max Marks ---
-//            val rubricsRow = LinearLayout(this).apply {
-//                orientation = LinearLayout.HORIZONTAL
-//                gravity = Gravity.CENTER_VERTICAL
-//                layoutParams = LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    rubricRowHeight
-//                )
-//            }
-//
-//            activityGroups.forEach { (activityId, activityCols) ->
-//                val rubricCols = activityCols.filter { it.isRubric }
-//
-//                if (rubricCols.isNotEmpty()) {
-//                    rubricCols.forEachIndexed { index, col ->
-//                        val rubricLayout = LinearLayout(this).apply {
-//                            orientation = LinearLayout.VERTICAL
-//                            gravity = Gravity.CENTER
-//                            layoutParams = LinearLayout.LayoutParams(
-//                                SUBJECT_CELL_WIDTH,
-//                                LinearLayout.LayoutParams.MATCH_PARENT
-//                            )
-//                        }
-//
-//                        rubricLayout.addView(TextView(this).apply {
-//                            text = col.selected_name?.trim() ?: col.rubricName?.trim() ?: ""
-//                            gravity = Gravity.CENTER
-//                            textSize = 12f
-//                            setTextColor(Color.BLACK)
-//                            layoutParams = LinearLayout.LayoutParams(
-//                                LinearLayout.LayoutParams.MATCH_PARENT,
-//                                0,
-//                                1f
-//                            )
-//                        })
-//
-//                        rubricLayout.addView(TextView(this).apply {
-//                            text = "Max: ${col.maxMark}"
-//                            gravity = Gravity.CENTER
-//                            setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
-//                            setTextColor(Color.GRAY)
-//                            layoutParams = LinearLayout.LayoutParams(
-//                                LinearLayout.LayoutParams.MATCH_PARENT,
-//                                0,
-//                                1f
-//                            )
-//                        })
-//
-//                        rubricsRow.addView(rubricLayout)
-//
-//                        // SPACING between rubrics (no line, just gap)
-//                        if (index != rubricCols.lastIndex) {
-//                            rubricsRow.addView(View(this).apply {
-//                                layoutParams = LinearLayout.LayoutParams(
-//                                    SUBJECT_CELL_GAP,  // Gap only
-//                                    LinearLayout.LayoutParams.MATCH_PARENT
-//                                )
-//                            })
-//                        }
-//                    }
-//                } else {
-//                    activityCols.forEach { col ->
-//                        val layout = LinearLayout(this).apply {
-//                            orientation = LinearLayout.VERTICAL
-//                            gravity = Gravity.CENTER
-//                            layoutParams = LinearLayout.LayoutParams(
-//                                SUBJECT_CELL_WIDTH,
-//                                LinearLayout.LayoutParams.MATCH_PARENT
-//                            )
-//                        }
-//
-//                        layout.addView(TextView(this).apply {
-//                            text = col.selected_name?.trim() ?: col.activityName
-//                            gravity = Gravity.CENTER
-//                            textSize = 12f
-//                            setTextColor(Color.BLACK)
-//                        })
-//
-//                        layout.addView(TextView(this).apply {
-//                            text = "Max: ${col.maxMark}"
-//                            gravity = Gravity.CENTER
-//                            setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
-//                            setTextColor(Color.GRAY)
-//                        })
-//
-//                        rubricsRow.addView(layout)
-//                    }
-//                }
-//
-//                // SPACING between activities (no line, just gap)
-//                if (activityId != activityGroups.keys.lastOrNull()) {
-//                    rubricsRow.addView(View(this).apply {
-//                        layoutParams = LinearLayout.LayoutParams(
-//                            SUBJECT_CELL_GAP * 2,  // Gap only
-//                            LinearLayout.LayoutParams.MATCH_PARENT
-//                        )
-//                    })
-//                }
-//            }
-//
-//            subjectContainer.addView(rubricsRow)
-//            container.addView(subjectContainer)
-//
-//            // SPACING between subjects (no line, just gap)
-//            if (subjectId != subjectGroups.keys.lastOrNull()) {
-//                container.addView(View(this).apply {
-//                    layoutParams = LinearLayout.LayoutParams(
-//                        SUBJECT_CELL_GAP * 3,  // Gap only
-//                        LinearLayout.LayoutParams.MATCH_PARENT
-//                    )
-//                })
-//            }
-//        }
-//
-//        HorizontalScrollSync.bind(headerScroll)
-//    }
     private fun isGetMarkDetails() {
         Constant.showLoading(this)
+
+        /* ── DIAGNOSTIC ── */
+        Log.d("FINAL_LIST_INPUT", "size=${isFinalMapDetails?.size ?: 0}")
+        isFinalMapDetails?.forEach { sub ->
+            Log.d("FINAL_LIST_INPUT",
+                "subject=${sub.subject} | papers=${sub.paper.map { "${it.name}(rubrics=${it.rubrics.size})" }}")
+        }
+
         val json = JsonObject().apply {
             addProperty(Constant.class_id, isFinalMapDetails!![0].class_id)
             addProperty(Constant.section_id, isFinalMapDetails!![0].section_id)
@@ -932,44 +733,94 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val activitiesArray = JsonArray()
 
             for (paper in subject.paper) {
+                val hasRubrics = paper.rubrics.isNotEmpty()
 
-                val activityId = paper.activity_id ?: paper.selectedActivityID
-                val selectedName =
-                    if (Constant.isMarkUploadFromAi) paper.selectedValue else paper.name
+                /* ── decide whether this paper should be included ── */
+                val shouldInclude = when {
+                    Constant.isMarkUploadFromAi -> {
+                        if (hasRubrics) {
+                            paper.rubrics.any { !it.selectedRubricesValue.isNullOrEmpty() }
+                        } else {
+                            !paper.selectedValue.isNullOrEmpty()
+                        }
+                    }
+                    else -> {
+                        if (hasRubrics) {
+                            paper.rubrics.any { it.isSelected }
+                        } else {
+                            paper.selectedActivityID == paper.activity_id
+                        }
+                    }
+                }
 
-                if (!activityId.isNullOrEmpty() && !selectedName.isNullOrEmpty()) {
+                Log.d("JSON_BUILDER",
+                    "subject=${subject.subject} paper=${paper.name} " +
+                            "isAi=${Constant.isMarkUploadFromAi} hasRubrics=$hasRubrics " +
+                            "shouldInclude=$shouldInclude")
 
-                    val activityObj = JsonObject().apply {
-                        // id as String (not Int)
-                        addProperty(APIKeyNames.id, activityId)
-                        addProperty(APIKeyNames.selected_name, selectedName)
+                if (!shouldInclude) continue
 
-                        // Filter rubrics where isSelected = true
-                        val selectedRubrics = paper.rubrics.filter { it.isSelected }
+                val activityId = (paper.activity_id?.toString()
+                    ?: paper.selectedActivityID?.toString()).orEmpty()
 
-                        if (selectedRubrics.isNotEmpty()) {
-                            val rubricsArray = JsonArray()
-                            selectedRubrics.forEach { rubric ->
+                val selectedName = when {
+                    Constant.isMarkUploadFromAi && hasRubrics -> paper.name
+                    Constant.isMarkUploadFromAi -> paper.selectedValue
+                    else -> paper.name
+                }
+
+                Log.d("JSON_BUILDER", "  → activityId=$activityId selectedName=$selectedName")
+
+                if (activityId.isEmpty() || selectedName.isNullOrEmpty()) continue
+
+                val activityObj = JsonObject().apply {
+                    addProperty(APIKeyNames.id, activityId)
+                    addProperty(APIKeyNames.selected_name, selectedName)
+
+                    if (hasRubrics) {
+                        val rubricsArray = JsonArray()
+
+                        val selectedRubrics = if (Constant.isMarkUploadFromAi) {
+                            paper.rubrics.filter { !it.selectedRubricesValue.isNullOrEmpty() }
+                        } else {
+                            paper.rubrics.filter { it.isSelected }
+                        }
+
+                        selectedRubrics.forEach { rubric ->
+                            val rubricSelectedName = if (Constant.isMarkUploadFromAi) {
+                                rubric.selectedRubricesValue?.trim()
+                            } else {
+                                rubric.rubric_name?.trim()
+                            }
+
+                            if (!rubricSelectedName.isNullOrEmpty()) {
                                 val rubricObj = JsonObject().apply {
-                                    // id as String
-                                    addProperty("id", rubric.rubric_id)
-                                    addProperty("selected_name", rubric.rubric_name?.trim())
+                                    addProperty("id", rubric.rubric_id?.toString())
+                                    addProperty("selected_name", rubricSelectedName)
                                 }
                                 rubricsArray.add(rubricObj)
+                                Log.d("JSON_BUILDER",
+                                    "    → rubric=${rubric.rubric_name} name=$rubricSelectedName")
                             }
+                        }
+
+                        if (rubricsArray.size() > 0) {
                             add("rubrics", rubricsArray)
                         }
                     }
-
-                    activitiesArray.add(activityObj)
                 }
+
+                activitiesArray.add(activityObj)
             }
 
             if (activitiesArray.size() > 0) {
                 subjectObj.add(Constant.activities, activitiesArray)
                 selectedActivitiesArray.add(subjectObj)
+                Log.d("JSON_BUILDER",
+                    "  → subject ${subject.subject} ADDED with ${activitiesArray.size()} activities")
             }
         }
+
         json.add(Constant.selected_activities, selectedActivitiesArray)
 
         Log.d("FINAL_JSON", json.toString())
@@ -1529,105 +1380,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             add(APIKeyNames.upload_details, uploadDetailsArray)
         }
     }
-
-    // UPDATED: Save marks including rubrics
-//    private fun isSaveTheMark(
-//        students: List<StudentMarkList>, columns: List<MarkColumn>
-//    ): JsonObject {
-//
-//        val uploadDetailsArray = JsonArray()
-//
-//        students.forEach { student ->
-//
-//            val studentObj = JsonObject().apply {
-//                addProperty(Constant.student_id, student.student_id)
-//                addProperty(Constant.student_name, student.name)
-//                addProperty(Constant.roll_no, student.rollNo)
-//                addProperty(Constant.admission_no, "")
-//            }
-//
-//            val marksArray = JsonArray()
-//
-//            // Group columns by subject
-//            val subjectGroups = columns.groupBy { it.subjectId }
-//
-//            subjectGroups.forEach { (subjectId, subjectColumns) ->
-//                val subjectName = subjectColumns.firstOrNull()?.subjectName ?: ""
-//
-//                val subjectObj = JsonObject().apply {
-//                    addProperty(Constant.subject_id, subjectId)
-//                    addProperty(Constant.subject_name, subjectName)
-//                }
-//
-//                val activitiesArray = JsonArray()
-//
-//                // Group by activity within subject
-//                val activityGroups = subjectColumns.groupBy { it.activityId }
-//
-//                activityGroups.forEach { (activityId, activityColumns) ->
-//
-//                    val activityName = activityColumns.firstOrNull()?.activityName ?: ""
-//                    val hasRubrics = activityColumns.any { it.isRubric }
-//
-//                    if (hasRubrics) {
-//                        // Build rubrics array
-//                        val rubricsArray = JsonArray()
-//
-//                        activityColumns.filter { it.isRubric }.forEach { col ->
-//                            val index = columns.indexOf(col)
-//                            val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
-//
-//                            val rubricObj = JsonObject().apply {
-//                                addProperty("id", col.rubricId)
-//                                addProperty("name", col.rubricName)
-//                                addProperty("mark", rawText)
-//                                addProperty("is_edit", student.isEditList.getOrNull(index) ?: true)
-//                                addProperty("max_mark", col.maxMark.toString())
-//                                addProperty("selected_name", col.selected_name)
-//                            }
-//                            rubricsArray.add(rubricObj)
-//                        }
-//
-//                        // Activity with rubrics
-//                        val activityObj = JsonObject().apply {
-//                            addProperty(Constant.id, activityId)
-//                            addProperty(Constant.name__, activityName)
-//                            addProperty("selected_name", activityColumns.firstOrNull()?.parentActivityName ?: "")
-//                            addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "100")
-//                            add("rubrics", rubricsArray)
-//                        }
-//                        activitiesArray.add(activityObj)
-//
-//                    } else {
-//                        // Regular activity (no rubrics)
-//                        activityColumns.forEach { col ->
-//                            val index = columns.indexOf(col)
-//                            val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
-//
-//                            val activityObj = JsonObject().apply {
-//                                addProperty(Constant.id, activityId)
-//                                addProperty(Constant.name__, activityName)
-//                                addProperty(Constant.selected_name, col.selected_name)
-//                                addProperty(Constant.mark, rawText)
-//                                addProperty(Constant.max_mark, col.maxMark.toString())
-//                            }
-//                            activitiesArray.add(activityObj)
-//                        }
-//                    }
-//                }
-//
-//                subjectObj.add(Constant.activities, activitiesArray)
-//                marksArray.add(subjectObj)
-//            }
-//
-//            studentObj.add(Constant.marks, marksArray)
-//            uploadDetailsArray.add(studentObj)
-//        }
-//        return JsonObject().apply {
-//            addProperty(APIKeyNames.exam_section_id, isExamSectionId)
-//            add(APIKeyNames.upload_details, uploadDetailsArray)
-//        }
-//    }
 
     fun showSendConfirmationDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)

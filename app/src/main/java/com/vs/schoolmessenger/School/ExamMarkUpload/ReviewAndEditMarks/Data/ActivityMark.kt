@@ -9,7 +9,7 @@ data class ActivityMark(
     val is_edit: Boolean,
     val max_mark: String,
     val selected_name: String,
-    val mark: String,
+    var mark: String,
     val rubrics: List<Rubric>? = null
 )
 

@@ -17,6 +17,7 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -67,6 +68,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     private var isUserActionTaken = false
 
     private var isEmergency: String? = null
+    private var school_logo: String? = null
 
     override fun getViewBinding(): NotificationCallScreenBinding {
         return NotificationCallScreenBinding.inflate(layoutInflater)
@@ -198,6 +200,15 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
                 isSpecker = true
             }
         }
+
+        Glide.with(this)
+            .load(
+                if (!school_logo.isNullOrEmpty()) school_logo
+                else R.drawable.school_splash_logo
+            )
+            .placeholder(R.drawable.school_splash_logo)
+            .error(R.drawable.school_splash_logo)
+            .into(binding.logoImage)
     }
 
     private fun cancelMissedTimer() {
@@ -243,6 +254,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         retrycount = intent.getStringExtra(Constant.retrycount)
         circular_id = intent.getStringExtra(Constant.circularId)
         isEmergency = intent.getStringExtra("isEmergencyCall")
+        school_logo = intent.getStringExtra("school_logo")
         MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
         cancelMissedTimer()
         Log.d("Circular_id", receiver_id + " " + circular_id)
