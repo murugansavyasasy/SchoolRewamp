@@ -3,7 +3,8 @@ data class ExamDataRewamp(
     val report_id: Int,
     val mark_sent: Boolean,
     val report_sent: Boolean,
-    val reportName: String
+    val reportName: String,
+    val type: String?
 )
 
 //data class ExamData(

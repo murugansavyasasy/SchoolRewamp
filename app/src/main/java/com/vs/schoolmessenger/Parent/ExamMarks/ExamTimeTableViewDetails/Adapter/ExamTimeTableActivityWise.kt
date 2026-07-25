@@ -79,6 +79,7 @@ class ExamTimeTableActivityWise(
         private val rlaNoDataFound: RelativeLayout = itemView.findViewById(R.id.rlaNoDataFound)
         private val lnrScheduleDetails: LinearLayout = itemView.findViewById(R.id.lnrScheduleDetails)
         private val subject_name: TextView = itemView.findViewById(R.id.subject_name)
+        private val total_marks: TextView = itemView.findViewById(R.id.total_marks)
 
         private val rcRubrics: RecyclerView =
             itemView.findViewById(R.id.rcRubrics)
@@ -87,6 +88,7 @@ class ExamTimeTableActivityWise(
 
             if (data == null) return
             subject_name.text=data.activityName
+            total_marks.text="${context.getString(R.string.max_marks)} - ${data.max_mark}"
 
 
             val rubrics = data.rubrics ?: emptyList()

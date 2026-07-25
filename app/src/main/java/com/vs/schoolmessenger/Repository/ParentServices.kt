@@ -818,9 +818,9 @@ class ParentServices {
 
     fun getProgressMarks(
         isToken: String,
-        exam_id: String
+        jsonObject: JsonObject
     ) {
-        RestClient.apiInterfaces.getProgressMarks(isToken, exam_id)
+        RestClient.apiInterfaces.getProgressMarks(isToken, jsonObject)
             ?.enqueue(object : Callback<ProgressCardResponse?> {
                 override fun onResponse(
                     call: Call<ProgressCardResponse?>,

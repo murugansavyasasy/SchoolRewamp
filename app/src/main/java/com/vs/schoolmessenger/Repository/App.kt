@@ -1366,8 +1366,8 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getexams(
         isToken: String, activity: Activity
     ) {
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiParentRepositories.getexams(isToken)
     }
 
@@ -1467,11 +1467,11 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getProgressMarks(
-        isToken: String, exam_id: String, activity: Activity
+        isToken: String,jsonObject: JsonObject, activity: Activity
     ) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
-        apiParentRepositories.getProgressMarks(isToken, exam_id)
+        apiParentRepositories.getProgressMarks(isToken, jsonObject)
     }
 
     fun getassignmentlist(

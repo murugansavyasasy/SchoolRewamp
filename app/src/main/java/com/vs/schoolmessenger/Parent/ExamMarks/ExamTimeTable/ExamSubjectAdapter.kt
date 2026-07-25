@@ -42,7 +42,7 @@ class ExamSubjectAdapter(
             subjectname.text = subject.subjectName
 
             maxmarkvalue.text =
-                "${this@ExamSubjectAdapter.context.getString(R.string.Marks)} : ${subject.totalMarks}"
+                "${this@ExamSubjectAdapter.context.getString(R.string.Marks)} : ${subject.max_mark}"
 
             val background = rootHeader.background?.mutate()
 

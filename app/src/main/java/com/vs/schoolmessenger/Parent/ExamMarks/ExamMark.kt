@@ -20,12 +20,8 @@ import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamDataRewamp
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableAdapter
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamScheduleDetails
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetable
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableActivity
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableRubric
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableSubject
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -486,8 +482,14 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
     }
 
-    override fun onExamSelected(examid: String, examName: String) {
-        appViewModel?.getProgressMarks(isAccessToken ?: "", examid.toString(), this)
+    override fun onExamSelected(examid: String, examName: String,type: String) {
+
+        val jsonObject = JsonObject().apply {
+            addProperty("report_id", examid) // or actual report ID
+            addProperty("type",type )
+        }
+
+        appViewModel?.getProgressMarks(isAccessToken ?: "",jsonObject , this)
         examTitle = examName
     }
 
@@ -550,14 +552,6 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                 onBackPressed()
             }
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, ParentDashboard::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
     }
 }
 
