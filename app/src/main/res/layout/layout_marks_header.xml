@@ -2,53 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EEEEEE"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:background="@color/gray"
+    android:paddingVertical="8dp">
 
-    <!-- FIXED COLUMN -->
+    <!-- Fixed Column Header -->
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
-            style="@style/CustomTextStylePoppinsBold1"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Student Name &amp; Gender"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:textSize="13sp" />
 
         <TextView
-            style="@style/CustomTextStylePoppinsBold1"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:text="Roll No"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:textSize="12sp" />
 
         <TextView
-            style="@style/CustomTextStylePoppinsBold1"
+            style="@style/CustomTextStylePoppinsMedium1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:text="Admission No"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:textSize="12sp" />
+
     </LinearLayout>
 
-    <!-- SUBJECT HEADER SCROLL -->
+    <!-- Vertical divider after fixed column -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray" />
+
+    <!-- Scrollable Subject Headers -->
     <HorizontalScrollView
         android:id="@+id/headerScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="horizontal">
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/headerSubjectContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal" />
+
     </HorizontalScrollView>
 
 </LinearLayout>

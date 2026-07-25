@@ -734,6 +734,7 @@ object Constant {
     var category = "category"
     var parent_dashboard_tour = "parent_dashboard_tour"
     var name__ = "name"
+    var selected_name = "selected_name"
     var selected__ = "selected"
     var discount = "discount"
     var address = "address"
