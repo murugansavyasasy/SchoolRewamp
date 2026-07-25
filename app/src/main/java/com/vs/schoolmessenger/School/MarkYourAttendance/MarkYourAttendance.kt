@@ -29,6 +29,8 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SubjectLoadAdapter.SubjectLoadAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -75,6 +77,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     private var lblDesignation: TextView? = null
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
+    var isGetStaffListData: List<NameAndIds>? = null
+    private var isStaffId: String? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -108,7 +112,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
-
+//        isGetStaffList()
         gpsStatusReceiver = GPSStatusReceiver(this)
 
 
@@ -151,6 +155,15 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
         }
 
+        appViewModel!!.isGetStaffList?.observe(this) { response ->
+            Constant.hideLoading(this@MarkYourAttendance)
+            if (response != null) {
+                isGetStaffListData = response.data
+                isStaffId=isStaffDetails?.staff_id
+                isLoadStaff(isGetStaffListData)
+            }
+        }
+
         appViewModel!!.isStaffAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val isStaffReport = response.data
@@ -180,6 +193,50 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 lblNoRecordsFound!!.text = response!!.message
             }
         }
+    }
+
+    private fun isGetStaffList() {
+        appViewModel!!.isGetStaffList(
+            isAccessToken!!, this
+        )
+    }
+
+    private fun isLoadStaff(isGetStaffListData: List<NameAndIds>?) {
+
+        if (isGetStaffListData.isNullOrEmpty()) return
+
+        val staffList = ArrayList<NameAndIds>()
+
+        staffList.add(
+            NameAndIds(
+                id = isStaffDetails?.staff_id!!.toInt(), name = "You", ",", "", "", ""
+            )
+        )
+
+        staffList.addAll(isGetStaffListData)
+
+        val adapter = SubjectLoadAdapter(this, staffList)
+        binding.spinnerStaffList.adapter = adapter
+
+        binding.spinnerStaffList.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
+                    val selectedItem = staffList[position]
+                    if (position == 0) {
+                        isStaffId = isStaffDetails?.staff_id
+                    } else {
+                        isStaffId = selectedItem.id.toString()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
@@ -350,6 +407,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.staff_or_student, Constant.staff)
+//        jsonObject.addProperty(APIKeyNames.staff_id, isStaffId)
         jsonObject.addProperty(APIKeyNames.device_id, Constant.getAndroidSecureId(this))
         jsonObject.addProperty(APIKeyNames.punch_type, 1)
         jsonObject.addProperty(APIKeyNames.device_model, Constant.getDeviceName())
@@ -423,6 +481,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
             R.id.btnHistory -> {
+//                binding.lblSelectStaff.visibility= View.GONE
+//                binding.rytStaffSelection.visibility= View.GONE
                 binding.btnCreate.isEnabled = true
                 binding.btnHistory.isEnabled = false
                 isLoadYear(Constant.isAcademicYearList)
@@ -432,6 +492,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
             R.id.btnCreate -> {
+//                binding.lblSelectStaff.visibility= View.VISIBLE
+//                binding.rytStaffSelection.visibility= View.VISIBLE
                 binding.btnCreate.isEnabled = false
                 binding.btnHistory.isEnabled = true
 

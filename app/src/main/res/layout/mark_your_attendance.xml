@@ -100,12 +100,47 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/lblSelectStaff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_staff_with_man"
+            android:textStyle="bold"
+            android:layout_below="@+id/lnrParent"
+            android:layout_marginStart="@dimen/ten"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rytStaffSelection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone"
+            android:layout_below="@+id/lblSelectStaff"
+            android:background="@drawable/bg_white_light_radious">
+
+            <Spinner
+                android:id="@+id/spinnerStaffList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
+
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/ic_drop_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rytMarkAttendanceSceen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/rytAddLocation"
-            android:layout_below="@+id/lnrParent"
+            android:layout_below="@+id/rytStaffSelection"
             android:visibility="visible">
 
             <RelativeLayout
