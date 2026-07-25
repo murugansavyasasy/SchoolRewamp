@@ -90,7 +90,6 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         }
 
         exam_id = intent.getStringExtra(Constant.exam_id) ?: ""
-        Log.d("ExamID--",exam_id)
         exam_title = intent.getStringExtra(Constant.exam_title) ?: ""
         binding.lblexamTitle.text = exam_title
 

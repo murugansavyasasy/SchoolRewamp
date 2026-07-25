@@ -340,6 +340,133 @@
 
 
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginVertical="@dimen/eight"
+            android:background="@color/very_light_gray_12"></View>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/imgMaxMarks"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/rect_bg_light_blue"
+                android:backgroundTint="@color/light_voliet_22"
+                android:padding="@dimen/ten"
+                android:src="@drawable/exam_pad"
+                android:tint="@color/dark_voliet_22">
+
+            </ImageView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="@dimen/eight"
+                android:layout_toEndOf="@id/imgMaxMarks"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_marks"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp"></TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/lblTotalMarks"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp"></TextView>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:layout_marginVertical="@dimen/eight"
+            android:background="@color/very_light_gray_12"></View>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/imgPassMarks"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/rect_bg_light_blue"
+                android:backgroundTint="@color/light_voliet_22"
+                android:padding="@dimen/ten"
+                android:src="@drawable/exam_pad"
+                android:tint="@color/dark_voliet_22">
+
+            </ImageView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="@dimen/eight"
+                android:layout_toEndOf="@id/imgPassMarks"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pass_marks"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp"></TextView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/lblPassMarks"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twele_sp"></TextView>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
     <!-- DATE -->

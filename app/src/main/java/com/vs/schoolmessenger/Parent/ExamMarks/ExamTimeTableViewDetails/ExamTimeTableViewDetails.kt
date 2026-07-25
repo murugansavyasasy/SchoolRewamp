@@ -146,12 +146,14 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
         val lblSession = view.findViewById<TextView>(R.id.lblSession)
         val lblVenue = view.findViewById<TextView>(R.id.lblVenue)
         val lblSyllabus = view.findViewById<TextView>(R.id.lblSyllabus)
+        val lblTotalMarks = view.findViewById<TextView>(R.id.lblTotalMarks)
+        val lblPassMarks = view.findViewById<TextView>(R.id.lblPassMarks)
         val imgClose = view.findViewById<ImageView>(R.id.imgClose)
 
         txtTitle.text = rubric.rubricName ?: ""
 
         lblDate.text =
-            if (details.date.isNullOrEmpty()) "-" else details.date
+            if (details.date.isNullOrEmpty()) "-" else Constant.formatDate33(details.date)
 
         lblTime.text =
             "${details.startTime ?: "-"} - ${details.endTime ?: "-"}"
@@ -164,6 +166,11 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
 
         lblSyllabus.text =
             if (details.syllabus.isNullOrEmpty()) "-" else details.syllabus
+        lblTotalMarks.text =rubric.max_mark
+
+        lblPassMarks.text =rubric.pass_mark
+
+
 
         imgClose.setOnClickListener {
             dialog.dismiss()

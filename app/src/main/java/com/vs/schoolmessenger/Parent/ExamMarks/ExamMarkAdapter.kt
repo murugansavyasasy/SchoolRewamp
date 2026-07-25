@@ -124,7 +124,7 @@ class ExamMarkAdapter(
                 val context = itemView.context
                 val intent = Intent(context, ExamMarkResults::class.java)
                 intent.putExtra(Constant.exam_title, exam.reportName)
-                intent.putExtra(Constant.exam_id, exam.report_id)
+                intent.putExtra(Constant.exam_id, exam.report_id.toString())
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {

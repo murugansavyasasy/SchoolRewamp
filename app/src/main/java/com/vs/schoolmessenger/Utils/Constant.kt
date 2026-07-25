@@ -2433,6 +2433,18 @@ object Constant {
         }
     }
 
+    fun formatDate33(dateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+
+            val inputDate = inputFormat.parse(dateStr) ?: return dateStr
+            outputFormat.format(inputDate)
+        } catch (e: Exception) {
+            dateStr
+        }
+    }
+
     fun formatToUi2(dateStr: String?): String {
         if (dateStr.isNullOrBlank()) return "--"
         return try {

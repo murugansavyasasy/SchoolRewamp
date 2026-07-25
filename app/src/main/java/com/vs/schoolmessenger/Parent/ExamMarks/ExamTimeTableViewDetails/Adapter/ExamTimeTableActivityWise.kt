@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ExamTimeTableActivityWise(
@@ -80,6 +81,8 @@ class ExamTimeTableActivityWise(
         private val lnrScheduleDetails: LinearLayout = itemView.findViewById(R.id.lnrScheduleDetails)
         private val subject_name: TextView = itemView.findViewById(R.id.subject_name)
         private val total_marks: TextView = itemView.findViewById(R.id.total_marks)
+        private val lblTotalMarks: TextView = itemView.findViewById(R.id.lblTotalMarks)
+        private val lblPassMarks: TextView = itemView.findViewById(R.id.lblPassMarks)
 
         private val rcRubrics: RecyclerView =
             itemView.findViewById(R.id.rcRubrics)
@@ -88,7 +91,8 @@ class ExamTimeTableActivityWise(
 
             if (data == null) return
             subject_name.text=data.activityName
-            total_marks.text="${context.getString(R.string.max_marks)} - ${data.max_mark}"
+            total_marks.visibility= View.GONE
+//            total_marks.text="${context.getString(R.string.max_marks)} - ${data.max_mark}"
 
 
             val rubrics = data.rubrics ?: emptyList()
@@ -99,11 +103,14 @@ class ExamTimeTableActivityWise(
                 rlaNoDataFound.visibility = View.VISIBLE
 
                 val scheduleDetails=data.schedulingDetails
-                lblDate.text=scheduleDetails?.date?:""
+                lblDate.text= Constant.formatDate33(scheduleDetails?.date?:"")
                 lblTime.text="${scheduleDetails?.startTime?:""} - ${scheduleDetails?.endTime?:""}"
                 lblSession.text=scheduleDetails?.session?:""
                 lblVenue.text=scheduleDetails?.venue?:""
                 lblSyllabus.text=scheduleDetails?.syllabus?:""
+                lblTotalMarks.text=data.max_mark?:""
+                lblPassMarks.text=data.pass_mark?:""
+
 
             } else {
                 lnrScheduleDetails.visibility = View.GONE

@@ -1181,5 +1181,7 @@
     <string name="activity">Activity</string>
     <string name="activity_2">activities</string>
     <string name="view_schedule">View schedule</string>
+    <string name="total_marks">Total marks</string>
+    <string name="pass_marks">Pass marks</string>
 
 </resources>
