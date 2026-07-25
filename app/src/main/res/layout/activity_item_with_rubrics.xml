@@ -1,77 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingVertical="8dp">
+    android:orientation="horizontal"
+    android:paddingVertical="6dp"
+    android:gravity="top">
 
-    <!-- Activity Name -->
     <TextView
-        android:id="@+id/activityName"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lab Work"
-        android:textColor="@color/dark_orange_2"
+        android:layout_marginEnd="6dp"
+        android:text="•"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <!-- Max Mark -->
     <TextView
-        android:id="@+id/activityMaxMark"
+        android:id="@+id/activityName"
         style="@style/CustomTextStylePoppinsRegular"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Max Mark: 50"
-        android:visibility="gone"
-        android:textColor="@color/gray"
-        android:textSize="13sp" />
-
-    <!-- Rubrics Section -->
-    <LinearLayout
-        android:id="@+id/rubricsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rubrics"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexRubrics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="flex_start" />
-
-    </LinearLayout>
-
-    <!-- No Rubrics Label -->
-    <TextView
-        android:id="@+id/lblNoRubrics"
-        style="@style/CustomTextStylePoppinsRegular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="No rubrics available"
-        android:textColor="@color/gray"
-        android:textSize="13sp"
-        android:visibility="gone" />
-
-    <!-- Divider between activities -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/AthensGray" />
+        android:layout_weight="1"
+        android:textSize="14sp" />
 
 </LinearLayout>
