@@ -1,26 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/eight"
     android:paddingStart="@dimen/thirty_five"
-    android:paddingEnd="@dimen/ten"
-    android:paddingVertical="@dimen/eight">
+    android:paddingEnd="@dimen/ten">
 
-    <ImageView
-        android:id="@+id/imgRubricCheck"
-        android:layout_width="@dimen/twenty"
-        android:layout_height="@dimen/twenty"
-        android:src="@drawable/circle_icon" />
+    <!-- Header row: check + name + clear (same pattern as subject item) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgRubricCheck"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/circle_icon" />
+
+        <ImageView
+            android:id="@+id/lblRubricClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/five"
+            android:paddingVertical="@dimen/three"
+            android:src="@drawable/close_icon_red_custom"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lblRubricName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@+id/lblRubricClear"
+            android:layout_toEndOf="@+id/imgRubricCheck"
+            android:text="time management (Max: 100.00)"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/subspinnerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:background="@drawable/field_background"
+        android:paddingHorizontal="@dimen/ten"
+        android:paddingVertical="@dimen/five"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/isSubSpinnerColumn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/subspinnerimg"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/subspinnerimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/three"
+            android:src="@drawable/ic_drop_down"
+            app:tint="@color/black" />
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/lblRubricName"
-        android:layout_width="wrap_content"
+        android:id="@+id/sublblHint"
+        style="@style/CustomTextStylePoppinsRegular"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:text="time management (Max: 100.00)" />
+        android:layout_marginHorizontal="@dimen/ten"
+        android:paddingHorizontal="@dimen/fifteen"
+        android:paddingBottom="@dimen/five"
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone" />
 
 </LinearLayout>
+
+    <!--Before code-->
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:orientation="vertical"-->
+    <!--    android:gravity="center_vertical"-->
+    <!--    android:paddingStart="@dimen/thirty_five"-->
+    <!--    android:paddingEnd="@dimen/ten"-->
+    <!--    android:paddingVertical="@dimen/eight">-->
+
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imgRubricCheck"-->
+    <!--            android:layout_width="@dimen/twenty"-->
+    <!--            android:layout_height="@dimen/twenty"-->
+    <!--            android:src="@drawable/circle_icon" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/lblRubricName"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/ten"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:textSize="15sp"-->
+    <!--            android:text="time management (Max: 100.00)" />-->
+    <!--    </LinearLayout>-->
+
+
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/subspinnerContainer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="@dimen/ten"-->
+    <!--        android:background="@drawable/field_background"-->
+    <!--        android:paddingHorizontal="@dimen/ten"-->
+    <!--        android:paddingVertical="@dimen/five"-->
+    <!--        android:visibility="gone">-->
+
+    <!--        <Spinner-->
+    <!--            android:id="@+id/isSubSpinnerColumn"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_toStartOf="@+id/subspinnerimg"-->
+    <!--            android:background="@android:color/transparent"-->
+    <!--            android:clickable="true"-->
+    <!--            android:focusable="false"-->
+    <!--            android:focusableInTouchMode="false"-->
+    <!--            android:spinnerMode="dropdown"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/subspinnerimg"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginEnd="@dimen/three"-->
+    <!--            android:src="@drawable/ic_drop_down"-->
+    <!--            app:tint="@color/black" />-->
+    <!--    </RelativeLayout>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/sublblHint"-->
+    <!--        style="@style/CustomTextStylePoppinsRegular"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/ten"-->
+    <!--        android:paddingHorizontal="@dimen/fifteen"-->
+    <!--        android:paddingBottom="@dimen/five"-->
+    <!--        android:textSize="@dimen/fifteen_sp"-->
+    <!--        android:visibility="gone" />-->
+
+    <!--</LinearLayout>-->
