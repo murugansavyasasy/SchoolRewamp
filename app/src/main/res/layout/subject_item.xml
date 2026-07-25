@@ -50,7 +50,6 @@
             android:text="@string/activities"
             android:textSize="@dimen/fifteen_sp" />
 
-        <!-- Container for all activities -->
         <LinearLayout
             android:id="@+id/activitiesContainer"
             android:layout_width="match_parent"

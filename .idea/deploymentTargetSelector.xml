@@ -13,6 +13,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+<<<<<<< HEAD
       <SelectionState runConfigName="androidTest">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-07-18T04:56:56.813396100Z">
@@ -46,6 +47,8 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+=======
+>>>>>>> 8e45477cf040f89c86f307fa9ca28ba83b2a7e0b
     </selectionStates>
   </component>
 </project>

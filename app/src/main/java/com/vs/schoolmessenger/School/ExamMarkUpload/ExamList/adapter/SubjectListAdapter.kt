@@ -3,6 +3,12 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import androidx.core.content.ContextCompat
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -74,33 +80,41 @@ class SubjectListAdapter(
 
             if (item.activities.isNotEmpty()) {
                 item.activities.forEach { activity ->
-                    // Inflate activity item layout
                     val activityView = LayoutInflater.from(context)
                         .inflate(R.layout.activity_item_with_rubrics, activitiesContainer, false)
 
-                    val activityName: TextView = activityView.findViewById(R.id.activityName)
-                    val rubricsFlex: FlexboxLayout = activityView.findViewById(R.id.flexRubrics)
-                    val lblNoRubrics: TextView = activityView.findViewById(R.id.lblNoRubrics)
-                    val rubricsContainer: LinearLayout = activityView.findViewById(R.id.rubricsContainer)
+                    val activityNameView: TextView = activityView.findViewById(R.id.activityName)
 
-                    activityName.text = activity.activity_name
-
-                    // Add rubric chips
-                    rubricsFlex.removeAllViews()
-                    if (activity.rubrics.isNotEmpty()) {
-                        activity.rubrics.forEach { rubric ->
-                            val chip = LayoutInflater.from(context)
-                                .inflate(R.layout.rubric_chip_item, rubricsFlex, false) as TextView
-                            chip.text = rubric.rubric_name
-                            rubricsFlex.addView(chip)
-                        }
-                        rubricsContainer.visibility = View.VISIBLE
-                        lblNoRubrics.visibility = View.GONE
+                    val namePart = activity.activity_name
+                    val rubricsPart = if (activity.rubrics.isNotEmpty()) {
+                        " (" + activity.rubrics.joinToString(", ") { it.rubric_name } + ")"
                     } else {
-                        rubricsContainer.visibility = View.GONE
-                        lblNoRubrics.visibility = View.VISIBLE
+                        ""
                     }
 
+                    val fullText = namePart + rubricsPart
+                    val spannable = SpannableString(fullText)
+
+                    spannable.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        0, namePart.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannable.setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                        0, namePart.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+
+                    if (rubricsPart.isNotEmpty()) {
+                        spannable.setSpan(
+                            ForegroundColorSpan(ContextCompat.getColor(context, R.color.black1)),
+                            namePart.length, fullText.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+
+                    activityNameView.text = spannable
                     activitiesContainer.addView(activityView)
                 }
                 lnrFlexContainer.visibility = View.VISIBLE
