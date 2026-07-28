@@ -206,7 +206,6 @@
                 android:layout_above="@+id/LnrContainer2"
                 android:layout_below="@+id/lytSearch"
                 android:orientation="vertical">
-
                 <include layout="@layout/layout_marks_header" />
 
                 <androidx.recyclerview.widget.RecyclerView
