@@ -6,6 +6,7 @@
     android:layout_margin="@dimen/eight"
     android:background="@drawable/bg_exam_card_base"
     android:elevation="@dimen/four"
+    android:backgroundTint="@color/light_blue2"
     android:orientation="vertical"
     android:padding="@dimen/eight">
 
@@ -15,55 +16,52 @@
         android:layout_height="wrap_content"
         >
 
+       <LinearLayout
+           android:layout_marginEnd="@dimen/five"
+           android:layout_width="match_parent"
+           android:layout_centerVertical="true"
+           android:layout_alignParentStart="true"
+           android:orientation="vertical"
+           android:layout_toStartOf="@+id/viewDetails"
+           android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/subjectname"
+               style="@style/CustomTextStylePoppinsBold"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="TAMIL"
+               android:textColor="@color/black"
+               android:textSize="@dimen/fourteen_sp" />
+
+           <TextView
+               android:id="@+id/maxmarkvalue"
+               style="@style/CustomTextStylePoppinsRegular"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingVertical="@dimen/three"
+               android:text=""
+               android:textColor="@color/black"
+               android:alpha="0.6"
+               android:textSize="@dimen/twele_sp" />
+
+       </LinearLayout>
+
         <TextView
-            android:id="@+id/subjectname"
+            android:layout_marginTop="@dimen/six"
+            android:id="@+id/viewDetails"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="TAMIL"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/lnrViewDetails"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fourteen_sp" />
-
-
-        <LinearLayout
-            android:id="@+id/lnrViewDetails"
-            android:orientation="vertical"
+            android:backgroundTint="@color/PrimaryColor"
+            android:background="@drawable/light_green_radius"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/four"
+            android:text="@string/view_schedule"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/maxmarkvalue"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/light_green_radius"
-                android:paddingHorizontal="@dimen/ten"
-                android:paddingVertical="@dimen/four"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/twele_sp" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twele_sp" />
 
-            <TextView
-                android:layout_marginTop="@dimen/six"
-                android:id="@+id/viewDetails"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/PrimaryColor"
-                android:background="@drawable/light_green_radius"
-                android:paddingHorizontal="@dimen/ten"
-                android:paddingVertical="@dimen/four"
-                android:text="@string/view_schedule"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/twele_sp" />
-
-
-        </LinearLayout>
 
     </RelativeLayout>
 

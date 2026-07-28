@@ -113,9 +113,8 @@
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:gravity="start"
-                        android:text="@string/log_in_to_stay_connected"
-                        android:textSize="@dimen/eighteen_sp" />
+                        android:gravity="center"
+                      />
 
                     <TextView
                         android:id="@+id/lblMobile"

@@ -384,6 +384,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
 
         appViewModel?.getProgressMarks?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response != null) {
 
                 if (response == null || !response.status || response.data.isNullOrEmpty()) {
@@ -488,7 +489,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             addProperty("report_id", examid) // or actual report ID
             addProperty("type",type )
         }
-
+        Constant.showLoading(this)
         appViewModel?.getProgressMarks(isAccessToken ?: "",jsonObject , this)
         examTitle = examName
     }

@@ -1183,5 +1183,6 @@
     <string name="view_schedule">View schedule</string>
     <string name="total_marks">Total marks</string>
     <string name="pass_marks">Pass marks</string>
+    <string name="log_in_to_stay_connected_with">Log in to stay connected with</string>
 
 </resources>

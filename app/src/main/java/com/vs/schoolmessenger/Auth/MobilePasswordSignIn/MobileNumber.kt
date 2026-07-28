@@ -2,6 +2,9 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
 import android.text.InputFilter
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +37,29 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
+
+
+        val firstText = getString(R.string.log_in_to_stay_connected_with)
+        val secondText = " / ${Constant.country_details?.name.orEmpty()}"
+
+        val fullText = firstText + secondText
+
+        val spannable = SpannableString(fullText)
+        spannable.setSpan(
+            AbsoluteSizeSpan(18, true),
+            0,
+            firstText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        spannable.setSpan(
+            AbsoluteSizeSpan(11, true),
+            firstText.length,
+            fullText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        binding.lblLogin.text = spannable
 
 
         binding.btnLoginContinue.setOnClickListener {

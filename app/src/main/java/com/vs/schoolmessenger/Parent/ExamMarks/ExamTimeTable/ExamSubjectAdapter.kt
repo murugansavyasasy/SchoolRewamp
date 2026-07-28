@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,18 +45,6 @@ class ExamSubjectAdapter(
             maxmarkvalue.text =
                 "${context.getString(R.string.total_marks)} : ${subject.total_mark}"
 
-
-            val background = rootHeader.background?.mutate()
-
-            val context = rootHeader.context
-            val color = ContextCompat.getColor(
-                context,
-                if (position % 2 == 0) R.color.light_blue2 else R.color.light_lavender
-            )
-            background?.setTint(color)
-            rootHeader.background = background
-
-
             viewDetails.setOnClickListener {
                 val intent = Intent(context, ExamTimeTableViewDetails::class.java)
 
@@ -63,7 +52,7 @@ class ExamSubjectAdapter(
                     "subject_data",
                     ArrayList(subjectList)
                 )
-
+                intent.putExtra("selected_subject_id", subject.subjectId)
                 context.startActivity(intent)
             }
 

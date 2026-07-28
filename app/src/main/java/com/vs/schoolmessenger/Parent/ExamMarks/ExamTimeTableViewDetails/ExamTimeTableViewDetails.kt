@@ -58,7 +58,14 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
         subjectList =
             intent.getParcelableArrayListExtra<ExamTimetableSubject>("subject_data")
                 ?: arrayListOf()
-        activityData = ArrayList(subjectList.firstOrNull()?.activities ?: emptyList())
+        val selectedSubjectId = intent.getIntExtra("selected_subject_id", -1)
+
+        activityData = ArrayList(
+            subjectList.find { it.subjectId == selectedSubjectId }?.activities ?: emptyList()
+        )
+
+        Log.d("SelectedSubjectList",activityData.toString())
+        Log.d("SelectedActivity",activityData.toString())
 
 
         if (fromNotification) {
