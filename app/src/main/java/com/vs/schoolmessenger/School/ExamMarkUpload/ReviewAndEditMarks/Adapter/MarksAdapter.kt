@@ -38,6 +38,9 @@ class MarksAdapter(
     private val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 40
 
+    private val MALE_COLOR = Color.parseColor("#2196F3")
+    private val FEMALE_COLOR = Color.parseColor("#E91E63")
+
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
@@ -76,8 +79,15 @@ class MarksAdapter(
 
         if (genderShort.isNotBlank()) {
             val start = lblText.indexOf("(")
+
+            val genderColor = when (student.gender.lowercase()) {
+                "male" -> MALE_COLOR
+                "female" -> FEMALE_COLOR
+                else -> Color.RED
+            }
+
             span.setSpan(
-                ForegroundColorSpan(Color.RED),
+                ForegroundColorSpan(genderColor),
                 start,
                 lblText.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -129,7 +139,6 @@ class MarksAdapter(
                         val cell = createMarkCell(student, column, globalColumnIndex)
                         activityGroup.addView(cell)
 
-                        // GAP only (no grey divider) between rubrics
                         if (index != rubricColumns.lastIndex) {
                             activityGroup.addView(View(context).apply {
                                 layoutParams = LinearLayout.LayoutParams(
@@ -148,7 +157,6 @@ class MarksAdapter(
                         val cell = createMarkCell(student, column, globalColumnIndex)
                         subjectGroupLayout.addView(cell)
 
-                        // GAP only (no grey divider) between columns
                         if (index != activityColumns.lastIndex) {
                             subjectGroupLayout.addView(View(context).apply {
                                 layoutParams = LinearLayout.LayoutParams(
@@ -271,7 +279,7 @@ class MarksAdapter(
         // Show "was: oldValue" if changed
         if (isAllowedValue(oldValue) && isAllowedValue(excelValue) && oldValue != excelValue) {
             val prev = TextView(context).apply {
-                text = "was: $oldValue"
+                text = "prev $oldValue"
                 textSize = 11f
                 gravity = Gravity.CENTER
                 setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))

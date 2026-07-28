@@ -21,9 +21,8 @@
             android:layout_height="@dimen/twenty_five"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/circle_icon" />
+            android:src="@drawable/ic_checkbox_unchecked2" />
 
-        <!-- NEW: expand/collapse arrow for rubrics -->
         <ImageView
             android:id="@+id/subArrow"
             android:layout_width="@dimen/fifteen"
@@ -55,7 +54,9 @@
                     android:layout_height="wrap_content"
                     android:text="notebook (Max: 100.00 marks)"
                     android:textColor="@color/black"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:clickable="true"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/lblRubricsCount"
@@ -134,7 +135,7 @@
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 
-        <!-- NEW: rubric rows go here, populated dynamically -->
+        <!-- rubric rows go here, populated dynamically -->
         <LinearLayout
             android:id="@+id/rubricsContainer"
             android:layout_width="match_parent"
