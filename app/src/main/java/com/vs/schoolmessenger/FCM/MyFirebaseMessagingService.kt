@@ -376,7 +376,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         call_title,
                         role,
                         circular_id,
-                        retrycount
+                        retrycount,
+                        school_logo
                     )
 
                 } catch (e: Exception) {
@@ -986,7 +987,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         call_title: String,
         role: String,
         circular_id: String,
-        retrycount: String
+        retrycount: String,
+        school_logo: String
     ) {
 
 
@@ -1019,6 +1021,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("launch_source", "MISSED")
             putExtra("launch_source", 1001)
             putExtra("isEmergencyCall", "0")
+            putExtra("school_logo", school_logo)
+
         }
 
         val pendingIntent =
