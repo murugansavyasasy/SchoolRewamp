@@ -64,9 +64,7 @@ class ClassListAdapter(
         private val Header: RelativeLayout = itemView.findViewById(R.id.Header)
 
         fun bind(item: StandardSection) {
-            tvTitle.text = "${context.getString(R.string.Standard)} ${item.standardName} - ${
-                context.getString(R.string.Section)
-            } ${item.sectionName}"
+            tvTitle.text = "${item.standardName} - ${item.sectionName}"
 //            tvCount.text = "${item.studentCount} ${context.getString(R.string.Students)}"
             tvCount.visibility = View.GONE
 

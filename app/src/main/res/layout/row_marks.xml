@@ -48,11 +48,12 @@
 
         </LinearLayout>
 
-        <!-- Vertical divider after fixed column -->
+        <!-- FIXED: Vertical divider after fixed column — was visibility="gone" -->
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
             android:background="@color/gray" />
 
         <HorizontalScrollView

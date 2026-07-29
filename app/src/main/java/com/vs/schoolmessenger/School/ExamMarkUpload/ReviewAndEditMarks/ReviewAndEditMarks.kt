@@ -350,7 +350,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         return data.flatMap { it.upload_details }
     }
 
-    // UPDATED: Build columns - each rubric gets its own column with proper activity tracking
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
 
@@ -360,7 +359,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         firstStudent.marks.orEmpty().forEach { subject ->
             subject.activities.orEmpty().forEach { activity ->
 
-                // If rubrics exist and not empty, create column for EACH rubric
                 if (!activity.rubrics.isNullOrEmpty()) {
                     activity.rubrics.forEach { rubric ->
                         columns.add(
@@ -397,7 +395,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         return columns
     }
 
-    // UPDATED: Setup marks UI with proper rubric matching
     private fun setupMarksUI(
         finalResponse: MarkResponse, baseResponse: MarkResponse
     ) {
@@ -414,12 +411,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             val marks = MutableList<Double?>(columns.size) { null }
             val isEditList = MutableList(columns.size) { true }
 
-            // Fill from API response (final - could be merged with Excel)
             apiStudent.marks.orEmpty().forEach { subject ->
                 subject.activities.orEmpty().forEach { activity ->
 
                     if (!activity.rubrics.isNullOrEmpty()) {
-                        // Match each rubric to its column using BOTH activityId AND rubricId
                         activity.rubrics.forEach { rubric ->
                             val index = columns.indexOfFirst {
                                 it.subjectId == subject.subject_id &&
@@ -449,7 +444,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
-            // Fill mock texts from base response (original API data)
             val baseStudent = baseStudents.firstOrNull {
                 it.student_id == apiStudent.student_id
             }
@@ -513,6 +507,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         val rubricRowHeight = dpToPx(48)
         val totalHeaderHeight = subjectRowHeight + activityRowHeight + rubricRowHeight
 
+
+        val dividerColor = Color.parseColor("#BBBBBB")
+
         val subjectGroups = columns.groupBy { it.subjectId }
 
         subjectGroups.forEach { (subjectId, subjectColumns) ->
@@ -526,7 +523,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 )
             }
 
-            // ROW 1: Subject Name
             subjectContainer.addView(TextView(this).apply {
                 text = subjectColumns.firstOrNull()?.subjectName ?: ""
                 setTypeface(null, Typeface.BOLD)
@@ -539,7 +535,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 )
             })
 
-            // ROW 2: Activity Names
             val activitiesRow = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER
@@ -577,7 +572,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (activityId != activityGroups.keys.lastOrNull()) {
                     activitiesRow.addView(View(this).apply {
                         layoutParams = LinearLayout.LayoutParams(px2, LinearLayout.LayoutParams.MATCH_PARENT)
-                        setBackgroundColor(Color.parseColor("#BBBBBB"))
+                        setBackgroundColor(dividerColor)
                     })
                     activitiesRow.addView(View(this).apply {
                         layoutParams = LinearLayout.LayoutParams(px8, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -587,7 +582,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             subjectContainer.addView(activitiesRow)
 
-            // ROW 3: Names + Max Marks (2 lines)
             val rubricsRow = LinearLayout(this).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
@@ -634,8 +628,12 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         rubricsRow.addView(rubricLayout)
 
-                        // GAP only (no divider) between rubrics
+
                         if (index != rubricCols.lastIndex) {
+                            rubricsRow.addView(View(this).apply {
+                                layoutParams = LinearLayout.LayoutParams(px2, LinearLayout.LayoutParams.MATCH_PARENT)
+                                setBackgroundColor(dividerColor)
+                            })
                             rubricsRow.addView(View(this).apply {
                                 layoutParams = LinearLayout.LayoutParams(px8, LinearLayout.LayoutParams.MATCH_PARENT)
                             })
@@ -680,7 +678,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (activityId != activityGroups.keys.lastOrNull()) {
                     rubricsRow.addView(View(this).apply {
                         layoutParams = LinearLayout.LayoutParams(px2, LinearLayout.LayoutParams.MATCH_PARENT)
-                        setBackgroundColor(Color.parseColor("#BBBBBB"))
+                        setBackgroundColor(dividerColor)
                     })
                     rubricsRow.addView(View(this).apply {
                         layoutParams = LinearLayout.LayoutParams(px8, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -708,7 +706,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private fun isGetMarkDetails() {
         Constant.showLoading(this)
 
-        /* ── DIAGNOSTIC ── */
         Log.d("FINAL_LIST_INPUT", "size=${isFinalMapDetails?.size ?: 0}")
         isFinalMapDetails?.forEach { sub ->
             Log.d("FINAL_LIST_INPUT",
@@ -735,7 +732,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             for (paper in subject.paper) {
                 val hasRubrics = paper.rubrics.isNotEmpty()
 
-                /* ── decide whether this paper should be included ── */
                 val shouldInclude = when {
                     Constant.isMarkUploadFromAi -> {
                         if (hasRubrics) {
@@ -1306,7 +1302,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             val marksArray = JsonArray()
 
-            // Group columns by subject
             val subjectGroups = columns.groupBy { it.subjectId }
 
             subjectGroups.forEach { (subjectId, subjectColumns) ->
@@ -1317,7 +1312,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 val activitiesArray = JsonArray()
 
-                // Group by activity within subject
                 val activityGroups = subjectColumns.groupBy { it.activityId }
 
                 activityGroups.forEach { (activityId, activityColumns) ->
@@ -1325,7 +1319,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     val hasRubrics = activityColumns.any { it.isRubric }
 
                     if (hasRubrics) {
-                        // Build rubrics array
                         val rubricsArray = JsonArray()
 
                         activityColumns.filter { it.isRubric }.forEach { col ->
@@ -1340,17 +1333,15 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             rubricsArray.add(rubricObj)
                         }
 
-                        // Activity with rubrics
                         val activityObj = JsonObject().apply {
                             addProperty(Constant.id, activityId)
-                            addProperty(Constant.mark, "") // Empty mark when rubrics present
+                            addProperty(Constant.mark, "")
                             addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "100")
                             add("rubrics", rubricsArray)
                         }
                         activitiesArray.add(activityObj)
 
                     } else {
-                        // Regular activity (no rubrics)
                         activityColumns.forEach { col ->
                             val index = columns.indexOf(col)
                             val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
@@ -1359,7 +1350,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                                 addProperty(Constant.id, activityId)
                                 addProperty(Constant.mark, rawText)
                                 addProperty(Constant.max_mark, col.maxMark.toString())
-                                add("rubrics", JsonArray()) // Empty rubrics array
+                                add("rubrics", JsonArray())
                             }
                             activitiesArray.add(activityObj)
                         }

@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint
+import android.os.Build
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -272,56 +274,105 @@ class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
         binding.txtOtp6
     ).joinToString("") { it.text.toString() }
 
-
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
+
         smsBroadcastReceiver = MySMSBroadcastReceiver().apply {
             otpListener = { otp ->
                 runOnUiThread {
                     Log.d("YOUR OTP", otp)
+
                     otp.forEachIndexed { index, char ->
                         when (index) {
-                            0 -> {
-                                binding.txtOtp1.setText(char.toString())
-                            }
-
-                            1 -> {
-                                binding.txtOtp2.setText(char.toString())
-                            }
-
-                            2 -> {
-                                binding.txtOtp3.setText(char.toString())
-                            }
-
-                            3 -> {
-                                binding.txtOtp4.setText(char.toString())
-                            }
-
-                            4 -> {
-                                binding.txtOtp5.setText(char.toString())
-                            }
-
-                            5 -> {
-                                binding.txtOtp6.setText(char.toString())
-                            }
+                            0 -> binding.txtOtp1.setText(char.toString())
+                            1 -> binding.txtOtp2.setText(char.toString())
+                            2 -> binding.txtOtp3.setText(char.toString())
+                            3 -> binding.txtOtp4.setText(char.toString())
+                            4 -> binding.txtOtp5.setText(char.toString())
+                            5 -> binding.txtOtp6.setText(char.toString())
                         }
-
                     }
+
                     isOtpValidate(otp)
                 }
             }
         }
 
-        smsBroadcastReceiver = MySMSBroadcastReceiver()
         val filter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        registerReceiver(smsBroadcastReceiver, filter, RECEIVER_NOT_EXPORTED)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(
+                smsBroadcastReceiver,
+                filter,
+                Context.RECEIVER_NOT_EXPORTED
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            registerReceiver(smsBroadcastReceiver, filter)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(smsBroadcastReceiver)
+        try {
+            unregisterReceiver(smsBroadcastReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
     }
+
+
+
+//    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+//    override fun onResume() {
+//        super.onResume()
+//        smsBroadcastReceiver = MySMSBroadcastReceiver().apply {
+//            otpListener = { otp ->
+//                runOnUiThread {
+//                    Log.d("YOUR OTP", otp)
+//                    otp.forEachIndexed { index, char ->
+//                        when (index) {
+//                            0 -> {
+//                                binding.txtOtp1.setText(char.toString())
+//                            }
+//
+//                            1 -> {
+//                                binding.txtOtp2.setText(char.toString())
+//                            }
+//
+//                            2 -> {
+//                                binding.txtOtp3.setText(char.toString())
+//                            }
+//
+//                            3 -> {
+//                                binding.txtOtp4.setText(char.toString())
+//                            }
+//
+//                            4 -> {
+//                                binding.txtOtp5.setText(char.toString())
+//                            }
+//
+//                            5 -> {
+//                                binding.txtOtp6.setText(char.toString())
+//                            }
+//                        }
+//
+//                    }
+//                    isOtpValidate(otp)
+//                }
+//            }
+//        }
+//
+//        smsBroadcastReceiver = MySMSBroadcastReceiver()
+//        val filter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+//        registerReceiver(smsBroadcastReceiver, filter, RECEIVER_NOT_EXPORTED)
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        unregisterReceiver(smsBroadcastReceiver)
+//    }
 
     private fun startSmsRetriever() {
         val client = SmsRetriever.getClient(this)

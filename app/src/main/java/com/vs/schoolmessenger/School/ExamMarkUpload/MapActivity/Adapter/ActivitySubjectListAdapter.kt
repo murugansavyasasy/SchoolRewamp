@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -64,9 +63,18 @@ class ActivitySubjectListAdapter(
             Log.d(TAG, "bind() name=${item.name}, hasRubrics=${item.rubrics.isNotEmpty()}, isEntryType=$isEntryType")
             subjectName.setNameWithMaxMarks(item.name, item.max_mark, context)
             if (isEntryType) bindImageEntryMode(item) else bindManualEntryMode(item)
+
+
+            subjectName.setOnClickListener {
+                Log.d(TAG, "subjectName clicked for ${item.name}")
+                if (item.rubrics.isNotEmpty()) {
+                    subArrow.performClick()
+                } else {
+                    imgCheck.performClick()
+                }
+            }
         }
 
-        /* ───────────────────────── IMAGE ENTRY MODE ───────────────────────── */
         private fun bindImageEntryMode(item: getActivityPaperNameData) {
             lnrFlexContainer.visibility = View.GONE
             rubricsContainer.visibility = View.GONE
@@ -212,7 +220,6 @@ class ActivitySubjectListAdapter(
             }
         }
 
-        /* ───────────────────────── MANUAL ENTRY MODE ───────────────────────── */
         private fun bindManualEntryMode(item: getActivityPaperNameData) {
             lnrFlexContainer.visibility = View.GONE
             rubricsContainer.visibility = View.GONE
@@ -278,7 +285,6 @@ class ActivitySubjectListAdapter(
             }
         }
 
-        /* ───────────────────────── RUBRIC ROWS ───────────────────────── */
         private fun renderRubricRows(
             item: getActivityPaperNameData,
             enableSpinner: Boolean
@@ -302,20 +308,11 @@ class ActivitySubjectListAdapter(
                     val hasSelection = !rubric.selectedRubricesValue.isNullOrEmpty()
                     val lblRubricClear: ImageView = rowView.findViewById(R.id.lblRubricClear)
 
-                    // FIXED: sync isSelected with selectedRubricesValue
                     rubric.isSelected = hasSelection
 
                     Log.d(TAG, "Rubric row ${rubric.rubric_name} → hasSelection=$hasSelection, isSelected=${rubric.isSelected}, selectedValue=${rubric.selectedRubricesValue}")
 
-                    rubricCheck.setImageResource(
-                        if (hasSelection) R.drawable.double_circle else R.drawable.circle_icon
-                    )
-                    rubricCheck.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            if (hasSelection) R.color.dark_bg_orange_2 else R.color.gray4
-                        ), PorterDuff.Mode.SRC_IN
-                    )
+                    setRubricCheckIcon(rubricCheck, hasSelection)
 
                     lblRubricClear.visibility = if (hasSelection) View.VISIBLE else View.GONE
 
@@ -326,8 +323,8 @@ class ActivitySubjectListAdapter(
                         subHint.visibility = View.GONE
                     }
 
-                    rubricCheck.setOnClickListener {
-                        Log.d(TAG, "rubricCheck clicked → open subSpinner for ${rubric.rubric_name}")
+                    val openSpinner = {
+                        Log.d(TAG, "rubricCheck/label clicked → open subSpinner for ${rubric.rubric_name}")
                         subHint.visibility = View.GONE
                         lblRubricClear.visibility = View.GONE
                         subSpinnerContainer.visibility = View.VISIBLE
@@ -340,6 +337,9 @@ class ActivitySubjectListAdapter(
                             }
                         )
                     }
+
+                    rubricCheck.setOnClickListener { openSpinner() }
+                    rubricLabel.setOnClickListener { rubricCheck.performClick() }
 
                     val defaultItems = listOf("\uD83D\uDCC4\u00A0\u00A0COLUMNS FROM UPLOADED IMAGE")
                     val fullList = defaultItems + item.activities
@@ -367,11 +367,7 @@ class ActivitySubjectListAdapter(
                         subHint.visibility = View.GONE
                         subSpinnerContainer.visibility = View.GONE
 
-                        rubricCheck.setImageResource(R.drawable.circle_icon)
-                        rubricCheck.setColorFilter(
-                            ContextCompat.getColor(context, R.color.gray4),
-                            PorterDuff.Mode.SRC_IN
-                        )
+                        setRubricCheckIcon(rubricCheck, false)
 
                         Log.d(TAG, "lblRubricClear done → ${rubric.rubric_name} reset to empty, isSelected=${rubric.isSelected}")
                         onSelectionChanged()
@@ -384,7 +380,6 @@ class ActivitySubjectListAdapter(
                             ) {
                                 Log.d(TAG, "Rubric spinner selected pos=$position for ${rubric.rubric_name}")
                                 if (position == 0) {
-                                    // Position 0 is the placeholder — do NOT treat as selected
                                     subSpinner.setSelection(
                                         if (spinnerAdapter.selectedPosition == -1) 0 else spinnerAdapter.selectedPosition,
                                         false
@@ -402,11 +397,7 @@ class ActivitySubjectListAdapter(
 
                                 lblRubricClear.visibility = View.VISIBLE
 
-                                rubricCheck.setImageResource(R.drawable.double_circle)
-                                rubricCheck.setColorFilter(
-                                    ContextCompat.getColor(context, R.color.dark_bg_orange_2),
-                                    PorterDuff.Mode.SRC_IN
-                                )
+                                setRubricCheckIcon(rubricCheck, true)
 
                                 Log.d(TAG, "Rubric mapped → ${rubric.rubric_name} = ${rubric.selectedRubricesValue}, isSelected=${rubric.isSelected}")
                                 onSelectionChanged()
@@ -418,31 +409,19 @@ class ActivitySubjectListAdapter(
                         }
 
                 } else {
-                    rubricCheck.setImageResource(
-                        if (rubric.isSelected) R.drawable.double_circle else R.drawable.circle_icon
-                    )
-                    rubricCheck.setColorFilter(
-                        ContextCompat.getColor(
-                            context,
-                            if (rubric.isSelected) R.color.dark_bg_orange_2 else R.color.gray4
-                        ), PorterDuff.Mode.SRC_IN
-                    )
+                    setRubricCheckIcon(rubricCheck, rubric.isSelected)
 
-                    rowView.setOnClickListener {
+                    val toggle = {
                         Log.d(TAG, "Manual rubric row clicked → toggle ${rubric.rubric_name}")
                         rubric.isSelected = !rubric.isSelected
-                        rubricCheck.setImageResource(
-                            if (rubric.isSelected) R.drawable.double_circle else R.drawable.circle_icon
-                        )
-                        rubricCheck.setColorFilter(
-                            ContextCompat.getColor(
-                                context,
-                                if (rubric.isSelected) R.color.dark_bg_orange_2 else R.color.gray4
-                            ), PorterDuff.Mode.SRC_IN
-                        )
+                        setRubricCheckIcon(rubricCheck, rubric.isSelected)
                         refreshActivityCheckboxState(item)
                         onSelectionChanged()
                     }
+
+                    rowView.setOnClickListener { toggle() }
+                    rubricCheck.setOnClickListener { toggle() }
+                    rubricLabel.setOnClickListener { toggle() }
                 }
 
                 rubricsContainer.addView(rowView)
@@ -458,13 +437,16 @@ class ActivitySubjectListAdapter(
             setHeaderColor(anySelected)
         }
 
+
         private fun setCheckIcon(selected: Boolean) {
             Log.d(TAG, "setCheckIcon selected=$selected")
-            imgCheck.setImageResource(if (selected) R.drawable.double_circle else R.drawable.circle_icon)
-            imgCheck.setColorFilter(
-                ContextCompat.getColor(context, if (selected) R.color.dark_bg_orange_2 else R.color.gray4),
-                PorterDuff.Mode.SRC_IN
-            )
+            imgCheck.setImageResource(if (selected) R.drawable.ic_checkbox_checked2 else R.drawable.ic_checkbox_unchecked2)
+            imgCheck.clearColorFilter()
+        }
+
+        private fun setRubricCheckIcon(rubricCheck: ImageView, selected: Boolean) {
+            rubricCheck.setImageResource(if (selected) R.drawable.ic_checkbox_checked2 else R.drawable.ic_checkbox_unchecked2)
+            rubricCheck.clearColorFilter()
         }
 
         private fun setHeaderColor(highlighted: Boolean) {

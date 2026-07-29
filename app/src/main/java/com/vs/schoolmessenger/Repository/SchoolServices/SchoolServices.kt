@@ -4388,27 +4388,47 @@ class SchoolServices {
                         "UploadMarkResponse ",
                         response.code().toString() + " - " + response.toString()
                     )
-                    if (response.code() == 200) {
+
+                    Constant.hideLoading(activity)
+
+                    if (response.isSuccessful && response.body() != null) {
                         uploadmarks.postValue(response.body())
-                    } else {
-                        Constant.hideLoading(activity)
-                        uploadmarks.postValue(null)
-                        val errorBodyString = response.errorBody()?.string()
-                        val gson = Gson()
-                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
+                        return
                     }
+
+                    uploadmarks.postValue(null)
+
+                    val errorMessage = try {
+                        val errorBodyString = response.errorBody()?.string()
+                        if (errorBodyString.isNullOrBlank()) {
+                            "Something went wrong (${response.code()}). Please try again."
+                        } else {
+                            val errorModel = Gson().fromJson(errorBodyString, ErrorResponse::class.java)
+                            errorModel?.message
+                                ?: "Something went wrong (${response.code()}). Please try again."
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        "Server error (${response.code()}). Please try again in a moment."
+                    }
+
+                    Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(
                     call: Call<UploadMarkResponse?>, t: Throwable
                 ) {
+                    Constant.hideLoading(activity)
                     uploadmarks.postValue(null)
                     t.printStackTrace()
+                    Toast.makeText(
+                        activity,
+                        "Network error. Please check your connection and try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
     }
-
     val uploadmarksLiveData: LiveData<UploadMarkResponse?>
         get() = uploadmarks
 
