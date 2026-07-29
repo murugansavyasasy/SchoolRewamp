@@ -201,14 +201,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
             }
         }
 
-        Glide.with(this)
-            .load(
-                if (!school_logo.isNullOrEmpty()) school_logo
-                else R.drawable.school_splash_logo
-            )
-            .placeholder(R.drawable.school_splash_logo)
-            .error(R.drawable.school_splash_logo)
-            .into(binding.logoImage)
+
     }
 
     private fun cancelMissedTimer() {
@@ -258,6 +251,15 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
         MyFirebaseMessagingService.isUserAnswered.isNotificationOpened = true
         cancelMissedTimer()
         Log.d("Circular_id", receiver_id + " " + circular_id)
+
+        Glide.with(this)
+            .load(
+                if (!school_logo.isNullOrEmpty()) school_logo
+                else R.drawable.school_splash_logo
+            )
+            .placeholder(R.drawable.school_splash_logo)
+            .error(R.drawable.school_splash_logo)
+            .into(binding.logoImage)
 
         binding.lblSchoolName.text = school_name
         binding.lblMemberName.text = "Calling - $member_name from"
