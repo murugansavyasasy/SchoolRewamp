@@ -1,155 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootHeader"
-    android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/eight"
+    app:cardBackgroundColor="@color/light_blue2"
+    app:strokeColor="@color/white"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    android:elevation="4dp"
+    app:strokeWidth="@dimen/zero"
+    app:cardCornerRadius="@dimen/five"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/eight"
-    android:background="@drawable/bg_exam_card_base"
-    android:elevation="@dimen/four"
-    android:backgroundTint="@color/light_blue2"
-    android:orientation="vertical"
-    android:padding="@dimen/eight">
+    android:layout_width="match_parent">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
        <LinearLayout
-           android:layout_marginEnd="@dimen/five"
+           android:id="@+id/rootHeader"
            android:layout_width="match_parent"
-           android:layout_centerVertical="true"
-           android:layout_alignParentStart="true"
+           android:layout_height="wrap_content"
+           android:elevation="@dimen/four"
            android:orientation="vertical"
-           android:layout_toStartOf="@+id/viewDetails"
-           android:layout_height="wrap_content">
-           <TextView
-               android:id="@+id/subjectname"
-               style="@style/CustomTextStylePoppinsBold"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="TAMIL"
-               android:textColor="@color/black"
-               android:textSize="@dimen/fourteen_sp" />
+           >
 
-           <TextView
-               android:id="@+id/maxmarkvalue"
-               style="@style/CustomTextStylePoppinsRegular"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:paddingVertical="@dimen/three"
-               android:text=""
-               android:textColor="@color/black"
-               android:alpha="0.6"
-               android:textSize="@dimen/twele_sp" />
+           <LinearLayout
+               android:padding="@dimen/five"
+               android:layout_width="match_parent"
+               android:layout_centerVertical="true"
+               android:layout_alignParentStart="true"
+               android:orientation="vertical"
+               android:layout_toStartOf="@+id/totalMarks"
+               android:layout_height="wrap_content">
+               <TextView
+                   android:id="@+id/subjectname"
+                   style="@style/CustomTextStylePoppinsBold"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="TAMIL"
+                   android:textColor="@color/PrimaryColor"
+                   android:textSize="@dimen/thirteen_sp" />
+
+               <TextView
+                   android:id="@+id/totalMarks"
+                   style="@style/CustomTextStylePoppinsBold"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingVertical="@dimen/three"
+                   android:text="Mark:"
+                   android:layout_alignParentEnd="true"
+                   android:layout_centerVertical="true"
+                   android:textColor="@android:color/black"
+                   android:alpha="0.6"
+                   android:textSize="@dimen/eleven_sp" />
+
+           </LinearLayout>
+
+
+
 
        </LinearLayout>
 
-        <TextView
-            android:layout_marginTop="@dimen/six"
-            android:id="@+id/viewDetails"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/PrimaryColor"
-            android:background="@drawable/light_green_radius"
-            android:paddingHorizontal="@dimen/ten"
-            android:paddingVertical="@dimen/four"
-            android:text="@string/view_schedule"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/twele_sp" />
 
 
-    </RelativeLayout>
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/syllabusvalue"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five"
-        android:text="Unit"
-        android:textSize="@dimen/fifteen_sp"></TextView>
+       <TextView
+           android:visibility="gone"
+           android:id="@+id/syllabusvalue"
+           style="@style/CustomTextStylePoppinsMedium"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/five"
+           android:text="Unit"
+           android:textSize="@dimen/fifteen_sp"></TextView>
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five">
+       <RelativeLayout
+           android:visibility="gone"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/five">
 
-        <ImageView
-            android:id="@+id/imgCalendar"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/calendar_icon" />
+           <ImageView
+               android:id="@+id/imgCalendar"
+               android:layout_width="@dimen/twenty"
+               android:layout_height="@dimen/twenty"
+               android:layout_alignParentStart="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/calendar_icon" />
 
-        <TextView
+           <TextView
 
-            android:id="@+id/datevalue"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/layoutAlarm"
-            android:layout_toEndOf="@+id/imgCalendar"
-            android:text="02-05-2002"></TextView>
+               android:id="@+id/datevalue"
+               style="@style/CustomTextStylePoppinsMedium"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_marginStart="@dimen/ten"
+               android:layout_toStartOf="@+id/layoutAlarm"
+               android:layout_toEndOf="@+id/imgCalendar"
+               android:text="02-05-2002"></TextView>
 
-        <LinearLayout
-            android:id="@+id/layoutAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+           <LinearLayout
+               android:id="@+id/layoutAlarm"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentEnd="true"
+               android:layout_centerVertical="true"
+               android:gravity="center"
+               android:orientation="vertical"
+               android:visibility="gone">
 
-            <ImageView
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:src="@drawable/alarm_clock">
+               <ImageView
+                   android:layout_width="@dimen/fourty"
+                   android:layout_height="@dimen/fourty"
+                   android:src="@drawable/alarm_clock">
 
-            </ImageView>
+               </ImageView>
 
-            <TextView
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_remainder"></TextView>
-        </LinearLayout>
+               <TextView
+                   style="@style/CustomTextStylePoppinsRegular"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/set_remainder"></TextView>
+           </LinearLayout>
 
-    </RelativeLayout>
+       </RelativeLayout>
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/subjectRecyclerView"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:padding="@dimen/ten" />
 
 
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+       <LinearLayout
+           android:visibility="gone"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/five"
+           android:gravity="center_vertical"
+           android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:src="@drawable/clock_icon" />
+           <ImageView
+               android:layout_width="@dimen/twenty"
+               android:layout_height="@dimen/twenty"
+               android:src="@drawable/clock_icon" />
 
-        <TextView
-            android:id="@+id/lblTime"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:text="00:00 PM"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fourteen_sp" />
-    </LinearLayout>
+           <TextView
+               android:id="@+id/lblTime"
+               style="@style/CustomTextStylePoppinsMedium"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/ten"
+               android:text="00:00 PM"
+               android:textColor="@color/black"
+               android:textSize="@dimen/fourteen_sp" />
+       </LinearLayout>
+   </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

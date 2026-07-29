@@ -117,7 +117,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
                 "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
         }
         binding.tabOneName.text = getString(R.string.exam_timetable)
-        binding.tabTwoName.text = getString(R.string.exam_marks)
+        binding.tabTwoName.text = getString(R.string.published_marks)
 
         binding.txtVideoMenu1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

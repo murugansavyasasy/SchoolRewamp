@@ -10,6 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetable
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableRubric
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableSubject
@@ -27,7 +29,7 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
     }
 
     private var isAccessToken: String? = null
-    lateinit var mAdapter: ExamTimeTableActivityWise
+    lateinit var mAdapter: ExamSubjectAdapter
 
     private var appViewModel: App? = null
 
@@ -37,7 +39,8 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
     var userDetails: UserDetails? = null
-    private var subjectList: ArrayList<ExamTimetableSubject> = arrayListOf()
+
+    private var examTimetable: ArrayList<ExamTimetable> = arrayListOf()
     private var activityData: ArrayList<ExamTimetableActivity> = arrayListOf()
 
 
@@ -55,15 +58,14 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
         fromNotification = intent.getBooleanExtra(Constant.fromNotification, false)
 
 
-        subjectList =
-            intent.getParcelableArrayListExtra<ExamTimetableSubject>("subject_data")
+
+        examTimetable =
+            intent.getParcelableArrayListExtra<ExamTimetable>("reciever_exam_data")
                 ?: arrayListOf()
-        val selectedSubjectId = intent.getIntExtra("selected_subject_id", -1)
 
-        activityData = ArrayList(
-            subjectList.find { it.subjectId == selectedSubjectId }?.activities ?: emptyList()
-        )
 
+
+        Log.d("SelectedExamTimetable",examTimetable.toString())
         Log.d("SelectedSubjectList",activityData.toString())
         Log.d("SelectedActivity",activityData.toString())
 
@@ -92,18 +94,17 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
         binding.toolbarLayout.imgSearchToolBar.visibility= View.GONE
 
 
-        binding.root.post {
-            val finalName =
-                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
-            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
-
-            binding.lblHeaderTitle.text = if (activityData.size == 1) {
-                getString(R.string.activity)+" ("+activityData.size+") "
-            } else {
-                getString(R.string.activity_2)+" ("+activityData.size+") "
-            }
-            binding.lblHeaderTitle.visibility = View.VISIBLE
-        }
+//        binding.root.post {
+//            val finalName =
+//                Constant.isSelectedMenuName?.takeIf { it.isNotEmpty() } ?: menu_name ?: ""
+//            Log.d("NoticeBoard_HeaderFinal", "Setting headerview text: $finalName")
+//
+//            binding.lblHeaderTitle.text = if (activityData.size == 1) {
+//                getString(R.string.activity)+" ("+activityData.size+") "
+//            } else {
+//                getString(R.string.activity_2)+" ("+activityData.size+") "
+//            }
+//        }
 
 
         binding.toolbarLayout.apply {
@@ -113,7 +114,7 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
                 "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
         }
 
-        isLoadingExamTimeTableActivity()
+        isLoadExamTimeTableActivity()
 
 
     }
@@ -126,17 +127,6 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
         }
     }
 
-    private fun isLoadingExamTimeTableActivity() {
-
-        mAdapter = ExamTimeTableActivityWise(
-            null, this, this, Constant.isShimmerViewShow
-        )
-        binding.rcExamTimeTableAct.layoutManager = LinearLayoutManager(this)
-        binding.rcExamTimeTableAct.isNestedScrollingEnabled = false
-        binding.rcExamTimeTableAct.adapter = mAdapter
-
-        isLoadExamTimeTableActivity()
-    }
 
     private fun showScheduleBottomSheet(rubric: ExamTimetableRubric) {
 
@@ -187,18 +177,24 @@ class ExamTimeTableViewDetails : BaseActivity<ExamTimeTableViewDetailsBinding>()
     }
     private fun isLoadExamTimeTableActivity() {
 
+        val data = examTimetable.getOrNull(0)?.subjects ?: emptyList()
+        Log.d("data", data.toString())
 
-        if (activityData.isEmpty()) {
-
+        if (data.isEmpty()) {
             binding.lytList.visibility = View.VISIBLE
             binding.rcExamTimeTableAct.visibility = View.GONE
         } else {
             binding.lytList.visibility = View.GONE
             binding.rcExamTimeTableAct.visibility = View.VISIBLE
 
-            mAdapter = ExamTimeTableActivityWise(
-                activityData, this, this, Constant.isShimmerViewDisable
+            binding.rcExamTimeTableAct.layoutManager = LinearLayoutManager(this)
+
+            mAdapter = ExamSubjectAdapter(
+                ArrayList(data),
+                this,
+                this
             )
+
             binding.rcExamTimeTableAct.adapter = mAdapter
         }
     }

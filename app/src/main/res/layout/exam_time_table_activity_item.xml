@@ -7,10 +7,9 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     app:cardCornerRadius="@dimen/ten"
-    android:elevation="@dimen/five"
     app:strokeColor="@color/white"
     android:layout_marginBottom="@dimen/ten"
-    app:cardElevation="@dimen/five">
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,38 +23,85 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rlaHeaderForNonRubic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/subject_name"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Subject_Name"
-                    android:layout_centerVertical="true"
+                <LinearLayout
+                    android:layout_marginEnd="@dimen/five"
                     android:layout_alignParentStart="true"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/black"
-                    android:layout_toStartOf="@+id/total_marks"
-                    android:textSize="@dimen/fifteen_sp"></TextView>
+                    android:orientation="vertical"
+                    android:layout_toStartOf="@+id/imgArrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/subject_name"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subject_Name"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:layout_toStartOf="@+id/total_marks"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
 
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/total_marks"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1212"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/five"
-                    android:background="@drawable/light_green_radius"
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/total_marks"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1212"
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/five"
+                            android:background="@drawable/light_green_radius"
+                            android:layout_alignParentEnd="true"
+                            android:backgroundTint="@color/PrimaryColor"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/twele_sp"></TextView>
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/NonRubiclblTime"
+                        android:layout_marginTop="@dimen/two"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/twele_sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/NonRubriclblSession"
+                        android:layout_marginTop="@dimen/two"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Session"
+                        android:textColor="@color/PrimaryColor"
+                        android:textSize="@dimen/twele_sp"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgArrow"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
                     android:layout_alignParentEnd="true"
-                    android:backgroundTint="@color/PrimaryColor"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/twele_sp"></TextView>
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/right_arrow"
+                    android:tint="#6B7280"/>
 
             </RelativeLayout>
+
 
             <LinearLayout
                 android:id="@+id/lnrScheduleDetails"
@@ -502,6 +548,7 @@
             android:background="@color/very_light_gray_12"></View>
 
         <LinearLayout
+            android:id="@+id/lnrRubrics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
@@ -560,15 +607,10 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/rcRubrics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
             </androidx.recyclerview.widget.RecyclerView>
-
-
-
 
 
         </LinearLayout>

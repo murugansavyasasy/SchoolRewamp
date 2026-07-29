@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetable
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableSubject
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableViewDetails.ExamTimeTableViewDetails
 import com.vs.schoolmessenger.R
 
 class ExamTimeTableAdapter(
@@ -26,26 +28,24 @@ class ExamTimeTableAdapter(
 
     inner class ExamTimeTableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val subjectName: TextView = itemView.findViewById(R.id.subjectName)
-        private val subjectRecyclerView: RecyclerView =
-            itemView.findViewById(R.id.subjectRecyclerView)
+        private val viewDetails: TextView = itemView.findViewById(R.id.viewDetails)
+
 
         fun bind(examTimeTable: ExamTimetable, context: Context) {
             subjectName.text = examTimeTable.examName
-            subject=examTimeTable.subjects?:emptyList()
 
-            if (subject.isNotEmpty()) {
-                subjectRecyclerView.visibility = View.VISIBLE
-                subjectRecyclerView.layoutManager =
-                    LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
-                val examSubjectAdapter = ExamSubjectAdapter(
-                    subject,
-                    this@ExamTimeTableAdapter.context
+            viewDetails.setOnClickListener {
+                val intent = Intent(context, ExamTimeTableViewDetails::class.java)
+
+                intent.putParcelableArrayListExtra(
+                    "reciever_exam_data",
+                    ArrayList(fullList)
                 )
-                subjectRecyclerView.isNestedScrollingEnabled = false
-                subjectRecyclerView.adapter = examSubjectAdapter
-            } else {
-                subjectRecyclerView.visibility = View.GONE
+
+                context.startActivity(intent)
             }
+
+            // Exam Marks-----------------------------------
         }
     }
 

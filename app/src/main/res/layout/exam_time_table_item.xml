@@ -2,22 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/eight"
+    android:background="@drawable/bg_exam_card_base"
+    android:elevation="@dimen/four"
+    android:backgroundTint="@color/light_blue2"
+    android:padding="@dimen/eight"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/subjectName"
-        style="@style/CustomTextStylePoppinsBold"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
-        android:textColor="@color/PrimaryColor"
-        android:textSize="@dimen/sixteen_sp"></TextView>
+        android:layout_height="wrap_content">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subjectRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="@dimen/ten"
-        android:padding="@dimen/eight" />
+        <TextView
+            android:id="@+id/subjectName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/five"
+            android:textColor="@color/black"
+            android:text=""
+            android:layout_marginEnd="@dimen/five"
+            android:layout_toStartOf="@+id/viewDetails"
+            android:textSize="@dimen/fourteen_sp"></TextView>
+
+
+        <TextView
+
+            android:id="@+id/viewDetails"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/PrimaryColor"
+            android:background="@drawable/light_green_radius"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/four"
+            android:text="@string/view_schedule"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/ten_sp" />
+    </RelativeLayout>
+
+
+
 </LinearLayout>

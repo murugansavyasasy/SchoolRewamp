@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableRubric
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ExamTimeTableRubricsWise(
@@ -84,6 +85,8 @@ class ExamTimeTableRubricsWise(
         RecyclerView.ViewHolder(itemView) {
 
         private val rubricsName: TextView = itemView.findViewById(R.id.rubricsName)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
+        private val lblSession: TextView = itemView.findViewById(R.id.lblSession)
         private val header: CardView = itemView.findViewById(R.id.header)
 
 
@@ -92,6 +95,8 @@ class ExamTimeTableRubricsWise(
         fun bind(data: ExamTimetableRubric, position: Int) {
 
             rubricsName.text=data.rubricName
+            lblTime.text="${context.getString(R.string.date)} - ${Constant.formatDate33(data.schedulingDetails?.date?:"")}"
+            lblSession.text="${context.getString(R.string.session)} - ${data.schedulingDetails?.session}"
 
             header.setOnClickListener {
                 listener.onRubricClick(data)
