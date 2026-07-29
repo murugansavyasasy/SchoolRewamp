@@ -119,8 +119,8 @@ class ExamTimeTableActivityWise(
                 NonRubiclblTime.visibility= View.VISIBLE
                 imgArrow.visibility= View.VISIBLE
 
-                NonRubiclblTime.text="${context.getString(R.string.date)} - ${Constant.formatDate33(data.schedulingDetails?.date?:"")}"
-                NonRubriclblSession.text="${context.getString(R.string.session)} - ${data.schedulingDetails?.session}"
+                NonRubiclblTime.text="${context.getString(R.string.date)} : ${Constant.formatDate33(data.schedulingDetails?.date?:"")}"
+                NonRubriclblSession.text="${context.getString(R.string.session)} : ${data.schedulingDetails?.session}"
 
                 rlaHeaderForNonRubic.setOnClickListener {
 

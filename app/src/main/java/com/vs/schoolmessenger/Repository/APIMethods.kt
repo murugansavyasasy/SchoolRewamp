@@ -244,7 +244,7 @@ object APIMethods {
     const val gethostelschoolattendancereport= "stud-attd/api/hostel-attendance/attendance-report"
     const val getparenthosteldetails= "stud-attd/api/hostel-attendance/hostel-info"
     const val schoolHostelOutpassUpdateStatus = "stud-attd/api/hostel-attendance/update-status"
-    const val parentHostelDashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
+    const val parentHostelDashboard = "stud-attd/api/hostel-attendance/parent-dashboard-new"
 
     const val applyHostelPass = "stud-attd/api/hostel-attendance/apply-outpass"
     const val isOnlinePaymentResponse = "dashboard/api/reconcile/online-payment-details-for-student"

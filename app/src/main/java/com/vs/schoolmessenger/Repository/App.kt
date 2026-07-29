@@ -2218,10 +2218,10 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun isGetParentHostelDashboard(isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,activity: Activity) {
+    fun isGetParentHostelDashboard(isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,country_id   : String,activity: Activity) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositoriesTwo.isGetParentHostelDashboard(isToken,hostel_id,year_id,month_id,activity)
+        apiSchoolRepositoriesTwo.isGetParentHostelDashboard(isToken,hostel_id,year_id,month_id,country_id,activity)
     }
 
 

@@ -101,9 +101,12 @@ class HostelFeeDetail(
 
                 txtInfo.text = spannable
 
-                txtTotalValue.text = formatAmount(item.summary.total_amount)
-                txtPaidValue.text = formatAmount(item.summary.paid_amount)
-                txtPendingValue.text = formatAmount(item.summary.pending_amount)
+//                txtTotalValue.text = formatAmount(item.summary.total_amount)
+                txtTotalValue.text = item.summary.total_amount
+//                txtPaidValue.text = formatAmount(item.summary.paid_amount)
+                txtPaidValue.text = item.summary.paid_amount
+//                txtPendingValue.text = formatAmount(item.summary.pending_amount)
+                txtPendingValue.text = item.summary.pending_amount
 
                 txtStatus.text = item.summary.status
 
@@ -122,7 +125,7 @@ class HostelFeeDetail(
                 }
 
                 btnPay.text =
-                    "Pay Now ${formatAmount(item.summary.pending_amount)}"
+                    "Pay Now ${(item.summary.pending_amount)}"
 
                 btnPay.setOnClickListener {
                     val intent = Intent(
@@ -142,8 +145,8 @@ class HostelFeeDetail(
         }
     }
 
-    private fun formatAmount(amount: Int): String {
-        val format = NumberFormat.getNumberInstance(Locale("en", "IN"))
-        return "₹${format.format(amount)}"
-    }
+//    private fun formatAmount(amount: Int): String {
+//        val format = NumberFormat.getNumberInstance(Locale("en", "IN"))
+//        return "₹${format.format(amount)}"
+//    }
 }

@@ -95,8 +95,8 @@ class ExamTimeTableRubricsWise(
         fun bind(data: ExamTimetableRubric, position: Int) {
 
             rubricsName.text=data.rubricName
-            lblTime.text="${context.getString(R.string.date)} - ${Constant.formatDate33(data.schedulingDetails?.date?:"")}"
-            lblSession.text="${context.getString(R.string.session)} - ${data.schedulingDetails?.session}"
+            lblTime.text="${context.getString(R.string.date)} : ${Constant.formatDate33(data.schedulingDetails?.date?:"")}"
+            lblSession.text="${context.getString(R.string.session)} : ${data.schedulingDetails?.session}"
 
             header.setOnClickListener {
                 listener.onRubricClick(data)

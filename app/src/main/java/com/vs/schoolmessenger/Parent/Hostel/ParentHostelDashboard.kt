@@ -370,7 +370,8 @@ class ParentHostelDashboard : BaseActivity<ParentHostelDashboardBinding>(),
 
     private fun isGetHostelDashBoardDetails(hostel_id : String,) {
         Constant.showLoading(this)
-        appViewModel!!.isGetParentHostelDashboard(isAccessToken!!,hostel_id.toIntOrNull()?:0,currentYear,currentMonth,this)
+        val isCountryId = SharedPreference.getCountryId(this)
+        appViewModel!!.isGetParentHostelDashboard(isAccessToken!!,hostel_id.toIntOrNull()?:0,currentYear,currentMonth,isCountryId.toString(),this)
     }
 
     private fun isLoadHotelInformation(Data: List<HostelInfo>)

@@ -417,9 +417,9 @@ class SchoolServicesTwo {
 
 
     fun isGetParentHostelDashboard(
-        isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,activity: Activity) {
+        isToken: String,hostel_id : Int,year_id : Int,month_id  : Int,country_id  : String,activity: Activity) {
 
-        RestClient.Companion.apiInterfaces.parentHostelDashboard(isToken,hostel_id,year_id,month_id)
+        RestClient.Companion.apiInterfaces.parentHostelDashboard(isToken,hostel_id,year_id,month_id,country_id)
             ?.enqueue(object : Callback<getParentHostelDashboard?> {
                 override fun onResponse(
                     call: Call<getParentHostelDashboard?>, response: Response<getParentHostelDashboard?>

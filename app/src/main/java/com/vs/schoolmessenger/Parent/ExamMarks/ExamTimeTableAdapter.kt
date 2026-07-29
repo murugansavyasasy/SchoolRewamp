@@ -36,10 +36,16 @@ class ExamTimeTableAdapter(
 
             viewDetails.setOnClickListener {
                 val intent = Intent(context, ExamTimeTableViewDetails::class.java)
+//
+//                intent.putParcelableArrayListExtra(
+//                    "reciever_exam_data",
+//                    ArrayList(fullList)
+//                )
+                val selectedExam = arrayListOf(examTimeTable)
 
                 intent.putParcelableArrayListExtra(
                     "reciever_exam_data",
-                    ArrayList(fullList)
+                    selectedExam
                 )
 
                 context.startActivity(intent)

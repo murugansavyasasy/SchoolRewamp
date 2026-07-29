@@ -16,15 +16,15 @@ data class HostelFeeDetails(
 )
 
 data class FeeSummary(
-    val total_amount: Int,
-    val paid_amount: Int,
-    val pending_amount: Int,
-    val discount: Int,
+    val total_amount: String,
+    val paid_amount: String,
+    val pending_amount: String,
+    val discount: String,
     val status: String
 )
 
 data class Payment(
-    val paid_amount: Int,
+    val paid_amount: String,
     val paid_date: String,
     val payment_mode: String
 )

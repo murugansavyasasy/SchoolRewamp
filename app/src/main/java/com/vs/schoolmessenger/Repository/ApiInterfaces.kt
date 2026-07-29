@@ -1487,6 +1487,7 @@ interface ApiInterfaces {
         @Query(APIKeyNames.hostel_id) hostel_id  : Int?,
         @Query(APIKeyNames.year_id ) year_id : Int?,
         @Query(APIKeyNames.month_id ) month_id   : Int?,
+        @Query(APIKeyNames.country_id ) country_id   : String?,
     ): Call<getParentHostelDashboard?>
 
     @Headers("Content-Type: application/json")
