@@ -279,7 +279,7 @@ class MarksAdapter(
         // Show "was: oldValue" if changed
         if (isAllowedValue(oldValue) && isAllowedValue(excelValue) && oldValue != excelValue) {
             val prev = TextView(context).apply {
-                text = "prev $oldValue"
+                text = "prev - $oldValue"
                 textSize = 11f
                 gravity = Gravity.CENTER
                 setTextColor(ContextCompat.getColor(context, R.color.mild_grey_dark))
