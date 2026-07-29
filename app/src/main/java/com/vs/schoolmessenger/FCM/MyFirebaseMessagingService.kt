@@ -604,7 +604,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 call_title,
                 role,
                 circular_id,
-                retrycount
+                retrycount,
+                school_logo
             )
         }
         }, 30000)
@@ -626,7 +627,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         call_title: String,
         role: String,
         circular_id: String,
-        retrycount: String
+        retrycount: String,
+        school_logo: String
     ) {
 
             Log.e("MISSED_CALL", "30 Seconds Completed")
@@ -680,7 +682,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     call_title,
                     role,
                     circular_id,
-                    retrycount
+                    retrycount,
+                    school_logo
                 )
             }
     }
@@ -701,7 +704,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         call_title: String,
         role: String,
         circular_id: String,
-        retrycount: String
+        retrycount: String,
+        school_logo: String
     ) {
         RingtonePlayer.stop()
 
@@ -734,6 +738,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("notification_id", 2001)
             putExtra("launch_source", "MISSED")
             putExtra("isEmergencyCall", isEmergency)
+            putExtra("school_logo", school_logo)
+
 
         }
 
