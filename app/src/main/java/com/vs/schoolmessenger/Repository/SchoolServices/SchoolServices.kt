@@ -4213,7 +4213,7 @@ class SchoolServices {
         exam_id: String,
         section_id:String
         ) {
-        RestClient.Companion.apiInterfaces.getSubjectWiseActivities(isToken, exam_id)
+        RestClient.Companion.apiInterfaces.getSubjectWiseActivities(isToken, exam_id,section_id)
             ?.enqueue(object : Callback<getSubjectWiseACtivities?> {
                 override fun onResponse(
                     call: Call<getSubjectWiseACtivities?>,

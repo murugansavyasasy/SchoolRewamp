@@ -304,7 +304,6 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                     ).show()
                 }
             }
-
         }
     }
 

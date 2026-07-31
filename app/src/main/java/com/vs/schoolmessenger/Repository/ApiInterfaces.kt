@@ -1375,7 +1375,8 @@ interface ApiInterfaces {
     @GET(APIMethods.getSubjectWiseACtivities)
     fun getSubjectWiseActivities(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.exam_id) exam_id: String
+        @Query(APIKeyNames.exam_id) exam_id: String,
+        @Query(APIKeyNames.section_id) section_id: String
     ): Call<getSubjectWiseACtivities>
 
 

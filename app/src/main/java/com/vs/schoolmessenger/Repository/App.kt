@@ -2050,8 +2050,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isAcademicYearId: String,
         activity: Activity
     ) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        val reporting_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetStaffWiseExam(isToken, section_id,isAcademicYearId)
     }
@@ -2062,8 +2062,8 @@ class App(application: Application) : AndroidViewModel(application) {
         section_id:String,
         activity: Activity
     ) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        val reporting_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetSubjectWiseActivities(isToken, exam_id,section_id)
     }
@@ -2072,9 +2072,9 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         jsonObject: JsonObject, activity: Activity
     ) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+//        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetMarkDetails(isToken, jsonObject)
     }
 
