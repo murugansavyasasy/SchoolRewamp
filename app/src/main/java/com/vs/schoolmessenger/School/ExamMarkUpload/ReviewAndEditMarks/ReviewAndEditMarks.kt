@@ -368,7 +368,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                                 activityId = activity.id,
                                 activityName = activity.name,
                                 selected_name = rubric.selected_name, // Use rubric's selected_name
-                                maxMark = rubric.max_mark.toIntOrNull() ?: 100,
+                                maxMark = rubric.max_mark.toIntOrNull() ?: 0,
                                 isRubric = true,
                                 rubricId = rubric.id,
                                 rubricName = rubric.name?.trim(),
@@ -385,7 +385,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             activityId = activity.id,
                             activityName = activity.name,
                             selected_name = activity.selected_name,
-                            maxMark = activity.max_mark.toIntOrNull() ?: 100,
+                            maxMark = activity.max_mark.toIntOrNull() ?: 0,
                             isRubric = false
                         )
                     )
@@ -1336,7 +1336,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         val activityObj = JsonObject().apply {
                             addProperty(Constant.id, activityId)
                             addProperty(Constant.mark, "")
-                            addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "100")
+                            addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "--")
                             add("rubrics", rubricsArray)
                         }
                         activitiesArray.add(activityObj)

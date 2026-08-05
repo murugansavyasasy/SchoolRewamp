@@ -102,7 +102,7 @@ class HomeWorkReportAdapter(
             binding.redDot.visibility = View.GONE
             binding.imgSuccess.visibility = View.GONE
             binding.progressContainer.visibility = View.GONE
-            if (item.can_edit && item.can_delete) {
+            if (item.can_edit || item.can_delete) {
                 binding.imgEditAndDelete.visibility = View.VISIBLE
             } else {
                 binding.imgEditAndDelete.visibility = View.GONE
