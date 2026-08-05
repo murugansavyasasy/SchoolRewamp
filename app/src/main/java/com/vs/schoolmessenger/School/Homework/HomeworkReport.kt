@@ -421,6 +421,18 @@ class HomeworkReport : BaseActivity<HomeworkReportBinding>(), HomeWorkReportClic
         val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
         val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
 
+        if (data.can_edit){
+            layoutEdit.visibility= View.VISIBLE
+        }else{
+            layoutEdit.visibility= View.GONE
+        }
+
+        if (data.can_delete){
+            layoutDelete.visibility= View.VISIBLE
+        }else{
+            layoutDelete.visibility= View.GONE
+        }
+
         layoutEdit.setOnClickListener {
             Constant.isClickEdit = true
             val intent = Intent(this, HomeWorkCreate::class.java)

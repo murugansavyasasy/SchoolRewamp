@@ -2,6 +2,7 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
+<<<<<<< HEAD
       <SelectionState runConfigName="main">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-07-31T11:10:55.856315700Z">
@@ -11,6 +12,10 @@
             </handle>
           </Target>
         </DropdownSelection>
+=======
+      <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
+>>>>>>> c71006dcd70979991b6614781ae0ebe38410f9d4
         <DialogSelection />
       </SelectionState>
     </selectionStates>
