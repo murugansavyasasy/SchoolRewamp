@@ -1186,5 +1186,6 @@
     <string name="log_in_to_stay_connected_with">Log in to stay connected with</string>
     <string name="published_marks">Published Marks</string>
     <string name="select_standard_section">Select Standard &amp; Section</string>
+    <string name="audio_limit">Only 1 audio are allowed</string>
 
 </resources>

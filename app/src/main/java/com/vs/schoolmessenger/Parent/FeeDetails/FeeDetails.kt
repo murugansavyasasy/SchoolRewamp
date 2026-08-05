@@ -102,6 +102,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
             "isChildId: ${isChildId} |isSchoolID: ${isSchoolID} | StudentFinalFeeUrl: ${isFinalFeeUrl}"
         )
 
+
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
         binding.toolbarLayout.lblStudentSection.text =
@@ -111,6 +112,24 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         appViewModel!!.init()
         alertDialogView = AlertDialog.Builder(this@FeeDetails).create()
         binding.lblHeaderTitle.text = Constant.isSelectedMenuName
+
+        appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
+            Constant.hideLoading(this)
+            Log.d("Data","isResponseComing")
+
+            if (response != null && response.status && response.data.isNotEmpty()) {
+                Log.d("Data","isResponseStatusComing")
+                val intent = Intent(this, FeeReceiptViewActivity::class.java)
+                intent.putExtra("pdf_url", response.data[0])
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    this,
+                    response?.message ?: getString(R.string.unable_to_fetch_invoice),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.rytSearch1.visibility == View.VISIBLE) {
@@ -444,23 +463,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
     fun viewInvoice(invoiceId: String) {
+        Log.d("Data","isDataComing")
         Constant.showLoading(this)
         appViewModel?.getInvoiceDetails(isAccessToken!!, invoiceId, this)
 
-        appViewModel?.apiParentRepositories?.isInvoiceDetails?.observe(this) { response ->
-            Constant.hideLoading(this)
-            if (response != null && response.status && response.data.isNotEmpty()) {
-                val intent = Intent(this, FeeReceiptViewActivity::class.java)
-                intent.putExtra("pdf_url", response.data[0])
-                startActivity(intent)
-            } else {
-                Toast.makeText(
-                    this,
-                    response?.message ?: getString(R.string.unable_to_fetch_invoice),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     private fun scrollToMessageId(msg_id: Int) {
@@ -641,10 +647,11 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         data: FeeInvoiceResponse.InvoiceData,
         holder: FeeReceiptAdapter.DataViewHolder
     ) {
-        Log.d("InvoiceID", data.id)
-        val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
-        intent.putExtra("invoice_id", data.id)
-        startActivity(intent)
+        viewInvoice(data.id)
+//        Log.d("InvoiceID", data.id)
+//        val intent = Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
+//        intent.putExtra("invoice_id", data.id)
+//        startActivity(intent)
     }
 
 }

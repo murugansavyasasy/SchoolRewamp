@@ -208,6 +208,130 @@ class FileViewerAdapter(
                     holder.documentWebView.loadUrl(isFile)
                 }
 
+            } else if (item.type == Constant.AUDIO) {
+
+//                if (item.path.contains("player.vimeo.com")) {
+//
+//
+//                    Log.d("isVideoPostedDate", Constant.isVideoPostedDate ?: "null")
+//
+//                    if (Constant.SELECTED_MENU_ID != Constant.M_QUIZ_EXAM) {
+//
+//                        if (!Constant.isVideoPostedDate.isNullOrBlank() &&
+//                            Constant.isWithin30Minutes(Constant.isVideoPostedDate)
+//                        ) {
+//
+//                            holder.lblVideoAvailable.visibility = View.VISIBLE
+//                            holder.documentWebView.visibility = View.GONE
+//                            holder.loadingBar.visibility = View.GONE
+//                            holder.imageView.visibility = View.GONE
+//
+//                        } else {
+//
+//                            holder.lblVideoAvailable.visibility = View.GONE
+//                            holder.documentWebView.visibility = View.VISIBLE
+//                            holder.loadingBar.visibility = View.GONE
+//                            holder.imageView.visibility = View.GONE
+//
+//                            var isFile = ""
+//                            holder.documentWebView.visibility = View.VISIBLE
+//
+//                            isFile = item.path
+//
+//                            holder.documentWebView.settings.apply {
+//                                javaScriptEnabled = true
+//                                setSupportZoom(true)
+//                                builtInZoomControls = true
+//                                displayZoomControls = false
+//                                loadWithOverviewMode = true
+//                                useWideViewPort = true
+//                                domStorageEnabled = true
+//                            }
+//
+//                            holder.documentWebView.setInitialScale(1)
+//                            holder.documentWebView.scrollBarStyle =
+//                                WebView.SCROLLBARS_INSIDE_OVERLAY
+//                            holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+//
+//                            holder.documentWebView.webViewClient = object : WebViewClient() {
+//                                override fun onPageFinished(view: WebView?, url: String?) {
+//                                    holder.loadingBar.visibility = View.GONE
+//                                }
+//                            }
+//
+//                            holder.documentWebView.loadUrl(isFile)
+//                        }
+//
+//                    } else {
+//
+//                        holder.lblVideoAvailable.visibility = View.GONE
+//                        holder.documentWebView.visibility = View.VISIBLE
+//                        holder.loadingBar.visibility = View.GONE
+//                        holder.imageView.visibility = View.GONE
+//
+//                        var isFile = ""
+//                        holder.documentWebView.visibility = View.VISIBLE
+//
+//                        isFile = item.path
+//
+//                        holder.documentWebView.settings.apply {
+//                            javaScriptEnabled = true
+//                            setSupportZoom(true)
+//                            builtInZoomControls = true
+//                            displayZoomControls = false
+//                            loadWithOverviewMode = true
+//                            useWideViewPort = true
+//                            domStorageEnabled = true
+//                        }
+//
+//                        holder.documentWebView.setInitialScale(1)
+//                        holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
+//                        holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+//
+//                        holder.documentWebView.webViewClient = object : WebViewClient() {
+//                            override fun onPageFinished(view: WebView?, url: String?) {
+//                                holder.loadingBar.visibility = View.GONE
+//                            }
+//                        }
+//
+//                        holder.documentWebView.loadUrl(isFile)
+//                    }
+
+//                } else {
+
+                    holder.lblVideoAvailable.visibility = View.GONE
+                    holder.documentWebView.visibility = View.VISIBLE
+                    holder.loadingBar.visibility = View.GONE
+                    holder.imageView.visibility = View.GONE
+
+                    var isFile = ""
+                    holder.documentWebView.visibility = View.VISIBLE
+
+                    isFile = item.path
+
+                    holder.documentWebView.settings.apply {
+                        javaScriptEnabled = true
+                        setSupportZoom(true)
+                        builtInZoomControls = true
+                        displayZoomControls = false
+                        loadWithOverviewMode = true
+                        useWideViewPort = true
+                        domStorageEnabled = true
+                    }
+
+                    holder.documentWebView.setInitialScale(1)
+                    holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
+                    holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
+                    holder.documentWebView.webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView?, url: String?) {
+                            holder.loadingBar.visibility = View.GONE
+                        }
+                    }
+
+                    holder.documentWebView.loadUrl(isFile)
+//                }
+
             } else {
 
                 holder.documentWebView.visibility = View.VISIBLE

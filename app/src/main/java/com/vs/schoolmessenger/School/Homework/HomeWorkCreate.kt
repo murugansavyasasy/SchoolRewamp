@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -51,6 +53,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Assignment.AssignmentCreate
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportData
+import com.vs.schoolmessenger.School.LSRW.CreateNewTask
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -65,10 +68,12 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.ceil
 
 class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
     VimeoVideoUpload.UploadCompletionListener {
@@ -76,8 +81,18 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
+
+    private var mediaRecorder: MediaRecorder? = null
+    private var recordingFilePath: String? = null
+    private var isRecording = false
+    private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 201
+    private var audioPermissionDeniedCount = 0
+    private var audioFilePath: String? = null
+    var isFileName: String? = null
+    private val PICK_AUDIO_REQUEST = 101
     private var pickImagesLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
     private var pickVideoLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
@@ -101,6 +116,12 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isHomeWorkId = ""
+
+    private fun updateRemainingCount() {
+        val usedSlots = Constant.selectedFiles.size - 1
+        Constant.Remaining = (CreateNewTask.MAX_FILES - usedSlots).coerceAtLeast(0)
+    }
+
 
 
     override fun setupViews() {
@@ -225,9 +246,21 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
                     mimeType?.startsWith("video/") == true -> FileType.VIDEO
                     mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                     fileName.endsWith(".pdf", true) -> FileType.PDF
-                    fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-                    fileName.endsWith(".xls", true) || fileName.endsWith(".xlsx", true) -> FileType.EXCEL
-                    fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                    fileName.endsWith(".doc", true) || fileName.endsWith(
+                        ".docx",
+                        true
+                    ) -> FileType.DOC
+
+                    fileName.endsWith(".xls", true) || fileName.endsWith(
+                        ".xlsx",
+                        true
+                    ) -> FileType.EXCEL
+
+                    fileName.endsWith(".ppt", true) || fileName.endsWith(
+                        ".pptx",
+                        true
+                    ) -> FileType.PPT
+
                     fileName.endsWith(".txt", true) -> FileType.TXT
                     else -> FileType.OTHER
                 }
@@ -267,7 +300,6 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             Log.d("LimitReached", "No remaining files allowed")
         }
     }
-
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -413,18 +445,25 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         Log.d("FileComing", isFileType)
         if (isFileType == Constant.DOCUMENT) {
             openSystemDocumentPicker()
-        }
-        else if(isFileType == Constant.VIDEO){
+        } else if (isFileType == Constant.VIDEO) {
             pickVideoLauncher!!.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
             )
-        }
-        else if(isFileType == Constant.IMAGE) {
+        } else if (isFileType == Constant.IMAGE) {
             pickImagesLauncher!!.launch(
                 PickVisualMediaRequest(
                     ActivityResultContracts.PickVisualMedia.ImageOnly
                 )
             )
+        } else if (isFileType == Constant.AUDIO) {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "audio/*"
+
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            }
+            startActivityForResult(intent, PICK_AUDIO_REQUEST)
         }
     }
 
@@ -448,7 +487,10 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
         val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
+        val rlaVoiceRecorder = dialog.findViewById<RelativeLayout>(R.id.rlavoicerecorder)
 
+        rlaVoiceRecorder.visibility = View.VISIBLE
+        rlaVoice.visibility = View.VISIBLE
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
             Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
@@ -458,9 +500,28 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
 
         rlaVoice.setOnClickListener {
-            Constant.isFileLimit = 10
-            openAlbumSelectActivity(Constant.AUDIO)
-            dialog.dismiss()
+
+            val selectedAudioCount = Constant.selectedFiles.count { it.type == FileType.AUDIO }
+            if (selectedAudioCount >= 1) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.audio_limit),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Constant.isFileLimit = 10
+//                if (Constant.selectedFiles.size == 1 || selectedAudioCount == 0) {
+//                    Constant.isFileLimit = 10
+//                } else if (selectedAudioCount == 1) {
+//                    Constant.isFileLimit = 10
+//                }
+                openAlbumSelectActivity(Constant.AUDIO)
+                dialog.dismiss()
+            }
+
+//            Constant.isFileLimit = 10
+//            openAlbumSelectActivity(Constant.AUDIO)
+//            dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
@@ -494,6 +555,27 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             dialog.dismiss()
         }
 
+        rlaVoiceRecorder.setOnClickListener {
+
+            val selectedAudioCount = Constant.selectedFiles.count { it.type == FileType.AUDIO }
+            if (selectedAudioCount >= 1) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.audio_limit),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Constant.isFileLimit = 10
+//                if (Constant.selectedFiles.size == 1 || selectedAudioCount == 0) {
+//                    Constant.isFileLimit = 10
+//                } else if (selectedAudioCount == 1) {
+//                    Constant.isFileLimit = 10
+//                }
+                openVoiceRecorder()
+                dialog.dismiss()
+            }
+        }
+
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -501,6 +583,159 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
             setWindowAnimations(R.style.PopupAnimation)
         }
         dialog.show()
+    }
+
+    private fun openVoiceRecorder() {
+        checkRecordPermissionAndStartRecording()
+    }
+
+    private fun showAudioPermissionSettingsDialog() {
+        AlertDialog.Builder(this).setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.microphone_permission_is_permanently_denied_please_enable_it_from_app_settings))
+            .setCancelable(false).setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            }.setNegativeButton(getString(R.string.Cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+
+    private fun checkRecordPermissionAndStartRecording() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startVoiceRecording()
+        } else {
+            if (audioPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, Manifest.permission.RECORD_AUDIO
+                )
+            ) {
+                showAudioPermissionSettingsDialog()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
+    }
+
+    private fun startVoiceRecording() {
+        if (isRecording) return
+
+        val timeStamp: String =
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmssSSS, Locale.getDefault()).format(Date())
+        val storageDir: File = getExternalFilesDir("recordings") ?: cacheDir
+        val audioFile: File = try {
+            File.createTempFile("Communication_${timeStamp}_", Constant.wav, storageDir)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            Toast.makeText(
+                this,
+                getString(R.string.could_not_create_file_for_audio),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        recordingFilePath = audioFile.absolutePath
+
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(recordingFilePath)
+            try {
+                prepare()
+                start()
+                isRecording = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                releaseRecorder()
+                Toast.makeText(
+                    this@HomeWorkCreate,
+                    getString(R.string.failed_to_start_recording),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+        }
+
+        // Replace your old dialog code with this:
+        val dialogView = layoutInflater.inflate(R.layout.dialog_voice_recording, null)
+        val stopBtn = dialogView.findViewById<TextView>(R.id.btnStop)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+
+        stopBtn.setOnClickListener {
+            stopVoiceRecording()
+            dialog.dismiss()
+        }
+    }
+
+    private fun stopVoiceRecording() {
+        if (!isRecording) return
+        isRecording = false
+        try {
+            mediaRecorder?.stop()
+        } catch (e: RuntimeException) {
+        }
+        mediaRecorder?.release()
+        mediaRecorder = null
+
+
+
+        Constant.showLoading(this@HomeWorkCreate)
+        recordingFilePath?.let { path ->
+            val file = File(path)
+            Constant.hideLoading(this@HomeWorkCreate)
+            if (file.exists() && file.length() > 0) {
+                if (Constant.selectedFiles.size < CreateNewTask.MAX_FILES + 1) {
+                    Constant.selectedFiles.add(FileItem(path, FileType.AUDIO))
+                    mAdapter?.notifyDataSetChanged()
+                    updateRemainingCount()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.audio_recorded_and_added),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.max_10_files_allowed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    file.delete()
+                }
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.recording_failed_file_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
+                file.delete()
+            }
+        }
+        recordingFilePath = null
+    }
+
+    private fun releaseRecorder() {
+        if (isRecording) {
+            stopVoiceRecording()
+        } else {
+            mediaRecorder?.release()
+            mediaRecorder = null
+        }
     }
 
     private fun openCameraIntent() {
@@ -666,9 +901,162 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
 
                 }
             }
+
+
+            PICK_AUDIO_REQUEST -> {
+
+                val uri = data?.data ?: return
+
+                val format = getPickedAudioFormat(uri)
+
+                Log.d("PickedAudioFormat", "User selected audio format: $format")
+
+                if (!isAllowedAudio(uri)) {
+                    Toast.makeText(
+                        this,
+                        "Only WAV, M4A or MP3 audio files are allowed",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
+                }
+
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+
+                val mediaPlayer = MediaPlayer()
+                try {
+                    mediaPlayer.setDataSource(this, uri)
+                    mediaPlayer.prepare()
+
+                    val durationInMillis = mediaPlayer.duration
+                    val formattedDuration = formatDuration(durationInMillis)
+                    if (durationInMillis > 180_000) {
+                        mediaPlayer.release()
+                        showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
+                        return
+
+                    }
+
+                    mediaPlayer.release()
+
+                    val extension = getAudioExtension(uri)
+
+                    val timeStamp = SimpleDateFormat(
+                        Constant.yyyyMMdd_HHmmssSSS,
+                        Locale.getDefault()
+                    ).format(Date())
+
+                    val fileName = "${Constant.Communication_}${timeStamp}.$extension"
+                    isFileName = fileName
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val outputFile = File(cacheDir, fileName)
+                    val outputStream = FileOutputStream(outputFile)
+
+                    inputStream?.copyTo(outputStream)
+                    inputStream?.close()
+                    outputStream.close()
+
+                    // Store local path
+                    audioFilePath = outputFile.absolutePath
+                    Constant.isVoiceType = 2
+                    Constant.selectedFiles!!.add(
+                        FileItem(audioFilePath!!, FileType.AUDIO)
+                    )
+
+                } catch (e: Exception) {
+                    mediaPlayer.release()
+                    e.printStackTrace()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.Failed_load_audio),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+
+            }
         }
+
         mAdapter?.notifyDataSetChanged()
     }
+
+    private fun isAllowedAudio(uri: Uri): Boolean {
+        val mimeType = contentResolver.getType(uri)
+        val name = getFileName(uri)?.lowercase() ?: ""
+
+        return when {
+            // WAV
+            mimeType == "audio/wav" ||
+                    mimeType == "audio/x-wav" -> true
+
+            // M4A
+            mimeType == "audio/mp4" -> true
+
+            // MP3
+            mimeType == "audio/mpeg" -> true
+
+            // Fallback by extension
+            name.endsWith(".wav") ||
+                    name.endsWith(".m4a") ||
+                    name.endsWith(".mp3") -> true
+
+            else -> false
+        }
+    }
+
+    private fun getPickedAudioFormat(uri: Uri): String {
+        val mimeType = contentResolver.getType(uri)
+
+        return when (mimeType) {
+            "audio/wav", "audio/x-wav" -> "WAV"
+            "audio/mp4" -> "M4A"
+            "audio/mpeg" -> "MP3"
+
+            else -> {
+                val name = getFileName(uri)?.lowercase()
+                when {
+                    name?.endsWith(".wav") == true -> "WAV"
+                    name?.endsWith(".m4a") == true -> "M4A"
+                    name?.endsWith(".mp3") == true -> "MP3"
+                    else -> "UNKNOWN"
+                }
+            }
+        }
+    }
+
+
+    private fun getAudioExtension(uri: Uri): String {
+        val mimeType = contentResolver.getType(uri)
+
+        return when (mimeType) {
+            "audio/wav", "audio/x-wav" -> "wav"
+            "audio/mp4" -> "m4a"
+            "audio/mpeg" -> "mp3"
+
+            else -> {
+                val name = getFileName(uri)?.lowercase()
+                when {
+                    name?.endsWith(".wav") == true -> "wav"
+                    name?.endsWith(".m4a") == true -> "m4a"
+                    name?.endsWith(".mp3") == true -> "mp3"
+                    else -> ""
+                }
+            }
+        }
+    }
+    private fun showDurationLimitDialog(message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.Invalid_Duration))
+        builder.setMessage(message)
+        builder.setPositiveButton(getString(R.string.permission_ok)) { dialog, _ ->
+            dialog.dismiss()  // Dismiss the dialog when "OK" is clicked
+        }
+        builder.setCancelable(false)  // Make the dialog non-cancelable
+        builder.show()
+    }
+
 
     private fun getPathFromUri(uri: Uri): File? {
         return try {
@@ -709,6 +1097,13 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         }
 
         return fileName ?: "temp_file_${System.currentTimeMillis()}"
+    }
+
+    private fun formatDuration(durationInMillis: Int): String {
+        val adjustedDuration = ceil(durationInMillis / 1000.0).toInt() // more accurate
+        val minutes = adjustedDuration / 60
+        val seconds = adjustedDuration % 60
+        return String.format(Constant.dateForMate, minutes, seconds)
     }
 
     @Throws(IOException::class)
@@ -968,7 +1363,10 @@ class HomeWorkCreate : BaseActivity<HomeWorkBinding>(), View.OnClickListener, On
         jsonObject.addProperty(APIKeyNames.thumbnail, "")
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
-            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.url,
+                Constant.isAwsUploadedFiles[i].isFileUrl
+            )
             isSelectedObject.addProperty(
                 APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
             )

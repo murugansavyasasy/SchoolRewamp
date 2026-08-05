@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp">
+
+            <!-- Play / Pause -->
+            <ImageView
+                android:id="@+id/imgPlayAudio"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:src="@drawable/play_icon_2" />
+
+            <!-- Running / Current Time (start side) -->
+            <TextView
+                android:id="@+id/lblCurrentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="6dp"
+                android:layout_toEndOf="@id/imgPlayAudio"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:minWidth="36dp"
+                android:text="0:00"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <!-- Total Duration (end side) -->
+            <TextView
+                android:id="@+id/lblDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="0:00"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <!-- SeekBar -->
+            <SeekBar
+                android:id="@+id/seekBarAudio"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/lblDuration"
+                android:layout_toEndOf="@id/lblCurrentTime"
+                android:max="100"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Delete icon -->
+    <ImageView
+        android:id="@+id/imgAudioDelete"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="-2dp"
+        android:background="@drawable/white_circle_bg"
+        android:elevation="10dp"
+        android:src="@drawable/del_icon" />
+
+</FrameLayout>

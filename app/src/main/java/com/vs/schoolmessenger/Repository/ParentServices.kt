@@ -107,6 +107,8 @@ class ParentServices {
     var isParentprofilelist: MutableLiveData<ProfileListResponse?>
     var ispresubmission: MutableLiveData<ProfileUpdateResponse?>
     var getmysubmissionedit: MutableLiveData<MySubmissionEditResponse?>
+    var isInvoiceDetails: MutableLiveData<InvoiceDetailsResponse?>
+
     var ismysubmissiondelete: MutableLiveData<MySubmissionDeleteResponse?>
     var isApplyHostelOutpass: MutableLiveData<applyOutpassResponse?>
     var isOnlinePaymentResponse: MutableLiveData<OnlinePaymentResponse?>
@@ -161,6 +163,7 @@ class ParentServices {
         isParentprofilelist = MutableLiveData()
         ispresubmission = MutableLiveData()
         getmysubmissionedit = MutableLiveData()
+        isInvoiceDetails = MutableLiveData()
         ismysubmissiondelete = MutableLiveData()
         isApplyHostelOutpass = MutableLiveData()
         isOnlinePaymentResponse = MutableLiveData()
@@ -1708,7 +1711,6 @@ class ParentServices {
             })
     }
 
-    var isInvoiceDetails: MutableLiveData<InvoiceDetailsResponse?> = MutableLiveData()
 
     fun getInvoiceDetails(isToken: String, invoiceId: String) {
         RestClient.apiInterfaces.getInvoiceDetails(isToken, invoiceId)
@@ -1731,6 +1733,8 @@ class ParentServices {
             })
     }
 
+    val getisInvoiceDetailsLiveData: LiveData<InvoiceDetailsResponse?>
+        get() = isInvoiceDetails
 
     fun getmysubmissionedit(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())

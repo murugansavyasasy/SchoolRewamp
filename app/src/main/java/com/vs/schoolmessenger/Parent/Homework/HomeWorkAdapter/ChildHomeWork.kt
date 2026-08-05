@@ -170,7 +170,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         binding.btnSubmit.setOnClickListener(this)
 
         Log.d("isSchoolMenuName", Constant.isSelectedMenuName)
-        data = intent.getParcelableExtra("isPreViewData")
+        data = intent.getParcelableExtra(Constant.isPreViewData)
 
         binding.toolbarLayout.lblStudentName.visibility = View.VISIBLE
         binding.toolbarLayout.lblStudentSection.visibility = View.GONE
@@ -378,18 +378,18 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
             )
             Log.d("FragmentCheck", "LsrwStudentListFragment should now be loaded")
 
-            val audioList =
-                data!!.fileList.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
-                    .map { it.url }
-            if (audioList.isNotEmpty()) {
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                audioAdapter = AudioAdapter(audioList)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
-                    LinearLayoutManager(binding.root.context)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
-            } else {
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
-            }
+//            val audioList =
+//                data!!.fileList.filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+//                    .map { it.url }
+//            if (audioList.isNotEmpty()) {
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
+//                audioAdapter = AudioAdapter(audioList)
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
+//                    LinearLayoutManager(binding.root.context)
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
+//            } else {
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
+//            }
 
         } else if (SELECTED_MENU_ID == M_LSRW && data!!.isParentAssignment == true) {
             binding.childlsrwlayoutxml.toolbarLayout.lblParentToolBar.text =
@@ -487,23 +487,23 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
 
             updateRemainingCount()
 
-            val audioList = data!!.fileList
-                .filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
-                .map { it.url }
-
-            data!!.fileList.forEach {
-                Log.d("IncomingType", "Value: ${it.type}")
-            }
-
-            if (audioList.isNotEmpty()) {
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
-                audioAdapter = AudioAdapter(audioList)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
-                    LinearLayoutManager(binding.root.context)
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
-            } else {
-                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
-            }
+//            val audioList = data!!.fileList
+//                .filter { it.type.equals(Constant.AUDIO, ignoreCase = true) }
+//                .map { it.url }
+//
+//            data!!.fileList.forEach {
+//                Log.d("IncomingType", "Value: ${it.type}")
+//            }
+//
+//            if (audioList.isNotEmpty()) {
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.VISIBLE
+//                audioAdapter = AudioAdapter(audioList)
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.layoutManager =
+//                    LinearLayoutManager(binding.root.context)
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.adapter = audioAdapter
+//            } else {
+//                binding.childlsrwlayoutxml.rcSeekBarAndTitle.visibility = View.GONE
+//            }
         } else {
             binding.childlsrwlayoutxml.lblviewSubmissions.visibility = View.GONE
         }
@@ -652,8 +652,8 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         Log.d("Child Homework Redirection", isParentAssignment.toString())
 
         // Filter out AUDIO files before passing to HomeWorkChildAdapter (AUDIO handled separately via AudioAdapter)
-        val filteredFileList = data!!.fileList.filter { it.type.uppercase() != Constant.AUDIO }
-
+//        val filteredFileList = data!!.fileList.filter { it.type.uppercase() != Constant.AUDIO }
+        val filteredFileList = data!!.fileList
         val adapter = HomeWorkChildAdapter(
             this, filteredFileList, data!!.subjectName!!, SELECTED_MENU_ID, isParentAssignment
         )

@@ -388,8 +388,14 @@ class HomeWorkChildAdapter(
                         binding.progressBar.visibility = View.GONE
                     }
 
+                    Constant.AUDIO -> {
+                        binding.imgView.setImageResource(R.drawable.audio_icon2)
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+
                     else -> {
-                        binding.imgView.setImageResource(R.drawable.excel_icon)
+                        binding.imgView.setImageResource(R.drawable.audio_icon2)
                         binding.progressBar.visibility = View.GONE
                     }
                 }
