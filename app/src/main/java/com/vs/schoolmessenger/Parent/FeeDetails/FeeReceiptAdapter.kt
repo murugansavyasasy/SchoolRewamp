@@ -113,11 +113,24 @@ class FeeReceiptAdapter(
 
             rytView.setOnClickListener { listener.onItemClick(data, this@DataViewHolder) }
 
+//            rytViewInvoice.setOnClickListener {
+//                val invoiceId = data.id ?: return@setOnClickListener
+//                if (context is FeeDetails) {
+//                    (context as FeeDetails).viewInvoice(invoiceId)
+//                }
+//            }
             rytViewInvoice.setOnClickListener {
+                it.isEnabled = false
+
                 val invoiceId = data.id ?: return@setOnClickListener
+
                 if (context is FeeDetails) {
                     (context as FeeDetails).viewInvoice(invoiceId)
                 }
+
+                it.postDelayed({
+                    it.isEnabled = true
+                }, 1000)
             }
         }
     }

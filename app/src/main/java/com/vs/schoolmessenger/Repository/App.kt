@@ -54,6 +54,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTime
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
@@ -503,6 +504,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isputClassTestDelete: LiveData<DeleteClassTestResponse?>? = null
     var isexamDetailsMark: LiveData<ClassEntryMarkResponse?>? = null
     var isexamdetailsmarkpost: LiveData<UploadMarksClassEntryResponse?>? = null
+    var getisInvoiceDetails: LiveData<InvoiceDetailsResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -576,8 +578,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
         getabsenteesstudentbydate = apiSchoolRepositories.getabsenteesstudentbydateLiveData
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
-
         sendnotice = apiSchoolRepositories.sendnoticeLiveData
+        getisInvoiceDetails = apiParentRepositories.getisInvoiceDetailsLiveData
         sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
         isLeaveRequest = apiParentRepositories.leaveRequestLiveData
