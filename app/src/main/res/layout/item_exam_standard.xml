@@ -1,0 +1,47 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardStandard"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/hundred_ten"
+    android:layout_margin="@dimen/six"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/sixteen"
+    app:cardElevation="@dimen/four">
+    <ImageView
+        android:id="@+id/imgCheckMark"
+        android:layout_width="@dimen/twenty_two"
+        android:layout_height="@dimen/twenty_two"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/eight"
+        android:padding="4dp"
+        android:background="@drawable/bg_check_badge"
+        android:src="@drawable/ic_check_mark_primary"
+        app:tint="@color/PrimaryColor"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/eight">
+
+        <TextView
+            android:id="@+id/lblStandardName"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_eight" />
+
+        <TextView
+            android:id="@+id/lblSectionCount"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/four"
+            android:text="2 sections"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/thirteen_sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

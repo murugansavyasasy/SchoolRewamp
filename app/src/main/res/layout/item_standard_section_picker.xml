@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="@dimen/twenty"
+    android:paddingVertical="@dimen/fourteen">
+
+    <TextView
+        android:id="@+id/lblPickerTitle"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/imgPickerCheck"
+        android:text="Class 6 - Section A"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp" />
+
+    <ImageView
+        android:id="@+id/imgPickerCheck"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_check_mark_primary"
+        app:tint="@color/PrimaryColor"
+        android:visibility="gone" />
+
+</RelativeLayout>

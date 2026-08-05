@@ -138,6 +138,7 @@ class SchoolMenuAdapter(
                 Constant.M_LIVE_BUS_TRACKING -> imgMenu.setImageResource(R.drawable.bus_tracking_icon)
                 Constant.M_STUDENTDATE -> imgMenu.setImageResource(R.drawable.student_report)
                 Constant.M_CLASSTEST -> imgMenu.setImageResource(R.drawable.classtestprofile)
+                Constant.M_EXAMREVIEW -> imgMenu.setImageResource(R.drawable.classtestprofile)
 
             }
 

@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Hostel.HostelList
@@ -236,13 +237,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Hardcode from here
                     //Added the hardcode data
 
-//                                        originalMenuList.add(
-//                        MenuDetail(
-//                            id = 205,
-//                            name = "Bus Live Tracking",
-//                            description = "Monitor and manage student data"
-//                        )
-//                    )
+                                        originalMenuList.add(
+                        MenuDetail(
+                            id = 222,
+                            name = "Exam Review",
+                            description = "Student exam review and marks"
+                        )
+                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()
@@ -1026,6 +1027,19 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         StandardActivity::class.java
+                    }
+                }
+            }
+
+            Constant.M_EXAMREVIEW-> {
+
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    ExamStandardActivity::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        ExamStandardActivity::class.java
                     }
                 }
             }

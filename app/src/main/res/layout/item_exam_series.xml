@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardExam"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/twele"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/sixteen"
+    app:cardElevation="@dimen/two"
+    app:strokeWidth="0dp"
+    app:strokeColor="@color/PrimaryColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fourteen">
+
+        <CheckBox
+            android:id="@+id/cbExam"
+            android:layout_width="@dimen/twenty_four"
+            android:layout_height="@dimen/twenty_four"
+            android:layout_centerVertical="true"
+            android:button="@drawable/checked_box"
+            android:background="@null" />
+
+        <TextView
+            android:id="@+id/lblSelectedPill"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_pill_primary_light"
+            android:paddingHorizontal="@dimen/twele"
+            android:paddingVertical="@dimen/four"
+            android:text="Selected"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/twele_sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fourteen"
+            android:layout_toStartOf="@id/lblSelectedPill"
+            android:layout_toEndOf="@id/cbExam"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblExamTitle"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DRT - 1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/lblExamSubtitle"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/two"
+                android:text="Series 1 \u00B7 Max 100 marks"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
