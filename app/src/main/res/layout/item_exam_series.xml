@@ -18,12 +18,13 @@
 
         <CheckBox
             android:id="@+id/cbExam"
-            android:layout_width="@dimen/twenty_four"
-            android:layout_height="@dimen/twenty_four"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_centerVertical="true"
-            android:button="@drawable/checked_box"
-            android:background="@null" />
-
+            android:button="@drawable/checked_box1"
+            android:background="@null"
+            android:clickable="false"
+            android:focusable="false" />
         <TextView
             android:id="@+id/lblSelectedPill"
             style="@style/CustomTextStylePoppinsBold"

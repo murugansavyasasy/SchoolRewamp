@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.ExamReview.Adapter
 
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +85,16 @@ class SelectExamAdapter(
         private fun applySelectionState(isSelected: Boolean) {
             val primaryColor = ContextCompat.getColor(context, R.color.PrimaryColor)
 
+            // ---- Checkbox appearance (pure code) ----
+            if (isSelected) {
+                // Use your existing filled circle + tick drawable
+                cbExam.buttonDrawable = ContextCompat.getDrawable(context, R.drawable.checked_box1)
+            } else {
+                // Empty circle outline created in code
+                cbExam.buttonDrawable = createEmptyCircleDrawable()
+            }
+
+            // ---- Card + pill (same as before) ----
             if (isSelected) {
                 cardExam.strokeWidth = context.resources.getDimensionPixelSize(R.dimen.two)
                 cardExam.strokeColor = primaryColor
@@ -93,6 +104,19 @@ class SelectExamAdapter(
             } else {
                 cardExam.strokeWidth = 0
                 lblSelectedPill.visibility = View.GONE
+            }
+        }
+
+        private fun createEmptyCircleDrawable(): GradientDrawable {
+            val size = context.resources.getDimensionPixelSize(R.dimen.twenty_four)
+            return GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setSize(size, size)
+                setColor(android.graphics.Color.TRANSPARENT)
+                setStroke(
+                    context.resources.getDimensionPixelSize(R.dimen.two),
+                    ContextCompat.getColor(context, R.color.grey)
+                )
             }
         }
     }
