@@ -97,7 +97,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== Stat cards (2 x 3 grid) ===== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -220,7 +219,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== Total performance trend line chart ===== -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,7 +260,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- ===== Subject average performance list ===== -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
