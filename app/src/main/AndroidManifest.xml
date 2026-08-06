@@ -803,6 +803,12 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <activity
+            android:name=".School.ExamReview.Activity.ExamAnalysisActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
             android:name=".School.ExamReview.Activity.SelectExamActivity"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"

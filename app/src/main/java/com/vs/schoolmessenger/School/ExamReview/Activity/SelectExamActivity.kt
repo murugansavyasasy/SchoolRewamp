@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.ExamReview.Activity
 
+import android.content.Intent
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -11,6 +12,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ExamReview.Adapter.SelectExamAdapter
 import com.vs.schoolmessenger.School.ExamReview.Model.ExamSeries
 import com.vs.schoolmessenger.databinding.ExamStandardSelectBinding
@@ -114,6 +116,7 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
             binding.btnViewAnalysis.id -> {
                 val selectedExams = examAdapter.getSelectedItems()
                 if (selectedExams.isEmpty()) return
+                startActivity(Intent(this, ExamAnalysisActivity::class.java))
             }
         }
     }
