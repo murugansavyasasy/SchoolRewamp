@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_stat_card"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <TextView
+        android:id="@+id/tvStatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.05"
+        android:textAllCaps="true"
+        android:textColor="@color/exam_text_secondary"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        tools:text="AVERAGE SCORE" />
+
+    <TextView
+        android:id="@+id/tvStatValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/exam_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="78/100" />
+
+    <TextView
+        android:id="@+id/tvStatSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/exam_text_secondary"
+        android:textSize="12sp"
+        tools:text="78.2%" />
+
+</LinearLayout>

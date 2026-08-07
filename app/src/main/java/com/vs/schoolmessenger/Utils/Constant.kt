@@ -210,6 +210,7 @@ object Constant {
         val M_LIVE_BUS_TRACKING = 205
     val M_STUDENTDATE = 789
     val M_CLASSTEST = 206
+    val M_EXAMREVIEW =222
     //    val M_STUDENTDATE = 996
     var SELECTED_MENU_ID = 0
     var isEmergencyVoiceNoticeBoard: Boolean? = false
