@@ -1,11 +1,12 @@
-package com.vs.schoolmessenger.School.ExamReview.Activity
+package com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamAnalysis
 
+import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -15,20 +16,19 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisData
-import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.SubjectExamAnalysis
 import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.TrendExamAnalysis
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamAnalysisBinding
+import com.vs.schoolmessenger.databinding.ParentExamAnalysisBinding
 
-class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickListener {
+class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), View.OnClickListener {
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -47,24 +47,23 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
 
     private fun colorForSeries(index: Int): Int {
         if (index < baseSeriesColors.size) return baseSeriesColors[index]
-
         val hue = ((index - baseSeriesColors.size) * 137.508f) % 360f
         return android.graphics.Color.HSVToColor(floatArrayOf(hue, 0.55f, 0.82f))
     }
 
-    override fun getViewBinding(): ExamAnalysisBinding =
-        ExamAnalysisBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ParentExamAnalysisBinding =
+        ParentExamAnalysisBinding.inflate(layoutInflater)
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimarySchool(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
 
         userDetails = SharedPreference.getUserDetails(this)
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails?.access_token
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -72,7 +71,7 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.tvClose.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = "Class Test Analysis"
+        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
 
         observeAnalysis()
         fetchAnalysis()
@@ -85,15 +84,15 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
     }
 
     private fun fetchAnalysis() {
-        val studentId = Constant.isSelectedStudent?.id?.toString()
+//        val studentId = Constant.isSelectedStudent?.id?.toString()
         val analysisSetId = Constant.isSelectedAnalysisSetId
 
-        if (isAccessToken.isNullOrEmpty() || studentId.isNullOrEmpty() || analysisSetId.isNullOrEmpty()) {
+        if (isAccessToken.isNullOrEmpty() ||  analysisSetId.isNullOrEmpty()) {
             Toast.makeText(this, "Missing student/exam set details", Toast.LENGTH_SHORT).show()
             return
         }
 
-        appViewModel!!.isExamtestAnalysis(isAccessToken!!, studentId, analysisSetId, this)
+        appViewModel!!.isExamtestAnalysis(isAccessToken!!, "", analysisSetId, this)
     }
 
     private fun observeAnalysis() {
@@ -167,7 +166,7 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
             setColors(colors)
             setDrawValues(true)
             valueTextSize = 9f
-            valueTextColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary)
+            valueTextColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary)
         }
 
         val barData = BarData(dataSet)
@@ -195,14 +194,14 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
                 if (totalSlots > 1) {
                     setLabelCount(totalSlots, true)
                 }
-                textColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary)
+                textColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary)
                 labelRotationAngle = 0f
             }
 
             axisLeft.apply {
                 axisMinimum = 0f
                 setDrawGridLines(true)
-                textColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary)
+                textColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary)
             }
             axisRight.isEnabled = false
 
@@ -218,23 +217,23 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
     private fun renderLegend(data: StudentAnalysisData) {
         binding.llLegend.removeAllViews()
         data.exam_series.forEachIndexed { index, examName ->
-            val itemView = android.widget.LinearLayout(this).apply {
-                orientation = android.widget.LinearLayout.HORIZONTAL
-                gravity = android.view.Gravity.CENTER_VERTICAL
+            val itemView = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
                 setPadding(0, 0, 20, 0)
             }
 
             val dot = View(this).apply {
                 val size = (10 * resources.displayMetrics.density).toInt()
                 layoutParams = android.widget.LinearLayout.LayoutParams(size, size)
-                background = ContextCompat.getDrawable(this@ExamAnalysisActivity, R.drawable.bg_legend_dot)
+                background = ContextCompat.getDrawable(this@ParentExamAnalysisActivity, R.drawable.bg_legend_dot)
                     ?.mutate()?.apply { setTint(colorForSeries(index)) }
             }
 
-            val label = android.widget.TextView(this).apply {
+            val label = TextView(this).apply {
                 text = examName
                 textSize = 12f
-                setTextColor(ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary))
+                setTextColor(ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary))
                 setPadding(8, 0, 0, 0)
             }
 
@@ -282,7 +281,7 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
                 granularity = 1f
                 setDrawGridLines(false)
                 valueFormatter = IndexAxisValueFormatter(trend.map { it.exam_name })
-                textColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary)
+                textColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary)
             }
 
             axisLeft.apply {
@@ -291,14 +290,14 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
                 removeAllLimitLines()
                 addLimitLine(
                     LimitLine(100f, "Max (100%)").apply {
-                        lineColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_max_line_red)
+                        lineColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_max_line_red)
                         lineWidth = 1f
                         enableDashedLine(6f, 4f, 0f)
-                        textColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_max_line_red)
+                        textColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_max_line_red)
                         textSize = 10f
                     }
                 )
-                textColor = ContextCompat.getColor(this@ExamAnalysisActivity, R.color.exam_text_secondary)
+                textColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_text_secondary)
             }
             axisRight.isEnabled = false
 

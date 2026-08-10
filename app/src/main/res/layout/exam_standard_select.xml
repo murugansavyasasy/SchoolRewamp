@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryRadiant">
 
-    <!-- ===== Header (unchanged from your original) ===== -->
     <LinearLayout
         android:id="@+id/lytHeader"
         android:layout_width="0dp"
@@ -86,7 +85,7 @@
                 android:layout_toStartOf="@id/toolbarSearchIcon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Exam Analyzes"
+                android:text="Class Test Analysis"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -103,7 +102,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Exam Mark Analysis"
+                android:text="Class Test Analysis"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_four_sp" />
 
@@ -131,7 +130,6 @@
 
     </LinearLayout>
 
-    <!-- ===== Content card ===== -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lytContent"
         android:layout_width="0dp"
@@ -157,7 +155,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Scrollable body: card 1 (dropdown) + card 2 (student list) -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -248,7 +245,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- ===== Card 2: Select Student ===== -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

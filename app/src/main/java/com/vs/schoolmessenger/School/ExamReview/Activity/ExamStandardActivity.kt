@@ -58,6 +58,7 @@ class ExamStandardActivity : BaseActivity<ExamStandardSelectBinding>(), View.OnC
     private var receiverId: String? = null
     private var menu_name: String? = null
     private var fromNotification: Boolean = false
+    var isSelectedStudent: NameAndIds? = null
 
     override fun getViewBinding(): ExamStandardSelectBinding =
         ExamStandardSelectBinding.inflate(layoutInflater)
@@ -300,10 +301,10 @@ class ExamStandardActivity : BaseActivity<ExamStandardSelectBinding>(), View.OnC
                 Toast.makeText(this, "Please select a student to continue", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            Constant.isSelectedStudent = selectedStudent
             startActivity(Intent(this, SelectExamActivity::class.java))
         }
     }
-
     private fun showStudentLoading() {
         binding.rcStudentList.visibility = View.VISIBLE
         binding.lytStudentEmpty.visibility = View.GONE

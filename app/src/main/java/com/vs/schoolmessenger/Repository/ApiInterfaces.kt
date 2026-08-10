@@ -1605,8 +1605,8 @@ interface ApiInterfaces {
     @GET(APIMethods.isExamtestAnalysis)
     fun isExamtestAnalysis(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("student_id ") student_id   : String,
-        @Query("analysis_set_id ") analysis_set_id    : String,)
+        @Query("student_id") student_id   : String,
+        @Query("analysis_set_id") analysis_set_id    : String,)
     : Call<StudentAnalysisResponse?>
 
 
@@ -1615,8 +1615,8 @@ interface ApiInterfaces {
     @GET(APIMethods.isExamtestAnalysisSets)
     fun isExamtestAnalysisSets(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("class_id  ") class_id  : String,
-        @Query("section_id  ") section_id  : String,)
+        @Query("class_id") class_id  : String,
+        @Query("section_id") section_id  : String,)
             : Call<AnalysisSetsResponse?>
 
 }

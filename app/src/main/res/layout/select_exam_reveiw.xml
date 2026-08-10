@@ -146,7 +146,7 @@
 
                 <TextView
                     android:id="@+id/lblStudentDetail"
-                    style="@style/CustomTextStylePoppinsRegular"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/two"
@@ -184,7 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/two"
-            android:text="Pick one or more exam series to include in the analysis."
+            android:text="Pick one exam series to include in the analysis."
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -205,18 +205,62 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lytSelectExamsHeader" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcExamList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/sixteen"
-        android:layout_marginTop="@dimen/eight"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/sixteen"
-        app:layout_constraintBottom_toTopOf="@id/lytBottomBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSelectAll" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcExamList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/sixteen"
+            android:layout_marginTop="@dimen/eight"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/sixteen"
+            app:layout_constraintBottom_toTopOf="@id/lytBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSelectAll" />
+
+        <LinearLayout
+            android:id="@+id/lytNoExamData"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/lytBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSelectAll">
+
+            <ImageView
+                android:id="@+id/imgNoExamData"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="@dimen/eighty"
+                android:src="@drawable/no_data_found"
+                app:tint="@color/grey" />
+
+            <TextView
+                android:id="@+id/lblNoExamData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twele"
+                android:gravity="center"
+                android:text="No Data Found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/lblNoExamDataSubtitle"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/four"
+                android:gravity="center"
+                android:text="No exam sets are available for this student yet."
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lytBottomBar"
