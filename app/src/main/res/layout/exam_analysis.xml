@@ -101,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <include
@@ -125,6 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <include
@@ -149,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <include
@@ -266,6 +269,7 @@
                 android:layout_marginTop="14dp"
                 app:cardBackgroundColor="@color/exam_card_white"
                 app:cardCornerRadius="14dp"
+                android:visibility="gone"
                 app:cardElevation="0dp">
 
                 <LinearLayout
