@@ -41,9 +41,11 @@ class ImagePickingAdapter(
         private var mediaPlayer: MediaPlayer? = null
         private var currentPlayingPath: String? = null
         private val handler = Handler(Looper.getMainLooper())
+        private var currentAudioHolder: AudioViewHolder? = null
 
         // Path-based caches (survive add / remove / reorder)
-        private val audioProgress = mutableMapOf<String, Int>()
+        private val audioProgress = mutableMapOf<String, Int>()   // 0-100 percentage
+        private val audioPositionMs = mutableMapOf<String, Int>()   // actual ms for resume
         private val durationCache = mutableMapOf<String, Long>()
     }
 
@@ -103,7 +105,10 @@ class ImagePickingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, pos: Int) {
         when (holder) {
             is MediaViewHolder -> bindMedia(holder, pos)
-            is AudioViewHolder -> bindAudio(holder, pos)
+            is AudioViewHolder -> {
+                currentAudioHolder = holder
+                bindAudio(holder, pos)
+            }
         }
     }
 
@@ -114,7 +119,12 @@ class ImagePickingAdapter(
             holder.img.setImageResource(R.drawable.add_image)
             holder.imgVideo.visibility = View.GONE
             holder.del.visibility = View.GONE
-            holder.itemView.setOnClickListener { listener.onImageClick(0) }
+            holder.itemView.setOnClickListener {
+                if (mediaPlayer != null) {
+                    releaseAudio()
+                }
+                listener.onImageClick(0)
+            }
             return
         }
 
@@ -185,16 +195,12 @@ class ImagePickingAdapter(
         }
     }
 
-    /* ───────────────────── AUDIO ───────────────────── */
-
     private fun bindAudio(holder: AudioViewHolder, pos: Int) {
         val item = items[pos]
 
-        // 1. SeekBar — path-based progress, default 0 for brand-new files
         holder.seekBarAudio.max = 100
         holder.seekBarAudio.progress = audioProgress[item.path] ?: 0
 
-        // 2. Total duration (RIGHT label) — safe null handling
         val fileDuration = item.durationMs ?: 0L
         val totalDuration = when {
             fileDuration > 0 -> fileDuration
@@ -203,7 +209,6 @@ class ImagePickingAdapter(
         }
         holder.lblDuration.text = formatTime(totalDuration)
 
-        // 3. Play state (path-based)
         val isThisPlaying = (item.path == currentPlayingPath && mediaPlayer?.isPlaying == true)
         val isThisPaused = (item.path == currentPlayingPath && mediaPlayer?.isPlaying == false && mediaPlayer != null)
 
@@ -211,26 +216,21 @@ class ImagePickingAdapter(
             if (isThisPlaying) R.drawable.pause_icon else R.drawable.video_play
         )
 
-        // 4. Running time (LEFT label)
         holder.lblCurrentTime.text = when {
             (isThisPlaying || isThisPaused) && mediaPlayer != null ->
                 formatTime(mediaPlayer!!.currentPosition.toLong())
-            else -> "0:00"
+            else -> formatTime((audioPositionMs[item.path] ?: 0).toLong())
         }
 
-        // 5. Clean old runner
         (holder.itemView.tag as? Runnable)?.let { handler.removeCallbacks(it) }
         holder.itemView.tag = null
 
-        // 6. Attach runner only while actually playing
         if (isThisPlaying) {
             attachProgressRunner(holder, item)
         }
 
-        // 7. Play / Pause / Resume
         holder.imgPlayAudio.setOnClickListener { togglePlay(item) }
 
-        // 8. Seek drag
         holder.seekBarAudio.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (!fromUser) return
@@ -238,6 +238,7 @@ class ImagePickingAdapter(
                 if (item.path == currentPlayingPath && mediaPlayer != null && mediaPlayer!!.duration > 0) {
                     val ms = (progress * mediaPlayer!!.duration) / 100
                     mediaPlayer!!.seekTo(ms)
+                    audioPositionMs[item.path] = ms
                     holder.lblCurrentTime.text = formatTime(ms.toLong())
                 }
             }
@@ -245,21 +246,16 @@ class ImagePickingAdapter(
             override fun onStopTrackingTouch(sb: SeekBar?) {}
         })
 
-        // 9. Delete (live adapter position + clear caches)
         holder.imgAudioDelete.setOnClickListener {
             val currentPos = holder.bindingAdapterPosition
             if (currentPos == RecyclerView.NO_POSITION) return@setOnClickListener
 
             if (currentPlayingPath == item.path) {
-                try {
-                    mediaPlayer?.stop()
-                    mediaPlayer?.release()
-                } catch (_: Exception) {}
-                mediaPlayer = null
-                currentPlayingPath = null
+                releaseAudio()
             }
 
             audioProgress.remove(item.path)
+            audioPositionMs.remove(item.path)
             durationCache.remove(item.path)
 
             Constant.Remaining += 1
@@ -286,9 +282,23 @@ class ImagePickingAdapter(
         mediaPlayer = MediaPlayer().apply {
             setDataSource(item.path)
             prepare()
+
+            // Seek to last known position if available
+            val savedMs = audioPositionMs[item.path] ?: 0
+            val savedPct = audioProgress[item.path] ?: 0
+            val seekMs = when {
+                savedMs > 0 -> savedMs
+                savedPct > 0 && duration > 0 -> (savedPct * duration) / 100
+                else -> 0
+            }
+            if (seekMs > 0 && seekMs < duration) {
+                seekTo(seekMs)
+            }
+
             start()
             setOnCompletionListener {
                 audioProgress[item.path] = 0
+                audioPositionMs[item.path] = 0
                 currentPlayingPath = null
                 val completedPos = items.indexOfFirst { it.path == item.path }
                 if (completedPos >= 0) notifyItemChanged(completedPos)
@@ -302,6 +312,7 @@ class ImagePickingAdapter(
     private fun pauseAudio(item: FileItem) {
         mediaPlayer?.pause()
         mediaPlayer?.currentPosition?.let { ms ->
+            audioPositionMs[item.path] = ms
             if ((mediaPlayer?.duration ?: 0) > 0) {
                 audioProgress[item.path] = (ms * 100) / mediaPlayer!!.duration
             }
@@ -311,7 +322,12 @@ class ImagePickingAdapter(
     }
 
     private fun resumeAudio(item: FileItem) {
-        mediaPlayer?.start()
+        try {
+            mediaPlayer?.start()
+        } catch (e: IllegalStateException) {
+            startAudio(item)
+            return
+        }
         val pos = items.indexOfFirst { it.path == item.path }
         if (pos >= 0) notifyItemChanged(pos)
     }
@@ -321,8 +337,7 @@ class ImagePickingAdapter(
         try {
             mediaPlayer?.stop()
             mediaPlayer?.release()
-        } catch (_: Exception) {
-        }
+        } catch (_: Exception) { }
         mediaPlayer = null
         currentPlayingPath = null
         prevPath?.let { path ->
@@ -340,6 +355,7 @@ class ImagePickingAdapter(
                         val pct = (mp.currentPosition * 100) / mp.duration
                         holder.seekBarAudio.progress = pct
                         audioProgress[item.path] = pct
+                        audioPositionMs[item.path] = mp.currentPosition
                         holder.lblCurrentTime.text = formatTime(mp.currentPosition.toLong())
                         handler.postDelayed(this, 500)
                     }
@@ -349,8 +365,6 @@ class ImagePickingAdapter(
         holder.itemView.tag = runnable
         handler.post(runnable)
     }
-
-    /* ───────────────────── HELPERS ───────────────────── */
 
     private fun extractDuration(path: String): Long {
         return try {
@@ -414,11 +428,8 @@ class ImagePickingAdapter(
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
         if (holder is AudioViewHolder) {
-            // Stop runner
             (holder.itemView.tag as? Runnable)?.let { handler.removeCallbacks(it) }
             holder.itemView.tag = null
-
-            // RESET visual state so recycled view doesn't show old data
             holder.seekBarAudio.progress = 0
             holder.lblCurrentTime.text = "0:00"
             holder.lblDuration.text = "0:00"
@@ -428,209 +439,3 @@ class ImagePickingAdapter(
 
     override fun getItemCount() = items.size
 }
-
-
-
-
-
-
-
-//package com.vs.schoolmessenger.CommonScreens
-//
-//import android.content.ActivityNotFoundException
-//import android.content.Context
-//import android.content.Intent
-//import android.content.pm.PackageManager
-//import android.net.Uri
-//import android.util.Log
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.View.GONE
-//import android.view.View.VISIBLE
-//import android.view.ViewGroup
-//import android.webkit.MimeTypeMap
-//import android.widget.ImageView
-//import android.widget.TextView
-//import android.widget.Toast
-//import androidx.core.content.FileProvider
-//import androidx.recyclerview.widget.RecyclerView
-//import com.bumptech.glide.Glide
-//import com.bumptech.glide.request.RequestOptions
-//import com.vs.schoolmessenger.R
-//import com.vs.schoolmessenger.Utils.Constant
-//import com.vs.schoolmessenger.Utils.FileItem
-//import com.vs.schoolmessenger.Utils.FileType
-//import java.io.File
-//
-//class ImagePickingAdapter(
-//    private val context: Context,
-//    private val items: MutableList<FileItem>,
-//    private val listener: OnImageClickListener
-//) : RecyclerView.Adapter<ImagePickingAdapter.FileViewHolder>() {
-//    private val defaultStartEndMargin: Int = context.resources.getDimensionPixelSize(R.dimen.twenty)
-//    private val defaultTopMargin: Int = context.resources.getDimensionPixelSize(R.dimen.ten)
-//
-//    class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-//        val img: ImageView = v.findViewById(R.id.imgPicking)
-//        val del: ImageView = v.findViewById(R.id.imgDelete)
-//        val delete: ImageView = v.findViewById(R.id.imgaudiodelete)
-//        val imgVideoPlay: ImageView = v.findViewById(R.id.imgVideoPlay)
-//        val imgVideo: ImageView = v.findViewById(R.id.imgVideo)
-//        val lblTime: TextView = v.findViewById(R.id.lblTime)
-//
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
-//        val view = LayoutInflater.from(parent.context)
-//            .inflate(R.layout.image_picking_item, parent, false)
-//        return FileViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: FileViewHolder, pos: Int) {
-//        val item = items[pos]
-//        Log.d("isFileType", item.type.toString())
-//        Log.d("isFilePath", item.path.toString())
-//
-//        // Layout margins
-//        val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
-//
-//        layoutParams.marginStart = defaultStartEndMargin
-//        layoutParams.marginEnd = defaultStartEndMargin
-//        layoutParams.topMargin = defaultTopMargin
-//
-//        holder.itemView.layoutParams = layoutParams
-//
-//        val filePath = item.path
-//        val fileUri = when {
-//            filePath.startsWith("content://") || filePath.startsWith("file://") -> Uri.parse(
-//                filePath
-//            )
-//
-//            filePath.startsWith("http://") || filePath.startsWith("https://") -> filePath
-//            else -> File(filePath)
-//        }
-//
-//        val placeholderRes = when (item.type) {
-//            FileType.PDF -> R.drawable.pdf_icon
-//            FileType.DOC, FileType.DOCX -> R.drawable.doc_icon
-//            FileType.PPT -> R.drawable.ppt_icon
-//            FileType.EXCEL -> R.drawable.excel_icon
-//            FileType.TXT -> R.drawable.txt_icon
-//            FileType.IMAGE -> R.drawable.image_placeholder
-//            FileType.VIDEO -> R.drawable.black
-//            FileType.AUDIO -> R.drawable.voice
-//            else -> R.drawable.address_icon
-//        }
-//
-//        Glide.with(context)
-//            .load(fileUri)
-//            .placeholder(placeholderRes)
-//            .apply(RequestOptions().dontTransform())
-//            .error(placeholderRes)
-//            .into(holder.img)
-//
-//
-//        holder.del.visibility = if (pos == 0) GONE else VISIBLE
-//        holder.del.setOnClickListener {
-//            Log.d("isPosition", pos.toString())
-//            Constant.Remaining = Constant.Remaining + 1
-//            items.removeAt(pos)
-//            notifyItemRemoved(pos)
-//            notifyItemRangeChanged(pos, items.size)
-//        }
-//
-//        if (item.type.toString() == Constant.VIDEO) {
-//            holder.imgVideo.visibility = VISIBLE
-//        } else {
-//            holder.imgVideo.visibility = GONE
-//        }
-//        holder.itemView.setOnClickListener {
-//            if (pos != 0) {
-//                if (!item.path.contains("amazonaws.")) {
-//                    if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
-//                        val filteredFiles = Constant.selectedFiles.filter {
-//                            it.type.toString() == Constant.IMAGE || it.type.toString() == Constant.VIDEO
-//                        }
-//                        Constant.commonFileList = filteredFiles.map {
-//                            CommonFileData(
-//                                type = it.type.toString(),
-//                                path = it.path
-//                            )
-//                        }
-//                            .toMutableList()
-//                        val clickedPath = item.path
-//                        val indexInFiltered = filteredFiles.indexOfFirst { it.path == clickedPath }
-//                            .let { if (it >= 0) it else 0 }
-//                        Constant.selectedFileIndex = indexInFiltered - 1
-//                        val intent = Intent(context, FilesViewActivity::class.java)
-//                        intent.putExtra(Constant.subjectName, "Your Files")
-//                        context.startActivity(intent)
-//                    } else {
-//
-//
-//                        Log.d("item.path", filePath)
-//
-//                        // 1️⃣ Create URI safely
-//                        val uri: Uri = if (filePath.startsWith("content://")) {
-//                            Uri.parse(filePath)
-//                        } else {
-//                            FileProvider.getUriForFile(
-//                                context,
-//                                "${context.packageName}.fileprovider",
-//                                File(filePath)
-//                            )
-//                        }
-//
-//                        // 2️⃣ Get MIME type (with fallback)
-//                        val mimeType = getMimeType(context, uri) ?: "*/*"
-//                        Log.d("FILE_DEBUG", "uri=$uri mime=$mimeType")
-//
-//                        // 3️⃣ Create intent
-//                        val intent = Intent(Intent.ACTION_VIEW).apply {
-//                            setDataAndType(uri, mimeType)
-//                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        }
-//
-//                        // 4️⃣ Open chooser safely
-//                        try {
-//                            context.startActivity(Intent.createChooser(intent, "Open with"))
-//                        } catch (e: ActivityNotFoundException) {
-//                            Toast.makeText(
-//                                context,
-//                                "Please install an app to view this file",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                    }
-//                } else {
-//                    Constant.commonFileList = Constant.selectedFiles.map {
-//                        CommonFileData(type = it.type.toString(), path = it.path)
-//                    }.toMutableList()
-//                    Constant.selectedFileIndex = pos - 1
-//                    val intent = Intent(context, FilesViewActivity::class.java)
-//                    intent.putExtra(Constant.subjectName, "Your Files")
-//                    context.startActivity(intent)
-//                }
-//            } else {
-//                listener.onImageClick(pos)
-//            }
-//        }
-//    }
-//
-//    private fun getMimeType(context: Context, uri: Uri): String? {
-//        var mimeType: String? = context.contentResolver.getType(uri)
-//
-//        if (mimeType == null) {
-//            val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
-//            if (!extension.isNullOrEmpty()) {
-//                mimeType = MimeTypeMap.getSingleton()
-//                    .getMimeTypeFromExtension(extension.lowercase())
-//            }
-//        }
-//        return mimeType
-//    }
-//
-//    override fun getItemCount() = items.size
-//}
-//
