@@ -1,44 +1,44 @@
-package com.vs.schoolmessenger.School.ExamReview.Activity
+package com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamselection
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.widget.Toast
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamAnalysis.ParentExamAnalysisActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.ExamReview.Adapter.AnalysisSetAdapter
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamAnalysisActivity
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.SelectExamReveiwBinding
+import com.vs.schoolmessenger.databinding.ParentSelectExamReviewBinding
 
-class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClickListener {
+class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), View.OnClickListener {
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
-    private var isStaffDetails: StaffDetails? = null
     private var userDetails: UserDetails? = null
 
-    private lateinit var examAdapter: AnalysisSetAdapter
+    private lateinit var examAdapter: ParentAnalysisSetAdapter
     private var currentSets: List<AnalysisSet> = emptyList()
 
-    override fun getViewBinding(): SelectExamReveiwBinding =
-        SelectExamReveiwBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ParentSelectExamReviewBinding =
+        ParentSelectExamReviewBinding.inflate(layoutInflater)
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarPrimarySchool(
+        isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
 
         userDetails = SharedPreference.getUserDetails(this)
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails?.access_token
+
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -47,44 +47,43 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Class Test Analysis"
+        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
 
-        bindSelectedStudent()
+//        bindSelectedStudent()
         setupExamList()
         observeAnalysisSets()
         fetchAnalysisSets()
     }
 
-    private fun bindSelectedStudent() {
-        val student = Constant.isSelectedStudent
-        val studentName = student?.name?.takeIf { it.isNotBlank() } ?: "-"
-        val standardName = Constant.isSelectedStandardName
-        val sectionName = Constant.isSelectedSections.firstOrNull()?.sectionName
-
-        binding.lblStudentNameValue.text = studentName
-        binding.lblStudentAvatarLetter.text =
-            studentName.filter { it.isLetter() }.take(2).ifBlank { "--" }.uppercase()
-
-        val classSection = if (!standardName.isNullOrBlank() && !sectionName.isNullOrBlank()) {
-            "Class $standardName - Section $sectionName"
-        } else {
-            "-"
-        }
-        binding.lblStudentDetail.text = classSection
-    }
+//    private fun bindSelectedStudent() {
+//        val student = Constant.isSelectedStudent
+//        val studentName = student?.name?.takeIf { it.isNotBlank() } ?: "-"
+//        val standardName = Constant.isSelectedStandardName
+//        val sectionName = Constant.isSelectedSections.firstOrNull()?.sectionName
+//
+//        binding.lblStudentNameValue.text = studentName
+//        binding.lblStudentAvatarLetter.text =
+//            studentName.filter { it.isLetter() }.take(2).ifBlank { "--" }.uppercase()
+//
+//        val classSection = if (!standardName.isNullOrBlank() && !sectionName.isNullOrBlank()) {
+//            "Class $standardName - Section $sectionName"
+//        } else {
+//            "-"
+//        }
+//        binding.lblStudentDetail.text = classSection
+//    }
 
     private fun setupExamList() {
-        // No "select all" for a single-choice list
         binding.btnSelectAll.visibility = View.GONE
 
-        examAdapter = AnalysisSetAdapter(
+        examAdapter = ParentAnalysisSetAdapter(
             itemList = emptyList()
         ) { selectedSet ->
             updateSelectionState(selectedSet)
         }
 
         binding.rcExamList.apply {
-            layoutManager = LinearLayoutManager(this@SelectExamActivity)
+            layoutManager = LinearLayoutManager(this@ParentSelectExamActivity)
             adapter = examAdapter
         }
 
@@ -92,15 +91,12 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
     }
 
     private fun fetchAnalysisSets() {
-        val classId = Constant.isSelectedStandardId
-        val sectionId = Constant.isSelectedSections.firstOrNull()?.sectionId
-
-        if (isAccessToken.isNullOrEmpty() || classId.isNullOrEmpty() || sectionId.isNullOrEmpty()) {
-            showNoExamData("Missing class/section details")
+        val token = isAccessToken
+        if (token.isNullOrEmpty()) {
+            showNoExamData("Missing student access details")
             return
         }
-
-        appViewModel!!.isExamtestAnalysisSets(isAccessToken!!, classId, sectionId, this)
+        appViewModel!!.isExamtestAnalysisSets(token, "", "", this)
     }
 
     private fun observeAnalysisSets() {
@@ -131,7 +127,6 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         examAdapter.updateList(emptyList())
         updateSelectionState(null)
     }
-
     private fun updateSelectionState(selected: AnalysisSet?) {
         binding.lblSelectionCount.text = selected?.setName?.let { "Selected: $it" }
             ?: "No exam set selected"
@@ -148,7 +143,7 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
             binding.btnViewAnalysis.id -> {
                 val selectedSet = examAdapter.getSelectedItem() ?: return
                 Constant.isSelectedAnalysisSetId = selectedSet.id
-                startActivity(Intent(this, ExamAnalysisActivity::class.java))
+                startActivity(Intent(this, ParentExamAnalysisActivity::class.java))
             }
         }
     }

@@ -73,6 +73,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuCountDetail
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
@@ -319,7 +320,8 @@ object Constant {
     var isParentMenuCountDetails: ArrayList<MenuCountDetail>? = null
     var FrequentParentlyUsedMenuItems: List<MenuDetail>? = null
     var isParentAdItem: List<AdItem>? = null
-
+    var isSelectedStudent: NameAndIds? = null
+    var isSelectedAnalysisSetId: String? = null
     var isSchoolContactDetails: ContactDetails? = null
     var isSchoolMenuDetails: List<MenuDetail>? = null
     var isSchoolMenuCountDetails: ArrayList<MenuCountDetail>? = null

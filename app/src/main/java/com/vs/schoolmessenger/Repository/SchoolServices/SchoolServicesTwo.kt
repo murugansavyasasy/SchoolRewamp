@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestRespo
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
+import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
+import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisResponse
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
 import com.vs.schoolmessenger.School.Hostel.Model.AttendanceHistory.getSchoolHostelAttendanceReport
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelAttendanceSessionType.getHostelAttendanceSession
@@ -56,6 +58,8 @@ class SchoolServicesTwo {
     var isputClassTestDelete: MutableLiveData<DeleteClassTestResponse?>
     var isexamDetailsMark: MutableLiveData<ClassEntryMarkResponse?>
     var isexamdetailsmarkpost: MutableLiveData<UploadMarksClassEntryResponse?>
+    var isExamtestAnalysis: MutableLiveData<StudentAnalysisResponse?>
+    var isExamtestAnalysisSets: MutableLiveData<AnalysisSetsResponse?>
 
 
     init {
@@ -81,6 +85,8 @@ class SchoolServicesTwo {
         isputClassTestDelete = MutableLiveData()
         isexamDetailsMark = MutableLiveData()
         isexamdetailsmarkpost = MutableLiveData()
+        isExamtestAnalysis = MutableLiveData()
+        isExamtestAnalysisSets = MutableLiveData()
 
     }
 
@@ -733,5 +739,69 @@ class SchoolServicesTwo {
 
     val isexamdetailsmarkpostLiveData: LiveData<UploadMarksClassEntryResponse?>
         get() = isexamdetailsmarkpost
+
+
+
+    fun isExamtestAnalysis(
+        isToken: String,student_id: String,analysis_set_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isExamtestAnalysis(isToken,student_id,analysis_set_id)
+            ?.enqueue(object : Callback<StudentAnalysisResponse?> {
+                override fun onResponse(
+                    call: Call<StudentAnalysisResponse?>, response: Response<StudentAnalysisResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isExamtestAnalysis.postValue(response.body())
+                        }
+                    } else {
+                        isExamtestAnalysis.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StudentAnalysisResponse?>, t: Throwable) {
+                    isExamtestAnalysis.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isExamtestAnalysisLiveData: LiveData<StudentAnalysisResponse?>
+        get() = isExamtestAnalysis
+
+
+
+    fun isExamtestAnalysisSets(
+        isToken: String,class_id: String,section_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isExamtestAnalysisSets(isToken,class_id,section_id)
+            ?.enqueue(object : Callback<AnalysisSetsResponse?> {
+                override fun onResponse(
+                    call: Call<AnalysisSetsResponse?>, response: Response<AnalysisSetsResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isExamtestAnalysisSets.postValue(response.body())
+                        }
+                    } else {
+                        isExamtestAnalysisSets.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<AnalysisSetsResponse?>, t: Throwable) {
+                    isExamtestAnalysisSets.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isExamtestAnalysisSetsLiveData: LiveData<AnalysisSetsResponse?>
+        get() = isExamtestAnalysisSets
 
 }

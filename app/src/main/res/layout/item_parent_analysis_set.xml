@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardSet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/twele"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/sixteen"
+    app:cardElevation="@dimen/two"
+    app:strokeWidth="0dp"
+    app:strokeColor="@color/PrimaryColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/fourteen">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/cbSet"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:button="@drawable/checked_box1"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/lblSelectedPill"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_pill_primary_light"
+                android:paddingHorizontal="@dimen/twele"
+                android:paddingVertical="@dimen/four"
+                android:text="Selected"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/twele_sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lblSetName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fourteen"
+                android:layout_toStartOf="@id/lblSelectedPill"
+                android:layout_toEndOf="@id/cbSet"
+                android:text="KG-AllTESTs"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcExamChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twele"
+            android:clipToPadding="false"
+            android:paddingStart="0dp"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

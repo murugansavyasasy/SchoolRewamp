@@ -240,7 +240,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                                         originalMenuList.add(
                         MenuDetail(
                             id = 222,
-                            name = "Exam Review",
+                            name = "Class Test Analysis",
                             description = "Student exam review and marks"
                         )
                     )

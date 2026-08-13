@@ -119,6 +119,8 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseAc
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
+import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
+import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -505,6 +507,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isexamDetailsMark: LiveData<ClassEntryMarkResponse?>? = null
     var isexamdetailsmarkpost: LiveData<UploadMarksClassEntryResponse?>? = null
     var getisInvoiceDetails: LiveData<InvoiceDetailsResponse?>? = null
+    var isExamtestAnalysis: LiveData<StudentAnalysisResponse?>? = null
+    var isExamtestAnalysisSets: LiveData<AnalysisSetsResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -721,6 +725,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isputClassTestDelete = apiSchoolRepositoriesTwo.isputClassTestDeleteLiveData
         isexamDetailsMark = apiSchoolRepositoriesTwo.isexamDetailsMarkLiveData
         isexamdetailsmarkpost = apiSchoolRepositoriesTwo.isexamdetailsmarkpostLiveData
+        isExamtestAnalysis = apiSchoolRepositoriesTwo.isExamtestAnalysisLiveData
+        isExamtestAnalysisSets = apiSchoolRepositoriesTwo.isExamtestAnalysisSetsLiveData
     }
 
     fun isDashBoardData(
@@ -2355,6 +2361,25 @@ class App(application: Application) : AndroidViewModel(application) {
         val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isexamdetailsmarkpost(isToken, jsonObject)
+    }
+
+
+    fun isExamtestAnalysis(
+        isToken: String,
+        class_test_id: String,analysis_set_id: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isExamtestAnalysis(isToken, class_test_id,analysis_set_id,activity)
+    }
+
+    fun isExamtestAnalysisSets(
+        isToken: String,
+        class_id: String,section_id: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isExamtestAnalysisSets(isToken, class_id,section_id,activity)
     }
 }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lblChip"
+    style="@style/CustomTextStylePoppinsMedium"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/eight"
+    android:background="@drawable/bg_pill_grey"
+    android:paddingHorizontal="@dimen/twele"
+    android:paddingVertical="@dimen/six"
+    android:text="1. Mid Term Test"
+    android:textColor="@color/black"
+    android:textSize="@dimen/twele_sp" />
