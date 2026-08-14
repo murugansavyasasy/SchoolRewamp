@@ -322,7 +322,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             override fun afterTextChanged(s: android.text.Editable?) {
                 if (!s.isNullOrBlank()) {
                     binding.etExamName.background = ContextCompat.getDrawable(
-                        this@ClassActivity, R.drawable.input_field_bg
+                        this@ClassActivity, android.R.drawable.ic_lock_idle_lock
                     )
                 }
             }

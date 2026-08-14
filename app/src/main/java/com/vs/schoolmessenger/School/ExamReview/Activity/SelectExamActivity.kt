@@ -47,7 +47,7 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text =  Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
+        binding.toolbarLayout.lblParentToolBar.text =  "Class Test Analysis"
 
 
         bindSelectedStudent()

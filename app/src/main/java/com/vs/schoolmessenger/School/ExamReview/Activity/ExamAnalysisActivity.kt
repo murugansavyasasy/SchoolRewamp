@@ -152,7 +152,7 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text =  Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
+        binding.toolbarLayout.lblParentToolBar.text =  "Class Test Analysis"
 
         observeAnalysis()
         fetchAnalysis()

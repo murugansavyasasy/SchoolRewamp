@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamsele
 
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -10,8 +9,6 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamAnalysis.ParentExamAnalysisActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.ExamReview.Activity.ExamAnalysisActivity
-import com.vs.schoolmessenger.School.ExamReview.Adapter.AnalysisSetAdapter
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -48,8 +45,7 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text =
-            Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
+        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
 
 //        bindSelectedStudent()
         setupExamList()
@@ -118,11 +114,13 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
     private fun showExamList() {
         binding.rcExamList.visibility = View.VISIBLE
         binding.lytNoExamData.visibility = View.GONE
+        binding.lytSelectExamsHeader.visibility = View.VISIBLE
     }
 
     private fun showNoExamData(message: String?) {
         binding.rcExamList.visibility = View.GONE
         binding.lytNoExamData.visibility = View.VISIBLE
+        binding.lytSelectExamsHeader.visibility = View.GONE
         if (!message.isNullOrBlank()) {
             binding.lblNoExamDataSubtitle.text = message
         }

@@ -154,8 +154,7 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.tvClose.setOnClickListener(this)
 
-        binding.toolbarLayout.lblStudentName.text =
-            Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
+        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
 
 
 
