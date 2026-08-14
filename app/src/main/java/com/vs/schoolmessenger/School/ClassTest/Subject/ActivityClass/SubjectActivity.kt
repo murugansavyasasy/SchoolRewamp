@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Standard.StandardAdapter
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SectionDataDetail
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -58,6 +59,7 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
         sectionIds = intent.getStringExtra("SECTION_IDS") ?: ""
         binding.imgBack.setOnClickListener(this)
         binding.viewreporttext.setOnClickListener(this)
+        binding.viewmarkanalysis.setOnClickListener(this)
         setupStepIndicator()
         setupViewModel()
         setupContinueButton()
@@ -169,10 +171,17 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
         startActivity(intent)
     }
 
+    private fun RedirectToAnalysis() {
+        val intent = Intent(this, ExamStandardActivity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressedDispatcher.onBackPressed()
             R.id.viewreporttext-> RedirectToReport()
+            R.id.viewmarkanalysis-> RedirectToAnalysis()
         }
     }
 }

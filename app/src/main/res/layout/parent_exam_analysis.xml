@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/exam_card_white"
                 app:cardCornerRadius="14dp"
+                android:visibility="gone"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -97,6 +98,55 @@
             </androidx.cardview.widget.CardView>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/cardExamsTaken"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/cardAverageScore"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/cardBestExam"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/cardLowestExam"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+
             <!-- ===== Subject-wise bar chart ===== -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -127,7 +177,7 @@
                         android:layout_marginTop="2dp"
                         android:textColor="@color/exam_text_secondary"
                         android:textSize="12sp"
-                        tools:text="" />
+                        tools:text="(DRT - 1, DRT - 2, DRT - 3, DRT - 4, DRT - 5)" />
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/barChartSubjects"
@@ -135,14 +185,14 @@
                         android:layout_height="260dp"
                         android:layout_marginTop="10dp" />
 
-                    <com.google.android.material.chip.ChipGroup
+                    <com.google.android.flexbox.FlexboxLayout
                         android:id="@+id/llLegend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        app:singleLine="false"
-                        app:chipSpacingHorizontal="14dp"
-                        app:chipSpacingVertical="6dp" />
+                        app:flexWrap="wrap"
+                        app:justifyContent="center"
+                        app:alignItems="center" />
 
                 </LinearLayout>
 

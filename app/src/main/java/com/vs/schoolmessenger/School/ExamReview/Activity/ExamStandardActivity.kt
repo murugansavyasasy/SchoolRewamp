@@ -217,7 +217,7 @@ class ExamStandardActivity : BaseActivity<ExamStandardSelectBinding>(), View.OnC
     private fun onStandardSectionSelected(item: StandardSection) {
         selectedStandardSection = item
         binding.txtSelectedStandardSection.text =
-            "Class ${item.standardName} - Section ${item.sectionName}"
+            "${item.standardName} - ${item.sectionName}"
 
         Constant.isSelectedStandardId = item.standardId ?: ""
         Constant.isSelectedStandardName = item.standardName ?: ""

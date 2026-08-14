@@ -34,7 +34,7 @@ class ExamStandardSectionDropdownAdapter(
         private val imgCheck: ImageView = itemView.findViewById(R.id.imgPickerCheck)
 
         fun bind(item: StandardSection) {
-            lblTitle.text = "Class ${item.standardName} - Section ${item.sectionName}"
+            lblTitle.text = "${item.standardName} - ${item.sectionName}"
             imgCheck.visibility =
                 if (item.sectionId == selectedSectionId) View.VISIBLE else View.GONE
             itemView.setOnClickListener { onItemClick(item) }

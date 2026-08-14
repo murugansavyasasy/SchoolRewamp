@@ -15,8 +15,10 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Parent.ClassTestMark.Adapter.ClassTestAdapter
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestData
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
+import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamselection.ParentSelectExamActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ClasstestViewmarkBinding
@@ -84,6 +86,12 @@ class ClassTest : BaseActivity<ClasstestViewmarkBinding>() {
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.lytAddButton.setOnClickListener {
+            val intent = Intent(this, ParentSelectExamActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             if (binding.toolbarLayout.rytSearch.visibility == View.VISIBLE) {

@@ -47,7 +47,8 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Class Test Analysis"
+        binding.toolbarLayout.lblParentToolBar.text =  Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
+
 
         bindSelectedStudent()
         setupExamList()
@@ -56,21 +57,21 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
     }
 
     private fun bindSelectedStudent() {
-        val student = Constant.isSelectedStudent
-        val studentName = student?.name?.takeIf { it.isNotBlank() } ?: "-"
+        val studentName = Constant.isSelectedStudent?.name?.takeIf { it.isNotBlank() } ?: "Student"
         val standardName = Constant.isSelectedStandardName
         val sectionName = Constant.isSelectedSections.firstOrNull()?.sectionName
-
         binding.lblStudentNameValue.text = studentName
         binding.lblStudentAvatarLetter.text =
             studentName.filter { it.isLetter() }.take(2).ifBlank { "--" }.uppercase()
 
         val classSection = if (!standardName.isNullOrBlank() && !sectionName.isNullOrBlank()) {
-            "Class $standardName - Section $sectionName"
+            "$standardName - $sectionName"
         } else {
             "-"
         }
         binding.lblStudentDetail.text = classSection
+        binding.lblrollno.text ="Roll No : " + Constant.isSelectedStudent?.roll_no
+        binding.lbladminno.text = "Admin No : " + Constant.isSelectedStudent?.admission_no
     }
 
     private fun setupExamList() {
@@ -134,7 +135,7 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
 
     private fun updateSelectionState(selected: AnalysisSet?) {
         binding.lblSelectionCount.text = selected?.setName?.let { "Selected: $it" }
-            ?: "No exam set selected"
+            ?: "No test set selected"
         binding.btnViewAnalysis.isEnabled = selected != null
         binding.btnViewAnalysis.alpha = if (selected != null) 1f else 0.5f
     }

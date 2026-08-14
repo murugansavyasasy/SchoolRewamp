@@ -1,15 +1,18 @@
 package com.vs.schoolmessenger.School.ExamReview.ApiResponseModel
 
-data class MarkExamAnaysis (
-    val exam_name: String,
-    val obtained_mark: String,
-    val max_mark: String,
-    val attendance: String,
-    val remarks: String,
-    val activity_name: String,
-    val exam_date: String,
-    val session: String,
-    val min_mark: String,
-    val syllabus: String,
-    val is_publish: String
+import com.google.gson.annotations.SerializedName
+
+data class MarkExamAnaysis(
+    @SerializedName("id") val id: String = "",
+    @SerializedName("exam_name") val exam_name: String = "",
+    @SerializedName("obtained_mark") val obtained_mark: String = "",
+    @SerializedName("max_mark") val max_mark: String = "",
+    @SerializedName("attendance") val attendance: String = "",
+    @SerializedName("remarks") val remarks: String = "",
+    @SerializedName("activity_name") val activity_name: String = "",
+    @SerializedName("exam_date") val exam_date: String = "",
+    @SerializedName("session") val session: String = "",
+    @SerializedName("min_mark") val min_mark: String = "",
+    @SerializedName("syllabus") val syllabus: String = "",
+    @SerializedName("is_publish") val is_publish: String = ""
 )

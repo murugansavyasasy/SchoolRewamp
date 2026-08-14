@@ -176,7 +176,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Exams"
+                android:text="Select Test"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/twenty_sp" />
 
@@ -185,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/two"
-                android:text="Pick one exam series to include in the analysis."
+                android:text="Pick one test series to include in the analysis."
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -257,11 +257,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/four"
                 android:gravity="center"
-                android:text="No exam sets are available for your child yet."
+                android:text="No exam sets are available for this student yet."
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/lytBottomBar"
             android:layout_width="0dp"
@@ -295,6 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:text="0 exams selected"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp" />

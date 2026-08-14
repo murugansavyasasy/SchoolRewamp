@@ -31,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/rlaStudentName"
                 android:layout_toEndOf="@+id/imgBack"
-                android:text="andsndllnlkn"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone">

@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.School.ClassTest.Class.Models.SelectedSubject
 import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Review.ReviewActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ClassActivityBinding
 
@@ -62,6 +63,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
         setupContinueButton()
 //        setupKeyboardScrollBehavior()
         binding.viewreporttext.setOnClickListener(this)
+        binding.viewmarkanalysis.setOnClickListener(this)
         onBackPressedDispatcher.addCallback(this, backPressCallback)
         binding.imgBack.setOnClickListener { handleExitAttempt() }
 
@@ -338,11 +340,17 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
         startActivity(intent)
     }
 
+    private fun RedirectToAnalysis() {
+        val intent = Intent(this, ExamStandardActivity::class.java)
+        startActivity(intent)
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
             R.id.viewreporttext-> RedirectToReport()
+            R.id.viewmarkanalysis-> RedirectToAnalysis()
         }
     }
 }

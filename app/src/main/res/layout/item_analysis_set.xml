@@ -61,14 +61,14 @@
 
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcExamChips"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupExams"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twele"
-            android:clipToPadding="false"
-            android:paddingStart="0dp"
-            android:overScrollMode="never" />
+            app:singleLine="false"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="6dp" />
 
     </LinearLayout>
 

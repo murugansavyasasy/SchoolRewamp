@@ -78,19 +78,6 @@
                 android:ellipsize="end"
                 android:textSize="@dimen/twenty_four_sp" />
 
-            <TextView
-                android:id="@+id/viewreporttext"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/eight"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="View created test >>"
-                android:textColor="@color/white"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:textSize="@dimen/fourteen_sp" />
 
         </LinearLayout>
 
@@ -113,6 +100,44 @@
             android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
+
+        <LinearLayout
+            android:id="@+id/linear_viewmarkanalysis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/eight">
+
+            <TextView
+                android:id="@+id/viewmarkanalysis"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/eight"
+                android:text="View Mark Analysis >"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:id="@+id/viewreporttext"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="View created test >"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lytContent"

@@ -74,91 +74,118 @@
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardStudentSummary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/twele"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/sixteen"
-        app:cardElevation="@dimen/two"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lytBreadcrumb">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStudentSummary"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/fourteen">
+            android:layout_marginTop="@dimen/twele"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/sixteen"
+            app:cardElevation="@dimen/two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lytBreadcrumb">
 
-            <View
-                android:id="@+id/viewStudentAvatar"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_circle_2" />
-
-            <TextView
-                android:id="@+id/lblStudentAvatarLetter"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
-                android:layout_alignStart="@id/viewStudentAvatar"
-                android:layout_alignTop="@id/viewStudentAvatar"
-                android:gravity="center"
-                android:text="JE"
-                android:textColor="@color/white"
-                android:textSize="@dimen/fourteen_sp" />
-
-            <TextView
-                android:id="@+id/btnChangeStudent"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/bg_pill_grey"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="@dimen/sixteen"
-                android:paddingVertical="@dimen/six"
-                android:text="Change"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                android:padding="@dimen/fourteen">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/twele"
-                android:layout_toStartOf="@id/btnChangeStudent"
-                android:layout_toEndOf="@id/viewStudentAvatar"
-                android:orientation="vertical">
+                <FrameLayout
+                    android:id="@+id/frameStudentAvatar"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_centerVertical="true">
+
+                    <View
+                        android:id="@+id/viewStudentAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/circle_bg_primary" />
+
+                    <TextView
+                        android:id="@+id/lblStudentAvatarLetter"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="JE"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                </FrameLayout>
 
                 <TextView
-                    android:id="@+id/lblStudentNameValue"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JEEVA"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp" />
-
-                <TextView
-                    android:id="@+id/lblStudentDetail"
+                    android:id="@+id/btnChangeStudent"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/two"
-                    android:text="Roll No: -- \u00B7 Class 6 - Section A"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/twele_sp" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_pill_grey"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/sixteen"
+                    android:paddingVertical="@dimen/six"
+                    android:text="Change"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/twele"
+                    android:layout_toStartOf="@id/btnChangeStudent"
+                    android:layout_toEndOf="@id/frameStudentAvatar"
+                    android:orientation="vertical">
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/lblStudentNameValue"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
 
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/lblStudentDetail"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/two"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        android:id="@+id/lblrollno"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/two"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <TextView
+                        android:id="@+id/lbladminno"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/two"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/twele_sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/lytSelectExamsHeader"
@@ -175,7 +202,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Exams"
+            android:text="Select Test"
             android:textColor="@color/PrimaryColor"
             android:textSize="@dimen/twenty_sp" />
 
@@ -184,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/two"
-            android:text="Pick one exam series to include in the analysis."
+            android:text="Pick one test series to include in the analysis."
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -295,6 +322,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="invisible"
             android:text="0 exams selected"
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp" />

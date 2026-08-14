@@ -359,7 +359,8 @@
     <color name="exam_teal_green">#10B981</color>
     <color name="exam_red">#EF4444</color>
     <color name="exam_purple">#8B5CF6</color>
-
+    <color name="exam_positive_green">#16A34A</color>
+    <color name="exam_negative_red">#DC2626</color>
     <!-- Line chart -->
     <color name="exam_line_navy">#1E3A5F</color>
     <color name="exam_max_line_red">#F87171</color>

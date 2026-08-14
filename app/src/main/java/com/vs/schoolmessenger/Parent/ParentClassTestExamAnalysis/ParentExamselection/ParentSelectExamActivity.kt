@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamAnaly
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamReview.Activity.ExamAnalysisActivity
+import com.vs.schoolmessenger.School.ExamReview.Adapter.AnalysisSetAdapter
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSet
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -47,7 +48,8 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
+        binding.toolbarLayout.lblStudentName.text =
+            Constant.isSelectedMenuName.ifBlank { "Class Test Analysis" }
 
 //        bindSelectedStudent()
         setupExamList()
@@ -74,6 +76,7 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
 //    }
 
     private fun setupExamList() {
+        // No "select all" for a single-choice list
         binding.btnSelectAll.visibility = View.GONE
 
         examAdapter = ParentAnalysisSetAdapter(
@@ -129,7 +132,7 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
     }
     private fun updateSelectionState(selected: AnalysisSet?) {
         binding.lblSelectionCount.text = selected?.setName?.let { "Selected: $it" }
-            ?: "No exam set selected"
+            ?: "No test set selected"
         binding.btnViewAnalysis.isEnabled = selected != null
         binding.btnViewAnalysis.alpha = if (selected != null) 1f else 0.5f
     }
