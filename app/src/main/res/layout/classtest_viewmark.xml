@@ -87,5 +87,41 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/lytAddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/imgAddButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="14dp"
+                android:background="@drawable/bg_fab_circle"
+                android:elevation="6dp"
+                android:src="@drawable/classanalysisreviewprofile"
+                android:contentDescription="Add" />
+
+            <TextView
+                android:id="@+id/tvAddButtonLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Mark Analysis"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                style="@style/CustomTextStylePoppinsBold" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

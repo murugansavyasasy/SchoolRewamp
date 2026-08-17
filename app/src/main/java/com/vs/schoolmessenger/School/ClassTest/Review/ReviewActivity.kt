@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.Standard.StandardActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
@@ -75,6 +76,7 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
         loadReviewData()
         setupButtons()
         binding.viewreporttext.setOnClickListener(this)
+        binding.viewmarkanalysis.setOnClickListener(this)
         binding.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         appViewModel!!.isCreateClasstest?.observe(this) { response ->
@@ -290,9 +292,17 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
         startActivity(intent)
     }
 
+    private fun RedirectToAnalysis() {
+        val intent = Intent(this, ExamStandardActivity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.viewreporttext-> RedirectToReport()
+            R.id.viewmarkanalysis-> RedirectToAnalysis()
+
         }
     }
 }

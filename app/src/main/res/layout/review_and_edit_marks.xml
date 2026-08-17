@@ -98,6 +98,21 @@
                 android:padding="4dp"
                 android:src="@drawable/filter_icon" />
 
+            <TextView
+                android:id="@+id/lblNAABNo"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblReviewDetail"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:textAlignment="viewStart"
+                android:text="@string/verify_the_data_and_make_any_necessary_corrections"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
 
             <TextView
                 android:id="@+id/lblSampleDesc"
@@ -144,12 +159,26 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/lblNAABNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblDisclaimerForAI"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:textAlignment="viewStart"
+                android:text="@string/ab_na_note"
+                android:textSize="@dimen/ten_sp"
+                >
+
+            </TextView>
+
 
             <View
                 android:id="@+id/View2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
-                android:layout_below="@+id/lblDisclaimerForAI"
+                android:layout_below="@+id/lblNAABNote"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginBottom="@dimen/five"
                 android:background="@color/AthensGray">

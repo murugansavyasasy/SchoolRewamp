@@ -128,6 +128,8 @@ import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseAc
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Model.SaveMarksModel
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.UploadMarkResponse
+import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
+import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -1598,5 +1600,23 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject,
     ): Call<UploadMarksClassEntryResponse?>
 
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isExamtestAnalysis)
+    fun isExamtestAnalysis(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("student_id") student_id   : String,
+        @Query("analysis_set_id") analysis_set_id    : String,)
+    : Call<StudentAnalysisResponse?>
+
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isExamtestAnalysisSets)
+    fun isExamtestAnalysisSets(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("class_id") class_id  : String,
+        @Query("section_id") section_id  : String,)
+            : Call<AnalysisSetsResponse?>
 
 }

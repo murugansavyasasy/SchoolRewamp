@@ -264,6 +264,9 @@ object APIMethods {
     const val examdetailsmark ="/exam/api/exam-test/mark-details"
     const val Examdetailsmarkpost ="/exam/api/exam-test/upload-marks"
 
+    const val isExamtestAnalysis ="exam/api/exam-test/student-analysis"
+    const val isExamtestAnalysisSets ="exam/api/exam-test/analysis-sets-list"
+
 }
 
 

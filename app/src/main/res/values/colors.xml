@@ -339,4 +339,31 @@
     <color name="orange_session">#E65100</color>
 
 
+    <color name="exam_screen_bg">#F4F6F9</color>
+    <color name="exam_card_white">#FFFFFF</color>
+    <color name="exam_stat_card_bg">#F7F9FC</color>
+    <color name="exam_track_grey">#E5E9F0</color>
+
+    <!-- Text -->
+    <color name="exam_text_primary">#0F2545</color>
+    <color name="exam_text_secondary">#6B7684</color>
+    <color name="exam_link_blue">#2563EB</color>
+
+    <!-- Status / semantic colors -->
+    <color name="exam_green">#16A34A</color>
+    <color name="exam_orange_red">#EF4444</color>
+
+    <!-- DRT series colors (bar chart groups + legend + line chart) -->
+    <color name="exam_blue">#3B82F6</color>
+    <color name="exam_orange">#F59E0B</color>
+    <color name="exam_teal_green">#10B981</color>
+    <color name="exam_red">#EF4444</color>
+    <color name="exam_purple">#8B5CF6</color>
+    <color name="exam_positive_green">#16A34A</color>
+    <color name="exam_negative_red">#DC2626</color>
+    <!-- Line chart -->
+    <color name="exam_line_navy">#1E3A5F</color>
+    <color name="exam_max_line_red">#F87171</color>
+
+
 </resources>

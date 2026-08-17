@@ -70,6 +70,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
+import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamselection.ParentSelectExamActivity
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
@@ -198,9 +199,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Added the hardcode data
 //                    originalMenuList.add(
 //                        MenuDetail(
-//                            id = 999,
-//                            name = "Bus tracking",
-//                            description = "Monitor and manage student data"
+//                            id = 222,
+//                            name = "Class Test Analysis",
+//                            description = "Student exam review and marks"
 //                        )
 //                    )
 
@@ -729,6 +730,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 ClassTest::class.java
             )
+
+
 
 
             else -> null

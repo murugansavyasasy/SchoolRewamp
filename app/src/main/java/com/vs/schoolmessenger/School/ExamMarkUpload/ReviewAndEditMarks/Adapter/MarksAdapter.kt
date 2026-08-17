@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -331,19 +332,23 @@ class MarksAdapter(
             return
         }
 
+        // Skip review-reason warning for AB / NA
         if (
             !reviewReason.isNullOrEmpty() &&
             trimmed == oldValue &&
-            isAllowedValue(trimmed)
+            isAllowedValue(trimmed) &&
+            !isSpecialTextValue(trimmed)
         ) {
             showError(et, icon, reviewReason)
             return
         }
 
+        // Skip green info for AB / NA when value changed
         if (
             isAllowedValue(oldValue) &&
             isAllowedValue(trimmed) &&
-            oldValue != trimmed
+            oldValue != trimmed &&
+            !isSpecialTextValue(trimmed)
         ) {
             if (Constant.isMarkUploadFromAi) {
                 showGreenInfo(
@@ -358,6 +363,10 @@ class MarksAdapter(
         }
 
         clearError(et, icon)
+    }
+
+    private fun isSpecialTextValue(value: String): Boolean {
+        return value.equals("AB", true) || value.equals("NA", true)
     }
 
     private fun clearError(et: EditText, icon: ImageView) {
@@ -451,7 +460,7 @@ class MarksAdapter(
 
     private fun isAllowedValue(value: String): Boolean {
         return value.equals("AB", true) ||
-                value.equals("NA", true) ||
+                value.equals("NA", true) || value.equals("na", true) || value.equals("ab", true) ||
                 value.toDoubleOrNull() != null
     }
 

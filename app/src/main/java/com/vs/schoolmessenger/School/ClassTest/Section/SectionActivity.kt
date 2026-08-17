@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ClassTest.Report.ExamReportActivity
 import com.vs.schoolmessenger.School.ClassTest.StepIndicatorHelper
 import com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass.SubjectActivity
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ActivitySectionBinding
@@ -47,6 +48,7 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickList
 
 
         binding.viewreporttext.setOnClickListener(this)
+        binding.viewmarkanalysis.setOnClickListener(this)
         binding.lblStepInfo.text = "Step 2 of 5"
         binding.lblSubtitle.text =
             "Standard ${Constant.isSelectedStandardName} — select one or more"
@@ -112,9 +114,17 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickList
         startActivity(intent)
     }
 
+    private fun RedirectToAnalysis() {
+        val intent = Intent(this, ExamStandardActivity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.viewreporttext-> RedirectToReport()
+            R.id.viewmarkanalysis-> RedirectToAnalysis()
+
         }
     }
 }

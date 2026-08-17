@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/exam_screen_bg"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/ten"
+            android:paddingEnd="@dimen/ten">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/exam_card_white"
+                app:cardCornerRadius="14dp"
+                android:visibility="gone"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvHeaderTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/exam_text_primary"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            tools:text="Performance Comparison — JEEVA" />
+
+                        <TextView
+                            android:id="@+id/tvHeaderSubtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/exam_text_secondary"
+                            android:textSize="12sp"
+                            tools:text="" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:padding="4dp"
+                        android:text="Close"
+                        android:textColor="@color/exam_link_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/cardExamsTaken"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/cardAverageScore"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/cardBestExam"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/cardLowestExam"
+                    layout="@layout/item_stat_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+
+            <!-- ===== Subject-wise bar chart ===== -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/exam_card_white"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subject-wise Performance Breakdown"
+                        android:textColor="@color/exam_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvBarChartSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/exam_text_secondary"
+                        android:textSize="12sp"
+                        tools:text="(DRT - 1, DRT - 2, DRT - 3, DRT - 4, DRT - 5)" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChartSubjects"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:layout_marginTop="10dp" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/llLegend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:flexWrap="wrap"
+                        app:justifyContent="center"
+                        app:alignItems="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/exam_card_white"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Performance Trend"
+                        android:textColor="@color/exam_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLineChartSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Total marks out of 100"
+                        android:textColor="@color/exam_text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChartTrend"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:layout_marginTop="10dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/exam_card_white"
+                app:cardCornerRadius="14dp"
+                android:visibility="gone"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subject Average Performance"
+                        android:textColor="@color/exam_text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSubjectAverages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        tools:itemCount="7"
+                        tools:listitem="@layout/item_subject_average" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:id="@+id/main"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@color/light_white">-->
+
+    <!--    <View-->
+    <!--        android:id="@+id/statusBarBackground"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:background="@color/PrimaryColor"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <include-->
+    <!--        android:id="@+id/toolbarLayout"-->
+    <!--        layout="@layout/school_side_tool_bar"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />-->
+
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:background="@color/exam_screen_bg"-->
+    <!--        android:clipToPadding="false"-->
+    <!--        android:paddingBottom="24dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingStart="@dimen/ten"-->
+    <!--            android:paddingTop="@dimen/ten"-->
+    <!--            android:paddingEnd="@dimen/ten">-->
+
+    <!--            <androidx.cardview.widget.CardView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                app:cardBackgroundColor="@color/exam_card_white"-->
+    <!--                app:cardCornerRadius="14dp"-->
+    <!--                app:cardElevation="0dp">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="horizontal"-->
+    <!--                    android:padding="16dp">-->
+
+    <!--                    <LinearLayout-->
+    <!--                        android:layout_width="0dp"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_weight="1"-->
+    <!--                        android:orientation="vertical">-->
+
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/tvHeaderTitle"-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:textColor="@color/exam_text_primary"-->
+    <!--                            android:textSize="17sp"-->
+    <!--                            android:textStyle="bold"-->
+    <!--                            tools:text="Performance Comparison — JEEVA" />-->
+
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/tvHeaderSubtitle"-->
+    <!--                            android:layout_width="match_parent"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginTop="4dp"-->
+    <!--                            android:textColor="@color/exam_text_secondary"-->
+    <!--                            android:textSize="12sp"-->
+    <!--                            tools:text="Exams: DRT - 1, DRT - 2, DRT - 3, DRT - 4, DRT - 5 · All subjects out of 20 marks each" />-->
+
+    <!--                    </LinearLayout>-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvClose"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_gravity="top"-->
+    <!--                        android:padding="4dp"-->
+    <!--                        android:text="Close"-->
+    <!--                        android:textColor="@color/exam_link_blue"-->
+    <!--                        android:textSize="14sp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--            </androidx.cardview.widget.CardView>-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="12dp"-->
+    <!--                android:visibility="gone"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardAverageScore"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginEnd="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardGrade"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="12dp"-->
+    <!--                android:visibility="gone"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardBestExam"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginEnd="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardLowestExam"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="12dp"-->
+    <!--                android:visibility="gone"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardExamsTaken"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginEnd="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--                <include-->
+    <!--                    android:id="@+id/cardSubjects"-->
+    <!--                    layout="@layout/item_stat_card"-->
+    <!--                    android:layout_width="0dp"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="6dp"-->
+    <!--                    android:layout_weight="1" />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            &lt;!&ndash; ===== Subject-wise bar chart ===== &ndash;&gt;-->
+    <!--            <androidx.cardview.widget.CardView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="14dp"-->
+    <!--                app:cardBackgroundColor="@color/exam_card_white"-->
+    <!--                app:cardCornerRadius="14dp"-->
+    <!--                app:cardElevation="0dp">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    android:padding="16dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="Subject-wise Performance Breakdown"-->
+    <!--                        android:textColor="@color/exam_text_primary"-->
+    <!--                        android:textSize="15sp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvBarChartSubtitle"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:textColor="@color/exam_text_secondary"-->
+    <!--                        android:textSize="12sp"-->
+    <!--                        tools:text="(DRT - 1, DRT - 2, DRT - 3, DRT - 4, DRT - 5)" />-->
+
+    <!--                    <com.github.mikephil.charting.charts.BarChart-->
+    <!--                        android:id="@+id/barChartSubjects"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="260dp"-->
+    <!--                        android:layout_marginTop="10dp" />-->
+
+    <!--                    <LinearLayout-->
+    <!--                        android:id="@+id/llLegend"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginTop="10dp"-->
+    <!--                        android:gravity="center"-->
+    <!--                        android:orientation="horizontal" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--            </androidx.cardview.widget.CardView>-->
+
+    <!--            <androidx.cardview.widget.CardView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="14dp"-->
+    <!--                app:cardBackgroundColor="@color/exam_card_white"-->
+    <!--                app:cardCornerRadius="14dp"-->
+    <!--                app:cardElevation="0dp">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    android:padding="16dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="Total Performance Trend"-->
+    <!--                        android:textColor="@color/exam_text_primary"-->
+    <!--                        android:textSize="15sp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvLineChartSubtitle"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:text="Total marks out of 100"-->
+    <!--                        android:textColor="@color/exam_text_secondary"-->
+    <!--                        android:textSize="12sp" />-->
+
+    <!--                    <com.github.mikephil.charting.charts.LineChart-->
+    <!--                        android:id="@+id/lineChartTrend"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="240dp"-->
+    <!--                        android:layout_marginTop="10dp" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--            </androidx.cardview.widget.CardView>-->
+
+    <!--            <androidx.cardview.widget.CardView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="14dp"-->
+    <!--                app:cardBackgroundColor="@color/exam_card_white"-->
+    <!--                app:cardCornerRadius="14dp"-->
+    <!--                android:visibility="gone"-->
+    <!--                app:cardElevation="0dp">-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical"-->
+    <!--                    android:padding="16dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="Subject Average Performance"-->
+    <!--                        android:textColor="@color/exam_text_primary"-->
+    <!--                        android:textSize="15sp"-->
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <androidx.recyclerview.widget.RecyclerView-->
+    <!--                        android:id="@+id/rvSubjectAverages"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginTop="8dp"-->
+    <!--                        android:nestedScrollingEnabled="false"-->
+    <!--                        tools:itemCount="7"-->
+    <!--                        tools:listitem="@layout/item_subject_average" />-->
+
+    <!--                </LinearLayout>-->
+
+    <!--            </androidx.cardview.widget.CardView>-->
+
+    <!--        </LinearLayout>-->
+
+    <!--    </androidx.core.widget.NestedScrollView>-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

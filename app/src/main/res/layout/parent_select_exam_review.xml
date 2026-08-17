@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
+
+
+        <LinearLayout
+            android:id="@+id/lytBreadcrumb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:paddingTop="@dimen/sixteen"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/lblBreadcrumbStudent"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Selection"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/four"
+                android:text=">"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Exams"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStudentSummary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twele"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/sixteen"
+            app:cardElevation="@dimen/two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lytBreadcrumb">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/fourteen">
+
+                <View
+                    android:id="@+id/viewStudentAvatar"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_circle_2" />
+
+                <TextView
+                    android:id="@+id/lblStudentAvatarLetter"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_alignStart="@id/viewStudentAvatar"
+                    android:layout_alignTop="@id/viewStudentAvatar"
+                    android:gravity="center"
+                    android:text="JE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <TextView
+                    android:id="@+id/btnChangeStudent"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_pill_grey"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/sixteen"
+                    android:paddingVertical="@dimen/six"
+                    android:text="Change"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/twele"
+                    android:layout_toStartOf="@id/btnChangeStudent"
+                    android:layout_toEndOf="@id/viewStudentAvatar"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblStudentNameValue"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JEEVA"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblStudentDetail"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/two"
+                        android:text="Roll No: -- \u00B7 Class 6 - Section A"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/twele_sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/lytSelectExamsHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:paddingTop="@dimen/twenty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardStudentSummary">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Test"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/twenty_sp" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/two"
+                android:text="Pick one test series to include in the analysis."
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnSelectAll"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sixteen"
+            android:layout_marginTop="@dimen/twele"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Select all"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lytSelectExamsHeader" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcExamList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/sixteen"
+            android:layout_marginTop="@dimen/eight"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/sixteen"
+            app:layout_constraintBottom_toTopOf="@id/lytBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSelectAll" />
+
+        <LinearLayout
+            android:id="@+id/lytNoExamData"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/sixteen"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/lytBottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSelectAll">
+
+            <ImageView
+                android:id="@+id/imgNoExamData"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="@dimen/eighty"
+                android:src="@drawable/no_data_found"
+                app:tint="@color/grey" />
+
+            <TextView
+                android:id="@+id/lblNoExamData"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twele"
+                android:gravity="center"
+                android:text="No Data Found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp" />
+
+            <TextView
+                android:id="@+id/lblNoExamDataSubtitle"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/four"
+                android:gravity="center"
+                android:text="No exam sets are available for this student yet."
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lytBottomBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/sixteen"
+            android:layout_marginBottom="@dimen/twele"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/btnBack"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fourty"
+                android:background="@drawable/bg_white_stroke_grey_rounded"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/twenty"
+                android:text="← Back"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:id="@+id/lblSelectionCount"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:text="0 exams selected"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/btnViewAnalysis"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fourty"
+                android:background="@drawable/rect_primary_rounded"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/twenty"
+                android:text="View Analysis  →"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

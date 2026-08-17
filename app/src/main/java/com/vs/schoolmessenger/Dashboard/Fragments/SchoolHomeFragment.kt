@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamMarkUpload.ClassList.ClassList
+import com.vs.schoolmessenger.School.ExamReview.Activity.ExamStandardActivity
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWorkCreate
 import com.vs.schoolmessenger.School.Hostel.HostelList
@@ -238,9 +239,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 //                                        originalMenuList.add(
 //                        MenuDetail(
-//                            id = 205,
-//                            name = "Bus Live Tracking",
-//                            description = "Monitor and manage student data"
+//                            id = 222,
+//                            name = "Class Test Analysis",
+//                            description = "Student exam review and marks"
 //                        )
 //                    )
 
@@ -1029,6 +1030,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
+
+
 
 
             else -> null
