@@ -45,7 +45,9 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text = "Class Test Analysis"
+        binding.toolbarLayout.lblStudentName.text = "Class Set Analysis"
+        binding.toolbarLayout.lblStudentSection.visibility=View.GONE
+
 
 //        bindSelectedStudent()
         setupExamList()

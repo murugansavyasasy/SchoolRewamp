@@ -88,6 +88,8 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             insets
         }
 
+
+
         ViewCompat.setOnApplyWindowInsetsListener(toolbarLayout) { _, insets ->
             insets
         }
@@ -179,10 +181,13 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         updateNavButtons()
 
         binding.imgBack.setOnClickListener {
+            adapter.stopAudio()
             Constant.commonFileList.clear()
-            onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
+
     }
+
 
 
     fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
@@ -226,15 +231,20 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             R.id.imgMoreOptions -> showFileOptions(isFilesList[currentPosition].path)
 
             R.id.lnrNext -> if (currentPosition < isFilesList.size - 1) {
+                adapter.stopAudio()
                 currentPosition++
                 scrollToPosition(currentPosition)
                 updateNavButtons()
+
             }
 
             R.id.lnrPrevious -> if (currentPosition > 0) {
+                // STOP CURRENT AUDIO FIRST
+                adapter.stopAudio()
                 currentPosition--
                 scrollToPosition(currentPosition)
                 updateNavButtons()
+
             }
         }
     }
@@ -242,6 +252,8 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     override fun onBackPressed() {
         super.onBackPressed()
         Constant.commonFileList.clear()
+        adapter.stopAudio()
+
     }
 
     private fun showFileOptions(url: String) {
@@ -330,6 +342,20 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStop() {
+        adapter.stopAudio()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        adapter.stopAudio()
+        super.onDestroy()
     }
 
 

@@ -1190,4 +1190,6 @@
     <string name="ab_na_note">Note: Use "AB" for absent students and "NA" for marks that are not applicable.</string>
     <string name="exam_performance_comparison_title">Performance Comparison — %1$s</string>
     <string name="exam_performance_comparison_subtitle">Exams: %1$s · All subjects out of %2$d marks each</string>
+    <string name="audio_file">Audio File</string>
+    <string name="audio_record">Audio Record</string>
 </resources>

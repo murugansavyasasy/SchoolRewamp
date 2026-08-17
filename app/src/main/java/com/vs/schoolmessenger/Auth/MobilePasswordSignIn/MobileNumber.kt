@@ -40,7 +40,7 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
 
 
         val firstText = getString(R.string.log_in_to_stay_connected_with)
-        val secondText = " \\ ${Constant.country_details?.name.orEmpty()}"
+        val secondText = " - ${Constant.country_details?.name.orEmpty()}"
 
         val fullText = firstText + secondText
 
@@ -53,7 +53,7 @@ class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListene
         )
 
         spannable.setSpan(
-            AbsoluteSizeSpan(11, true),
+            AbsoluteSizeSpan(18, true),
             firstText.length,
             fullText.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

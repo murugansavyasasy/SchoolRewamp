@@ -202,7 +202,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Test"
+            android:text="Select set analysis"
             android:textColor="@color/PrimaryColor"
             android:textSize="@dimen/twenty_sp" />
 
@@ -211,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/two"
-            android:text="Pick one test series to include in the analysis."
+            android:text="Pick a set to view analysis."
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp" />
 

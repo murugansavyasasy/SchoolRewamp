@@ -85,7 +85,7 @@
                 android:layout_toStartOf="@id/toolbarSearchIcon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Class Test Analysis"
+                android:text="Class set analysis"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -102,7 +102,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class Test Analysis"
+                android:text="Class set analysis"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty_four_sp" />
 
@@ -327,7 +327,7 @@
             android:layout_marginBottom="@dimen/eight"
             android:background="@drawable/rect_primary_rounded"
             android:gravity="center"
-            android:text="Select Test  ›"
+            android:text="Select set  ›"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             app:layout_constraintBottom_toTopOf="@id/btnAddTestMarks"

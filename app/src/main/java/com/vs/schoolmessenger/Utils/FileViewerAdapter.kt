@@ -299,37 +299,79 @@ class FileViewerAdapter(
 
 //                } else {
 
-                    holder.lblVideoAvailable.visibility = View.GONE
-                    holder.documentWebView.visibility = View.VISIBLE
-                    holder.loadingBar.visibility = View.GONE
-                    holder.imageView.visibility = View.GONE
 
-                    var isFile = ""
-                    holder.documentWebView.visibility = View.VISIBLE
+                currentAudioWebView = holder.documentWebView
 
-                    isFile = item.path
+                holder.lblVideoAvailable.visibility = View.GONE
+                holder.documentWebView.visibility = View.VISIBLE
+                holder.loadingBar.visibility = View.GONE
+                holder.imageView.visibility = View.GONE
 
-                    holder.documentWebView.settings.apply {
-                        javaScriptEnabled = true
-                        setSupportZoom(true)
-                        builtInZoomControls = true
-                        displayZoomControls = false
-                        loadWithOverviewMode = true
-                        useWideViewPort = true
-                        domStorageEnabled = true
-                    }
+                holder.documentWebView.settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    mediaPlaybackRequiresUserGesture = true
+                    setSupportZoom(true)
+                    builtInZoomControls = true
+                    displayZoomControls = false
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
+                }
 
-                    holder.documentWebView.setInitialScale(1)
-                    holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
-                    holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+                holder.documentWebView.setInitialScale(1)
 
-                    holder.documentWebView.webViewClient = object : WebViewClient() {
-                        override fun onPageFinished(view: WebView?, url: String?) {
+                holder.documentWebView.scrollBarStyle =
+                    WebView.SCROLLBARS_INSIDE_OVERLAY
+
+                holder.documentWebView.setLayerType(
+                    View.LAYER_TYPE_HARDWARE,
+                    null
+                )
+
+                holder.documentWebView.webViewClient =
+                    object : WebViewClient() {
+
+                        override fun onPageFinished(
+                            view: WebView?,
+                            url: String?
+                        ) {
                             holder.loadingBar.visibility = View.GONE
                         }
                     }
 
-                    holder.documentWebView.loadUrl(isFile)
+                holder.documentWebView.loadUrl(item.path)
+
+//                    holder.lblVideoAvailable.visibility = View.GONE
+//                    holder.documentWebView.visibility = View.VISIBLE
+//                    holder.loadingBar.visibility = View.GONE
+//                    holder.imageView.visibility = View.GONE
+//
+//                    var isFile = ""
+//                    holder.documentWebView.visibility = View.VISIBLE
+//
+//                    isFile = item.path
+//
+//                    holder.documentWebView.settings.apply {
+//                        javaScriptEnabled = true
+//                        setSupportZoom(true)
+//                        builtInZoomControls = true
+//                        displayZoomControls = false
+//                        loadWithOverviewMode = true
+//                        useWideViewPort = true
+//                        domStorageEnabled = true
+//                    }
+//
+//                    holder.documentWebView.setInitialScale(1)
+//                    holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
+//                    holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+//
+//                    holder.documentWebView.webViewClient = object : WebViewClient() {
+//                        override fun onPageFinished(view: WebView?, url: String?) {
+//                            holder.loadingBar.visibility = View.GONE
+//                        }
+//                    }
+//
+//                    holder.documentWebView.loadUrl(isFile)
 //                }
 
             } else {
@@ -382,6 +424,37 @@ class FileViewerAdapter(
         }
     }
 
+    fun stopAudio() {
+
+        currentAudioWebView?.let { webView ->
+
+            webView.post {
+
+                webView.evaluateJavascript(
+                    """
+                (function() {
+                    var media = document.querySelectorAll('audio, video');
+
+                    media.forEach(function(element) {
+                        try {
+                            element.pause();
+                            element.currentTime = 0;
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    });
+
+                    return true;
+                })();
+                """.trimIndent(),
+                    null
+                )
+            }
+        }
+
+        currentAudioWebView = null
+    }
+
     override fun getItemCount(): Int = fileList.size
 
     class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -390,4 +463,5 @@ class FileViewerAdapter(
         val imageView: PhotoView = itemView.findViewById(R.id.imageView)
         val lblVideoAvailable: TextView = itemView.findViewById(R.id.lblVideoAvailable)
     }
+    private var currentAudioWebView: WebView? = null
 }

@@ -2,20 +2,8 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-<<<<<<< HEAD
       <SelectionState runConfigName="main">
         <option name="selectionMode" value="DROPDOWN" />
-=======
-      <SelectionState runConfigName="app">
-        <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-14T04:35:16.978056200Z">
-          <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="Wireless" identifier="serviceName=adb-10BFAF2QNR0029S-YYWZu5" />
-            </handle>
-          </Target>
-        </DropdownSelection>
->>>>>>> 7c2102f661bac2ebf6405cb73483bd8993f786ac
         <DialogSelection />
       </SelectionState>
     </selectionStates>

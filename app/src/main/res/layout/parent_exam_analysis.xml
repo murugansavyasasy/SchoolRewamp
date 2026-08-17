@@ -177,6 +177,7 @@
                         android:layout_marginTop="2dp"
                         android:textColor="@color/exam_text_secondary"
                         android:textSize="12sp"
+                        android:visibility="gone"
                         tools:text="(DRT - 1, DRT - 2, DRT - 3, DRT - 4, DRT - 5)" />
 
                     <com.github.mikephil.charting.charts.BarChart

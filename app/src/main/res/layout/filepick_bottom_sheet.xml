@@ -190,7 +190,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/voice">
+                    android:text="@string/audio_file">
 
                 </TextView>
             </RelativeLayout>
@@ -224,7 +224,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="@string/voice_record">
+                    android:text="@string/audio_record">
 
                 </TextView>
             </RelativeLayout>

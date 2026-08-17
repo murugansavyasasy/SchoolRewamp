@@ -47,7 +47,8 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text =  "Class Test Analysis"
+        binding.toolbarLayout.lblParentToolBar.text =  "Class set analysis"
+        binding.toolbarLayout.lblSchoolName.visibility= View.GONE
 
 
         bindSelectedStudent()

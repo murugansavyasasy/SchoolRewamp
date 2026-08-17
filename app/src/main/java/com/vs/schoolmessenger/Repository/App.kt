@@ -2295,20 +2295,16 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isClassTestStudent(
         isToken: String, activity: Activity) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-//        RestClient.changeApiBaseUrl(reporting_url!!)
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isClassTesFortStudent(isToken,activity)
 
     }
 
     fun isViewClassTestStudent(
         isToken: String, isExamId: String, activity: Activity) {
-//        val reporting_url = SharedPreference.getReportingUrl(activity)
-//        RestClient.changeApiBaseUrl(reporting_url!!)
-        val base_url = SharedPreference.getBaseUrl(activity)
-        RestClient.changeApiBaseUrl(base_url!!)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isViewClassTesFortStudent(isToken,isExamId,activity)
 
     }
@@ -2368,7 +2364,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         class_test_id: String,analysis_set_id: String, activity: Activity
     ) {
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isExamtestAnalysis(isToken, class_test_id,analysis_set_id,activity)
     }
@@ -2377,7 +2374,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         class_id: String,section_id: String, activity: Activity
     ) {
-        val reporting_url = SharedPreference.getBaseUrl(activity)
+        val reporting_url = SharedPreference.getReportingUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isExamtestAnalysisSets(isToken, class_id,section_id,activity)
     }

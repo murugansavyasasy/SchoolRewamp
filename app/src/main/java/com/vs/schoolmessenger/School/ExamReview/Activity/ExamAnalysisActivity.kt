@@ -152,7 +152,7 @@ class ExamAnalysisActivity : BaseActivity<ExamAnalysisBinding>(), View.OnClickLi
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text =  "Class Test Analysis"
+        binding.toolbarLayout.lblParentToolBar.text =  "Class set analysis"
 
         observeAnalysis()
         fetchAnalysis()
