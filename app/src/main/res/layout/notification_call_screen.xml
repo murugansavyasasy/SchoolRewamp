@@ -7,24 +7,36 @@
     android:keepScreenOn="true">
 
 
-    <ImageView
-        android:id="@+id/logoImage"
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/logoImage1"
         android:layout_width="@dimen/two_hundred"
         android:layout_height="@dimen/two_hundred"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/thirty"
         android:background="@drawable/glow_circle"
-        android:contentDescription="School Chimes Logo"
         android:padding="20dp"
-        android:src="@drawable/school_splash_logo"
-        app:layout_constraintVertical_bias="0.30" />
+        android:gravity="center"
+        app:layout_constraintVertical_bias="0.30">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/logoImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/school_splash_logo"
+            app:shapeAppearanceOverlay="@style/CircleImageViewShape"
+            android:layout_width="@dimen/one_twenty"
+            android:layout_height="@dimen/one_twenty">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblMemberName"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoImage"
+        android:layout_below="@+id/logoImage1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/thirty"
         android:gravity="center"
