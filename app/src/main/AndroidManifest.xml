@@ -907,6 +907,12 @@
             android:windowSoftInputMode="adjustResize" />
 
 
+        <activity
+            android:name=".Parent.RaiseConcern.RaiseConcernActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

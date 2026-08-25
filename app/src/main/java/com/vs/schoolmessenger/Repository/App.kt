@@ -51,7 +51,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
-import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
@@ -76,6 +75,10 @@ import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
 import com.vs.schoolmessenger.Parent.QuizExam.Model.SubmitQuiz.SubmitQuizResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ActionTakenModel.ActionTakenResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernTypeResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseParentModel.RaiseConcernResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -509,6 +512,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var getisInvoiceDetails: LiveData<InvoiceDetailsResponse?>? = null
     var isExamtestAnalysis: LiveData<StudentAnalysisResponse?>? = null
     var isExamtestAnalysisSets: LiveData<AnalysisSetsResponse?>? = null
+    var isRaiseConcernType: LiveData<ConcernTypeResponse?>? = null
+    var isParentConcernlist: LiveData<ParentConcernResponse?>? = null
+    var isRaiseParentConcern: LiveData<RaiseConcernResponse?>? = null
+    var isActionTakenConcern: LiveData<ActionTakenResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -727,6 +734,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isexamdetailsmarkpost = apiSchoolRepositoriesTwo.isexamdetailsmarkpostLiveData
         isExamtestAnalysis = apiSchoolRepositoriesTwo.isExamtestAnalysisLiveData
         isExamtestAnalysisSets = apiSchoolRepositoriesTwo.isExamtestAnalysisSetsLiveData
+        isRaiseConcernType = apiSchoolRepositoriesTwo.isRaiseConcernTypeLiveData
+        isParentConcernlist = apiSchoolRepositoriesTwo.isParentConcernlistLiveData
+        isRaiseParentConcern = apiSchoolRepositoriesTwo.isRaiseParentConcernLiveData
+        isActionTakenConcern = apiSchoolRepositoriesTwo.isActionTakenConcernLiveData
     }
 
     fun isDashBoardData(
@@ -2378,6 +2389,45 @@ class App(application: Application) : AndroidViewModel(application) {
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.isExamtestAnalysisSets(isToken, class_id,section_id,activity)
+    }
+
+
+    fun isRaiseConcernType(
+        isToken: String,activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isRaiseConcernType(isToken,activity)
+    }
+    fun isParentConcernlist(
+        isToken: String,activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isParentConcernlist(isToken,activity)
+    }
+
+
+    fun isRaiseParentConcern(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isRaiseParentConcern(isToken, jsonObject,activity)
+    }
+
+
+
+    fun isActionTakenConcern(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isActionTakenConcern(isToken, jsonObject,activity)
     }
 }
 

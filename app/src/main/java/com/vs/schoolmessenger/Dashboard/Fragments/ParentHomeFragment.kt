@@ -72,6 +72,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
 import com.vs.schoolmessenger.Parent.PTM.PTM
 import com.vs.schoolmessenger.Parent.ParentClassTestExamAnalysis.ParentExamselection.ParentSelectExamActivity
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseConcernActivity
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -197,13 +198,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
                     //Hardcode from here
                     //Added the hardcode data
-//                    originalMenuList.add(
-//                        MenuDetail(
-//                            id = 222,
-//                            name = "Class Test Analysis",
-//                            description = "Student exam review and marks"
-//                        )
-//                    )
+                    originalMenuList.add(
+                        MenuDetail(
+                            id = 222,
+                            name = "Raise Concern",
+                            description = "Student exam review and marks"
+                        )
+                    )
 
 
                     filteredMenuList.clear()
@@ -729,6 +730,12 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_CLASSTEST -> Intent(
                 requireActivity(),
                 ClassTest::class.java
+            )
+
+
+            Constant.M_EXAMREVIEW -> Intent(
+                requireActivity(),
+                RaiseConcernActivity::class.java
             )
 
 

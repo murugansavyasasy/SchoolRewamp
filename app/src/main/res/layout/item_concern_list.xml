@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/ten"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/ten"
+    android:background="@drawable/rect_grey"
+    android:orientation="vertical"
+    android:padding="@dimen/ten">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/lblConcernType"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/thirteen_sp"
+            tools:text="Academic" />
+
+        <TextView
+            android:id="@+id/lblStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            tools:text="Pending" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblRaisedTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        tools:text="Raised to: Principal" />
+
+    <TextView
+        android:id="@+id/lblDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        tools:text="Student is facing difficulty in understanding Mathematics lessons." />
+
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:gravity="end"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        tools:text="20-08-2026" />
+
+</LinearLayout>
