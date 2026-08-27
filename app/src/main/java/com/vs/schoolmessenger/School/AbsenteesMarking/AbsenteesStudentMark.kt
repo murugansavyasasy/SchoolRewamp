@@ -176,6 +176,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.cbSelect.visibility = View.VISIBLE
                     binding.rytSend.visibility = View.VISIBLE
                     isEditAttendance = response.data.get(0).is_edit
+                    binding.toolbarLayout.tvTotalStrengthCount.text =
+                        response.data.get(0).total_strength
+                            ?.toIntOrNull()
+                            ?.let { String.format(Constant.time02d, it) }
+                            ?: Constant.zero
                     studentsList = response.data.get(0).attd_details
                     FilterAttendanceList = response.data.get(0).attd_details
                     originalAttendanceList = response.data.get(0).attd_details
@@ -187,6 +192,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.toolbarLayout.imgSearch.visibility = View.GONE
                     binding.lnrHeader.visibility = View.GONE
                     binding.imgSearch.isEnabled = false
+                    binding.toolbarLayout.tvTotalStrengthCount.text ="-"
                     binding.recycleStudents.visibility = View.GONE
                     binding.rlaSortSearch.visibility = View.GONE
                     binding.cbSelect.visibility = View.GONE
@@ -195,6 +201,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 }
             } else {
                 isEditAttendance = false
+                binding.toolbarLayout.tvTotalStrengthCount.text ="-"
                 binding.rytSearchBar.visibility = View.GONE
                 binding.toolbarLayout.imgSearch.visibility = View.GONE
                 binding.imgSearch.isEnabled = false

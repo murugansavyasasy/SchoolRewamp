@@ -81,18 +81,53 @@
         android:layout_alignBottom="@id/rytHeader"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/five"
         android:translationY="@dimen/fifty"
-        android:weightSum="1">
+        android:weightSum="4.5">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/eight"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="@dimen/twele"
+            app:cardElevation="@dimen/six">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/twenty_five">
+
+                <TextView
+                    android:id="@+id/tvTotalStrengthCount"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twenty_two_sp" />
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/total"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Present Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/eight"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/twele"
             app:cardElevation="@dimen/six">
@@ -126,7 +161,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/twele"
             app:cardElevation="@dimen/six">
@@ -160,7 +195,7 @@
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/twele"
             app:cardElevation="@dimen/six">
