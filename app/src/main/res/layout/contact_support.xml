@@ -65,6 +65,8 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblOurCustomerService"
                     android:textColor="@color/black"
+                    android:textAlignment="viewStart"
+
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>
@@ -77,6 +79,7 @@
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/ten"
                     android:text="+918939894902"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/navi_blue2"
                     android:textSize="@dimen/fifteen_sp"
                     android:textStyle="bold">
@@ -121,6 +124,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblWriteus"
                     android:textColor="@color/black"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/fifteen_sp">
 
                 </TextView>
@@ -135,6 +139,7 @@
                     android:text="support@savyasasy.com"
                     android:textColor="@color/navi_blue2"
                     android:textSize="@dimen/fifteen_sp"
+                    android:textAlignment="viewStart"
                     android:textStyle="bold">
 
                 </TextView>
@@ -145,6 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
+                    android:textAlignment="viewStart"
+
                     android:layout_marginEnd="@dimen/ten"
                     android:text="schoolchimes@savyasasy.com"
                     android:textColor="@color/navi_blue2"

@@ -39,7 +39,7 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
                         .build()
                         .toString()
                 }
-                "Terms and Conditions"
+                getString(R.string.lblTermsCondition)
             }
 
             "isPrivacy" -> {
@@ -53,17 +53,18 @@ class TermsAndConditions : BaseActivity<TermsAndConditionsBinding>(), View.OnCli
                         .build()
                         .toString()
                 }
-                "Privacy Policy"
+                getString(R.string.privacy_policy)
             }
 
             "isAboutTheApp" -> {
                 URL = Constant.isGlobalVariableData?.about_the_app ?: ""
-                "About the App"
+                getString(R.string.about_the_app)
+
             }
 
             "HowToUse" -> {
                 URL = Constant.isGlobalVariableData?.how_to_use ?: ""
-                "How to Use?"
+                getString(R.string.how_to_use)
             }
 
             else -> ""
