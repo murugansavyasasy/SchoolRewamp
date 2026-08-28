@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
+import com.vs.schoolmessenger.Utils.Constant.M_EXAMREVIEW
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LSRW
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
@@ -113,6 +114,12 @@ class AwsUploadingPreSigned {
                 M_UPLOAD_MARKS -> {
                     isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
                     isFolderName = "marksheets"
+                    bucketPath = "$isFolderName/$instituteID/$currentDate"
+                }
+
+                M_EXAMREVIEW -> {
+                    isBucket = AWSKeys.SCHOOL_CHIMES_ACTIVITIES
+                    isFolderName = "events"
                     bucketPath = "$isFolderName/$instituteID/$currentDate"
                 }
 

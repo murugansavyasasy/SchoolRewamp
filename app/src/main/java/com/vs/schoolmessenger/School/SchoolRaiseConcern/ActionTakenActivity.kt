@@ -1,6 +1,7 @@
-package com.vs.schoolmessenger.Parent.RaiseConcern
+package com.vs.schoolmessenger.School.SchoolRaiseConcern
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -20,15 +21,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import androidx.lifecycle.ViewModelProvider
-import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.RaiseConcernBinding
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -37,17 +29,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
-import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernType
-import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcern
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
@@ -55,6 +48,8 @@ import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.ProgressDialogHelper
+import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.databinding.ActionTakenCreateBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
@@ -62,31 +57,23 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+class ActionTakenActivity : BaseActivity<ActionTakenCreateBinding>(), View.OnClickListener,
+    OnImageClickListener, VimeoVideoUpload.UploadCompletionListener {
 
-class RaiseConcernActivity :
-    BaseActivity<RaiseConcernBinding>(),
-    View.OnClickListener,
-    OnImageClickListener, VimeoVideoUpload.UploadCompletionListener  {
-
-    override fun getViewBinding(): RaiseConcernBinding {
-        return RaiseConcernBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActionTakenCreateBinding {
+        return ActionTakenCreateBinding.inflate(layoutInflater)
     }
 
-    private var isAccessToken: String? = null
-    private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
-    var userDetails: UserDetails? = null
+    private var isAccessToken: String? = null
+    private var isStaffDetails: StaffDetails? = null
 
-    private var concernTypeList: List<ConcernType> = emptyList()
-    private var selectedConcernTypeId: String = ""
-    private var selectedRaisedTo: String = ""
-
+    private var concernId: String? = null
+    private var studentId: String? = null
     private var pendingDescription: String = ""
 
-    private var concernList: MutableList<ParentConcern> = mutableListOf()
-    private lateinit var concernAdapter: ParentConcernAdapter
-
     var isTotalSelectedItem = 0
+
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
 
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -105,117 +92,34 @@ class RaiseConcernActivity :
         private const val MAX_FILES = 10
     }
 
+
     override fun setupViews() {
         super.setupViews()
         isToolBarPrimaryParent(
             mainViewId = R.id.main,
             statusBarBgView = binding.statusBarBackground
         )
-
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-        isChildDetails = SharedPreference.getChildDetails(this)
-        isAccessToken = isChildDetails!!.access_token
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+
+        concernId = intent.getStringExtra("concern_id")
+        studentId = intent.getStringExtra("student_id")
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         Constant.SELECTED_MENU_ID = Constant.M_ATTACHMENTS
 
 
-        binding.toolbarLayout.apply {
-            imgBack.setOnClickListener(this@RaiseConcernActivity)
-            lblStudentName.text = isChildDetails?.name
-            lblStudentSection.text =
-                "${isChildDetails?.standard_name} - ${isChildDetails?.section_name}"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-            imgSearchToolBar.setOnClickListener {
-                if (binding.rytSearch1.visibility == View.VISIBLE) {
-                    binding.rytSearch1.visibility = View.GONE
-                } else {
-                    binding.rytSearch1.visibility = View.VISIBLE
-                    binding.txtVideoMenu1.text.clear()
-                }
-            }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
         }
 
-        binding.tabOneName.text = "Raise concern"
-        binding.tabTwoName.text = "Raised concern list"
 
-        setupTabClicks()
-        setupConcernListRecycler()
-        setupRadioGroup()
-        setupSubmitButton()
-
-        showRaiseConcernTab()
-
-        callConcernTypeApi()
-
-        appViewModel?.isParentConcernlist?.observe(this) { response ->
-            if (response != null) {
-                Constant.hideLoading(this)
-                if (response.status && !response.data.isNullOrEmpty()) {
-                    val data = response.data ?: emptyList()
-                    concernList.clear()
-                    concernList.addAll(data)
-                    concernAdapter.updateList(concernList)
-                    toggleEmptyState(concernList.isEmpty())
-                } else {
-                    toggleEmptyState(true)
-                }
-            }
-        }
-
-        appViewModel?.isRaiseParentConcern?.observe(this) { response ->
-            if (response != null) {
-                Constant.hideLoading(this)
-                if (response.status) {
-                    Toast.makeText(
-                        this@RaiseConcernActivity,
-                        response.message ?: "Concern raised successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    clearForm()
-                    showConcernListTab()
-                } else {
-                    Toast.makeText(
-                        this@RaiseConcernActivity,
-                        response.message ?: "Something went wrong",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-
-        appViewModel?.isRaiseConcernType?.observe(this) { response ->
-            if (response != null) {
-                if (response.status && !response.data.isNullOrEmpty()) {
-                    concernTypeList = response.data ?: emptyList()
-                    setupConcernTypeSpinner()
-                } else {
-                    Log.e("RaiseConcern", "concernType error: ${response.message}")
-                }
-            }
-        }
-
-        appViewModel?.isRemoveConcern?.observe(this) { response ->
-            if (response != null) {
-                Constant.hideLoading(this)
-                if (response.status) {
-                    Toast.makeText(
-                        this@RaiseConcernActivity,
-                        response.message ?: "Concern deleted successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    callParentConcernListApi()
-                } else {
-                    Toast.makeText(
-                        this@RaiseConcernActivity,
-                        response.message ?: "Failed to delete concern",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
 
         pickImagesLauncher =
             registerForActivityResult(
@@ -255,6 +159,41 @@ class RaiseConcernActivity :
         mAdapter = ImagePickingAdapter(this, selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
+
+        binding.btnSubmit.setOnClickListener { onSubmitClicked() }
+
+        appViewModel?.isActionTakenConcern?.observe(this) { response ->
+            if (response != null) {
+                ProgressDialogHelper.dismiss()
+                if (response.status) {
+                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                    selectedFiles.clear()
+                    isAwsUploadedFiles.clear()
+                    setResult(RESULT_OK)
+                    finish()
+                } else {
+                    Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun onSubmitClicked() {
+        val description = binding.edtDescription.text.toString().trim()
+
+        if (description.isEmpty()) {
+            Toast.makeText(this, "Please describe the action taken", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (concernId.isNullOrEmpty() || studentId.isNullOrEmpty()) {
+            Toast.makeText(this, "Missing concern details, please go back and try again", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        pendingDescription = description
+        ProgressDialogHelper.show(this)
+        isUploadFilesInServer(Constant.IMAGE)
     }
 
 
@@ -407,98 +346,6 @@ class RaiseConcernActivity :
         return File.createTempFile("${Constant.IMG_}${timeStamp}_", Constant.jpg, storageDir)
     }
 
-    private fun setupTabClicks() {
-        binding.lnrTabOneName.setOnClickListener { showRaiseConcernTab() }
-        binding.lnrTabTwoName.setOnClickListener { showConcernListTab() }
-    }
-
-    private fun showRaiseConcernTab() {
-        binding.lytRaiseConcern.visibility = View.VISIBLE
-        binding.lytConcernList.visibility = View.GONE
-
-        binding.tabOneName.setTextColor(resources.getColor(R.color.PrimaryColor))
-        binding.tabTwoName.setTextColor(resources.getColor(R.color.black))
-        binding.line1.setBackgroundColor(resources.getColor(R.color.PrimaryColor))
-        binding.line2.setBackgroundColor(resources.getColor(android.R.color.transparent))
-    }
-
-    private fun showConcernListTab() {
-        binding.lytRaiseConcern.visibility = View.GONE
-        binding.lytConcernList.visibility = View.VISIBLE
-
-        binding.tabTwoName.setTextColor(resources.getColor(R.color.PrimaryColor))
-        binding.tabOneName.setTextColor(resources.getColor(R.color.black))
-        binding.line2.setBackgroundColor(resources.getColor(R.color.PrimaryColor))
-        binding.line1.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        callParentConcernListApi()
-    }
-
-
-    private fun setupRadioGroup() {
-        val radioButtons = listOf(binding.rbManagement, binding.rbPrincipal, binding.rbClassTeacher)
-
-        val onRadioClick = View.OnClickListener { clicked ->
-            radioButtons.forEach { rb -> rb.isChecked = (rb.id == clicked.id) }
-            selectedRaisedTo = when (clicked.id) {
-                R.id.rbManagement -> "management"
-                R.id.rbPrincipal -> "principle"
-                R.id.rbClassTeacher -> "class_teacher"
-                else -> ""
-            }
-        }
-
-        radioButtons.forEach { it.setOnClickListener(onRadioClick) }
-    }
-
-    private fun callConcernTypeApi() {
-        appViewModel!!.isRaiseConcernType(isAccessToken!!, this)
-    }
-
-    private fun setupConcernTypeSpinner() {
-        val names = mutableListOf("Select concern type")
-        names.addAll(concernTypeList.map { it.name })
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerConcernType.adapter = adapter
-
-        binding.spinnerConcernType.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
-                ) {
-                    selectedConcernTypeId =
-                        if (position == 0) "" else concernTypeList[position - 1].id
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    selectedConcernTypeId = ""
-                }
-            }
-    }
-
-    private fun setupSubmitButton() {
-        binding.btnSubmit.setOnClickListener {
-            val description = binding.edtDescription.text.toString().trim()
-
-            when {
-                selectedConcernTypeId.isEmpty() ->
-                    Toast.makeText(this, "Please select a concern type", Toast.LENGTH_SHORT).show()
-
-                selectedRaisedTo.isEmpty() ->
-                    Toast.makeText(this, "Please select whom to raise the concern to", Toast.LENGTH_SHORT).show()
-
-                description.isEmpty() ->
-                    Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show()
-
-                else -> {
-                    pendingDescription = description
-                    Constant.showLoading(this)
-                    isUploadFilesInServer(Constant.file_)
-                }
-            }
-        }
-    }
 
     fun isUploadFilesInServer(isFileType: String?) {
         if (selectedFiles.isNotEmpty()) {
@@ -548,7 +395,7 @@ class RaiseConcernActivity :
 
             else -> {
                 ProgressDialogHelper.dismiss()
-                callRaiseConcernApi(pendingDescription)
+                callActionTakenApi(pendingDescription)
             }
         }
     }
@@ -573,7 +420,7 @@ class RaiseConcernActivity :
         if (selectedFiles.isEmpty()) {
             if (isVideoSelectedArrayList.isEmpty()) {
                 ProgressDialogHelper.dismiss()
-                callRaiseConcernApi(pendingDescription)
+                callActionTakenApi(pendingDescription)
             } else {
                 videoUploading(totalTasks, onTaskComplete)
             }
@@ -624,11 +471,12 @@ class RaiseConcernActivity :
                     val isSelectedFileCount = selectedFiles.size
 
                     for (i in selectedFiles.indices) {
+                        // NOTE: assumes StaffDetails exposes school_id — adjust if your field name differs
                         isAwsUploadingPreSigned?.getPreSignedUrl(
                             selectedFiles[i].path,
-                            isChildDetails!!.school_id,
+                            isStaffDetails!!.school_id,
                             isFileType!!,
-                            this@RaiseConcernActivity,
+                            this@ActionTakenActivity,
                             isCountryId!!,
                             false,
                             object : UploadCallback {
@@ -648,7 +496,7 @@ class RaiseConcernActivity :
 
                                     if (isTotalSelectedItem == isAwsUploadedFiles.size) {
                                         ProgressDialogHelper.dismiss()
-                                        callRaiseConcernApi(pendingDescription)
+                                        callActionTakenApi(pendingDescription)
                                     } else if (isAwsUploadingFile.size == isSelectedFileCount) {
                                         videoUploading(totalTasks, onTaskComplete)
                                     }
@@ -664,6 +512,27 @@ class RaiseConcernActivity :
                     Log.d("Compressor", "All files compressed and uploaded.")
                 })
         }
+    }
+
+
+    private fun callActionTakenApi(description: String) {
+        val filePathArray = JsonArray()
+        for (file in isAwsUploadedFiles) {
+            val obj = JsonObject()
+            obj.addProperty("url", file.isFileUrl)
+            obj.addProperty("type", file.isFileType)
+            filePathArray.add(obj)
+        }
+
+        val jsonObject = JsonObject().apply {
+            addProperty("concern_id", concernId)
+            addProperty("action", "action_taken")
+            addProperty("action_taken", description)
+            add("action_file_path", filePathArray)
+            addProperty("student_id", studentId)
+        }
+
+        appViewModel!!.isActionTakenConcern(isAccessToken!!, jsonObject, this)
     }
 
     private fun videoUploading(totalTasks: Int, onTaskComplete: () -> Unit) {
@@ -693,7 +562,7 @@ class RaiseConcernActivity :
             }
         } else {
             ProgressDialogHelper.dismiss()
-            callRaiseConcernApi(pendingDescription)
+            callActionTakenApi(pendingDescription)
         }
     }
 
@@ -705,7 +574,7 @@ class RaiseConcernActivity :
 
             if (isAwsUploadedFiles.size == isTotalSelectedItem) {
                 ProgressDialogHelper.dismiss()
-                callRaiseConcernApi(pendingDescription)
+                callActionTakenApi(pendingDescription)
             }
         }
     }
@@ -798,89 +667,9 @@ class RaiseConcernActivity :
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
-    private fun callRaiseConcernApi(description: String) {
-        val filePathArray = JsonArray()
-        for (file in isAwsUploadedFiles) {
-            val obj = JsonObject()
-            obj.addProperty("url", file.isFileUrl)
-            obj.addProperty("type", file.isFileType)
-            filePathArray.add(obj)
-        }
-
-        val jsonObject = JsonObject().apply {
-            addProperty("concern_type_id", selectedConcernTypeId)
-            addProperty("raised_to", selectedRaisedTo)
-            addProperty("description", description)
-            add("file_path", filePathArray)
-        }
-
-        appViewModel!!.isRaiseParentConcern(isAccessToken!!, jsonObject, this)
-    }
-
-    private fun confirmDeleteConcern(concern: ParentConcern) {
-        AlertDialog.Builder(this)
-            .setTitle("Delete concern")
-            .setMessage("Are you sure you want to delete this concern? This action cannot be undone.")
-            .setCancelable(true)
-            .setPositiveButton("Delete") { dialog, _ ->
-                dialog.dismiss()
-                deleteConcern(concern.id)
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
-    private fun deleteConcern(concernId: String) {
-        Constant.showLoading(this)
-        val jsonObject = JsonObject().apply {
-            addProperty("id", concernId)
-        }
-        appViewModel!!.isRemoveConcern(isAccessToken!!, jsonObject, this)
-    }
-
-    private fun clearForm() {
-        binding.spinnerConcernType.setSelection(0)
-        binding.rbManagement.isChecked = false
-        binding.rbPrincipal.isChecked = false
-        binding.rbClassTeacher.isChecked = false
-        binding.edtDescription.text.clear()
-        selectedConcernTypeId = ""
-        selectedRaisedTo = ""
-        pendingDescription = ""
-
-        selectedFiles.clear()
-        isAwsUploadedFiles.clear()
-        Constant.Remaining = MAX_FILES
-        renderDrawableToCacheFile(R.drawable.attachment_with_bg)?.let {
-            selectedFiles.add(FileItem(it, FileType.IMAGE))
-        }
-        mAdapter?.notifyDataSetChanged()
-    }
-
-    private fun setupConcernListRecycler() {
-        concernAdapter = ParentConcernAdapter(concernList, this) { concern ->
-            confirmDeleteConcern(concern)
-        }
-        binding.rvConcernList.layoutManager = LinearLayoutManager(this)
-        binding.rvConcernList.adapter = concernAdapter
-    }
-
-    private fun callParentConcernListApi() {
-        Constant.showLoading(this)
-        appViewModel!!.isParentConcernlist(isAccessToken!!, this)
-    }
-
-    private fun toggleEmptyState(isEmpty: Boolean) {
-        binding.rvConcernList.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
-    }
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgBack -> onBackPressed()
+
         }
     }
 

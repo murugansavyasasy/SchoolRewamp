@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/statusBarBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/PrimaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/relative_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusBarBackground">
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
+
+
+
+
+
+        <ScrollView
+            android:id="@+id/lytRaiseConcern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarLayout"
+            android:fillViewport="true"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/ten"
+                android:paddingTop="@dimen/fifteen"
+                android:paddingEnd="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblDescription"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="Remarks"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <EditText
+                    android:id="@+id/edtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/field_background"
+                    android:gravity="top|start"
+                    android:hint="Describe your Remarks"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/ten"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/edtDescription"
+                    android:layout_marginTop="@dimen/five">
+
+                    <TextView
+                        android:id="@+id/lblAddPhoto"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="@string/add_attachment"
+                        android:textColor="@color/black">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/eight"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_toEndOf="@+id/lblAddPhoto"
+                        android:text="@string/Optional"
+                        android:textColor="@color/mild_grey1"
+                        android:textSize="@dimen/thirteen_sp"></TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:src="@drawable/ic_attach_file"
+                        android:visibility="invisible">
+
+                    </ImageView>
+
+                    <RelativeLayout
+                        android:id="@+id/rytRecyclewview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblAddPhoto">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcyImages"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:orientation="vertical">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/btnSubmit"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rytRecyclewview"
+                        android:layout_marginStart="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/fifty"
+                        android:layout_marginEnd="@dimen/twenty_five"
+                        android:layout_marginBottom="@dimen/thirty"
+                        android:background="@drawable/rect_btn_orange"
+                        android:gravity="center"
+                        android:padding="@dimen/ten"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/lytConcernList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarLayout"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/rytSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/rect_grey"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/txtVideoMenu1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSearch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lblSearch"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvConcernList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rytSearch1"
+                android:layout_marginTop="@dimen/ten"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/ten" />
+
+            <LinearLayout
+                android:id="@+id/lytList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rytSearch1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/nomessage"
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:layout_gravity="center"
+                    android:src="@drawable/exam_marks_error_msg"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/no_list_found"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

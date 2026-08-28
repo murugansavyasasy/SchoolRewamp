@@ -78,7 +78,7 @@ class SchoolProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 }
 
                 binding.recyclerview.adapter =
-                    ProfileRewampFragmentAdapter(items, requireContext(), this)
+                    SchoolProfileRewampFragmentAdapter(items, requireContext(), this)
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
 

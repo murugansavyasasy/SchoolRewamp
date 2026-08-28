@@ -73,106 +73,150 @@
                     android:layout_toEndOf="@+id/lblRef"
                     android:src="@drawable/refresh" />
 
-
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lnrParent"
+        <HorizontalScrollView
+            android:id="@+id/hsvTabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/headerview"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="@dimen/ten"
-            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/lnrParent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/btnPayment"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/tabPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btnPayment"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/payment"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <View
+                        android:id="@+id/linePayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:background="@color/PrimaryColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabReceipt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btnReceipt"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/receipt"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <View
+                        android:id="@+id/lineReceipt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:background="@color/athens_gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabAllTrance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btnAllTrance"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/all_transaction"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <View
+                        android:id="@+id/lineTrance"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:background="@color/athens_gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabPaymentProof"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/five"
-                    android:text="@string/payment"
-                    android:textColor="@color/dark_blue"
-                    android:textSize="@dimen/twele_sp" />
+                    android:orientation="vertical">
 
-                <View
-                    android:id="@+id/linePayment"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:background="@color/PrimaryColor" />
+                    <TextView
+                        android:id="@+id/btnPaymentProof"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/ten"
+                        android:paddingTop="@dimen/five"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingBottom="@dimen/five"
+                        android:text="@string/payment_proof"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp" />
+
+                    <View
+                        android:id="@+id/linePaymentProof"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/three"
+                        android:background="@color/athens_gray" />
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/btnReceipt"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/five"
-                    android:text="@string/receipt"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp" />
-
-                <View
-                    android:id="@+id/lineReceipt"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:background="@color/athens_gray" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/btnAllTrance"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/five"
-                    android:text="@string/all_transaction"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp" />
-
-                <View
-                    android:id="@+id/lineTrance"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/three"
-                    android:background="@color/athens_gray" />
-            </LinearLayout>
-
-
-        </LinearLayout>
+        </HorizontalScrollView>
 
         <RelativeLayout
             android:id="@+id/rytSearch1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
-            android:layout_below="@+id/lnrParent"
+            android:layout_below="@+id/hsvTabs"
             android:layout_margin="@dimen/ten"
             android:background="@drawable/rect_grey"
             android:visibility="gone">

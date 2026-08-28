@@ -1192,4 +1192,5 @@
     <string name="exam_performance_comparison_subtitle">Exams: %1$s · All subjects out of %2$d marks each</string>
     <string name="audio_file">Audio File</string>
     <string name="audio_record">Audio Record</string>
+    <string name="payment_proof">Payment Proof</string>
 </resources>

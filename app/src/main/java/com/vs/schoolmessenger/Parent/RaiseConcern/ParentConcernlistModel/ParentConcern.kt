@@ -9,6 +9,7 @@ data class ParentConcern (
     val type_name: String,
     val description: String,
     val status: String,
+    val can_delete: Boolean,
     val file_path: List<ConcernFile>,
     val acknowledged_by: String,
     val acknowledged_on: String,
@@ -16,5 +17,8 @@ data class ParentConcern (
     val action_taken: String,
     val action_taken_by: String,
     val action_taken_on: String,
-    val raised_on: String
+    val action_file_path: List<ConcernFile>,
+    val raised_on: String,
+    val is_acknowledged: Boolean,
+    val is_action: Boolean
 )

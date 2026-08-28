@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/fourteen"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblRowLabel"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/PrimaryColor"
+        android:textSize="@dimen/eleven_sp"
+        tools:text="ACKNOWLEDGED BY"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+    <TextView
+        android:id="@+id/lblRowValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/four"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        tools:text="Trisha"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+</LinearLayout>

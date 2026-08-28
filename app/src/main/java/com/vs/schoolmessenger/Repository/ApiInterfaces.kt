@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
@@ -90,6 +91,7 @@ import com.vs.schoolmessenger.Parent.RaiseConcern.ActionTakenModel.ActionTakenRe
 import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernTypeResponse
 import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcernResponse
 import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseParentModel.RaiseConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RemoveModel.RemoveConcernResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -1643,5 +1645,20 @@ interface ApiInterfaces {
     fun isActionTakenConcern(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<ActionTakenResponse?>
+
+
+    @PUT(APIMethods.isRemoveConcern)
+    fun isRemoveConcern(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<RemoveConcernResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isPaymentProof)
+    fun isPaymentProof(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("academic_year_id") academic_year_id   : String,
+        @Query("country_id") country_id   : String,)
+            : Call<PaymentProofResponse?>
 
 }

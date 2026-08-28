@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
@@ -79,6 +80,7 @@ import com.vs.schoolmessenger.Parent.RaiseConcern.ActionTakenModel.ActionTakenRe
 import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernTypeResponse
 import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcernResponse
 import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseParentModel.RaiseConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RemoveModel.RemoveConcernResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -516,6 +518,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isParentConcernlist: LiveData<ParentConcernResponse?>? = null
     var isRaiseParentConcern: LiveData<RaiseConcernResponse?>? = null
     var isActionTakenConcern: LiveData<ActionTakenResponse?>? = null
+    var isRemoveConcern: LiveData<RemoveConcernResponse?>? = null
+    var isPaymentProof: LiveData<PaymentProofResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -738,6 +742,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isParentConcernlist = apiSchoolRepositoriesTwo.isParentConcernlistLiveData
         isRaiseParentConcern = apiSchoolRepositoriesTwo.isRaiseParentConcernLiveData
         isActionTakenConcern = apiSchoolRepositoriesTwo.isActionTakenConcernLiveData
+        isRemoveConcern = apiSchoolRepositoriesTwo.isRemoveConcernLiveData
+        isPaymentProof = apiSchoolRepositoriesTwo.isPaymentProofLiveData
     }
 
     fun isDashBoardData(
@@ -2429,6 +2435,27 @@ class App(application: Application) : AndroidViewModel(application) {
         RestClient.changeApiBaseUrl(base_url!!)
         apiSchoolRepositoriesTwo.isActionTakenConcern(isToken, jsonObject,activity)
     }
+
+
+    fun isRemoveConcern(
+        isToken: String,
+        jsonObject: JsonObject, activity: Activity
+    ) {
+        val base_url = SharedPreference.getBaseUrl(activity)
+        RestClient.changeApiBaseUrl(base_url!!)
+        apiSchoolRepositoriesTwo.isRemoveConcern(isToken, jsonObject,activity)
+    }
+
+    fun isPaymentProof(
+        isToken: String,
+        academic_year_id: String,country_id: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.isPaymentProof(isToken, academic_year_id,country_id,activity)
+    }
+
 }
 
 

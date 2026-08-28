@@ -913,6 +913,18 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".School.SchoolRaiseConcern.SchoolRaiseConcernActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".School.SchoolRaiseConcern.ActionTakenActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
