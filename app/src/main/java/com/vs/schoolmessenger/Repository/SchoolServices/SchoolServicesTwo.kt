@@ -8,8 +8,14 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestMarkResponse
 import com.vs.schoolmessenger.Parent.ClassTestMark.DataClass.ClassTestResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofResponse
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
+import com.vs.schoolmessenger.Parent.RaiseConcern.ActionTakenModel.ActionTakenResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernTypeResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseParentModel.RaiseConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RemoveModel.RemoveConcernResponse
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.ClassTest.Report.DeleteClassTestExamModel.DeleteClassTestResponse
 import com.vs.schoolmessenger.School.ClassTest.Report.ExamTestDeleteModel.ExamTestDeleteResponse
@@ -30,7 +36,6 @@ import com.vs.schoolmessenger.School.Hostel.Model.OutPassRequest.OutpassUpdateSt
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.HostelRoomAttendanceStudentList.getHostelStudentRoomAttendance
 import com.vs.schoolmessenger.School.Hostel.Model.RoomAttendance.RoomMarkAttendance.hostelMarkAttendanceRespone
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
-import kotlinx.serialization.StringFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,6 +65,12 @@ class SchoolServicesTwo {
     var isexamdetailsmarkpost: MutableLiveData<UploadMarksClassEntryResponse?>
     var isExamtestAnalysis: MutableLiveData<StudentAnalysisResponse?>
     var isExamtestAnalysisSets: MutableLiveData<AnalysisSetsResponse?>
+    var isRaiseConcernType: MutableLiveData<ConcernTypeResponse?>
+    var isParentConcernlist: MutableLiveData<ParentConcernResponse?>
+    var isRaiseParentConcern: MutableLiveData<RaiseConcernResponse?>
+    var isActionTakenConcern: MutableLiveData<ActionTakenResponse?>
+    var isRemoveConcern: MutableLiveData<RemoveConcernResponse?>
+    var isPaymentProof: MutableLiveData<PaymentProofResponse?>
 
 
     init {
@@ -87,6 +98,12 @@ class SchoolServicesTwo {
         isexamdetailsmarkpost = MutableLiveData()
         isExamtestAnalysis = MutableLiveData()
         isExamtestAnalysisSets = MutableLiveData()
+        isRaiseConcernType = MutableLiveData()
+        isParentConcernlist = MutableLiveData()
+        isRaiseParentConcern = MutableLiveData()
+        isActionTakenConcern = MutableLiveData()
+        isRemoveConcern = MutableLiveData()
+        isPaymentProof = MutableLiveData()
 
     }
 
@@ -803,5 +820,194 @@ class SchoolServicesTwo {
 
     val isExamtestAnalysisSetsLiveData: LiveData<AnalysisSetsResponse?>
         get() = isExamtestAnalysisSets
+
+
+    fun isRaiseConcernType(
+        isToken: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isRaiseConcernType(isToken)
+            ?.enqueue(object : Callback<ConcernTypeResponse?> {
+                override fun onResponse(
+                    call: Call<ConcernTypeResponse?>, response: Response<ConcernTypeResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isRaiseConcernType.postValue(response.body())
+                        }
+                    } else {
+                        isRaiseConcernType.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ConcernTypeResponse?>, t: Throwable) {
+                    isRaiseConcernType.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isRaiseConcernTypeLiveData: LiveData<ConcernTypeResponse?>
+        get() = isRaiseConcernType
+
+
+
+    fun isParentConcernlist(
+        isToken: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isParentConcernlist(isToken)
+            ?.enqueue(object : Callback<ParentConcernResponse?> {
+                override fun onResponse(
+                    call: Call<ParentConcernResponse?>, response: Response<ParentConcernResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isParentConcernlist.postValue(response.body())
+                        }
+                    } else {
+                        isParentConcernlist.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ParentConcernResponse?>, t: Throwable) {
+                    isParentConcernlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isParentConcernlistLiveData: LiveData<ParentConcernResponse?>
+        get() = isParentConcernlist
+
+
+    fun isRaiseParentConcern(
+        isToken: String,jsonObject: JsonObject,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isRaiseParentConcern(isToken,jsonObject)
+            ?.enqueue(object : Callback<RaiseConcernResponse?> {
+                override fun onResponse(
+                    call: Call<RaiseConcernResponse?>, response: Response<RaiseConcernResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isRaiseParentConcern.postValue(response.body())
+                        }
+                    } else {
+                        isRaiseParentConcern.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<RaiseConcernResponse?>, t: Throwable) {
+                    isRaiseParentConcern.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isRaiseParentConcernLiveData: LiveData<RaiseConcernResponse?>
+        get() = isRaiseParentConcern
+
+    fun isActionTakenConcern(
+        isToken: String,jsonObject: JsonObject,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isActionTakenConcern(isToken,jsonObject)
+            ?.enqueue(object : Callback<ActionTakenResponse?> {
+                override fun onResponse(
+                    call: Call<ActionTakenResponse?>, response: Response<ActionTakenResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isActionTakenConcern.postValue(response.body())
+                        }
+                    } else {
+                        isActionTakenConcern.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ActionTakenResponse?>, t: Throwable) {
+                    isActionTakenConcern.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isActionTakenConcernLiveData: LiveData<ActionTakenResponse?>
+        get() = isActionTakenConcern
+
+
+    fun isRemoveConcern(
+        isToken: String,jsonObject: JsonObject,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isRemoveConcern(isToken,jsonObject)
+            ?.enqueue(object : Callback<RemoveConcernResponse?> {
+                override fun onResponse(
+                    call: Call<RemoveConcernResponse?>, response: Response<RemoveConcernResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isRemoveConcern.postValue(response.body())
+                        }
+                    } else {
+                        isRemoveConcern.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<RemoveConcernResponse?>, t: Throwable) {
+                    isRemoveConcern.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isRemoveConcernLiveData: LiveData<RemoveConcernResponse?>
+        get() = isRemoveConcern
+
+
+
+
+    fun isPaymentProof(
+        isToken: String,academic_year_id: String,country_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isPaymentProof(isToken,academic_year_id,country_id)
+            ?.enqueue(object : Callback<PaymentProofResponse?> {
+                override fun onResponse(
+                    call: Call<PaymentProofResponse?>, response: Response<PaymentProofResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            isPaymentProof.postValue(response.body())
+                        }
+                    } else {
+                        isPaymentProof.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<PaymentProofResponse?>, t: Throwable) {
+                    isPaymentProof.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPaymentProofLiveData: LiveData<PaymentProofResponse?>
+        get() = isPaymentProof
+
 
 }

@@ -83,6 +83,7 @@ import com.vs.schoolmessenger.School.NoticeBoard.NoticeBoardReport
 import com.vs.schoolmessenger.School.PTM.Activity.PTM
 import com.vs.schoolmessenger.School.QuizExam.ExamQuiz
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
+import com.vs.schoolmessenger.School.SchoolRaiseConcern.SchoolRaiseConcernActivity
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffLeaveRequest.StaffLeaveRequest
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -237,13 +238,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     //Hardcode from here
                     //Added the hardcode data
 
-//                                        originalMenuList.add(
-//                        MenuDetail(
-//                            id = 222,
-//                            name = "Class Test Analysis",
-//                            description = "Student exam review and marks"
-//                        )
-//                    )
+                                        originalMenuList.add(
+                        MenuDetail(
+                            id = 222,
+                            name = "Raise Concern",
+                            description = "Student exam review and marks"
+                        )
+                    )
 
                     //Hardcode till here
                     filteredMenuList.clear()
@@ -1027,6 +1028,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         SchoolList::class.java
                     } else {
                         StandardActivity::class.java
+                    }
+                }
+            }
+
+
+            Constant.M_EXAMREVIEW-> {
+
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
+                    SchoolRaiseConcernActivity::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        SchoolRaiseConcernActivity::class.java
                     }
                 }
             }

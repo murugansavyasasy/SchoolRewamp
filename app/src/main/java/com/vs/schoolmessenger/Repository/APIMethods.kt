@@ -266,6 +266,12 @@ object APIMethods {
 
     const val isExamtestAnalysis ="exam/api/exam-test/student-analysis"
     const val isExamtestAnalysisSets ="exam/api/exam-test/analysis-sets-list"
+    const val isRaiseConcernType ="admin/api/parent-concern/get-concern-types"
+    const val isParentConcernlist ="admin/api/parent-concern/get-concerns"
+    const val isRaiseParentConcern ="admin/api/parent-concern/raise-concern"
+    const val isActionTakenConcern ="admin/api/parent-concern/action-Taken"
+    const val isRemoveConcern ="admin/api/parent-concern/delete"
+    const val isPaymentProof ="fee/api/fee-details/payment-proof"
 
 }
 

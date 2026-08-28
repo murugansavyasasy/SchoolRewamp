@@ -62,12 +62,12 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableRewampModel.ExamTimetableResponse
-import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.FeeInvoiceResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.InvoiceDetailsResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.OnlinePaymentResponse
 import com.vs.schoolmessenger.Parent.FeeDetails.Model.PaymentStatusResponse
+import com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDashboard.getParentHostelDashboard
 import com.vs.schoolmessenger.Parent.Hostel.Model.ParentHostelDetails.getParentHostelDetails
@@ -87,6 +87,11 @@ import com.vs.schoolmessenger.Parent.QuizExam.Model.GetQuestion.GetQuizQuestions
 import com.vs.schoolmessenger.Parent.QuizExam.Model.MySubmission.GetMySubmission
 import com.vs.schoolmessenger.Parent.QuizExam.Model.QuizExamList.GetQuizExamList
 import com.vs.schoolmessenger.Parent.QuizExam.Model.SubmitQuiz.SubmitQuizResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ActionTakenModel.ActionTakenResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ConcernTypeModel.ConcernTypeResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RaiseParentModel.RaiseConcernResponse
+import com.vs.schoolmessenger.Parent.RaiseConcern.RemoveModel.RemoveConcernResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
@@ -1609,8 +1614,6 @@ interface ApiInterfaces {
         @Query("analysis_set_id") analysis_set_id    : String,)
     : Call<StudentAnalysisResponse?>
 
-
-
     @Headers("Content-Type: application/json")
     @GET(APIMethods.isExamtestAnalysisSets)
     fun isExamtestAnalysisSets(
@@ -1618,5 +1621,44 @@ interface ApiInterfaces {
         @Query("class_id") class_id  : String,
         @Query("section_id") section_id  : String,)
             : Call<AnalysisSetsResponse?>
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isRaiseConcernType)
+    fun isRaiseConcernType(
+        @Header(APIKeyNames.Authorization) token: String): Call<ConcernTypeResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isParentConcernlist)
+    fun isParentConcernlist(
+        @Header(APIKeyNames.Authorization) token: String): Call<ParentConcernResponse?>
+
+
+    @POST(APIMethods.isRaiseParentConcern)
+    fun isRaiseParentConcern(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject,
+    ): Call<RaiseConcernResponse?>
+
+
+    @PUT(APIMethods.isActionTakenConcern)
+    fun isActionTakenConcern(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<ActionTakenResponse?>
+
+
+    @PUT(APIMethods.isRemoveConcern)
+    fun isRemoveConcern(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<RemoveConcernResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.isPaymentProof)
+    fun isPaymentProof(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("academic_year_id") academic_year_id   : String,
+        @Query("country_id") country_id   : String,)
+            : Call<PaymentProofResponse?>
 
 }

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/ten"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/ten"
+    android:id="@+id/header"
+    android:background="@drawable/bg_card_white_rounded"
+    android:elevation="@dimen/two"
+    android:orientation="vertical"
+    android:padding="@dimen/fourteen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:background="@drawable/bg_avatar_circle">
+
+            <TextView
+                android:id="@+id/lblInitials"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                tools:text="" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"
+                tools:text="" />
+
+            <TextView
+                android:id="@+id/lblClassInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/two"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp"
+                tools:text="" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblStatus"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/bg_status_chip"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/four"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/four"
+            android:textSize="@dimen/eleven_sp"
+            tools:text="" />
+
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="@dimen/thirty_two"
+            android:layout_height="@dimen/thirty_two"
+            android:background="@drawable/bg_delete_circle"
+            android:padding="@dimen/eight"
+            android:src="@drawable/delete_icon_2"
+            app:tint="#E14545"
+            android:contentDescription="@string/delete" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twele"
+        android:background="@drawable/bg_type_chip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/ten"
+        android:paddingTop="@dimen/six"
+        android:paddingEnd="@dimen/ten"
+        android:paddingBottom="@dimen/six">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="19dp"
+            android:src="@drawable/ic_graduation_cap"
+            app:tint="@color/PrimaryColor" />
+
+        <TextView
+            android:id="@+id/lblConcernType"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/six"
+            android:textColor="@color/PrimaryColor"
+            android:textSize="@dimen/twele"
+            tools:text="" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        tools:text="" />
+
+    <LinearLayout
+        android:id="@+id/lytParentAttachmentsHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fourteen"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/thirteen"
+                android:layout_height="@dimen/thirteen"
+                android:src="@drawable/attachment_icon_2"
+                app:tint="@color/grey_color" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/six"
+                android:text="PARENT ATTACHMENTS"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="@dimen/eleven_sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblNoParentAttachments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/six"
+            android:text="No attachments"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/twele_sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/rytParentAttachments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:background="@drawable/bg_radiantwhite1"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyParentAttachments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/totalParentAttachments"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone"
+                tools:text="+9" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/lblActionDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        android:maxLines="2"
+        android:visibility="gone"
+        android:ellipsize="end"
+        tools:text="" />
+
+
+    <LinearLayout
+        android:id="@+id/lytActionAttachmentsHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fourteen"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
+                android:src="@drawable/file_noticeboard"
+                app:tint="#1E8E5A" />
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/six"
+                android:text="ACTION ATTACHMENTS"
+                android:textColor="#1E8E5A"
+                android:textSize="@dimen/eleven_sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblNoActionAttachments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/six"
+            android:text="No attachments"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/twele_sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/rytActionAttachments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/eight"
+            android:background="@drawable/bg_radiantwhite1"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyActionAttachments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/five"
+                android:paddingEnd="@dimen/five" />
+
+            <TextView
+                android:id="@+id/totalActionAttachments"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="@dimen/thirty_six"
+                android:layout_height="@dimen/thirty_six"
+                android:layout_marginStart="@dimen/minus_fifteen"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:gravity="center"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone"
+                tools:text="+9" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twele"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/eleven_sp"
+        tools:text="" />
+
+    <LinearLayout
+        android:id="@+id/rytActionButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twele"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/btnAcknowledge"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/six"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_blue"
+            android:drawablePadding="@dimen/six"
+            android:gravity="center"
+            android:paddingTop="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="Acknowledge"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            android:id="@+id/btnActionTaken"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/six"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_green"
+            android:drawablePadding="@dimen/six"
+            android:gravity="center"
+            android:paddingTop="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="Action Taken"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
