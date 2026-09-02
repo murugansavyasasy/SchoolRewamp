@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.FeeDetails
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -68,6 +71,10 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
 
     private var msg_id: Int = -1
     private var fromNotification: Boolean = false
+
+    private var filePathCallback: ValueCallback<Array<Uri>>? = null
+
+    private val FILE_CHOOSER_REQUEST_CODE = 1001
 
     override fun setupViews() {
         super.setupViews()
@@ -235,6 +242,64 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         }
     }
 
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
+
+        if (requestCode != FILE_CHOOSER_REQUEST_CODE) {
+            return
+        }
+
+        Log.d(
+            "WEBVIEW_UPLOAD",
+            "File picker result: $resultCode"
+        )
+
+        val result: Array<Uri>? =
+
+            if (resultCode == Activity.RESULT_OK) {
+
+                when {
+
+
+                    data?.clipData != null -> {
+
+                        val clipData = data.clipData!!
+
+                        Array(clipData.itemCount) { index ->
+                            clipData.getItemAt(index).uri
+                        }
+                    }
+
+
+                    data?.data != null -> {
+
+                        arrayOf(data.data!!)
+                    }
+
+                    else -> null
+                }
+
+            } else {
+                null
+            }
+
+        filePathCallback?.onReceiveValue(result)
+
+        filePathCallback = null
+    }
+
+
+
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
@@ -347,31 +412,91 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
     }
 
 
+
+    @SuppressLint("SetJavaScriptEnabled")
     private fun loadPaymentPage(webView: WebView) {
+
         val settings = webView.settings
+
         settings.javaScriptEnabled = true
-        settings.domStorageEnabled = true
-        settings.setSupportMultipleWindows(true)
         settings.javaScriptCanOpenWindowsAutomatically = true
+
+        settings.domStorageEnabled = true
+        settings.databaseEnabled = true
+
+        settings.allowFileAccess = true
+        settings.allowContentAccess = true
+
+        settings.setSupportMultipleWindows(true)
+
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
+
         settings.setSupportZoom(true)
         settings.builtInZoomControls = false
+        settings.displayZoomControls = false
+
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-        settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
+        settings.cacheMode = WebSettings.LOAD_DEFAULT
 
         webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
         webView.isScrollbarFadingEnabled = true
-        settings.databaseEnabled = true
 
-        settings.cacheMode = WebSettings.LOAD_DEFAULT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         } else {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }
 
+
         webView.webChromeClient = object : WebChromeClient() {
+
+            override fun onShowFileChooser(
+                webView: WebView?,
+                filePath: ValueCallback<Array<Uri>>?,
+                fileChooserParams: FileChooserParams?
+            ): Boolean {
+
+                Log.d("WEBVIEW_UPLOAD", "File chooser requested")
+
+                filePathCallback?.onReceiveValue(null)
+
+                filePathCallback = filePath
+
+                try {
+
+                    val intent = fileChooserParams?.createIntent()
+
+                    if (intent != null) {
+
+                        Log.d(
+                            "WEBVIEW_UPLOAD",
+                            "Opening file picker"
+                        )
+
+                        startActivityForResult(
+                            intent,
+                            FILE_CHOOSER_REQUEST_CODE
+                        )
+
+                        return true
+                    }
+
+                } catch (e: Exception) {
+
+                    Log.e(
+                        "WEBVIEW_UPLOAD",
+                        "Unable to open file chooser",
+                        e
+                    )
+
+                    filePathCallback = null
+                }
+
+                return false
+            }
+
 
             override fun onCreateWindow(
                 view: WebView,
@@ -380,32 +505,55 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 resultMsg: Message
             ): Boolean {
 
+                Log.d(
+                    "WEBVIEW_WINDOW",
+                    "Creating new WebView window"
+                )
+
                 val newWebView = WebView(this@FeeDetails)
+
                 loadPaymentPage(newWebView)
 
                 val params = FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
+
                 newWebView.layoutParams = params
+
                 binding.webviewContainer.addView(newWebView)
 
                 popupWebViewStack.push(newWebView)
 
-                val transport = resultMsg.obj as WebView.WebViewTransport
+                val transport =
+                    resultMsg.obj as WebView.WebViewTransport
+
                 transport.webView = newWebView
+
                 resultMsg.sendToTarget()
+
                 return true
             }
 
+
+
             override fun onCloseWindow(window: WebView) {
+
                 if (popupWebViewStack.isNotEmpty()) {
-                    val closingWebView = popupWebViewStack.pop()
-                    binding.webviewContainer.removeView(closingWebView)
+
+                    val closingWebView =
+                        popupWebViewStack.pop()
+
+                    binding.webviewContainer.removeView(
+                        closingWebView
+                    )
+
                     closingWebView.destroy()
                 }
             }
         }
+
+
 
         webView.webViewClient = object : WebViewClient() {
 
@@ -413,18 +561,37 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 view: WebView,
                 request: WebResourceRequest
             ): Boolean {
-                return handleUri(view, request.url)
+
+                return handleUri(
+                    view,
+                    request.url
+                )
             }
 
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                val uri = Uri.parse(url)
-                return handleUri(view, uri)
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                url: String
+            ): Boolean {
+
+                return handleUri(
+                    view,
+                    Uri.parse(url)
+                )
             }
 
-            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                if (!isProgressLoading){
-                    isProgressLoading=true
-                    Constant.showLoading(this@FeeDetails)
+            override fun onPageStarted(
+                view: WebView,
+                url: String,
+                favicon: Bitmap?
+            ) {
+
+                if (!isProgressLoading) {
+
+                    isProgressLoading = true
+
+                    Constant.showLoading(
+                        this@FeeDetails
+                    )
                 }
             }
 
@@ -434,27 +601,58 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 description: String?,
                 failingUrl: String?
             ) {
-                Constant.hideLoading(this@FeeDetails)
-                isProgressLoading=false
+
+                Constant.hideLoading(
+                    this@FeeDetails
+                )
+
+                isProgressLoading = false
+
+                Log.e(
+                    "WEBVIEW_ERROR",
+                    "Error: $errorCode $description"
+                )
             }
 
-            override fun onPageFinished(view: WebView, url: String) {
-                isProgressLoading=false
-                Constant.hideLoading(this@FeeDetails)
-                Log.d("callbackURL", url)
+            override fun onPageFinished(
+                view: WebView,
+                url: String
+            ) {
+
+                isProgressLoading = false
+
+                Constant.hideLoading(
+                    this@FeeDetails
+                )
+
+                Log.d(
+                    "callbackURL",
+                    url
+                )
 
                 when {
-                    url.contains("/#/paymentsucccess/success") -> {
+
+                    url.contains(
+                        "/#/paymentsucccess/success"
+                    ) -> {
+
                         paymentSuccess(
                             getString(R.string.payment_done),
-                            getString(R.string.payment_successful_view_download_receipt_on_receipt_tab)
+                            getString(
+                                R.string.payment_successful_view_download_receipt_on_receipt_tab
+                            )
                         )
                     }
 
-                    url.contains("/#/paymentsucccess/failed") -> {
+                    url.contains(
+                        "/#/paymentsucccess/failed"
+                    ) -> {
+
                         paymentFailed(
                             getString(R.string.payment_failed),
-                            getString(R.string.please_try_again_later)
+                            getString(
+                                R.string.please_try_again_later
+                            )
                         )
                     }
                 }
