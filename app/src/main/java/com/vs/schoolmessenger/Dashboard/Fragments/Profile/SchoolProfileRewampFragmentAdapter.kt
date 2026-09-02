@@ -42,6 +42,8 @@ class SchoolProfileRewampFragmentAdapter(
     companion object {
         private const val VIEW_TYPE_HEADER = 0
         private const val VIEW_TYPE_FIELD = 1
+
+        private const val HINT_COLOR = "#9E9E9E"
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -87,41 +89,27 @@ class SchoolProfileRewampFragmentAdapter(
 
     inner class FieldViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
         private val titlelabel: TextView = itemView.findViewById(R.id.titlelabel)
         private val titlevalue: EditText = itemView.findViewById(R.id.titlevalue)
         private val titlelayout: LinearLayout = itemView.findViewById(R.id.titlelayout)
-        private val titleFieldContainer: View = itemView.findViewById(R.id.titlefieldcontainer)
-        private val titleEditIcon: ImageView = itemView.findViewById(R.id.titleEditIcon)
-
 
         private val remarksvalue: EditText = itemView.findViewById(R.id.remarksvalue)
         private val remarkslayout: LinearLayout = itemView.findViewById(R.id.remarks_layout)
         private val remarkslabel: TextView = itemView.findViewById(R.id.remarkslabel)
-        private val remarksEditIcon: ImageView = itemView.findViewById(R.id.remarksEditIcon)
-
 
         private val datelabel: TextView = itemView.findViewById(R.id.datelabel)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
         private val datelayout: LinearLayout = itemView.findViewById(R.id.datelayout)
-        private val dateFieldContainer: View = itemView.findViewById(R.id.datefieldcontainer)
-        private val dateEditIcon: ImageView = itemView.findViewById(R.id.dateEditIcon)
-
+        private val ivCalendarIcon: ImageView = itemView.findViewById(R.id.ivCalendarIcon)
 
         private val dropdownvalue: AutoCompleteTextView = itemView.findViewById(R.id.dropdownvalue)
         private val dropdownlayout: LinearLayout = itemView.findViewById(R.id.dropdownlayout)
         private val dropdownlabel: TextView = itemView.findViewById(R.id.dropdownlabel)
-        private val dropdownFieldContainer: View = itemView.findViewById(R.id.dropdownfieldcontainer)
-        private val dropdownEditIcon: ImageView = itemView.findViewById(R.id.dropdownEditIcon)
-
 
         private val genderLayout: LinearLayout = itemView.findViewById(R.id.genderLayout)
-        private val genderEditIcon: ImageView = itemView.findViewById(R.id.genderEditIcon)
-
 
         private val imagelayout: LinearLayout = itemView.findViewById(R.id.imagelayout)
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
-        private val imageEditIcon: ImageView = itemView.findViewById(R.id.imageEditIcon)
         private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
         private val selectedFilesContainer: FrameLayout =
             itemView.findViewById(R.id.selectedFilesContainer)
@@ -144,20 +132,26 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.text_, Constant.mobile, Constant.number -> {
                     titlelayout.visibility = View.VISIBLE
 
-                    applyEditableVisualState(field, titlelabel, titleFieldContainer, titleEditIcon)
+//                    titlelabel.text = editableLabelText(field)
 
-                    titlevalue.setSafeTextWatcher(field) { field.value = it }
-                    titlevalue.isEnabled = field.is_editable
-                    titlevalue.setTextColor(valueTextColor(field.is_editable))
+                    titlevalue.hint = field.title
+                    titlevalue.setHintTextColor(Color.parseColor(HINT_COLOR))
+                    titlevalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+
+                    if (field.is_editable) {
+                        titlevalue.setSafeTextWatcher(field) { field.value = it }
+                        titlevalue.isEnabled = true
+                    } else {
+                        clearTextWatcher(titlevalue)
+                        titlevalue.setText(field.value ?: "")
+                        titlevalue.isEnabled = false
+                    }
                 }
 
                 Constant.image_ -> {
                     imagelayout.visibility = View.VISIBLE
 
                     imagelabel.text = requiredLabel(field)
-                    imageEditIcon.setImageResource(
-                        if (field.is_editable) R.drawable.ic_edit else R.drawable.ic_lock
-                    )
 
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
@@ -196,9 +190,6 @@ class SchoolProfileRewampFragmentAdapter(
                     imagelayout.visibility = View.VISIBLE
 
                     imagelabel.text = requiredLabel(field)
-                    imageEditIcon.setImageResource(
-                        if (field.is_editable) R.drawable.ic_edit else R.drawable.ic_lock
-                    )
 
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
@@ -244,45 +235,65 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
 
-                    applyEditableVisualState(field, remarkslabel, remarksvalue, remarksEditIcon)
+//                    remarkslabel.text = editableLabelText(field)
 
-                    remarksvalue.setSafeTextWatcher(field) { field.value = it }
-                    remarksvalue.isEnabled = field.is_editable
-                    remarksvalue.setTextColor(valueTextColor(field.is_editable))
+                    remarksvalue.hint = field.title
+                    remarksvalue.setHintTextColor(Color.parseColor(HINT_COLOR))
+                    remarksvalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+
+                    if (field.is_editable) {
+                        remarksvalue.setSafeTextWatcher(field) { field.value = it }
+                        remarksvalue.isEnabled = true
+                    } else {
+                        clearTextWatcher(remarksvalue)
+                        remarksvalue.setText(field.value ?: "")
+                        remarksvalue.isEnabled = false
+                    }
                 }
 
                 Constant.calendar -> {
                     datelayout.visibility = View.VISIBLE
 
-                    applyEditableVisualState(field, datelabel, dateFieldContainer, dateEditIcon)
+//                    datelabel.text = editableLabelText(field)
 
-                    datevalue.text = field.value.orEmpty()
-                    datevalue.setTextColor(valueTextColor(field.is_editable))
-
-                    datelayout.setOnClickListener {
-                        if (!field.is_editable) return@setOnClickListener
-
-                        val calendar = Calendar.getInstance()
-
-                        DatePickerDialog(
-                            itemView.context,
-                            { _, year, month, day ->
-                                val selectedDate = String.format(
-                                    "%02d-%02d-%04d",
-                                    day,
-                                    month + 1,
-                                    year
-                                )
-                                datevalue.text = selectedDate
-                                field.value = selectedDate
-                            },
-                            calendar.get(Calendar.YEAR),
-                            calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH)
-                        ).apply {
-                            datePicker.maxDate = System.currentTimeMillis()
-                        }.show()
+                    if (field.value.isNullOrBlank()) {
+                        datevalue.text = field.title.orEmpty()
+                        datevalue.setTextColor(Color.parseColor(HINT_COLOR))
+                    } else {
+                        datevalue.text = field.value
+                        datevalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
                     }
+
+                    val openDatePicker: (View) -> Unit = {
+                        if (field.is_editable) {
+                            val calendar = Calendar.getInstance()
+
+                            DatePickerDialog(
+                                itemView.context,
+                                { _, year, month, day ->
+                                    val selectedDate = String.format(
+                                        "%02d-%02d-%04d",
+                                        day,
+                                        month + 1,
+                                        year
+                                    )
+                                    datevalue.text = selectedDate
+                                    datevalue.setTextColor(
+                                        ContextCompat.getColor(itemView.context, R.color.black)
+                                    )
+                                    field.value = selectedDate
+                                },
+                                calendar.get(Calendar.YEAR),
+                                calendar.get(Calendar.MONTH),
+                                calendar.get(Calendar.DAY_OF_MONTH)
+                            ).apply {
+                                datePicker.maxDate = System.currentTimeMillis()
+                            }.show()
+                        }
+                    }
+
+                    ivCalendarIcon.setOnClickListener(openDatePicker)
+                    datelayout.setOnClickListener(openDatePicker)
                 }
 
                 Constant.gender -> {
@@ -294,11 +305,7 @@ class SchoolProfileRewampFragmentAdapter(
                     val radioFemale: RadioButton = itemView.findViewById(R.id.radioFemale)
                     val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
 
-                    // was: genderLabel.text = requiredLabel(field)
-                    genderLabel.text = editableLabelText(field)
-                    genderEditIcon.setImageResource(
-                        if (field.is_editable) R.drawable.ic_edit else R.drawable.ic_lock
-                    )
+//                    genderLabel.text = editableLabelText(field)
 
                     when (field.value?.lowercase()) {
                         Constant.male -> radioMale.isChecked = true
@@ -324,7 +331,7 @@ class SchoolProfileRewampFragmentAdapter(
                 Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
 
-                    applyEditableVisualState(field, dropdownlabel, dropdownFieldContainer, dropdownEditIcon)
+//                    dropdownlabel.text = editableLabelText(field)
 
                     val options = field.options.orEmpty()
 
@@ -335,11 +342,17 @@ class SchoolProfileRewampFragmentAdapter(
                     )
 
                     dropdownvalue.setAdapter(adapterDropdown)
-                    dropdownvalue.setText(field.value.orEmpty(), false)
+                    dropdownvalue.hint = field.title
+                    dropdownvalue.setHintTextColor(Color.parseColor(HINT_COLOR))
+                    dropdownvalue.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+                    dropdownvalue.setText(field.value ?: "", false)
                     dropdownvalue.isEnabled = field.is_editable
-                    dropdownvalue.setTextColor(valueTextColor(field.is_editable))
 
-                    dropdownvalue.setSafeTextWatcher(field) { field.value = it }
+                    if (field.is_editable) {
+                        dropdownvalue.setSafeTextWatcher(field) { field.value = it }
+                    } else {
+                        clearTextWatcher(dropdownvalue)
+                    }
                 }
             }
         }
@@ -356,12 +369,9 @@ class SchoolProfileRewampFragmentAdapter(
             }
         }
 
-        private fun valueTextColor(isEditable: Boolean): Int {
-            return if (isEditable) {
-                ContextCompat.getColor(itemView.context, R.color.black)
-            } else {
-                Color.parseColor("#9E9E9E")
-            }
+        private fun clearTextWatcher(editText: EditText) {
+            (editText.tag as? TextWatcher)?.let { editText.removeTextChangedListener(it) }
+            editText.tag = null
         }
 
         fun mapUrlsToCommonFileData(urls: List<String>): List<CommonFileData> {
@@ -397,40 +407,26 @@ class SchoolProfileRewampFragmentAdapter(
             }
         }
 
-        private fun editableLabelText(field: ProfileField): CharSequence {
-            val editStatusText = if (field.is_editable) {
-                " <font color='#4CAF50'>(Editable)</font>"
-            } else {
-                " <font color='#9E9E9E'>(Non-editable)</font>"
-            }
 
-            return if (field.optional == false) {
-                Html.fromHtml(
-                    "${field.title} <font color='#FF0000'>*</font>$editStatusText",
-                    Html.FROM_HTML_MODE_LEGACY
-                )
-            } else {
-                Html.fromHtml(
-                    "${field.title}$editStatusText",
-                    Html.FROM_HTML_MODE_LEGACY
-                )
-            }
-        }
-
-        private fun applyEditableVisualState(
-            field: ProfileField,
-            label: TextView,
-            container: View,
-            icon: ImageView
-        ) {
-            label.text = editableLabelText(field)
-
-            container.background = itemView.context.getDrawable(
-                if (field.is_editable) R.drawable.field_background else R.drawable.field_background_disabled
-            )
-            icon.setImageResource(if (field.is_editable) R.drawable.ic_edit else R.drawable.ic_lock)
-            icon.visibility = View.VISIBLE
-        }
+//        private fun editableLabelText(field: ProfileField): CharSequence {
+//            val editStatusText = if (field.is_editable) {
+//                " <font color='#4CAF50'><small>(Editable)</small></font>"
+//            } else {
+//                " <font color='#9E9E9E'><small>(Non-editable)</small></font>"
+//            }
+//
+//            return if (field.optional == false) {
+//                Html.fromHtml(
+//                    "${field.title} <font color='#FF0000'>*</font>$editStatusText",
+//                    Html.FROM_HTML_MODE_LEGACY
+//                )
+//            } else {
+//                Html.fromHtml(
+//                    "${field.title}$editStatusText",
+//                    Html.FROM_HTML_MODE_LEGACY
+//                )
+//            }
+//        }
 
         fun detachRcyImages() {
             if (isRcyImagesAttached) {

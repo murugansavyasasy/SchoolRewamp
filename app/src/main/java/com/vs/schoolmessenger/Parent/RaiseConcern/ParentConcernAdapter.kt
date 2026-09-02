@@ -1,12 +1,19 @@
 package com.vs.schoolmessenger.Parent.RaiseConcern
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
@@ -16,6 +23,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ConcernFile
 import com.vs.schoolmessenger.Parent.RaiseConcern.ParentConcernlistModel.ParentConcern
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ItemConcernListBinding
 import java.text.SimpleDateFormat
@@ -47,7 +55,21 @@ class ParentConcernAdapter(
                 "Class ${item.class_name}-${item.section_name} \u00b7 ID: ${item.student_id.take(3)}..."
             lblInitials.text = getInitials(item.student_name)
             lblConcernType.text = item.type_name
-            lblDescription.text = item.description
+
+            if (item.description.isNullOrEmpty()) {
+                lblDescription.isGone = true
+            } else {
+                lblDescription.isVisible = true
+                lblDescription.text = item.description
+            }
+
+            if (item.action_taken.isNullOrEmpty()) {
+                lblActionDescription.isGone = true
+            } else {
+                lblActionDescription.isVisible = true
+                lblActionDescription.text = item.action_taken
+            }
+
             lblDate.text = "Raised on ${formatDate(item.raised_on)}"
 
             lblStatus.text = item.status.uppercase()
@@ -58,7 +80,44 @@ class ParentConcernAdapter(
             btnDelete.visibility = if (item.can_delete) View.VISIBLE else View.GONE
             btnDelete.setOnClickListener { onDeleteClick(item) }
 
-            rytActionButtons.visibility = View.GONE
+            // Parent can only VIEW acknowledgement / action taken - never act on it.
+            // Driven purely by whether the timestamps are populated.
+            val showAcknowledgeBtn = item.acknowledged_on.isNotBlank()
+            val showActionBtn = item.action_taken_on.isNotBlank()
+
+            rytActionButtons.visibility =
+                if (showAcknowledgeBtn || showActionBtn) View.VISIBLE else View.GONE
+
+            if (showAcknowledgeBtn) {
+                btnAcknowledge.visibility = View.VISIBLE
+                btnAcknowledge.text = "View Acknowledgement"
+                btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
+                btnAcknowledge.setTextColor(
+                    ContextCompat.getColor(btnAcknowledge.context, R.color.PrimaryColor)
+                )
+                btnAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
+            } else {
+                btnAcknowledge.visibility = View.GONE
+            }
+
+            if (showActionBtn) {
+                btnActionTaken.visibility = View.VISIBLE
+                btnActionTaken.text = "View Action Taken"
+                btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
+                btnActionTaken.setTextColor(
+                    ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
+                )
+                btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
+            } else {
+                btnActionTaken.visibility = View.GONE
+            }
+
+            lytParentAttachmentsHeader.setOnClickListener {
+                openFilePreview(item, item.file_path)
+            }
+            lytActionAttachmentsHeader.setOnClickListener {
+                openActionFilePreview(item, item.action_file_path)
+            }
         }
 
         bindAttachments(
@@ -66,7 +125,8 @@ class ParentConcernAdapter(
             container = holder.binding.rytParentAttachments,
             recyclerView = holder.binding.rcyParentAttachments,
             totalLabel = holder.binding.totalParentAttachments,
-            noAttachmentsLabel = holder.binding.lblNoParentAttachments
+            noAttachmentsLabel = holder.binding.lblNoParentAttachments,
+            onContainerClick = { files -> openFilePreview(item, files) }
         )
 
         bindAttachments(
@@ -74,36 +134,127 @@ class ParentConcernAdapter(
             container = holder.binding.rytActionAttachments,
             recyclerView = holder.binding.rcyActionAttachments,
             totalLabel = holder.binding.totalActionAttachments,
-            noAttachmentsLabel = holder.binding.lblNoActionAttachments
+            noAttachmentsLabel = holder.binding.lblNoActionAttachments,
+            onContainerClick = { files -> openActionFilePreview(item, files) }
+        )
+    }
+
+    private fun showAcknowledgeDetailsPopup(item: ParentConcern) {
+        val rows = listOf(
+            "ACKNOWLEDGED BY" to item.acknowledged_by.ifBlank { "-" },
+            "ACKNOWLEDGED ON" to formatDate(item.acknowledged_on).ifBlank { "-" },
+            "REMARKS" to item.acknowledgement.ifBlank { "-" }
+        )
+        showDetailsDialog(
+            title = "Acknowledgement Details",
+            iconRes = R.drawable.attachment_icon_2,
+            rows = rows
+        )
+    }
+
+    private fun showActionTakenDetailsPopup(item: ParentConcern) {
+        val rows = listOf(
+            "ACTION TAKEN BY" to item.action_taken_by.ifBlank { "-" },
+            "ACTION TAKEN ON" to formatDate(item.action_taken_on).ifBlank { "-" },
+            "DETAILS" to item.action_taken.ifBlank { "-" }
+        )
+        showDetailsDialog(
+            title = "Action Taken Details",
+            iconRes = R.drawable.file_noticeboard,
+            rows = rows
+        )
+    }
+
+    private fun showDetailsDialog(title: String, iconRes: Int, rows: List<Pair<String, String>>) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_concern_details)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(true)
+
+        val marginPx = (24 * context.resources.displayMetrics.density).toInt()
+        dialog.window?.setLayout(
+            context.resources.displayMetrics.widthPixels - (marginPx * 2),
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        holder.binding.header.setOnClickListener {
-            val convertedList = item.file_path.map {
-                GetFilePathDetails(
-                    type = it.type,
-                    url = it.url,
-                )
-            }
-            Constant.isVideoPostedDate = item.raised_on
-            val isHomeWorkData = FilePreview(
-                id = "",
-                title = item.student_name,
-                description = item.description,
-                created_date = item.raised_on,
-                subjectName = "",
-                sentBy = item.action_taken_by,
-                thumbnail = "",
-                isUnread = true,
-                isCompleted = true,
-                isMenuType = Constant.M_PARENT_CLASS_EVENTS,
-                fileList = convertedList,
-            )
+        val imgIcon = dialog.findViewById<android.widget.ImageView>(R.id.imgDialogIcon)
+        val imgClose = dialog.findViewById<android.widget.ImageView>(R.id.imgDialogClose)
+        val lblTitle = dialog.findViewById<TextView>(R.id.lblDialogTitle)
+        val lytRows = dialog.findViewById<LinearLayout>(R.id.lytDetailRows)
+        val btnOk = dialog.findViewById<TextView>(R.id.btnDialogOk)
 
-            val intent = Intent(context, ChildHomeWork::class.java)
-            intent.putExtra(Constant.isPreViewData, isHomeWorkData)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            context.startActivity(intent)
+        imgIcon.setImageResource(iconRes)
+        lblTitle.text = title
+
+        val inflater = LayoutInflater.from(context)
+        rows.forEach { (label, value) ->
+            val rowView = inflater.inflate(R.layout.item_detail_row, lytRows, false)
+            rowView.findViewById<TextView>(R.id.lblRowLabel).text = label
+            rowView.findViewById<TextView>(R.id.lblRowValue).text = value
+            lytRows.addView(rowView)
         }
+
+        imgClose.setOnClickListener { dialog.dismiss() }
+        btnOk.setOnClickListener { dialog.dismiss() }
+
+        dialog.show()
+    }
+
+    private fun openFilePreview(item: ParentConcern, files: List<ConcernFile>) {
+        val convertedList = files.map {
+            GetFilePathDetails(
+                type = it.type,
+                url = it.url,
+            )
+        }
+        Constant.isVideoPostedDate = item.raised_on
+        val isHomeWorkData = FilePreview(
+            id = "",
+            title = item.student_name,
+            description = item.description,
+            created_date = item.raised_on,
+            subjectName = "",
+            sentBy = item.action_taken_by,
+            thumbnail = "",
+            isUnread = true,
+            isCompleted = true,
+            isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+            fileList = convertedList,
+        )
+
+        val intent = Intent(context, ChildHomeWork::class.java)
+        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        context.startActivity(intent)
+    }
+
+    private fun openActionFilePreview(item: ParentConcern, files: List<ConcernFile>) {
+        val convertedList = files.map {
+            GetFilePathDetails(
+                type = it.type,
+                url = it.url,
+            )
+        }
+        Constant.isVideoPostedDate = item.action_taken_on
+        val isHomeWorkData = FilePreview(
+            id = item.id,
+            title = item.action_taken_by,
+            description = item.action_taken,
+            created_date = item.action_taken_on,
+            subjectName = "",
+            sentBy = item.student_name,
+            thumbnail = "",
+            isUnread = true,
+            isCompleted = true,
+            isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+            fileList = convertedList,
+        )
+
+        val intent = Intent(context, ChildHomeWork::class.java)
+        intent.putExtra(Constant.isPreViewData, isHomeWorkData)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        context.startActivity(intent)
     }
 
     private fun bindAttachments(
@@ -111,11 +262,13 @@ class ParentConcernAdapter(
         container: View,
         recyclerView: RecyclerView,
         totalLabel: TextView,
-        noAttachmentsLabel: TextView
+        noAttachmentsLabel: TextView,
+        onContainerClick: (List<ConcernFile>) -> Unit
     ) {
         if (files.isNullOrEmpty()) {
             container.visibility = View.GONE
             noAttachmentsLabel.visibility = View.VISIBLE
+            container.setOnClickListener(null)
             return
         }
 
@@ -137,6 +290,8 @@ class ParentConcernAdapter(
         } else {
             totalLabel.visibility = View.GONE
         }
+
+        container.setOnClickListener { onContainerClick(files) }
     }
 
     private fun getInitials(name: String): String {
@@ -159,6 +314,7 @@ class ParentConcernAdapter(
     }
 
     private fun formatDate(raw: String): String {
+        if (raw.isBlank()) return raw
         return try {
             val input = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
             val output = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())

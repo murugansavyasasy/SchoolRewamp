@@ -114,6 +114,12 @@ class CustomDatePicker(
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val firstDayOfWeek = firstDayOfMonth.get(Calendar.DAY_OF_WEEK)
 
+
+        val displayedMonth = calendar.get(Calendar.MONTH)
+        val displayedYear = calendar.get(Calendar.YEAR)
+
+
+
         for (i in 1 until firstDayOfWeek) {
             dates.add(DateItem(null, false))
         }
@@ -127,8 +133,9 @@ class CustomDatePicker(
             currentDate.set(Calendar.MILLISECOND, 0)
 
             val isSelectable = !currentDate.before(today) && !currentDate.after(endDate)
-            dates.add(DateItem(i, isSelectable))
+            dates.add(DateItem(i, isSelectable, displayedMonth, displayedYear))
         }
+
 
         dateAdapter!!.submitDates(dates)
     }

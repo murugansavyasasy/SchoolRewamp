@@ -492,12 +492,27 @@ class RaiseConcernActivity :
                     Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show()
 
                 else -> {
-                    pendingDescription = description
-                    Constant.showLoading(this)
-                    isUploadFilesInServer(Constant.file_)
+                    confirmSubmitConcern(description)
                 }
             }
         }
+    }
+
+    private fun confirmSubmitConcern(description: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Submit concern")
+            .setMessage("Are you sure you want to submit?")
+            .setCancelable(true)
+            .setPositiveButton("Submit") { dialog, _ ->
+                dialog.dismiss()
+                pendingDescription = description
+                Constant.showLoading(this)
+                isUploadFilesInServer(Constant.file_)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     fun isUploadFilesInServer(isFileType: String?) {

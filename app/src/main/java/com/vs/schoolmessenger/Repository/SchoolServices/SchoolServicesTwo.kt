@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestRespo
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamAnalysis.Model.AcademicAnalysisResponse
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
 import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisResponse
 import com.vs.schoolmessenger.School.Homework.HomeworkSubmissionListModel.GetHomeWorkSubmissionList
@@ -71,6 +72,7 @@ class SchoolServicesTwo {
     var isActionTakenConcern: MutableLiveData<ActionTakenResponse?>
     var isRemoveConcern: MutableLiveData<RemoveConcernResponse?>
     var isPaymentProof: MutableLiveData<PaymentProofResponse?>
+    var getexamanalysis: MutableLiveData<AcademicAnalysisResponse?>
 
 
     init {
@@ -104,6 +106,7 @@ class SchoolServicesTwo {
         isActionTakenConcern = MutableLiveData()
         isRemoveConcern = MutableLiveData()
         isPaymentProof = MutableLiveData()
+        getexamanalysis = MutableLiveData()
 
     }
 
@@ -1008,6 +1011,38 @@ class SchoolServicesTwo {
 
     val isPaymentProofLiveData: LiveData<PaymentProofResponse?>
         get() = isPaymentProof
+
+
+
+    fun getexamanalysis(
+        isToken: String,exam_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getexamanalysis(isToken,exam_id)
+            ?.enqueue(object : Callback<AcademicAnalysisResponse?> {
+                override fun onResponse(
+                    call: Call<AcademicAnalysisResponse?>, response: Response<AcademicAnalysisResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getexamanalysis.postValue(response.body())
+                        }
+                    } else {
+                        getexamanalysis.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<AcademicAnalysisResponse?>, t: Throwable) {
+                    getexamanalysis.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getexamanalysisLiveData: LiveData<AcademicAnalysisResponse?>
+        get() = getexamanalysis
 
 
 }

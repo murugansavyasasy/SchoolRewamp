@@ -128,6 +128,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamAnalysis.Model.AcademicAnalysisResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.MarkResponse
@@ -1661,4 +1662,12 @@ interface ApiInterfaces {
         @Query("country_id") country_id   : String,)
             : Call<PaymentProofResponse?>
 
+
+
+    @Headers("Content-Type: application/json")
+    @GET(APIMethods.getexamanalysis)
+    fun getexamanalysis(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query("exam_id") exam_id : String,)
+            : Call<AcademicAnalysisResponse?>
 }

@@ -114,7 +114,7 @@ class SchoolRaiseConcernAdapter(
                     btnActionTaken.text = "View Action Taken"
                     btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
                     btnActionTaken.setTextColor(
-                        ContextCompat.getColor(btnActionTaken.context, R.color.green)
+                        ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
                     )
                     btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
                 }

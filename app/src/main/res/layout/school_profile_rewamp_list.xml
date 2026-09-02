@@ -16,98 +16,59 @@
             android:id="@+id/titlelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/titlelabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:text="@string/student_name_"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp" />
 
-                <TextView
-                    android:id="@+id/titlelabel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/student_name_"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <ImageView
-                    android:id="@+id/titleEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/titlefieldcontainer"
+            <EditText
+                android:id="@+id/titlevalue"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty_five"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/field_background"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/twele">
-
-                <EditText
-                    android:id="@+id/titlevalue"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:ellipsize="end"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapWords"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords"
+                android:paddingVertical="4dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="#9E9E9E"
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/datelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/datelabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/datelabel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Date of birth"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <ImageView
-                    android:id="@+id/dateEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
-            </LinearLayout>
+                android:text="Date of birth"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
                 android:id="@+id/datefieldcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty_five"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/field_background"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/twele">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/datevalue"
@@ -117,13 +78,18 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
+                    android:paddingVertical="4dp"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivCalendarIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_radius_button"
+                    android:padding="9dp"
+                    android:visibility="gone"
                     android:src="@drawable/ic_calendar" />
             </LinearLayout>
         </LinearLayout>
@@ -132,33 +98,19 @@
             android:id="@+id/genderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/genderLabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/genderLabel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="@dimen/eight"
-                    android:text="@string/Gender"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/genderEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
-            </LinearLayout>
+                android:layout_marginBottom="@dimen/eight"
+                android:text="@string/Gender"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <RadioGroup
                 android:id="@+id/radioGenderGroup"
@@ -171,9 +123,6 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/field_background"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
                     android:text="@string/male"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -182,10 +131,7 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/sixteen"
-                    android:background="@drawable/field_background"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:text="@string/female"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -194,10 +140,7 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/sixteen"
-                    android:background="@drawable/field_background"
-                    android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/five"
+                    android:layout_marginStart="@dimen/twenty_five"
                     android:text="@string/others"
                     android:textSize="@dimen/thirteen_sp" />
             </RadioGroup>
@@ -207,103 +150,68 @@
             android:id="@+id/dropdownlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/dropdownlabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:text="Blood Group"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/dropdownlabel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Blood Group"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/dropdownEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/dropdownfieldcontainer"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <AutoCompleteTextView
+                android:id="@+id/dropdownvalue"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/field_background">
-
-                <AutoCompleteTextView
-                    android:id="@+id/dropdownvalue"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="none"
-                    android:padding="0dp"
-                    android:popupBackground="@android:color/white"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/eight"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="none"
+                android:paddingVertical="4dp"
+                android:popupBackground="@android:color/white"
+                android:textColor="@android:color/black"
+                android:textColorHint="#9E9E9E"
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/remarks_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/remarkslabel"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/remarkslabel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/Remarks"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/remarksEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
-            </LinearLayout>
+                android:text="@string/Remarks"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/remarksvalue"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/field_background"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/eight"
+                android:background="@android:color/transparent"
                 android:gravity="top|start"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine|textCapSentences"
                 android:overScrollMode="always"
-                android:padding="12dp"
+                android:paddingVertical="4dp"
                 android:scrollbars="vertical"
                 android:textColor="@android:color/black"
+                android:textColorHint="#9E9E9E"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -311,7 +219,7 @@
             android:id="@+id/imagelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginBottom="@dimen/eighteen"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -326,16 +234,10 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.8"
                     android:text="@string/document_name"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/imageEditIcon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_lock" />
 
                 <TextView
                     android:id="@+id/addlabel"
