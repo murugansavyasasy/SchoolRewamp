@@ -77,7 +77,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
         super.setupViews()
-        isToolBarNoticeCallTheme()
+//        isToolBarNoticeCallTheme()
+        setupBlackSystemBars()
 
         val notificationId = intent.getIntExtra("notification_id", -1)
         isEmergency = intent.getStringExtra("isEmergencyCall")
