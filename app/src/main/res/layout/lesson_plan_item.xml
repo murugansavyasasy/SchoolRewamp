@@ -63,6 +63,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="end"
                         android:layout_weight="0.5">
 
                         <TextView
@@ -95,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:textAlignment="viewStart"
+                        android:visibility="gone"
                         android:drawableStart="@drawable/red_circle_icon"
                         android:drawablePadding="@dimen/five"
                         android:text="@string/admin">
