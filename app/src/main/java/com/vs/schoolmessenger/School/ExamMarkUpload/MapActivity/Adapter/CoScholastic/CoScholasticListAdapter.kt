@@ -98,8 +98,7 @@ class CoScholasticListAdapter(
 
         fun bind(item: getCoScholasticDataValues) {
 
-            subjectName.text =
-                "${item.name ?: ""} (Max: ${item.type ?: ""} marks)"
+            subjectName.text =item.name ?: ""
 
             if (isEntryType) {
 
