@@ -605,8 +605,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = adapter
 
         Log.d("isToken", childDetails!!.access_token)
+        val language_Code=SharedPreference.getLanguage(requireActivity())?:"en"
         appViewModel!!.isDashBoardData(
-            childDetails!!.access_token, Constant.parent, mobile_number, requireActivity()
+            childDetails!!.access_token, Constant.parent, mobile_number,language_Code, requireActivity()
         )
     }
 

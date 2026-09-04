@@ -678,9 +678,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
+        val language_Code=SharedPreference.getLanguage(requireActivity())?:"en"
+
 
         appViewModel!!.isDashBoardData(
-            access_token, Constant.staff_, mobile_number, requireActivity()
+            access_token, Constant.staff_, mobile_number,language_Code,requireActivity()
         )
     }
 
