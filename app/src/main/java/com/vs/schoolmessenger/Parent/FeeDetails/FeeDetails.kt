@@ -80,7 +80,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
         binding.btnReceipt.setOnClickListener(this)
         binding.btnAllTrance.setOnClickListener(this)
         binding.rytRefresh.setOnClickListener(this)
-
+        binding.tabPaymentProof.setOnClickListener(this)
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isChildId = isChildDetails!!.child_id
@@ -324,6 +324,11 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener, Invo
                 binding.btnReceipt.setTextColor(Color.BLACK)
                 clearPopupWebViews()
 //                reloadPaymentPage()
+            }
+
+            R.id.tabPaymentProof -> {
+                val intent = Intent(this, FeePaymentProof::class.java)
+                startActivity(intent)
             }
         }
     }

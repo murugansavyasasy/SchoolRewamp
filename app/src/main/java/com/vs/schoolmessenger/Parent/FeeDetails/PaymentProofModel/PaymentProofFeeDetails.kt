@@ -1,11 +1,13 @@
 package com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel
 
-data class PaymentProofFeeDetails (
-    val term: List<Term>?,
-    val others: List<Any>?,
-    val carryover: List<Any>?,
-    val transport: List<Any>?,
-    val hostel: List<Any>?,
-    val quantity_result: List<Any>?,
-    val quantity: List<Quantity>?
+data class PaymentProofFeeDetails(
+    val term: List<Term>,
+    val others: List<GenericFee>,
+    val carryover: List<GenericFee>,
+    val transport: List<GenericFee>,
+    val hostel: List<GenericFee>,
+    val quantity_result: List<GenericFee>,
+    val quantity: List<Quantity>
 )
+
+

@@ -1,9 +1,9 @@
 package com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel
 
 data class ProofDetails(
-    val payment_status: String?,
-    val receipt_type: String?,
-    val payment_method: String?,
+    val payment_status: String,
+    val receipt_type: String,
+    val payment_method: String,
     val upi_provider: String?,
     val receipt_date: String?,
     val validation_message: String?,
@@ -17,5 +17,5 @@ data class ProofDetails(
     val upi_id: String?,
     val account_number: String?,
     val failure_reason: String?,
-    val confidence: Int?
+    val confidence: Int
 )
