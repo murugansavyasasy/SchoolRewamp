@@ -11,7 +11,10 @@ data class MarkColumn(
     val isRubric: Boolean = false,
     val rubricId: String? = null,
     val rubricName: String? = null,
-    val parentActivityName: String? = null
+    val parentActivityName: String? = null,
+    val isCoScholastic: Boolean = false,
+    val isRemark: Boolean = false,
+    val remarkType: String? = null
 )
 
 

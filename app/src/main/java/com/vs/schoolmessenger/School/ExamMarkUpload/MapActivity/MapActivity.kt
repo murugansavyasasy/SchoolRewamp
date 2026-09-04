@@ -407,24 +407,24 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         )
 
 
-//        val intent =
-//            Intent(
-//                this,
-//                ReviewAndEditMarks::class.java
-//            )
-//
-//        intent.putParcelableArrayListExtra(
-//            Constant.FINAL_MAP_ACTIVITY,
-//            ArrayList(finalSubjectList)
-//        )
-//
-//
-//         intent.putParcelableArrayListExtra(
-//             Constant.FINAL_COSCHOLASTIC_MAP_ACTIVITY,
-//             ArrayList(selectedCoScholasticList)
-//         )
-//
-//        startActivity(intent)
+        val intent =
+            Intent(
+                this,
+                ReviewAndEditMarks::class.java
+            )
+
+        intent.putParcelableArrayListExtra(
+            Constant.FINAL_MAP_ACTIVITY,
+            ArrayList(finalSubjectList)
+        )
+
+
+         intent.putParcelableArrayListExtra(
+             Constant.FINAL_COSCHOLASTIC_MAP_ACTIVITY,
+             ArrayList(selectedCoScholasticList)
+         )
+
+        startActivity(intent)
     }
 
 //    private fun saveSelectedMappings(

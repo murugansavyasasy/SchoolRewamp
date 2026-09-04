@@ -6,6 +6,8 @@ data class StudentMarkApi(
     val gender: String,
     val roll_no: String,
     val admission_no: String,
-    val marks: List<SubjectMark>
+    val marks: List<SubjectMark>,
+    val co_scholastic: List<CoScholastic>,
+    val remarks: List<Remark>
 )
 

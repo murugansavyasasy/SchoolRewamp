@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.Interface.OnMarksChangedListener
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getCoScholasticDataValues
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Adapter.MarksAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.FilterState
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.Data.InvalidMarkIssue
@@ -59,6 +60,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
     override fun getViewBinding() = ReviewAndEditMarksBinding.inflate(layoutInflater)
     private var isFinalMapDetails: List<getActivitySubjectNameData>? = emptyList()
+    private var isFinalCoScholasticDetails: List<getCoScholasticDataValues>? = emptyList()
     private var appViewModel: App? = null
     private val TAG_SORT = "GENDER_SORT_DEBUG"
     private val savedFilters = mutableListOf<FilterState>()
@@ -74,6 +76,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
     private var isAccessToken: String? = null
     private val SUBJECT_CELL_WIDTH = 200
+    private val REMARK_CELL_WIDTH = 280
     private var markColumns: List<MarkColumn> = emptyList()
     private val SUBJECT_CELL_GAP = 40
     private val reviewFlagMap = mutableMapOf<String, String>()
@@ -106,7 +109,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         isFinalMapDetails = intent.getParcelableArrayListExtra(
             Constant.FINAL_MAP_ACTIVITY
         ) ?: emptyList()
+
+        isFinalCoScholasticDetails = intent.getParcelableArrayListExtra(
+            Constant.FINAL_COSCHOLASTIC_MAP_ACTIVITY
+        ) ?: emptyList()
+
         Log.d("isFinalMapDetails", isFinalMapDetails.toString())
+        Log.d("isFinalCoScholasticDetails", isFinalCoScholasticDetails.toString())
 
         isGetMarkDetails()
 
@@ -391,6 +400,43 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
         }
+
+        // Co-Scholastic columns (grouped under a pseudo "subject")
+        firstStudent.co_scholastic.orEmpty().forEach { cs ->
+            columns.add(
+                MarkColumn(
+                    subjectId = "CO_SCHOLASTIC",
+                    subjectName = "Co-Scholastic",
+                    activityId = cs.id,
+                    activityName = cs.name,
+                    selected_name = cs.name,
+                    maxMark = 0,
+                    isCoScholastic = true
+                )
+            )
+        }
+
+        // Remark columns (grouped under a pseudo "subject")
+        firstStudent.remarks.orEmpty().forEach { r ->
+            val label = if (r.reference_type.equals("BEHAVIOURAL_REMARK", true)) {
+                "Behavioural Remark"
+            } else {
+                "Remark"
+            }
+            columns.add(
+                MarkColumn(
+                    subjectId = "REMARKS",
+                    subjectName = "Remarks",
+                    activityId = r.reference_type,
+                    activityName = label,
+                    selected_name = label,
+                    maxMark = 0,
+                    isRemark = true,
+                    remarkType = r.reference_type
+                )
+            )
+        }
+
         return columns
     }
 
@@ -443,6 +489,26 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 }
             }
 
+            // Co-Scholastic values
+            apiStudent.co_scholastic.orEmpty().forEach { cs ->
+                val index = columns.indexOfFirst { it.isCoScholastic && it.activityId == cs.id }
+                if (index != -1) {
+                    markTexts[index] = cs.mark
+                    marks[index] = cs.mark.toDoubleOrNull()
+                    isEditList[index] = cs.is_edit
+                }
+            }
+
+            // Remark values (free text, not numeric)
+            apiStudent.remarks.orEmpty().forEach { r ->
+                val index = columns.indexOfFirst { it.isRemark && it.activityId == r.reference_type }
+                if (index != -1) {
+                    markTexts[index] = r.mark
+                    marks[index] = null
+                    isEditList[index] = r.is_edit
+                }
+            }
+
             val baseStudent = baseStudents.firstOrNull {
                 it.student_id == apiStudent.student_id
             }
@@ -472,6 +538,20 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             mockTexts[index] = activity.mark ?: ""
                         }
                     }
+                }
+            }
+
+            baseStudent?.co_scholastic.orEmpty().forEach { cs ->
+                val index = columns.indexOfFirst { it.isCoScholastic && it.activityId == cs.id }
+                if (index != -1) {
+                    mockTexts[index] = cs.mark
+                }
+            }
+
+            baseStudent?.remarks.orEmpty().forEach { r ->
+                val index = columns.indexOfFirst { it.isRemark && it.activityId == r.reference_type }
+                if (index != -1) {
+                    mockTexts[index] = r.mark
                 }
             }
 
@@ -554,7 +634,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 val activityWidth = if (rubricCount > 0) {
                     (rubricCount * SUBJECT_CELL_WIDTH) + ((rubricCount - 1) * px8)
                 } else {
-                    SUBJECT_CELL_WIDTH
+                    if (activityCols.any { it.isRemark }) REMARK_CELL_WIDTH else SUBJECT_CELL_WIDTH
                 }
 
                 activitiesRow.addView(TextView(this).apply {
@@ -616,7 +696,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         })
 
                         rubricLayout.addView(TextView(this).apply {
-                            text = "Max: ${col.maxMark}"
+                            text = if (col.isRemark || col.isCoScholastic) "" else "Max: ${col.maxMark}"
                             gravity = Gravity.CENTER
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
                             setTextColor(Color.GRAY)
@@ -644,7 +724,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             orientation = LinearLayout.VERTICAL
                             gravity = Gravity.CENTER
                             layoutParams = LinearLayout.LayoutParams(
-                                SUBJECT_CELL_WIDTH,
+                                if (col.isRemark) REMARK_CELL_WIDTH else SUBJECT_CELL_WIDTH,
                                 LinearLayout.LayoutParams.MATCH_PARENT
                             )
                         }
@@ -661,7 +741,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         })
 
                         layout.addView(TextView(this).apply {
-                            text = "Max: ${col.maxMark}"
+                            text = if (col.isRemark || col.isCoScholastic) "" else "Max: ${col.maxMark}"
                             gravity = Gravity.CENTER
                             setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
                             setTextColor(Color.GRAY)
@@ -817,6 +897,17 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         }
 
         json.add(Constant.selected_activities, selectedActivitiesArray)
+
+        // NEW: co_scholastic_ids
+        val coScholasticIdsArray = JsonArray()
+        isFinalCoScholasticDetails.orEmpty().forEach { cs ->
+            val obj = JsonObject().apply {
+                addProperty("id", cs.id)
+                addProperty("name", cs.name)
+            }
+            coScholasticIdsArray.add(obj)
+        }
+        json.add("co_scholastic_ids", coScholasticIdsArray)
 
         Log.d("FINAL_JSON", json.toString())
 
@@ -1207,6 +1298,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             student.markTexts.forEachIndexed { index, rawText ->
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
+                if (column.isRemark) return@forEachIndexed // free text, no validation
+
                 val trimmed = rawText.trim()
                 val value = trimmed.toIntOrNull()
 
@@ -1244,7 +1337,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     return@forEachIndexed
                 }
 
-                if (value != null && value > column.maxMark) {
+                if (column.maxMark > 0 && value != null && value > column.maxMark) {
                     summary.total++
                     summary.maxMarkCount++
                     summary.details.add(
@@ -1308,7 +1401,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             val marksArray = JsonArray()
 
-            val subjectGroups = columns.groupBy { it.subjectId }
+            // Only real subject/activity/rubric columns go into "marks"
+            val subjectGroups = columns
+                .filterNot { it.isCoScholastic || it.isRemark }
+                .groupBy { it.subjectId }
 
             subjectGroups.forEach { (subjectId, subjectColumns) ->
 
@@ -1368,6 +1464,36 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
 
             studentObj.add(Constant.marks, marksArray)
+
+            // NEW: co_scholastic array
+            val coScholasticArray = JsonArray()
+            columns.filter { it.isCoScholastic }.forEach { col ->
+                val index = columns.indexOf(col)
+                val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
+
+                coScholasticArray.add(JsonObject().apply {
+                    addProperty("id", col.activityId)
+                    addProperty("name", col.activityName)
+                    addProperty("mark", rawText)
+                    addProperty("is_edit", true)
+                })
+            }
+            studentObj.add("co_scholastic", coScholasticArray)
+
+            // NEW: remarks array
+            val remarksArray = JsonArray()
+            columns.filter { it.isRemark }.forEach { col ->
+                val index = columns.indexOf(col)
+                val rawText = student.markTexts.getOrNull(index)?.trim().orEmpty()
+
+                remarksArray.add(JsonObject().apply {
+                    addProperty("reference_type", col.remarkType ?: col.activityId)
+                    addProperty("mark", rawText)
+                    addProperty("is_edit", true)
+                })
+            }
+            studentObj.add("remarks", remarksArray)
+
             uploadDetailsArray.add(studentObj)
         }
 
@@ -1420,10 +1546,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (text.isEmpty()) return@forEachIndexed
                 if (text.equals("AB", true) || text.equals("NA", true)) return@forEachIndexed
 
+                val column = columns.getOrNull(index) ?: return@forEachIndexed
+                if (column.isRemark) return@forEachIndexed // free text, no validation
+
                 if (text.toDoubleOrNull() == null) {
-
-                    val column = columns.getOrNull(index) ?: return@forEachIndexed
-
                     issues.add(
                         InvalidMarkIssue(
                             studentName = student.name,
@@ -1451,6 +1577,8 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 val value = rawText.toDoubleOrNull() ?: return@forEachIndexed
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
+
+                if (column.isRemark || column.maxMark <= 0) return@forEachIndexed
 
                 if (value > column.maxMark) {
                     issues.add(

@@ -2100,7 +2100,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         jsonObject: JsonObject, activity: Activity
     ) {
-        val reporting_url = SharedPreference.getReportingUrl(activity)
+        val reporting_url = SharedPreference.getBaseUrl(activity)
 //        val base_url = SharedPreference.getBaseUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositories.isGetMarkDetails(isToken, jsonObject)

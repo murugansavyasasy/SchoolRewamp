@@ -223,7 +223,7 @@ object APIMethods {
 //    const val savemarks = "exam/api/exam/upload-marks"
     const val savemarks = "exam/api/new-exam/upload-mark"
 //    const val getMarkDetails = "exam/api/exam/get-mark-details"
-    const val getMarkDetails = "exam/api/new-exam/get-mark-to-upload"
+    const val getMarkDetails = "exam/api/new-exam/get-marks-to-upload-details"
     const val getexamanalysis = "exam/api/new-exam/exam-analysis"
 
     const val staff_leave_request_apply = "comm/api/leave-req-for-staff/apply"

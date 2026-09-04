@@ -38,6 +38,7 @@ class MarksAdapter(
 
     private val SUBJECT_CELL_WIDTH = 200
     private val SUBJECT_CELL_GAP = 40
+    private val REMARK_CELL_WIDTH = 280
 
     private val MALE_COLOR = Color.parseColor("#2196F3")
     private val FEMALE_COLOR = Color.parseColor("#E91E63")
@@ -223,31 +224,48 @@ class MarksAdapter(
         val reviewKey = "${student.student_id}_${normalize(column.selected_name)}"
         val reviewReason = reviewFlagMap[reviewKey]
 
+        val cellWidth = if (column.isRemark) REMARK_CELL_WIDTH else SUBJECT_CELL_WIDTH
+
         val columnLayout = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutParams = LinearLayout.LayoutParams(
-                SUBJECT_CELL_WIDTH,
+                cellWidth,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            gravity = Gravity.CENTER_HORIZONTAL
+            gravity = if (column.isRemark) Gravity.START else Gravity.CENTER_HORIZONTAL
         }
 
         val topRow = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         }
 
         val et = EditText(context).apply {
             layoutParams = LinearLayout.LayoutParams(
                 0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
             )
-            gravity = Gravity.CENTER
             textSize = 14f
-            inputType = InputType.TYPE_CLASS_TEXT
-            setPadding(10, 10, 10, 4)
             hint = "--"
 
-            if (isAllowedValue(excelValue)) {
+            if (column.isRemark) {
+                gravity = Gravity.TOP or Gravity.START
+                inputType = InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or
+                        InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                minLines = 2
+                maxLines = 4
+                setPadding(20, 16, 20, 16)
+            } else {
+                gravity = Gravity.CENTER
+                inputType = InputType.TYPE_CLASS_TEXT
+                setPadding(10, 10, 10, 4)
+            }
+
+            if (isAllowedValue(excelValue, column)) {
                 setText(excelValue)
             } else {
                 setText("")
@@ -266,7 +284,7 @@ class MarksAdapter(
         et.addTextChangedListener {
             val input = it.toString().trim()
             student.markTexts[columnIndex] = input
-            student.marks[columnIndex] = input.toDoubleOrNull()
+            student.marks[columnIndex] = if (column.isRemark) null else input.toDoubleOrNull()
 
             validateMark(
                 et, icon, student, column, input, oldValue, reviewReason
@@ -278,7 +296,7 @@ class MarksAdapter(
         columnLayout.addView(topRow)
 
         // Show "was: oldValue" if changed
-        if (isAllowedValue(oldValue) && isAllowedValue(excelValue) && oldValue != excelValue) {
+        if (isAllowedValue(oldValue, column) && isAllowedValue(excelValue, column) && oldValue != excelValue) {
             val prev = TextView(context).apply {
                 text = "prev - $oldValue"
                 textSize = 11f
@@ -316,14 +334,21 @@ class MarksAdapter(
     ) {
 
         val trimmed = value.trim()
+
+        // Remarks are free text: no numeric / max-mark validation applies
+        if (column.isRemark) {
+            clearError(et, icon)
+            return
+        }
+
         val doubleValue = trimmed.toDoubleOrNull()
 
-        if (trimmed.isNotEmpty() && !isAllowedValue(trimmed)) {
+        if (trimmed.isNotEmpty() && !isAllowedValue(trimmed, column)) {
             showError(et, icon, trimmed)
             return
         }
 
-        if (doubleValue != null && doubleValue > column.maxMark) {
+        if (column.maxMark > 0 && doubleValue != null && doubleValue > column.maxMark) {
             showError(
                 et,
                 icon,
@@ -336,7 +361,7 @@ class MarksAdapter(
         if (
             !reviewReason.isNullOrEmpty() &&
             trimmed == oldValue &&
-            isAllowedValue(trimmed) &&
+            isAllowedValue(trimmed, column) &&
             !isSpecialTextValue(trimmed)
         ) {
             showError(et, icon, reviewReason)
@@ -345,8 +370,8 @@ class MarksAdapter(
 
         // Skip green info for AB / NA when value changed
         if (
-            isAllowedValue(oldValue) &&
-            isAllowedValue(trimmed) &&
+            isAllowedValue(oldValue, column) &&
+            isAllowedValue(trimmed, column) &&
             oldValue != trimmed &&
             !isSpecialTextValue(trimmed)
         ) {
@@ -458,9 +483,16 @@ class MarksAdapter(
         }
     }
 
-    private fun isAllowedValue(value: String): Boolean {
+    /**
+     * Whether [value] is acceptable for [column].
+     * Remark columns are free text and always allowed.
+     * Everything else must be AB / NA / a number, same as before.
+     */
+    private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
+        if (column?.isRemark == true) return true
+
         return value.equals("AB", true) ||
-                value.equals("NA", true) || value.equals("na", true) || value.equals("ab", true) ||
+                value.equals("NA", true) ||
                 value.toDoubleOrNull() != null
     }
 
