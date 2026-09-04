@@ -202,12 +202,11 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
 
         if (mappedList_2.isEmpty()){
             binding.rcCoScholastic.visibility= View.GONE
-            binding.lblCoScholastic.visibility= View.VISIBLE
-
+            binding.lblCoScholastic.visibility= View.GONE
         }
         else{
             binding.rcCoScholastic.visibility= View.VISIBLE
-            binding.lblCoScholastic.visibility= View.GONE
+            binding.lblCoScholastic.visibility= View.VISIBLE
             adapter2 = CoScholasticListAdapter(mappedList_2, isEntryType, this)
             binding.rcCoScholastic.layoutManager = LinearLayoutManager(this)
             binding.rcCoScholastic.adapter = adapter2
