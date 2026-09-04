@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileField
 import com.vs.schoolmessenger.Dashboard.Fragments.Model.ProfileItem
@@ -39,6 +40,19 @@ class ProfileRewampFragmentAdapter(
         private const val VIEW_TYPE_HEADER = 0
         private const val VIEW_TYPE_FIELD = 1
     }
+
+    // Global flag — false = view-only (line, no input), true = editable (box, input allowed)
+    private var isEditMode: Boolean = false
+
+    /** Call this from the Fragment when the user taps the edit (pencil) icon. */
+    fun setEditMode(enabled: Boolean) {
+        if (isEditMode != enabled) {
+            isEditMode = enabled
+            notifyDataSetChanged()
+        }
+    }
+
+    fun isInEditMode(): Boolean = isEditMode
 
     override fun getItemViewType(position: Int): Int {
         return when (itemList[position]) {
@@ -84,10 +98,17 @@ class ProfileRewampFragmentAdapter(
     inner class FieldViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titlelabel: TextView = itemView.findViewById(R.id.titlelabel)
         private val titlevalue: EditText = itemView.findViewById(R.id.titlevalue)
+        private val titleValueBox: LinearLayout = itemView.findViewById(R.id.titleValueBox)
+
         private val remarksvalue: EditText = itemView.findViewById(R.id.remarksvalue)
+
         private val datelabel: TextView = itemView.findViewById(R.id.datelabel)
         private val datevalue: TextView = itemView.findViewById(R.id.datevalue)
+        private val dateValueBox: LinearLayout = itemView.findViewById(R.id.dateValueBox)
+
         private val dropdownvalue: AutoCompleteTextView = itemView.findViewById(R.id.dropdownvalue)
+        private val dropdownValueBox: TextInputLayout = itemView.findViewById(R.id.dropdownValueBox)
+
         private val datelayout: LinearLayout = itemView.findViewById(R.id.datelayout)
         private val dropdownlayout: LinearLayout = itemView.findViewById(R.id.dropdownlayout)
         private val remarkslayout: LinearLayout = itemView.findViewById(R.id.remarks_layout)
@@ -99,12 +120,29 @@ class ProfileRewampFragmentAdapter(
         private val imagelabel: TextView = itemView.findViewById(R.id.imagelabel)
         private val addlabel: TextView = itemView.findViewById(R.id.addlabel)
         private val selectedFilesContainer: FrameLayout =
-            itemView.findViewById(R.id.selectedFilesContainer)  // New container
+            itemView.findViewById(R.id.selectedFilesContainer)
 
         var isRcyImagesAttached = false
 
-        fun bind(field: ProfileField, position: Int) {
+        /**
+         * Style (box vs line) depends only on the global [isEditMode] flag.
+         */
+        private fun applyEditableStyle(view: View) {
+            view.setBackgroundResource(
+                if (isEditMode) R.drawable.field_background else R.drawable.field_underline_bg
+            )
+        }
 
+        /**
+         * Whether the user can ACTUALLY type/tap/change this field right now.
+         * Requires BOTH: global edit mode is on (pencil icon tapped) AND
+         * the field itself is marked editable by the API.
+         */
+        private fun isActuallyEditable(field: ProfileField): Boolean {
+            return isEditMode && field.is_editable
+        }
+
+        fun bind(field: ProfileField, position: Int) {
 
             datelayout.visibility = View.GONE
             dropdownlayout.visibility = View.GONE
@@ -116,9 +154,12 @@ class ProfileRewampFragmentAdapter(
 
             if (field.node.equals("photoPath", ignoreCase = true)) return
 
+            val canEdit = isActuallyEditable(field)
+
             when (field.type) {
                 Constant.text_, Constant.mobile, Constant.number -> {
                     titlelayout.visibility = View.VISIBLE
+                    applyEditableStyle(titleValueBox)
 
                     val editStatusText = if (field.is_editable) {
                         " <font color='#4CAF50'>(Editable)</font>"
@@ -139,7 +180,10 @@ class ProfileRewampFragmentAdapter(
                     }
 
                     titlevalue.setSafeTextWatcher(field) { field.value = it }
-                    titlevalue.isEnabled = field.is_editable
+                    titlevalue.isEnabled = canEdit
+                    titlevalue.isFocusable = canEdit
+                    titlevalue.isFocusableInTouchMode = canEdit
+                    titlevalue.isClickable = canEdit
                 }
 
 
@@ -186,8 +230,11 @@ class ProfileRewampFragmentAdapter(
                         attachRcyImagesBelowField()
                     }
 
-                    addlabel.isVisible = field.is_editable
+                    // Add button only visible AND clickable when actually editable
+                    addlabel.isVisible = canEdit
+                    addlabel.isEnabled = canEdit
                     addlabel.setOnClickListener {
+                        if (!canEdit) return@setOnClickListener
                         listener.onDocumentClicked(field, position)
                         field.isRcyImagesAttached = true
                         attachRcyImagesBelowField()
@@ -246,8 +293,10 @@ class ProfileRewampFragmentAdapter(
                         attachRcyImagesBelowField()
                     }
 
-                    addlabel.isVisible = field.is_editable
+                    addlabel.isVisible = canEdit
+                    addlabel.isEnabled = canEdit
                     addlabel.setOnClickListener {
+                        if (!canEdit) return@setOnClickListener
                         listener.onDocumentClicked(field, position)
                         field.isRcyImagesAttached = true
                         attachRcyImagesBelowField()
@@ -257,6 +306,7 @@ class ProfileRewampFragmentAdapter(
 
                 Constant.address -> {
                     remarkslayout.visibility = View.VISIBLE
+                    applyEditableStyle(remarksvalue)
 
                     val editStatusText = if (field.is_editable) {
                         "<font color='#4CAF50'>(Editable)</font>"
@@ -276,12 +326,16 @@ class ProfileRewampFragmentAdapter(
                     )
 
                     remarksvalue.setSafeTextWatcher(field) { field.value = it }
-                    remarksvalue.isEnabled = field.is_editable
+                    remarksvalue.isEnabled = canEdit
+                    remarksvalue.isFocusable = canEdit
+                    remarksvalue.isFocusableInTouchMode = canEdit
+                    remarksvalue.isClickable = canEdit
                 }
 
 
                 Constant.calendar -> {
                     datelayout.visibility = View.VISIBLE
+                    applyEditableStyle(dateValueBox)
 
                     val editStatusText = if (field.is_editable) {
                         "<font color='#4CAF50'>(Editable)</font>"
@@ -302,8 +356,9 @@ class ProfileRewampFragmentAdapter(
 
                     datevalue.text = field.value.orEmpty()
 
+                    datelayout.isEnabled = canEdit
                     datelayout.setOnClickListener {
-                        if (!field.is_editable) return@setOnClickListener
+                        if (!canEdit) return@setOnClickListener
 
                         val calendar = Calendar.getInstance()
 
@@ -360,10 +415,11 @@ class ProfileRewampFragmentAdapter(
                     }
 
                     for (i in 0 until radioGroup.childCount) {
-                        radioGroup.getChildAt(i).isEnabled = field.is_editable
+                        radioGroup.getChildAt(i).isEnabled = canEdit
                     }
 
                     radioGroup.setOnCheckedChangeListener { _, checkedId ->
+                        if (!canEdit) return@setOnCheckedChangeListener
                         field.value = when (checkedId) {
                             R.id.radioMale -> Constant.male
                             R.id.radioFemale -> Constant.female
@@ -375,6 +431,7 @@ class ProfileRewampFragmentAdapter(
 
                 Constant.dropdown -> {
                     dropdownlayout.visibility = View.VISIBLE
+                    applyEditableStyle(dropdownValueBox)
 
                     val editStatusText = if (field.is_editable) {
                         "<font color='#4CAF50'>(Editable)</font>"
@@ -403,7 +460,9 @@ class ProfileRewampFragmentAdapter(
 
                     dropdownvalue.setAdapter(adapterDropdown)
                     dropdownvalue.setText(field.value.orEmpty(), false)
-                    dropdownvalue.isEnabled = field.is_editable
+                    dropdownvalue.isEnabled = canEdit
+                    dropdownvalue.isClickable = canEdit
+                    dropdownvalue.isFocusable = canEdit
 
                     dropdownvalue.setSafeTextWatcher(field) { field.value = it }
                 }

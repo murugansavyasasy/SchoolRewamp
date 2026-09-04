@@ -16,7 +16,6 @@
         android:showDividers="none">
 
         <LinearLayout
-
             android:id="@+id/titlelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,6 +33,7 @@
                 android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
+                android:id="@+id/titleValueBox"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty_five"
                 android:layout_marginTop="@dimen/ten"
@@ -50,18 +50,16 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
-                    android:textAlignment="viewStart"
                     android:imeOptions="actionDone"
                     android:inputType="textCapWords"
                     android:padding="@dimen/zero"
                     android:singleLine="true"
                     android:text="SARON"
+                    android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -84,6 +82,7 @@
                 android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
+                android:id="@+id/dateValueBox"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty_five"
                 android:layout_marginTop="@dimen/ten"
@@ -112,9 +111,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_calendar" />
 
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -196,15 +193,14 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dropdownValueBox"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/field_background">
-
 
                 <AutoCompleteTextView
                     android:id="@+id/dropdownvalue"
@@ -298,7 +294,6 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcChildHW"

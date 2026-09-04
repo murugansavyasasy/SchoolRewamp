@@ -42,6 +42,7 @@
                         android:src="@drawable/default_profile"
                         app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
+                    <!-- Camera icon: changes the profile photo -->
                     <ImageView
                         android:id="@+id/imgEdit"
                         android:layout_width="@dimen/twenty_eight"
@@ -50,6 +51,16 @@
                         android:background="@drawable/circle_white_bg"
                         android:padding="@dimen/four"
                         android:src="@drawable/camerasvgformat" />
+
+                    <ImageView
+                        android:id="@+id/imgEditFields"
+                        android:layout_width="@dimen/twenty_eight"
+                        android:layout_height="@dimen/twenty_eight"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/circle_white_bg"
+                        android:padding="@dimen/four"
+                        android:contentDescription="Edit Profile"
+                        android:src="@drawable/ic_edit_pencil" />
                 </FrameLayout>
             </FrameLayout>
 

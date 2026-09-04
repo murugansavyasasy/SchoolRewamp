@@ -226,6 +226,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     profilePhotoFileItem = null
                     binding.rcyImages.visibility = View.GONE
                     mAdapter?.notifyDataSetChanged()
+                    adapter?.setEditMode(false)
                 } else {
                     showDataValidation(
                         resources.getString(R.string.Oops), response.message, requireActivity()
@@ -333,6 +334,9 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             R.id.imgEdit -> {
                 currentEditMode = "profile_photo"
                 showBottomDialog()
+            }
+            R.id.imgEditFields -> {
+                adapter?.setEditMode(true)
             }
         }
     }
