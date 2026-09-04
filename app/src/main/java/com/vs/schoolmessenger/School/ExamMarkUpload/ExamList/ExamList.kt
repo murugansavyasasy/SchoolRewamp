@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getCoScholasticData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.adapter.ExamListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.UploadMarkSheet
@@ -34,6 +35,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
     private lateinit var adapter: ExamListAdapter
     private var staffWisExamList: List<getStaffWisExamData>? = emptyList()
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+    private var selectedCoScholastic: List<getCoScholasticData>? = null
     private var selectedExam: getStaffWisExamData? = null
     var selectedExamID = ""
     var isDirectToUploadPage = false
@@ -142,12 +144,15 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             if (response != null) {
 
                 if (response.status && response.data.isNotEmpty()) {
-                    selectedExamActivities = response.data
-                    adapter.updateSecondData(response.data)
+                    val response =response.data.firstOrNull()
+                    selectedExamActivities = response?.subjects?:emptyList()
+                    selectedCoScholastic = response?.co_scholastic?:emptyList()
+                    adapter.updateSecondData( response?.subjects?:emptyList(),response?.co_scholastic?:emptyList())
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 } else {
                     selectedExamActivities = emptyList()
-                    adapter.updateSecondData(emptyList())
+                    selectedCoScholastic = emptyList()
+                    adapter.updateSecondData(emptyList(),emptyList())
                     adapter.notifyItemChanged(adapter.expandedPosition)
                 }
 
@@ -170,9 +175,11 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
                             }
                         }
                     }
+                    Log.d("UploadDebug",selectedCoScholastic.toString())
 
                     Constant.staffWisExamList = staffWisExamList
                     Constant.isSelectedExamActivities = selectedExamActivities
+                    Constant.isSelectedCoScholastic = selectedCoScholastic
                     Constant.isMarkUploadExamListDataDetails = selectedExam
                     val intent = Intent(this, UploadMarkSheet::class.java)
                     startActivity(intent)
@@ -293,6 +300,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
             R.id.lnrUpload -> {
                 if (selectedExamID != "") {
                     selectedExamActivities = null
+                    selectedCoScholastic = null
                     isUploadClicked=true
                     appViewModel!!.getSubjectWiseActivities(isAccessToken!!, selectedExamID,Constant.isMarkUploadClassSectionDetails?.sectionId?:"", this)
                 } else {
@@ -323,6 +331,7 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         selectedExam = item
         selectedExamID = item.id
         selectedExamActivities = null
+        selectedCoScholastic = null
         binding.lnrUpload.isEnabled = true
         binding.lnrUpload.alpha = 1f
         isDirectToUploadPage = true
@@ -337,11 +346,12 @@ class ExamList : BaseActivity<ExamListBinding>(), View.OnClickListener, OnExamSe
         selectedExam = item
         selectedExamID = item!!.id
         selectedExamActivities = null
+        selectedCoScholastic = null
         isUploadClicked=false
         Log.d("Data", item.toString())
         Log.d("isSelected", selectedExam.toString())
 
-        adapter.updateSecondData(null)
+        adapter.updateSecondData(null,null)
 
         //  Only refresh active expanded item if valid index
         if (adapter.expandedPosition != -1) {

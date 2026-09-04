@@ -1194,4 +1194,6 @@
     <string name="audio_record">Audio Record</string>
     <string name="total_strength">Total Strength</string>
     <string name="payment_proof">Payment Proof</string>
+    <string name="co_scholastic">Co Scholastics</string>
+    <string name="subjects">Subjects</string>
 </resources>

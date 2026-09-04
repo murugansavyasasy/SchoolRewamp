@@ -94,6 +94,7 @@ import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SubjectDataDet
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getCoScholasticData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.SelectedActivityMapping
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
@@ -296,6 +297,7 @@ object Constant {
     var isMarkUploadClassSectionDetails: StandardSection? = null
     var isMarkUploadExamListDataDetails: getStaffWisExamData? = null
     var isSelectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+    var isSelectedCoScholastic: List<getCoScholasticData>? = null
 
     var staffWisExamList: List<getStaffWisExamData>? = emptyList()
     var isExtractedDetails: List<ParcelTableData>? = emptyList()
@@ -414,6 +416,7 @@ object Constant {
     var class_id = "class_id"
     var section_id = "section_id"
     var FINAL_MAP_ACTIVITY = "FINAL_MAP_ACTIVITY"
+    var FINAL_COSCHOLASTIC_MAP_ACTIVITY = "FINAL_COSCHOLASTIC_MAP_ACTIVITY"
     var Student_ID = "Student ID"
     var student_id = "student_id"
     var student_name = "student_name"

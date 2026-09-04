@@ -204,7 +204,8 @@ object APIMethods {
 //    const val getStaffWiseExam = "exam/api/exam/get-staff-wise-exam"
     const val getStaffWiseExam = "exam/api/new-exam/get-staffwise-exam"
 //    const val getSubjectWiseACtivities = "exam/api/exam/get-subject-wise-activities"
-    const val getSubjectWiseACtivities = "exam/api/new-exam/get-subjectwise-activities"
+//    const val getSubjectWiseACtivities = "exam/api/new-exam/get-subjectwise-activities" //Old API end point
+    const val getSubjectWiseACtivities = "exam/api/new-exam/get-subject-activities"
 
 
     const val isblockstudent = "/comm/api/interaction/block-student"

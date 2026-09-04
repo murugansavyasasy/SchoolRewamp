@@ -21,11 +21,14 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getCoScholasticData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.ActivityExamListAdapter
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Adapter.CoScholasticListAdapter
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.RubricSelectableData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivityPaperNameData
 import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getActivitySubjectNameData
+import com.vs.schoolmessenger.School.ExamMarkUpload.MapActivity.Model.getCoScholasticDataValues
 import com.vs.schoolmessenger.School.ExamMarkUpload.ReviewAndEditMarks.ReviewAndEditMarks
 import com.vs.schoolmessenger.School.ExamMarkUpload.UploadMarkSheet.Model.ParcelTableData
 import com.vs.schoolmessenger.Utils.Constant
@@ -42,10 +45,12 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private lateinit var adapter: ActivityExamListAdapter
+    private lateinit var adapter2: CoScholasticListAdapter
     private var isClassList: List<getActivitySubjectNameData>? = emptyList()
     private var staffWisExamList: List<getStaffWisExamData>? = null
     private var selectedExam: getStaffWisExamData? = null
     private var selectedExamActivities: List<getSubjectWiseACtivitiesData>? = null
+    private var selectedCoScholastics: List<getCoScholasticData>? = null
     private var extractedDetails: List<ParcelTableData>? = null
     private var isEntryType = false
 
@@ -70,6 +75,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         staffWisExamList = Constant.staffWisExamList
         selectedExam = Constant.isMarkUploadExamListDataDetails
         selectedExamActivities = Constant.isSelectedExamActivities
+        selectedCoScholastics = Constant.isSelectedCoScholastic
         extractedDetails = Constant.isExtractedDetails
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -119,6 +125,7 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
             }
         })
         LoadExamList()
+        LoadCoScholasticList()
     }
 
     private fun LoadExamList() {
@@ -173,6 +180,43 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
         binding.rcMapActivity.adapter = adapter
 
     }
+
+
+
+    private fun LoadCoScholasticList() {
+
+        val selectedColumns =
+            extractedDetails?.firstOrNull()?.tableStructure?.selectedColumns ?: emptyList()
+
+        val mappedList_2 = (selectedCoScholastics ?: emptyList()).map { CoScholastic ->
+
+            getCoScholasticDataValues(
+                id = CoScholastic.id.orEmpty(),
+                name = CoScholastic.name,
+                type = CoScholastic.type,
+                activities = selectedColumns,
+                selectedValue = null,
+                isSelected = false
+            )
+        }
+
+        if (mappedList_2.isEmpty()){
+            binding.rcCoScholastic.visibility= View.GONE
+            binding.lblCoScholastic.visibility= View.VISIBLE
+
+        }
+        else{
+            binding.rcCoScholastic.visibility= View.VISIBLE
+            binding.lblCoScholastic.visibility= View.GONE
+            adapter2 = CoScholasticListAdapter(mappedList_2, isEntryType, this)
+            binding.rcCoScholastic.layoutManager = LinearLayoutManager(this)
+            binding.rcCoScholastic.adapter = adapter2
+        }
+
+    }
+
+
+
 
 
     private fun filter(text: String) {
@@ -243,65 +287,197 @@ class MapActivity : BaseActivity<MapActivityBinding>(), View.OnClickListener {
             }
 
             R.id.lnrUpload -> {
+
+                // Adapter 1
                 val paperList = adapter.getFinalList()
-                Log.d("Final_List", paperList.toString())
-                saveSelectedMappings(paperList)
+
+                // Adapter 2
+                val coScholasticList = adapter2.getFinalList()
+
+                Log.d("Final_Paper_List", paperList.toString())
+                Log.d("Final_CoScholastic_List", coScholasticList.toString())
+
+                saveSelectedMappings(
+                    finalListFromAdapter = paperList,
+                    coScholasticList = coScholasticList
+                )
 
             }
         }
     }
 
     private fun saveSelectedMappings(
-        finalListFromAdapter: List<getActivitySubjectNameData>
+        finalListFromAdapter: List<getActivitySubjectNameData>,
+        coScholasticList: List<getCoScholasticDataValues>
     ) {
-        val finalSubjectList = mutableListOf<getActivitySubjectNameData>()
+
+        val finalSubjectList =
+            mutableListOf<getActivitySubjectNameData>()
 
         finalListFromAdapter.forEach { subject ->
 
             val validPapers = subject.paper.filter { paper ->
-                val hasRubrics = paper.rubrics.isNotEmpty()
 
-                if (isEntryType) {               // ── AI mode ──
+                val hasRubrics =
+                    paper.rubrics.isNotEmpty()
+
+                if (isEntryType) {
                     if (hasRubrics) {
-                        // AI + rubrics: at least one rubric mapped to a column
-                        paper.rubrics.any { !it.selectedRubricesValue.isNullOrEmpty() }
+
+                        paper.rubrics.any {
+                            !it.selectedRubricesValue.isNullOrEmpty()
+                        }
+
                     } else {
-                        // AI + no rubrics: paper-level spinner has a value
+
                         !paper.selectedValue.isNullOrEmpty()
                     }
-                } else {                          // ── Manual mode ──
+
+                } else {
+
+
                     if (hasRubrics) {
-                        // Manual + rubrics: at least one rubric ticked
-                        paper.rubrics.any { it.isSelected }
+
+                        paper.rubrics.any {
+                            it.isSelected
+                        }
+
                     } else {
-                        // Manual + no rubrics: checkbox ticked
+
                         !paper.selectedActivityID.isNullOrEmpty()
                     }
                 }
             }
 
             if (validPapers.isNotEmpty()) {
+
                 finalSubjectList.add(
-                    subject.copy(paper = validPapers)
+                    subject.copy(
+                        paper = validPapers
+                    )
                 )
             }
         }
 
-        Log.d("FINAL_SUBJECT_LIST", finalSubjectList.toString())
 
-        if (finalSubjectList.isEmpty()) {
+        val selectedCoScholasticList =
+            coScholasticList.filter { item ->
+                item.isSelected
+            }
+
+        val activityMappingCount =
+            finalSubjectList.sumOf { subject ->
+                subject.paper.size
+            }
+
+        val coScholasticMappingCount =
+            selectedCoScholasticList.size
+
+
+        Log.d(
+            "MAPPING_COUNT",
+            "Activity/Paper = $activityMappingCount, " +
+                    "CoScholastic = $coScholasticMappingCount"
+        )
+
+
+        if (
+            activityMappingCount == 0 &&
+            coScholasticMappingCount == 0
+        ) {
+
             Toast.makeText(
                 this,
                 getString(R.string.please_select_at_least_one_mapping),
                 Toast.LENGTH_SHORT
             ).show()
+
             return
         }
 
-        val intent = Intent(this, ReviewAndEditMarks::class.java)
-        intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
-        startActivity(intent)
+
+        Log.d(
+            "FINAL_SUBJECT_LIST",
+            finalSubjectList.toString()
+        )
+
+        Log.d(
+            "FINAL_CO_SCHOLASTIC_LIST",
+            selectedCoScholasticList.toString()
+        )
+
+
+//        val intent =
+//            Intent(
+//                this,
+//                ReviewAndEditMarks::class.java
+//            )
+//
+//        intent.putParcelableArrayListExtra(
+//            Constant.FINAL_MAP_ACTIVITY,
+//            ArrayList(finalSubjectList)
+//        )
+//
+//
+//         intent.putParcelableArrayListExtra(
+//             Constant.FINAL_COSCHOLASTIC_MAP_ACTIVITY,
+//             ArrayList(selectedCoScholasticList)
+//         )
+//
+//        startActivity(intent)
     }
+
+//    private fun saveSelectedMappings(
+//        finalListFromAdapter: List<getActivitySubjectNameData>
+//    ) {
+//        val finalSubjectList = mutableListOf<getActivitySubjectNameData>()
+//
+//        finalListFromAdapter.forEach { subject ->
+//
+//            val validPapers = subject.paper.filter { paper ->
+//                val hasRubrics = paper.rubrics.isNotEmpty()
+//
+//                if (isEntryType) {               // ── AI mode ──
+//                    if (hasRubrics) {
+//                        // AI + rubrics: at least one rubric mapped to a column
+//                        paper.rubrics.any { !it.selectedRubricesValue.isNullOrEmpty() }
+//                    } else {
+//                        // AI + no rubrics: paper-level spinner has a value
+//                        !paper.selectedValue.isNullOrEmpty()
+//                    }
+//                } else {                          // ── Manual mode ──
+//                    if (hasRubrics) {
+//                        // Manual + rubrics: at least one rubric ticked
+//                        paper.rubrics.any { it.isSelected }
+//                    } else {
+//                        // Manual + no rubrics: checkbox ticked
+//                        !paper.selectedActivityID.isNullOrEmpty()
+//                    }
+//                }
+//            }
+//
+//            if (validPapers.isNotEmpty()) {
+//                finalSubjectList.add(
+//                    subject.copy(paper = validPapers)
+//                )
+//            }
+//        }
+//
+//        Log.d("FINAL_SUBJECT_LIST", finalSubjectList.toString())
+//
+//        if (finalSubjectList.isEmpty()) {
+//            Toast.makeText(
+//                this,
+//                getString(R.string.please_select_at_least_one_mapping),
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            return
+//        }
+//
+//        val intent = Intent(this, ReviewAndEditMarks::class.java)
+//        intent.putParcelableArrayListExtra(Constant.FINAL_MAP_ACTIVITY, ArrayList(finalSubjectList))
+//        startActivity(intent)
+//    }
 
 //    private fun saveSelectedMappings(
 //        finalListFromAdapter: List<getActivitySubjectNameData>

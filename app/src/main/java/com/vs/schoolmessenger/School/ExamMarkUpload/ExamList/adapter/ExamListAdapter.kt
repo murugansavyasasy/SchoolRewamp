@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExamData
+import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getCoScholasticData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivitiesData
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.OnExamSelectListener
 import com.vs.schoolmessenger.Utils.Constant
@@ -28,6 +29,7 @@ class ExamListAdapter(
     private val TYPE_DATA = 1
 
     private var getSubjectActivitiesList: List<getSubjectWiseACtivitiesData>? = null
+    private var getCoScholasticList: List<getCoScholasticData>? = null
 
     private var selectedPosition = -1
     var expandedPosition = -1
@@ -64,8 +66,9 @@ class ExamListAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateSecondData(newList: List<getSubjectWiseACtivitiesData>?) {
+    fun updateSecondData(newList: List<getSubjectWiseACtivitiesData>?,newCoScholastic: List<getCoScholasticData>?) {
         getSubjectActivitiesList = newList
+        getCoScholasticList = newCoScholastic
         if (expandedPosition != -1) notifyItemChanged(expandedPosition)
     }
 
@@ -78,9 +81,12 @@ class ExamListAdapter(
 
         private val title: TextView = itemView.findViewById(R.id.examTitle)
         private val month: TextView = itemView.findViewById(R.id.examMonth)
+        private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
+        private val lblCoScholastic: TextView = itemView.findViewById(R.id.lblCoScholastic)
         private val arrow: ImageView = itemView.findViewById(R.id.arrow)
         private val imgCheck: ImageView = itemView.findViewById(R.id.imgCheck)
         private val subjectsRv: RecyclerView = itemView.findViewById(R.id.rcSubject)
+        private val rcCoScholastic: RecyclerView = itemView.findViewById(R.id.rcCoScholastic)
         private val header: RelativeLayout = itemView.findViewById(R.id.Header)
         private val viewDiv: View = itemView.findViewById(R.id.viewDiv)
         private val leftRibbon: View = itemView.findViewById(R.id.leftRibbon)
@@ -91,9 +97,13 @@ class ExamListAdapter(
             title.text = item.name
             month.text = Constant.convertDateFormatType3(item.date)
             subjectsRv.layoutManager = LinearLayoutManager(context)
+            rcCoScholastic.layoutManager = LinearLayoutManager(context)
 
             val isExpanded = position == expandedPosition
             subjectsRv.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            lblCoScholastic.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            rcCoScholastic.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            lblSubject.visibility = if (isExpanded) View.VISIBLE else View.GONE
             viewDiv.visibility = if (isExpanded) View.VISIBLE else View.GONE
             arrow.rotation = if (isExpanded) 180f else 0f
 
@@ -174,6 +184,25 @@ class ExamListAdapter(
                     else -> {
                         subjectsRv.visibility = View.GONE
                         lblNoDataFound.visibility = View.VISIBLE
+                    }
+                }
+
+                when {
+                    getCoScholasticList == null -> {
+                        rcCoScholastic.adapter = CoScholasticAdapter(null, context)
+                        rcCoScholastic.visibility = View.VISIBLE
+                        lblCoScholastic.visibility = View.VISIBLE
+                    }
+
+                    getCoScholasticList!!.isNotEmpty() -> {
+                        rcCoScholastic.adapter = CoScholasticAdapter(getCoScholasticList, context)
+                        rcCoScholastic.visibility = View.VISIBLE
+                        lblCoScholastic.visibility = View.VISIBLE
+                    }
+
+                    else -> {
+                        rcCoScholastic.visibility = View.GONE
+                        lblCoScholastic.visibility = View.GONE
                     }
                 }
             }

@@ -3,5 +3,5 @@ package com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseA
 data class getSubjectWiseACtivities(
     val status: Boolean,
     val message: String,
-    val data: List<getSubjectWiseACtivitiesData>
+    val data: List<getSubjectActivities>
 )

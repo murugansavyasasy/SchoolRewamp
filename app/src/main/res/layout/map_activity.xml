@@ -114,19 +114,56 @@
                 android:text="@string/map_each_activity_to_a_column_from_your_uploaded_image_or_choose_to_enter_marks_manually"
                 android:textStyle="bold"></TextView>
 
+            <TextView
+                android:id="@+id/lblSubjects"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/subjects"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_below="@+id/lblSampleMsg"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcMapActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSampleMsg"
-                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_below="@+id/lblSubjects"
+
+                android:nestedScrollingEnabled="false"></androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/lblCoScholastic"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/co_scholastic"
+                android:layout_below="@+id/rcMapActivity"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcCoScholastic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_below="@+id/lblCoScholastic"
+
                 android:nestedScrollingEnabled="false"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/lytList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rcMapActivity"
+                android:layout_below="@+id/rcCoScholastic"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical"

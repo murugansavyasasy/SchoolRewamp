@@ -99,8 +99,20 @@
             android:layout_height="@dimen/one"
             android:background="@color/AthensGray"></View>
 
+        <TextView
+            android:id="@+id/lblSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="@string/subjects"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcSubject"
+            android:layout_marginTop="@dimen/five"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/very_light_gray_13"
@@ -115,6 +127,24 @@
             android:visibility="gone">
 
         </TextView>
+        <TextView
+            android:layout_marginHorizontal="@dimen/ten"
+            android:id="@+id/lblCoScholastic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/co_scholastic"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginTop="@dimen/five"
+            android:visibility="gone"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcCoScholastic"
+            android:layout_marginTop="@dimen/five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/very_light_gray_13"
+            android:visibility="gone" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
