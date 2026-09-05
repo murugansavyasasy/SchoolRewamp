@@ -1344,4 +1344,13 @@
     <string name="no_activity_added">No activity added</string>
     <string name="no_date">No date</string>
     <string name="selected_">Selected</string>
+    <string name="select_the_class_and_student_to_get_started">Select the class and student to get started.</string>
+    <string name="select_standard_amp_section"><![CDATA[Select Standard & Section]]></string>
+    <string name="select_student">Select Student</string>
+    <string name="select_set">Select set ›</string>
+    <string name="please_select_a_standard_section"><![CDATA[Please select a standard & section]]></string>
+    <string name="please_select_a_student_to_continue">Please select a student to continue</string>
+    <string name="Admin_No">Admin No</string>
+    <string name="missing_class_section_details">Missing class/section details</string>
+    <string name="no_test_set_selected">No test set selected</string>
 </resources>

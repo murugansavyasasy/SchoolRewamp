@@ -1332,4 +1332,25 @@
     <string name="Thank_you_for_traveling_with_us">எங்களுடன் பயணம் செய்ததற்கு நன்றி!</string>
     <string name="live">நேரலை</string>
     <string name="next_stop">அடுத்த நிறுத்தம்</string>
+    <string name="sections">பிரிவுகள்</string>
+    <string name="details">விவரங்கள்</string>
+    <string name="fills_all_tests_from_that_subject_into_this_section">அந்தப் பாடத்தின் அனைத்து தேர்வுகளையும் இந்தப் பிரிவில் நிரப்புகிறது</string>
+    <string name="min_marks_must_be_less_than_max_marks">குறைந்தபட்ச மதிப்பெண் அதிகபட்ச மதிப்பெண்ணைவிட குறைவாக இருக்க வேண்டும்</string>
+    <string name="please_fill_activity_name_before_adding_another_activity">மற்றொரு செயல்பாட்டைச் சேர்ப்பதற்கு முன் செயல்பாட்டின் பெயரை உள்ளிடவும்</string>
+    <string name="Source_data_changed_re_copy_from">மூலத் தரவு மாற்றப்பட்டுள்ளது — இதிலிருந்து மீண்டும் நகலெடுக்கவும்</string>
+    <string name="Copy_data_from">இதிலிருந்து தரவை நகலெடுக்கவும்</string>
+    <string name="copy">நகலெடுக்கவும்</string>
+    <string name="add_activity">+ செயல்பாட்டைச் சேர்க்கவும்</string>
+    <string name="no_activity_added">எந்த செயல்பாடும் சேர்க்கப்படவில்லை</string>
+    <string name="no_date">தேதி இல்லை</string>
+    <string name="selected_">தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="select_the_class_and_student_to_get_started">தொடங்க வகுப்பு மற்றும் மாணவரைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="select_standard_amp_section"><![CDATA[வகுப்பு மற்றும் பிரிவைத் தேர்ந்தெடுக்கவும்]]></string>
+    <string name="select_student">மாணவரைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="select_set">தொகுப்பைத் தேர்ந்தெடுக்கவும் ›</string>
+    <string name="please_select_a_standard_section"><![CDATA[வகுப்பு மற்றும் பிரிவைத் தேர்ந்தெடுக்கவும்]]></string>
+    <string name="please_select_a_student_to_continue">தொடர மாணவரைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="Admin_No">நிர்வாக எண்</string>
+    <string name="missing_class_section_details">வகுப்பு/பிரிவு விவரங்கள் இல்லை</string>
+    <string name="no_test_set_selected">எந்த தேர்வு தொகுப்பும் தேர்ந்தெடுக்கப்படவில்லை</string>
 </resources>

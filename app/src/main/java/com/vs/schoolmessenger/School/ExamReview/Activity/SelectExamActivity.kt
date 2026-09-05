@@ -71,8 +71,8 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
             "-"
         }
         binding.lblStudentDetail.text = classSection
-        binding.lblrollno.text ="Roll No : " + Constant.isSelectedStudent?.roll_no
-        binding.lbladminno.text = "Admin No : " + Constant.isSelectedStudent?.admission_no
+        binding.lblrollno.text ="${getString(R.string.roll_no)} : " + Constant.isSelectedStudent?.roll_no
+        binding.lbladminno.text = "${getString(R.string.Admin_No)} : " + Constant.isSelectedStudent?.admission_no
     }
 
     private fun setupExamList() {
@@ -98,7 +98,7 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
         val sectionId = Constant.isSelectedSections.firstOrNull()?.sectionId
 
         if (isAccessToken.isNullOrEmpty() || classId.isNullOrEmpty() || sectionId.isNullOrEmpty()) {
-            showNoExamData("Missing class/section details")
+            showNoExamData(getString(R.string.missing_class_section_details))
             return
         }
 
@@ -135,8 +135,8 @@ class SelectExamActivity : BaseActivity<SelectExamReveiwBinding>(), View.OnClick
     }
 
     private fun updateSelectionState(selected: AnalysisSet?) {
-        binding.lblSelectionCount.text = selected?.setName?.let { "Selected: $it" }
-            ?: "No test set selected"
+        binding.lblSelectionCount.text = selected?.setName?.let { "${getString(R.string.selected_)}: $it" }
+            ?: getString(R.string.no_test_set_selected)
         binding.btnViewAnalysis.isEnabled = selected != null
         binding.btnViewAnalysis.alpha = if (selected != null) 1f else 0.5f
     }

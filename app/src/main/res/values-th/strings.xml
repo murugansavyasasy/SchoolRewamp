@@ -1332,4 +1332,25 @@
     <string name="Thank_you_for_traveling_with_us">ขอบคุณที่เดินทางกับเรา!</string>
     <string name="live">สด</string>
     <string name="next_stop">ป้ายถัดไป</string>
+    <string name="sections">ห้องเรียน</string>
+    <string name="details">รายละเอียด</string>
+    <string name="fills_all_tests_from_that_subject_into_this_section">เติมแบบทดสอบทั้งหมดจากวิชานั้นลงในห้องเรียนนี้</string>
+    <string name="min_marks_must_be_less_than_max_marks">คะแนนขั้นต่ำต้องน้อยกว่าคะแนนสูงสุด</string>
+    <string name="please_fill_activity_name_before_adding_another_activity">กรุณากรอกชื่อกิจกรรมก่อนเพิ่มกิจกรรมอื่น</string>
+    <string name="Source_data_changed_re_copy_from">ข้อมูลต้นทางมีการเปลี่ยนแปลง — คัดลอกใหม่จาก</string>
+    <string name="Copy_data_from">คัดลอกข้อมูลจาก</string>
+    <string name="copy">คัดลอก</string>
+    <string name="add_activity">+ เพิ่มกิจกรรม</string>
+    <string name="no_activity_added">ยังไม่มีกิจกรรมที่เพิ่ม</string>
+    <string name="no_date">ไม่มีวันที่</string>
+    <string name="selected_">เลือกแล้ว</string>
+    <string name="select_the_class_and_student_to_get_started">เลือกชั้นเรียนและนักเรียนเพื่อเริ่มต้น</string>
+    <string name="select_standard_amp_section"><![CDATA[เลือกชั้นเรียนและห้อง]]></string>
+    <string name="select_student">เลือกนักเรียน</string>
+    <string name="select_set">เลือกชุด ›</string>
+    <string name="please_select_a_standard_section"><![CDATA[โปรดเลือกชั้นเรียนและห้อง]]></string>
+    <string name="please_select_a_student_to_continue">โปรดเลือกนักเรียนเพื่อดำเนินการต่อ</string>
+    <string name="Admin_No">หมายเลขผู้ดูแลระบบ</string>
+    <string name="missing_class_section_details">ไม่มีรายละเอียดชั้นเรียน/ห้อง</string>
+    <string name="no_test_set_selected">ยังไม่ได้เลือกชุดการทดสอบ</string>
 </resources>

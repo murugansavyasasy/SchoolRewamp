@@ -294,11 +294,13 @@ class ExamStandardActivity : BaseActivity<ExamStandardSelectBinding>(), View.OnC
         binding.btnContinue.isEnabled = false
         binding.btnContinue.setOnClickListener {
             if (selectedStandardSection == null) {
-                Toast.makeText(this, "Please select a standard & section", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_select_a_standard_section), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (selectedStudent == null) {
-                Toast.makeText(this, "Please select a student to continue", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_select_a_student_to_continue), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             Constant.isSelectedStudent = selectedStudent

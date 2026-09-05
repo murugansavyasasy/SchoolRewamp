@@ -1332,4 +1332,25 @@
     <string name="Thank_you_for_traveling_with_us">हमारे साथ यात्रा करने के लिए धन्यवाद!</string>
     <string name="live">लाइव</string>
     <string name="next_stop">अगला स्टॉप</string>
+    <string name="sections">अनुभाग</string>
+    <string name="details">विवरण</string>
+    <string name="fills_all_tests_from_that_subject_into_this_section">उस विषय के सभी टेस्ट इस अनुभाग में भरता है</string>
+    <string name="min_marks_must_be_less_than_max_marks">न्यूनतम अंक अधिकतम अंकों से कम होने चाहिए</string>
+    <string name="please_fill_activity_name_before_adding_another_activity">कृपया कोई अन्य गतिविधि जोड़ने से पहले गतिविधि का नाम भरें</string>
+    <string name="Source_data_changed_re_copy_from">स्रोत डेटा बदल गया है — यहाँ से दोबारा कॉपी करें</string>
+    <string name="Copy_data_from">डेटा यहाँ से कॉपी करें</string>
+    <string name="copy">कॉपी करें</string>
+    <string name="add_activity">+ गतिविधि जोड़ें</string>
+    <string name="no_activity_added">कोई गतिविधि नहीं जोड़ी गई</string>
+    <string name="no_date">कोई तारीख नहीं</string>
+    <string name="selected_">चयनित</string>
+    <string name="select_the_class_and_student_to_get_started">शुरू करने के लिए कक्षा और छात्र चुनें।</string>
+    <string name="select_standard_amp_section"><![CDATA[कक्षा और अनुभाग चुनें]]></string>
+    <string name="select_student">छात्र चुनें</string>
+    <string name="select_set">सेट चुनें ›</string>
+    <string name="please_select_a_standard_section"><![CDATA[कृपया कक्षा और अनुभाग चुनें]]></string>
+    <string name="please_select_a_student_to_continue">जारी रखने के लिए कृपया एक छात्र चुनें</string>
+    <string name="Admin_No">प्रशासन संख्या</string>
+    <string name="missing_class_section_details">कक्षा/अनुभाग का विवरण उपलब्ध नहीं है</string>
+    <string name="no_test_set_selected">कोई टेस्ट सेट चयनित नहीं है</string>
 </resources>

@@ -1179,7 +1179,7 @@
     <string name="please_fill_all_marks_before_publishing">يرجى تعبئة جميع الدرجات قبل النشر:\n\n%s</string>
     <string name="please_fill_all_marks_before_publishing_title">يرجى تعبئة جميع الدرجات قبل النشر</string>
     <string name="create_class_test">إنشاء اختبار صفي</string>
-    <string name="view_created_test"><![CDATA[عرض الاختبار الذي تم إنشاؤه >>]]></string>
+    <string name="view_created_test"><![CDATA[<< عرض الاختبار الذي تم إنشاؤه ]]></string>
     <string name="class_description">**ملاحظة:** لن يتم احتساب هذه الاختبارات الصفية ودرجاتها في بطاقة التقرير والحسابات</string>
     <string name="test_name">اسم الاختبار</string>
     <string name="back_text">‹ رجوع</string>
@@ -1332,4 +1332,25 @@
     <string name="Thank_you_for_traveling_with_us">شكرًا لسفرك معنا!</string>
     <string name="live">مباشر</string>
     <string name="next_stop">المحطة التالية</string>
+    <string name="sections">الأقسام</string>
+    <string name="details">التفاصيل</string>
+    <string name="fills_all_tests_from_that_subject_into_this_section">يملأ جميع الاختبارات من تلك المادة في هذا القسم</string>
+    <string name="min_marks_must_be_less_than_max_marks">يجب أن تكون أقل درجة أقل من أعلى درجة</string>
+    <string name="please_fill_activity_name_before_adding_another_activity">يرجى إدخال اسم النشاط قبل إضافة نشاط آخر</string>
+    <string name="Source_data_changed_re_copy_from">تم تغيير بيانات المصدر — أعد النسخ من</string>
+    <string name="Copy_data_from">نسخ البيانات من</string>
+    <string name="copy">نسخ</string>
+    <string name="add_activity">+ إضافة نشاط</string>
+    <string name="no_activity_added">لم تتم إضافة أي نشاط</string>
+    <string name="no_date">لا يوجد تاريخ</string>
+    <string name="selected_">محدد</string>
+    <string name="select_the_class_and_student_to_get_started">اختر الصف والطالب للبدء.</string>
+    <string name="select_standard_amp_section"><![CDATA[اختر الصف والقسم]]></string>
+    <string name="select_student">اختر الطالب</string>
+    <string name="select_set">اختر المجموعة ›</string>
+    <string name="please_select_a_standard_section"><![CDATA[يرجى اختيار الصف والقسم]]></string>
+    <string name="please_select_a_student_to_continue">يرجى اختيار طالب للمتابعة</string>
+    <string name="Admin_No">رقم الإدارة</string>
+    <string name="missing_class_section_details">تفاصيل الصف/القسم مفقودة</string>
+    <string name="no_test_set_selected">لم يتم اختيار مجموعة اختبار</string>
 </resources>
