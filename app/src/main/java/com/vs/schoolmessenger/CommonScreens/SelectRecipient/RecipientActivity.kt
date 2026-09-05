@@ -2143,8 +2143,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 fileName = isVoiceData.isFileName
             )
             appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+            Log.d("VoiceDataFinal", isVoiceData.toString())
 
         }, 100)
+
     }
 
 

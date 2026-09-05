@@ -43,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/ten"
         android:nestedScrollingEnabled="false"
-    >
+        >
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

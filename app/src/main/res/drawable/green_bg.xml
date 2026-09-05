@@ -7,3 +7,6 @@
         android:topLeftRadius="100dp"
         android:topRightRadius="0dp" />
 </shape>
+    <!--Note-Important -->
+    <!--Try to Read it fully-->
+    <!--See  when you are changing this drawable make sure to change the idrtl file also because in arabic that change should be reflect or else the UI will be different-->

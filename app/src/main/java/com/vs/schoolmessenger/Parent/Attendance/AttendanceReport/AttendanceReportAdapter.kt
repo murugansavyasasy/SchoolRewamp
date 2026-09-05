@@ -118,9 +118,9 @@ class AttendanceReportAdapter(
             tvDayName.text = data.day
 
             val inputDate = data.date
-            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
-            val outputMonthFormat = SimpleDateFormat(Constant.MMM_, Locale.getDefault())
-            val outputDayFormat = SimpleDateFormat(Constant.dd, Locale.getDefault())
+            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
+            val outputMonthFormat = SimpleDateFormat(Constant.MMM_, Locale.ENGLISH)
+            val outputDayFormat = SimpleDateFormat(Constant.dd, Locale.ENGLISH)
 
             try {
                 val dateObj = inputFormat.parse(inputDate)

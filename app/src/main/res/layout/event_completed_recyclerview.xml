@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:textAlignment="viewStart"
                 android:text="Annual Day"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
@@ -71,6 +72,7 @@
             android:layout_marginTop="@dimen/five"
             android:ellipsize="end"
             android:lines="3"
+            android:textAlignment="viewStart"
             android:autoLink="web"
             android:linksClickable="true"
             android:maxLines="3"
@@ -79,6 +81,7 @@
             android:textSize="@dimen/thirteen_sp" />
 
         <LinearLayout
+            android:textAlignment="viewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -104,6 +107,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:textAlignment="viewStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"

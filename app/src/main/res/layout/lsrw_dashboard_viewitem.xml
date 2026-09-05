@@ -41,6 +41,7 @@
         </LinearLayout>
 
         <TextView
+            android:textAlignment="viewStart"
             android:id="@+id/txtTitle"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
@@ -58,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:textAlignment="viewStart"
             android:maxLines="1"
             android:text="1 overddue"
             android:textColor="#808080"

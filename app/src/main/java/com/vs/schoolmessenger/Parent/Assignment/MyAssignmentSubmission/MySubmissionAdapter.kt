@@ -141,17 +141,17 @@ class MySubmissionAdapter(
 
             try {
                 val apiFormat =
-                    SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_ss_a, Locale.getDefault())
+                    SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_ss_a, Locale.ENGLISH)
                 val parsedDate = apiFormat.parse(data.submitted_on)
 
                 if (parsedDate != null) {
-                    val displayFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                    val displayFormat = SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
                     val formattedDate = displayFormat.format(parsedDate)
 
                     submitteddetails.text =
                         "${context.getString(R.string.submitted1)}: $formattedDate"
 
-                    val shortDateFormat = SimpleDateFormat("d MMM", Locale.getDefault())
+                    val shortDateFormat = SimpleDateFormat("d MMM", Locale.ENGLISH)
                     datevalue.text = shortDateFormat.format(parsedDate)
                 } else {
                     submitteddetails.text =

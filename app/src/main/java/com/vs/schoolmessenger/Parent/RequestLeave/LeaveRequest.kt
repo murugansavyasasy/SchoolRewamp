@@ -44,7 +44,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
-    private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
+    private val dateFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.ENGLISH)
     private var selectedStatus: String = Constant.All_
     private var originalLeaveList: List<MonthWiseLeaveData> = emptyList()
     private var isLeaveList: List<MonthWiseLeaveData> = emptyList()

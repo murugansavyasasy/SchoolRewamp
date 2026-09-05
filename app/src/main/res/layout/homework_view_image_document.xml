@@ -103,9 +103,9 @@
             android:visibility="gone">
 
             <ImageView
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:src="@drawable/left_arrow" />
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:src="@drawable/left_arrow_ic_2" />
         </LinearLayout>
 
         <LinearLayout
@@ -125,9 +125,9 @@
 
             <ImageView
                 android:id="@+id/imgNext"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:src="@drawable/rightarrrow" />
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:src="@drawable/right_arrow_ic_2" />
         </LinearLayout>
 
         <LinearLayout

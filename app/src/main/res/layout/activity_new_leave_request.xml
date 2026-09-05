@@ -153,6 +153,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/transparent"
                                 android:hint="@string/enter_reason"
+                                android:textAlignment="viewStart"
                                 android:inputType="textMultiLine|textCapSentences"
                                 android:paddingTop="@dimen/four"
                                 android:paddingBottom="@dimen/four"

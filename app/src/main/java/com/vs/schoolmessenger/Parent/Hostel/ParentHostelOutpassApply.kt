@@ -162,8 +162,8 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
             }
 
             // FORMAT DATE + TIME (dd-MM-yyyy hh:mm a)
-            val apiDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
-            val inputDateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+            val apiDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val inputDateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH)
 
             val fromDateTime = inputDateFormat.parse("$txtStartDate $txtFromTime")
             val toDateTime = inputDateFormat.parse("$txtEndDate $txtToTime")
@@ -238,11 +238,11 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
     private fun getCurrentCal(): Calendar = Calendar.getInstance()
 
     private fun formatTime(cal: Calendar): String {
-        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(cal.time)
+        return SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(cal.time)
     }
 
     private fun parseTime(time: String): Calendar {
-        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val sdf = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
         val date = sdf.parse(time) ?: Date()
         return Calendar.getInstance().apply { this.time = date }
     }
@@ -254,7 +254,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
             return   //  skip all validations
         }
 
-        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
         val selectedDate = sdf.parse(txtStartDate ?: "") ?: Date()
         val today = sdf.parse(sdf.format(Date())) ?: Date()
@@ -301,7 +301,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
         val now = getCurrentCal()
 
-        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val todayStr = sdf.format(Date())
 
         // If today → use current time
@@ -339,7 +339,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
                 selectedDateField = 1
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                 val defaultCal = Calendar.getInstance()
 
                 if (!txtStartDate.isNullOrEmpty()) {
@@ -401,7 +401,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                     return
                 }
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                 val startDate = sdf.parse(txtStartDate!!) ?: Date()
 
                 val cal = Calendar.getInstance()
@@ -438,7 +438,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
 
             R.id.selectedFromTime -> {
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
                 val selectedDate = sdf.parse(txtStartDate ?: "") ?: Date()
                 val today = sdf.parse(sdf.format(Date())) ?: Date()
@@ -501,7 +501,7 @@ class ParentHostelOutpassApply : BaseActivity<ParentHostelOutpassApplyBinding>()
                     return
                 }
 
-                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
                 val fromDate = sdf.parse(txtStartDate ?: "") ?: Date()
                 val toDate = sdf.parse(txtEndDate ?: "") ?: Date()

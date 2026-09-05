@@ -159,7 +159,7 @@ class AttendanceHistoryFragment : Fragment(), View.OnClickListener {
 
                 lastSelectedDate = selectedCalendar
 
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 val formattedDate = sdf.format(selectedCalendar.time)
 
                 onDateSelected(formattedDate)

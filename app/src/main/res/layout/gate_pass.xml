@@ -154,6 +154,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/applied_on"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="bold" />
@@ -172,6 +173,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="Apr 1, 2025"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
                     </LinearLayout>
@@ -187,6 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/from_date"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="bold" />
@@ -204,6 +207,7 @@
                             android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
+                            android:textAlignment="viewStart"
                             android:text="May 3. 2025"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
@@ -220,6 +224,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/to_date"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="bold" />
@@ -237,6 +242,7 @@
                             android:layout_width="@dimen/zero"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
+                            android:textAlignment="viewStart"
                             android:text="May 10, 2025"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
@@ -253,6 +259,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="@string/no_of_day_s"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/fourteen_sp"
                             android:textStyle="bold" />
@@ -271,6 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="7"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
                     </LinearLayout>
@@ -288,6 +296,7 @@
                             android:text="@string/approved_by"
                             android:textColor="@color/PrimaryColor"
                             android:textSize="@dimen/fourteen_sp"
+                            android:textAlignment="viewStart"
                             android:textStyle="bold" />
 
                         <TextView
@@ -304,6 +313,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:text="Sathsih"
+                            android:textAlignment="viewStart"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
                     </LinearLayout>
@@ -333,6 +343,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Medical Emsergency"
+                            android:layout_marginHorizontal="@dimen/five"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fourteen_sp" />
                     </LinearLayout>

@@ -100,8 +100,8 @@ class AssignmentStudentListDetailAdapter(
             lblassignmentsubject.text = assignmentSubject
             Log.d("title", title.toString())
             Log.d("description", assignmentSubject.toString())
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
             val formattedDate = try {
                 val date = inputFormat.parse(data.submitted_on)

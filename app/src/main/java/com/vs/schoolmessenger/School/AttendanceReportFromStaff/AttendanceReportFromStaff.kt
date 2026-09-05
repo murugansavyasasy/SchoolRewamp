@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.AttendanceReportFromStaff
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
@@ -68,8 +69,8 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     private var isFromDate: String = ""
     private var isToDFate: String = ""
 
-    private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-    private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    private val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH)
+    private val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
 
     override fun setupViews() {
         super.setupViews()
@@ -93,8 +94,6 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
         val calendar = Calendar.getInstance()
         fromDateMillis = calendar.timeInMillis
         toDateMillis = calendar.timeInMillis
-        val displayFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-        val apiFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val displayDate = displayFormat.format(calendar.time)
         val apiDate = apiFormat.format(calendar.time)
         binding.fromDate2.text = displayDate
@@ -322,11 +321,26 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
 
     private fun openFromDatePicker() {
 
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(this.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        this.resources.updateConfiguration(config, this.resources.displayMetrics)
+
         val calendar = Calendar.getInstance()
 
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
+
+                Locale.setDefault(originalLocale)
+                this.resources.updateConfiguration(
+                    Configuration(this.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    this.resources.displayMetrics
+                )
 
                 val selectedCal = Calendar.getInstance()
                 selectedCal.set(year, month, dayOfMonth)
@@ -357,12 +371,25 @@ class AttendanceReportFromStaff : BaseActivity<AttendancereportFromStaffBinding>
     }
 
     private fun openToDatePicker() {
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
 
+        val config = Configuration(this.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        this.resources.updateConfiguration(config, this.resources.displayMetrics)
         val calendar = Calendar.getInstance()
 
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
+
+                Locale.setDefault(originalLocale)
+                this.resources.updateConfiguration(
+                    Configuration(this.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    this.resources.displayMetrics
+                )
 
                 val selectedCal = Calendar.getInstance()
                 selectedCal.set(year, month, dayOfMonth)

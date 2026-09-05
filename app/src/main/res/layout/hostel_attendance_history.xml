@@ -25,6 +25,7 @@
             android:layout_marginStart="@dimen/ten"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="@dimen/twenty_sp"
+            android:textAlignment="viewStart"
             style="@style/CustomTextStylePoppinsBold"
             android:text="@string/attendance_history"
             android:layout_height="wrap_content">
@@ -48,6 +49,7 @@
 
         <TextView
             android:layout_width="0dp"
+            android:textAlignment="viewStart"
             app:layout_constraintTop_toBottomOf="@+id/lblAttendanceHistory"
             android:id="@+id/lblHostelName"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,21 +106,22 @@
                 android:text="@string/mandatory"
                 android:textColor="@color/red" />
 
+
             <LinearLayout
-                android:layout_marginHorizontal="@dimen/ten"
-                app:layout_constraintTop_toBottomOf="@+id/lblStart"
                 android:id="@+id/rytStart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rcRoomAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/field_background"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/ten"
                 android:paddingVertical="@dimen/eight"
-                >
+                app:layout_constraintBottom_toTopOf="@+id/rcRoomAvailability"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.526"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblStart">
 
                 <RelativeLayout
                     android:id="@+id/rytStartDate"
@@ -131,8 +134,8 @@
                         android:layout_height="@dimen/fourty"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:backgroundTint="@color/dark_blue_15"
                         android:background="@drawable/rect_purple_rounded"
+                        android:backgroundTint="@color/dark_blue_15"
                         android:padding="@dimen/five"
                         android:src="@drawable/calendar_icon_6">
 
@@ -166,7 +169,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"

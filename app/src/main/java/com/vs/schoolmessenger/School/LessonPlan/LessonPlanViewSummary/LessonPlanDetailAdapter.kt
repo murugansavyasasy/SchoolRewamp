@@ -95,8 +95,8 @@ class LessonPlanDetailAdapter(
 
     fun convertDateFormat(dateStr: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             val date = inputFormat.parse(dateStr)
             outputFormat.format(date!!)
         } catch (e: Exception) {

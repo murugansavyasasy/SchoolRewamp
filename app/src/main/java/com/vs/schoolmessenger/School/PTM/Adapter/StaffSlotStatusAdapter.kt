@@ -192,9 +192,9 @@ class StaffSlotStatusAdapter(
         fun shouldShowImgDot(slotDate: String, toTime: String): Int {
             return try {
                 val normalizedDate = slotDate.replace("-", "/").trim()
-                val normalizedTime = toTime.trim().uppercase(Locale.getDefault())
+                val normalizedTime = toTime.trim().uppercase(Locale.ENGLISH)
 
-                val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+                val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH)
                 val slotEndDateTime = dateTimeFormat.parse("$normalizedDate $normalizedTime")
 
                 val now = Calendar.getInstance().time

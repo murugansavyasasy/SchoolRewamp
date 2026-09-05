@@ -35,7 +35,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var country_id: String? = null
-    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
 
 
     override fun getViewBinding(): DailyCollectionBinding {

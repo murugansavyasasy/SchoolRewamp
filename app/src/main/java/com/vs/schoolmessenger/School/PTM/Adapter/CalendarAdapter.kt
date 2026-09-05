@@ -21,7 +21,7 @@ class CalendarAdapter(
 ) : BaseAdapter() {
 
     private val today = Calendar.getInstance()
-    private val todayStr = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(today.time)
+    private val todayStr = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(today.time)
 
     override fun getCount(): Int = days.size
     override fun getItem(position: Int): Any = days[position]
@@ -45,7 +45,7 @@ class CalendarAdapter(
 
         val cellCal = calendar.clone() as Calendar
         cellCal.set(Calendar.DAY_OF_MONTH, day.toInt())
-        val cellDateStr = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cellCal.time)
+        val cellDateStr = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(cellCal.time)
 
         // 🔹 Disable days before minDate
         if (cellCal.timeInMillis < minDate) {

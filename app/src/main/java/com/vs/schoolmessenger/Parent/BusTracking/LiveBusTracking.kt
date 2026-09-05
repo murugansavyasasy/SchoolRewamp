@@ -535,7 +535,7 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    text = "  Now  "
+                    text = context.getString(R.string.now)
                     textSize = 12f  // Slightly increased
                     setTextColor(Color.WHITE)
                     setTypeface(typeface, android.graphics.Typeface.BOLD)
@@ -642,10 +642,10 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private fun showGpsEnableDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Enable Location")
-            .setMessage("Location services must be enabled to track the bus.")
+            .setTitle(getString(R.string.enable_location))
+            .setMessage(getString(R.string.location_services_must_be_enabled_to_track_the_bus))
             .setCancelable(false)
-            .setPositiveButton("Enable") { _, _ ->
+            .setPositiveButton(getString(R.string.enable)) { _, _ ->
                 isSettingsOpened = true
                 startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             }.show()
@@ -653,18 +653,18 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
 
     private fun showRetryPermissionDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permission Required")
-            .setMessage("Location permission is required for live bus tracking.")
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.location_permission_is_required_for_live_bus_tracking))
             .setCancelable(false)
-            .setPositiveButton("Retry") { _, _ -> requestLocationPermission() }.show()
+            .setPositiveButton(getString(R.string.retry)) { _, _ -> requestLocationPermission() }.show()
     }
 
     private fun showPermissionSettingsDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permission Required")
-            .setMessage("Location permission is permanently denied. Allow it in Settings.")
+            .setTitle(getString(R.string.permission_required))
+            .setMessage(getString(R.string.location_permission_is_permanently_denied_allow_it_in_settings))
             .setCancelable(false)
-            .setPositiveButton("Open Settings") { _, _ ->
+            .setPositiveButton(getString(R.string.open_settings)) { _, _ ->
                 isSettingsOpened = true
                 startActivity(
                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -1350,8 +1350,8 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
                     busMarker = map.addMarker(
                         MarkerOptions()
                             .position(interpolated)
-                            .title("🚌 ${busData?.vehicle_no ?: "Bus"}")
-                            .snippet("Route: ${busData?.route_name ?: "—"}")
+                            .title("🚌 ${busData?.vehicle_no ?: getString(R.string.bus)}")
+                            .snippet("${getString(R.string.Route)}: ${busData?.route_name ?: "—"}")
                             .icon(scaledBusIcon())
                     )
                 } else {
@@ -1476,9 +1476,9 @@ class LiveBusTracking : BaseActivity<LiveBusTrackingBinding>(),
             val btnDone = dialogView.findViewById<Button>(R.id.btnDone)
 
             tvDescription.text = if (journeyStatus?.equals("DROPPING", ignoreCase = true) == true) {
-                "Successfully completed. Thank you for traveling with us! This trip has been completed, and no further tracking updates are available"
+                getString(R.string.successfully_completed_thank_you_for_traveling_with_us_this_trip_has_been_completed_and_no_further_tracking_updates_are_available)
             } else {
-                "Successfully completed ${stops.size} stops\nThank you for traveling with us!"
+                "${getString(R.string.Successfully_completed)} ${stops.size} ${getString(R.string.stops)}\n ${getString(R.string.Thank_you_for_traveling_with_us)}"
             }
 
             val dialog = AlertDialog.Builder(this)

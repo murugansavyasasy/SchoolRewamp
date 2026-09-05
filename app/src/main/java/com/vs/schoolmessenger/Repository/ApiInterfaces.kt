@@ -279,7 +279,8 @@ interface ApiInterfaces {
     fun isDashBoard(
         @Header(APIKeyNames.Authorization) token: String,  // Pass token as a header
         @Query(APIKeyNames.member_type) isMemberType: String,  // Pass isMemberType as a query parameter
-        @Query(APIKeyNames.mobile_number) isMobileNumber: String  // Pass isMemberType as a query parameter
+        @Query(APIKeyNames.mobile_number) isMobileNumber: String,  // Pass isMemberType as a query parameter
+        @Query(APIKeyNames.language_code) language_code: String  // Pass isMemberType as a query parameter
     ): Call<DashboardResponse?>
 
 

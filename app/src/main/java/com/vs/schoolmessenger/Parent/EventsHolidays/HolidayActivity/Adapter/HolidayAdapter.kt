@@ -29,8 +29,8 @@ class HolidayAdapter(
         holder.txtName.text = holiday.name
 
         // Format date to "dd MMM yyyy"
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         holder.txtDate.text = try {
             val parsedDate = inputFormat.parse(holiday.date)
             outputFormat.format(parsedDate!!)

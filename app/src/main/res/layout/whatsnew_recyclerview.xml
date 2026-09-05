@@ -35,6 +35,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/twenty"
                 android:ellipsize="end"
+                android:textAlignment="viewStart"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen_sp" />
@@ -47,6 +48,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
+                android:textAlignment="viewStart"
                 android:paddingBottom="@dimen/ten"
                 android:text=""
                 android:textColor="@color/black"

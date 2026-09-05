@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MarkYourAttendanceBinding
 import java.util.Calendar
+import java.util.Locale
 
 class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnClickListener,
     GPSStatusListener, LocationLatLongListener, AttendanceReportClickListener {
@@ -337,18 +338,21 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
 
-                    val selectedMonthNumber = String.format(Constant.time02d, position + 1)
+                    val selectedMonthNumber = String.format(Locale.ENGLISH,Constant.time02d, position + 1)
                     binding.lblNoRecords.visibility = View.GONE
                     binding.imgNorecord.visibility = View.GONE
 
                     getStaffAttendanceReport(selectedYear, selectedMonthNumber)
+                    Log.d("SelectedYearAndMonth","Year"+selectedYear+"Month"+selectedMonthNumber)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
         // Trigger report call immediately for the default selected month
-        val selectedMonthNumber = String.format(Constant.time02d, currentMonthIndex + 1)
+        val selectedMonthNumber = String.format(Locale.ENGLISH,Constant.time02d, currentMonthIndex + 1)
+        Log.d("SelectedYearAndMonthFinal","Year"+selectedYear+"Month"+selectedMonthNumber)
+
         getStaffAttendanceReport(selectedYear, selectedMonthNumber)
     }
 

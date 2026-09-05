@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="View Marks"
+                android:text="@string/view_marks"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="14sp"
                 style="@style/CustomTextStylePoppinsBold" />

@@ -114,7 +114,7 @@ class CustomCalendarFragment : Fragment() {
 
     private fun updateCalendar() {
         currentMonthText.text =
-            "${calendar.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${calendar.year}"
+            "${calendar.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)} ${calendar.year}"
         val dates = generateDates(calendar)
         calendarAdapter.submitList(dates, selectedDate, today)
     }
