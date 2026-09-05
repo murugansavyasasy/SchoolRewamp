@@ -27,6 +27,7 @@
                 android:layout_toStartOf="@+id/arrow_icon_1"
                 android:text="@string/what_is_the_school_admission_process"
                 android:textColor="@color/black"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/thirteen_sp" />
 
             <ImageView
@@ -46,6 +47,7 @@
             android:background="@android:color/transparent"
             android:hint="@string/the_admission_process_includes_submitting_documents_and_an_entrance_exam"
             android:textColor="@color/black"
+            android:textAlignment="viewStart"
             android:textSize="@dimen/thirteen_sp"
             android:visibility="gone" />
     </LinearLayout>

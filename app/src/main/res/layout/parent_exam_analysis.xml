@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
                         android:padding="4dp"
-                        android:text="Close"
+                        android:text="@string/Close"
                         android:textColor="@color/exam_link_blue"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -165,7 +165,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Subject-wise Performance Breakdown"
+                        android:text="@string/subject_wise_performance_breakdown"
                         android:textColor="@color/exam_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -216,7 +216,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Performance Trend"
+                        android:text="@string/total_performance_trend"
                         android:textColor="@color/exam_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -258,7 +258,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Subject Average Performance"
+                        android:text="@string/subject_average_performance"
                         android:textColor="@color/exam_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold" />

@@ -14,6 +14,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:text="Hello Title"
+        android:textAlignment="viewStart"
         android:textSize="@dimen/twenty_sp" />
 
 
@@ -58,6 +59,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_weight="1"
             android:text="TAMIL"
+            android:textAlignment="viewStart"
             android:textColor="@color/clr_grey_dark"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -89,6 +91,7 @@
         android:layout_below="@+id/linearlayout_container"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
+        android:textAlignment="viewStart"
         android:text="I have submitted the assignment kindly check and provide me the suggestion"
         android:textColor="@color/clr_grey_dark"
         android:textSize="@dimen/thirteen_sp" />
@@ -199,6 +202,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Submitted on "
+            android:textAlignment="viewStart"
             android:textColor="@color/light_gray_5" />
 
         <View

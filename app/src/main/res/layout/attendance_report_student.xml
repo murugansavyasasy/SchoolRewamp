@@ -38,6 +38,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/fifteen"
                 android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textDirection="locale"
+                android:layoutDirection="locale"
+                android:mirrorForRtl="true"
                 android:text="Sep"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/eighteen_sp" />

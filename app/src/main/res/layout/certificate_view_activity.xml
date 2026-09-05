@@ -137,6 +137,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblRequestedOnDate"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
@@ -172,6 +173,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblCertificateDate"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
@@ -206,6 +208,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblCerticateTypeValue"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
@@ -240,6 +243,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:textAlignment="viewStart"
                     android:id="@+id/lblReasonValue"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"

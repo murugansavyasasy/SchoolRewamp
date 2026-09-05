@@ -76,7 +76,7 @@ class AbsenteesCalendarAdapter(
                 cal.set(Calendar.MONTH, month)
                 cal.set(Calendar.DAY_OF_MONTH, day.toInt())
 
-                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cal.time)
+                val fullDate = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(cal.time)
                 onDateClick(fullDate)
             }
         }

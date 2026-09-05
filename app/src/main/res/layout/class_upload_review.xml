@@ -118,7 +118,7 @@
                 android:layout_below="@+id/lblSampleDesc"
                 android:layout_marginHorizontal="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:text="Note: Use &quot;AB&quot; for absent students and NA for marks that are not applicable."
+                android:text="@string/note_use_quot_ab_quot_for_absent_students_and_na_for_marks_that_are_not_applicable"
                 android:textSize="@dimen/fifteen_sp"
                 android:textColor="@color/grey"/>
 
@@ -288,7 +288,7 @@
                             android:drawableStart="@drawable/ic_publish"
                             android:drawablePadding="@dimen/eight"
                             android:gravity="center"
-                            android:text="Publish"
+                            android:text="@string/publish"
                             android:textColor="@color/white"
                             android:textSize="@dimen/fifteen_sp" />
                     </LinearLayout>
@@ -321,7 +321,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No students found"
+                    android:text="@string/no_students_found"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp" />
             </LinearLayout>

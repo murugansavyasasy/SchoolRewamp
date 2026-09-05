@@ -95,7 +95,7 @@ class CustomDatePicker(
     }
 
     private fun loadDates(currentMonthText: TextView) {
-        val dateFormat = SimpleDateFormat(Constant.MMMM_yyyy, Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constant.MMMM_yyyy, Locale.ENGLISH)
         currentMonthText.text = dateFormat.format(calendar.time)
 
         val today = Calendar.getInstance().apply {

@@ -132,6 +132,7 @@
                         android:layout_marginTop="@dimen/one"
                         android:layout_toStartOf="@+id/lblGetOutPass"
                         android:text="Casual"
+                        android:textAlignment="viewStart"
                         android:textColor="@color/amber_yellow"
                         android:textSize="@dimen/fourteen_sp" />
 
@@ -139,6 +140,7 @@
                         android:id="@+id/lblGetOutPass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAlignment="viewStart"
                         android:layout_alignParentEnd="true"
                         android:text="@string/generate_outpass"
                         android:textColor="@color/iconBlue"
@@ -153,6 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one"
+                    android:textAlignment="viewStart"
                     android:layout_marginBottom="@dimen/ten"
                     android:text="Reason: Fever"
                     android:textSize="@dimen/fourteen_sp" />

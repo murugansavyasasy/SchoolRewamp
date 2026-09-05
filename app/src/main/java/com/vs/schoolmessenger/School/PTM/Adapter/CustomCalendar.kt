@@ -99,7 +99,7 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
     }
 
     private fun setupCalendar() {
-        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
         tvMonthYear.text = monthYear.format(calendar.time)
 
         val daysInMonth = ArrayList<Pair<String, Int>>()
@@ -138,7 +138,7 @@ class CustomCalendar(context: Context, attrs: AttributeSet? = null) : LinearLayo
                 if (isPastDate(tempCal2)) return@setOnItemClickListener
 
                 val fullDate =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(tempCal2.time)
+                    SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(tempCal2.time)
                 if (selectedDates.contains(fullDate)) {
                     selectedDates.remove(fullDate)
                 } else {

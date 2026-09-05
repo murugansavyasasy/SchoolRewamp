@@ -53,6 +53,7 @@
                 android:src="@drawable/ic_search" />
 
             <EditText
+                android:textAlignment="viewStart"
                 android:id="@+id/txtSearch1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

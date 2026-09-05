@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.OTP.OTP
+import com.vs.schoolmessenger.BuildConfig
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.Model.RateUsListener
@@ -1346,6 +1347,13 @@ class Splash : BaseActivity<ActivitySplashBinding>(), View.OnClickListener,
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_version_code, Constant.isVersionId)
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, isMobileNumber)
+
+        var school_id="0" // Here "0" means it a default school chimes.
+        if (!BuildConfig.BASE_APP) {
+            school_id = BuildConfig.SCHOOL_ID
+        }
+        jsonObject.addProperty(APIKeyNames.school_id, school_id)
+
         jsonObject.addProperty(
             APIKeyNames.Req_country_id,
             SharedPreference.getCountryId(this)

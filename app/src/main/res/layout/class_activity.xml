@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Create Class Test"
+                android:text="@string/create_class_test"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 style="@style/CustomTextStylePoppinsBold" />
@@ -66,7 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Create Class Test"
+                android:text="@string/create_class_test"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -85,14 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/two"
             android:layout_marginTop="@dimen/four"
-            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
+            android:text="@string/note_these_class_tests_and_its_marks_will_not_be_considered_for_report_card_and_calculations"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Configure each test"
+            android:text="@string/configure_each_test"
             android:visibility="gone"
             android:textColor="#CCFFFFFF"
             android:textSize="13sp" />
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/eight"
-                android:text="View Mark Analysis >"
+                android:text="@string/view_mark_analysis"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="View created test >"
+                android:text="@string/view_created_test"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -176,7 +176,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Test Name"
+                    android:text="@string/test_name"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsBold" />
@@ -254,7 +254,7 @@
                 android:layout_marginEnd="@dimen/eight"
                 android:layout_weight="0.35"
                 android:background="@drawable/rect_white_border_rounded"
-                android:text="‹ Back"
+                android:text="@string/back_text"
                 android:gravity="center"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="@dimen/twele_sp" />
@@ -266,7 +266,7 @@
                 android:layout_height="@dimen/fourty"
                 android:layout_weight="0.65"
                 android:background="@drawable/rect_primary_rounded"
-                android:text="Continue ›"
+                android:text="@string/continue_text"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp" />

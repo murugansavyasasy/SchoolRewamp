@@ -76,6 +76,7 @@
                 android:id="@+id/isSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
                 android:background="@drawable/custom_spinner_background" />
 
         </RelativeLayout>

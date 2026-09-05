@@ -162,13 +162,13 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
     private fun showExitConfirmationDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Discard changes?")
-            .setMessage("You have unsaved test details. If you exit now, this information will be lost.")
-            .setPositiveButton("Exit") { dialog, _ ->
+            .setTitle(getString(R.string.discard_changes))
+            .setMessage(getString(R.string.you_have_unsaved_test_details_if_you_exit_now_this_information_will_be_lost))
+            .setPositiveButton(getString(R.string.exit)) { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .setCancelable(true)
@@ -195,7 +195,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
     private fun loadSubjectData() {
         val selectedSubjects: List<SelectedSubject> = Constant.isSelectedSubjectss ?: emptyList()
         if (selectedSubjects.isEmpty()) {
-            showError("No subjects selected")
+            showError(getString(R.string.no_subjects_selected))
             return
         }
 
@@ -222,7 +222,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
                     subjectId = s.subjectId,
                     subjectName = s.subjectName,
                     sectionId = s.sectionId,
-                    sectionLabel = "Section ${s.sectionName}",
+                    sectionLabel = getString(R.string.section, s.sectionName),
                     isMerged = false,
                     mergedSections = emptyList(),
                     mergedSectionIds = emptyList(),
@@ -236,7 +236,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
 
     private fun buildAdapter(items: List<ClassTestItem>) {
         items.firstOrNull()?.isExpanded = true
-        adapter = ClassAdapter(items.toMutableList())
+        adapter = ClassAdapter(this,items.toMutableList())
         binding.rcClassList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ClassActivity.adapter
@@ -254,9 +254,10 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
                 binding.etExamName.background = ContextCompat.getDrawable(
                     this, R.drawable.input_field_bg_error
                 )
-                binding.etExamName.error = "Exam name is required"
+                binding.etExamName.error = getString(R.string.exam_name_is_required)
                 binding.etExamName.requestFocus()
-                Toast.makeText(this, "Please enter the Exam Name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_enter_the_exam_name), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
                 binding.etExamName.background = ContextCompat.getDrawable(
@@ -277,7 +278,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             if (touchedItems.isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Please fill in at least one subject's test details",
+                    getString(R.string.please_fill_in_at_least_one_subject_s_test_details),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -292,7 +293,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             if (hasIncomplete) {
                 Toast.makeText(
                     this,
-                    "Please fill Activity Name and Marks for every test",
+                    getString(R.string.please_fill_activity_name_and_marks_for_every_test),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -305,7 +306,7 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             if (hasInvalidMarks) {
                 Toast.makeText(
                     this,
-                    "Min marks must be less than Max marks for every activity",
+                    getString(R.string.min_marks_must_be_less_than_max_marks_for_every_activity),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener

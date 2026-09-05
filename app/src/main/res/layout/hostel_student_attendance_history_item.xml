@@ -32,7 +32,7 @@
         </TextView>
 
         <TextView
-
+            android:textAlignment="viewStart"
             android:id="@+id/lblFullName"
             android:layout_marginEnd="@dimen/ten"
             style="@style/CustomTextStylePoppinsBold"
@@ -52,6 +52,7 @@
             android:id="@+id/lblRoomAndClassDetails"
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="0dp"
+            android:textAlignment="viewStart"
             android:layout_height="wrap_content"
             android:text="Room No 101"
             android:textColor="@color/light_gray"
@@ -69,6 +70,7 @@
             android:id="@+id/lblPrimarymobile"
             style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="0dp"
+            android:textAlignment="viewStart"
             android:layout_height="wrap_content"
             android:text="0000000000"
             android:textColor="@color/light_gray"

@@ -58,7 +58,7 @@
                         android:layout_height="@dimen/thirty"
 
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/rightarrrow" />
+                        android:src="@drawable/right_arrow" />
                 </LinearLayout>
 
                 <RelativeLayout

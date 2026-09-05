@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Event
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -9,6 +10,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -63,6 +65,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_MENU_ID
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -517,6 +520,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
+        Log.d("isSelectedTime___hour",hour.toString())
+        Log.d("isSelectedTime___minute",minute.toString())
+        Log.d("isSelectedTime___amPm",amPm)
         if (isFromTime) {
             binding.txtStartTime.text =
                 String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
@@ -532,40 +538,98 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
     }
 
-
     fun showDatePicker11(
-        context: Context,
+        activity: Activity,
         dateFormatType: Boolean,
         onDateSelected: (String) -> Unit
     ) {
         val calendar = lastSelectedDate ?: Calendar.getInstance()
 
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        // Force English locale globally for this dialog creation
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
 
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
+        val config = Configuration(activity.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
+
+        val dialog = DatePickerDialog(
+            activity,
+            { _, year, month, day ->
+                // Restore original locale after selection
+                Locale.setDefault(originalLocale)
+                activity.resources.updateConfiguration(
+                    Configuration(activity.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    activity.resources.displayMetrics
+                )
+
                 val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
+                    set(year, month, day)
                 }
-
-                // Save for next time
                 lastSelectedDate = selectedCalendar
 
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
+                val formattedDate = SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.ENGLISH
+                ).format(selectedCalendar.time)
+
                 onDateSelected(formattedDate)
             },
-            year, month, day
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        // Prevent past dates
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        dialog.setOnCancelListener {
+            // Restore locale if dialog is cancelled
+            Locale.setDefault(originalLocale)
+            activity.resources.updateConfiguration(
+                Configuration(activity.resources.configuration).apply {
+                    setLocale(originalLocale)
+                },
+                activity.resources.displayMetrics
+            )
+        }
 
-        datePickerDialog.show()
+        dialog.datePicker.minDate = System.currentTimeMillis()
+        dialog.show()
     }
+
+//    fun showDatePicker11(
+//        context: Context,
+//        dateFormatType: Boolean,
+//        onDateSelected: (String) -> Unit
+//    ) {
+//        val calendar = lastSelectedDate ?: Calendar.getInstance()
+//
+//        val year = calendar.get(Calendar.YEAR)
+//        val month = calendar.get(Calendar.MONTH)
+//        val day = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//        val datePickerDialog = DatePickerDialog(
+//            context,
+//            { _, selectedYear, selectedMonth, selectedDay ->
+//                val selectedCalendar = Calendar.getInstance().apply {
+//                    set(selectedYear, selectedMonth, selectedDay)
+//                }
+//
+//                // Save for next time
+//                lastSelectedDate = selectedCalendar
+//
+//                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//                val formattedDate = sdf.format(selectedCalendar.time)
+//                onDateSelected(formattedDate)
+//            },
+//            year, month, day
+//        )
+//
+//        // Prevent past dates
+//        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+//
+//        datePickerDialog.show()
+//    }
 
     private fun validateTimeAfterDateChange(context: Context) {
 
@@ -574,7 +638,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val today = Calendar.getInstance()
 
         val selectedDate = try {
-            val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+            val sdf = SimpleDateFormat(
+                "dd MMM yyyy",
+                Locale.ENGLISH
+            )
             sdf.parse(binding.txtStartDate.text.toString())
         } catch (e: Exception) {
             null
@@ -621,7 +688,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
     }
 
-
     fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
 
         timeSelectedListener = listener
@@ -629,15 +695,35 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
         val currentMinute = calendar.get(Calendar.MINUTE)
 
+        // Force English locale globally for this dialog creation
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         val timePickerDialog = TimePickerDialog(
             context,
             { _, selectedHour, selectedMinute ->
 
+                // Restore original locale after selection
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
                 val today = Calendar.getInstance()
 
-                // 🔹 GET SELECTED DATE FROM TEXTVIEW
+                // GET SELECTED DATE FROM TEXTVIEW
                 val effectiveSelectedDate = try {
-                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                    val sdf = SimpleDateFormat(
+                        "dd MMM yyyy",
+                        Locale.ENGLISH
+                    )
                     val date = sdf.parse(binding.txtStartDate.text.toString())
                     Calendar.getInstance().apply {
                         time = date!!
@@ -652,7 +738,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
                 if (isSameDay) {
 
-                    // 🔹 COMBINE SELECTED DATE + TIME
+                    // COMBINE SELECTED DATE + TIME
                     val selectedCal = Calendar.getInstance().apply {
                         set(Calendar.YEAR, effectiveSelectedDate.get(Calendar.YEAR))
                         set(Calendar.MONTH, effectiveSelectedDate.get(Calendar.MONTH))
@@ -698,7 +784,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     }
                 }
 
-                // ✅ VALID TIME → CONTINUE ORIGINAL FLOW
+                // VALID TIME → CONTINUE ORIGINAL FLOW
                 val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
                 val hourIn12Format =
                     if (selectedHour == 0) 12
@@ -716,8 +802,117 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             false
         )
 
+        timePickerDialog.setOnCancelListener {
+            // Restore locale if dialog is cancelled
+            Locale.setDefault(originalLocale)
+            context.resources.updateConfiguration(
+                Configuration(context.resources.configuration).apply {
+                    setLocale(originalLocale)
+                },
+                context.resources.displayMetrics
+            )
+        }
+
         timePickerDialog.show()
     }
+
+
+//    fun showTimePickerDialog1(context: Context, listener: TimeSelectedListener) {
+//
+//        timeSelectedListener = listener
+//        val calendar = Calendar.getInstance()
+//        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+//        val currentMinute = calendar.get(Calendar.MINUTE)
+//
+//        val timePickerDialog = TimePickerDialog(
+//            context,
+//            { _, selectedHour, selectedMinute ->
+//
+//                val today = Calendar.getInstance()
+//
+//                // 🔹 GET SELECTED DATE FROM TEXTVIEW
+//                val effectiveSelectedDate = try {
+//                    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+//                    val date = sdf.parse(binding.txtStartDate.text.toString())
+//                    Calendar.getInstance().apply {
+//                        time = date!!
+//                    }
+//                } catch (e: Exception) {
+//                    today
+//                }
+//
+//                val isSameDay =
+//                    effectiveSelectedDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+//                            effectiveSelectedDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+//
+//                if (isSameDay) {
+//
+//                    // 🔹 COMBINE SELECTED DATE + TIME
+//                    val selectedCal = Calendar.getInstance().apply {
+//                        set(Calendar.YEAR, effectiveSelectedDate.get(Calendar.YEAR))
+//                        set(Calendar.MONTH, effectiveSelectedDate.get(Calendar.MONTH))
+//                        set(Calendar.DAY_OF_MONTH, effectiveSelectedDate.get(Calendar.DAY_OF_MONTH))
+//                        set(Calendar.HOUR_OF_DAY, selectedHour)
+//                        set(Calendar.MINUTE, selectedMinute)
+//                        set(Calendar.SECOND, 0)
+//                        set(Calendar.MILLISECOND, 0)
+//                    }
+//
+//                    val currentCal = Calendar.getInstance().apply {
+//                        set(Calendar.SECOND, 0)
+//                        set(Calendar.MILLISECOND, 0)
+//                    }
+//
+//                    if (selectedCal.before(currentCal)) {
+//
+//                        val resetHour12 =
+//                            if (currentCal.get(Calendar.HOUR_OF_DAY) == 0) 12
+//                            else if (currentCal.get(Calendar.HOUR_OF_DAY) > 12)
+//                                currentCal.get(Calendar.HOUR_OF_DAY) - 12
+//                            else currentCal.get(Calendar.HOUR_OF_DAY)
+//
+//                        val resetAmPm =
+//                            if (currentCal.get(Calendar.HOUR_OF_DAY) < 12)
+//                                Constant.AM
+//                            else
+//                                Constant.PM
+//
+//                        listener.onTimeSelected(
+//                            resetHour12,
+//                            currentCal.get(Calendar.MINUTE),
+//                            resetAmPm
+//                        )
+//
+//                        Toast.makeText(
+//                            context,
+//                            context.getString(R.string.time_cannot_be_past),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                        return@TimePickerDialog
+//                    }
+//                }
+//
+//                // ✅ VALID TIME → CONTINUE ORIGINAL FLOW
+//                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
+//                val hourIn12Format =
+//                    if (selectedHour == 0) 12
+//                    else if (selectedHour > 12) selectedHour - 12
+//                    else selectedHour
+//
+//                selectedHour24 = selectedHour
+//                selectedMinute24 = selectedMinute
+//
+//                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+//
+//            },
+//            currentHour,
+//            currentMinute,
+//            false
+//        )
+//
+//        timePickerDialog.show()
+//    }
 
 
     private fun showBottomDialog() {
@@ -997,7 +1192,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.ENGLISH).format(Date())
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile(
             "${Constant.IMG_}${timeStamp}${Constant.underscore}",
@@ -1029,8 +1224,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val txtLocation = binding.txtLocation.text.toString().trim()
         val txtTitle = binding.txtTitle.text.toString().trim()
         val txtDesc = binding.txtDesc.text.toString().trim()
-        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
-        val txtStartTime = binding.txtStartTime.text.toString().trim()
+        val txtStartDate = DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(binding.txtStartDate.text.toString()))
+        val txtStartTime = DateFormatterUtil.normalizeToApiFormat(binding.txtStartTime.text.toString().trim())
 
         if (txtLocation.isEmpty()) {
             binding.txtLocation.error = getString(R.string.This_field_required)
@@ -1341,7 +1536,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         try {
             val sdfInput = SimpleDateFormat(
                 "dd/MM/yyyy",
-                Locale.getDefault()
+                Locale.ENGLISH
             )  // Adjust if data.date format differs
             val parsedDate = sdfInput.parse(binding.txtStartDate.text.toString())
             selectedDate = Calendar.getInstance().apply { time = parsedDate!! }
@@ -1380,10 +1575,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         jsonObject.addProperty(APIKeyNames.file_size, "")
         jsonObject.addProperty(APIKeyNames.thumbnail, "")
         jsonObject.addProperty(
-            APIKeyNames.event_date,
-            Constant.convertDateFormat(binding.txtStartDate.text.toString())
+            APIKeyNames.event_date, DateFormatterUtil.normalizeToApiFormat(Constant.convertDateFormat(binding.txtStartDate.text.toString())
+            )
         )
-        jsonObject.addProperty(APIKeyNames.event_time, binding.txtStartTime.text.toString().trim())
+        jsonObject.addProperty(APIKeyNames.event_time, DateFormatterUtil.normalizeToApiFormat(binding.txtStartTime.text.toString().trim()))
         jsonObject.addProperty(APIKeyNames.category, isSelectedCategoryId)
         jsonObject.addProperty(APIKeyNames.venue, binding.txtLocation.text.toString())
         for (i in Constant.isAwsUploadedFiles.indices) {

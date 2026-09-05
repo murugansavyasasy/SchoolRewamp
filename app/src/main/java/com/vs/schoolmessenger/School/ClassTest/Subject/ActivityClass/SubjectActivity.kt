@@ -106,7 +106,8 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
 
         binding.btnContinue.setOnClickListener {
             if (totalSelectedCount == 0) {
-                Toast.makeText(this, "Please select atleast one subject", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.please_select_atleast_one_subject), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -151,7 +152,8 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
             binding.lblSelectionCount.visibility = View.GONE
         } else {
             val totalSubjects = adapter.getTotalSubjectCount()
-            binding.lblSelectionCount.text = "✓ $count of $totalSubjects subjects selected"
+            binding.lblSelectionCount.text =
+                getString(R.string.of_subjects_selected, count, totalSubjects)
             binding.lblSelectionCount.visibility = View.VISIBLE
         }
     }

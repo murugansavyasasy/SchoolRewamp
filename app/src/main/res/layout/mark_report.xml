@@ -25,7 +25,7 @@
                 <TextView
                     android:id="@+id/isBack"
                     android:layout_width="match_parent"
-                    android:text="Class Tests"
+                    android:text="@string/class_tests"
                     android:gravity="center"
                     android:paddingStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
@@ -62,7 +62,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Scored"
+                                android:text="@string/scored"
                                 android:textColor="#888888"
                                 android:textSize="@dimen/twele_sp" />
 
@@ -92,7 +92,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total"
+                                android:text="@string/total"
                                 android:textColor="#888888"
                                 android:textSize="13sp" />
 
@@ -122,7 +122,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Percentage"
+                                android:text="@string/percentage"
                                 android:textColor="#888888"
                                 android:textSize="13sp" />
 
@@ -161,7 +161,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="P - Pass"
+                                android:text="@string/p_pass"
                                 android:textColor="@color/green"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -180,7 +180,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:text="F - Fail"
+                                android:text="@string/f_fail"
                                 android:textColor="@color/red"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -189,7 +189,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="AB - Absent"
+                            android:text="@string/ab_absent"
                             android:textColor="#F44336"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -228,7 +228,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="No data available"
+                        android:text="@string/no_data_available"
                         android:textSize="14sp" />
                 </LinearLayout>
 

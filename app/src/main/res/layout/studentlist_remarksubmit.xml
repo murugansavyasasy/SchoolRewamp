@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
+                android:textAlignment="viewStart"
                 android:text="@string/images_docs"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp" />
@@ -102,6 +103,7 @@
                             android:ellipsize="end"
                             android:maxLines="4"
                             android:autoLink="web"
+                            android:textAlignment="viewStart"
                             android:linksClickable="true"
                             android:text=""
                             android:textColor="#666666"
@@ -247,7 +249,7 @@
             android:layout_marginTop="@dimen/twele"
             android:backgroundTint="@color/PrimaryColor"
             android:padding="@dimen/ten"
-            android:text="Submit Remark"
+            android:text="@string/submit_remark"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

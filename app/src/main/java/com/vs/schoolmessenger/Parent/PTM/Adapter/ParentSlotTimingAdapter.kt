@@ -187,11 +187,11 @@ class ParentSlotTimingAdapter(
 
     private fun isOverlapping(slot1: SlotData, slot2: SlotData): Boolean {
         return try {
-            val format = SimpleDateFormat("hh:mm a", Locale.getDefault())
-            val from1Str = slot1.slot_from.trim().uppercase(Locale.getDefault())
-            val to1Str = slot1.slot_to.trim().uppercase(Locale.getDefault())
-            val from2Str = slot2.slot_from.trim().uppercase(Locale.getDefault())
-            val to2Str = slot2.slot_to.trim().uppercase(Locale.getDefault())
+            val format = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+            val from1Str = slot1.slot_from.trim().uppercase(Locale.ENGLISH)
+            val to1Str = slot1.slot_to.trim().uppercase(Locale.ENGLISH)
+            val from2Str = slot2.slot_from.trim().uppercase(Locale.ENGLISH)
+            val to2Str = slot2.slot_to.trim().uppercase(Locale.ENGLISH)
 
             val isSlot1AM = from1Str.contains("AM")
             val isSlot2AM = from2Str.contains("AM")

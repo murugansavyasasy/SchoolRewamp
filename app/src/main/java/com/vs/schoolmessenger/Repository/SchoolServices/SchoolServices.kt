@@ -404,9 +404,10 @@ class SchoolServices {
         isToken: String,
         isMemberType: String,
         isMobileNumber: String,
+        isLanguageCode: String,
         activity: Activity
     ) {
-        RestClient.Companion.apiInterfaces.isDashBoard(isToken, isMemberType, isMobileNumber)
+        RestClient.Companion.apiInterfaces.isDashBoard(isToken, isMemberType, isMobileNumber,isLanguageCode)
             ?.enqueue(object : Callback<DashboardResponse?> {
                 override fun onResponse(
                     call: Call<DashboardResponse?>, response: Response<DashboardResponse?>

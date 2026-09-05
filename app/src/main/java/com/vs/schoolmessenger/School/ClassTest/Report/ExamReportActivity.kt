@@ -61,7 +61,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
             statusBarBgView = binding.statusBarBackground
         )
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "View Created test list"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.view_created_test_list)
         binding.toolbarLayout.lblExamCount.visibility = View.VISIBLE
         setupRecyclerView()
         setupViewModel()
@@ -102,7 +102,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
 
     private fun updateExamCountBadge(count: Int) {
         binding.toolbarLayout.lblExamCount.text =
-            "$count ${if (count == 1) "TEST" else "TESTS"}"
+            "$count ${if (count == 1) getString(R.string.test) else getString(R.string.tests)}"
     }
 
 
@@ -125,14 +125,14 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         position: Int
     ) {
         AlertDialog.Builder(this)
-            .setTitle("Delete Exam")
-            .setMessage("Are you sure you want to delete \"${classTest.examName}\"?")
+            .setTitle(getString(R.string.delete_exam))
+            .setMessage(getString(R.string.are_you_sure_you_want_to_delete, classTest.examName))
             .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                 dialog.dismiss()
                 deleteClassTest(classTest, position)
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -200,7 +200,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
         AlertDialog.Builder(this)
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("OK") { dialog, _ ->
+            .setPositiveButton(getString(R.string.OK_2)) { dialog, _ ->
                 dialog.dismiss()
                 onOkClick?.invoke()
             }

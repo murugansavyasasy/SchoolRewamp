@@ -138,7 +138,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
             .into(binding.bottomLayout.thumbnail)
 
         try {
-            val apiFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
+            val apiFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.ENGLISH)
             val expiryDateParsed = apiFormat.parse(expiry_date)
 
             val calendar = Calendar.getInstance()
@@ -146,7 +146,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
 
             val day = calendar.get(Calendar.DAY_OF_MONTH)
             val month =
-                SimpleDateFormat(Constant.MMMM, Locale.getDefault()).format(expiryDateParsed)
+                SimpleDateFormat(Constant.MMMM, Locale.ENGLISH).format(expiryDateParsed)
             val suffix = getDaySuffix(day)
 
             val displayText = "${getString(R.string.expires_on)} $day$suffix $month"

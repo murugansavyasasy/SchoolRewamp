@@ -45,7 +45,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Live Bus Tracking"
+                android:text="@string/live_bus_tracking"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp" />
@@ -56,7 +56,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Track route in real time"
+                android:text="@string/track_route_in_real_time"
                 android:textSize="@dimen/eighteen_sp" />
         </LinearLayout>
 

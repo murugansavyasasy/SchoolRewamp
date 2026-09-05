@@ -36,6 +36,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textAlignment="viewStart"
                 android:id="@+id/event_header"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
@@ -63,6 +64,7 @@
 
         <TextView
             android:id="@+id/eventdesc"
+            android:textAlignment="viewStart"
             style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,6 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
+            android:textAlignment="viewStart"
             android:orientation="horizontal">
 
             <ImageView
@@ -108,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
+            android:textAlignment="viewStart"
             android:layout_marginBottom="@dimen/ten"
             android:orientation="horizontal">
 

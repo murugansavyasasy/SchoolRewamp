@@ -733,11 +733,12 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         isMemberType: String,
         isMobileNumber: String,
+        isLanguageCode: String,
         activity: Activity
     ) {
         val reporting_url = SharedPreference.getReportingUrl(activity)
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositories.isDashBoard(isToken, isMemberType, isMobileNumber, activity)
+        apiSchoolRepositories.isDashBoard(isToken, isMemberType, isMobileNumber, isLanguageCode,activity)
     }
 
     fun isDashBoardCountData(isToken: String, isMemberType: String, activity: Activity) {

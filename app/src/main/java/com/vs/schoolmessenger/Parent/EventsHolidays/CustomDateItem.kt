@@ -19,7 +19,7 @@ data class CustomDateItem(
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month - 1)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        val dateFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constant.yyyy_MM_dd, Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
 }

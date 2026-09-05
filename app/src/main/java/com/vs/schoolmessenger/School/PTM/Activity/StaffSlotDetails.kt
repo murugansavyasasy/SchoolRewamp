@@ -137,7 +137,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         try {
             if (raw.matches(Regex("^\\d{10}\$")) || raw.matches(Regex("^\\d{13}\$"))) {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
-                val out = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val out = java.text.SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                     .format(java.util.Date(millis))
                 android.util.Log.d("StaffSlotDetails", "parsed epoch -> $out")
                 return out
@@ -160,11 +160,11 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
         )
         for (pattern in patterns) {
             try {
-                val parser = java.text.SimpleDateFormat(pattern, Locale.getDefault())
+                val parser = java.text.SimpleDateFormat(pattern, Locale.ENGLISH)
                 parser.isLenient = false
                 val parsed = parser.parse(raw)
                 if (parsed != null) {
-                    val output = java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    val output = java.text.SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                     val result = output.format(parsed)
                     android.util.Log.d(
                         "StaffSlotDetails",
@@ -179,7 +179,7 @@ class StaffSlotDetails : BaseActivity<PtmStaffSlotDetailsBinding>(),
             val odt = java.time.OffsetDateTime.parse(raw)
             val zoned = odt.atZoneSameInstant(java.time.ZoneId.systemDefault())
             val fmt =
-                java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault())
+                java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
             val s = zoned.format(fmt)
             android.util.Log.d("StaffSlotDetails", "parsed with OffsetDateTime -> $s")
             return s

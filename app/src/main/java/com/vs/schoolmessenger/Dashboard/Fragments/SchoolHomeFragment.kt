@@ -408,7 +408,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 .into(imgProfile)
         }
 
-        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH).format(Date())
         txtDate.text = currentDate
 
         dimView.setOnClickListener {
@@ -679,9 +679,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.gridRecyclerView.layoutManager = gridLayoutManager
         binding.gridRecyclerView.adapter = isMenuAdapter
+        val language_Code=SharedPreference.getLanguage(requireActivity())?:"en"
+
 
         appViewModel!!.isDashBoardData(
-            access_token, Constant.staff_, mobile_number, requireActivity()
+            access_token, Constant.staff_, mobile_number,language_Code,requireActivity()
         )
     }
 

@@ -155,6 +155,7 @@
 
                     <TextView
                         android:id="@+id/txtquestion"
+                        android:textAlignment="viewStart"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -169,8 +170,8 @@
                     android:id="@+id/edtMessage"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fourty"
+                    android:textAlignment="viewStart"
                     android:background="@drawable/bg_message_input"
-                    android:gravity="center_vertical"
                     android:hint="@string/type_your_message_here"
                     android:inputType="textMultiLine|textCapSentences"
                     android:paddingHorizontal="@dimen/twele"

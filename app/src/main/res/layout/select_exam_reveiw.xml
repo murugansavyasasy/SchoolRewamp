@@ -312,6 +312,7 @@
             android:gravity="center"
             android:paddingHorizontal="@dimen/twenty"
             android:text="← Back"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp" />
 
@@ -338,6 +339,7 @@
             android:gravity="center"
             android:paddingHorizontal="@dimen/twenty"
             android:text="View Analysis  →"
+            android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/fourteen_sp" />
 

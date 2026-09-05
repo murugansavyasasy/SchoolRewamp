@@ -25,7 +25,6 @@
             android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/lblOutPassRequest"
             app:layout_constraintEnd_toStartOf="@+id/lblOutPassRequest"
-            app:layout_constraintStart_toEndOf="@+id/lblOutPassRequest"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -36,6 +35,7 @@
             android:id="@+id/lblOutPassRequest"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
+            android:textAlignment="viewStart"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
             android:layout_marginEnd="@dimen/five"
@@ -72,8 +72,9 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginHorizontal="@dimen/ten"
             android:text=""
+            android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             app:layout_constraintBottom_toBottomOf="parent"

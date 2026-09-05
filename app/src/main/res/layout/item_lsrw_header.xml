@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:ellipsize="end"
+            android:textAlignment="viewStart"
             android:maxLines="1"
             android:text="Today Submitted"
             android:textColor="@android:color/black"
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textAlignment="viewStart"
             android:text="0 Students"
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp" />

@@ -89,7 +89,7 @@
                 android:layout_toStartOf="@id/toolbarSearchIcon"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Create Class Test"
+                android:text="@string/create_class_test"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/ten"
-                android:text="Select Standard"
+                android:text="@string/select_standard"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
-            android:text="Choose the class for which you want to create a test"
+            android:text="@string/choose_the_class_for_which_you_want_to_create_a_test"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/four"
-            android:text="**Note:**These class tests and its marks will not be considered for report card and calculations"
+            android:text="@string/note_these_class_tests_and_its_marks_will_not_be_considered_for_report_card_and_calculations"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/eight"
-                android:text="View Mark Analysis >"
+                android:text="@string/view_mark_analysis"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="View created test >"
+                android:text="@string/view_created_test"
                 android:textColor="@color/white"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -278,7 +278,7 @@
             android:layout_marginBottom="@dimen/eight"
             android:background="@drawable/rect_primary_rounded"
             android:gravity="center"
-            android:text="Continue  ›"
+            android:text="@string/continue_text"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             app:layout_constraintBottom_toTopOf="@id/btnAddTestMarks"
@@ -313,7 +313,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Test Marks"
+                android:text="@string/add_test_marks"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp" />
 

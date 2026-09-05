@@ -34,7 +34,7 @@ class CalendarAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedDate = dateList[position]
                     val today = Calendar.getInstance().time
-                    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+                    val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
                     val clicked = dateFormat.parse(clickedDate.fullDate)
                     if (clicked!!.after(today)) {
                         return@setOnClickListener
