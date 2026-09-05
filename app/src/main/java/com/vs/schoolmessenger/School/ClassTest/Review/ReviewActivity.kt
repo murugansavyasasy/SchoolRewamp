@@ -167,6 +167,7 @@ class ReviewActivity : BaseActivity<ReviewActivityBinding>(), View.OnClickListen
 
         adapter = ReviewAdapter(
             items = items,
+            this,
             onRemoveTest = { subjectIndex, testIndex ->
                 val subject = items[subjectIndex]
                 if (testIndex in subject.tests.indices) {

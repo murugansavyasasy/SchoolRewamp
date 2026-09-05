@@ -68,7 +68,7 @@ class SectionActivity : BaseActivity<ActivitySectionBinding>(), View.OnClickList
             (Constant.isAllStandardSections ?: emptyList())
                 .filter { it.standardId == Constant.isSelectedStandardId }
 
-        sectionAdapter = SectionAdapter(sectionsForStandard) { selectedCount ->
+        sectionAdapter = SectionAdapter(sectionsForStandard,this) { selectedCount ->
             updateSelectionBadge(selectedCount)
         }
 
