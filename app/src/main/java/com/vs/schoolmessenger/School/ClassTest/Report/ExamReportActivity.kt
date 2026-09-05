@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Report
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
@@ -245,22 +246,30 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
     private fun openDatePicker() {
         val calendar = Calendar.getInstance()
 
-        DatePickerDialog(
+        val datePickerDialog = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
+
                 calendar.set(year, month, dayOfMonth)
 
                 selectedExamDate = apiDateFormat.format(calendar.time)
 
                 binding.txtDateLabel.text = getString(R.string.selected)
-                binding.txtSelectedDate.text = displayDateFormat.format(calendar.time)
+                binding.txtSelectedDate.text =
+                    displayDateFormat.format(calendar.time)
 
                 fetchExamReport()
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+
+        datePickerDialog.datePicker.context.resources.configuration.setLocale(
+            Locale.ENGLISH
+        )
+
+        datePickerDialog.show()
     }
 
     private fun fetchExamReport() {
