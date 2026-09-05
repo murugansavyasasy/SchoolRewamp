@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.ClassTest.Review
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 
 class ReviewAdapter(
     private val items: List<ClassTestItem>,
+    private val context: Context,
     private val onRemoveTest: (subjectIndex: Int, testIndex: Int) -> Unit
 ) : RecyclerView.Adapter<ReviewAdapter.ReviewVH>() {
 
@@ -38,12 +40,12 @@ class ReviewAdapter(
 
         val testCount = item.tests.size
         if (testCount == 0) {
-            holder.txtActivityCount.text = "No activity added"
+            holder.txtActivityCount.text = context.getString(R.string.no_activity_added)
             holder.txtActivityCount.setTextColor(
                 ContextCompat.getColor(holder.itemView.context, android.R.color.holo_red_dark)
             )
         } else {
-            holder.txtActivityCount.text = "$testCount ${if (testCount == 1) "activity" else "activities"}"
+            holder.txtActivityCount.text = "$testCount ${if (testCount == 1) "${context.getString(R.string.activity)}" else "${context.getString(R.string.activities)}"}"
             holder.txtActivityCount.setTextColor(
                 ContextCompat.getColor(holder.itemView.context, R.color.clr_grey_dark)
             )
@@ -71,7 +73,7 @@ class ReviewAdapter(
             txtRemove.setOnClickListener { onRemoveTest(position, testIndex) }
 
             row.findViewById<TextView>(R.id.txtReviewDate).text =
-                if (test.testDate.isBlank()) "No date" else test.testDate
+                if (test.testDate.isBlank()) context.getString(R.string.no_date) else test.testDate
             row.findViewById<TextView>(R.id.txtReviewMax).text = test.maxMarks
             row.findViewById<TextView>(R.id.txtReviewMin).text = test.minMarks
 

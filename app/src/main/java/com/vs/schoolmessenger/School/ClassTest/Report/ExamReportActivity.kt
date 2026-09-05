@@ -110,6 +110,7 @@ class ExamReportActivity : BaseActivity<ExamReportListBinding>() {
     private fun setupRecyclerView() {
         adapter = ExamReportAdapter(
             list = examListData,
+            this,
             onSectionClick = { classTest, section ->
                 openMarksEntry(classTest, section)
             },

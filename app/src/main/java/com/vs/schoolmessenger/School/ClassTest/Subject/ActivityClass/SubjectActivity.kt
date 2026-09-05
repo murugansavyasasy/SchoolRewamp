@@ -136,7 +136,7 @@ class SubjectActivity : BaseActivity<SubjectListBinding>(), View.OnClickListener
 
 
     private fun showStandardCards(data: List<SectionDataDetail>) {
-        adapter = SubjectAdapter(data) { selectedCount ->
+        adapter = SubjectAdapter(data,this) { selectedCount ->
             totalSelectedCount = selectedCount
             updateSelectionBadge(selectedCount)
         }

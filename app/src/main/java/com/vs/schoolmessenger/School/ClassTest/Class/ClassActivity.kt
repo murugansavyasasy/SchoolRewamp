@@ -322,9 +322,10 @@ class ClassActivity : BaseActivity<ClassActivityBinding>(), View.OnClickListener
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
             override fun afterTextChanged(s: android.text.Editable?) {
                 if (!s.isNullOrBlank()) {
-                    binding.etExamName.background = ContextCompat.getDrawable(
-                        this@ClassActivity, android.R.drawable.ic_lock_idle_lock
-                    )
+//                    Changed by balu saran
+//                    binding.etExamName.background = ContextCompat.getDrawable(
+//                        this@ClassActivity, android.R.drawable.ic_lock_idle_lock
+//                    )
                 }
             }
         })

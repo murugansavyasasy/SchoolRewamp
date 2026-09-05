@@ -1332,4 +1332,16 @@
     <string name="Thank_you_for_traveling_with_us">Thank you for traveling with us!</string>
     <string name="live">LIVE</string>
     <string name="next_stop">NEXT STOP</string>
+    <string name="sections">Sections</string>
+    <string name="details">Details</string>
+    <string name="fills_all_tests_from_that_subject_into_this_section">Fills all tests from that subject into this section</string>
+    <string name="min_marks_must_be_less_than_max_marks">Min marks must be less than Max marks</string>
+    <string name="please_fill_activity_name_before_adding_another_activity">Please fill Activity Name  before adding another activity</string>
+    <string name="Source_data_changed_re_copy_from">Source data changed — re-copy from</string>
+    <string name="Copy_data_from">Copy data from</string>
+    <string name="copy">Copy</string>
+    <string name="add_activity">+ Add Activity</string>
+    <string name="no_activity_added">No activity added</string>
+    <string name="no_date">No date</string>
+    <string name="selected_">Selected</string>
 </resources>

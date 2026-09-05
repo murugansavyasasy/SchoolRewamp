@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.ClassTest.Section
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 
 class SectionAdapter(
     private val sectionList: List<StandardSection>,
+    private var context: Context,
     private val onSelectionChanged: (Int) -> Unit
 ) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>() {
 
@@ -45,8 +47,8 @@ class SectionAdapter(
 
         fun bind(item: StandardSection) {
             lblAvatarLetter.text = item.sectionName?.firstOrNull()?.toString() ?: ""
-            lblSectionName.text = "Section ${item.sectionName}"
-            lblSectionDetail.text = "Standard ${item.standardName} — ${item.sectionName}"
+            lblSectionName.text = "${context.getString(R.string.Section)} ${item.sectionName}"
+            lblSectionDetail.text = "${context.getString(R.string.Standard)} ${item.standardName} — ${item.sectionName}"
 
             val isSelected = item.sectionId in selectedIds
             applySelectionState(isSelected, item)

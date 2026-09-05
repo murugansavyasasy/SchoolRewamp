@@ -22,6 +22,7 @@ import java.util.Calendar
 
 class ExamMarksEnterAdapter(
     private val items: MutableList<ClassTestItem>,
+    private val context: Context,
     private val onDeleteTestClick: (item: ClassTestItem, test: TestEntry, testIndex: Int, itemPos: Int) -> Unit
 ) : RecyclerView.Adapter<ExamMarksEnterAdapter.SubjectViewHolder>() {
 
@@ -82,7 +83,7 @@ class ExamMarksEnterAdapter(
         val activityCount = item.tests.count { it.examName.isNotBlank() }
         if (activityCount > 0) {
             holder.txtActivityCount.text =
-                "$activityCount ${if (activityCount == 1) "Activity" else "Activities"}"
+                "$activityCount ${if (activityCount == 1) "${context.getString(R.string.activity)}" else "${context.getString(R.string.activities)}"}"
             holder.txtActivityCount.visibility = View.VISIBLE
         } else {
             holder.txtActivityCount.visibility = View.GONE
@@ -102,9 +103,9 @@ class ExamMarksEnterAdapter(
         val sourceItem = findPreviousFilledSameSubject(position)
         if (sourceItem != null && item.isExpanded) {
             holder.txtMergeTitle.text =
-                "Copy data from ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
+                "${context.getString(R.string.Copy_data_from)} ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
             holder.txtMergeSubtitle.text =
-                "Fills all tests from that subject into this section"
+                "${context.getString(R.string.fills_all_tests_from_that_subject_into_this_section)}"
             holder.lytMergeBanner.visibility = View.VISIBLE
 
             holder.btnMerge.setOnClickListener {
@@ -213,7 +214,7 @@ class ExamMarksEnterAdapter(
         val removetext: TextView = v.findViewById(R.id.removetext)
 
         txtTestNumber.text = "${testIndex + 1}"
-        testlabel.text = "Activity ${testIndex + 1}"
+        testlabel.text = "${context.getString(R.string.activity)} ${testIndex + 1}"
 
         imgDelete.visibility = if (test.canDelete) View.VISIBLE else View.GONE
         removetext.visibility = if (test.canDelete) View.VISIBLE else View.GONE

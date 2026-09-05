@@ -1179,7 +1179,7 @@
     <string name="please_fill_all_marks_before_publishing">يرجى تعبئة جميع الدرجات قبل النشر:\n\n%s</string>
     <string name="please_fill_all_marks_before_publishing_title">يرجى تعبئة جميع الدرجات قبل النشر</string>
     <string name="create_class_test">إنشاء اختبار صفي</string>
-    <string name="view_created_test">عرض الاختبار الذي تم إنشاؤه >></string>
+    <string name="view_created_test"><![CDATA[عرض الاختبار الذي تم إنشاؤه >>]]></string>
     <string name="class_description">**ملاحظة:** لن يتم احتساب هذه الاختبارات الصفية ودرجاتها في بطاقة التقرير والحسابات</string>
     <string name="test_name">اسم الاختبار</string>
     <string name="back_text">‹ رجوع</string>
@@ -1282,7 +1282,7 @@
     <string name="submit_remark">إرسال الملاحظة</string>
     <string name="your_stop">محطتك</string>
     <string name="configure_each_test">تكوين كل اختبار</string>
-    <string name="view_mark_analysis"><![CDATA[عرض تحليل الدرجات >]]></string>
+    <string name="view_mark_analysis"><![CDATA[<<عرض تحليل الدرجات ]]></string>
     <string name="select_one_or_more">اختر واحدًا أو أكثر</string>
     <string name="sections_selected_">أقسام محددة</string>
     <string name="please_select_at_least_one_section">يرجى اختيار قسم واحد على الأقل</string>
@@ -1313,8 +1313,8 @@
     <string name="select_set_analysis">اختيار تحليل المجموعة</string>
     <string name="pick_a_set_to_view_analysis">اختر مجموعة لعرض التحليل.</string>
     <string name="no_exam_sets_are_available_for_this_student_yet">لا توجد مجموعات اختبارات متاحة لهذا الطالب حتى الآن.</string>
-    <string name="back_button_2">← رجوع</string>
-    <string name="view_analysis">عرض التحليل →</string>
+    <string name="back_button_2">→ رجوع</string>
+    <string name="view_analysis">عرض التحليل ←</string>
     <string name="live_bus_tracking">تتبع الحافلة مباشرة</string>
     <string name="track_route_in_real_time">تتبع المسار في الوقت الفعلي</string>
     <string name="now">الآن</string>
