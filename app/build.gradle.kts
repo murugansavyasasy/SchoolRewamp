@@ -21,12 +21,19 @@ android {
             useLegacyPackaging = false
         }
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 37
-        versionCode = 210
+        versionCode = 213
 
         versionName = "8.12"
         // 👇 Add these lines
