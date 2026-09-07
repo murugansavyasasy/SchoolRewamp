@@ -21,6 +21,13 @@ android {
             useLegacyPackaging = false
         }
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId = "com.vs.schoolmessenger"
         minSdk = 24
