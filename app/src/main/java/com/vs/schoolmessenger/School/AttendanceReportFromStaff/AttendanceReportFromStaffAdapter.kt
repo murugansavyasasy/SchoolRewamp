@@ -65,10 +65,10 @@ class AttendanceReportFromStaffAdapter(
             val tvSummary = itemView.findViewById<TextView>(R.id.tvSummary)
             val recyclerChild = itemView.findViewById<RecyclerView>(R.id.recyclerChild)
 
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-            val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
-            val weekFormat = SimpleDateFormat("EEE", Locale.getDefault())
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+            val dayFormat = SimpleDateFormat("dd", Locale.ENGLISH)
+            val weekFormat = SimpleDateFormat("EEE", Locale.ENGLISH)
 
             val parsedDate = inputFormat.parse(date)
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.res.Configuration
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.Engine
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -43,6 +45,7 @@ import com.vs.schoolmessenger.School.PTM.DataClass.SlotAvailability
 import com.vs.schoolmessenger.School.PTM.DataClass.StandardSection
 import com.vs.schoolmessenger.School.PTM.DataClass.ValidatedSlot
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.CreateSlotsBinding
@@ -310,6 +313,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             R.id.rytPickFromTime -> {
                 val calendar = Calendar.getInstance()
+
+                val originalLocale = Locale.getDefault()
+                Locale.setDefault(Locale.ENGLISH)
+
+                val config = Configuration(this.resources.configuration)
+                config.setLocale(Locale.ENGLISH)
+                this.resources.updateConfiguration(config, this.resources.displayMetrics)
                 TimePickerDialog(
                     this,
                     { _, hour, minute ->
@@ -321,8 +331,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             set(Calendar.MILLISECOND, 0)
                         }
 
+                        Locale.setDefault(originalLocale)
+                        this.resources.updateConfiguration(
+                            Configuration(this.resources.configuration).apply {
+                                setLocale(originalLocale)
+                            },
+                            this.resources.displayMetrics
+                        )
                         // Format today and compare properly
-                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
                         val todayStr = sdf.format(now.time)
 
                         // Normalize selectedDates format to dd-MM-yyyy
@@ -330,7 +347,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             try {
                                 // Try to parse any format like dd-MMM-yyyy or yyyy-MM-dd
                                 val parsed =
-                                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(it)
+                                    SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(it)
                                 sdf.format(parsed!!)
                             } catch (e: Exception) {
                                 it
@@ -352,13 +369,12 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                                 return@TimePickerDialog
                             }
                         }
-
                         // Save and display
                         startCalendar = chosenTime
                         binding.lblFromTime.text =
                             SimpleDateFormat(
                                 "hh:mm a",
-                                Locale.getDefault()
+                                Locale.ENGLISH
                             ).format(startCalendar!!.time)
 
                         // Reset end time
@@ -382,6 +398,13 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                 }
 
                 val calendar = Calendar.getInstance()
+
+                val originalLocale = Locale.getDefault()
+                Locale.setDefault(Locale.ENGLISH)
+
+                val config = Configuration(this.resources.configuration)
+                config.setLocale(Locale.ENGLISH)
+                this.resources.updateConfiguration(config, this.resources.displayMetrics)
                 TimePickerDialog(
                     this,
                     { _, hour, minute ->
@@ -391,6 +414,15 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             set(Calendar.SECOND, 0)
                             set(Calendar.MILLISECOND, 0)
                         }
+
+                        Locale.setDefault(originalLocale)
+                        this.resources.updateConfiguration(
+                            Configuration(this.resources.configuration).apply {
+                                setLocale(originalLocale)
+                            },
+                            this.resources.displayMetrics
+                        )
+
 
                         when {
                             endCalendar!!.before(startCalendar) -> {
@@ -416,7 +448,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             else -> {
                                 binding.lblToTime.text = SimpleDateFormat(
                                     "hh:mm a",
-                                    Locale.getDefault()
+                                    Locale.ENGLISH
                                 ).format(endCalendar!!.time)
                             }
                         }
@@ -440,7 +472,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
 
             for (i in meetingData.selectedDates.indices) {
                 val jsonObject = JsonObject()
-                jsonObject.addProperty("date", meetingData.selectedDates[i])
+                jsonObject.addProperty("date", DateFormatterUtil.normalizeToApiFormat(meetingData.selectedDates[i]))
                 jsonObject.addProperty("event_name", meetingData.purpose)
                 jsonObject.addProperty("from_time", formatTimeWithAMPM(meetingData.fromTime))
                 jsonObject.addProperty("to_time", formatTimeWithAMPM(meetingData.toTime))
@@ -515,7 +547,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
         breakAfterSlots: Int = 0 // 0 => no break
     ): List<SlotTiming> {
         val slots = mutableListOf<SlotTiming>()
-        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val sdf = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
 
         val startDate = try {
             sdf.parse(startTime)
@@ -596,11 +628,11 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             }
 
             val inputFormats = listOf(
-                SimpleDateFormat("HH:mm", Locale.getDefault()),
-                SimpleDateFormat("H:mm", Locale.getDefault())
+                SimpleDateFormat("HH:mm", Locale.ENGLISH),
+                SimpleDateFormat("H:mm", Locale.ENGLISH)
             )
 
-            val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
 
             var date: Date? = null
             for (format in inputFormats) {
@@ -914,14 +946,14 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
             val selected = calendarView.getSelectedDates()
             val validDates = ArrayList<String>()
 
-            val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             val todayStr = sdf.format(Calendar.getInstance().time)
             val now = Calendar.getInstance()
 
             for (dateStr in selected) {
+                val normalizedDateStr = DateFormatterUtil.normalizeToApiFormat(dateStr)
                 try {
-                    if (dateStr == todayStr) {
-                        // Check if From or To time already picked and in past
+                    if (normalizedDateStr == todayStr) {
                         if (startCalendar != null && startCalendar!!.before(now)) {
                             Toast.makeText(
                                 this,
@@ -939,7 +971,7 @@ class CreateSlots : BaseActivity<CreateSlotsBinding>(),
                             continue
                         }
                     }
-                    validDates.add(dateStr)
+                    validDates.add(normalizedDateStr)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

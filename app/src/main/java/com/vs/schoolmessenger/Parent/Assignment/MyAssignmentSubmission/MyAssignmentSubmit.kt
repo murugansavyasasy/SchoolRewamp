@@ -414,7 +414,7 @@ class MyAssignmentSubmit : BaseActivity<AssignmentSubmitBinding>(), View.OnClick
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.ENGLISH).format(Date())
 
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("${Constant.IMG_}${timeStamp}_", Constant.jpg, storageDir)

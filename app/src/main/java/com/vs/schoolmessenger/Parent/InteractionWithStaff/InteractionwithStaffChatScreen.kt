@@ -142,7 +142,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             return
         }
 
-        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.getDefault())
+        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy_hh_mm_a, Locale.ENGLISH)
 
         val sortedData = data.sortedWith(compareBy<AnswerData> {
             try {

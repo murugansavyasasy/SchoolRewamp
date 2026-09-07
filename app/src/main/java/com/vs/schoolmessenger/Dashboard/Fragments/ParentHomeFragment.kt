@@ -357,7 +357,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val lottieView: LottieAnimationView = view.findViewById(R.id.lottieBirthday)
         lottieView.playAnimation()
         txtName.text = childDetails!!.name
-        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.getDefault()).format(Date())
+        val currentDate = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH).format(Date())
         txtDate.text = currentDate
         Glide.with(this)
             .load(childDetails!!.profile)
@@ -607,8 +607,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.gridRecyclerView.adapter = adapter
 
         Log.d("isToken", childDetails!!.access_token)
+        val language_Code=SharedPreference.getLanguage(requireActivity())?:"en"
         appViewModel!!.isDashBoardData(
-            childDetails!!.access_token, Constant.parent, mobile_number, requireActivity()
+            childDetails!!.access_token, Constant.parent, mobile_number,language_Code, requireActivity()
         )
     }
 

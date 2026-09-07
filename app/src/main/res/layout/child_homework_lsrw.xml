@@ -101,6 +101,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
                     android:ellipsize="end"
+                    android:textAlignment="viewStart"
                     android:maxLines="4"
                     android:text="The Only Way I"
                     android:textColor="@color/black"
@@ -115,6 +116,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
                     android:autoLink="web"
+                    android:textAlignment="viewStart"
                     android:linksClickable="true"
                     android:text="The First Time the two"
                     android:textColor="@color/light_gray_3"
@@ -294,6 +296,7 @@
                 android:background="@drawable/bg_edittext_rounded"
                 android:hint="@string/description2"
                 android:padding="@dimen/twele"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
 

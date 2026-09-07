@@ -252,7 +252,7 @@ class LsrwReportAndStatics : BaseActivity<LsrwReportstaticsBinding>(), View.OnCl
             val date = LocalDate.parse(activity.student_submited_on, formatter)
 
             if (date.monthValue == selectedMonth && date.year == currentYear) {
-                val week = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth())
+                val week = date.get(WeekFields.of(Locale.ENGLISH).weekOfMonth())
                 val current = sums.getOrDefault(week, 0 to 0)
 
                 sums[week] = (current.first + (activity.submitted_count ?: 0)) to

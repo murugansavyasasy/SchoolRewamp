@@ -45,7 +45,7 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
         binding.btnBack.setOnClickListener(this)
         binding.btnChangeStudent.setOnClickListener(this)
         binding.btnViewAnalysis.setOnClickListener(this)
-        binding.toolbarLayout.lblStudentName.text = "Class Set Analysis"
+        binding.toolbarLayout.lblStudentName.text = getString(R.string.class_set_analysis)
         binding.toolbarLayout.lblStudentSection.visibility=View.GONE
 
 
@@ -94,7 +94,7 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
     private fun fetchAnalysisSets() {
         val token = isAccessToken
         if (token.isNullOrEmpty()) {
-            showNoExamData("Missing student access details")
+            showNoExamData(getString(R.string.missing_student_access_details))
             return
         }
         appViewModel!!.isExamtestAnalysisSets(token, "", "", this)
@@ -131,8 +131,8 @@ class ParentSelectExamActivity : BaseActivity<ParentSelectExamReviewBinding>(), 
         updateSelectionState(null)
     }
     private fun updateSelectionState(selected: AnalysisSet?) {
-        binding.lblSelectionCount.text = selected?.setName?.let { "Selected: $it" }
-            ?: "No test set selected"
+        binding.lblSelectionCount.text = selected?.setName?.let { "${getString(R.string.Selected_)}: $it" }
+            ?: getString(R.string.No_test_set_selected)
         binding.btnViewAnalysis.isEnabled = selected != null
         binding.btnViewAnalysis.alpha = if (selected != null) 1f else 0.5f
     }

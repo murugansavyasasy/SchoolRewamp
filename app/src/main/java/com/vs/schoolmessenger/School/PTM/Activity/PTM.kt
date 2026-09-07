@@ -305,11 +305,11 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
         val trimmed = input.trim()
         return try {
             val parsed = when {
-                trimmed.contains("/") -> SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(
+                trimmed.contains("/") -> SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(
                     trimmed
                 )
 
-                trimmed.contains("-") -> SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(
+                trimmed.contains("-") -> SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(
                     trimmed
                 )
 
@@ -317,7 +317,7 @@ class PTM : BaseActivity<PtmStaffBinding>(), View.OnClickListener, StaffSlotClic
             }
             if (parsed != null) SimpleDateFormat(
                 "dd-MM-yyyy",
-                Locale.getDefault()
+                Locale.ENGLISH
             ).format(parsed) else trimmed
         } catch (e: Exception) {
             trimmed

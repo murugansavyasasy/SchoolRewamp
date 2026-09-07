@@ -139,7 +139,7 @@ class UpComingSlotAdapter(
             try {
                 val millis = if (raw.length == 10) raw.toLong() * 1000L else raw.toLong()
                 val d = java.util.Date(millis)
-                val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                val out = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.ENGLISH)
                     .format(d)
                 return out
             } catch (e: Exception) {
@@ -165,12 +165,12 @@ class UpComingSlotAdapter(
 
         for (pattern in patterns) {
             try {
-                val sdf = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
+                val sdf = java.text.SimpleDateFormat(pattern, java.util.Locale.ENGLISH)
                 sdf.isLenient = false
                 val parsed = sdf.parse(raw)
                 if (parsed != null) {
                     val out =
-                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.ENGLISH)
                             .format(parsed)
                     return out
                 }
@@ -187,12 +187,12 @@ class UpComingSlotAdapter(
             val sep = if (prefix.contains("/")) "/" else "-"
             val pattern = "dd${sep}MM${sep}yyyy"
             try {
-                val sdf = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
+                val sdf = java.text.SimpleDateFormat(pattern, java.util.Locale.ENGLISH)
                 sdf.isLenient = false
                 val parsed = sdf.parse(fixed)
                 if (parsed != null) {
                     val out =
-                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                        java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.ENGLISH)
                             .format(parsed)
                     return out
                 }

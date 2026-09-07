@@ -9,7 +9,7 @@ object CurrentDatePicking {
         get() {
             // Define the date format you need
             val sdf =
-                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             // Get the current date
             val currentDate = Date()
             // Format and return the current date

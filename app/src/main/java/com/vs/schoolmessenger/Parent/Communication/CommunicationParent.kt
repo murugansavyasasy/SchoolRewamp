@@ -52,7 +52,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     // DATE FORMAT (MATCH API DATE)
     private val apiDateTimeFormat =
-        java.text.SimpleDateFormat("dd-MM-yyyy hh:mm a", java.util.Locale.getDefault())
+        java.text.SimpleDateFormat("dd-MM-yyyy hh:mm a", java.util.Locale.ENGLISH)
 
 
     var isFilterClick = false
@@ -302,7 +302,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 fromDateMillis = selectedCal.timeInMillis
 
                 binding.txtFromDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                         .format(selectedCal.time)
 
                 // 🔴 If invalid range
@@ -353,7 +353,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 toDateMillis = selectedCal.timeInMillis
 
                 binding.txtToDate.text =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                    SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                         .format(selectedCal.time)
                 updateClearFilterVisibility()
                 applyCombinedFilter()

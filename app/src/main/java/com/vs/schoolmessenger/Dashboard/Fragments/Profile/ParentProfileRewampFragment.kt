@@ -875,7 +875,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
-            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+            SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.ENGLISH).format(Date())
         val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             ?: requireContext().cacheDir
         return File.createTempFile(

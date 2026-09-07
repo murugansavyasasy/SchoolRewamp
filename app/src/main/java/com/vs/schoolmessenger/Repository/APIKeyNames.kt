@@ -128,6 +128,7 @@ object APIKeyNames {
     const val detail_id = "detail_id"
     const val member_type = "member_type"
     const val mobile_number = "mobile_number"
+    const val language_code  = "language_code"
     const val user_type = "user_type"
     const val menu_id = "menu_id"
     const val section_ids = "section_ids"

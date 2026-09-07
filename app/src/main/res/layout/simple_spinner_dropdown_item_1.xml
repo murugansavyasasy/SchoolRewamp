@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="@style/CustomTextStylePoppinsMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start|center_vertical"
+    android:minHeight="48dp"
+    android:paddingStart="@dimen/ten"
+    android:paddingTop="@dimen/ten"
+    android:paddingEnd="@dimen/ten"
+    android:paddingBottom="@dimen/ten"
+    android:textAlignment="viewStart"
+    android:textColor="@color/black"
+    android:textDirection="locale"
+    android:textSize="@dimen/fifteen_sp" />

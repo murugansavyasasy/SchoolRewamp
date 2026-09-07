@@ -18,7 +18,9 @@ data class DateItem(
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+
+        // Format date as dd-MM-yyyy
+        val dateFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
 

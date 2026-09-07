@@ -129,7 +129,7 @@
                     android:focusable="true"
                     android:paddingHorizontal="@dimen/sixteen"
                     android:paddingVertical="@dimen/six"
-                    android:text="Change"
+                    android:text="@string/change"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -202,7 +202,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select set analysis"
+            android:text="@string/select_set_analysis"
             android:textColor="@color/PrimaryColor"
             android:textSize="@dimen/twenty_sp" />
 
@@ -211,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/two"
-            android:text="Pick a set to view analysis."
+            android:text="@string/pick_a_set_to_view_analysis"
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -226,7 +226,7 @@
         android:layout_marginTop="@dimen/twele"
         android:clickable="true"
         android:focusable="true"
-        android:text="Select all"
+        android:text="@string/Selectall"
         android:textColor="@color/PrimaryColor"
         android:textSize="@dimen/thirteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -305,13 +305,14 @@
             android:id="@+id/btnBack"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fourty"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/ten"
             android:background="@drawable/bg_white_stroke_grey_rounded"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:paddingHorizontal="@dimen/twenty"
-            android:text="← Back"
+            android:text="@string/back_button_2"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/fourteen_sp" />
 
@@ -331,13 +332,15 @@
             android:id="@+id/btnViewAnalysis"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fourty"
+            android:layout_height="wrap_content"
             android:background="@drawable/rect_primary_rounded"
             android:clickable="true"
+            android:paddingVertical="@dimen/ten"
+
             android:focusable="true"
-            android:gravity="center"
             android:paddingHorizontal="@dimen/twenty"
-            android:text="View Analysis  →"
+            android:text="@string/view_analysis"
+            android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/fourteen_sp" />
 

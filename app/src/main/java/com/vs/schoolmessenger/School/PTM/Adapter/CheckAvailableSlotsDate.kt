@@ -104,15 +104,15 @@ class CheckAvailableSlotsDate(
         )
         for (p in patterns) {
             try {
-                val sdf = SimpleDateFormat(p, Locale.getDefault())
+                val sdf = SimpleDateFormat(p, Locale.ENGLISH)
                 sdf.isLenient = false
                 val parsed = sdf.parse(s)
                 if (parsed != null) {
-                    val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsed)
+                    val out = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(parsed)
                     // convert month to lowercase: "16 Sep 2025" -> "16 sep 2025"
                     val parts = out.split(" ")
                     if (parts.size == 3) {
-                        return "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                        return "${parts[0]} ${parts[1].lowercase(Locale.ENGLISH)} ${parts[2]}"
                     }
                     return out
                 }
@@ -122,12 +122,12 @@ class CheckAvailableSlotsDate(
         }
         try {
             if (s.matches(Regex("^\\d{8}\$"))) {
-                val parsed = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(s)
+                val parsed = SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(s)
                 if (parsed != null) {
-                    val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(parsed)
+                    val out = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(parsed)
                     val parts = out.split(" ")
                     if (parts.size == 3) {
-                        return "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                        return "${parts[0]} ${parts[1].lowercase(Locale.ENGLISH)} ${parts[2]}"
                     }
                     return out
                 }
@@ -137,12 +137,12 @@ class CheckAvailableSlotsDate(
 
         Log.w("CheckAvailableSlotsDate", "Unable to parse date: '$input' (showing raw)")
         return try {
-            val quick = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(s)
+            val quick = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(s)
             if (quick != null) {
-                val out = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(quick)
+                val out = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).format(quick)
                 val parts = out.split(" ")
                 if (parts.size == 3) {
-                    "${parts[0]} ${parts[1].lowercase(Locale.getDefault())} ${parts[2]}"
+                    "${parts[0]} ${parts[1].lowercase(Locale.ENGLISH)} ${parts[2]}"
                 } else out
             } else s
         } catch (_: Exception) {

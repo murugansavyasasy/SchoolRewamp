@@ -154,7 +154,7 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.tvClose.setOnClickListener(this)
 
-        binding.toolbarLayout.lblStudentName.text = "Class set analysis"
+        binding.toolbarLayout.lblStudentName.text = getString(R.string.class_set_analysis)
         binding.toolbarLayout.lblStudentSection.visibility=View.GONE
 
 
@@ -175,7 +175,8 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val analysisSetId = Constant.isSelectedAnalysisSetId
 
         if (isAccessToken.isNullOrEmpty() ||  analysisSetId.isNullOrEmpty()) {
-            Toast.makeText(this, "Missing student/exam set details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.missing_student_exam_set_details), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -208,12 +209,12 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
 
 
     private fun renderHeader(data: StudentAnalysisData) {
-        val studentName = Constant.isSelectedStudent?.name?.takeIf { it.isNotBlank() } ?: "Student"
-        binding.tvHeaderTitle.text = "Performance Comparison — $studentName"
+        val studentName = Constant.isSelectedStudent?.name?.takeIf { it.isNotBlank() } ?: getString(R.string.student)
+        binding.tvHeaderTitle.text = "${getString(R.string.Performance_Comparison)} — $studentName"
 
         val examLabels = data.exam_series.joinToString(", ")
         binding.tvHeaderSubtitle.text =
-            "Exams: $examLabels \u00B7 ${data.subjects.size} subject${if (data.subjects.size == 1) "" else "s"}"
+            "${getString(R.string.Exams)}: $examLabels \u00B7 ${data.subjects.size} ${if (data.subjects.size == 1)"${getString(R.string.subject_)}" else "${getString(R.string.subjects)}"}"
 
         binding.tvBarChartSubtitle.text = "($examLabels)"
     }
@@ -263,7 +264,7 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
 
         val highestObtainedMark = entries.maxOfOrNull { it.y } ?: 0f
 
-        val dataSet = BarDataSet(entries, "Marks").apply {
+        val dataSet = BarDataSet(entries, getString(R.string.Marks)).apply {
             setColors(colors)
             setDrawValues(true)
             valueTextSize = 9f
@@ -344,22 +345,22 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val max = mark.max_mark.ifBlank { "-" }
 
         val message = buildString {
-            append("Subject: $subjectName\n")
-            append("Exam: ${mark.exam_name}\n")
-            if (mark.activity_name.isNotBlank()) append("Activity: ${mark.activity_name}\n")
-            append("Marks: $obtained / $max\n")
-            if (mark.attendance.isNotBlank()) append("Attendance: ${if (mark.attendance == "P") "Present" else "Absent"}\n")
-            if (mark.exam_date.isNotBlank()) append("Date: ${mark.exam_date}\n")
-            if (mark.session.isNotBlank()) append("Session: ${mark.session}\n")
-            if (mark.min_mark.isNotBlank()) append("Pass Mark: ${mark.min_mark}\n")
-            if (mark.syllabus.isNotBlank()) append("Syllabus: ${mark.syllabus}\n")
-            if (mark.remarks.isNotBlank()) append("Remarks: ${mark.remarks}")
+            append("${getString(R.string.subject)}: $subjectName\n")
+            append("${getString(R.string.Exam)}: ${mark.exam_name}\n")
+            if (mark.activity_name.isNotBlank()) append("${getString(R.string.activity)}: ${mark.activity_name}\n")
+            append("${getString(R.string.Marks)}: $obtained / $max\n")
+            if (mark.attendance.isNotBlank()) append("${getString(R.string.attendance)}: ${if (mark.attendance == "P") getString(R.string.present) else getString(R.string.absent)}\n")
+            if (mark.exam_date.isNotBlank()) append("${getString(R.string.date)}: ${mark.exam_date}\n")
+            if (mark.session.isNotBlank()) append("${getString(R.string.session)}: ${mark.session}\n")
+            if (mark.min_mark.isNotBlank()) append("${getString(R.string.Pass_Mark)}: ${mark.min_mark}\n")
+            if (mark.syllabus.isNotBlank()) append("${getString(R.string.syllabus)}: ${mark.syllabus}\n")
+            if (mark.remarks.isNotBlank()) append("${getString(R.string.Remarks)}: ${mark.remarks}")
         }.trimEnd('\n')
 
         androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle(mark.exam_name.ifBlank { "Exam" })
+            .setTitle(mark.exam_name.ifBlank { "${getString(R.string.Exam)}" })
             .setMessage(message)
-            .setPositiveButton("Close", null)
+            .setPositiveButton(getString(R.string.Close), null)
             .show()
     }
 
@@ -406,9 +407,11 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val greenColor = ContextCompat.getColor(this, R.color.exam_positive_green)
         val redColor = ContextCompat.getColor(this, R.color.exam_negative_red)
 
-        binding.cardExamsTaken.root.findViewById<TextView>(R.id.tvStatLabel).text = "Exams Taken"
+        binding.cardExamsTaken.root.findViewById<TextView>(R.id.tvStatLabel).text =
+            getString(R.string.exams_taken)
         binding.cardExamsTaken.root.findViewById<TextView>(R.id.tvStatValue).text = summary.exams_analysed
-        binding.cardExamsTaken.root.findViewById<TextView>(R.id.tvStatSubtitle).text = "Selected series"
+        binding.cardExamsTaken.root.findViewById<TextView>(R.id.tvStatSubtitle).text =
+            getString(R.string.selected_series)
 
         val averageParts = summary.average_total.split("/")
         val averageScoreValue = if (averageParts.size == 2) {
@@ -416,7 +419,8 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         } else {
             summary.average_total
         }
-        binding.cardAverageScore.root.findViewById<TextView>(R.id.tvStatLabel).text = "Average Score"
+        binding.cardAverageScore.root.findViewById<TextView>(R.id.tvStatLabel).text =
+            getString(R.string.average_score)
         binding.cardAverageScore.root.findViewById<TextView>(R.id.tvStatValue).text = averageScoreValue
         binding.cardAverageScore.root.findViewById<TextView>(R.id.tvStatSubtitle).text =
             summary.average_percentage.ifBlank { "-" }
@@ -424,7 +428,8 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val bestTotalParts = summary.best_exam.total.split("/")
         val bestValue = if (bestTotalParts.size == 2) "${bestTotalParts[0]}/${bestTotalParts[1]}" else summary.best_exam.total
 
-        binding.cardBestExam.root.findViewById<TextView>(R.id.tvStatLabel).text = "Best Exam"
+        binding.cardBestExam.root.findViewById<TextView>(R.id.tvStatLabel).text =
+            getString(R.string.best_exam)
         binding.cardBestExam.root.findViewById<TextView>(R.id.tvStatValue).apply {
             text = bestValue
             setTextColor(greenColor)
@@ -435,7 +440,8 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val worstTotalParts = summary.worst_exam.total.split("/")
         val worstValue = if (worstTotalParts.size == 2) "${worstTotalParts[0]}/${worstTotalParts[1]}" else summary.worst_exam.total
 
-        binding.cardLowestExam.root.findViewById<TextView>(R.id.tvStatLabel).text = "Lowest Exam"
+        binding.cardLowestExam.root.findViewById<TextView>(R.id.tvStatLabel).text =
+            getString(R.string.lowest_exam)
         binding.cardLowestExam.root.findViewById<TextView>(R.id.tvStatValue).apply {
             text = worstValue
             setTextColor(redColor)
@@ -465,7 +471,7 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
         val axisTop = chartCeiling * 1.05f
 
         val navy = ContextCompat.getColor(this, R.color.exam_line_navy)
-        val dataSet = LineDataSet(entries, "Percentage").apply {
+        val dataSet = LineDataSet(entries, getString(R.string.percentage)).apply {
             color = navy
             setCircleColor(navy)
             circleRadius = 4f
@@ -509,7 +515,7 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
                 axisMaximum = axisTop
                 removeAllLimitLines()
                 addLimitLine(
-                    LimitLine(chartCeiling, "Max (${chartCeiling.toInt()}%)").apply {
+                    LimitLine(chartCeiling, "${getString(R.string.Max)} (${chartCeiling.toInt()}%)").apply {
                         lineColor = ContextCompat.getColor(this@ParentExamAnalysisActivity, R.color.exam_max_line_red)
                         lineWidth = 1f
                         enableDashedLine(6f, 4f, 0f)
@@ -534,9 +540,9 @@ class ParentExamAnalysisActivity : BaseActivity<ParentExamAnalysisBinding>(), Vi
     private fun buildLineChartSubtitle(trend: List<TrendExamAnalysis>): String {
         val maxValues = trend.mapNotNull { it.max.toFloatOrNull() }.filter { it > 0f }.distinct()
         return if (maxValues.size == 1) {
-            "Total marks out of ${maxValues.first().toInt()}"
+            "${getString(R.string.Total_marks_out_of)} ${maxValues.first().toInt()}"
         } else {
-            "Performance shown as percentage (0-100%)"
+            getString(R.string.performance_shown_as_percentage_0_100)
         }
     }
 }

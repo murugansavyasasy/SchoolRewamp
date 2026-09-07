@@ -44,9 +44,7 @@ class ExamSubjectAdapter(
             totalMarks.text =
                 "${context.getString(R.string.total_marks)} : ${subject.total_mark}"
 
-
             val data=subject.activities?:emptyList()
-
 
             if (data.isNotEmpty()) {
                 subjectRecyclerView.visibility = View.VISIBLE

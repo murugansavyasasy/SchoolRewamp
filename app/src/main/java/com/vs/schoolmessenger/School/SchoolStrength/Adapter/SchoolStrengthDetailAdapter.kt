@@ -92,7 +92,7 @@ class SchoolStrengthDetailAdapter(
 
             val othersCountValue = data.others_count?.takeIf { it.isNotBlank() } ?: "0"
             otherscount.text = HtmlCompat.fromHtml(
-                "<font color='#808080'>${"Not specified"} :</font> $othersCountValue",
+                "<font color='#808080'>${context.getString(R.string.not_specified)} :</font> $othersCountValue",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 

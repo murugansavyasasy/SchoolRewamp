@@ -156,7 +156,7 @@ class NoticeBoardAdapter(
             val date1 = parts1.getOrNull(0) ?: ""
             val time1 = (parts1.getOrNull(1) ?: "") + " " + (parts1.getOrNull(2) ?: "")
 
-            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.getDefault())
+            val inputFormat = SimpleDateFormat(Constant.ddMMyyyy, Locale.ENGLISH)
             val parsedDate = try {
                 inputFormat.parse(date1)
             } catch (_: Exception) {
@@ -170,7 +170,7 @@ class NoticeBoardAdapter(
 
             val outputText = when {
                 parsedDate != null -> {
-                    val sdf = SimpleDateFormat(Constant.yyyyMMdd, Locale.getDefault())
+                    val sdf = SimpleDateFormat(Constant.yyyyMMdd, Locale.ENGLISH)
                     when (sdf.format(parsedDate)) {
                         sdf.format(today) -> context.getString(R.string.today)
                         sdf.format(yesterday) -> context.getString(R.string.yesterday)

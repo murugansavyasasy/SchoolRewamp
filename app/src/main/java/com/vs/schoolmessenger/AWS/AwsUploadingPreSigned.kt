@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_QUIZ_EXAM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_UPLOAD_MARKS
+import com.vs.schoolmessenger.Utils.DateFormatterUtil
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -43,7 +44,7 @@ class AwsUploadingPreSigned {
         uploadCallback: UploadCallback
     ) {
         var bucketPath: String? = ""
-        val currentDate: String = CurrentDatePicking.currentDate
+        val currentDate: String = DateFormatterUtil.normalizeToApiFormat(CurrentDatePicking.currentDate)
         var fileExtension: String?
 
         if (isProfilePage) {

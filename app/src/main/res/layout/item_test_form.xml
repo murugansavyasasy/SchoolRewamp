@@ -42,6 +42,7 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:text=""
+            android:textAlignment="viewStart"
             android:textColor="@color/PrimaryColor"
             android:textSize="14sp" />
 
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
-            android:text="Remove"
+            android:text="@string/remove"
             android:visibility="gone"
             style="@style/CustomTextStylePoppinsMedium"/>
 
@@ -79,7 +80,7 @@
         <TextView
             style="@style/FieldLabel"
             android:layout_marginStart="4dp"
-            android:text="ACTIVITY NAME" />
+            android:text="@string/activity_name" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,6 +95,7 @@
     <EditText
         android:id="@+id/etExamName"
         style="@style/FieldInput"
+        android:textAlignment="viewStart"
         android:layout_marginBottom="12dp"
         android:inputType="textCapSentences" />
 
@@ -125,7 +127,7 @@
                 <TextView
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
-                    android:text="ACTIVITY DATE" />
+                    android:text="@string/activity_date" />
             </LinearLayout>
 
             <TextView
@@ -135,7 +137,8 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/input_field_bg"
                 android:gravity="center_vertical"
-                android:hint="Select date"
+                android:hint="@string/select_date"
+                android:textAlignment="viewStart"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textColor="#1A1A2E"
@@ -165,7 +168,7 @@
                 <TextView
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
-                    android:text="SESSION" />
+                    android:text="@string/sessions_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -234,7 +237,7 @@
                 <TextView
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
-                    android:text="MAX MARKS" />
+                    android:text="@string/max_marks_text" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -249,6 +252,7 @@
             <EditText
                 android:id="@+id/etMaxMarks"
                 style="@style/FieldInput"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="4dp"
                 android:inputType="numberDecimal"
                 android:text="" />
@@ -276,7 +280,7 @@
                 <TextView
                     style="@style/FieldLabel"
                     android:layout_marginStart="4dp"
-                    android:text="MIN MARKS" />
+                    android:text="@string/min_marks" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -291,6 +295,7 @@
             <EditText
                 android:id="@+id/etMinMarks"
                 style="@style/FieldInput"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="4dp"
                 android:inputType="numberDecimal"
                 android:text="" />
@@ -312,7 +317,7 @@
         <TextView
             style="@style/FieldLabel"
             android:layout_marginStart="4dp"
-            android:text="SYLLABUS" />
+            android:text="@string/syllabus" />
     </LinearLayout>
 
     <EditText
@@ -323,6 +328,7 @@
         android:background="@drawable/input_field_bg"
         android:gravity="top|start"
         android:minHeight="@dimen/seventy"
+        android:textAlignment="viewStart"
         android:inputType="textMultiLine|textCapSentences"
         android:paddingStart="12dp"
         android:paddingTop="8dp"

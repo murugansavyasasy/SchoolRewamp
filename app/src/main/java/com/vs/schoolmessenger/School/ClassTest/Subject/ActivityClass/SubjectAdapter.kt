@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.ClassTest.Subject.ActivityClass
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.SubjectDataDet
 
 class SubjectAdapter(
     private val sections: List<SectionDataDetail>,
+    private var context: Context,
     private val onSelectionChanged: (totalSelected: Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -109,9 +111,9 @@ class SubjectAdapter(
 
     private fun bindSectionHeader(holder: SectionHeaderViewHolder, item: ListItem.SectionHeader) {
         holder.tvSectionInitial.text = item.sectionName.first().toString()
-        holder.tvSectionName.text    = "Section ${item.sectionName}"
+        holder.tvSectionName.text    = "${context.getString(R.string.Section)} ${item.sectionName}"
         val selectedCount = selectedMap[item.sectionId]?.size ?: 0
-        holder.tvSelectionInfo.text  = "$selectedCount/${item.totalSubjects} selected"
+        holder.tvSelectionInfo.text  = "$selectedCount/${item.totalSubjects} ${context.getString(R.string.selected)}"
     }
 
     private fun bindSubjectRow(holder: SubjectRowViewHolder, item: ListItem.SubjectRow) {
@@ -131,7 +133,7 @@ class SubjectAdapter(
 
         if (item.isSelected) {
             holder.tvSelected.visibility = View.VISIBLE
-            holder.tvSelected.text = "Selected"
+            holder.tvSelected.text = context.getString(R.string.selected_)
         } else {
             holder.tvSelected.visibility = View.GONE
         }

@@ -45,6 +45,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
         android:ellipsize="end"
+        android:textAlignment="viewStart"
         android:autoLink="web"
         android:linksClickable="true"
         android:maxLines="10"

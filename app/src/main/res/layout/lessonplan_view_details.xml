@@ -44,11 +44,12 @@
             android:layout_marginStart="@dimen/ten"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/allbutton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:padding="@dimen/ten"
                 android:paddingStart="@dimen/thirty"
                 android:paddingEnd="@dimen/thirty">
@@ -57,124 +58,112 @@
                     android:id="@+id/imgAll"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/all_icon_2"
                     android:visibility="gone"
-                    app:tint="@color/black">
-
-                </ImageView>
+                    app:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/allbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/five"
-                    android:layout_toEndOf="@+id/imgAll"
                     android:text="@string/all"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp"></TextView>
-            </RelativeLayout>
+                    android:textSize="@dimen/twele_sp" />
+            </LinearLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/ytsbutton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/five"
-                android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp">
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:paddingTop="@dimen/ten"
+                android:paddingBottom="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgYet"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/waiting_for_approval"
-                    app:tint="@color/dark_orange">
-
-                </ImageView>
+                    app:tint="@color/dark_orange" />
 
                 <TextView
                     android:id="@+id/ytsbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/five"
-                    android:layout_toEndOf="@+id/imgYet"
                     android:gravity="center"
                     android:text="@string/yet_to_start"
                     android:textSize="@dimen/twele_sp" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/inprogressbutton1"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="@dimen/five"
-                android:gravity="center"
-                android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp">
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:paddingTop="@dimen/ten"
+                android:paddingBottom="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgProgress"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/progress_icon_2"></ImageView>
+                    android:src="@drawable/progress_icon_2" />
 
                 <TextView
                     android:id="@+id/inprogressbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/five"
-                    android:layout_toEndOf="@+id/imgProgress"
                     android:text="@string/in_progress"
                     android:textSize="@dimen/twele_sp" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/completedbutton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
-                android:gravity="center"
-                android:padding="@dimen/ten"
                 android:paddingStart="@dimen/eighteen_sp"
-                android:paddingEnd="@dimen/eighteen_sp">
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:paddingTop="@dimen/ten"
+                android:paddingBottom="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgComplete"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/completed_icon_3"></ImageView>
+                    android:src="@drawable/completed_icon_3" />
 
                 <TextView
                     android:id="@+id/completedbutton"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/five"
-                    android:layout_toEndOf="@+id/imgComplete"
                     android:text="@string/completed"
-                    android:textSize="@dimen/twele_sp"></TextView>
-
-            </RelativeLayout>
+                    android:textSize="@dimen/twele_sp" />
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -210,6 +199,7 @@
             android:layout_toEndOf="@+id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:textAlignment="viewStart"
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:scrollHorizontally="true"

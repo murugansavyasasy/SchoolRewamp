@@ -273,7 +273,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
                     val calendar = Calendar.getInstance()
                     val todayDay = calendar.get(Calendar.DAY_OF_MONTH)
                     val todayMonth =
-                        SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+                        SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.time)
 
                     val todayPos = dates.indexOfFirst {
                         it.first == todayMonth && it.second == todayDay
@@ -537,7 +537,7 @@ class PTM : BaseActivity<PtmBinding>(), View.OnClickListener, OnCancelClickListe
     fun generateDates(daysCount: Int): List<Triple<String, Int, Int>> { // month, day, year
         val list = mutableListOf<Triple<String, Int, Int>>()
         val calendar = Calendar.getInstance()
-        val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
+        val monthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
 
         repeat(daysCount) {
             val month = monthFormat.format(calendar.time)

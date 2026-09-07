@@ -69,6 +69,7 @@
         android:layout_marginEnd="@dimen/twenty"
         android:ellipsize="end"
         android:maxLines="4"
+        android:textAlignment="viewStart"
         android:text="Purpose of testing student's skill"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp" />
@@ -84,6 +85,7 @@
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/twenty"
         android:ellipsize="end"
+        android:textAlignment="viewStart"
         android:autoLink="web"
         android:linksClickable="true"
         android:maxLines="3"

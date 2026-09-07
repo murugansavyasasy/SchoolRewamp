@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Standard"
+            android:text="@string/Standard"
             android:textColor="@color/PrimaryColor"
             android:textSize="10sp"
             android:textStyle="bold" />
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Sections"
+            android:text="@string/sections"
             android:textColor="#AAAAAA"
             android:textSize="10sp" />
     </LinearLayout>
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Subjects"
+            android:text="@string/subjects"
             android:textColor="#AAAAAA"
             android:textSize="10sp" />
     </LinearLayout>
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Details"
+            android:text="@string/details"
             android:textColor="#AAAAAA"
             android:textSize="10sp" />
     </LinearLayout>
@@ -170,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Review"
+            android:text="@string/review"
             android:textColor="#AAAAAA"
             android:textSize="10sp" />
     </LinearLayout>

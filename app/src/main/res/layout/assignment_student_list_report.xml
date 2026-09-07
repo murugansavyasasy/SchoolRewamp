@@ -78,6 +78,7 @@
             android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>

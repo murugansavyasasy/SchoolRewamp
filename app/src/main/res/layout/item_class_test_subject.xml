@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Fills all tests from that subject into this section"
+                        android:text="@string/fills_all_tests_from_that_subject_into_this_section"
                         android:textColor="#92400E"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -154,7 +154,7 @@
                     android:gravity="center"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Copy"
+                    android:text="@string/copy"
                     android:textColor="@color/white"
                     android:textSize="13sp"
                     style="@style/CustomTextStylePoppinsBold" />
@@ -172,7 +172,7 @@
                 android:layout_height="41dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="4dp"
-                android:text="+ Add Activity"
+                android:text="@string/add_activity"
                 android:gravity="center"
                 android:textColor="@color/PrimaryColor"
                 android:textSize="14sp"

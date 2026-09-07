@@ -65,7 +65,7 @@ class AbsenteesCustomCalender(
     }
 
     private fun setupCalendar() {
-        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.ENGLISH)
         tvMonthYear.text = monthYear.format(calendar.time)
 
         val daysInMonth = ArrayList<Pair<String, Int>>()

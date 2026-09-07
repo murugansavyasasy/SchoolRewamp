@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.ClassTest.Class
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,8 +20,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.ClassTestItem
 import com.vs.schoolmessenger.School.ClassTest.Class.Models.TestEntry
 import java.util.Calendar
+import java.util.Locale
 
-class ClassAdapter(
+class ClassAdapter(var context: Context,
     private val items: MutableList<ClassTestItem>
 ) : RecyclerView.Adapter<ClassAdapter.SubjectViewHolder>() {
 
@@ -81,13 +83,13 @@ class ClassAdapter(
 
         if (shouldShowBanner && sourceItem != null) {
             val label = if (item.isMerged)
-                "Source data changed — re-copy from ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
+                "${context.getString(R.string.Source_data_changed_re_copy_from)} ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
             else
-                "Copy data from ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
+                "${context.getString(R.string.Copy_data_from)} ${sourceItem.subjectName} · ${sourceItem.sectionLabel}?"
 
             holder.txtMergeTitle.text = label
             holder.txtMergeSubtitle.text =
-                "Fills all tests from that subject into this section"
+                context.getString(R.string.fills_all_tests_from_that_subject_into_this_section)
             holder.lytMergeBanner.visibility = View.VISIBLE
 
             holder.btnMerge.setOnClickListener {
@@ -115,7 +117,7 @@ class ClassAdapter(
             if (lastTest != null && (lastTest.examName.isBlank())) {
                 Toast.makeText(
                     holder.itemView.context,
-                    "Please fill Activity Name  before adding another activity",
+                    context.getString(R.string.please_fill_activity_name_before_adding_another_activity),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -238,7 +240,7 @@ class ClassAdapter(
         etSyllabus.onFocusChangeListener = focusScrollListener
 
         txtTestNumber.text = "${testIndex + 1}"
-        testlabel.text = "Activity ${testIndex + 1}"
+        testlabel.text = "${context.getString(R.string.activity)} ${testIndex + 1}"
 
         imgDelete.visibility = View.VISIBLE
         removetext.visibility = View.VISIBLE
@@ -268,12 +270,29 @@ class ClassAdapter(
 
         if (test.testDate.isNotEmpty()) tvTestDate.text = test.testDate
         tvTestDate.setOnClickListener {
+
+            val originalLocale = Locale.getDefault()
+            Locale.setDefault(Locale.ENGLISH)
+
+            val config = Configuration(context.resources.configuration)
+            config.setLocale(Locale.ENGLISH)
+            context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
             val cal = Calendar.getInstance()
 
             val datePickerDialog = DatePickerDialog(
                 ctx,
                 { _, y, m, d ->
-                    val s = "%02d/%02d/%04d".format(d, m + 1, y)
+
+                    Locale.setDefault(originalLocale)
+                    context.resources.updateConfiguration(
+                        Configuration(context.resources.configuration).apply {
+                            setLocale(originalLocale)
+                        },
+                        context.resources.displayMetrics
+                    )
+
+                    val s = String.format(Locale.ENGLISH, "%02d/%02d/%04d", d, m + 1, y)
                     test.testDate = s
                     tvTestDate.text = s
                     refreshCompletedState(v, item, itemPos)
@@ -345,7 +364,7 @@ class ClassAdapter(
             etMinMarks.background = ContextCompat.getDrawable(ctx, R.drawable.input_field_bg)
         } else {
             etMinMarks.background = ContextCompat.getDrawable(ctx, R.drawable.input_field_bg_error)
-            etMinMarks.error = "Min marks must be less than Max marks"
+            etMinMarks.error = context.getString(R.string.min_marks_must_be_less_than_max_marks)
         }
 
         return isValid

@@ -161,6 +161,7 @@
                 android:id="@+id/tvDate"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
+                android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/four"
@@ -204,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginTop="@dimen/four"
+                android:textAlignment="viewStart"
                 android:text="04:15 PM - 04:30 PM"
                 android:textSize="@dimen/thirteen_sp" />
 

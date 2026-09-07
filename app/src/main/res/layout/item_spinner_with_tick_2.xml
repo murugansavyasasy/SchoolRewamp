@@ -5,6 +5,7 @@
     android:paddingHorizontal="@dimen/fifteen">
 
     <TextView
+        android:textAlignment="viewStart"
         android:id="@+id/textViewItem"
         style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="match_parent"

@@ -77,7 +77,8 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
         super.setupViews()
-        isToolBarNoticeCallTheme()
+//        isToolBarNoticeCallTheme()
+        setupBlackSystemBars()
 
         val notificationId = intent.getIntExtra("notification_id", -1)
         isEmergency = intent.getStringExtra("isEmergencyCall")
@@ -676,7 +677,7 @@ class NotificationCallScreen : BaseActivity<NotificationCallScreenBinding>(), Vi
     }
 
     private fun getNow(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         return sdf.format(Date())
     }
 

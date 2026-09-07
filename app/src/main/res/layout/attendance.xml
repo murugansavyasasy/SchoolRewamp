@@ -38,11 +38,12 @@
             android:paddingBottom="@dimen/fifty">
 
             <TextView
+                android:textAlignment="viewStart"
                 android:id="@+id/lblHeaderTitle"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginHorizontal="@dimen/twenty"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty">

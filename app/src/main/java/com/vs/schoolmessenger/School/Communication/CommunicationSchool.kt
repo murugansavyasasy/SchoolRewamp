@@ -9,6 +9,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Paint
 import android.media.MediaPlayer
 import android.media.MediaRecorder
@@ -85,8 +86,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var toHour24: Int? = null
     private var toMinute: Int? = null
     private var isFromTime = true
-
-
     private var isInitialized = false
     private var selectedDatesAdapter: SelectedDatesAdapter? = null
 
@@ -338,7 +337,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             set(Calendar.HOUR_OF_DAY, hour24)
             set(Calendar.MINUTE, minute)
         }
-        return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(cal.time)
+        return SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(cal.time)
     }
 
     private fun showTimePickerDialog(
@@ -352,10 +351,27 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val hour = preSelectedHour ?: calendar.get(Calendar.HOUR_OF_DAY)
         val minute = preSelectedMinute ?: calendar.get(Calendar.MINUTE)
 
+        //        // Force English locale globally for this dialog creation
+        val originalLocale = Locale.getDefault()
+        Locale.setDefault(Locale.ENGLISH)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.ENGLISH)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
         var isTimeSelected = false
 
         val timePicker = TimePickerDialog(
             context, { _, selectedHour, selectedMinute ->
+
+                // Restore original locale after selection
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
 
                 isTimeSelected = true
 
@@ -367,7 +383,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 val today = SimpleDateFormat(
                     "dd-MM-yyyy",
-                    Locale.getDefault()
+                    Locale.ENGLISH
                 ).format(Date())
 
                 val isTodaySelected = selectedDates.contains(today)
@@ -445,6 +461,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (!isFromTime && !isTimeSelected &&
                 fromHour24 != null && fromMinute != null
             ) {
+
+                Locale.setDefault(originalLocale)
+                context.resources.updateConfiguration(
+                    Configuration(context.resources.configuration).apply {
+                        setLocale(originalLocale)
+                    },
+                    context.resources.displayMetrics
+                )
+
                 val cal = Calendar.getInstance().apply {
                     set(Calendar.HOUR_OF_DAY, fromHour24!!)
                     set(Calendar.MINUTE, fromMinute!!)
@@ -539,7 +564,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         if (checkAndRequestPermissions(this)) {
             val dir = externalCacheDir ?: cacheDir
 //            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
-            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmssSSS, Locale.getDefault()).format(Date())
+            val timeStamp = SimpleDateFormat(Constant.yyyyMMdd_HHmmssSSS, Locale.ENGLISH).format(Date())
             val fileName = "${Constant.original_}$timeStamp${Constant.m4a}"
             val filePath = "${dir.absolutePath}/$fileName"
             audioFilePath = filePath
@@ -1092,8 +1117,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     preSelectedDates = selectedDates.toList(),
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
-                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                    val tf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+                    val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+                    val tf = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
                     val pickedTimeText = binding.lblStartTime.text.toString()
                     val now = Calendar.getInstance()
                     val validDates = mutableListOf<String>()
@@ -1448,7 +1473,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun isPastTimeForToday(): Boolean {
         if (selectedDates.isEmpty()) return false
         val today = SimpleDateFormat(
-            "dd-MM-yyyy", Locale.getDefault()
+            "dd-MM-yyyy", Locale.ENGLISH
         ).format(Date())
 
         if (!selectedDates.contains(today)) return false
@@ -1942,7 +1967,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 val timeStamp = SimpleDateFormat(
                     Constant.yyyyMMdd_HHmmssSSS,
-                    Locale.getDefault()
+                    Locale.ENGLISH
                 ).format(Date())
 
                 val fileName = "${Constant.Communication_}${timeStamp}.$extension"

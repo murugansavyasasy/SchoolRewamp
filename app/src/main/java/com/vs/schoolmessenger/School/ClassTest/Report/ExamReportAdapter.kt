@@ -1,10 +1,12 @@
 package com.vs.schoolmessenger.School.ClassTest.Report
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.ClassTest.Report.Model.ExamlistModel
 import com.vs.schoolmessenger.School.ClassTest.Report.Model.SectionModeldata
 import com.vs.schoolmessenger.databinding.ItemExamReportBinding
@@ -12,6 +14,7 @@ import com.vs.schoolmessenger.databinding.ItemSectionChipBinding
 
 class ExamReportAdapter(
     private val list: MutableList<ExamlistModel>,
+    private val context: Context,
     private val onSectionClick: (ExamlistModel, SectionModeldata) -> Unit,
     private val onDeleteClick: (ExamlistModel, Int) -> Unit
 ) : RecyclerView.Adapter<ExamReportAdapter.ViewHolder>() {
@@ -31,8 +34,8 @@ class ExamReportAdapter(
 
         holder.binding.txtExamName.text = item.examName
         holder.binding.txtsection.text =
-            "Standard : ${item.sections.firstOrNull()?.className ?: "-"}"
-        holder.binding.txtSentBy.text = "Sent by: ${item.sentBy}"
+            "${context.getString(R.string.Standard)} : ${item.sections.firstOrNull()?.className ?: "-"}"
+        holder.binding.txtSentBy.text = "${context.getString(R.string.send_by)}: ${item.sentBy}"
 
         holder.binding.imgDelete.visibility =
             if (item.candelete) View.VISIBLE else View.GONE
@@ -44,7 +47,7 @@ class ExamReportAdapter(
                 holder.binding.flexSections,
                 false
             )
-            chipBinding.txtSectionChip.text = "Section ${section.sectionName}"
+            chipBinding.txtSectionChip.text = "${context.getString(R.string.Section)} ${section.sectionName}"
             chipBinding.txtSectionChip.setOnClickListener {
                 onSectionClick(item, section)
             }

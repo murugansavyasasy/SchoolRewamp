@@ -128,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/live_badge_bg"
-                            android:text="LIVE "
+                            android:text="@string/live"
                             android:textColor="@color/white"
                             android:textSize="10sp" />
 
@@ -183,7 +183,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:letterSpacing="0.1"
-                                    android:text="FROM"
+                                    android:text="@string/from"
+                                    android:textAllCaps="true"
                                     android:textColor="#9E9E9E"
                                     android:textSize="10sp" />
 
@@ -242,7 +243,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:letterSpacing="0.1"
-                                    android:text="TO"
+                                    android:text="@string/to"
+                                    android:textAllCaps="true"
                                     android:textColor="#9E9E9E"
                                     android:textSize="10sp" />
 
@@ -290,7 +292,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:letterSpacing="0.08"
-                                    android:text="NEXT STOP"
+                                    android:text="@string/next_stop"
                                     android:textColor="#9E9E9E"
                                     android:textSize="10sp" />
 

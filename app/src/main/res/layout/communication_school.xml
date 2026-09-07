@@ -631,7 +631,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_toEndOf="@+id/lblNExt"
-                            android:src="@drawable/rightwhitearrow" />
+                            android:src="@drawable/rightwhitearrow_2" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -741,7 +741,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/lblPickVoiceFile"
-                                android:text="(only .mp3, .m4a, .wav files are allowed)"
+                                android:text="@string/only_mp3_m4a_wav_files_are_allowed"
                                 android:textColor="@color/red_90"
                                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -911,7 +911,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_toEndOf="@+id/lblSend"
-                                android:src="@drawable/rightwhitearrow">
+                                android:src="@drawable/rightwhitearrow_2">
 
                             </ImageView>
                         </RelativeLayout>
