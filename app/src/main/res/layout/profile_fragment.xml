@@ -42,7 +42,6 @@
                         android:src="@drawable/default_profile"
                         app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
-                    <!-- Camera icon: changes the profile photo -->
                     <ImageView
                         android:id="@+id/imgEdit"
                         android:layout_width="@dimen/twenty_eight"
