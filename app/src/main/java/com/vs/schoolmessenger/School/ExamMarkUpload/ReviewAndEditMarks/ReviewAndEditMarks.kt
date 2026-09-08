@@ -1387,6 +1387,38 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         binding.lblIssueFound.text = message
     }
 
+    /**
+     * Builds the save-marks request body to match the required API contract:
+     *
+     * {
+     *   "exam_id": "...",
+     *   "section_id": "...",
+     *   "upload_details": [
+     *     {
+     *       "student_id": "...",
+     *       "marks": [
+     *         {
+     *           "subject_id": "...",
+     *           "activities": [
+     *             {
+     *               "id": "...",
+     *               "mark": "...",
+     *               "max_mark": "...",
+     *               "rubrics": [ { "id": "...", "mark": "...", "max_mark": "..." }, ... ]
+     *             }
+     *           ]
+     *         }
+     *       ],
+     *       "co_scholastic": [ { "id": "...", "mark": "..." }, ... ],
+     *       "remarks": [ { "reference_type": "...", "mark": "..." }, ... ]
+     *     }
+     *   ]
+     * }
+     *
+     * Note: for activities that have rubrics, the activity-level "mark" is intentionally
+     * left blank — there's no separate editable input for the parent activity in that
+     * case, only the individual rubric marks.
+     */
     private fun isSaveTheMark(
         students: List<StudentMarkList>, columns: List<MarkColumn>
     ): JsonObject {
@@ -1437,7 +1469,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         val activityObj = JsonObject().apply {
                             addProperty(Constant.id, activityId)
-                            addProperty(Constant.mark, "")
+                            addProperty(Constant.mark, "") // no standalone input for the parent activity when rubrics exist
                             addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "--")
                             add("rubrics", rubricsArray)
                         }
@@ -1465,7 +1497,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             studentObj.add(Constant.marks, marksArray)
 
-            // NEW: co_scholastic array
+            // co_scholastic array — only "id" and "mark" per the required format
             val coScholasticArray = JsonArray()
             columns.filter { it.isCoScholastic }.forEach { col ->
                 val index = columns.indexOf(col)
@@ -1473,14 +1505,12 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                 coScholasticArray.add(JsonObject().apply {
                     addProperty("id", col.activityId)
-                    addProperty("name", col.activityName)
                     addProperty("mark", rawText)
-                    addProperty("is_edit", true)
                 })
             }
             studentObj.add("co_scholastic", coScholasticArray)
 
-            // NEW: remarks array
+            // remarks array — only "reference_type" and "mark" per the required format
             val remarksArray = JsonArray()
             columns.filter { it.isRemark }.forEach { col ->
                 val index = columns.indexOf(col)
@@ -1489,7 +1519,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 remarksArray.add(JsonObject().apply {
                     addProperty("reference_type", col.remarkType ?: col.activityId)
                     addProperty("mark", rawText)
-                    addProperty("is_edit", true)
                 })
             }
             studentObj.add("remarks", remarksArray)

@@ -221,7 +221,7 @@ object APIMethods {
 
     const val uploadmarks = "ocr/api/upload-marks"
 //    const val savemarks = "exam/api/exam/upload-marks"
-    const val savemarks = "exam/api/new-exam/upload-mark"
+    const val savemarks = "exam/api/new-exam/upload-exam-mark"
 //    const val getMarkDetails = "exam/api/exam/get-mark-details"
     const val getMarkDetails = "exam/api/new-exam/get-marks-to-upload-details"
     const val getexamanalysis = "exam/api/new-exam/exam-analysis"
