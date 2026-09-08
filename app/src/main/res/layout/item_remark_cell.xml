@@ -1,0 +1,16 @@
+<com.google.android.material.textfield.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lytRemarkDropdown"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:hint="Remark">
+
+    <AutoCompleteTextView
+        android:id="@+id/edtRemark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:maxLines="3" />
+
+</com.google.android.material.textfield.TextInputLayout>

@@ -85,6 +85,9 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     var isExamSectionId = ""
     private var originalStudentsList: MutableList<StudentMarkList> = mutableListOf()
 
+    private var academicRemarksList: List<String> = emptyList()
+    private var behaviouralRemarksList: List<String> = emptyList()
+
     override fun setupViews() {
         super.setupViews()
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -118,6 +121,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         Log.d("isFinalCoScholasticDetails", isFinalCoScholasticDetails.toString())
 
         isGetMarkDetails()
+        fetchCommonRemarks()
 
         appViewModel!!.savemarks?.observe(this) { response ->
             Constant.hideLoading(this@ReviewAndEditMarks)
@@ -125,6 +129,16 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
+
+        appViewModel!!.getcommonremarks?.observe(this) { response ->
+            val items = response?.data?.data.orEmpty()
+            academicRemarksList = items.map { it.academic_remarks }.distinct()
+            behaviouralRemarksList = items.map { it.behavioural_remarks }.distinct()
+
+            (binding.rvMarks.adapter as? MarksAdapter)
+                ?.updateRemarkSuggestions(academicRemarksList, behaviouralRemarksList)
+        }
+
 
         appViewModel!!.isGetMarkDetails?.observe(this) { response ->
 
@@ -152,7 +166,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 binding.rvMarks.layoutManager = LinearLayoutManager(this)
                 originalStudentsList = currentStudentsList.toMutableList()
                 binding.rvMarks.adapter = MarksAdapter(
-                    currentStudentsList, markColumns, reviewFlagMap, this, this
+                    currentStudentsList,
+                    markColumns,
+                    reviewFlagMap,
+                    this,
+                    this,
+                    academicRemarksList,
+                    behaviouralRemarksList
                 )
 
                 (binding.rvMarks.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
@@ -357,6 +377,13 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private fun MarkResponse.getAllStudents(): List<StudentMarkApi> {
         return data.flatMap { it.upload_details }
     }
+
+    private fun fetchCommonRemarks() {
+        appViewModel!!.getcommonremarks(
+            isAccessToken!!, isFinalMapDetails!![0].class_id, this
+        )
+    }
+
 
     private fun buildHeaderColumns(response: MarkResponse): List<MarkColumn> {
         val columns = mutableListOf<MarkColumn>()
@@ -1387,38 +1414,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         binding.lblIssueFound.text = message
     }
 
-    /**
-     * Builds the save-marks request body to match the required API contract:
-     *
-     * {
-     *   "exam_id": "...",
-     *   "section_id": "...",
-     *   "upload_details": [
-     *     {
-     *       "student_id": "...",
-     *       "marks": [
-     *         {
-     *           "subject_id": "...",
-     *           "activities": [
-     *             {
-     *               "id": "...",
-     *               "mark": "...",
-     *               "max_mark": "...",
-     *               "rubrics": [ { "id": "...", "mark": "...", "max_mark": "..." }, ... ]
-     *             }
-     *           ]
-     *         }
-     *       ],
-     *       "co_scholastic": [ { "id": "...", "mark": "..." }, ... ],
-     *       "remarks": [ { "reference_type": "...", "mark": "..." }, ... ]
-     *     }
-     *   ]
-     * }
-     *
-     * Note: for activities that have rubrics, the activity-level "mark" is intentionally
-     * left blank — there's no separate editable input for the parent activity in that
-     * case, only the individual rubric marks.
-     */
     private fun isSaveTheMark(
         students: List<StudentMarkList>, columns: List<MarkColumn>
     ): JsonObject {
