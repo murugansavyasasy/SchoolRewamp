@@ -7,11 +7,12 @@ import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
@@ -34,6 +35,8 @@ class MarksAdapter(
     private val reviewFlagMap: Map<String, String>,
     private val context: Context,
     private val listener: OnMarksChangedListener,
+    initialAcademicRemarks: List<String> = emptyList(),
+    initialBehaviouralRemarks: List<String> = emptyList(),
 ) : RecyclerView.Adapter<MarksAdapter.MarksViewHolder>() {
 
     private val SUBJECT_CELL_WIDTH = 200
@@ -42,6 +45,16 @@ class MarksAdapter(
 
     private val MALE_COLOR = Color.parseColor("#2196F3")
     private val FEMALE_COLOR = Color.parseColor("#E91E63")
+
+    private var academicRemarksList: List<String> = initialAcademicRemarks
+    private var behaviouralRemarksList: List<String> = initialBehaviouralRemarks
+
+
+    fun updateRemarkSuggestions(academic: List<String>, behavioural: List<String>) {
+        academicRemarksList = academic
+        behaviouralRemarksList = behavioural
+        notifyDataSetChanged()
+    }
 
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -244,31 +257,81 @@ class MarksAdapter(
             )
         }
 
-        val et = EditText(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
-            )
-            textSize = 14f
-            hint = "--"
 
-            if (column.isRemark) {
+        val et: EditText = if (column.isRemark) {
+            AutoCompleteTextView(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+                )
+                textSize = 14f
+                hint = "--"
                 gravity = Gravity.TOP or Gravity.START
                 inputType = InputType.TYPE_CLASS_TEXT or
                         InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or
                         InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                minLines = 2
-                maxLines = 4
-                setPadding(20, 16, 20, 16)
-            } else {
+                minLines = 1
+                maxLines = 3
+                setPadding(16, 8, 16, 8)
+
+                val suggestions = if (column.remarkType.equals("BEHAVIOURAL_REMARK", true)) {
+                    behaviouralRemarksList
+                } else {
+                    academicRemarksList
+                }
+
+                setAdapter(
+                    ArrayAdapter(
+                        context,
+                        android.R.layout.simple_dropdown_item_1line,
+                        suggestions
+                    )
+                )
+                threshold = 1
+
+                background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
+
+
+                val dropDownArrow =
+                    ContextCompat.getDrawable(context, android.R.drawable.arrow_down_float)
+                dropDownArrow?.setTint(
+                    ContextCompat.getColor(context, R.color.mild_grey_dark)
+                )
+                setCompoundDrawablesWithIntrinsicBounds(null, null, dropDownArrow, null)
+                compoundDrawablePadding = 12.dp
+
+                setOnClickListener { showDropDown() }
+
+                if (isAllowedValue(excelValue, column)) {
+                    setText(excelValue)
+                } else {
+                    setText("")
+                }
+            }
+        } else {
+            EditText(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+                )
+                textSize = 14f
+                hint = "--"
                 gravity = Gravity.CENTER
                 inputType = InputType.TYPE_CLASS_TEXT
                 setPadding(10, 10, 10, 4)
-            }
 
-            if (isAllowedValue(excelValue, column)) {
-                setText(excelValue)
-            } else {
-                setText("")
+                if (isAllowedValue(excelValue, column)) {
+                    setText(excelValue)
+                } else {
+                    setText("")
+                }
+            }
+        }
+
+
+        if (et is AutoCompleteTextView) {
+            et.setOnItemClickListener { parent, _, pos, _ ->
+                val selected = parent.getItemAtPosition(pos).toString()
+                et.setText(selected)
+                et.setSelection(selected.length)
             }
         }
 
@@ -295,7 +358,7 @@ class MarksAdapter(
         topRow.addView(icon)
         columnLayout.addView(topRow)
 
-        // Show "was: oldValue" if changed
+
         if (isAllowedValue(oldValue, column) && isAllowedValue(excelValue, column) && oldValue != excelValue) {
             val prev = TextView(context).apply {
                 text = "prev - $oldValue"
@@ -306,7 +369,7 @@ class MarksAdapter(
             columnLayout.addView(prev)
         }
 
-        // Apply edit state
+
         val isEditable = student.isEditList[columnIndex]
         et.isEnabled = isEditable
         et.isFocusable = isEditable
@@ -335,9 +398,11 @@ class MarksAdapter(
 
         val trimmed = value.trim()
 
-        // Remarks are free text: no numeric / max-mark validation applies
+
         if (column.isRemark) {
-            clearError(et, icon)
+            icon.visibility = View.GONE
+            icon.layoutParams.width = 0
+            et.background = ContextCompat.getDrawable(context, R.drawable.rect_bg_stroke_remark)
             return
         }
 
@@ -357,7 +422,7 @@ class MarksAdapter(
             return
         }
 
-        // Skip review-reason warning for AB / NA
+
         if (
             !reviewReason.isNullOrEmpty() &&
             trimmed == oldValue &&
@@ -368,7 +433,7 @@ class MarksAdapter(
             return
         }
 
-        // Skip green info for AB / NA when value changed
+
         if (
             isAllowedValue(oldValue, column) &&
             isAllowedValue(trimmed, column) &&
@@ -483,11 +548,6 @@ class MarksAdapter(
         }
     }
 
-    /**
-     * Whether [value] is acceptable for [column].
-     * Remark columns are free text and always allowed.
-     * Everything else must be AB / NA / a number, same as before.
-     */
     private fun isAllowedValue(value: String, column: MarkColumn? = null): Boolean {
         if (column?.isRemark == true) return true
 

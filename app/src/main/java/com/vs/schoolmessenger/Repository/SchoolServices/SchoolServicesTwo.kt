@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.School.ClassTest.Review.Model.CreateClassTestRespo
 import com.vs.schoolmessenger.School.ClassTest.Subject.ModelClass.Subjectlistresponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.ClassEntryMarkResponse
 import com.vs.schoolmessenger.School.ClassTest.UploadMarks.Model.UploadMarksClassEntryResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.CommonRemarksModel.CommonRemarksResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamAnalysis.Model.AcademicAnalysisResponse
 import com.vs.schoolmessenger.School.ExamReview.AnalysisSetResponseModel.AnalysisSetsResponse
 import com.vs.schoolmessenger.School.ExamReview.ApiResponseModel.StudentAnalysisResponse
@@ -73,6 +74,7 @@ class SchoolServicesTwo {
     var isRemoveConcern: MutableLiveData<RemoveConcernResponse?>
     var isPaymentProof: MutableLiveData<PaymentProofResponse?>
     var getexamanalysis: MutableLiveData<AcademicAnalysisResponse?>
+    var getcommonremarks: MutableLiveData<CommonRemarksResponse?>
 
 
     init {
@@ -107,6 +109,7 @@ class SchoolServicesTwo {
         isRemoveConcern = MutableLiveData()
         isPaymentProof = MutableLiveData()
         getexamanalysis = MutableLiveData()
+        getcommonremarks = MutableLiveData()
 
     }
 
@@ -1044,5 +1047,36 @@ class SchoolServicesTwo {
     val getexamanalysisLiveData: LiveData<AcademicAnalysisResponse?>
         get() = getexamanalysis
 
+
+
+    fun getcommonremarks(
+        isToken: String,standard_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.getcommonremarks(isToken,standard_id)
+            ?.enqueue(object : Callback<CommonRemarksResponse?> {
+                override fun onResponse(
+                    call: Call<CommonRemarksResponse?>, response: Response<CommonRemarksResponse?>
+                ) {
+                    Log.d(
+                        "getParentHostelDashboard", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            getcommonremarks.postValue(response.body())
+                        }
+                    } else {
+                        getcommonremarks.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<CommonRemarksResponse?>, t: Throwable) {
+                    getcommonremarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getcommonremarksLiveData: LiveData<CommonRemarksResponse?>
+        get() = getcommonremarks
 
 }

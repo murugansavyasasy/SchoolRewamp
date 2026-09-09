@@ -119,6 +119,7 @@ import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
+import com.vs.schoolmessenger.School.ExamMarkUpload.CommonRemarksModel.CommonRemarksResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamAnalysis.Model.AcademicAnalysisResponse
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.StaffWiseExam.getStaffWisExam
 import com.vs.schoolmessenger.School.ExamMarkUpload.ExamList.Model.SubjectWiseActivities.getSubjectWiseACtivities
@@ -522,6 +523,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isRemoveConcern: LiveData<RemoveConcernResponse?>? = null
     var isPaymentProof: LiveData<PaymentProofResponse?>? = null
     var getexamanalysis: LiveData<AcademicAnalysisResponse?>? = null
+    var getcommonremarks: LiveData<CommonRemarksResponse?>? = null
 
     var isFirstLocationSynced = false
 
@@ -747,6 +749,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isRemoveConcern = apiSchoolRepositoriesTwo.isRemoveConcernLiveData
         isPaymentProof = apiSchoolRepositoriesTwo.isPaymentProofLiveData
         getexamanalysis = apiSchoolRepositoriesTwo.getexamanalysisLiveData
+        getcommonremarks = apiSchoolRepositoriesTwo.getcommonremarksLiveData
     }
 
     fun isDashBoardData(
@@ -2469,6 +2472,15 @@ class App(application: Application) : AndroidViewModel(application) {
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
         apiSchoolRepositoriesTwo.getexamanalysis(isToken,exam_id,activity)
+    }
+    fun getcommonremarks(
+        isToken: String,
+        standard_id: String, activity: Activity
+    ) {
+        val reporting_url = SharedPreference.getBaseUrl(activity)
+        Log.d("reporting_url",reporting_url.toString())
+        RestClient.changeApiBaseUrl(reporting_url!!)
+        apiSchoolRepositoriesTwo.getcommonremarks(isToken,standard_id,activity)
     }
 
 }
