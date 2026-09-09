@@ -88,6 +88,11 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
     private var academicRemarksList: List<String> = emptyList()
     private var behaviouralRemarksList: List<String> = emptyList()
 
+
+    private val searchHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var searchRunnable: Runnable? = null
+    private val SEARCH_DEBOUNCE_MS = 250L
+
     override fun setupViews() {
         super.setupViews()
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -178,7 +183,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 (binding.rvMarks.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
                     false
             } else {
-                binding.rvMarks.adapter?.notifyDataSetChanged()
+                safeNotifyDataSetChanged()
                 updateEmptyState()
             }
         }
@@ -223,6 +228,17 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
         setupSearch()
     }
 
+    private fun safeNotifyDataSetChanged() {
+        val currentFocus = currentFocus
+        if (currentFocus != null && binding.rvMarks.findContainingViewHolder(currentFocus) != null) {
+            currentFocus.clearFocus()
+        }
+
+        binding.main.isFocusableInTouchMode = true
+        binding.main.requestFocus()
+        binding.rvMarks.adapter?.notifyDataSetChanged()
+    }
+
     private fun toggleSearch(show: Boolean) {
         binding.lytSearch.visibility = if (show) View.VISIBLE else View.GONE
         if (show) {
@@ -256,23 +272,30 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                     val query = s.toString().trim()
 
-                    if (query.isEmpty()) {
-                        currentStudentsList.clear()
-                        currentStudentsList.addAll(originalStudentsList)
-                    } else {
-                        val filteredList = originalStudentsList.filter { student ->
-                            student.name.contains(query, true) || student.rollNo.contains(
-                                query,
-                                true
-                            ) || student.admission_no.contains(query, true)
+
+                    searchRunnable?.let { searchHandler.removeCallbacks(it) }
+
+                    val runnable = Runnable {
+                        if (query.isEmpty()) {
+                            currentStudentsList.clear()
+                            currentStudentsList.addAll(originalStudentsList)
+                        } else {
+                            val filteredList = originalStudentsList.filter { student ->
+                                student.name.contains(query, true) || student.rollNo.contains(
+                                    query,
+                                    true
+                                ) || student.admission_no.contains(query, true)
+                            }
+
+                            currentStudentsList.clear()
+                            currentStudentsList.addAll(filteredList)
                         }
 
-                        currentStudentsList.clear()
-                        currentStudentsList.addAll(filteredList)
+                        safeNotifyDataSetChanged()
+                        updateEmptyState()
                     }
-
-                    rvMarks.adapter?.notifyDataSetChanged()
-                    updateEmptyState()
+                    searchRunnable = runnable
+                    searchHandler.postDelayed(runnable, SEARCH_DEBOUNCE_MS)
                 }
 
                 override fun afterTextChanged(s: Editable?) {}
@@ -340,7 +363,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                             else -> baseMark
                         }
 
-                        // Also merge rubric marks if present
+
                         val updatedRubrics = activity.rubrics?.map { rubric ->
                             val rubricKey = normalize(rubric.selected_name)
                             val rubricExtracted = row.entries.firstNotNullOfOrNull { entry ->
@@ -412,7 +435,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                         )
                     }
                 } else {
-                    // No rubrics - single column for activity itself
+
                     columns.add(
                         MarkColumn(
                             subjectId = subject.subject_id,
@@ -428,7 +451,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
         }
 
-        // Co-Scholastic columns (grouped under a pseudo "subject")
+
         firstStudent.co_scholastic.orEmpty().forEach { cs ->
             columns.add(
                 MarkColumn(
@@ -443,7 +466,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             )
         }
 
-        // Remark columns (grouped under a pseudo "subject")
+
         firstStudent.remarks.orEmpty().forEach { r ->
             val label = if (r.reference_type.equals("BEHAVIOURAL_REMARK", true)) {
                 "Behavioural Remark"
@@ -1035,7 +1058,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             currentStudentsList.clear()
             currentStudentsList.addAll(originalStudentsList)
-            binding.rvMarks.adapter?.notifyDataSetChanged()
+            safeNotifyDataSetChanged()
 
             dialog.dismiss()
         }
@@ -1166,7 +1189,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
         currentStudentsList.clear()
         currentStudentsList.addAll(list)
-        binding.rvMarks.adapter?.notifyDataSetChanged()
+        safeNotifyDataSetChanged()
 
         Log.d(TAG_SORT, "----- APPLY SORT END -----")
     }
@@ -1325,7 +1348,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             student.markTexts.forEachIndexed { index, rawText ->
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
-                if (column.isRemark) return@forEachIndexed // free text, no validation
+                if (column.isRemark) return@forEachIndexed
 
                 val trimmed = rawText.trim()
                 val value = trimmed.toIntOrNull()
@@ -1339,7 +1362,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     column.selected_name?.lowercase()?.replace("[^a-z0-9]".toRegex(), "")
                 }"
 
-                // Skip review-flag warning for AB / NA
+
                 if (trimmed.isNotEmpty() && trimmed == oldValue &&
                     reviewFlagMap.containsKey(reviewKey) &&
                     !isSpecialText(trimmed)
@@ -1354,7 +1377,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                     return@forEachIndexed
                 }
 
-                // Skip invalid-value issue for AB / NA
+
                 if (trimmed.isNotEmpty() && value == null && !isSpecialText(trimmed)) {
                     summary.total++
                     summary.invalidCount++
@@ -1428,7 +1451,6 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             val marksArray = JsonArray()
 
-            // Only real subject/activity/rubric columns go into "marks"
             val subjectGroups = columns
                 .filterNot { it.isCoScholastic || it.isRemark }
                 .groupBy { it.subjectId }
@@ -1464,7 +1486,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
                         val activityObj = JsonObject().apply {
                             addProperty(Constant.id, activityId)
-                            addProperty(Constant.mark, "") // no standalone input for the parent activity when rubrics exist
+                            addProperty(Constant.mark, "")
                             addProperty(Constant.max_mark, activityColumns.firstOrNull()?.maxMark?.toString() ?: "--")
                             add("rubrics", rubricsArray)
                         }
@@ -1492,7 +1514,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
 
             studentObj.add(Constant.marks, marksArray)
 
-            // co_scholastic array — only "id" and "mark" per the required format
+
             val coScholasticArray = JsonArray()
             columns.filter { it.isCoScholastic }.forEach { col ->
                 val index = columns.indexOf(col)
@@ -1571,7 +1593,7 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
                 if (text.equals("AB", true) || text.equals("NA", true)) return@forEachIndexed
 
                 val column = columns.getOrNull(index) ?: return@forEachIndexed
-                if (column.isRemark) return@forEachIndexed // free text, no validation
+                if (column.isRemark) return@forEachIndexed
 
                 if (text.toDoubleOrNull() == null) {
                     issues.add(
@@ -1619,5 +1641,10 @@ class ReviewAndEditMarks : BaseActivity<ReviewAndEditMarksBinding>(), View.OnCli
             }
         }
         return issues
+    }
+
+    override fun onDestroy() {
+        searchRunnable?.let { searchHandler.removeCallbacks(it) }
+        super.onDestroy()
     }
 }
