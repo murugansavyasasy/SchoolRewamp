@@ -1,5 +1,9 @@
-package com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel
+package com.vs.schoolmessenger.Parent.FeeDetails.PaymentProofModel.PaymentProofFeeDetailsModel
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Quantity(
     val id: String?,
     val fee_name: String?,
@@ -10,4 +14,4 @@ data class Quantity(
     val amount_to_be_paid: String?,
     val previous_quantity: String?,
     val previous_quantity_amount: String?
-)
+): Parcelable

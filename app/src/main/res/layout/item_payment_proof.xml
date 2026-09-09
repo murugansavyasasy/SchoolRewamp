@@ -1,76 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardPayment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@android:color/white">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <View
+            android:layout_centerVertical="true"
+            android:id="@+id/viewStatusDot"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/five"
+            android:background="@drawable/bg_payment_pending_dot" />
 
         <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/five"
+            android:id="@+id/lnrProofDetails"
+            android:layout_toStartOf="@+id/lblStatus"
+            android:layout_toEndOf="@+id/viewStatusDot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvAmount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="₹400.00" />
-
-            <TextView
-                android:id="@+id/tvStatus"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="3dp"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                tools:text="APPROVED" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹11,230.00"
+                    android:drawablePadding="@dimen/ten"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="#172033"
+                    android:textSize="17sp"
+                  />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="02-09 · 2 photos"
+                android:textColor="#596579"
+                android:textSize="11sp" />
+
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvCreatedOn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/lblStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            tools:text="26-08-2026 08:37 PM" />
+            android:paddingStart="4dp"
+            android:paddingEnd="2dp"
+            android:text="Pending"
+            android:textAlignment="viewStart"
+            android:drawablePadding="@dimen/five"
+            android:drawableEnd="@drawable/right_ic_arrow_gray"
+            android:textColor="#E87500"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvRemarks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            tools:text="Remarks: asdfgjkl;" />
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/ivProof"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/tvValidationMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textSize="12sp"
-            tools:text="Valid payment image (98% confidence)" />
-
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

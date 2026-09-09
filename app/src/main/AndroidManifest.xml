@@ -926,7 +926,12 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".Parent.FeeDetails.FeePaymentProof"
+            android:name=".Parent.FeeDetails.PaymentProof.FeePaymentProof"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Parent.FeeDetails.PaymentProof.ViewIndividualFeePaymentProofDetails"
             android:configChanges="uiMode|orientation|screenSize"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
