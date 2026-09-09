@@ -107,6 +107,13 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
     private var profilePhotoFileItem: FileItem? = null
     private var currentEditMode = ""
 
+    private var isEditMode = false
+
+    private var currentPhotoUrl: String? = null
+
+
+    private var lastUploadedPhotoUrl: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -117,6 +124,8 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
+
+        binding.btnEditProfile.visibility = View.VISIBLE
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         fetchProfileData()
 
@@ -164,6 +173,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         binding.btnupdateprofile.setOnClickListener(this)
         binding.imgEdit.setOnClickListener(this)
+        binding.btnEditProfile.setOnClickListener { toggleEditMode() }
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         appViewModel.isParentprofilelist?.observe(viewLifecycleOwner) { response ->
@@ -195,11 +205,16 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     }
                 }
 
+                currentPhotoUrl = photoUrl
+
                 adapter =
                     ProfileRewampFragmentAdapter(items, requireContext(), this, binding.rcyImages)
                 binding.recyclerview.adapter = adapter
                 binding.recyclerview.visibility = View.VISIBLE
                 binding.lytNoDataFound.visibility = View.GONE
+
+
+                adapter?.setEditMode(isEditMode)
 
                 val defaultProfileRes = R.drawable.default_profile
                 if (!photoUrl.isNullOrEmpty()) {
@@ -220,13 +235,18 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     showDataValidation(
                         resources.getString(R.string.success), response.message, requireActivity()
                     )
-                    Constant.selectedFiles.clear()
-                    isVideoSelectedArrayList.clear()
-                    Constant.isAwsUploadedFiles.clear()
-                    profilePhotoFileItem = null
-                    binding.rcyImages.visibility = View.GONE
-                    mAdapter?.notifyDataSetChanged()
-                    adapter?.setEditMode(false)
+
+                    refreshOriginalDataFromAdapter()
+
+                    if (lastUploadedPhotoUrl != null) {
+                        currentPhotoUrl = lastUploadedPhotoUrl
+                        lastUploadedPhotoUrl = null
+                        val defaultProfileRes = R.drawable.default_profile
+                        Glide.with(this).load(currentPhotoUrl).placeholder(defaultProfileRes)
+                            .error(defaultProfileRes).into(binding.imgProfile)
+                    }
+
+                    exitEditMode(revertChanges = false)
                 } else {
                     showDataValidation(
                         resources.getString(R.string.Oops), response.message, requireActivity()
@@ -247,7 +267,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
 
         if (uris.isEmpty()) return
 
-        // ---------------- PROFILE PHOTO MODE ----------------
+
         if (currentEditMode == "profile_photo") {
 
             uris.firstOrNull()?.let { uri ->
@@ -266,7 +286,6 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             return
         }
 
-        // ---------------- NORMAL FILE ADD MODE ----------------
 
         val remaining = MAX_FILES - Constant.selectedFiles.size
 
@@ -308,7 +327,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
             Log.d("SelectedFile", "URI: $uri, Type: $type")
         }
 
-        // If user selected more than allowed
+
         if (uris.size > remaining) {
             Toast.makeText(
                 requireContext(),
@@ -335,8 +354,81 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 currentEditMode = "profile_photo"
                 showBottomDialog()
             }
-            R.id.imgEditFields -> {
-                adapter?.setEditMode(true)
+        }
+    }
+
+    private fun toggleEditMode() {
+        if (isEditMode) {
+            exitEditMode(revertChanges = true)
+        } else {
+            enterEditMode()
+        }
+    }
+
+    private fun enterEditMode() {
+        isEditMode = true
+        binding.btnEditProfile.text = "Back to profile"
+        binding.imgEdit.visibility = View.VISIBLE
+        binding.btnupdateprofile.visibility = View.VISIBLE
+        adapter?.setEditMode(true)
+    }
+
+
+    private fun exitEditMode(revertChanges: Boolean) {
+        if (revertChanges) {
+            revertFieldChanges()
+            restoreOriginalPhoto()
+        }
+
+        Constant.selectedFiles.clear()
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        profilePhotoFileItem = null
+        pendingChangedData = null
+        currentEditMode = ""
+
+        binding.rcyImages.visibility = View.GONE
+        mAdapter?.notifyDataSetChanged()
+
+        isEditMode = false
+        binding.btnEditProfile.text = "Edit Profile"
+        binding.imgEdit.visibility = View.GONE
+        binding.btnupdateprofile.visibility = View.GONE
+
+        adapter?.setEditMode(false)
+    }
+
+    private fun revertFieldChanges() {
+        for (section in originalData) {
+            for ((_, originalFields) in section) {
+                for (original in originalFields) {
+                    val current = adapter?.getUpdatedField(original.node)
+                    if (current != null) {
+                        current.value = original.originalValue
+                    }
+                }
+            }
+        }
+    }
+
+    private fun restoreOriginalPhoto() {
+        val defaultProfileRes = R.drawable.default_profile
+        if (!currentPhotoUrl.isNullOrEmpty()) {
+            Glide.with(this).load(currentPhotoUrl).placeholder(defaultProfileRes)
+                .error(defaultProfileRes).into(binding.imgProfile)
+        } else {
+            Glide.with(this).load(defaultProfileRes).into(binding.imgProfile)
+        }
+    }
+
+    private fun refreshOriginalDataFromAdapter() {
+        val currentFieldsByNode = adapter?.getAllFields()?.associateBy { it.node } ?: return
+        originalData = originalData.map { section ->
+            section.mapValues { (_, fields) ->
+                fields.map { original ->
+                    val current = currentFieldsByNode[original.node]
+                    original.copy(originalValue = current?.value ?: original.originalValue)
+                }
             }
         }
     }
@@ -375,6 +467,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                     ProgressDialogHelper.dismiss()
                     if (url != null) {
                         textPayload.addProperty("photoPath", url)
+                        lastUploadedPhotoUrl = url
                     } else {
                         showDataValidation(
                             getString(R.string.Oops),
@@ -421,6 +514,7 @@ class ParentProfileRewampFragment : Fragment(), View.OnClickListener, DocumentCl
                 ProgressDialogHelper.dismiss()
                 if (url != null) {
                     payload.addProperty("photoPath", url)
+                    lastUploadedPhotoUrl = url
                 } else {
                     showDataValidation(
                         getString(R.string.Oops),

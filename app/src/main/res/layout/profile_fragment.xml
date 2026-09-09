@@ -42,6 +42,7 @@
                         android:src="@drawable/default_profile"
                         app:shapeAppearanceOverlay="@style/CircleImageShape" />
 
+                    <!-- Camera icon: only shown while editing -->
                     <ImageView
                         android:id="@+id/imgEdit"
                         android:layout_width="@dimen/twenty_eight"
@@ -49,8 +50,12 @@
                         android:layout_gravity="bottom|end"
                         android:background="@drawable/circle_white_bg"
                         android:padding="@dimen/four"
-                        android:src="@drawable/camerasvgformat" />
+                        android:contentDescription="Change photo"
+                        android:src="@drawable/camerasvgformat"
+                        android:visibility="gone" />
 
+                    <!-- Superseded by btnEditProfile below; kept (hidden) so nothing else that
+                         references this id breaks. -->
                     <ImageView
                         android:id="@+id/imgEditFields"
                         android:layout_width="@dimen/twenty_eight"
@@ -59,8 +64,27 @@
                         android:background="@drawable/circle_white_bg"
                         android:padding="@dimen/four"
                         android:contentDescription="Edit Profile"
-                        android:src="@drawable/ic_edit_pencil" />
+                        android:src="@drawable/ic_edit_pencil"
+                        android:visibility="gone" />
                 </FrameLayout>
+
+                <TextView
+                    android:id="@+id/btnEditProfile"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:background="@drawable/bg_edit_profile_pill"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:text="Edit Profile"
+                    android:textColor="@color/PrimaryColor"
+                    android:textSize="13sp" />
+
             </FrameLayout>
 
 
@@ -123,5 +147,6 @@
         android:padding="@dimen/ten"
         android:text="@string/UpdateProfile"
         android:textColor="@color/white"
-        android:textSize="@dimen/fifteen_sp" />
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone" />
 </LinearLayout>

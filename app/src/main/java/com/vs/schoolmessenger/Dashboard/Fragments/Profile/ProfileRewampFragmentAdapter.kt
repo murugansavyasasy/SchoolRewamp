@@ -41,10 +41,8 @@ class ProfileRewampFragmentAdapter(
         private const val VIEW_TYPE_FIELD = 1
     }
 
-    // Global flag — false = view-only (line, no input), true = editable (box, input allowed)
     private var isEditMode: Boolean = false
 
-    /** Call this from the Fragment when the user taps the edit (pencil) icon. */
     fun setEditMode(enabled: Boolean) {
         if (isEditMode != enabled) {
             isEditMode = enabled
@@ -124,22 +122,25 @@ class ProfileRewampFragmentAdapter(
 
         var isRcyImagesAttached = false
 
-        /**
-         * Style (box vs line) depends only on the global [isEditMode] flag.
-         */
+
         private fun applyEditableStyle(view: View) {
             view.setBackgroundResource(
                 if (isEditMode) R.drawable.field_background else R.drawable.field_underline_bg
             )
         }
 
-        /**
-         * Whether the user can ACTUALLY type/tap/change this field right now.
-         * Requires BOTH: global edit mode is on (pencil icon tapped) AND
-         * the field itself is marked editable by the API.
-         */
+
         private fun isActuallyEditable(field: ProfileField): Boolean {
             return isEditMode && field.is_editable
+        }
+
+        private fun editStatusSuffix(field: ProfileField): String {
+            if (!isEditMode) return ""
+            return if (field.is_editable) {
+                " <font color='#4CAF50'>(Editable)</font>"
+            } else {
+                " <font color='#9E9E9E'>(Non-editable)</font>"
+            }
         }
 
         fun bind(field: ProfileField, position: Int) {
@@ -161,11 +162,7 @@ class ProfileRewampFragmentAdapter(
                     titlelayout.visibility = View.VISIBLE
                     applyEditableStyle(titleValueBox)
 
-                    val editStatusText = if (field.is_editable) {
-                        " <font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        " <font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
 
                     titlelabel.text = if (!field.optional) {
                         Html.fromHtml(
@@ -190,12 +187,7 @@ class ProfileRewampFragmentAdapter(
                 Constant.image_ -> {
                     imagelayout.visibility = View.VISIBLE
 
-                    val editStatusText = if (field.is_editable) {
-                        " <font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        " <font color='#9E9E9E'>(Non-editable)</font>"
-                    }
-
+                    val editStatusText = editStatusSuffix(field)
 
                     if (field.optional == false) {
                         imagelabel.text = Html.fromHtml(
@@ -203,7 +195,10 @@ class ProfileRewampFragmentAdapter(
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        imagelabel.text = "${field.title}$editStatusText"
+                        imagelabel.text = Html.fromHtml(
+                            "${field.title}$editStatusText",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
                     }
                     val recyclerView: RecyclerView = itemView.findViewById(R.id.rcChildHW)
                     recyclerView.layoutManager = GridLayoutManager(itemView.context, 2)
@@ -244,16 +239,12 @@ class ProfileRewampFragmentAdapter(
                 Constant.document_ -> {
                     imagelayout.visibility = View.VISIBLE
 
-                    val editStatusText = if (field.is_editable) {
-                        "<font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        "<font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
 
                     val labelText = if (field.optional == false) {
-                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                        "${field.title} <font color='#FF0000'>*</font>$editStatusText"
                     } else {
-                        "${field.title} $editStatusText"
+                        "${field.title}$editStatusText"
                     }
 
                     imagelabel.text = Html.fromHtml(
@@ -308,16 +299,12 @@ class ProfileRewampFragmentAdapter(
                     remarkslayout.visibility = View.VISIBLE
                     applyEditableStyle(remarksvalue)
 
-                    val editStatusText = if (field.is_editable) {
-                        "<font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        "<font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
 
                     val labelText = if (field.optional == false) {
-                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                        "${field.title} <font color='#FF0000'>*</font>$editStatusText"
                     } else {
-                        "${field.title} $editStatusText"
+                        "${field.title}$editStatusText"
                     }
 
                     remarkslabel.text = Html.fromHtml(
@@ -337,16 +324,12 @@ class ProfileRewampFragmentAdapter(
                     datelayout.visibility = View.VISIBLE
                     applyEditableStyle(dateValueBox)
 
-                    val editStatusText = if (field.is_editable) {
-                        "<font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        "<font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
 
                     val labelText = if (field.optional == false) {
-                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                        "${field.title} <font color='#FF0000'>*</font>$editStatusText"
                     } else {
-                        "${field.title} $editStatusText"
+                        "${field.title}$editStatusText"
                     }
 
                     datelabel.text = Html.fromHtml(
@@ -386,11 +369,7 @@ class ProfileRewampFragmentAdapter(
 
                 Constant.gender -> {
                     genderLayout.visibility = View.VISIBLE
-                    val editStatusText = if (field.is_editable) {
-                        " <font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        " <font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
                     val genderLabel: TextView = itemView.findViewById(R.id.genderLabel)
                     val radioGroup: RadioGroup = itemView.findViewById(R.id.radioGenderGroup)
                     val radioMale: RadioButton = itemView.findViewById(R.id.radioMale)
@@ -398,13 +377,16 @@ class ProfileRewampFragmentAdapter(
                     val radioOthers: RadioButton = itemView.findViewById(R.id.radioOthers)
 
 
-                    if (field.optional == false) {
-                        genderLabel.text = Html.fromHtml(
+                    genderLabel.text = if (field.optional == false) {
+                        Html.fromHtml(
                             "${field.title} <font color='#FF0000'>*</font>$editStatusText",
                             Html.FROM_HTML_MODE_LEGACY
                         )
                     } else {
-                        genderLabel.text = "${field.title}$editStatusText"
+                        Html.fromHtml(
+                            "${field.title}$editStatusText",
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
                     }
 
                     when (field.value?.lowercase()) {
@@ -433,16 +415,12 @@ class ProfileRewampFragmentAdapter(
                     dropdownlayout.visibility = View.VISIBLE
                     applyEditableStyle(dropdownValueBox)
 
-                    val editStatusText = if (field.is_editable) {
-                        "<font color='#4CAF50'>(Editable)</font>"
-                    } else {
-                        "<font color='#9E9E9E'>(Non-editable)</font>"
-                    }
+                    val editStatusText = editStatusSuffix(field)
 
                     val labelText = if (field.optional == false) {
-                        "${field.title} <font color='#FF0000'>*</font> $editStatusText"
+                        "${field.title} <font color='#FF0000'>*</font>$editStatusText"
                     } else {
-                        "${field.title} $editStatusText"
+                        "${field.title}$editStatusText"
                     }
 
                     dropdownlabel.text = Html.fromHtml(
@@ -460,9 +438,25 @@ class ProfileRewampFragmentAdapter(
 
                     dropdownvalue.setAdapter(adapterDropdown)
                     dropdownvalue.setText(field.value.orEmpty(), false)
+
+                    // IMPORTANT: the OutlinedBox.ExposedDropdownMenu style gives the
+                    // TextInputLayout its own end (dropdown-arrow) icon with its own click
+                    // handling — disabling only the AutoCompleteTextView is not enough,
+                    // tapping that icon would still open the popup. Disable the box itself too.
+                    dropdownValueBox.isEnabled = canEdit
+                    dropdownValueBox.endIconMode = if (canEdit) {
+                        TextInputLayout.END_ICON_DROPDOWN_MENU
+                    } else {
+                        TextInputLayout.END_ICON_NONE
+                    }
+
                     dropdownvalue.isEnabled = canEdit
                     dropdownvalue.isClickable = canEdit
                     dropdownvalue.isFocusable = canEdit
+
+                    dropdownvalue.setOnClickListener {
+                        if (canEdit) dropdownvalue.showDropDown()
+                    }
 
                     dropdownvalue.setSafeTextWatcher(field) { field.value = it }
                 }
@@ -526,6 +520,11 @@ class ProfileRewampFragmentAdapter(
     fun getUpdatedField(node: String): ProfileField? {
         return itemList.filterIsInstance<ProfileItem.Field>().map { it.field }
             .find { it.node.equals(node, ignoreCase = true) }
+    }
+
+    /** All fields with their current (possibly edited) in-memory values. */
+    fun getAllFields(): List<ProfileField> {
+        return itemList.filterIsInstance<ProfileItem.Field>().map { it.field }
     }
 
     fun EditText.setSafeTextWatcher(field: ProfileField, onChanged: (String) -> Unit) {

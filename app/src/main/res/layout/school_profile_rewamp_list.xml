@@ -43,6 +43,12 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/thirteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,6 +98,12 @@
                     android:visibility="gone"
                     android:src="@drawable/ic_calendar" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
         <LinearLayout
@@ -144,6 +156,12 @@
                     android:text="@string/others"
                     android:textSize="@dimen/thirteen_sp" />
             </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,6 +196,12 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/thirteen_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
         <LinearLayout
@@ -213,6 +237,12 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="#9E9E9E"
                 android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
         <LinearLayout
@@ -266,6 +296,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#E0E0E0" />
         </LinearLayout>
 
     </LinearLayout>
