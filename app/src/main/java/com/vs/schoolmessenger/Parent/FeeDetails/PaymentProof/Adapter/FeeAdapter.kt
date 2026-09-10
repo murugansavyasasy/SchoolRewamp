@@ -87,6 +87,8 @@ class FeeAdapter(
                 discount = item.discountAmount,
                 paid = item.paidAmount
             )
+//            Right now we no need to show the group header's Fee amount,Discount,Paid amount so that's why goned!
+            binding.breakdownRow.visibility= View.GONE
         }
     }
 

@@ -41,6 +41,7 @@ class ViewIndividualFeePaymentProofDetails :
 
     private var feeDetails: PaymentProofFeeDetails? = null
 
+    private var hasBeenInitialized = false
     private var expandedSectionId: String? = null   // the ONLY expand/collapse state for the whole list
 
     private val feeAdapter: FeeAdapter by lazy {
@@ -67,6 +68,7 @@ class ViewIndividualFeePaymentProofDetails :
 
         isChildDetails =
             SharedPreference.getChildDetails(this)
+
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSelectedMenuName
@@ -106,13 +108,13 @@ class ViewIndividualFeePaymentProofDetails :
             val data = paymentDetails!!
 
             binding.lblUserEntered.text=data.user_enter_amount?:"-"
-            binding.lblTotalPayment.text=data.total_amount?:"-"
-            binding.lblAIDeteched.text=data.ai_detected_amount?:"-"
-            binding.lblValidatedBy.text=data.validated_by?:"-"
-            binding.lblValidatedOn.text=data.validated_on?:"-"
-            binding.lblPaymentID.text=data.payment_id?:"-"
-            binding.lblCreatedOn.text=data.created_on?:"-"
-            binding.lblRemarks.text=data.remarks?:"-"
+            binding.lblTotalPayment.text=displayValue(data.total_amount?:"")
+            binding.lblAIDeteched.text=displayValue(data.ai_detected_amount?:"")
+            binding.lblValidatedBy.text=displayValue(data.validated_by?:"")
+            binding.lblValidatedOn.text=displayValue(data.validated_on?:"")
+            binding.lblPaymentID.text=displayValue(data.payment_id?:"")
+            binding.lblCreatedOn.text=displayValue(data.created_on?:"")
+            binding.lblRemarks.text=displayValue(data.remarks?:"")
 
             setupPaymentProofList(data.proof_uploaded)
             setupTransactionReceiptList(data.proof_details)
@@ -171,26 +173,89 @@ class ViewIndividualFeePaymentProofDetails :
     }
 
     private fun setupFeeBreakdownList(details: PaymentProofFeeDetails?) {
+
         feeDetails = details
 
         if (details == null) {
-            binding.rcFeesBreakDown.visibility = View.GONE
+            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
+            binding.lblFeeBreakDown.visibility = View.GONE
             return
         }
 
-        binding.rcFeesBreakDown.visibility = View.VISIBLE
+        val hasNoFeeDetails =
+            details.term.isEmpty() &&
+                    details.others.isEmpty() &&
+                    details.carryover.isEmpty() &&
+                    details.transport.isEmpty() &&
+                    details.hostel.isEmpty() &&
+                    details.quantity.isEmpty()
+
+        if (hasNoFeeDetails) {
+            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
+            binding.lblFeeBreakDown.visibility = View.GONE
+            return
+        }
+
+        binding.cardLnrFeeBreakDownDetails.visibility = View.VISIBLE
+        binding.lblFeeBreakDown.visibility = View.VISIBLE
+
         binding.rcFeesBreakDown.layoutManager = LinearLayoutManager(this)
         binding.rcFeesBreakDown.setHasFixedSize(false)
         binding.rcFeesBreakDown.itemAnimator = null
 
         binding.rcFeesBreakDown.adapter = feeAdapter
 
+        // Default-expand the first card, but only on initial load — if the user
+        // has already toggled something (expandedSectionId no longer null, or
+        // was explicitly collapsed to null by tapping the open section again),
+        // don't override their choice on a later call to this function.
+        if (expandedSectionId == null && !hasBeenInitialized) {
+            expandedSectionId = FeeItemMapper.firstSectionId(this, details)
+        }
+        hasBeenInitialized = true
+
         refreshFeeBreakdownList()
     }
 
+//    private fun setupFeeBreakdownList(details: PaymentProofFeeDetails?) {
+//
+//        feeDetails = details
+//
+//        if (details == null) {
+//            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
+//            binding.lblFeeBreakDown.visibility = View.GONE
+//            return
+//        }
+//
+//        val hasNoFeeDetails =
+//            details.term.isEmpty() &&
+//                    details.others.isEmpty() &&
+//                    details.carryover.isEmpty() &&
+//                    details.transport.isEmpty() &&
+//                    details.hostel.isEmpty() &&
+//                    details.quantity.isEmpty()
+//
+//        if (hasNoFeeDetails) {
+//            binding.cardLnrFeeBreakDownDetails.visibility = View.GONE
+//            binding.lblFeeBreakDown.visibility = View.GONE
+//            return
+//        }
+//
+//        binding.cardLnrFeeBreakDownDetails.visibility = View.VISIBLE
+//        binding.lblFeeBreakDown.visibility = View.VISIBLE
+//
+//        binding.rcFeesBreakDown.layoutManager = LinearLayoutManager(this)
+//        binding.rcFeesBreakDown.setHasFixedSize(false)
+//        binding.rcFeesBreakDown.itemAnimator = null
+//
+//        binding.rcFeesBreakDown.adapter = feeAdapter
+//
+//        refreshFeeBreakdownList()
+//    }
+
     private fun refreshFeeBreakdownList() {
         val details = feeDetails ?: return
-        val newList = FeeItemMapper.buildFlatList(details, expandedSectionId)
+        val newList = FeeItemMapper.buildFlatList(this,details, expandedSectionId)
 
         feeAdapter.submitList(newList) {
             binding.rcFeesBreakDown.requestLayout()
@@ -229,7 +294,9 @@ class ViewIndividualFeePaymentProofDetails :
 
 
 
-
+    private fun displayValue(value: String?): String {
+        return value?.takeIf { it.isNotBlank() } ?: "-"
+    }
 
     override fun onClick(v: View?) {
 

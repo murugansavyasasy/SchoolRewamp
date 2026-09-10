@@ -986,8 +986,8 @@ class SchoolServicesTwo {
 
 
     fun isPaymentProof(
-        isToken: String,academic_year_id: String,country_id: String,activity: Activity) {
-        RestClient.Companion.apiInterfaces.isPaymentProof(isToken,academic_year_id,country_id)
+        isToken: String,country_id: String,activity: Activity) {
+        RestClient.Companion.apiInterfaces.isPaymentProof(isToken,country_id)
             ?.enqueue(object : Callback<PaymentProofResponse?> {
                 override fun onResponse(
                     call: Call<PaymentProofResponse?>, response: Response<PaymentProofResponse?>

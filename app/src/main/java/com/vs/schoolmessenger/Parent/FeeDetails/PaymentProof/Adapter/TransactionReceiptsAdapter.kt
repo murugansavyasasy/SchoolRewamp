@@ -41,34 +41,78 @@ class TransactionReceiptsAdapter(
     override fun onBindViewHolder(holder: ReceiptViewHolder, position: Int) {
         val item = items[position]
 
-        holder.tvPaymentTitle.text = "${item.upi_provider} • ${item.bank_name}"
-        holder.tvPaymentSubtitle.text = item.payment_method
-        holder.tvFailureMessage.visibility = if (item.payment_status?.lowercase() == "success") {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-        holder.viewDiv.visibility = if (item.payment_status?.lowercase() == "success") {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-        holder.tvFailureMessage.text = "${context.getString(R.string.failed_reason)} : ${item.failure_reason}"
+        holder.tvPaymentTitle.text =
+            "${displayValue(item.upi_provider)} • ${displayValue(item.bank_name)}"
 
-        bindField(holder.rowAmount, context.getString(R.string.amount), item.paid_amount)
-        bindField(holder.rowDate, context.getString(R.string.date), item.receipt_date)
-        bindField(holder.rowTransactionId, context.getString(R.string.transaction_id), item.transaction_id)
-        bindField(holder.rowRefNumber, context.getString(R.string.ref_number), item.reference_number)
-        bindField(holder.rowPayer, context.getString(R.string.payer), item.payer_name)
-        bindField(holder.rowPayee, context.getString(R.string.payee), item.payee_name)
-        bindField(holder.rowTime, context.getString(R.string.time), item.receipt_time)
+        holder.tvPaymentSubtitle.text = displayValue(item.payment_method)
+
+        val isSuccess = item.payment_status?.equals("success", ignoreCase = true) == true
+
+        val hasFailureReason = !item.failure_reason.isNullOrBlank()
+
+        val showFailureReason = !isSuccess && hasFailureReason
+
+        holder.tvFailureMessage.visibility =
+            if (showFailureReason) View.VISIBLE else View.GONE
+
+        holder.viewDiv.visibility =
+            if (showFailureReason) View.VISIBLE else View.GONE
+
+        holder.tvFailureMessage.text =
+            "${context.getString(R.string.failed_reason)} : ${displayValue(item.failure_reason)}"
+
+        bindField(
+            holder.rowAmount,
+            context.getString(R.string.amount),
+            displayValue(item.paid_amount)
+        )
+
+        bindField(
+            holder.rowDate,
+            context.getString(R.string.date),
+            displayValue(item.receipt_date)
+        )
+
+        bindField(
+            holder.rowTransactionId,
+            context.getString(R.string.transaction_id),
+            displayValue(item.transaction_id)
+        )
+
+        bindField(
+            holder.rowRefNumber,
+            context.getString(R.string.ref_number),
+            displayValue(item.reference_number)
+        )
+
+        bindField(
+            holder.rowPayer,
+            context.getString(R.string.payer),
+            displayValue(item.payer_name)
+        )
+
+        bindField(
+            holder.rowPayee,
+            context.getString(R.string.payee),
+            displayValue(item.payee_name)
+        )
+
+        bindField(
+            holder.rowTime,
+            context.getString(R.string.time),
+            displayValue(item.receipt_time)
+        )
+
         bindField(
             holder.rowStatus,
             context.getString(R.string.payment_status),
-            item.payment_status,
+            displayValue(item.payment_status),
             getStatusColor(context, item.payment_status)
         )
 
+    }
+    private fun displayValue(value: String?): String {
+        return value?.takeIf { it.isNotBlank() } ?: "-"
     }
 
     private fun getStatusColor(context: Context, status: String?): Int {

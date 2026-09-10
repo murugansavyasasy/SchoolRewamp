@@ -4,6 +4,9 @@ package com.vs.schoolmessenger.School.SchoolStrength
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -264,19 +267,55 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
         if (firstItem.previous.message.isNullOrEmpty()) {
-            binding.summaryStaticscardview.growthValue3.text =
-                ((firstItem.previous.total_staff_strength.toIntOrNull()
-                    ?: 0) + (firstItem.previous.total_student_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
+//            binding.summaryStaticscardview.growthValue3.text =
+//                ((firstItem.previous.total_staff_strength.toIntOrNull()
+//                    ?: 0) + (firstItem.previous.total_student_strength.toIntOrNull()
+//                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
+//
+//            binding.summaryStaticscardview.growthValue1.text =
+//                ((firstItem.previous.total_student_strength.toIntOrNull()
+//                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
+//
+//
+//            binding.summaryStaticscardview.growthValue2.text =
+//                ((firstItem.previous.total_staff_strength.toIntOrNull()
+//                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
 
-            binding.summaryStaticscardview.growthValue1.text =
-                ((firstItem.previous.total_student_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
+            val currentStaff =
+                firstItem.totalStaffStrength.toIntOrNull() ?: 0
 
+            val previousStaff =
+                firstItem.previous.total_staff_strength.toIntOrNull() ?: 0
 
-            binding.summaryStaticscardview.growthValue2.text =
-                ((firstItem.previous.total_staff_strength.toIntOrNull()
-                    ?: 0)).toString() + " " + getString(R.string.from_last_year)
+            val currentStudent =
+                firstItem.totalStudentStrength.toIntOrNull() ?: 0
+
+            val previousStudent =
+                firstItem.previous.total_student_strength.toIntOrNull() ?: 0
+
+            val currentTotal = currentStaff + currentStudent
+            val previousTotal = previousStaff + previousStudent
+            setGrowthValue(
+                textView = binding.summaryStaticscardview.growthValue2,
+                arrowImage = binding.summaryStaticscardview.arrowUp2,
+                current = currentStaff,
+                previous = previousStaff
+            )
+
+            setGrowthValue(
+                textView = binding.summaryStaticscardview.growthValue1,
+                arrowImage = binding.summaryStaticscardview.arrowUp1,
+                current = currentStudent,
+                previous = previousStudent
+            )
+
+            setGrowthValue(
+                textView = binding.summaryStaticscardview.growthValue3,
+                arrowImage = binding.summaryStaticscardview.arrowUp,
+                current = currentTotal,
+                previous = previousTotal
+            )
+
 
         } else {
             binding.summaryStaticscardview.growthValue3.text = firstItem.previous.message
@@ -287,6 +326,70 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
             binding.summaryStaticscardview.growthValue2.text = firstItem.previous.message
+        }
+    }
+
+    private fun setGrowthValue(
+        textView: TextView,
+        arrowImage: ImageView,
+        current: Int,
+        previous: Int
+    ) {
+        when {
+            current > previous -> {
+                val difference = current - previous
+
+                textView.text =
+                    "+ $difference ${getString(R.string.from_last_year)}"
+
+                val color = ContextCompat.getColor(
+                    this,
+                    R.color.green
+                )
+
+                textView.setTextColor(color)
+
+                arrowImage.visibility = View.VISIBLE
+                arrowImage.setImageResource(R.drawable.arrow_up)
+                arrowImage.rotation = 0f
+
+                arrowImage.setColorFilter(color)
+            }
+
+            current == previous -> {
+                textView.text =
+                    getString(R.string.no_changes_from_last_year)
+
+                textView.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.mid_black_gray
+                    )
+                )
+
+                arrowImage.visibility = View.GONE
+            }
+
+            else -> {
+                val difference = previous - current
+
+                textView.text =
+                    "- $difference ${getString(R.string.from_last_year)}"
+
+                val color = ContextCompat.getColor(
+                    this,
+                    R.color.red
+                )
+
+                textView.setTextColor(color)
+
+                arrowImage.visibility = View.VISIBLE
+                arrowImage.setImageResource(R.drawable.arrow_up)
+
+                arrowImage.rotation = 180f
+
+                arrowImage.setColorFilter(color)
+            }
         }
     }
 

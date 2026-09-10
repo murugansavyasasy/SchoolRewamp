@@ -98,6 +98,7 @@ class StaffApproveLeaveRequestAdapter(
         private val textNoOfDays: TextView = itemView.findViewById(R.id.lblDays)
         private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
         private val lblLogo: TextView = itemView.findViewById(R.id.lblLogo)
+        private val lblRole: TextView = itemView.findViewById(R.id.lblRole)
         private val lblLeaveStatus: TextView = itemView.findViewById(R.id.lblLeaveStatus)
 
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
@@ -112,6 +113,7 @@ class StaffApproveLeaveRequestAdapter(
         fun bind(data: StaffLeaveData, position: Int) {
             textName.text = data.staff_name
             lblLogo.text = Constant.getInitials(data.staff_name?:"")
+            lblRole.text = data.role
 
             lblStartDate.text = Constant.convertDateTimeFormatDateMonth(data.from_date ?: "")
 
@@ -150,21 +152,23 @@ class StaffApproveLeaveRequestAdapter(
 
 
             } else if (data.status == Constant.waiting_for_approval) {
-                applyTintedBackground(
-                    lblLeaveStatus,
-                    R.drawable.bg_leave_approved,
-                    R.color.amber_yellow
-                )
-                lblLeaveStatus.setTextColor(context.getColor(R.color.white))
-                lblLeaveStatus.text=context.getString(R.string.pending)
-                cstStatus.visibility= View.VISIBLE
+                if (data.priority_level?.lowercase()=="p2"){
+                    cstStatus.visibility= View.GONE
+                }else{
+                    applyTintedBackground(
+                        lblLeaveStatus,
+                        R.drawable.bg_leave_approved,
+                        R.color.amber_yellow
+                    )
+                    lblLeaveStatus.setTextColor(context.getColor(R.color.white))
+                    lblLeaveStatus.text=context.getString(R.string.pending)
+                    cstStatus.visibility= View.VISIBLE
 
 
-                lblLeaveStatus.visibility= View.GONE
-                btnApprove.text=context.getString(R.string.approve)
-                btnCancel.text=context.getString(R.string.reject)
-
-
+                    lblLeaveStatus.visibility= View.GONE
+                    btnApprove.text=context.getString(R.string.approve)
+                    btnCancel.text=context.getString(R.string.reject)
+                }
             }
 
             if (data.leave_type == "") {
@@ -193,6 +197,7 @@ class StaffApproveLeaveRequestAdapter(
                     to_date=data.to_date,
                     no_of_days=data.no_of_days,
                     status=data.status,
+                    priority_level=data.priority_level,
                     reason = data.reason,
                     updated_on=data.updated_on,
                     from_session=data.from_session,

@@ -39,7 +39,7 @@ class PaymentProofFileAdapter(
         val item = items[position]
         val resolvedType = resolveFileType(item.type)
 
-        val displayName = item.file_name ?: item.url?.substringAfterLast('/')?:""
+        val displayName = item.original_file_name ?: item.url?.substringAfterLast('/')?:""
         holder.tvFileName.text = displayName
         holder.tvIconType.text = iconLabel(resolvedType)
 

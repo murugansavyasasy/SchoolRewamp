@@ -274,15 +274,11 @@ class FeePaymentProof :
 
         Constant.showLoading(this)
 
-
         appViewModel?.isPaymentProof(
-            isAccessToken!!,
-            "8",
-            country_id,
+            isAccessToken!!, country_id,
             this
         )
     }
-
 
     private fun updateStatusCounts() {
 

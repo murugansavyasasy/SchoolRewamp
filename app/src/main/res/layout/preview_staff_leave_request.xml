@@ -251,6 +251,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_below="@+id/LnrReason"
                         android:layout_width="match_parent"
+                        android:id="@+id/constStatus"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
                         android:paddingHorizontal="@dimen/ten">

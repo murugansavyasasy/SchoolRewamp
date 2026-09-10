@@ -29,6 +29,7 @@
         android:layout_weight="1"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:textAlignment="viewStart"
         android:textStyle="bold"
         tools:text="Term Fees" />
 
@@ -39,6 +40,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textAlignment="viewStart"
         tools:text="₹200.00" />
 
     <ImageView
