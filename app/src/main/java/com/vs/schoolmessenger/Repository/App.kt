@@ -2454,13 +2454,12 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isPaymentProof(
-        isToken: String,
-        academic_year_id: String,country_id: String, activity: Activity
+        isToken: String,country_id: String, activity: Activity
     ) {
         val reporting_url = SharedPreference.getBaseUrl(activity)
         Log.d("reporting_url",reporting_url.toString())
         RestClient.changeApiBaseUrl(reporting_url!!)
-        apiSchoolRepositoriesTwo.isPaymentProof(isToken, academic_year_id,country_id,activity)
+        apiSchoolRepositoriesTwo.isPaymentProof(isToken,country_id,activity)
     }
 
 

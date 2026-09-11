@@ -347,16 +347,5 @@ class PaymentProofAdapter(
             }
         }
 
-        private fun dpToPx(
-            dp: Int
-        ): Int {
-
-            return (
-                    dp *
-                            context.resources
-                                .displayMetrics
-                                .density
-                    ).toInt()
-        }
     }
 }

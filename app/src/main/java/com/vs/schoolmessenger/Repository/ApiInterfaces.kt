@@ -1660,7 +1660,6 @@ interface ApiInterfaces {
     @GET(APIMethods.isPaymentProof)
     fun isPaymentProof(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query("academic_year_id") academic_year_id   : String,
         @Query("country_id") country_id   : String,)
             : Call<PaymentProofResponse?>
 

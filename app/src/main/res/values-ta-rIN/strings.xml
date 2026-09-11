@@ -1356,5 +1356,36 @@
     <string name="total_strength">மொத்த எண்ணிக்கை</string>
     <string name="payment_proof">கட்டணச் சான்று</string>
     <string name="co_scholastic">இணைப் பாடத்திட்ட செயல்பாடுகள்</string>
-
+    <string name="photo">புகைப்படம்</string>
+    <string name="photos">புகைப்படங்கள்</string>
+    <string name="amount_breakdown">தொகை விவரம்</string>
+    <string name="user_entered">பயனர் உள்ளிட்டது</string>
+    <string name="difference">வித்தியாசம்</string>
+    <string name="validation_status">சரிபார்ப்பு நிலை</string>
+    <string name="validated_by">சரிபார்த்தவர்</string>
+    <string name="validated_on">சரிபார்க்கப்பட்ட தேதி</string>
+    <string name="payment_id">கட்டண அடையாள எண்</string>
+    <string name="total_payment">மொத்த கட்டணம்</string>
+    <string name="attachment">இணைப்பு</string>
+    <string name="no_proof_uploaded">எந்த ஆதாரமும் பதிவேற்றப்படவில்லை</string>
+    <string name="transaction">பரிவர்த்தனை</string>
+    <string name="detail">விவரம்</string>
+    <string name="receipts">ரசீதுகள்</string>
+    <string name="detected">கண்டறியப்பட்டது</string>
+    <string name="no_transaction_details">பரிவர்த்தனை விவரங்கள் இல்லை</string>
+    <string name="failed_reason">தோல்விக்கான காரணம்</string>
+    <string name="amount">தொகை</string>
+    <string name="ref_number">குறிப்பு எண்</string>
+    <string name="payer">பணம் செலுத்துபவர்</string>
+    <string name="payee">பணம் பெறுபவர்</string>
+    <string name="payment_status">கட்டண நிலை</string>
+    <string name="proofs">ஆதாரங்கள்</string>
+    <string name="fee_breakdown">கட்டண விவரம்</string>
+    <string name="fee_amount">கட்டணத் தொகை</string>
+    <string name="discount">தள்ளுபடி</string>
+    <string name="quantity_fees">அளவு கட்டணம்</string>
+    <string name="transport">போக்குவரத்து</string>
+    <string name="carryover">முந்தைய நிலுவை</string>
+    <string name="other_fees">பிற கட்டணங்கள்</string>
+    <string name="term_fees">பருவக் கட்டணம்</string>
 </resources>

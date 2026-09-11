@@ -12,6 +12,7 @@ class isStaffLeaveHistoryData(
     val role: String?,
     val to_date: String?,
     val no_of_days: String?,
+    val priority_level: String?,
     val reason: String?,
     var status: String?,
     val updated_on: String?,

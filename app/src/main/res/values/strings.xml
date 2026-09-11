@@ -1383,5 +1383,14 @@
     <string name="fee_breakdown">Fee Breakdown</string>
     <string name="fee_amount">Fee Amount</string>
     <string name="discount">Discount</string>
+<<<<<<< HEAD
     <string name="edit_profile">Edit Profile</string>
+=======
+    <string name="quantity_fees">Quantity Fees</string>
+    <string name="transport">Transport</string>
+    <string name="carryover">Carryover</string>
+    <string name="other_fees">Other Fees</string>
+    <string name="term_fees">Term Fees</string>
+    <string name="no_changes_from_last_year">No changes from last year</string>
+>>>>>>> be9ddb84a15c52b57a21ffba65759d36fee7b8dd
 </resources>

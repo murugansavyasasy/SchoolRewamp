@@ -28,6 +28,7 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
     private var isStaffDetails: StaffDetails? = null
     private var isRoleName = ""
     private var isStaffName = ""
+    private var isPripority = ""
     lateinit var request: LeaveApproveRequest
 
 
@@ -41,8 +42,18 @@ class PreviewStaffLeaveRequest : BaseActivity<PreviewStaffLeaveRequestBinding>()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+
         isRoleName = Constant.isStaffLeaveHistoryData?.role ?: ""
         isStaffName = Constant.isStaffLeaveHistoryData?.staff_name ?: ""
+        isPripority = Constant.isStaffLeaveHistoryData?.priority_level?.lowercase() ?: ""
+
+        if (isPripority=="p2"){
+            binding.constStatus.visibility= View.GONE
+        }
+        else{
+            binding.constStatus.visibility= View.VISIBLE
+        }
+
         binding.btnCancel.setOnClickListener {
             isApproveReject(false)
         }

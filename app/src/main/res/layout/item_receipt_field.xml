@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LABEL"
+        android:textAlignment="viewStart"
         android:textAllCaps="true"
         android:textColor="#B0B4BA"
         android:textSize="12sp"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Value"
+        android:textAlignment="viewStart"
         android:textColor="#111111"
         android:textSize="14sp"
         android:textStyle="bold" />

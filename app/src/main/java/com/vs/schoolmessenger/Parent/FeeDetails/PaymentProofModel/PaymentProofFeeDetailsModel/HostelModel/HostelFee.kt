@@ -13,6 +13,7 @@ data class HostelFee (
     val pending_amount: String? = null,
     val paid_amount: String? = null,
     val discount_amount: String? = null,
-    val month_wise_fee: List<HostelMonthWise>? = null
+//    val month_wise_fee: List<HostelMonthWise>? = null,
+    val month_details: List<HostelMonthWise>? = null
 
 ): Parcelable
