@@ -1389,4 +1389,6 @@
     <string name="other_fees">Other Fees</string>
     <string name="term_fees">Term Fees</string>
     <string name="no_changes_from_last_year">No changes from last year</string>
+    <string name="proof">Proof</string>
+    <string name="you">You</string>
 </resources>

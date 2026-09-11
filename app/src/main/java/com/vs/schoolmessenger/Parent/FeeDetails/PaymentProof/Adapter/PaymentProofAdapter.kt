@@ -224,12 +224,12 @@ class PaymentProofAdapter(
 
             val photosLetter =
                 if (photoCount == 1) {
-                    context.getString(R.string.attachment)
+                    context.getString(R.string.proof)
 
                 } else {
 
                     context.getString(
-                        R.string.attachments
+                        R.string.proofs
                     )
                 }
 
@@ -237,11 +237,10 @@ class PaymentProofAdapter(
             lblDate.text =
                 if (photoCount > 0) {
 
-                    "$createdDate · $photoCount $photosLetter"
+                    "${context.getString(R.string.created_on)} : $createdDate · $photoCount $photosLetter"
 
                 } else {
-
-                    createdDate
+                    "${context.getString(R.string.created_on)} : ${createdDate}"
                 }
 
 

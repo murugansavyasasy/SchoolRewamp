@@ -21,23 +21,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusBarBackground" />
 
-    <TextView
-        android:id="@+id/tvStudentName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textAlignment="viewStart"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="" />
 
     <RelativeLayout
-        app:layout_constraintTop_toBottomOf="@+id/tvStudentName"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
         android:id="@+id/rytSearch1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

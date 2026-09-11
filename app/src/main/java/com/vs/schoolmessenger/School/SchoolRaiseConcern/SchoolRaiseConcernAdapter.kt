@@ -92,7 +92,7 @@ class SchoolRaiseConcernAdapter(
                 )
                 btnAcknowledge.setOnClickListener { showAcknowledgeInputDialog(item) }
 
-                btnActionTaken.visibility = View.GONE
+//                btnActionTaken.visibility = View.GONE
             } else {
                 btnAcknowledge.text = "View Acknowledge"
                 btnAcknowledge.setBackgroundResource(R.drawable.bg_button_acknowledge_outline)
@@ -101,7 +101,7 @@ class SchoolRaiseConcernAdapter(
                 )
                 btnAcknowledge.setOnClickListener { showAcknowledgeDetailsPopup(item) }
 
-                btnActionTaken.visibility = View.VISIBLE
+//                btnActionTaken.visibility = View.VISIBLE
 
                 if (item.is_action) {
                     btnActionTaken.text = "Action Taken"
@@ -110,6 +110,8 @@ class SchoolRaiseConcernAdapter(
                         ContextCompat.getColor(btnActionTaken.context, R.color.white)
                     )
                     btnActionTaken.setOnClickListener { onActionTakenClick(item) }
+
+//                    btnAcknowledge.visibility = View.GONE
                 } else {
                     btnActionTaken.text = "View Action Taken"
                     btnActionTaken.setBackgroundResource(R.drawable.bg_button_green_action_taken)
@@ -117,6 +119,8 @@ class SchoolRaiseConcernAdapter(
                         ContextCompat.getColor(btnActionTaken.context, R.color.light_shade_yellow)
                     )
                     btnActionTaken.setOnClickListener { showActionTakenDetailsPopup(item) }
+
+//                    btnAcknowledge.visibility = View.VISIBLE
                 }
             }
 
