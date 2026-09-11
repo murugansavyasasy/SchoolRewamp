@@ -130,7 +130,7 @@ object Constant {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var isDeviceType = "Android"
-    var isVersionId = 223
+    var isVersionId = 224
 
 
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
